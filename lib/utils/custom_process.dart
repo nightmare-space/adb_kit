@@ -35,6 +35,11 @@ class NiProcess {
             return 'sh';
         }
       }();
+  static Future<void> ensureInitialized() async {
+    if (process == null) {
+      await _init();
+    }
+  }
 
   static Future<void> _init() async {
     _process = await Process.start(
@@ -54,8 +59,9 @@ class NiProcess {
         'export PATH=/data/data/$packageName/files:\$PATH\n',
       );
     }
+
     processStderr.transform(utf8.decoder).listen((event) {
-      print(event);
+      print('$NiProcess------>$event');
     });
   }
 
@@ -87,17 +93,15 @@ class NiProcess {
       script += '\n';
     }
     _process.stdin.write(script);
-    print('脚本====>${script}');
+    // print('脚本====>${script}');
     _process.stdin.write('echo exitCode\n');
     // _process.stdin.write(script + 'echo exitCode\n');
     if (getStdout) {
       await processStdout.transform(utf8.decoder).every(
         (String out) {
-          print('processStdout输出为======>$out');
+          // print('processStdout输出为======>$out');
           buffer.write(out);
-          if (callback != null) {
-            callback(out);
-          }
+          callback?.call(out);
           //
           if (out.contains('exitCode'))
             return false;
@@ -111,9 +115,7 @@ class NiProcess {
       await processStderr.transform(utf8.decoder).every(
         (String out) {
           buffer.write(out);
-          if (callback != null) {
-            callback(out);
-          }
+          callback?.call(out);
           return false;
         },
       );

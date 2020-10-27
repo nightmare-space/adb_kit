@@ -2,12 +2,20 @@ import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
-import 'home_page.dart';
+import 'global/provider/process_state.dart';
+import 'page/home_page.dart';
 import 'utils/custom_process.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(providers: <SingleChildCloneableWidget>[
+      ChangeNotifierProvider<ProcessState>(
+        create: (_) => ProcessState(),
+      ),
+    ], child: MyApp()),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -38,6 +46,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
             brightness: Brightness.light,
             backgroundColor: Colors.white,

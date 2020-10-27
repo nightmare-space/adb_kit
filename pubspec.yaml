@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  provider: ^3.1.0
   flutter_screenutil: ^2.3.0
 
   # The following adds the Cupertino Icons font to your application.
