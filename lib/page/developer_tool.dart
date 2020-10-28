@@ -53,6 +53,14 @@ class _DeveloperToolState extends State<DeveloperTool> {
             title: '显示屏幕指针',
             putKey: 'pointer_location',
           ),
+          SizedBox(
+            height: Dimens.gap_dp48,
+            child: Text('上传文件'),
+          ),
+          SizedBox(
+            height: Dimens.gap_dp48,
+            child: Text('下载文件'),
+          ),
         ],
       ),
     );
