@@ -1,36 +1,59 @@
 import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import 'global/provider/devices_state.dart';
 import 'global/provider/process_state.dart';
+import 'page/exec_cmd_page.dart';
 import 'page/home_page.dart';
 import 'utils/custom_process.dart';
 
 void main() {
-  runApp(
-    MultiProvider(providers: <SingleChildCloneableWidget>[
-      ChangeNotifierProvider<ProcessState>(
-        create: (_) => ProcessState(),
-      ),
-    ], child: MyApp()),
-  );
+  runApp(AdbTool());
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarDividerColor: Colors.transparent,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
+class AdbTool extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _AdbToolState createState() => _AdbToolState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AdbToolState extends State<AdbTool> {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: <SingleChildCloneableWidget>[
+        ChangeNotifierProvider<ProcessState>(
+          create: (_) => ProcessState(),
+        ),
+        ChangeNotifierProvider<DevicesState>(
+          create: (_) => DevicesState(),
+        ),
+      ],
+      child: MaterialApp(
+        home: _AdbTool(),
+      ),
+    );
+  }
+}
+
+class _AdbTool extends StatefulWidget {
+  @override
+  __AdbToolState createState() => __AdbToolState();
+}
+
+class __AdbToolState extends State<_AdbTool> {
   int currentIndex = 0;
+  // 页面的键
+  String curKey = 'main';
   @override
   void initState() {
     super.initState();
@@ -38,76 +61,66 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> init() async {
-    final String result = await NiProcess.exec('ip neigh');
-    print(result);
+    // final String result = await NiProcess.exec('ip neigh');
+    // print(result);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   NiProcess.exit();
+      // }),
+      appBar: AppBar(
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-            brightness: Brightness.light,
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            elevation: 0.0,
-            title: Text(
-              'ADB 工具',
-              style: TextStyle(
-                height: 1.0,
-                color: Theme.of(context).textTheme.bodyText2.color,
-                fontWeight: FontWeight.bold,
+        centerTitle: true,
+        elevation: 0.0,
+        title: Text(
+          'ADB 工具',
+          style: TextStyle(
+            height: 1.0,
+            color: Theme.of(context).textTheme.bodyText2.color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: Builder(
+          builder: (_) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black,
               ),
-            ),
-            leading: Builder(builder: (_) {
-              return IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Scaffold.of(_).openDrawer();
-                },
-              );
-            })
-            // actions: <Widget>[
-            ),
-        drawer: DrawerPage(),
-        body: HomePage(),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: bottomNavItems,
-        //   currentIndex: currentIndex,
-        //   type: BottomNavigationBarType.shifting,
-        //   onTap: (index) {
-        //     currentIndex = index;
-        //     setState(() {});
-        //   },
-        // ),
+              onPressed: () {
+                Scaffold.of(_).openDrawer();
+              },
+            );
+          },
+        ),
       ),
+      drawer: DrawerPage(
+        onChange: (key) {
+          curKey = key;
+          setState(() {});
+          print(key);
+          Navigator.pop(context);
+        },
+      ),
+      body: _getPage(curKey),
     );
   }
 }
 
-final List<BottomNavigationBarItem> bottomNavItems = [
-  BottomNavigationBarItem(
-    backgroundColor: Colors.blue,
-    icon: Icon(Icons.home),
-    title: Text("首页"),
-  ),
-  BottomNavigationBarItem(
-    backgroundColor: Colors.green,
-    icon: Icon(Icons.message),
-    title: Text("消息"),
-  ),
-  BottomNavigationBarItem(
-    backgroundColor: Colors.amber,
-    icon: Icon(Icons.shopping_cart),
-    title: Text("购物车"),
-  ),
-  BottomNavigationBarItem(
-    backgroundColor: Colors.red,
-    icon: Icon(Icons.person),
-    title: Text("个人中心"),
-  ),
-];
+Widget _getPage(String key) {
+  switch (key) {
+    case 'main':
+      return HomePage();
+      break;
+    case 'exec-cmd':
+      return ExecCmdPage();
+      break;
+    default:
+      return ExecCmdPage();
+  }
+}

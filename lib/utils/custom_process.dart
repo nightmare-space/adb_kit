@@ -15,7 +15,7 @@ class NiProcess {
   // 确保异步安全，这是一种极low的方式
   static bool isUseing = false;
   // 包名
-  static String packageName = 'com.example.scrcpy_client';
+  static String packageName = 'com.example.adb_tool';
   static Process get process => _process;
   static String get shPath => () {
         switch (Platform.operatingSystem) {
@@ -60,9 +60,9 @@ class NiProcess {
       );
     }
 
-    processStderr.transform(utf8.decoder).listen((event) {
-      print('$NiProcess------>$event');
-    });
+    // processStderr.transform(utf8.decoder).listen((event) {
+    //   print('$NiProcess------>$event');
+    // });
   }
 
   static Stream<List<int>> processStdout = _process.stdout.asBroadcastStream();
@@ -93,7 +93,7 @@ class NiProcess {
       script += '\n';
     }
     _process.stdin.write(script);
-    // print('脚本====>${script}');
+    // print('脚本====>$script');
     _process.stdin.write('echo exitCode\n');
     // _process.stdin.write(script + 'echo exitCode\n');
     if (getStdout) {
@@ -112,14 +112,22 @@ class NiProcess {
     }
 
     if (getStderr) {
+      print('等待错误');
+
+      _process.stdin.write('echo exitCode >&2\n');
       await processStderr.transform(utf8.decoder).every(
         (String out) {
+          // print('processStdout错误输出为======>$out');
           buffer.write(out);
           callback?.call(out);
-          return false;
+          if (out.contains('exitCode'))
+            return false;
+          else
+            return true;
         },
       );
     }
+    // print('释放锁');
     isUseing = false;
     return buffer.toString().replaceAll('exitCode', '').trim();
   }

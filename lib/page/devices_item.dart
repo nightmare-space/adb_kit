@@ -1,14 +1,18 @@
 import 'dart:io';
 
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/config/envirpath.dart';
+import 'package:adb_tool/global/provider/process_state.dart';
 import 'package:adb_tool/utils/custom_process.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DevicesItem extends StatefulWidget {
-  const DevicesItem({Key key, this.serial}) : super(key: key);
+  const DevicesItem({Key key, this.serial, this.onTap}) : super(key: key);
   // 可能是ip地址可能是设备编号
   final String serial;
+  final void Function() onTap;
 
   @override
   _DevicesItemState createState() => _DevicesItemState();
@@ -16,58 +20,51 @@ class DevicesItem extends StatefulWidget {
 
 class _DevicesItemState extends State<DevicesItem>
     with SingleTickerProviderStateMixin {
+  String _title;
   AnimationController animationController;
   Color proColor = Colors.blue;
   Animation<double> shadow;
   double progress = 0;
-  DevicesInfo devicesInfo = DevicesInfo();
+  double progressMax = 1;
   // 当前在干嘛
   String curProcess = '';
 
-  final List<bool> _list = <bool>[];
   Future<void> getDeviceInfo() async {
-    // print('object');
-    // currentIp = ip.replaceAll(RegExp('\\s.*'), '');
-    curProcess = 'push jar中...';
-    setState(() {});
-    await NiProcess.exec(
-      'adb -s ${widget.serial} push /data/data/com.example.scrcpy_client/files/scrcpy-server.jar /data/local/tmp',
-    );
-    progress++;
-    curProcess = 'push jar中...';
-    setState(() {});
-    curProcess = '反向监听端口中...';
-    setState(() {});
-    ProcessResult result = await Process.run(
-      'sh',
-      [
-        '-c',
-        'export PATH=/data/data/com.example.scrcpy_client/files:\$PATH\n adb -s ${widget.serial} forward tcp:1234 localabstract:scrcpy\n'
-      ],
-      runInShell: false,
-      includeParentEnvironment: true,
-    );
-    print('result.stdout==>${result.stdout}');
-    print('result.stderr==>${result.stderr}');
-    // return;
-    progress++;
     for (final String key in DevicesInfo.shellApi.keys) {
-      curProcess = '获取$key信息中...';
-      setState(() {});
-      Future<void>.delayed(const Duration(milliseconds: 600), () {
-        NiProcess.exit();
-      });
-      final String value = await NiProcess.exec(
-          'adb -s ${widget.serial} shell getprop ${DevicesInfo.shellApi[key]}\n');
-      devicesInfo.setValue(key, value);
+      if (!Config.devicesMap.containsKey(widget.serial)) {
+        curProcess = '获取$key信息中...';
+        if (mounted) {
+          setState(() {});
+        }
+
+        final String value = (await Process.run(
+          'sh',
+          [
+            '-c',
+            '''
+        adb -s ${widget.serial} shell getprop ${DevicesInfo.shellApi[key]}'''
+          ],
+        ))
+            .stdout
+            .toString()
+            .trim();
+        Config.devicesMap[widget.serial] = value;
+      }
       progress++;
-      if (progress == 8) {
+      if (progress == progressMax) {
         await animationController.forward();
         await animationController.reverse();
         proColor = Colors.green;
-        curProcess = '完成';
+        curProcess = '';
+        if (mounted) {
+          setState(() {});
+        }
+      }
+      if (mounted) {
         setState(() {});
       }
+    }
+    if (mounted) {
       setState(() {});
     }
     // for (final String str in deviceStat) {
@@ -80,13 +77,12 @@ class _DevicesItemState extends State<DevicesItem>
     //     _list.add(false);
     //   // setState(() {});
     // }
-    print(_list);
+    // print(_list);
   }
 
   @override
   void initState() {
     super.initState();
-    getDeviceInfo();
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(
@@ -103,42 +99,27 @@ class _DevicesItemState extends State<DevicesItem>
       // }
       setState(() {});
     });
-    // animationController.forward();
+    isRemoteDevices();
+    getDeviceInfo();
   }
 
-  Future<void> getDevicesMsg() {}
+  bool check = false;
+  bool isRemoteDevices() {
+    RegExp regExp = RegExp(
+        '((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
+    print(regExp.hasMatch(widget.serial));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (Config.devicesMap.containsKey(widget.serial))
+      _title = Config.devicesMap[widget.serial];
+    else {
+      _title = widget.serial;
+    }
     return InkWell(
-      onTap: () async {
-        final String function = '''
-                function adbRemote(){
-                  su -c '
-                  echo  -e "\\033[1;34m推送投屏jar...\n\\033[0m"
-                  ${EnvirPath.binPath}/adb -s ${widget.serial} push ${EnvirPath.binPath}/scrcpy-server.jar /data/local/tmp
-                  echo  -e "\\033[1;34m监听端口\\033[0m"
-                  ${EnvirPath.binPath}/adb -s ${widget.serial} forward tcp:1234 localabstract:scrcpy
-                  echo  -e "\\033[1;34m启动投屏\\033[0m"
-                  ${EnvirPath.binPath}/adb -s ${widget.serial} shell 'CLASSPATH=/data/local/tmp/scrcpy-server.jar app_process / com.genymobile.scrcpy.Server 1.12.1 0 8000000 0 true - false true'
-                  sleep 0.5
-                  '
-                }
-                ''';
-        // Process.run('scrcpy', ['-s', '${widget.serial}']);
-        NiProcess.exec(
-            "adb -s ${widget.serial} shell 'CLASSPATH=/data/local/tmp/scrcpy-server.jar app_process / com.genymobile.scrcpy.Server 1.12.1 0 8000000 0 true - false true'");
-        // final NitermController controller = NitermController();
-        // await controller.defineTermFunc(function);
-        // controller.exec('adbRemote');
-        // // TermUtils.openTerm(
-        // //   context: context,
-        // //   controller: controller,
-        // //   exec: 'adbRemote',
-        // // );
-        await Future<void>.delayed(
-          const Duration(seconds: 2),
-        );
-      },
+      onTap: widget.onTap,
+      borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       child: Container(
         // decoration: BoxDecoration(
         //   gradient: LinearGradient(colors: [Colors.green.withOpacity(0.2),Colors.green.withOpacity(0.6)])
@@ -159,49 +140,61 @@ class _DevicesItemState extends State<DevicesItem>
                     Row(
                       children: [
                         Container(
-                          height: Dimens.gap_dp24,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.deepPurple,
+                          ),
+                          height: Dimens.gap_dp8,
                           width: Dimens.gap_dp8,
-                          color: Colors.purple,
                         ),
                         SizedBox(
                           width: Dimens.gap_dp4,
                         ),
                         Text(
-                          widget.serial,
+                          _title,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        IconButton(
+                          tooltip: '点开连接',
+                          icon: Icon(Icons.clear),
+                          onPressed: () async {
+                            Provider.of<ProcessState>(context).clear();
+                            final ProcessResult result = await Process.run(
+                              'sh',
+                              [
+                                '-c',
+                                '''
+                        adb disconnect ${widget.serial}
+                        '''
+                              ],
+                            );
+                            String value = result.stdout.toString().trim();
+                            value += result.stderr.toString().trim();
+                            print(value);
+                            Provider.of<ProcessState>(context).appendOut(value);
+                          },
+                        )
                       ],
                     ),
                     Row(
                       children: [
                         Text(
-                          '$curProcess',
+                          curProcess,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
                         ),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(Dimens.gap_dp24),
-                          onTap: () {
-                            print(devicesInfo.devicesInfo);
-                            showDialog<void>(
-                              context: context,
-                              child: DevicesInfoDialog(
-                                devicesInfo: devicesInfo,
-                              ),
-                            );
+                        Radio<String>(
+                          value: widget.serial,
+                          groupValue: Config.curDevicesSerial,
+                          onChanged: (_) {
+                            Config.curDevicesSerial = widget.serial;
+                            setState(() {});
                           },
-                          child: SizedBox(
-                            width: Dimens.gap_dp48,
-                            height: Dimens.gap_dp48,
-                            child: Icon(
-                              Icons.check_circle_outline,
-                            ),
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ],
@@ -229,7 +222,7 @@ class _DevicesItemState extends State<DevicesItem>
                     borderRadius: BorderRadius.circular(16),
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(proColor),
-                      value: progress / 8,
+                      value: progress / progressMax,
                     ),
                   ),
                 ),
@@ -244,39 +237,40 @@ class _DevicesItemState extends State<DevicesItem>
 
 class DevicesInfo {
   // 架构
-  String get abi => devicesInfo['架构'];
+  String get abi => _devicesInfo['架构'];
   // 芯片
-  String get hardware => devicesInfo['芯片'];
+  String get hardware => _devicesInfo['芯片'];
   // Android版本
-  String get version => devicesInfo['Android版本'];
+  String get version => _devicesInfo['Android版本'];
   // 品牌
-  String get manufacturer => devicesInfo['品牌'];
+  String get manufacturer => _devicesInfo['品牌'];
   // 设备代号
-  String get device => devicesInfo['设备代号'];
+  String get device => _devicesInfo['设备代号'];
   // 型号
-  String get model => devicesInfo['型号'];
-  Map<String, String> devicesInfo = {};
+  String get model => _devicesInfo['型号'];
+  final Map<String, String> _devicesInfo = {};
+  Map get devicesInfo => _devicesInfo;
   static Map<String, String> shellApi = <String, String>{
-    '架构': 'ro.product.cpu.abi',
-    '芯片': 'ro.boot.hardware',
-    'Android版本': 'ro.build.version.release',
-    '品牌': 'ro.product.manufacturer',
-    '设备代号': 'ro.product.device',
+    // '架构': 'ro.product.cpu.abi',
+    // '芯片': 'ro.boot.hardware',
+    // 'Android版本': 'ro.build.version.release',
+    // '品牌': 'ro.product.manufacturer',
+    // '设备代号': 'ro.product.device',
     '型号': 'ro.product.model',
   };
-  List<String> deviceStat = <String>[
+  final List<String> _deviceStat = <String>[
     'show_touches',
     'pointer_location',
   ];
   void setValue(String key, String value) {
-    devicesInfo[key] = value;
+    _devicesInfo[key] = value;
   }
 
   String getValue(
     String key,
   ) {
-    if (devicesInfo.containsKey(key)) {
-      return devicesInfo[key];
+    if (_devicesInfo.containsKey(key)) {
+      return _devicesInfo[key];
     }
     return '';
   }
@@ -296,7 +290,7 @@ class DevicesInfoDialog extends StatelessWidget {
         child: Material(
           borderRadius: BorderRadius.circular(16),
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 8,
               vertical: 16,
             ),

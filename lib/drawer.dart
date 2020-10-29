@@ -1,6 +1,10 @@
+import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 
 class DrawerPage extends StatefulWidget {
+  const DrawerPage({Key key, this.onChange}) : super(key: key);
+  final void Function(String key) onChange;
+
   @override
   _DrawerPageState createState() => _DrawerPageState();
 }
@@ -12,12 +16,21 @@ class _DrawerPageState extends State<DrawerPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 80,
+          Icon(
+            Icons.adb,
+            size: Dimens.setWidth(100),
           ),
           _DrawerItem(
             title: '概况',
-            onTap: () {},
+            onTap: () {
+              widget.onChange?.call('main');
+            },
+          ),
+          _DrawerItem(
+            title: '安装到系统',
+            onTap: () {
+              widget.onChange?.call('main');
+            },
           ),
           _DrawerItem(
             title: '当前设备ip',
@@ -29,19 +42,9 @@ class _DrawerPageState extends State<DrawerPage> {
           ),
           _DrawerItem(
             title: '执行自定义命令',
-            onTap: () {},
-          ),
-          _DrawerItem(
-            title: '连接局域网设备',
-            onTap: () {},
-          ),
-          _DrawerItem(
-            title: '上传/下载文件',
-            onTap: () {},
-          ),
-          _DrawerItem(
-            title: '向设备安装apk',
-            onTap: () {},
+            onTap: () {
+              widget.onChange?.call('exec-cmd');
+            },
           ),
         ],
       ),
@@ -67,8 +70,8 @@ class _DrawerItem extends StatelessWidget {
             ),
             child: Text(
               title,
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: Dimens.font_sp14,
                 fontWeight: FontWeight.bold,
               ),
             ),

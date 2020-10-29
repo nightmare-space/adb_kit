@@ -20,7 +20,6 @@ class _MaterialClipRRectState extends State<MaterialClipRRect> {
           isOnTap = false;
           setState(() {});
           if (widget.onTap != null) {
-            print('按下');
             widget.onTap();
           }
         },

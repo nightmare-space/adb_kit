@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProcessPage extends StatefulWidget {
+  const ProcessPage({Key key, this.height = 400}) : super(key: key);
+  final double height;
   @override
   _ProcessPageState createState() => _ProcessPageState();
 }
@@ -41,7 +43,7 @@ class _ProcessPageState extends State<ProcessPage> {
     final ProcessState processState = Provider.of<ProcessState>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 300,
+      height: Dimens.setWidth(widget.height),
       decoration: const BoxDecoration(
         color: Colors.transparent,
       ),
@@ -56,11 +58,10 @@ class _ProcessPageState extends State<ProcessPage> {
             ),
           ),
           width: MediaQuery.of(context).size.width,
-          height: Dimens.setWidth(240),
           child: Scrollbar(
             child: CustomList(
               child: Text(
-                processState.output == '' ? '等待刷入' : processState.output.trim(),
+                processState.output == '' ? '等待输入' : processState.output.trim(),
                 style: TextStyle(
                   fontSize: Dimens.font_sp18,
                   fontWeight: FontWeight.bold,

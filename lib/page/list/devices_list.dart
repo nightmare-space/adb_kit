@@ -1,3 +1,5 @@
+import 'package:adb_tool/page/developer_tool.dart';
+import 'package:adb_tool/page/devices_item.dart';
 import 'package:adb_tool/utils/custom_process.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +12,12 @@ class _DevicesListState extends State<DevicesList> {
   @override
   void initState() {
     super.initState();
-
     getDevices();
   }
 
   List<String> generate(List<String> pre) {
-    List<String> tmp = [];
-    for (String s in pre) {
+    final List<String> tmp = [];
+    for (final String s in pre) {
       // print('s====>$s');
       final String devicesEntity = s.split(RegExp('\\s+')).first;
       // print(devicesEntity.hashCode);
@@ -33,7 +34,11 @@ class _DevicesListState extends State<DevicesList> {
       // 说明adb服务开启了
       if (out.startsWith('List of devices')) {
         final List<String> tmp = out.split('\n')..removeAt(0);
+        devicesEntitys.clear();
+        setState(() {});
+        // await Future<void>.delayed(Duration(milliseconds: 300));
         devicesEntitys = generate(tmp);
+        // print('devicesEntitys->${devicesEntitys}');
         setState(() {});
         // for(final devicesEntity in devicesEntitys){
         //   bool containes=false;
@@ -55,7 +60,7 @@ class _DevicesListState extends State<DevicesList> {
         // print('------------------');
         // print(tmp);
       }
-      await Future<void>.delayed(const Duration(milliseconds: 50), () {});
+      await Future<void>.delayed(const Duration(milliseconds: 200), () {});
     }
   }
 
@@ -68,6 +73,27 @@ class _DevicesListState extends State<DevicesList> {
             '未发现设备',
             style: TextStyle(color: Colors.grey),
           ),
+        for (String devicesEntity in devicesEntitys)
+          DevicesItem(
+            onTap: () {
+              Navigator.of(context).push<void>(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return DeveloperTool(
+                      serial: devicesEntity,
+                    );
+                  },
+                ),
+              );
+            },
+            serial: devicesEntity,
+          ),
+        // const DevicesItem(
+        //   serial: '192.168.43.1:5555',
+        // ),
+        // const DevicesItem(
+        //   serial: '192.168.43.209:5555',
+        // ),
       ],
     );
   }
