@@ -153,7 +153,7 @@ class _DownloadFileState extends State<DownloadFile>
                           ),
                         ),
                         ConstrainedBox(
-                          constraints: BoxConstraints(
+                          constraints: const BoxConstraints(
                             maxHeight: 100,
                           ),
                           // height: MediaQuery.of(context).size.height * 3 / 4,

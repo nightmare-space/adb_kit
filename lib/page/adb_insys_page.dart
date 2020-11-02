@@ -41,11 +41,11 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
-                  children: [
-                    const ItemHeader(
+                  children: const <Widget>[
+                    ItemHeader(
                       color: YanToolColors.accentColor,
                     ),
-                    const Text(
+                    Text(
                       '安装到系统(需要root)',
                       style: TextStyle(
                         fontSize: 16.0,
@@ -54,7 +54,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     ),
                   ],
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.center,
                   child: Text(
                     '请选择安装路径',
@@ -64,14 +64,14 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Text(
                             binPath,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
@@ -129,7 +129,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
             ),
           ),
           Align(
-            alignment: Alignment(0, 0.5),
+            alignment: const Alignment(0, 0.5),
             child: SizedBox(
               height: Dimens.gap_dp52,
               child: ItemButton(

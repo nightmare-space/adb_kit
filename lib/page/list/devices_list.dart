@@ -10,14 +10,19 @@ class DevicesEntity {
   // 连接的状态
   final String stat;
   @override
-  bool operator ==(other) {
+  bool operator ==(dynamic other) {
     // 判断是否是非
     if (other is! DevicesEntity) {
       return false;
     }
-    final DevicesEntity devicesEntity = other;
-    return serial == devicesEntity.serial;
+    if (other is DevicesEntity) {
+      final DevicesEntity devicesEntity = other;
+      return serial == devicesEntity.serial;
+    }
   }
+
+  @override
+  int get hashCode => serial.hashCode;
 }
 
 class DevicesList extends StatefulWidget {
@@ -26,7 +31,7 @@ class DevicesList extends StatefulWidget {
 }
 
 class _DevicesListState extends State<DevicesList> {
-  List<DevicesEntity> devicesEntitys = [DevicesEntity('7919c2f1', 'stat')];
+  List<DevicesEntity> devicesEntitys = [];
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   @override
   void initState() {
@@ -43,9 +48,8 @@ class _DevicesListState extends State<DevicesList> {
 
   Widget _buildItem(DevicesEntity devicesEntity, Animation _animation) {
     return SlideTransition(
-      position: _animation
-          .drive(CurveTween(curve: Curves.easeIn))
-          .drive(Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))),
+      position: _animation.drive(CurveTween(curve: Curves.easeIn)).drive(
+          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))),
       child: DevicesItem(
         onTap: () {
           Navigator.of(
@@ -88,24 +92,24 @@ class _DevicesListState extends State<DevicesList> {
             // devicesEntitys.add(devicesEntity);
           }
         }
-        print('addressList===>${addressList}');
+        print('addressList===>$addressList');
         int length = devicesEntitys.length;
         int curIndex = 0;
         for (; curIndex < length; curIndex++) {
           if (!addressList.contains(devicesEntitys[curIndex].serial)) {
             print('要删除的====>${devicesEntitys[curIndex].serial}');
-            DevicesEntity devicesEntity = devicesEntitys[curIndex];
+            final DevicesEntity devicesEntity = devicesEntitys[curIndex];
             _listKey.currentState.removeItem(
               curIndex,
               (context, animation) => _buildItem(
                 devicesEntity,
                 animation,
               ),
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
             );
 
             devicesEntitys.removeAt(curIndex);
-            Future.delayed(Duration(milliseconds: 300), () {
+            Future.delayed(const Duration(milliseconds: 300), () {
               setState(() {});
             });
             // setState(() {});
@@ -113,7 +117,7 @@ class _DevicesListState extends State<DevicesList> {
             length--;
           }
         }
-        for (DevicesEntity devicesEntity in devicesEntitys) {
+        for (final DevicesEntity devicesEntity in devicesEntitys) {
           print(devicesEntity.serial);
         }
         // devicesEntitys.removeWhere((element) {
@@ -164,7 +168,7 @@ class _DevicesListState extends State<DevicesList> {
         _index,
         (context, animation) =>
             _buildItem(DevicesEntity('7919c2f1', 'stat'), animation),
-        duration: Duration(
+        duration: const Duration(
           seconds: 3,
         ));
     devicesEntitys.removeAt(_index);
@@ -184,7 +188,7 @@ class _DevicesListState extends State<DevicesList> {
           height: 48.0 * devicesEntitys.length,
           child: AnimatedList(
             shrinkWrap: false,
-            padding: EdgeInsets.only(top: 0),
+            padding: const EdgeInsets.only(top: 0),
             key: _listKey,
             initialItemCount: devicesEntitys.length,
             itemBuilder:

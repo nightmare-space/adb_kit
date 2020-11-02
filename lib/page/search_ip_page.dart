@@ -1,6 +1,5 @@
 // 这是 android 端才有的页面
 // 只有当 android 端作为热点的时候才行。
-import 'dart:math';
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/utils/platform_util.dart';
