@@ -1,15 +1,29 @@
+import 'dart:io';
+
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/utils/process_util.dart';
+import 'package:adb_tool/page/install_apk_page.dart.dart';
+import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
 
+import 'download_file.dart';
+import 'upload_file.dart';
+
 class DeveloperTool extends StatefulWidget {
-  const DeveloperTool({Key key, this.serial}) : super(key: key);
+  const DeveloperTool({Key key, this.serial, this.providerContext})
+      : super(key: key);
   final String serial;
+  final BuildContext providerContext;
   @override
   _DeveloperToolState createState() => _DeveloperToolState();
 }
 
 class _DeveloperToolState extends State<DeveloperTool> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,44 +55,202 @@ class _DeveloperToolState extends State<DeveloperTool> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          DeveloperItem(
-            serial: widget.serial,
-            title: '显示点按操作反馈',
-            putKey: 'show_touches',
-          ),
-          DeveloperItem(
-            serial: widget.serial,
-            title: '显示屏幕指针',
-            putKey: 'pointer_location',
-          ),
-          SizedBox(
-            height: Dimens.gap_dp48,
-            child: Text('上传文件'),
-          ),
-          SizedBox(
-            height: Dimens.gap_dp48,
-            child: Text('下载文件'),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: Dimens.gap_dp48,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: Dimens.gap_dp12,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            '设备序列号    ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          Text(
+                            widget.serial,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            _DeveloperItem(
+              serial: widget.serial,
+              title: '显示点按操作反馈',
+              putKey: 'show_touches',
+            ),
+            _DeveloperItem(
+              serial: widget.serial,
+              title: '显示屏幕指针',
+              putKey: 'pointer_location',
+            ),
+            _OpenRemoteDebug(
+              serial: widget.serial,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).push<void>(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return UploadFile(
+                        serial: widget.serial,
+                      );
+                    },
+                  ),
+                );
+              },
+              child: SizedBox(
+                height: Dimens.gap_dp48,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.gap_dp12,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '上传文件',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                showDialog<void>(
+                  context: context,
+                  child: DownloadFile(
+                    serial: widget.serial,
+                  ),
+                );
+              },
+              child: SizedBox(
+                height: Dimens.gap_dp48,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.gap_dp12,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '下载文件',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).push<void>(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return InstallApkPage(
+                        serial: widget.serial,
+                      );
+                    },
+                  ),
+                );
+              },
+              child: SizedBox(
+                height: Dimens.gap_dp48,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.gap_dp12,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '向设备安装apk',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            if (Config.scrcpyExist)
+              InkWell(
+                onTap: () {
+                  Process.run('scrcpy', ['-s', widget.serial]);
+                },
+                child: SizedBox(
+                  height: Dimens.gap_dp48,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Dimens.gap_dp12,
+                    ),
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '打开Scrcpy投屏',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class DeveloperItem extends StatefulWidget {
-  const DeveloperItem({Key key, this.title, this.serial, this.putKey})
-      : super(key: key);
-  final String title;
+class _OpenRemoteDebug extends StatefulWidget {
+  const _OpenRemoteDebug({
+    Key key,
+    this.serial,
+  }) : super(key: key);
   final String serial;
-  final String putKey;
   @override
-  _DeveloperItemState createState() => _DeveloperItemState();
+  __OpenRemoteDebugState createState() => __OpenRemoteDebugState();
 }
 
-class _DeveloperItemState extends State<DeveloperItem> {
+class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
   bool isCheck = false;
+  @override
+  void initState() {
+    super.initState();
+    initCheckState();
+  }
+
+  Future<void> initCheckState() async {
+    final String result = await exec(
+        'adb -s ${widget.serial} shell getprop service.adb.tcp.port');
+    print(result);
+    if (result == '5555') {
+      isCheck = true;
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -90,6 +262,110 @@ class _DeveloperItemState extends State<DeveloperItem> {
         width: MediaQuery.of(context).size.width,
         height: Dimens.gap_dp48,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      '为设备开启远程调试',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      isAddress(widget.serial) ? '(当前方式:远程)' : '(当前方式:usb)',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+                const Text(
+                  '无需root可让设备打开远程调试',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            Switch(
+              value: isCheck,
+              onChanged: (_) async {
+                isCheck = !isCheck;
+                final int value = isCheck ? 5555 : -1;
+                // String result = await exec(
+                //   'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
+                //   'adb -s ${widget.serial} shell stop adbd\n'
+                //   'adb -s ${widget.serial} shell start adbd\n',
+                // );
+                // print(result);
+                String result;
+                if (isCheck) {
+                  result = await exec(
+                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
+                    'adb -s ${widget.serial} tcpip 5555',
+                  );
+                } else {
+                  result = await exec(
+                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
+                    'adb -s ${widget.serial} usb',
+                  );
+                }
+                print(result);
+                setState(() {});
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DeveloperItem extends StatefulWidget {
+  const _DeveloperItem({Key key, this.title, this.serial, this.putKey})
+      : super(key: key);
+  final String title;
+  final String serial;
+  final String putKey;
+  @override
+  __DeveloperItemState createState() => __DeveloperItemState();
+}
+
+class __DeveloperItemState extends State<_DeveloperItem> {
+  bool isCheck = false;
+  @override
+  void initState() {
+    super.initState();
+    initCheckState();
+  }
+
+  Future<void> initCheckState() async {
+    final String result = await exec(
+        'adb -s ${widget.serial} shell settings get system ${widget.putKey}');
+    if (result == '1') {
+      isCheck = true;
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: Dimens.gap_dp12,
+        ),
+        width: MediaQuery.of(context).size.width,
+        height: Dimens.gap_dp48,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               widget.title,
@@ -101,7 +377,7 @@ class _DeveloperItemState extends State<DeveloperItem> {
               value: isCheck,
               onChanged: (_) {
                 isCheck = !isCheck;
-                int value = isCheck ? 1 : 0;
+                final int value = isCheck ? 1 : 0;
                 print(
                     'adb -s ${widget.serial} shell settings put system show_touches 1');
                 exec(

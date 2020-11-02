@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-
 // 自实现的Process基于dart:io库中的Process.start
 
 typedef ProcessCallBack = void Function(String output);
@@ -51,9 +49,9 @@ class NiProcess {
     // 初始化app的环境变量
     if (Platform.isAndroid) {
       isUseing = true;
-      _process.stdin.write(
-        'su\n',
-      );
+      // _process.stdin.write(
+      //   'su\n',
+      // );
       await Future<void>.delayed(const Duration(milliseconds: 300));
       _process.stdin.write(
         'export PATH=/data/data/$packageName/files:\$PATH\n',

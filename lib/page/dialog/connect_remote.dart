@@ -1,10 +1,6 @@
-import 'dart:io';
-
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/global/provider/process_state.dart';
-import 'package:adb_tool/utils/custom_process.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ConnectRemote extends StatefulWidget {
   @override
@@ -12,7 +8,8 @@ class ConnectRemote extends StatefulWidget {
 }
 
 class _ConnectRemoteState extends State<ConnectRemote> {
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController textEditingController =
+      TextEditingController(text: Config.historyIp);
 
   @override
   void initState() {
@@ -23,10 +20,11 @@ class _ConnectRemoteState extends State<ConnectRemote> {
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
-        height: 300,
+        height: Dimens.setWidth(156),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: Dimens.gap_dp8,
+            vertical: Dimens.gap_dp8,
           ),
           child: Column(
             children: [
@@ -42,11 +40,15 @@ class _ConnectRemoteState extends State<ConnectRemote> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                 child: TextField(
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                   controller: textEditingController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    fillColor: Colors.grey.withOpacity(0.4),
+                    fillColor: Colors.grey.withOpacity(0.2),
                     filled: true,
+                    labelText: '输入设备的 ip 地址',
                   ),
                 ),
               ),
@@ -54,10 +56,12 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                 alignment: Alignment.centerRight,
                 child: FlatButton(
                   onPressed: () async {
-                    Navigator.of(context)
-                        .pop('adb connect ${textEditingController.text}');
+                    Config.historyIp = textEditingController.text;
+                    Navigator.of(context).pop(
+                      'adb connect ${textEditingController.text}',
+                    );
                   },
-                  child: Text('连接'),
+                  child: const Text('连接'),
                 ),
               ),
             ],

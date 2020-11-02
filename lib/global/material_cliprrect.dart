@@ -34,7 +34,7 @@ class _MaterialClipRRectState extends State<MaterialClipRRect> {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
             boxShadow: <BoxShadow>[
@@ -47,7 +47,7 @@ class _MaterialClipRRectState extends State<MaterialClipRRect> {
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(12),
             ),
             child: widget.child,

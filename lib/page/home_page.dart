@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/material_cliprrect.dart';
-import 'package:adb_tool/global/provider/process_state.dart';
-import 'package:adb_tool/utils/custom_process.dart';
+import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/widget/fullheight_listview.dart';
 import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'dialog/connect_remote.dart';
@@ -21,24 +20,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String binPath = '/system/bin';
-  String xbinPath = '/system/xbin';
-  String choosePath;
-
   @override
   void initState() {
     super.initState();
-    choosePath = binPath;
   }
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      context,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      allowFontScaling: false,
-    );
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8,
@@ -67,77 +55,6 @@ class _HomePageState extends State<HomePage> {
               ),
               child: DevicesList(),
             ),
-
-            // FlatButton(
-            //   onPressed: () {},
-            //   child: Text('开启服务'),
-            // ),
-            // FlatButton(
-            //   onPressed: null,
-            //   child: Text('重启 adb server'),
-            // ),
-            // FlatButton(
-            //   onPressed: null,
-            //   child: Text('打开 ADB 远程调试'),
-            // ),
-            // FlatButton(
-            //   onPressed: null,
-            //   child: Text('关闭 ADB 远程调试'),
-            // ),
-            // const FlatButton(
-            //   onPressed: null,
-            //   child: Text('向设备安装apk'),
-            // ),
-            // Row(
-            //   children: [
-            //     const ItemHeader(
-            //       color: YanToolColors.accentColor,
-            //     ),
-            //     const Text(
-            //       '安装到系统(需要root)',
-            //       style: TextStyle(
-            //         fontSize: 16.0,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // Row(
-            //   children: [
-            //     const Text(
-            //       '/system/bin',
-            //       style: TextStyle(
-            //         fontSize: 16.0,
-            //       ),
-            //     ),
-            //     Radio(
-            //       value: '/system/bin',
-            //       groupValue: choosePath,
-            //       onChanged: (String value) {
-            //         choosePath = value;
-            //         setState(() {});
-            //       },
-            //     ),
-            //   ],
-            // ),
-            // Row(
-            //   children: [
-            //     Text(
-            //       xbinPath,
-            //       style: const TextStyle(
-            //         fontSize: 16.0,
-            //       ),
-            //     ),
-            //     Radio(
-            //       value: xbinPath,
-            //       groupValue: choosePath,
-            //       onChanged: (String value) {
-            //         choosePath = value;
-            //         setState(() {});
-            //       },
-            //     ),
-            //   ],
-            // ),
             Row(
               children: [
                 ItemHeader(
@@ -160,42 +77,32 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ItemButton(
                   title: '开启服务',
-                  onTap: () {
+                  onTap: () async {
                     Provider.of<ProcessState>(context).clear();
-                    NiProcess.exec(
-                      'ad\n',
-                      getStderr: true,
-                      callback: (s) {
-                        print('ss======>$s');
-                        if (s.trim() == 'exitCode') {
-                          return;
-                        }
-                        Provider.of<ProcessState>(context).appendOut(s);
-                      },
-                    );
+                    const String cmd = 'adb start-server';
+                    final String result = await exec('echo $cmd\n$cmd');
+                    Provider.of<ProcessState>(context).appendOut(result);
                   },
                 ),
                 SizedBox(
                   width: Dimens.setWidth(108),
-                  child: const ItemButton(
+                  child: ItemButton(
                     title: '停止服务',
+                    onTap: () async {
+                      Provider.of<ProcessState>(context).clear();
+                      const String cmd = 'adb kill-server';
+                      final String result = await exec('echo $cmd\n$cmd');
+                      Provider.of<ProcessState>(context).appendOut(result);
+                    },
                   ),
                 ),
                 ItemButton(
                   title: '重启服务',
-                  onTap: () {
+                  onTap: () async {
                     Provider.of<ProcessState>(context).clear();
-                    NiProcess.exec(
-                      'adb kill-server\nadb server',
-                      getStderr: true,
-                      callback: (s) {
-                        print('ss======>$s');
-                        if (s.trim() == 'exitCode') {
-                          return;
-                        }
-                        Provider.of<ProcessState>(context).appendOut(s);
-                      },
-                    );
+                    const String cmd = 'adb kill-server\nadb start-server';
+                    final String result = await exec('echo $cmd\n$cmd\n');
+                    Provider.of<ProcessState>(context).appendOut(result);
                   },
                 ),
                 ItemButton(
@@ -205,50 +112,12 @@ class _HomePageState extends State<HomePage> {
                       context: context,
                       child: ConnectRemote(),
                     );
+                    if (cmd == null) {
+                      return;
+                    }
                     Provider.of<ProcessState>(context).clear();
-                    // print(map);
-                    // return;
-                    final ProcessResult result = await Process.run(
-                      'sh',
-                      [
-                        '-c',
-                        '''
-                        $cmd
-                        '''
-                      ],
-                      environment: PlatformUtil.environment(),
-                    );
-                    String value = result.stdout.toString().trim();
-                    value += result.stderr.toString().trim();
-                    print(value);
-                    Provider.of<ProcessState>(context).appendOut(value);
-                  },
-                ),
-                ItemButton(
-                  title: '上传文件',
-                  onTap: () {
-                    showDialog<void>(
-                      context: context,
-                      child: ConnectRemote(),
-                    );
-                  },
-                ),
-                ItemButton(
-                  title: '下载文件',
-                  onTap: () {
-                    showDialog<void>(
-                      context: context,
-                      child: ConnectRemote(),
-                    );
-                  },
-                ),
-                ItemButton(
-                  title: '安装apk',
-                  onTap: () {
-                    showDialog<void>(
-                      context: context,
-                      child: ConnectRemote(),
-                    );
+                    final String result = await exec('echo $cmd\n$cmd');
+                    Provider.of<ProcessState>(context).appendOut(result);
                   },
                 ),
               ],
@@ -304,7 +173,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            ProcessPage(),
+            const FullHeightListView(
+              child: ProcessPage(
+                height: 100,
+              ),
+            ),
           ],
         ),
       ),
@@ -322,7 +195,7 @@ class ItemButton extends StatelessWidget {
     return MaterialClipRRect(
       onTap: onTap,
       child: Container(
-        width: title.length * 22.0,
+        width: title.length * 14.0 + 32,
         decoration: const BoxDecoration(color: Colors.white),
         child: Center(
           child: Padding(

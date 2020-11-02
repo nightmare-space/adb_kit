@@ -1,17 +1,17 @@
-import 'dart:io';
-
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/config/envirpath.dart';
-import 'package:adb_tool/global/provider/process_state.dart';
-import 'package:adb_tool/utils/custom_process.dart';
+import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'list/devices_list.dart';
+
 class DevicesItem extends StatefulWidget {
-  const DevicesItem({Key key, this.serial, this.onTap}) : super(key: key);
+  const DevicesItem({Key key, this.devicesEntity, this.onTap})
+      : super(key: key);
   // 可能是ip地址可能是设备编号
-  final String serial;
+  final DevicesEntity devicesEntity;
   final void Function() onTap;
 
   @override
@@ -19,9 +19,10 @@ class DevicesItem extends StatefulWidget {
 }
 
 class _DevicesItemState extends State<DevicesItem>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   String _title;
   AnimationController animationController;
+  AnimationController progressAnimaCTL;
   Color proColor = Colors.blue;
   Animation<double> shadow;
   double progress = 0;
@@ -31,30 +32,25 @@ class _DevicesItemState extends State<DevicesItem>
 
   Future<void> getDeviceInfo() async {
     for (final String key in DevicesInfo.shellApi.keys) {
-      if (!Config.devicesMap.containsKey(widget.serial)) {
+      if (!Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
         curProcess = '获取$key信息中...';
         if (mounted) {
           setState(() {});
         }
 
-        final String value = (await Process.run(
-          'sh',
-          [
-            '-c',
-            '''
-        adb -s ${widget.serial} shell getprop ${DevicesInfo.shellApi[key]}'''
-          ],
-        ))
-            .stdout
-            .toString()
-            .trim();
-        Config.devicesMap[widget.serial] = value;
+        final String value = await exec(
+            'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}');
+        print('value->$value');
+
+        if (value.isNotEmpty && value.length <= 10)
+          Config.devicesMap[widget.devicesEntity.serial] = value;
       }
       progress++;
       if (progress == progressMax) {
-        await animationController.forward();
-        await animationController.reverse();
-        proColor = Colors.green;
+        await animationController?.forward();
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+        await animationController?.reverse();
+        proColor = Colors.blue;
         curProcess = '';
         if (mounted) {
           setState(() {});
@@ -70,7 +66,7 @@ class _DevicesItemState extends State<DevicesItem>
     // for (final String str in deviceStat) {
     //   // deviceInfo[key] =
     //   if (await NiProcess.exec(
-    //           'adb -s ${widget.serial} shell settings get system $str') ==
+    //           'adb -s ${widget.devicesEntity.serial} shell settings get system $str') ==
     //       '1')
     //     _list.add(true);
     //   else
@@ -89,6 +85,13 @@ class _DevicesItemState extends State<DevicesItem>
         milliseconds: 500,
       ),
     );
+    progressAnimaCTL = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 500,
+      ),
+    );
+    progressAnimaCTL.forward();
     shadow = Tween<double>(begin: 0, end: 1).animate(animationController);
     shadow.addListener(() {
       // if (animationController.isCompleted) {
@@ -99,26 +102,26 @@ class _DevicesItemState extends State<DevicesItem>
       // }
       setState(() {});
     });
-    isRemoteDevices();
     getDeviceInfo();
   }
 
   bool check = false;
-  bool isRemoteDevices() {
-    RegExp regExp = RegExp(
-        '((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
-    print(regExp.hasMatch(widget.serial));
+  @override
+  void dispose() {
+    animationController.dispose();
+    progressAnimaCTL.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Config.devicesMap.containsKey(widget.serial))
-      _title = Config.devicesMap[widget.serial];
-    else {
-      _title = widget.serial;
+    if (Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
+      // print('object');
+      _title = Config.devicesMap[widget.devicesEntity.serial];
+    } else {
+      _title = widget.devicesEntity.serial;
     }
     return InkWell(
-      onTap: widget.onTap,
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       child: Container(
         // decoration: BoxDecoration(
@@ -156,26 +159,29 @@ class _DevicesItemState extends State<DevicesItem>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        IconButton(
-                          tooltip: '点开连接',
-                          icon: Icon(Icons.clear),
-                          onPressed: () async {
-                            Provider.of<ProcessState>(context).clear();
-                            final ProcessResult result = await Process.run(
-                              'sh',
-                              [
-                                '-c',
-                                '''
-                        adb disconnect ${widget.serial}
-                        '''
-                              ],
-                            );
-                            String value = result.stdout.toString().trim();
-                            value += result.stderr.toString().trim();
-                            print(value);
-                            Provider.of<ProcessState>(context).appendOut(value);
-                          },
-                        )
+                        SizedBox(
+                          width: Dimens.gap_dp8,
+                        ),
+                        Text(
+                          widget.devicesEntity.stat,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        if (isAddress(widget.devicesEntity.serial))
+                          IconButton(
+                            tooltip: '断开连接',
+                            icon: const Icon(Icons.clear),
+                            onPressed: () async {
+                              Provider.of<ProcessState>(context).clear();
+                              final String result = await exec(
+                                  'adb disconnect ${widget.devicesEntity.serial}');
+                              Provider.of<ProcessState>(context).appendOut(
+                                result,
+                              );
+                            },
+                          )
                       ],
                     ),
                     Row(
@@ -187,14 +193,23 @@ class _DevicesItemState extends State<DevicesItem>
                             color: Colors.grey,
                           ),
                         ),
-                        Radio<String>(
-                          value: widget.serial,
-                          groupValue: Config.curDevicesSerial,
-                          onChanged: (_) {
-                            Config.curDevicesSerial = widget.serial;
-                            setState(() {});
-                          },
-                        )
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 18,
+                            color: Colors.black87,
+                          ),
+                          onPressed: widget.onTap,
+                        ),
+                        // Radio<String>(
+                        //   value: widget.devicesEntity.serial,
+                        //   groupValue: Config.curDevicesSerial,
+                        //   onChanged: (_) {
+                        //     Config.curDevicesSerial =
+                        //         widget.devicesEntity.serial;
+                        //     setState(() {});
+                        //   },
+                        // )
                       ],
                     ),
                   ],
@@ -222,7 +237,7 @@ class _DevicesItemState extends State<DevicesItem>
                     borderRadius: BorderRadius.circular(16),
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(proColor),
-                      value: progress / progressMax,
+                      value: progressAnimaCTL.value * progress / progressMax,
                     ),
                   ),
                 ),
@@ -258,10 +273,10 @@ class DevicesInfo {
     // '设备代号': 'ro.product.device',
     '型号': 'ro.product.model',
   };
-  final List<String> _deviceStat = <String>[
-    'show_touches',
-    'pointer_location',
-  ];
+  // final List<String> _deviceStat = <String>[
+  //   'show_touches',
+  //   'pointer_location',
+  // ];
   void setValue(String key, String value) {
     _devicesInfo[key] = value;
   }
