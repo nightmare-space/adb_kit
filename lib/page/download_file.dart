@@ -5,6 +5,7 @@ import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'process_page.dart';
 
@@ -96,7 +97,12 @@ class _DownloadFileState extends State<DownloadFile>
                               ),
                             ),
                             FlatButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final String text =
+                                    (await Clipboard.getData('text/plain'))
+                                        .text;
+                                devicesFilePathCTL.text = text;
+                              },
                               child: const Text('粘贴'),
                             )
                           ],
@@ -126,7 +132,12 @@ class _DownloadFileState extends State<DownloadFile>
                               ),
                             ),
                             FlatButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final String text =
+                                    (await Clipboard.getData('text/plain'))
+                                        .text;
+                                localFilePathCTL.text = text;
+                              },
                               child: const Text('粘贴'),
                             )
                           ],

@@ -7,7 +7,7 @@ class Config {
       kReleaseMode ? 'https://api2.bmob.cn/1' : 'https://api2.bmob.cn/1';
 
   static String dbPath = '/data/data/com.nightmare/databases/user.db';
-  static String packageName = 'com.example.adb_tool';
+  static String packageName = 'com.nightmare.adbtool';
   static String curDevicesSerial = '';
   static Map<String, String> devicesMap = {};
   static String historyIp = '';

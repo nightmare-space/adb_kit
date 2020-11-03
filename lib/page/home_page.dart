@@ -5,6 +5,7 @@ import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/material_cliprrect.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/fullheight_listview.dart';
+import 'package:adb_tool/utils/custom_process.dart';
 import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -122,57 +123,85 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Row(
-              children: [
-                ItemHeader(
-                  color: YanToolColors.candyColor[1],
-                ),
-                const Text(
-                  '安卓端命令(为本机执行的命令)',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+            if (Platform.isAndroid)
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      ItemHeader(
+                        color: YanToolColors.candyColor[1],
+                      ),
+                      const Text(
+                        '安卓端命令(为本机执行的命令)',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ItemButton(
-                  title: '打开远程调试',
-                  onTap: () async {
-                    Provider.of<ProcessState>(context).clear();
-                    final ProcessResult result = await Process.run(
-                      'sh',
-                      [
-                        '-c',
-                        '''
-                        adb -s ${Config.curDevicesSerial} tcpip 5555
-                        '''
-                      ],
-                    );
-                    String value = result.stdout.toString().trim();
-                    value += result.stderr.toString().trim();
-                    print(value);
-                    Provider.of<ProcessState>(context).appendOut(value);
-                    // NiProcess.exec(
-                    //   'adb tcpip 5555',
-                    //   getStderr: true,
-                    //   callback: (s) {
-                    //     print('ss======>$s');
-                    //     if (s.trim() == 'exitCode') {
-                    //       return;
-                    //     }
-                    //     Provider.of<ProcessState>(context).appendOut(s);
-                    //   },
-                    // );
-                  },
-                ),
-                const ItemButton(
-                  title: '关闭远程调试',
-                ),
-              ],
-            ),
+                  Row(
+                    children: [
+                      ItemButton(
+                        title: '打开远程调试',
+                        onTap: () async {
+                          NiProcess.exec('su');
+                          Provider.of<ProcessState>(context).clear();
+                          final List<String> cmds = [
+                            'setprop service.adb.tcp.port 5555',
+                            'stop adbd',
+                            'start adbd',
+                          ];
+                          String execCmd = '';
+                          for (final String cmd in cmds) {
+                            execCmd += 'echo $cmd\n$cmd\n';
+                          }
+                          print(execCmd);
+                          NiProcess.exec(
+                            execCmd,
+                            getStderr: true,
+                            callback: (s) {
+                              print('ss======>$s');
+                              if (s.trim() == 'exitCode') {
+                                return;
+                              }
+                              Provider.of<ProcessState>(context).appendOut(s);
+                            },
+                          );
+                        },
+                      ),
+                      ItemButton(
+                        onTap: () async {
+                          NiProcess.exec('su');
+                          Provider.of<ProcessState>(context).clear();
+                          final List<String> cmds = [
+                            'setprop service.adb.tcp.port -1',
+                            'stop adbd',
+                            'start adbd',
+                          ];
+                          String execCmd = '';
+                          for (final String cmd in cmds) {
+                            execCmd += 'echo $cmd\n$cmd\n';
+                          }
+                          print(execCmd);
+                          NiProcess.exec(
+                            execCmd,
+                            getStderr: true,
+                            callback: (s) {
+                              print('ss======>$s');
+                              if (s.trim() == 'exitCode') {
+                                return;
+                              }
+                              Provider.of<ProcessState>(context).appendOut(s);
+                            },
+                          );
+                        },
+                        title: '关闭远程调试',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             const FullHeightListView(
               child: ProcessPage(
                 height: 100,

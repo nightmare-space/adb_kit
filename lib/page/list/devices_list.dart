@@ -8,7 +8,7 @@ class DevicesEntity {
   // 有可能是ip或者设备序列号
   final String serial;
   // 连接的状态
-  final String stat;
+  String stat;
   @override
   bool operator ==(dynamic other) {
     // 判断是否是非
@@ -19,6 +19,12 @@ class DevicesEntity {
       final DevicesEntity devicesEntity = other;
       return serial == devicesEntity.serial;
     }
+    return false;
+  }
+
+  @override
+  String toString() {
+    return 'serial:$serial  stat:$stat';
   }
 
   @override
@@ -78,7 +84,7 @@ class _DevicesListState extends State<DevicesList> {
       if (out.startsWith('List of devices')) {
         final List<String> tmp = out.split('\n')..removeAt(0);
         final List<String> addressList = [];
-        print(tmp);
+        // print(tmp);
         // devicesEntitys.clear();
         for (final String str in tmp) {
           // print('s====>$s');
@@ -87,12 +93,26 @@ class _DevicesListState extends State<DevicesList> {
               DevicesEntity(listTmp.first, listTmp.last);
           // print(devicesEntity.hashCode);
           addressList.add(listTmp.first);
+          // 如果devicesEntitys没有这个设备，就需要更新
           if (!devicesEntitys.contains(devicesEntity)) {
             _addItem(devicesEntity);
             // devicesEntitys.add(devicesEntity);
+          } else {
+            // 更新数据
+            devicesEntitys.forEach((element) {
+              if (element == devicesEntity) {
+                // 找到元素
+                if (element.stat != devicesEntity.stat) {
+                  element.stat = devicesEntity.stat;
+                  setState(() {});
+                }
+                // print('pre->$element');
+                // print('devicesEntity->$devicesEntity');
+              }
+            });
           }
         }
-        print('addressList===>$addressList');
+        // print('addressList===>$addressList');
         int length = devicesEntitys.length;
         int curIndex = 0;
         for (; curIndex < length; curIndex++) {
@@ -118,36 +138,8 @@ class _DevicesListState extends State<DevicesList> {
           }
         }
         for (final DevicesEntity devicesEntity in devicesEntitys) {
-          print(devicesEntity.serial);
+          // print(devicesEntity.serial);
         }
-        // devicesEntitys.removeWhere((element) {
-        //   bool contains = addressList.contains(element.serial);
-        //   _removeItem(element);
-        //   return !contains;
-        // });
-        // await Future<void>.delayed(Duration(milliseconds: 300));
-        // devicesEntitys = generate(tmp);
-        // print('devicesEntitys->${devicesEntitys}');
-
-        // for(final devicesEntity in devicesEntitys){
-        //   bool containes=false;
-        //   for(final s in tmp){
-        //     if(s.startsWith(devicesEntity.ip)){
-        //       containes=true;
-        //       break;
-        //     }
-        //   }
-        //   print(containes);
-        //   print(devicesEntity.ip);
-        //   if(!containes){
-        //     devicesEntitys.remove(devicesEntity);
-        //     setState(() {
-
-        //     });
-        //   }
-        // }
-        // print('------------------');
-        // print(tmp);
       }
       await Future<void>.delayed(const Duration(milliseconds: 50), () {});
     }

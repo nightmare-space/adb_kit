@@ -77,7 +77,7 @@ class PlatformUtil {
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isAndroid) {
       // 只有安卓需要
-      map['PATH'] = '/data/data/com.example.adb_tool/files:' + map['PATH'];
+      map['PATH'] = '/data/data/com.nightmare.adbtool/files:' + map['PATH'];
     }
     return map;
   }

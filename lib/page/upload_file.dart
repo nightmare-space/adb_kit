@@ -132,7 +132,12 @@ class _UploadFileState extends State<UploadFile>
                               ),
                             ),
                             FlatButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final String text =
+                                    (await Clipboard.getData('text/plain'))
+                                        .text;
+                                localFilePathCTL.text = text;
+                              },
                               child: const Text('粘贴'),
                             )
                           ],

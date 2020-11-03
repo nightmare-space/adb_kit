@@ -1,4 +1,4 @@
-package com.example.adb_tool
+package com.nightmare.adbtool
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -13,7 +13,7 @@ class NiProcess {
   // 确保异步安全，这是一种极low的方式
   static bool isUseing = false;
   // 包名
-  static String packageName = 'com.example.adb_tool';
+  static String packageName = 'com.nightmare.adbtool';
   static Process get process => _process;
   static String get shPath => () {
         switch (Platform.operatingSystem) {

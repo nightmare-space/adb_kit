@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 
@@ -22,27 +24,29 @@ class _DrawerPageState extends State<DrawerPage> {
               size: Dimens.setWidth(100),
             ),
             _DrawerItem(
-              title: '概况',
+              title: '主页',
               onTap: () {
                 widget.onChange?.call('main');
               },
             ),
-            _DrawerItem(
-              title: '安装到系统',
-              onTap: () {
-                widget.onChange?.call('install-adb');
-              },
-            ),
-            _DrawerItem(
-              title: '当前设备ip',
-              onTap: () {},
-            ),
-            _DrawerItem(
-              title: '查看连接到本机的ip',
-              onTap: () {
-                widget.onChange?.call('search-ip');
-              },
-            ),
+            if (Platform.isAndroid)
+              _DrawerItem(
+                title: '安装到系统',
+                onTap: () {
+                  widget.onChange?.call('install-adb');
+                },
+              ),
+            // _DrawerItem(
+            //   title: '当前设备ip',
+            //   onTap: () {},
+            // ),
+            if (Platform.isAndroid)
+              _DrawerItem(
+                title: '查看连接到本机的ip',
+                onTap: () {
+                  widget.onChange?.call('search-ip');
+                },
+              ),
             _DrawerItem(
               title: '执行自定义命令',
               onTap: () {

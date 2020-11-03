@@ -58,7 +58,7 @@ class _AdbToolState extends State<AdbTool> {
             height: MediaQuery.of(context).size.height,
             allowFontScaling: false,
           );
-          return _AdbTool();
+          // return _AdbTool();
           switch (snapshot.connectionState) {
             case ConnectionState.none:
               print('还没有开始网络请求');

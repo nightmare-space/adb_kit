@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
+import 'package:adb_tool/main.dart';
 import 'package:adb_tool/utils/platform_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,11 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
       print(urlPath);
       await downloadFile(urlPath);
     }
+    Navigator.of(context).pushReplacement<MaterialPageRoute, void>(
+      MaterialPageRoute(builder: (_) {
+        return AdbTool();
+      }),
+    );
     widget.callback?.call();
   }
 
