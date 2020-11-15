@@ -1,8 +1,8 @@
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
-import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'list/devices_list.dart';

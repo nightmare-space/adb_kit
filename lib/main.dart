@@ -2,6 +2,7 @@ import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
 import 'config/config.dart';
@@ -13,7 +14,6 @@ import 'page/adb_insys_page.dart';
 import 'page/exec_cmd_page.dart';
 import 'page/home_page.dart';
 import 'page/search_ip_page.dart';
-import 'utils/platform_util.dart';
 
 void main() {
   runApp(
@@ -51,7 +51,7 @@ class _AdbToolState extends State<AdbTool> {
       ],
       child: FutureBuilder<bool>(
         future: PlatformUtil.cmdIsExist('adb'),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           ScreenUtil.init(
             context,
             width: MediaQuery.of(context).size.width,
@@ -126,14 +126,14 @@ class __AdbToolState extends State<_AdbTool> {
             ),
           ),
           leading: Builder(
-            builder: (_) {
+            builder: (BuildContext context) {
               return IconButton(
                 icon: const Icon(
                   Icons.menu,
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Scaffold.of(_).openDrawer();
+                  Scaffold.of(context).openDrawer();
                 },
               );
             },

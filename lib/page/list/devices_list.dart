@@ -1,7 +1,7 @@
 import 'package:adb_tool/page/developer_tool.dart';
 import 'package:adb_tool/page/devices_item.dart';
-import 'package:adb_tool/utils/custom_process.dart';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);

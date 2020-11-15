@@ -4,10 +4,10 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/main.dart';
-import 'package:adb_tool/utils/platform_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:global_repository/global_repository.dart';
 
 class AdbInstallPage extends StatefulWidget {
   @override

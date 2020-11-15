@@ -1,5 +1,5 @@
-import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/foundation.dart';
+import 'package:global_repository/global_repository.dart';
 
 class Config {
   Config._();

@@ -1,6 +1,6 @@
 import 'package:adb_tool/global/provider/process_info.dart';
-import 'package:adb_tool/utils/platform_util.dart';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 
 class Global {
   // 工厂模式
