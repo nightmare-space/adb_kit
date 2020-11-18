@@ -199,10 +199,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-            const FullHeightListView(
-              child: ProcessPage(
-                height: 100,
-              ),
+            ProcessPage(
+              height: 100,
             ),
           ],
         ),
