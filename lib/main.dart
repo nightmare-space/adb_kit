@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +40,21 @@ class AdbTool extends StatefulWidget {
 }
 
 class _AdbToolState extends State<AdbTool> {
+  @override
+  void initState() {
+    super.initState();
+    print(
+      'PlatformUtil.environment() -> ${PlatformUtil.environment()['PATH']}',
+    );
+    init();
+  }
+
+  Future<void> init() async {
+    print('${PlatformUtil.getBinaryPath()}');
+    print(
+        "PlatformUtil.cmdIsExist('adb') -> ${await PlatformUtil.cmdIsExist('adb')}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
