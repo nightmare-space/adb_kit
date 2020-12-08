@@ -16,6 +16,17 @@ class AdbInstallPage extends StatefulWidget {
 
 class _AdbInstallPageState extends State<AdbInstallPage> {
   @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    String result = await NiProcess.exec('echo \$PATH');
+    print('result->$result');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -54,20 +65,24 @@ class _CheckBusybox extends StatefulWidget {
 class __CheckBusyboxState extends State<_CheckBusybox> {
   final Dio dio = Dio();
   Response<String> response;
-  final String filesPath = PlatformUtil.getFilsePath(Config.packageName);
-  List<String> adbFiles = [
-    'http://nightmare.fun/File/MToolkit/android/adb/adb',
-    'http://nightmare.fun/File/MToolkit/android/adb/adb.bin'
+  final String filesPath = PlatformUtil.getBinaryPath();
+  List<String> androidAdbFiles = [
+    'https://39.107.248.176/File/MToolkit/android/adb/adb',
+    'https://39.107.248.176/File/MToolkit/android/adb/adb.bin'
+  ];
+  List<String> macAdbFiles = [
+    'https://nightmare.fun/File/MToolkit/mac/adb.zip',
   ];
   double busyboxDownratio = 0.0;
   String downloadName = '';
   Future<void> downloadFile(String urlPath) async {
+    print(urlPath);
     response = await dio.head<String>(urlPath);
     final int fullByte = int.tryParse(
       response.headers.value('content-length'),
     ); //得到服务器文件返回的字节大小
     // final String _human = getFileSize(_fullByte); //拿到可读的文件大小返回给用户
-    // print('_human======$_human');
+    print('fullByte======$fullByte');
     final String savePath =
         filesPath + Platform.pathSeparator + PlatformUtil.getFileName(urlPath);
     updateBusyboxProgress(fullByte, savePath);
@@ -75,7 +90,20 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
       urlPath,
       savePath,
     );
-    Process.runSync('chmod', <String>['0777', savePath]);
+    Process.runSync('chmod', <String>[
+      '0777',
+      savePath,
+    ]);
+    installModule(savePath);
+  }
+
+  void installModule(String modulePath) {
+    Process.runSync('sh', <String>[
+      '-c',
+      'unzip -o $modulePath -d ${PlatformUtil.getTmpPath()}/ \n' +
+          'mv ${PlatformUtil.getTmpPath()}/* ${PlatformUtil.getBinaryPath()}/ \n' +
+          'chmod 0777 ${PlatformUtil.getBinaryPath()}/* \n',
+    ]);
   }
 
   Future<void> updateBusyboxProgress(int fullByte, String filePath) async {
@@ -95,10 +123,9 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
   }
 
   Future<void> execDownload() async {
-    for (final String urlPath in adbFiles) {
+    for (final String urlPath in macAdbFiles) {
       downloadName = PlatformUtil.getFileName(urlPath);
       setState(() {});
-      print(urlPath);
       await downloadFile(urlPath);
     }
     Navigator.of(context).pushReplacement<MaterialPageRoute, void>(
