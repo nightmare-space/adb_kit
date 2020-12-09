@@ -1,4 +1,6 @@
 // 有动画
+import 'dart:io';
+
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
@@ -146,6 +148,8 @@ class _DownloadFileState extends State<DownloadFile>
                           alignment: Alignment.centerRight,
                           child: FlatButton(
                             onPressed: () async {
+                              // print(Map.from(Platform.environment));
+                              // return;
                               final ProcessState processState =
                                   Global.instance.processState;
                               processState.clear();

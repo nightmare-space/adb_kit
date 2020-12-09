@@ -195,8 +195,8 @@ class _DeveloperToolState extends State<DeveloperTool> {
             ),
             if (Config.scrcpyExist)
               InkWell(
-                onTap: () {
-                  Process.run('scrcpy', ['-s', widget.serial]);
+                onTap: () async {
+                  exec('scrcpy -s ${widget.serial}');
                 },
                 child: SizedBox(
                   height: Dimens.gap_dp48,
