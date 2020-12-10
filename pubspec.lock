@@ -105,9 +105,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "../global_repository"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "05abcdaa04424ee014d1a67bee3b532c69f387da"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   http_parser:
     dependency: transitive

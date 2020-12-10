@@ -73,12 +73,21 @@ class _AdbToolState extends State<AdbTool> {
       child: FutureBuilder<bool>(
         future: adbExist(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          ScreenUtil.init(
-            context,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            allowFontScaling: false,
-          );
+          if (PlatformUtil.isDesktop()) {
+            ScreenUtil.init(
+              context,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              allowFontScaling: false,
+            );
+          } else {
+            ScreenUtil.init(
+              context,
+              width: 414,
+              height: 896,
+              allowFontScaling: false,
+            );
+          }
           // return _AdbTool();
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -122,7 +131,7 @@ class __AdbToolState extends State<_AdbTool> {
 
   @override
   Widget build(BuildContext context) {
-    Global.instance.processState ??= Provider.of<ProcessState>(context);
+    Global.instance.processState = Provider.of<ProcessState>(context);
     return Material(
       child: Scaffold(
         backgroundColor: Colors.white,
