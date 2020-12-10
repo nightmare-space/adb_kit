@@ -23,15 +23,15 @@ void main() {
       home: AdbTool(),
     ),
   );
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-    ),
-  );
-  Config.init();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   const SystemUiOverlayStyle(
+  //     statusBarColor: Colors.transparent,
+  //     systemNavigationBarColor: Colors.transparent,
+  //     systemNavigationBarDividerColor: Colors.transparent,
+  //   ),
+  // );
+  // Config.init();
 }
 
 class AdbTool extends StatefulWidget {
