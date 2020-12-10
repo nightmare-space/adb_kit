@@ -26,3 +26,4 @@ Operation not permitted
 所以你需要用xcode打开对应的mac工程来关闭沙盒模式即可
 ### 始终是unauthorized
 需要保证对方设备此时还没有被另外的adb连接。
+# test
