@@ -11,6 +11,7 @@ import 'config/config.dart';
 import 'config/global.dart';
 import 'global/provider/devices_state.dart';
 import 'global/provider/process_info.dart';
+import 'global/widget/custom_scaffold.dart';
 import 'page/adb_install_page.dart';
 import 'page/adb_insys_page.dart';
 import 'page/exec_cmd_page.dart';
@@ -113,8 +114,7 @@ class _AdbTool extends StatefulWidget {
 
 class __AdbToolState extends State<_AdbTool> {
   int currentIndex = 0;
-  // 页面的键
-  String curKey = 'main';
+  int pageIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -142,50 +142,29 @@ class __AdbToolState extends State<_AdbTool> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
+        ),
+        body: NiScaffold(
+          drawer: DrawerPage(
+            index: pageIndex,
+            onChange: (index) {
+              pageIndex = index;
+              setState(() {});
+              if (PlatformUtil.isMobilePhone()) {
+                Navigator.pop(context);
+              }
             },
           ),
+          body: listWidget[pageIndex],
         ),
-        drawer: DrawerPage(
-          onChange: (key) {
-            curKey = key;
-            setState(() {});
-            print(key);
-            Navigator.pop(context);
-          },
-        ),
-        body: _getPage(curKey),
       ),
     );
   }
 }
 
-Widget _getPage(String key) {
-  switch (key) {
-    case 'main':
-      return HomePage();
-      break;
-    case 'exec-cmd':
-      return ExecCmdPage();
-      break;
-    case 'install-adb':
-      return AdbInstallToSystemPage();
-      break;
-
-    case 'search-ip':
-      return SearchIpPage();
-      break;
-    default:
-      return ExecCmdPage();
-  }
-}
+List<Widget> listWidget = [
+  HomePage(),
+  ExecCmdPage(),
+  AdbInstallToSystemPage(),
+  SearchIpPage(),
+  ExecCmdPage(),
+];
