@@ -167,8 +167,8 @@ class __AdbToolState extends State<_AdbTool> {
 
 List<Widget> listWidget = [
   HomePage(),
-  ExecCmdPage(),
   AdbInstallToSystemPage(),
   SearchIpPage(),
+  ExecCmdPage(),
   ExecCmdPage(),
 ];
