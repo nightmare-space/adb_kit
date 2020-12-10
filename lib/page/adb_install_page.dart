@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/main.dart';
@@ -48,21 +46,21 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
-          _CheckBusybox(),
+          _DownloadFile(),
         ],
       ),
     );
   }
 }
 
-class _CheckBusybox extends StatefulWidget {
-  const _CheckBusybox({Key key, this.callback}) : super(key: key);
+class _DownloadFile extends StatefulWidget {
+  const _DownloadFile({Key key, this.callback}) : super(key: key);
   final void Function() callback;
   @override
-  __CheckBusyboxState createState() => __CheckBusyboxState();
+  _DownloadFileState createState() => _DownloadFileState();
 }
 
-class __CheckBusyboxState extends State<_CheckBusybox> {
+class _DownloadFileState extends State<_DownloadFile> {
   final Dio dio = Dio();
   Response<String> response;
   final String filesPath = PlatformUtil.getBinaryPath();
@@ -73,7 +71,7 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
   List<String> macAdbFiles = [
     'https://nightmare.fun/File/MToolkit/mac/adb.zip',
   ];
-  double busyboxDownratio = 0.0;
+  double fileDownratio = 0.0;
   String downloadName = '';
   Future<void> downloadFile(String urlPath) async {
     print(urlPath);
@@ -85,10 +83,16 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
     print('fullByte======$fullByte');
     final String savePath =
         filesPath + Platform.pathSeparator + PlatformUtil.getFileName(urlPath);
-    updateBusyboxProgress(fullByte, savePath);
+    // updateBusyboxProgress(fullByte, savePath);
     await dio.download(
       urlPath,
       savePath,
+      onReceiveProgress: (count, total) {
+        final double process = count / total;
+        fileDownratio = process;
+        setState(() {});
+        // );
+      },
     );
     Process.runSync('chmod', <String>[
       '0777',
@@ -104,16 +108,6 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
           'mv ${PlatformUtil.getTmpPath()}/* ${PlatformUtil.getBinaryPath()}/ \n' +
           'chmod 0777 ${PlatformUtil.getBinaryPath()}/* \n',
     ]);
-  }
-
-  Future<void> updateBusyboxProgress(int fullByte, String filePath) async {
-    while (mounted) {
-      if (await File(filePath).exists()) {
-        busyboxDownratio = await File(filePath).length() / fullByte;
-        setState(() {});
-      }
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-    }
   }
 
   @override
@@ -171,7 +165,7 @@ class __CheckBusyboxState extends State<_CheckBusybox> {
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(25.0)),
                 child: LinearProgressIndicator(
-                  value: busyboxDownratio,
+                  value: fileDownratio,
                 ),
               ),
               SizedBox(
