@@ -21,6 +21,9 @@ import 'page/search_ip_page.dart';
 void main() {
   runApp(
     MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'sarasa',
+      ),
       home: AdbTool(),
     ),
   );
@@ -33,6 +36,7 @@ void main() {
   //   ),
   // );
   // Config.init();
+  print(FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data');
 }
 
 class AdbTool extends StatefulWidget {

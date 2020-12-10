@@ -38,6 +38,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: DroidSansMono
+    - family: SourceCodePro
       fonts:
-        - asset: assets/fonts/DroidSansMono.ttf
+        - asset: assets/fonts/SourceCodePro.ttf
+    - family: sarasa
+      fonts:
+        - asset: assets/fonts/sarasa-ui-sc-semibold.ttf
