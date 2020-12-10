@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({
@@ -19,55 +20,64 @@ class DrawerPage extends StatefulWidget {
 class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 1 / 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.adb,
-              size: Dimens.setWidth(100),
-            ),
-            _DrawerItem(
-              title: '主页',
-              value: 0,
-              groupValue: widget.index,
-              onTap: () {
-                widget.onChange?.call(0);
-              },
-            ),
-            if (Platform.isAndroid)
+    double width = 0;
+    if (PlatformUtil.isDesktop()) {
+      width = MediaQuery.of(context).size.width * 1 / 5;
+    } else {
+      width = MediaQuery.of(context).size.width * 2 / 3;
+    }
+    return Material(
+      color: Colors.white,
+      child: SafeArea(
+        child: SizedBox(
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.adb,
+                size: Dimens.setWidth(100),
+              ),
               _DrawerItem(
-                value: 1,
+                title: '主页',
+                value: 0,
                 groupValue: widget.index,
-                title: '安装到系统',
                 onTap: () {
-                  widget.onChange?.call(1);
+                  widget.onChange?.call(0);
                 },
               ),
-            // _DrawerItem(
-            //   title: '当前设备ip',
-            //   onTap: () {},
-            // ),
-            if (Platform.isAndroid)
+              if (Platform.isAndroid)
+                _DrawerItem(
+                  value: 1,
+                  groupValue: widget.index,
+                  title: '安装到系统',
+                  onTap: () {
+                    widget.onChange?.call(1);
+                  },
+                ),
+              // _DrawerItem(
+              //   title: '当前设备ip',
+              //   onTap: () {},
+              // ),
+              if (Platform.isAndroid)
+                _DrawerItem(
+                  value: 2,
+                  groupValue: widget.index,
+                  title: '查看连接到本机的ip',
+                  onTap: () {
+                    widget.onChange?.call(2);
+                  },
+                ),
               _DrawerItem(
-                value: 2,
+                value: 3,
                 groupValue: widget.index,
-                title: '查看连接到本机的ip',
+                title: '执行自定义命令',
                 onTap: () {
-                  widget.onChange?.call(2);
+                  widget.onChange?.call(3);
                 },
               ),
-            _DrawerItem(
-              value: 3,
-              groupValue: widget.index,
-              title: '执行自定义命令',
-              onTap: () {
-                widget.onChange?.call(3);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -128,6 +128,9 @@ class _DownloadFileState extends State<_DownloadFile> {
     } else if (Platform.isMacOS) {
       needDownloadFile = macAdbFiles;
     }
+    if (Platform.isAndroid) {
+      needDownloadFile = androidAdbFiles;
+    }
     for (final String urlPath in needDownloadFile) {
       downloadName = PlatformUtil.getFileName(urlPath);
       setState(() {});

@@ -27,15 +27,15 @@ void main() {
       home: AdbTool(),
     ),
   );
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   const SystemUiOverlayStyle(
-  //     statusBarColor: Colors.transparent,
-  //     systemNavigationBarColor: Colors.transparent,
-  //     systemNavigationBarDividerColor: Colors.transparent,
-  //   ),
-  // );
-  // Config.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ),
+  );
+  Config.init();
 }
 
 class AdbTool extends StatefulWidget {
@@ -47,16 +47,16 @@ class _AdbToolState extends State<AdbTool> {
   @override
   void initState() {
     super.initState();
-
-    // init();
   }
 
-  Future<void> init() async {
-    print('${PlatformUtil.getBinaryPath()}');
+  Future<bool> adbExist() async {
+    await PlatformUtil.init();
     print(PlatformUtil.environment()['PATH']);
-    print("-> ${await PlatformUtil.cmdIsExist('adb')}");
+    print("-> ${await PlatformUtil.cmdIsExist('scrcpy')}");
     print("-> ${await PlatformUtil.cmdIsExist('adbc')}");
     print("-> ${await PlatformUtil.cmdIsExist('where')}");
+    print("-> ${await PlatformUtil.cmdIsExist('python')}");
+    return PlatformUtil.cmdIsExist('adb');
   }
 
   @override
@@ -71,7 +71,7 @@ class _AdbToolState extends State<AdbTool> {
         ),
       ],
       child: FutureBuilder<bool>(
-        future: PlatformUtil.cmdIsExist('adb'),
+        future: adbExist(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           ScreenUtil.init(
             context,
