@@ -28,7 +28,7 @@ dependencies:
   provider: ^3.1.0
   flutter_screenutil: ^2.3.0
   global_repository:
-    git: https://github.com/nightmare-space/global_repository
+    path: ../global_repository
 
   cupertino_icons: ^0.1.3
 

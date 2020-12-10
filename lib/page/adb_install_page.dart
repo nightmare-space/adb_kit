@@ -16,7 +16,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
   @override
   void initState() {
     super.initState();
-    init();
+    // init();
   }
 
   init() async {
@@ -65,11 +65,16 @@ class _DownloadFileState extends State<_DownloadFile> {
   Response<String> response;
   final String filesPath = PlatformUtil.getBinaryPath();
   List<String> androidAdbFiles = [
-    'https://39.107.248.176/File/MToolkit/android/adb/adb',
-    'https://39.107.248.176/File/MToolkit/android/adb/adb.bin'
+    'https://nightmare.fun/File/MToolkit/android/adb/adb',
+    'https://nightmare.fun/File/MToolkit/android/adb/adb.bin'
   ];
   List<String> macAdbFiles = [
     'https://nightmare.fun/File/MToolkit/mac/adb.zip',
+  ];
+  List<String> winAdbFiles = [
+    'https://nightmare.fun/File/MToolkit/windows/adb.exe',
+    'https://nightmare.fun/File/MToolkit/windows/AdbWinUsbApi.dll',
+    'https://nightmare.fun/File/MToolkit/windows/AdbWinApi.dll',
   ];
   double fileDownratio = 0.0;
   String downloadName = '';
@@ -117,7 +122,13 @@ class _DownloadFileState extends State<_DownloadFile> {
   }
 
   Future<void> execDownload() async {
-    for (final String urlPath in macAdbFiles) {
+    List<String> needDownloadFile;
+    if (Platform.isWindows) {
+      needDownloadFile = winAdbFiles;
+    } else if (Platform.isMacOS) {
+      needDownloadFile = macAdbFiles;
+    }
+    for (final String urlPath in needDownloadFile) {
       downloadName = PlatformUtil.getFileName(urlPath);
       setState(() {});
       await downloadFile(urlPath);

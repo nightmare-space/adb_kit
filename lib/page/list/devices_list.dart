@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/page/developer_tool.dart';
 import 'package:adb_tool/page/devices_item.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +80,24 @@ class _DevicesListState extends State<DevicesList> {
 
   Future<void> getDevices() async {
     while (mounted) {
-      final String out = (await NiProcess.exec('adb devices')).trim();
+      String out;
+      if (Platform.isWindows) {
+        String stderr;
+        String stdout;
+        final ProcessResult result = await Process.run(
+          'adb',
+          ['devices'],
+          environment: PlatformUtil.environment(),
+          runInShell: true,
+        );
+        stdout = result.stdout.toString();
+        stderr = result.stderr.toString();
+        out = stdout.trim();
+        // print('stderr->$stderr');
+        // print('stdout->$stdout');
+      } else {
+        out = (await NiProcess.exec('adb devices')).trim();
+      }
       // print('------------------');
       // 说明adb服务开启了
       if (out.startsWith('List of devices')) {

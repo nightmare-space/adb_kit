@@ -36,7 +36,6 @@ void main() {
   //   ),
   // );
   // Config.init();
-  print(FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data');
 }
 
 class AdbTool extends StatefulWidget {
@@ -48,16 +47,16 @@ class _AdbToolState extends State<AdbTool> {
   @override
   void initState() {
     super.initState();
-    print(
-      'PlatformUtil.environment() -> ${PlatformUtil.environment()['PATH']}',
-    );
-    init();
+
+    // init();
   }
 
   Future<void> init() async {
     print('${PlatformUtil.getBinaryPath()}');
-    print(
-        "PlatformUtil.cmdIsExist('adb') -> ${await PlatformUtil.cmdIsExist('adb')}");
+    print(PlatformUtil.environment()['PATH']);
+    print("-> ${await PlatformUtil.cmdIsExist('adb')}");
+    print("-> ${await PlatformUtil.cmdIsExist('adbc')}");
+    print("-> ${await PlatformUtil.cmdIsExist('where')}");
   }
 
   @override
@@ -86,15 +85,12 @@ class _AdbToolState extends State<AdbTool> {
               print('还没有开始网络请求');
               return const Text('');
             case ConnectionState.active:
-              print('active');
               return const Text('ConnectionState.active');
             case ConnectionState.waiting:
-              print('waiting');
               return const Center(
                 child: CircularProgressIndicator(),
               );
             case ConnectionState.done:
-              print('done');
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               }
