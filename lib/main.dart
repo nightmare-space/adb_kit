@@ -134,25 +134,25 @@ class __AdbToolState extends State<_AdbTool> {
     Global.instance.processState = Provider.of<ProcessState>(context);
     return Material(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         // floatingActionButton: FloatingActionButton(onPressed: () {
         //   NiProcess.exit();
         // }),
-        appBar: AppBar(
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          elevation: 0.0,
-          title: Text(
-            'ADB 工具',
-            style: TextStyle(
-              height: 1.0,
-              color: Theme.of(context).textTheme.bodyText2.color,
-              fontWeight: FontWeight.bold,
+        body: NiScaffold(
+          appBar: AppBar(
+            brightness: Brightness.light,
+            backgroundColor: Color(0xf7f7f7),
+            centerTitle: true,
+            elevation: 0.0,
+            title: Text(
+              'ADB 工具',
+              style: TextStyle(
+                height: 1.0,
+                color: Theme.of(context).textTheme.bodyText2.color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        body: NiScaffold(
           drawer: DrawerPage(
             index: pageIndex,
             onChange: (index) {

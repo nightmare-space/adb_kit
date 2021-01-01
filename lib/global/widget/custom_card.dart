@@ -1,8 +1,7 @@
-import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 
-class NiCard extends StatefulWidget {
-  const NiCard({
+class NiCardButton extends StatefulWidget {
+  const NiCardButton({
     Key key,
     this.child,
     this.onTap,
@@ -12,11 +11,31 @@ class NiCard extends StatefulWidget {
   final Function onTap;
   final double blurRadius;
   @override
-  _NiCardState createState() => _NiCardState();
+  _NiCardButtonState createState() => _NiCardButtonState();
 }
 
-class _NiCardState extends State<NiCard> {
+class _NiCardButtonState extends State<NiCardButton>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
   bool isOnTap = false;
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 100),
+    );
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,38 +43,52 @@ class _NiCardState extends State<NiCard> {
       onTap: () {
         isOnTap = false;
         setState(() {});
+        Feedback.forLongPress(context);
+        animationController.reverse();
         if (widget.onTap != null) {
           widget.onTap();
         }
       },
       onTapDown: (_) {
+        animationController.forward();
+        Feedback.forLongPress(context);
         isOnTap = true;
         setState(() {});
       },
       onTapCancel: () {
+        animationController.reverse();
+        Feedback.forLongPress(context);
         isOnTap = false;
         setState(() {});
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(Dimens.gap_dp12),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
-              blurRadius: widget.blurRadius, //阴影模糊程度
-              spreadRadius: 0.0, //阴影扩散程度
+      child: Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()
+          ..scale(1.0 - animationController.value * 0.05),
+        child: Container(
+          margin: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(widget.blurRadius),
             ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(Dimens.gap_dp12),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.black.withOpacity(
+                  0.1 - animationController.value * 0.1,
+                ),
+                offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
+                blurRadius: widget.blurRadius, //阴影模糊程度
+                spreadRadius: 0.0, //阴影扩散程度
+              ),
+            ],
           ),
-          child: widget.child,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(widget.blurRadius),
+            ),
+            child: widget.child,
+          ),
         ),
       ),
     );

@@ -19,7 +19,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
     // init();
   }
 
-  init() async {
+  Future<void> init() async {
     String result = await NiProcess.exec('echo \$PATH');
     print('result->$result');
   }
@@ -150,7 +150,7 @@ class _DownloadFileState extends State<_DownloadFile> {
       padding: EdgeInsets.all(
         Dimens.gap_dp8,
       ),
-      child: NiCard(
+      child: NiCardButton(
         child: Padding(
           padding: EdgeInsets.all(
             12.w.toDouble(),

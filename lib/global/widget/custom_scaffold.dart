@@ -7,9 +7,11 @@ class NiScaffold extends StatefulWidget {
     Key key,
     this.drawer,
     this.body,
+    this.appBar,
   }) : super(key: key);
   final Widget drawer;
   final Widget body;
+  final PreferredSizeWidget appBar;
   @override
   _NiScaffoldState createState() => _NiScaffoldState();
 }
@@ -19,14 +21,17 @@ class _NiScaffoldState extends State<NiScaffold> {
   Widget build(BuildContext context) {
     bool isMobile = PlatformUtil.isMobilePhone();
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       drawer: isMobile ? widget.drawer : null,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isMobile) widget.drawer,
           Expanded(
-            child: widget.body,
+            child: Scaffold(
+              appBar: widget.appBar,
+              body: widget.body,
+            ),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/material_cliprrect.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'dialog/connect_remote.dart';
 import 'list/devices_list.dart';
 import 'process_page.dart';
+import 'qr_scan_page.dart';
 import 'toolkit_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -118,6 +120,23 @@ class _HomePageState extends State<HomePage> {
                     Provider.of<ProcessState>(context).appendOut(result);
                   },
                 ),
+                ItemButton(
+                  title: '扫码连接',
+                  onTap: () async {
+                    final String cmd = await showDialog<String>(
+                      context: context,
+                      builder: (_) {
+                        return QrScanPage();
+                      },
+                    );
+                    if (cmd == null) {
+                      return;
+                    }
+                    Provider.of<ProcessState>(context).clear();
+                    final String result = await exec('echo $cmd\n$cmd');
+                    Provider.of<ProcessState>(context).appendOut(result);
+                  },
+                ),
               ],
             ),
             if (Platform.isAndroid)
@@ -216,23 +235,24 @@ class ItemButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialClipRRect(
+    return NiCardButton(
       onTap: onTap,
-      child: Container(
-        width: title.length * 14.0 + 32,
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: Column(
+          children: [
+            SizedBox(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

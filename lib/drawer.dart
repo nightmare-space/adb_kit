@@ -11,7 +11,7 @@ class DrawerPage extends StatefulWidget {
     this.index,
   }) : super(key: key);
   final void Function(int index) onChange;
-  final index;
+  final int index;
 
   @override
   _DrawerPageState createState() => _DrawerPageState();

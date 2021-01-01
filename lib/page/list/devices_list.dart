@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:adb_tool/page/developer_tool.dart';
-import 'package:adb_tool/page/devices_item.dart';
+import 'package:adb_tool/page/list/devices_item.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 

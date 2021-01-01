@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
-import 'list/devices_list.dart';
+import 'devices_list.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({Key key, this.devicesEntity, this.onTap})
