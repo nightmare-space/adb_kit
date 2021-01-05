@@ -243,7 +243,8 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
 
   Future<void> initCheckState() async {
     final String result = await exec(
-        'adb -s ${widget.serial} shell getprop service.adb.tcp.port');
+      'adb -s ${widget.serial} shell getprop service.adb.tcp.port',
+    );
     print(result);
     if (result == '5555') {
       isCheck = true;

@@ -42,8 +42,8 @@ class _DrawerPageState extends State<DrawerPage> {
                 title: '主页',
                 value: 0,
                 groupValue: widget.index,
-                onTap: () {
-                  widget.onChange?.call(0);
+                onTap: (index) {
+                  widget.onChange?.call(index);
                 },
               ),
               if (Platform.isAndroid)
@@ -51,8 +51,8 @@ class _DrawerPageState extends State<DrawerPage> {
                   value: 1,
                   groupValue: widget.index,
                   title: '安装到系统',
-                  onTap: () {
-                    widget.onChange?.call(1);
+                  onTap: (index) {
+                    widget.onChange?.call(index);
                   },
                 ),
               // _DrawerItem(
@@ -60,20 +60,40 @@ class _DrawerPageState extends State<DrawerPage> {
               //   onTap: () {},
               // ),
               if (Platform.isAndroid)
-                _DrawerItem(
-                  value: 2,
-                  groupValue: widget.index,
-                  title: '查看连接到本机的ip',
-                  onTap: () {
-                    widget.onChange?.call(2);
-                  },
+                Column(
+                  children: [
+                    _DrawerItem(
+                      value: 2,
+                      groupValue: widget.index,
+                      title: '查看连接到本机的ip',
+                      onTap: (index) {
+                        widget.onChange?.call(index);
+                      },
+                    ),
+                    _DrawerItem(
+                      value: 3,
+                      groupValue: widget.index,
+                      title: '远程调试',
+                      onTap: (index) {
+                        widget.onChange?.call(index);
+                      },
+                    ),
+                  ],
                 ),
               _DrawerItem(
-                value: 3,
+                value: 4,
                 groupValue: widget.index,
                 title: '执行自定义命令',
-                onTap: () {
-                  widget.onChange?.call(3);
+                onTap: (index) {
+                  widget.onChange?.call(index);
+                },
+              ),
+              _DrawerItem(
+                value: 5,
+                groupValue: widget.index,
+                title: '电脑版下载',
+                onTap: (index) {
+                  // widget.onChange?.call(index);
                 },
               ),
             ],
@@ -84,7 +104,7 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 }
 
-Color accent = Color(0xff282b3e);
+Color accent = const Color(0xff282b3e);
 
 class _DrawerItem extends StatelessWidget {
   const _DrawerItem({
@@ -95,14 +115,14 @@ class _DrawerItem extends StatelessWidget {
     this.groupValue,
   }) : super(key: key);
   final String title;
-  final void Function() onTap;
+  final void Function(int index) onTap;
   final int value;
   final int groupValue;
   @override
   Widget build(BuildContext context) {
-    bool isChecked = value == groupValue;
+    final bool isChecked = value == groupValue;
     return InkWell(
-      onTap: onTap,
+      onTap: () => onTap(value),
       child: Stack(
         children: [
           Container(
@@ -111,7 +131,7 @@ class _DrawerItem extends StatelessWidget {
             decoration: isChecked
                 ? BoxDecoration(
                     color: accent,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(24),
                       bottomRight: Radius.circular(24),
                     ),

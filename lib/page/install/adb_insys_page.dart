@@ -2,13 +2,14 @@
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
-import 'home_page.dart';
-import 'process_page.dart';
-import 'toolkit_colors.dart';
+import '../home_page.dart';
+import '../process_page.dart';
+import '../toolkit_colors.dart';
 
 class AdbInstallToSystemPage extends StatefulWidget {
   @override
@@ -29,8 +30,13 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        brightness: Brightness.light,
+        title: Text('安装ADB到系统'),
+        elevation: 0,
+      ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
@@ -115,11 +121,14 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                SizedBox(
+                  height: 8,
+                ),
                 ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height -
                         kToolbarHeight -
-                        120,
+                        500,
                   ),
                   // height: MediaQuery.of(context).size.height * 3 / 4,
                   child: const ProcessPage(),
@@ -127,18 +136,18 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
               ],
             ),
           ),
-          Align(
-            alignment: const Alignment(0, 0.5),
-            child: SizedBox(
-              height: Dimens.gap_dp52,
-              child: ItemButton(
-                title: '安装',
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              NiCardButton(
+                blurRadius: 4,
+                borderRadius: 24.0,
                 onTap: () async {
                   NiProcess.exec('su');
                   Provider.of<ProcessState>(context).clear();
                   final List<String> cmds = [
-                    'cp ${PlatformUtil.getFilsePath(Config.packageName)}/adb $choosePath/adb',
-                    'cp ${PlatformUtil.getFilsePath(Config.packageName)}/adb.bin $choosePath/adb.bin',
+                    'cp ${PlatformUtil.getBinaryPath()}/adb $choosePath/adb',
+                    'cp ${PlatformUtil.getBinaryPath()}/adb.bin $choosePath/adb.bin',
                   ];
                   String execCmd = 'mount -o rw,remount /\n';
                   for (final String cmd in cmds) {
@@ -162,8 +171,23 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   //   Provider.of<ProcessState>(context).appendOut(result);
                   // }
                 },
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 48.0,
+                  child: Center(
+                    child: Text(
+                      '安装',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              SizedBox(
+                height: 32.0,
+              ),
+            ],
           ),
         ],
       ),

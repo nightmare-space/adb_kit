@@ -29,8 +29,10 @@ dependencies:
   provider: ^3.1.0
   flutter_screenutil: ^2.3.0
   global_repository:
-    git: https://github.com/nightmare-space/global_repository
-
+    path: /Users/nightmare/Desktop/nightmare-space/global_repository
+  permission_handler: ^5.0.1+1
+  qrscan: ^0.2.21
+  flutter_svg: ^0.19.1
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
@@ -38,10 +40,5 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
-  # fonts:
-  #   - family: SourceCodePro
-  #     fonts:
-  #       - asset: assets/fonts/SourceCodePro.ttf
-  #   - family: sarasa
-  #     fonts:
-  #       - asset: assets/fonts/sarasa-ui-sc-semibold.ttf
+  assets:
+    - assets/icon/

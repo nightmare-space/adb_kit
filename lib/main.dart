@@ -12,10 +12,11 @@ import 'config/global.dart';
 import 'global/provider/devices_state.dart';
 import 'global/provider/process_info.dart';
 import 'global/widget/custom_scaffold.dart';
-import 'page/adb_install_page.dart';
-import 'page/adb_insys_page.dart';
+import 'page/install/adb_install_page.dart';
+import 'page/install/adb_insys_page.dart';
 import 'page/exec_cmd_page.dart';
 import 'page/home_page.dart';
+import 'page/net_debug/remote_debug_page.dart';
 import 'page/search_ip_page.dart';
 
 void main() {
@@ -35,7 +36,6 @@ void main() {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
-  Config.init();
 }
 
 class AdbTool extends StatefulWidget {
@@ -51,11 +51,10 @@ class _AdbToolState extends State<AdbTool> {
 
   Future<bool> adbExist() async {
     await PlatformUtil.init();
+    Config.init();
     print(PlatformUtil.environment()['PATH']);
-    print("-> ${await PlatformUtil.cmdIsExist('scrcpy')}");
-    print("-> ${await PlatformUtil.cmdIsExist('adbc')}");
-    print("-> ${await PlatformUtil.cmdIsExist('where')}");
-    print("-> ${await PlatformUtil.cmdIsExist('python')}");
+    print(await NiProcess.exec('echo \$PATH'));
+    // print("-> ${await PlatformUtil.cmdIsExist('scrcpy')}");
     return PlatformUtil.cmdIsExist('adb');
   }
 
@@ -70,47 +69,65 @@ class _AdbToolState extends State<AdbTool> {
           create: (_) => DevicesState(),
         ),
       ],
-      child: FutureBuilder<bool>(
-        future: adbExist(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (PlatformUtil.isDesktop()) {
-            ScreenUtil.init(
-              context,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              allowFontScaling: false,
-            );
-          } else {
-            ScreenUtil.init(
-              context,
-              width: 414,
-              height: 896,
-              allowFontScaling: false,
-            );
-          }
-          // return _AdbTool();
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              print('还没有开始网络请求');
-              return const Text('');
-            case ConnectionState.active:
-              return const Text('ConnectionState.active');
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
+      child: Theme(
+        data: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Color(0xfffafafa),
+            elevation: 1.0,
+            centerTitle: true,
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                height: 1.0,
+                fontSize: 20.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        child: FutureBuilder<bool>(
+          future: adbExist(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            NiToast.initContext(context);
+            if (PlatformUtil.isDesktop()) {
+              ScreenUtil.init(
+                context,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                allowFontScaling: false,
               );
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (!snapshot.data) {
-                return AdbInstallPage();
-              }
-              return _AdbTool();
-            default:
-              return null;
-          }
-        },
+            } else {
+              ScreenUtil.init(
+                context,
+                width: 414,
+                height: 896,
+                allowFontScaling: false,
+              );
+            }
+            // return _AdbTool();
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                print('还没有开始网络请求');
+                return const Text('');
+              case ConnectionState.active:
+                return const Text('ConnectionState.active');
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (!snapshot.data) {
+                  return AdbInstallPage();
+                }
+                return _AdbTool();
+              default:
+                return null;
+            }
+          },
+        ),
       ),
     );
   }
@@ -139,20 +156,6 @@ class __AdbToolState extends State<_AdbTool> {
         //   NiProcess.exit();
         // }),
         body: NiScaffold(
-          appBar: AppBar(
-            brightness: Brightness.light,
-            backgroundColor: Color(0xf7f7f7),
-            centerTitle: true,
-            elevation: 0.0,
-            title: Text(
-              'ADB 工具',
-              style: TextStyle(
-                height: 1.0,
-                color: Theme.of(context).textTheme.bodyText2.color,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           drawer: DrawerPage(
             index: pageIndex,
             onChange: (index) {
@@ -174,6 +177,6 @@ List<Widget> listWidget = [
   HomePage(),
   AdbInstallToSystemPage(),
   SearchIpPage(),
-  ExecCmdPage(),
+  RemoteDebugPage(),
   ExecCmdPage(),
 ];

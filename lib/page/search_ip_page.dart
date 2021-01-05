@@ -3,6 +3,7 @@
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class SearchIpPage extends StatefulWidget {
@@ -45,31 +46,41 @@ class _SearchIpPageState extends State<SearchIpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: Dimens.gap_dp8,
+    return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.light,
+        title: const Text('IP查看'),
       ),
-      child: Column(
-        children: [
-          for (String ip in addressList)
-            InkWell(
-              onTap: () {},
-              child: SizedBox(
-                height: Dimens.gap_dp48,
-                child: Row(
-                  children: [
-                    Text(
-                      ip,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: Dimens.font_sp16,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            // horizontal: Dimens.gap_dp8,
+            ),
+        child: Column(
+          children: [
+            for (String ip in addressList)
+              InkWell(
+                onTap: () async {
+                  await Clipboard.setData(ClipboardData(text: ip));
+                  NiToast.showToast('IP已复制');
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: Dimens.gap_dp8),
+                  height: Dimens.gap_dp48,
+                  child: Row(
+                    children: [
+                      Text(
+                        ip,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Dimens.font_sp16,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

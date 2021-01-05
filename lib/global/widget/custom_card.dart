@@ -6,10 +6,14 @@ class NiCardButton extends StatefulWidget {
     this.child,
     this.onTap,
     this.blurRadius = 8.0,
+    this.shadowColor = Colors.black,
+    this.borderRadius = 8.0,
   }) : super(key: key);
   final Widget child;
   final Function onTap;
   final double blurRadius;
+  final double borderRadius;
+  final Color shadowColor;
   @override
   _NiCardButtonState createState() => _NiCardButtonState();
 }
@@ -70,11 +74,11 @@ class _NiCardButtonState extends State<NiCardButton>
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.all(
-              Radius.circular(widget.blurRadius),
+              Radius.circular(widget.borderRadius),
             ),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: Colors.black.withOpacity(
+                color: widget.shadowColor.withOpacity(
                   0.1 - animationController.value * 0.1,
                 ),
                 offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
@@ -85,7 +89,7 @@ class _NiCardButtonState extends State<NiCardButton>
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.all(
-              Radius.circular(widget.blurRadius),
+              Radius.circular(widget.borderRadius),
             ),
             child: widget.child,
           ),

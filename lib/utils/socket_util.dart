@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:global_repository/global_repository.dart';
+
 const int msgByteLen = 2;
 const int msgCodeByteLen = 2;
 const int minMsgByteLen = msgByteLen + msgCodeByteLen;
@@ -23,6 +25,7 @@ class NetworkManager {
     ); //绑定端口4041，根据需要自行修改，建议用动态，防止端口占用
     serverSocket.listen((Socket s) {
       print('发现连接 ${s.address}');
+      NiToast.showToast('扫描成功');
       mStream = s.asBroadcastStream();
       mStream.listen((event) {
         listen(utf8.decode(event));
@@ -40,8 +43,6 @@ class NetworkManager {
   }
 
   Future<void> init() async {
-    print('host -> $host。');
-    print('port -> $port。');
     try {
       socket = await Socket.connect(
         host,

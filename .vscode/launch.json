@@ -8,12 +8,6 @@
             "name": "adb_tool",
             "request": "launch",
             "type": "dart"
-        },
-        {
-            "name": "Mi 10",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "192.168.43.1:5555"
         }
     ]
 }

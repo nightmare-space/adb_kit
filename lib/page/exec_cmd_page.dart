@@ -22,88 +22,97 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     NiProcess.exec(
       editingController.text,
       getStderr: true,
-      callback: (s) {
-        print('ss======>$s');
-        if (s.trim() == 'exitCode') {
+      callback: (output) {
+        print('ss======>$output');
+
+        if (output.trim() == 'process_exit') {
           return;
         }
-        Provider.of<ProcessState>(context).appendOut(s);
+        output = output.replaceAll('process_exit', '');
+        Provider.of<ProcessState>(context).appendOut(output);
       },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(Dimens.gap_dp8),
-            child: Stack(
-              children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height -
+    return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.light,
+        title: Text('执行命令'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(Dimens.gap_dp8),
+              child: Stack(
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height -
+                          kToolbarHeight -
+                          120,
+                    ),
+                    // height: MediaQuery.of(context).size.height * 3 / 4,
+                    child: const ProcessPage(),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height -
                         kToolbarHeight -
                         120,
                   ),
-                  // height: MediaQuery.of(context).size.height * 3 / 4,
-                  child: const ProcessPage(),
-                ),
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height - kToolbarHeight - 120,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              Dimens.gap_dp8,
-              0,
-              Dimens.gap_dp8,
-              Dimens.gap_dp28,
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                  child: TextField(
-                    controller: editingController,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                Dimens.gap_dp8,
+                0,
+                Dimens.gap_dp8,
+                Dimens.gap_dp28,
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                    child: TextField(
+                      controller: editingController,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                        // border: OutlineInputBorder(
+                        //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                        // ),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.grey.withOpacity(0.3),
+                      ),
+                      onSubmitted: (_) {
+                        execCmd();
+                      },
                     ),
-                    decoration: InputDecoration(
-                      // border: OutlineInputBorder(
-                      //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                      // ),
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                    ),
-                    onSubmitted: (_) {
-                      execCmd();
-                    },
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.black.withOpacity(0.6),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                      onPressed: () async {
+                        execCmd();
+                      },
                     ),
-                    onPressed: () async {
-                      execCmd();
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -17,7 +17,7 @@ class QrScanPage extends StatefulWidget {
 
 class _QrScanPageState extends State<QrScanPage> {
   NetworkManager networkManager;
-  String content;
+  String content = '';
   // Random random = Random();
   Future<void> getQrCode() async {
     port = 9000 + Random().nextInt(9) * 10 + Random().nextInt(9);
@@ -33,8 +33,23 @@ class _QrScanPageState extends State<QrScanPage> {
       print(match);
       content = match + ':$port';
       setState(() {});
+    } else if (Platform.isAndroid) {
+      final String ipRoute = await NiProcess.exec(
+        'ip route',
+      );
+      for (String ip in ipRoute.split('\n')) {
+        if (ip.startsWith('192')) {
+          ip = ip.trim().replaceAll(RegExp('.* '), '');
+          content += ip + ':$port\n';
+          // connectDevices(ip);
+          // ProcessResult result = Process.runSync('scrcpy', []);
+          // print(result.stderr);
+          // print(result.stdout);
+        }
+      }
     } else {
       final String ipResult = await NiProcess.exec('ifconfig | grep "inet"');
+      print('ipResult->$ipResult');
       for (final String line in ipResult.split('\n')) {
         if (line.startsWith(RegExp('.{1,}inet '))) {
           // print('line -> $line');
@@ -47,21 +62,16 @@ class _QrScanPageState extends State<QrScanPage> {
         }
       }
     }
+    content = content.trim().replaceAll('\n', ';');
+    setState(() {});
+    print('content -> $content');
     // if (Platform.isAndroid) {
     //   content = '127.0.0.1:port';
     // }
     // String clientHost=
     await networkManager.startServer((data) {
       print('data -> $data');
-      for (String ip in data.split('\n')) {
-        if (ip.startsWith('192')) {
-          ip = ip.trim().replaceAll(RegExp('.* '), '');
-          connectDevices(ip);
-          // ProcessResult result = Process.runSync('scrcpy', []);
-          // print(result.stderr);
-          // print(result.stdout);
-        }
-      }
+      connectDevices(data);
     });
     // final NetworkManager socket = NetworkManager(
     //   '127.0.0.1',
@@ -79,6 +89,7 @@ class _QrScanPageState extends State<QrScanPage> {
   }
 
   void connectDevices(String ip) {
+    Navigator.pop(context);
     print(
       PlatformUtil.environment()['PATH'],
     );
@@ -118,8 +129,9 @@ class _QrScanPageState extends State<QrScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (content == null) {
+    if (content.isEmpty) {
       return const Material(
+        color: Colors.transparent,
         child: Center(
           child: CircularProgressIndicator(),
         ),
@@ -137,15 +149,18 @@ class _QrScanPageState extends State<QrScanPage> {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: 16,
-            ),
-            child: Text(
-              '使用魇系列任意app扫描即可快速连接\n- 设备与PC需要在同一局域网\n- 设备需要打开wifi adb调试',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          child: Material(
+            color: Colors.transparent,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: 16,
+              ),
+              child: Text(
+                '使用魇系列任意app扫描即可快速连接\n- 设备与PC需要在同一局域网\n- 设备需要打开wifi adb调试',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

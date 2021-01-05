@@ -56,10 +56,19 @@ class _DevicesListState extends State<DevicesList> {
 
   Widget _buildItem(DevicesEntity devicesEntity, Animation _animation) {
     return SlideTransition(
-      position: _animation.drive(CurveTween(curve: Curves.easeIn)).drive(
-          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))),
+      position: _animation
+          .drive(CurveTween(
+            curve: Curves.easeIn,
+          ))
+          .drive(
+            Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: const Offset(0, 0),
+            ),
+          ),
       child: DevicesItem(
         onTap: () {
+          // return;
           Navigator.of(
             context,
           ).push<void>(
@@ -202,9 +211,15 @@ class _DevicesListState extends State<DevicesList> {
             padding: const EdgeInsets.only(top: 0),
             key: _listKey,
             initialItemCount: devicesEntitys.length,
-            itemBuilder:
-                (BuildContext context, int index, Animation animation) {
-              return _buildItem(devicesEntitys[index], animation);
+            itemBuilder: (
+              BuildContext context,
+              int index,
+              Animation animation,
+            ) {
+              return _buildItem(
+                devicesEntitys[index],
+                animation,
+              );
             },
           ),
         ),
