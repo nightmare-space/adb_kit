@@ -23,16 +23,17 @@ class NetworkManager {
       port,
       shared: true,
     ); //绑定端口4041，根据需要自行修改，建议用动态，防止端口占用
-    serverSocket.listen((Socket s) {
-      print('发现连接 ${s.address}');
-      NiToast.showToast('扫描成功');
-      mStream = s.asBroadcastStream();
+    serverSocket.listen((Socket socket) {
+      print('发现连接 ${socket.remoteAddress}');
+      listen(socket.remoteAddress.address);
+      mStream = socket.asBroadcastStream();
       mStream.listen((event) {
         listen(utf8.decode(event));
         // print('this event ->${utf8.decode(event)}');
       });
     });
-    print(' Socket服务启动，正在监听端口 $port...');
+    print(
+        ' Socket服务启动，正在监听端口 $port... ${serverSocket.address}  ${serverSocket.address}');
   }
 
   Future<void> stopServer() async {
