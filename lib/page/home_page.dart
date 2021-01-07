@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/global/material_cliprrect.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
+import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/utils/permission_utils.dart';
 import 'package:adb_tool/utils/socket_util.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +31,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar;
+    if (Platform.isAndroid) {
+      appBar = AppBar(
         brightness: Brightness.light,
         backgroundColor: const Color(0x00f7f7f7),
         centerTitle: true,
         elevation: 0.0,
         title: Text(
-          'ADB 工具',
+          '概览',
           style: TextStyle(
             height: 1.0,
             color: Theme.of(context).textTheme.bodyText2.color,
@@ -46,52 +47,62 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: SvgPicture.asset('assets/icon/QR_code.svg'),
-            onPressed: () async {
-              if (Platform.isAndroid) {
-                await PermissionUtil.request();
-                final String cameraScanResult = await scanner.scan();
-                if (cameraScanResult == null) {
-                  return;
-                }
-                print(
-                    'cameraScanResult -> $cameraScanResult ${cameraScanResult.split(':').first} ${cameraScanResult.split(':').last}');
-                final ProcessResult result = await Process.run(
-                  'ip',
-                  ['route'],
-                );
-                final String deviceIp =
-                    result.stdout.toString().trim().replaceAll(
-                          RegExp('.* '),
-                          '',
-                        );
-                // 读本机的adb端口一起发送过去
-                print('deviceIp -> $deviceIp');
-                for (final String serverAddress
-                    in cameraScanResult.split(';')) {
-                  List<String> serverAddressList = serverAddress.split('.');
-                  List<String> localAddressList = deviceIp.split('.');
-                  print('serverAddressList->${serverAddressList}');
-                  print('localAddressList->${localAddressList}');
-                  if (serverAddressList[0] == localAddressList[0] &&
-                      serverAddressList[1] == localAddressList[1] &&
-                      serverAddressList[2] == localAddressList[2]) {
-                    final NetworkManager socket = NetworkManager(
-                      serverAddress.split(':').first,
-                      int.tryParse(serverAddress.split(':').last),
-                    );
-                    await socket.init();
-
-                    socket.sendMsg(deviceIp);
-                  }
-                }
+          NiIconButton(
+            child: SvgPicture.asset('assets/icon/QR_code.svg'),
+            onTap: () async {
+              await PermissionUtil.request();
+              final String cameraScanResult = await scanner.scan();
+              if (cameraScanResult == null) {
                 return;
               }
+              print('cameraScanResult -> $cameraScanResult');
+
+              final List<NetworkInterface> networkInterfaces =
+                  await NetworkInterface.list(
+                includeLoopback: false,
+                type: InternetAddressType.IPv4,
+              );
+              for (final NetworkInterface netInterface in networkInterfaces) {
+                // 遍历网卡
+                print('${netInterface.name} : ${netInterface.addresses}');
+                for (final InternetAddress netAddress
+                    in netInterface.addresses) {
+                  // 遍历网卡的IP地址
+                  if (isAddress(netAddress.address)) {
+                    print('${netAddress.address}\n');
+                    for (final String serverAddress
+                        in cameraScanResult.split(';')) {
+                      // 遍历二维码中的ip地址
+                      final List<String> serverAddressList =
+                          serverAddress.split('.');
+                      final List<String> localAddressList =
+                          netAddress.address.split('.');
+                      print('serverAddressList->$serverAddressList');
+                      print('localAddressList->$localAddressList');
+                      if (serverAddressList[0] == localAddressList[0] &&
+                          serverAddressList[1] == localAddressList[1] &&
+                          serverAddressList[2] == localAddressList[2]) {
+                        // 默认为前三个ip段相同代表在同一个局域网，可能更负责，由这学期学的计算机网路来看
+                        print('发现同一局域网IP');
+                        final NetworkManager socket = NetworkManager(
+                          serverAddress.split(':').first,
+                          int.tryParse(serverAddress.split(':').last),
+                        );
+                        await socket.init();
+
+                        // socket.sendMsg(deviceIp);
+                      }
+                    }
+                  }
+                }
+              }
             },
-          )
+          ),
         ],
-      ),
+      );
+    }
+    return Scaffold(
+      appBar: appBar,
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 8,
@@ -167,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                   ItemButton(
                     title: '连接远程设备',
                     onTap: () async {
-                      final String cmd = await showDialog<String>(
+                      final String cmd = await showCustomDialog<String>(
                         context: context,
                         child: ConnectRemote(),
                       );

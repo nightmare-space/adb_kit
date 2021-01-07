@@ -1,27 +1,24 @@
-import 'dart:io';
-
 import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
-
-import 'config/config.dart';
 import 'config/global.dart';
 import 'global/provider/devices_state.dart';
 import 'global/provider/process_info.dart';
 import 'global/widget/custom_scaffold.dart';
-import 'page/install/adb_install_page.dart';
-import 'page/install/adb_insys_page.dart';
 import 'page/exec_cmd_page.dart';
 import 'page/home_page.dart';
+import 'page/install/adb_install_page.dart';
+import 'page/install/adb_insys_page.dart';
 import 'page/net_debug/remote_debug_page.dart';
 import 'page/search_ip_page.dart';
 
 void main() {
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'sarasa',
       ),
@@ -50,10 +47,9 @@ class _AdbToolState extends State<AdbTool> {
   }
 
   Future<bool> adbExist() async {
-    await PlatformUtil.init();
-    Config.init();
-    print(PlatformUtil.environment()['PATH']);
-    print(await NiProcess.exec('echo \$PATH'));
+    await Global.instance.initGlobal();
+    // print(PlatformUtil.environment()['PATH']);
+    // print(await NiProcess.exec('echo \$PATH'));
     // print("-> ${await PlatformUtil.cmdIsExist('scrcpy')}");
     return PlatformUtil.cmdIsExist('adb');
   }
@@ -71,7 +67,7 @@ class _AdbToolState extends State<AdbTool> {
       ],
       child: Theme(
         data: ThemeData(
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             color: Color(0xfffafafa),
             elevation: 1.0,
             centerTitle: true,
@@ -104,6 +100,7 @@ class _AdbToolState extends State<AdbTool> {
                 allowFontScaling: false,
               );
             }
+            // if (Platform.isAndroid) return NFCReader();
             // return _AdbTool();
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -180,3 +177,44 @@ List<Widget> listWidget = [
   RemoteDebugPage(),
   ExecCmdPage(),
 ];
+
+// class NetworkInterfaceWidget extends StatefulWidget {
+//   @override
+//   _NetworkInterfaceState createState() => _NetworkInterfaceState();
+// }
+
+// class _NetworkInterfaceState extends State<NetworkInterfaceWidget> {
+//   String _networkInterface;
+//   @override
+//   initState() {
+//     super.initState();
+
+//     NetworkInterface.list(includeLoopback: false, type: InternetAddressType.any)
+//         .then((List<NetworkInterface> interfaces) {
+//       setState(() {
+//         _networkInterface = "";
+//         interfaces.forEach((interface) {
+//           _networkInterface += "### name: ${interface.name}\n";
+//           int i = 0;
+//           interface.addresses.forEach((address) {
+//             _networkInterface += "${i++}) ${address.address}\n";
+//           });
+//         });
+//       });
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("NetworkInterface"),
+//       ),
+//       body: Container(
+//         padding: EdgeInsets.all(10.0),
+//         child:
+//             Text("Only in iOS.. :(\n\nNetworkInterface:\n $_networkInterface"),
+//       ),
+//     );
+//   }
+// }

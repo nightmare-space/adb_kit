@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +38,15 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar;
+    if (Platform.isAndroid) {
+      appBar = AppBar(
         brightness: Brightness.light,
-        title: Text('执行命令'),
-      ),
+        title: const Text('执行命令'),
+      );
+    }
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -191,6 +191,7 @@ class _DevicesItemState extends State<DevicesItem>
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey,
+                            fontSize: 12.0,
                           ),
                         ),
                         IconButton(

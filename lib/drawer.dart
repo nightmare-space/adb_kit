@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'global/widget/custom_card.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({
@@ -34,9 +37,25 @@ class _DrawerPageState extends State<DrawerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.adb,
-                size: Dimens.setWidth(100),
+              NiCardButton(
+                onTap: () {
+                  NiToast.showToast('按着玩的~');
+                },
+                borderRadius: 12,
+                child: const Material(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 16.0,
+                      horizontal: 16.0,
+                    ),
+                    child: Icon(
+                      Icons.adb_rounded,
+                      size: 36,
+                      color: Color(0xff282b3e),
+                    ),
+                  ),
+                ),
               ),
               _DrawerItem(
                 title: '主页',
@@ -65,7 +84,7 @@ class _DrawerPageState extends State<DrawerPage> {
                     _DrawerItem(
                       value: 2,
                       groupValue: widget.index,
-                      title: '查看连接到本机的ip',
+                      title: '查看局域网ip',
                       onTap: (index) {
                         widget.onChange?.call(index);
                       },
@@ -91,8 +110,20 @@ class _DrawerPageState extends State<DrawerPage> {
               _DrawerItem(
                 value: 5,
                 groupValue: widget.index,
-                title: '电脑版下载',
-                onTap: (index) {
+                title: '其他平台下载',
+                onTap: (index) async {
+                  const String url = 'http://nightmare.fun/adbtool';
+                  if (await canLaunch(url)) {
+                    await launch(
+                      url,
+                      forceSafariVC: false,
+                      forceWebView: false,
+                      // headers: <String, String>{'my_header_key': 'my_header_value'},
+                    );
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                  // http://nightmare.fun/adbtool
                   // widget.onChange?.call(index);
                 },
               ),

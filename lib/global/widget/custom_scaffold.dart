@@ -19,7 +19,7 @@ class NiScaffold extends StatefulWidget {
 class _NiScaffoldState extends State<NiScaffold> {
   @override
   Widget build(BuildContext context) {
-    bool isMobile = PlatformUtil.isMobilePhone();
+    final bool isMobile = PlatformUtil.isMobilePhone();
     return Scaffold(
       // backgroundColor: Colors.white,
       drawer: isMobile ? widget.drawer : null,

@@ -24,7 +24,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   void initState() {
     super.initState();
-    choosePath = binPath;
+    choosePath = xbinPath;
   }
 
   @override
@@ -75,14 +75,14 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                       Row(
                         children: [
                           Text(
-                            binPath,
+                            xbinPath,
                             style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Radio<String>(
-                            value: binPath,
+                          Radio(
+                            value: xbinPath,
                             groupValue: choosePath,
                             onChanged: (String value) {
                               choosePath = value;
@@ -94,14 +94,14 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                       Row(
                         children: [
                           Text(
-                            xbinPath,
+                            binPath,
                             style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Radio(
-                            value: xbinPath,
+                          Radio<String>(
+                            value: binPath,
                             groupValue: choosePath,
                             onChanged: (String value) {
                               choosePath = value;

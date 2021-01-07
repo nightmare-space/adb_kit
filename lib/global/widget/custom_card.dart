@@ -27,7 +27,7 @@ class _NiCardButtonState extends State<NiCardButton>
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
     );
     animationController.addListener(() {
       setState(() {});
@@ -70,7 +70,7 @@ class _NiCardButtonState extends State<NiCardButton>
         transform: Matrix4.identity()
           ..scale(1.0 - animationController.value * 0.05),
         child: Container(
-          margin: EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.all(

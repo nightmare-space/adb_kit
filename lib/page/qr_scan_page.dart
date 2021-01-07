@@ -20,7 +20,8 @@ class _QrScanPageState extends State<QrScanPage> {
   String content = '';
   // Random random = Random();
   Future<void> getQrCode() async {
-    port = 9000 + Random().nextInt(9) * 10 + Random().nextInt(9);
+    // port = 9000 + Random().nextInt(9) * 10 + Random().nextInt(9);
+    port = 9000;
     print('port -> $port');
     networkManager = NetworkManager('0.0.0.0', port);
     if (Platform.isWindows) {
@@ -34,9 +35,8 @@ class _QrScanPageState extends State<QrScanPage> {
       content = match + ':$port';
       setState(() {});
     } else if (Platform.isAndroid) {
-      final String ipRoute = await NiProcess.exec(
-        'ip route',
-      );
+      final ProcessResult result = await Process.run('ip', ['route']);
+      final String ipRoute = result.stdout.toString();
       for (String ip in ipRoute.split('\n')) {
         if (ip.startsWith('192')) {
           ip = ip.trim().replaceAll(RegExp('.* '), '');
@@ -49,7 +49,7 @@ class _QrScanPageState extends State<QrScanPage> {
       }
     } else {
       final String ipResult = await NiProcess.exec('ifconfig | grep "inet"');
-      print('ipResult->$ipResult');
+      // print('ipResult->$ipResult');
       for (final String line in ipResult.split('\n')) {
         if (line.startsWith(RegExp('.{1,}inet '))) {
           // print('line -> $line');
@@ -88,12 +88,13 @@ class _QrScanPageState extends State<QrScanPage> {
     // print(ipResult);
   }
 
-  void connectDevices(String ip) {
-    Navigator.pop(context);
-    print(
-      PlatformUtil.environment()['PATH'],
-    );
-    final ProcessResult result = Process.runSync(
+  Future<void> connectDevices(String ip) async {
+    NiToast.showToast('扫描成功');
+    // Navigator.pop(context);
+    // print(
+    //   PlatformUtil.environment()['PATH'],
+    // );
+    final ProcessResult result = await Process.run(
       'adb',
       [
         'connect',
@@ -103,16 +104,11 @@ class _QrScanPageState extends State<QrScanPage> {
       includeParentEnvironment: true,
       environment: PlatformUtil.environment(),
     );
-    print(result.stdout);
-    print(result.stderr);
-    Process.runSync(
-      'scrcpy-noconsole',
-      ['-s', ip, '--turn-screen-off'],
-      runInShell: true,
-      includeParentEnvironment: true,
-      environment: PlatformUtil.environment(),
-    );
-    print('ip -> $ip');
+    if (result.stdout.toString().contains('unable to connect')) {
+      NiToast.showToast('连接失败，对方设备可能未打开网络ADB调试');
+    }
+    print('result.stdout -> ${result.stdout}');
+    print('result.stderr -> ${result.stderr}');
   }
 
   @override

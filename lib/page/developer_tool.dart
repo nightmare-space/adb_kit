@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/page/install_apk_page.dart.dart';
 import 'package:flutter/material.dart';
@@ -193,29 +190,6 @@ class _DeveloperToolState extends State<DeveloperTool> {
                 ),
               ),
             ),
-            if (Config.scrcpyExist)
-              InkWell(
-                onTap: () async {
-                  exec('scrcpy -s ${widget.serial}');
-                },
-                child: SizedBox(
-                  height: Dimens.gap_dp48,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Dimens.gap_dp12,
-                    ),
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        '打开Scrcpy投屏',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
           ],
         ),
       ),

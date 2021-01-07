@@ -1,13 +1,7 @@
-import 'package:global_repository/global_repository.dart';
-
 class Config {
   Config._();
-  static String packageName = 'com.nightmare.adbtool';
+  static String packageName = 'com.nightmare.adbtools';
   static String curDevicesSerial = '';
   static Map<String, String> devicesMap = {};
   static String historyIp = '';
-  static bool scrcpyExist = false;
-  static Future<void> init() async {
-    scrcpyExist = await PlatformUtil.cmdIsExist('scrcpy');
-  }
 }

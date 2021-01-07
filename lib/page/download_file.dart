@@ -1,5 +1,4 @@
 // 有动画
-import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/config/global.dart';
