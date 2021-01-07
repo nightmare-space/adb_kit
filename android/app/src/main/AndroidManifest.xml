@@ -1,15 +1,21 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nightmare.adbtool">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nightmare.adbtools">
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <application android:name="io.flutter.app.FlutterApplication" android:label="adb_tool" android:icon="@mipmap/ic_launcher">
+  <uses-permission android:name="android.permission.NFC" />
+  <application android:name="io.flutter.app.FlutterApplication" android:label="ADB工具" android:icon="@mipmap/ic_launcher">
     <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
       <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
       <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="yan" android:host="nightmare.fun" android:pathPrefix="/index.html" />
       </intent-filter>
     </activity>
     <meta-data android:name="flutterEmbedding" android:value="2" />

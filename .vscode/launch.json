@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Mac Desktop",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "macos"
+        },
+        {
             "name": "adb_tool",
             "request": "launch",
             "type": "dart"
