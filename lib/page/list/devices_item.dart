@@ -34,16 +34,17 @@ class _DevicesItemState extends State<DevicesItem>
     for (final String key in DevicesInfo.shellApi.keys) {
       if (!Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
         curProcess = '获取$key信息中...';
+        // Log.i(widget.devicesEntity.stat);
         if (mounted) {
           setState(() {});
         }
-
-        final String value = await exec(
-            'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}');
-        print('value -> $value');
-
-        if (value.isNotEmpty && value.length <= 10)
-          Config.devicesMap[widget.devicesEntity.serial] = value;
+        if (widget.devicesEntity.connect()) {
+          final String value = await exec(
+              'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}');
+          // Log.i('value->$value');
+          if (value.isNotEmpty && value.length <= 10)
+            Config.devicesMap[widget.devicesEntity.serial] = value;
+        }
       }
       progress++;
       if (progress == progressMax) {

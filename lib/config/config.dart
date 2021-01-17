@@ -4,4 +4,6 @@ class Config {
   static String curDevicesSerial = '';
   static Map<String, String> devicesMap = {};
   static String historyIp = '';
+  static int qrPort = 9000;
+  static bool conWhenScan = true;
 }

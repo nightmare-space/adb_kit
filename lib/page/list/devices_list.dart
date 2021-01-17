@@ -24,6 +24,10 @@ class DevicesEntity {
     return false;
   }
 
+  bool connect() {
+    return stat == 'device';
+  }
+
   @override
   String toString() {
     return 'serial:$serial  stat:$stat';
@@ -44,7 +48,7 @@ class _DevicesListState extends State<DevicesList> {
   @override
   void initState() {
     super.initState();
-    getDevices();
+    // getDevices();
   }
 
   void _addItem(DevicesEntity devicesEntity) {

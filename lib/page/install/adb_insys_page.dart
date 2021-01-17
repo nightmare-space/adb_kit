@@ -1,4 +1,5 @@
 // 安装 adb 工具到系统
+import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
@@ -9,7 +10,6 @@ import 'package:provider/provider.dart';
 
 import '../home_page.dart';
 import '../process_page.dart';
-import '../toolkit_colors.dart';
 
 class AdbInstallToSystemPage extends StatefulWidget {
   @override
@@ -48,7 +48,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 Row(
                   children: const <Widget>[
                     ItemHeader(
-                      color: YanToolColors.accentColor,
+                      color: CandyColors.candyCyan,
                     ),
                     Text(
                       '安装到系统(需要root)',

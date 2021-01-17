@@ -12,6 +12,7 @@ class Global {
     environment = PlatformUtil.environment();
     themeFollowSystem = true;
   }
+  bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   // 由于使用的是页面级别的Provider，所以push后的context会找不到Provider的祖先节点

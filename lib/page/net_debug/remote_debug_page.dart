@@ -1,10 +1,10 @@
+import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 import '../home_page.dart';
-import '../toolkit_colors.dart';
 
 class RemoteDebugPage extends StatefulWidget {
   @override
