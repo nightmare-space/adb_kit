@@ -35,7 +35,7 @@ class Global {
     }
     isInit = true;
     await PlatformUtil.init();
-    NiProcess.exec('su');
+    // NiProcess.exec('su');
     final NetworkManager networkManager = NetworkManager('0.0.0.0', 9001);
     await networkManager.startServer((data) {
       NiToast.showToast('发现碰一碰');
@@ -93,7 +93,7 @@ class Global {
       // '192.168.199.192',
       9003,
     );
-    await socket.init();
+    await socket.connect();
     socket.sendMsg('192.168.43.1');
   }
 

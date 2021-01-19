@@ -9,7 +9,7 @@ import 'package:global_repository/global_repository.dart';
 
 class DeviceEntitys extends ChangeNotifier {
   DeviceEntitys() {
-    getDevices();
+    // getDevices();
   }
   List<DevicesEntity> devicesEntitys = [];
 

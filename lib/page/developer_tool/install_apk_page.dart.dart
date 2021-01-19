@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
-import 'process_page.dart';
+import '../process_page.dart';
 
 class InstallApkPage extends StatefulWidget {
   const InstallApkPage({Key key, this.serial}) : super(key: key);

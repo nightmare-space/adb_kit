@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
-import 'process_page.dart';
+import '../process_page.dart';
 
 class DownloadFile extends StatefulWidget {
   const DownloadFile({Key key, this.serial}) : super(key: key);

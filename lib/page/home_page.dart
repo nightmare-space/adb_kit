@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                           serverAddress.split(':').first,
                           int.tryParse(serverAddress.split(':').last),
                         );
-                        await socket.init();
+                        await socket.connect();
 
                         // socket.sendMsg(deviceIp);
                       }

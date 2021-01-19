@@ -9,8 +9,8 @@ const int msgCodeByteLen = 2;
 const int minMsgByteLen = msgByteLen + msgCodeByteLen;
 
 class NetworkManager {
-  NetworkManager(this.host, this.port);
-  final String host;
+  NetworkManager(this.address, this.port);
+  final dynamic address;
   final int port;
   Socket socket;
   static Stream<List<int>> mStream;
@@ -19,7 +19,7 @@ class NetworkManager {
   Future<void> startServer(void Function(String) listen) async {
     print('启动 socket');
     serverSocket = await ServerSocket.bind(
-      host,
+      address,
       port,
       shared: true,
     ); //绑定端口4041，根据需要自行修改，建议用动态，防止端口占用
@@ -43,17 +43,19 @@ class NetworkManager {
     print(DateTime.now().toString() + ' Socket服务停止...');
   }
 
-  Future<void> init() async {
+  Future<bool> connect() async {
     try {
       socket = await Socket.connect(
-        host,
+        address,
         port,
         timeout: const Duration(
           seconds: 3,
         ),
       );
       mStream = socket.asBroadcastStream();
+      return true;
     } catch (e) {
+      return false;
       print('连接socket出现异常，e=${e.toString()}');
     }
     // socket.listen(decodeHandle,

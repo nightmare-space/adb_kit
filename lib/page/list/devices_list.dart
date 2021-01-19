@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:adb_tool/page/developer_tool.dart';
+import 'package:adb_tool/page/developer_tool/developer_tool.dart';
 import 'package:adb_tool/page/list/devices_item.dart';
+import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -48,7 +49,7 @@ class _DevicesListState extends State<DevicesList> {
   @override
   void initState() {
     super.initState();
-    // getDevices();
+    getDevices();
   }
 
   void _addItem(DevicesEntity devicesEntity) {
@@ -111,6 +112,7 @@ class _DevicesListState extends State<DevicesList> {
       } else {
         out = (await NiProcess.exec('adb devices')).trim();
       }
+      Log.w(out);
       // print('------------------');
       // 说明adb服务开启了
       if (out.startsWith('List of devices')) {
@@ -173,30 +175,8 @@ class _DevicesListState extends State<DevicesList> {
           // print(devicesEntity.serial);
         }
       }
-      await Future<void>.delayed(const Duration(milliseconds: 50), () {});
+      await Future<void>.delayed(const Duration(milliseconds: 100), () {});
     }
-  }
-
-  int i = 0;
-  void addItem() {
-    final int _index = devicesEntitys.length;
-    devicesEntitys.insert(_index, DevicesEntity('$i', 'stat'));
-    setState(() {});
-    _listKey.currentState.insertItem(_index);
-    i++;
-  }
-
-  void removeItem() {
-    final int _index = devicesEntitys.length - 1;
-    _listKey.currentState.removeItem(
-        _index,
-        (context, animation) =>
-            _buildItem(DevicesEntity('7919c2f1', 'stat'), animation),
-        duration: const Duration(
-          seconds: 3,
-        ));
-    devicesEntitys.removeAt(_index);
-    setState(() {});
   }
 
   @override
