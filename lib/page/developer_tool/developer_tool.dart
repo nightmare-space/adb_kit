@@ -97,6 +97,16 @@ class _DeveloperToolState extends State<DeveloperTool> {
             ),
             _DeveloperItem(
               serial: widget.serial,
+              title: '开启单手模式',
+              putKey: 'handy_mode_state',
+            ),
+            _DeveloperItem(
+              serial: widget.serial,
+              title: '一键转无线调试',
+              putKey: 'show_touches',
+            ),
+            _DeveloperItem(
+              serial: widget.serial,
               title: '显示屏幕指针',
               putKey: 'pointer_location',
             ),
@@ -303,11 +313,17 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
 }
 
 class _DeveloperItem extends StatefulWidget {
-  const _DeveloperItem({Key key, this.title, this.serial, this.putKey})
-      : super(key: key);
+  const _DeveloperItem({
+    Key key,
+    this.title,
+    this.serial,
+    this.putKey,
+    this.putType,
+  }) : super(key: key);
   final String title;
   final String serial;
   final String putKey;
+  final String putType;
   @override
   __DeveloperItemState createState() => __DeveloperItemState();
 }
