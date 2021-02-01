@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/home/provider/device_entitys.dart';
 import 'package:adb_tool/page/home_page.dart';
@@ -45,7 +46,7 @@ class _QrScanPageState extends State<QrScanPage> {
   }
 
   Future<void> connectDevices(String ip) async {
-    final DeviceEntitys deviceEntitys = Provider.of(context);
+    final DeviceEntitys deviceEntitys = Global.instance.deviceEntitys;
     NiToast.initContext(context);
     NiToast.showToast('扫描成功');
 
@@ -79,7 +80,9 @@ class _QrScanPageState extends State<QrScanPage> {
       includeParentEnvironment: true,
       environment: PlatformUtil.environment(),
     );
-    if (result.stdout.toString().contains('unable to connect')) {
+    Log.w(result.stdout);
+    if (result.stdout.toString().contains('unable to connect') ||
+        result.stdout.toString().contains('failed to connect')) {
       NiToast.showToast('连接失败，对方设备可能未打开网络ADB调试');
       return;
     }

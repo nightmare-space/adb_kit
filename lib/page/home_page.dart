@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
@@ -108,115 +109,126 @@ class _HomePageState extends State<HomePage> {
           create: (_) => DeviceEntitys(),
         ),
       ],
-      child: Scaffold(
-        appBar: appBar,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: 16,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      child: Builder(
+        builder: (_) {
+          Global.instance.deviceEntitys = Provider.of(_);
+          return Scaffold(
+            appBar: appBar,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 16,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ItemHeader(color: CandyColors.candyPink),
-                    const Text(
-                      '已成功连接的设备',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyPink),
+                        const Text(
+                          '已成功连接的设备',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Dimens.gap_dp8,
                       ),
+                      child: DevicesList(),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: Dimens.gap_dp8,
-                  ),
-                  child: DevicesList(),
-                ),
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyBlue),
-                    const Text(
-                      '快捷命令',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyBlue),
+                        const Text(
+                          '快捷命令',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Wrap(
-                  spacing: 0,
-                  alignment: WrapAlignment.start,
-                  runAlignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  children: [
-                    ItemButton(
-                      title: '开启服务',
-                      onTap: () async {
-                        Provider.of<ProcessState>(context).clear();
-                        const String cmd = 'adb start-server';
-                        final String result = await exec('echo $cmd\n$cmd');
-                        Provider.of<ProcessState>(context).appendOut(result);
-                      },
-                    ),
-                    ItemButton(
-                      title: '停止服务',
-                      onTap: () async {
-                        Provider.of<ProcessState>(context).clear();
-                        const String cmd = 'adb kill-server';
-                        final String result = await exec('echo $cmd\n$cmd');
-                        Provider.of<ProcessState>(context).appendOut(result);
-                      },
-                    ),
-                    ItemButton(
-                      title: '重启服务',
-                      onTap: () async {
-                        Provider.of<ProcessState>(context).clear();
-                        const String cmd = 'adb kill-server\nadb start-server';
-                        final String result = await exec('echo $cmd\n$cmd\n');
-                        Provider.of<ProcessState>(context).appendOut(result);
-                      },
-                    ),
-                    ItemButton(
-                      title: '连接远程设备',
-                      onTap: () async {
-                        final String cmd = await showCustomDialog<String>(
-                          context: context,
-                          child: ConnectRemote(),
-                        );
-                        if (cmd == null) {
-                          return;
-                        }
-                        Provider.of<ProcessState>(context).clear();
-                        final String result = await exec('echo $cmd\n$cmd');
-                        Provider.of<ProcessState>(context).appendOut(result);
-                      },
-                    ),
-                    ItemButton(
-                      title: '连接二维码',
-                      onTap: () async {
-                        await showDialog<String>(
-                          context: context,
-                          builder: (_) {
-                            return QrScanPage();
+                    Wrap(
+                      spacing: 0,
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: [
+                        ItemButton(
+                          title: '开启服务',
+                          onTap: () async {
+                            Provider.of<ProcessState>(context).clear();
+                            const String cmd = 'adb start-server';
+                            final String result = await exec('echo $cmd\n$cmd');
+                            Provider.of<ProcessState>(context)
+                                .appendOut(result);
                           },
-                        );
-                      },
+                        ),
+                        ItemButton(
+                          title: '停止服务',
+                          onTap: () async {
+                            Provider.of<ProcessState>(context).clear();
+                            const String cmd = 'adb kill-server';
+                            final String result = await exec('echo $cmd\n$cmd');
+                            Provider.of<ProcessState>(context)
+                                .appendOut(result);
+                          },
+                        ),
+                        ItemButton(
+                          title: '重启服务',
+                          onTap: () async {
+                            Provider.of<ProcessState>(context).clear();
+                            const String cmd =
+                                'adb kill-server\nadb start-server';
+                            final String result =
+                                await exec('echo $cmd\n$cmd\n');
+                            Provider.of<ProcessState>(context)
+                                .appendOut(result);
+                          },
+                        ),
+                        ItemButton(
+                          title: '连接远程设备',
+                          onTap: () async {
+                            final String cmd = await showCustomDialog<String>(
+                              context: context,
+                              child: ConnectRemote(),
+                            );
+                            if (cmd == null) {
+                              return;
+                            }
+                            Provider.of<ProcessState>(context).clear();
+                            final String result = await exec('echo $cmd\n$cmd');
+                            Provider.of<ProcessState>(context)
+                                .appendOut(result);
+                          },
+                        ),
+                        ItemButton(
+                          title: '连接二维码',
+                          onTap: () async {
+                            await showDialog<String>(
+                              context: _,
+                              builder: (_) {
+                                return QrScanPage();
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    ProcessPage(
+                      height: 100,
                     ),
                   ],
                 ),
-                ProcessPage(
-                  height: 100,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

@@ -66,13 +66,11 @@ class _AdbToolState extends State<AdbTool> {
         ),
       ],
       child: Theme(
-        data: ThemeData(
-        
-        
-        ),
+        data: ThemeData(),
         child: FutureBuilder<bool>(
           future: adbExist(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            Global.instance.processState = Provider.of(context);
             NiToast.initContext(context);
             if (PlatformUtil.isDesktop()) {
               ScreenUtil.init(
