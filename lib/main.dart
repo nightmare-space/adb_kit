@@ -67,19 +67,8 @@ class _AdbToolState extends State<AdbTool> {
       ],
       child: Theme(
         data: ThemeData(
-          appBarTheme: const AppBarTheme(
-            color: Color(0xfffafafa),
-            elevation: 1.0,
-            centerTitle: true,
-            textTheme: TextTheme(
-              headline6: TextStyle(
-                height: 1.0,
-                fontSize: 20.0,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+        
+        
         ),
         child: FutureBuilder<bool>(
           future: adbExist(),

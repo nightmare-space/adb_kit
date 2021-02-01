@@ -25,6 +25,8 @@ class DevicesEntity {
     return false;
   }
 
+  @override
+  int get hashCode => serial.hashCode;
   bool connect() {
     return stat == 'device';
   }
@@ -34,8 +36,6 @@ class DevicesEntity {
     return 'serial:$serial  stat:$stat';
   }
 
-  @override
-  int get hashCode => serial.hashCode;
 }
 
 class DevicesList extends StatefulWidget {

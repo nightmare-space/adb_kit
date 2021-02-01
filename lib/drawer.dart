@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'global/widget/custom_card.dart';
+import 'page/help_page.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({
@@ -107,6 +110,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   widget.onChange?.call(index);
                 },
               ),
+
               _DrawerItem(
                 value: 5,
                 groupValue: widget.index,
@@ -125,6 +129,23 @@ class _DrawerPageState extends State<DrawerPage> {
                   }
                   // http://nightmare.fun/adbtool
                   // widget.onChange?.call(index);
+                },
+              ),
+              _DrawerItem(
+                value: 5,
+                groupValue: widget.index,
+                title: 'ADB命令手册',
+                onTap: (index) async {
+                  final String data = await rootBundle.loadString(
+                    'assets/README.md',
+                  );
+                  Navigator.of(context).push<HelpPage>(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return HelpPage();
+                      },
+                    ),
+                  );
                 },
               ),
             ],
