@@ -8,6 +8,7 @@ import 'package:adb_tool/page/home/provider/device_entitys.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
+import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
@@ -67,20 +68,16 @@ class Global {
   Future<void> _initNfcModule() async {
     RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
-      Config.multicastPort,
+      Config.udpPort,
     ).then((RawDatagramSocket socket) {
       socket.broadcastEnabled = true;
-      socket.writeEventsEnabled = true;
-      socket.joinMulticast(Config.multicastAddress);
-      print('Multicast group joined');
-
       socket.listen((RawSocketEvent rawSocketEvent) async {
         final Datagram datagram = socket.receive();
         if (datagram == null) {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        print('message -> $message');
+        // print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
           if (unique != await UniqueUtil.getUniqueId()) {
@@ -94,6 +91,7 @@ class Global {
         }
         if (message == await UniqueUtil.getUniqueId()) {
           NiToast.showToast('发现来自IP：${datagram.address.address}的碰一碰');
+          print('发现来自IP：${datagram.address.address}的碰一碰');
           ScrcpyUtil.showDeviceScreen(datagram.address.address);
         } else {
           print(
@@ -102,14 +100,11 @@ class Global {
       });
     });
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-        .then((RawDatagramSocket socket) {
-      print('Sending from ${socket.address.address}:${socket.port}');
+        .then((RawDatagramSocket socket) async {
+      socket.broadcastEnabled = true;
+
       Timer.periodic(const Duration(seconds: 1), (Timer t) async {
-        socket.send(
-          'find ${await UniqueUtil.getUniqueId()}'.codeUnits,
-          Config.multicastAddress,
-          Config.multicastPort,
-        );
+        UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
       });
     });
     if (!Platform.isAndroid) {
@@ -134,14 +129,12 @@ class Global {
       //   NDEFRecord.plain('macos10.15.7'),
       // ]);
       // message.tag.write(newMessage);
+
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-          .then((RawDatagramSocket socket) {
-        print('Sending from ${socket.address.address}:${socket.port}');
-        socket.send(
-          message.records.first.data.codeUnits,
-          Config.multicastAddress,
-          Config.multicastPort,
-        );
+          .then((RawDatagramSocket socket) async {
+        socket.broadcastEnabled = true;
+
+        UdpUtil.boardcast(socket, message.records.first.data);
       });
     });
   }

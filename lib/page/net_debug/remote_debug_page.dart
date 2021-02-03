@@ -55,19 +55,15 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     // );
     // print(result);
     String result;
-    if (adbDebugOpen) {
-      result = await NiProcess.exec(
-        'setprop service.adb.tcp.port $value\n'
-        'stop adbd\n'
-        'start adbd\n',
-      );
-    } else {
-      result = await NiProcess.exec(
-        'setprop service.adb.tcp.port $value\n'
-        'stop adbd\n'
-        'start adbd\n',
-      );
-    }
+    result = await NiProcess.exec(
+      '''
+      su -c '
+        setprop service.adb.tcp.port $value
+        stop adbd
+        start adbd
+        '
+        ''',
+    );
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:global_repository/global_repository.dart';
 
 class ScrcpyUtil {
   static Future<void> showDeviceScreen(String ip) async {
-    await Process.run(
+    final ProcessResult result = await Process.run(
       'scrcpy',
       [
         '-s',
@@ -14,5 +14,8 @@ class ScrcpyUtil {
       includeParentEnvironment: true,
       environment: PlatformUtil.environment(),
     );
+
+    print('result.stdout -> ${result.stdout}');
+    print('result.stderr -> ${result.stderr}');
   }
 }

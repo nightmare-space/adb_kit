@@ -10,6 +10,7 @@ import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/utils/permission_utils.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
+import 'package:adb_tool/utils/udp_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
@@ -86,13 +87,24 @@ class _HomePageState extends State<HomePage> {
             // floatingActionButton: FloatingActionButton(
             //   onPressed: () async {
             //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-            //         .then((RawDatagramSocket socket) {
-            //       print('Sending ${UniqueKey()}');
-            //       socket.send(
-            //         UniqueKey().toString().codeUnits,
-            //         Config.multicastAddress,
-            //         Config.multicastPort,
-            //       );
+            //         .then((RawDatagramSocket socket) async {
+            //       socket.broadcastEnabled = true;
+            //       final List<String> address =
+            //           await PlatformUtil.localAddress();
+            //       for (final String addr in address) {
+            //         final tmp = addr.split('.');
+            //         tmp.removeLast();
+            //         final String addrPrfix = tmp.join('.');
+            //         print('addrPrfix -> $addrPrfix');
+            //         final InternetAddress address = InternetAddress(
+            //           '$addrPrfix\.255',
+            //         );
+            //         socket.send(
+            //           UniqueKey().toString().codeUnits,
+            //           address,
+            //           Config.udpPort,
+            //         );
+            //       }
             //     });
             //   },
             // ),

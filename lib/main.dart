@@ -27,10 +27,10 @@ void main() {
       home: AdbTool(),
     ),
   );
-  if (Platform.isAndroid) {
-    final MethodChannel methodChannel = MethodChannel('multicast-lock');
-    methodChannel.invokeMethod<void>('aquire');
-  }
+  // if (Platform.isAndroid) {
+  //   final MethodChannel methodChannel = MethodChannel('multicast-lock');
+  //   methodChannel.invokeMethod<void>('aquire');
+  // }
   PlatformUtil.setPackageName('com.nightmare.adbtools');
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
