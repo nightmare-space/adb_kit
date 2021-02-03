@@ -17,6 +17,7 @@ class NetworkManager {
   Int8List cacheData = Int8List(0);
   static ServerSocket serverSocket;
   Future<void> startServer(void Function(String) listen) async {
+    InternetAddress.anyIPv4;
     print('启动 socket');
     serverSocket = await ServerSocket.bind(
       address,

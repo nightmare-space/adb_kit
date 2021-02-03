@@ -1,24 +1,25 @@
 import 'dart:io';
 
 import 'package:adb_tool/config/candy_colors.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/utils/permission_utils.dart';
+import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
-import 'package:qrscan/qrscan.dart' as scanner;
 import 'dialog/connect_remote.dart';
 import 'home/provider/device_entitys.dart';
+import 'home/qr_scan_page.dart';
 import 'list/devices_list.dart';
 import 'process_page.dart';
-import 'home/qr_scan_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,8 +27,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<DeviceEntity> list = [];
   @override
   void initState() {
+    Global.instance.findDevicesCall = (DeviceEntity deviceEntity) {
+      if (!list.contains(deviceEntity)) {
+        list.add(deviceEntity);
+        setState(() {});
+      }
+      // print('$this deviceEntity->$deviceEntity');
+    };
     super.initState();
   }
 
@@ -40,6 +49,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color(0x00f7f7f7),
         centerTitle: true,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
         title: Text(
           '概览',
           style: TextStyle(
@@ -52,52 +67,7 @@ class _HomePageState extends State<HomePage> {
           NiIconButton(
             child: SvgPicture.asset('assets/icon/QR_code.svg'),
             onTap: () async {
-              await PermissionUtil.request();
-              final String cameraScanResult = await scanner.scan();
-              if (cameraScanResult == null) {
-                return;
-              }
-              print('cameraScanResult -> $cameraScanResult');
-
-              final List<NetworkInterface> networkInterfaces =
-                  await NetworkInterface.list(
-                includeLoopback: false,
-                type: InternetAddressType.IPv4,
-              );
-              for (final NetworkInterface netInterface in networkInterfaces) {
-                // 遍历网卡
-                print('${netInterface.name} : ${netInterface.addresses}');
-                for (final InternetAddress netAddress
-                    in netInterface.addresses) {
-                  // 遍历网卡的IP地址
-                  if (isAddress(netAddress.address)) {
-                    print('${netAddress.address}\n');
-                    for (final String serverAddress
-                        in cameraScanResult.split(';')) {
-                      // 遍历二维码中的ip地址
-                      final List<String> serverAddressList =
-                          serverAddress.split('.');
-                      final List<String> localAddressList =
-                          netAddress.address.split('.');
-                      print('serverAddressList->$serverAddressList');
-                      print('localAddressList->$localAddressList');
-                      if (serverAddressList[0] == localAddressList[0] &&
-                          serverAddressList[1] == localAddressList[1] &&
-                          serverAddressList[2] == localAddressList[2]) {
-                        // 默认为前三个ip段相同代表在同一个局域网，可能更负责，由这学期学的计算机网路来看
-                        print('发现同一局域网IP');
-                        final NetworkManager socket = NetworkManager(
-                          serverAddress.split(':').first,
-                          int.tryParse(serverAddress.split(':').last),
-                        );
-                        await socket.connect();
-
-                        // socket.sendMsg(deviceIp);
-                      }
-                    }
-                  }
-                }
-              }
+              ScanUtil.parseScan();
             },
           ),
         ],
@@ -113,6 +83,19 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           Global.instance.deviceEntitys = Provider.of(_);
           return Scaffold(
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () async {
+            //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+            //         .then((RawDatagramSocket socket) {
+            //       print('Sending ${UniqueKey()}');
+            //       socket.send(
+            //         UniqueKey().toString().codeUnits,
+            //         Config.multicastAddress,
+            //         Config.multicastPort,
+            //       );
+            //     });
+            //   },
+            // ),
             appBar: appBar,
             body: Padding(
               padding: const EdgeInsets.symmetric(
@@ -219,6 +202,83 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                       ],
+                    ),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyCyan),
+                        const Text(
+                          '运行AdbTool的设备',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 48.0 * list.length,
+                      child: ListView.builder(
+                        itemCount: list.length,
+                        itemBuilder: (c, i) {
+                          return InkWell(
+                            onTap: () async {
+                              final NetworkManager socket = NetworkManager(
+                                list[i].address,
+                                Config.qrPort,
+                              );
+                              await socket.connect();
+                            },
+                            child: SizedBox(
+                              height: 48.0,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.deepPurple,
+                                    ),
+                                    height: Dimens.gap_dp8,
+                                    width: Dimens.gap_dp8,
+                                  ),
+                                  SizedBox(
+                                    width: Dimens.gap_dp4,
+                                  ),
+                                  Center(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          ' ${list[i].address}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          '(${list[i].unique})',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.cast_connected),
+                                    onPressed: () async {
+                                      final NetworkManager socket =
+                                          NetworkManager(
+                                        list[i].address,
+                                        Config.qrPort,
+                                      );
+                                      await socket.connect();
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     ProcessPage(
                       height: 100,

@@ -35,7 +35,6 @@ class DevicesEntity {
   String toString() {
     return 'serial:$serial  stat:$stat';
   }
-
 }
 
 class DevicesList extends StatefulWidget {
@@ -112,7 +111,7 @@ class _DevicesListState extends State<DevicesList> {
       } else {
         out = (await NiProcess.exec('adb devices')).trim();
       }
-      Log.w(out);
+      // Log.w(out);
       // print('------------------');
       // 说明adb服务开启了
       if (out.startsWith('List of devices')) {

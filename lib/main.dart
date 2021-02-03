@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +27,11 @@ void main() {
       home: AdbTool(),
     ),
   );
+  if (Platform.isAndroid) {
+    final MethodChannel methodChannel = MethodChannel('multicast-lock');
+    methodChannel.invokeMethod<void>('aquire');
+  }
+  PlatformUtil.setPackageName('com.nightmare.adbtools');
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -54,8 +61,21 @@ class _AdbToolState extends State<AdbTool> {
     return PlatformUtil.cmdIsExist('adb');
   }
 
+  // void test() {
+  //   if (Platform.isAndroid) {
+  //     RawDatagramSocket.bind(InternetAddress('192.168.208.0'), 0)
+  //         .then((RawDatagramSocket socket) {
+  //       print('Sending from ${socket.address.address}:${socket.port}');
+  //       int port = 6666;
+  //       socket.send('Hello from UDP land!\n'.codeUnits,
+  //           InternetAddress.LOOPBACK_IP_V4, port);
+  //     });
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
+    // test();
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
         ChangeNotifierProvider<ProcessState>(
@@ -66,7 +86,22 @@ class _AdbToolState extends State<AdbTool> {
         ),
       ],
       child: Theme(
-        data: ThemeData(),
+        data: ThemeData(
+          appBarTheme: const AppBarTheme(
+            color: Colors.transparent,
+            elevation: 0.0,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Colors.black),
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                height: 1.0,
+                fontSize: 20.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
         child: FutureBuilder<bool>(
           future: adbExist(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {

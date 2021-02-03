@@ -147,7 +147,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e880d1c13af9788f2790b0c0fa194445584bd29d
+      resolved-ref: "690d5e3faaaf3bc907908d90ff7943f6d88891bb"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -318,7 +318,7 @@ packages:
       name: qrscan
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.21"
+    version: "0.2.22"
   quiver:
     dependency: transitive
     description:
@@ -369,8 +369,8 @@ packages:
   termare_view:
     dependency: transitive
     description:
-      path: "../../termare-space/termare_view"
-      relative: true
+      path: "/Users/nightmare/Desktop/termare-space/termare_view"
+      relative: false
     source: path
     version: "0.0.2"
   test_api:
@@ -421,7 +421,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.5+1"
+    version: "0.1.5+3"
   url_launcher_windows:
     dependency: transitive
     description:
@@ -442,7 +442,7 @@ packages:
       name: win32
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.4"
+    version: "1.7.4+1"
   xdg_directories:
     dependency: transitive
     description:

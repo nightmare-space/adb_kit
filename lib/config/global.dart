@@ -1,12 +1,43 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/provider/devices_state.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/page/home/provider/device_entitys.dart';
+import 'package:adb_tool/utils/adb_util.dart';
+import 'package:adb_tool/utils/scrcpy_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
+import 'package:adb_tool/utils/unique_util.dart';
+import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
+
+class DeviceEntity {
+  DeviceEntity(this.unique, this.address);
+  final String unique;
+  final String address;
+  @override
+  String toString() {
+    return 'unique:$unique address:$address';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    // 判断是否是非
+    if (other is! DeviceEntity) {
+      return false;
+    }
+    if (other is DeviceEntity) {
+      return other.address == address;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => '$address'.hashCode;
+}
 
 class Global {
   factory Global() => _getInstance();
@@ -24,6 +55,7 @@ class Global {
   Map<String, String> environment;
   bool themeFollowSystem;
   String _documentsDir;
+  void Function(DeviceEntity deviceEntity) findDevicesCall;
   static Global get instance => _getInstance();
   static Global _instance;
 
@@ -32,19 +64,53 @@ class Global {
     return _instance;
   }
 
-  Future<void> initGlobal() async {
-    print('initGlobal');
-    if (isInit) {
-      return;
-    }
-    isInit = true;
-    await PlatformUtil.init();
-    // NiProcess.exec('su');
-    final NetworkManager networkManager = NetworkManager('0.0.0.0', 9001);
-    await networkManager.startServer((data) {
-      NiToast.showToast('发现碰一碰');
-      print('data -> $data');
-      connectDevices(data);
+  Future<void> _initNfcModule() async {
+    RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      Config.multicastPort,
+    ).then((RawDatagramSocket socket) {
+      socket.broadcastEnabled = true;
+      socket.writeEventsEnabled = true;
+      socket.joinMulticast(Config.multicastAddress);
+      print('Multicast group joined');
+
+      socket.listen((RawSocketEvent rawSocketEvent) async {
+        final Datagram datagram = socket.receive();
+        if (datagram == null) {
+          return;
+        }
+        final String message = String.fromCharCodes(datagram.data);
+        print('message -> $message');
+        if (message.startsWith('find')) {
+          final String unique = message.replaceAll('find ', '');
+          if (unique != await UniqueUtil.getUniqueId()) {
+            findDevicesCall?.call(
+              DeviceEntity(unique, datagram.address.address),
+            );
+          }
+
+          // print('发现设备');
+          return;
+        }
+        if (message == await UniqueUtil.getUniqueId()) {
+          NiToast.showToast('发现来自IP：${datagram.address.address}的碰一碰');
+          ScrcpyUtil.showDeviceScreen(datagram.address.address);
+        } else {
+          print(
+              'NFC标签的序列化为 $message 本设备的序列化为 ${await UniqueUtil.getUniqueId()}');
+        }
+      });
+    });
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+        .then((RawDatagramSocket socket) {
+      print('Sending from ${socket.address.address}:${socket.port}');
+      Timer.periodic(const Duration(seconds: 1), (Timer t) async {
+        socket.send(
+          'find ${await UniqueUtil.getUniqueId()}'.codeUnits,
+          Config.multicastAddress,
+          Config.multicastPort,
+        );
+      });
     });
     if (!Platform.isAndroid) {
       return;
@@ -57,70 +123,52 @@ class Global {
     final Stream<NDEFMessage> stream = NFC.readNDEF(once: false);
 
     stream.listen((NDEFMessage message) {
-      print('${message.type}');
-      print('${message.id}');
-      print('${message.tag.id}');
-      print('${message.records.length}');
-      print('${message.messageType}');
-      for (final record in message.records) {
-        print(
-            'records: ${record.payload} ${record.data} ${record.type} ${record.tnf} ${record.languageCode}');
-      }
-      final NDEFMessage newMessage = NDEFMessage.withRecords([
-        NDEFRecord.uri(Uri.parse('yan://nightmare.fun/index.html')),
-      ]);
-      message.tag.write(newMessage);
-      sendIpToServer();
-      // print("records: ${message.records.length}");
-      // print("records: ${message.payload}");
-      // print("records: ${message.records[0].data}");
-      // print("records: ${message.records[1].payload}");
-      // print("records: ${message.records[2].data}");
-      // print("records: ${message.data}");
+      Log.i('records.length ${message.records.length}');
+
+      Log.i('records.length ${message.records.first.data}');
+      // for (final record in message.records) {
+      //   print(
+      //       'records: ${record.payload} ${record.data} ${record.type} ${record.tnf} ${record.languageCode}');
+      // }
+      // final NDEFMessage newMessage = NDEFMessage.withRecords([
+      //   NDEFRecord.plain('macos10.15.7'),
+      // ]);
+      // message.tag.write(newMessage);
+      RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+          .then((RawDatagramSocket socket) {
+        print('Sending from ${socket.address.address}:${socket.port}');
+        socket.send(
+          message.records.first.data.codeUnits,
+          Config.multicastAddress,
+          Config.multicastPort,
+        );
+      });
     });
   }
 
-  Future<void> sendIpToServer() async {
-    final ProcessResult result = await Process.run(
-      'ip',
-      ['route'],
+  Future<void> _socketServer() async {
+    NetworkManager networkManager;
+    networkManager = NetworkManager(
+      InternetAddress.anyIPv4,
+      Config.qrPort,
     );
-    // print(result.stdout);
-    final String deviceIp = result.stdout.toString().trim().replaceAll(
-          RegExp('.* '),
-          '',
-        );
-    print('deviceIp ->$deviceIp');
-    // 读本机的adb端口一起发送过去
-    final NetworkManager socket = NetworkManager(
-      '192.168.43.49',
-      // '192.168.199.192',
-      9003,
-    );
-    await socket.connect();
-    socket.sendMsg('192.168.43.1');
+    await networkManager.startServer((data) {
+      Log.v('data -> $data');
+      AdbUtil.connectDevices(data);
+    });
   }
 
-  Future<void> connectDevices(String ip) async {
-    // Navigator.pop(context);
-    // print(
-    //   PlatformUtil.environment()['PATH'],
-    // );
-    final ProcessResult result = await Process.run(
-      'adb',
-      [
-        'connect',
-        ip + ':5555',
-      ],
-      runInShell: true,
-      includeParentEnvironment: true,
-      environment: PlatformUtil.environment(),
-    );
-    if (result.stdout.toString().contains('unable to connect')) {
-      NiToast.showToast('连接失败，对方设备可能未打开网络ADB调试');
+  Future<void> initGlobal() async {
+    print('initGlobal');
+    if (isInit) {
+      return;
     }
-    print('result.stdout -> ${result.stdout}');
-    print('result.stderr -> ${result.stderr}');
+    isInit = true;
+    _initNfcModule();
+    _socketServer();
+    if (!Platform.isAndroid) {
+      return;
+    }
   }
 
   static String get documentsDir => instance._documentsDir;

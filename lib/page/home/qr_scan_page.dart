@@ -20,17 +20,14 @@ class QrScanPage extends StatefulWidget {
 }
 
 class _QrScanPageState extends State<QrScanPage> {
-  NetworkManager networkManager;
   String content = '';
   // Random random = Random();
   Future<void> getQrCode() async {
     // port = 9000 + Random().nextInt(9) * 10 + Random().nextInt(9);
     // print('port -> $port');
-    networkManager = NetworkManager(
-      InternetAddress.anyIPv4,
-      Config.qrPort,
-    );
+
     final List<String> localAddress = await PlatformUtil.localAddress();
+    print(localAddress);
     for (final String localAddress in localAddress) {
       if (localAddress.startsWith('192.')) {
         content += localAddress + ':${Config.qrPort}\n';
@@ -39,10 +36,6 @@ class _QrScanPageState extends State<QrScanPage> {
     content = content.trim().replaceAll('\n', ';');
     setState(() {});
     Log.v('content -> $content');
-    await networkManager.startServer((data) {
-      Log.v('data -> $data');
-      connectDevices(data);
-    });
   }
 
   Future<void> connectDevices(String ip) async {
@@ -118,7 +111,6 @@ class _QrScanPageState extends State<QrScanPage> {
 
   @override
   void dispose() {
-    networkManager.stopServer();
     super.dispose();
   }
 
