@@ -67,8 +67,8 @@ packages:
   custom_log:
     dependency: "direct main"
     description:
-      path: "../custom_log"
-      relative: true
+      path: "/Users/nightmare/Desktop/nightmare-space/custom_log"
+      relative: false
     source: path
     version: "0.0.1"
   dio:

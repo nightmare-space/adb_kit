@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
