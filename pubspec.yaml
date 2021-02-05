@@ -12,7 +12,7 @@ dependencies:
   provider: ^3.1.0
   flutter_screenutil: ^2.3.0
   custom_log:
-    path: /Users/nightmare/Desktop/nightmare-space/custom_log
+    path: ../../custom_log
   global_repository:
     git: https://github.com/nightmare-space/global_repository
   permission_handler: ^5.0.1+1

@@ -11,6 +11,12 @@
             "deviceId": "macos"
         },
         {
+            "name": "Windows Desktop",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "windows"
+        },
+        {
             "name": "小米10",
             "request": "launch",
             "type": "dart",
