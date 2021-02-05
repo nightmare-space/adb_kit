@@ -77,7 +77,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
                 ),
               ),
             Text(
-              '该页面列表的是能与本机互通的IP，末尾为.1结尾的代表路由器的IP地址，其余的代表连接到本机的IP地址',
+              '该页面列表的是能与本机互通的IP，末尾为.1结尾的通常代表路由器的IP地址，其余的代表连接到本机的IP地址',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: Dimens.font_sp12,

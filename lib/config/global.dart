@@ -70,14 +70,16 @@ class Global {
       InternetAddress.anyIPv4,
       Config.udpPort,
     ).then((RawDatagramSocket socket) {
+      print('启动_initNfcModule');
       socket.broadcastEnabled = true;
       socket.listen((RawSocketEvent rawSocketEvent) async {
+        socket.broadcastEnabled = true;
         final Datagram datagram = socket.receive();
         if (datagram == null) {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        // print('message -> $message');
+        print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
           if (unique != await UniqueUtil.getUniqueId()) {
@@ -89,7 +91,7 @@ class Global {
           // print('发现设备');
           return;
         }
-        if (message == await UniqueUtil.getUniqueId()) {
+        if (message == 'macos10.15.7') {
           NiToast.showToast('发现来自IP：${datagram.address.address}的碰一碰');
           print('发现来自IP：${datagram.address.address}的碰一碰');
           ScrcpyUtil.showDeviceScreen(datagram.address.address);
@@ -99,13 +101,24 @@ class Global {
         }
       });
     });
-    RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-        .then((RawDatagramSocket socket) async {
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((
+      RawDatagramSocket socket,
+    ) async {
       socket.broadcastEnabled = true;
-
-      Timer.periodic(const Duration(seconds: 1), (Timer t) async {
-        UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
-      });
+      print('发送自己');
+      Timer.periodic(
+        const Duration(seconds: 1),
+        (Timer t) async {
+          // for (int i = 0; i < 255; i++) {
+          //   socket.send(
+          //     'find ${await UniqueUtil.getUniqueId()}'.codeUnits,
+          //     InternetAddress('192.168.39.$i'),
+          //     Config.udpPort,
+          //   );
+          // }
+          UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
+        },
+      );
     });
     if (!Platform.isAndroid) {
       return;
@@ -133,7 +146,13 @@ class Global {
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
           .then((RawDatagramSocket socket) async {
         socket.broadcastEnabled = true;
-
+        // for (int i = 0; i < 255; i++) {
+        //   socket.send(
+        //     message.records.first.data.codeUnits,
+        //     InternetAddress('192.168.39.$i'),
+        //     Config.udpPort,
+        //   );
+        // }
         UdpUtil.boardcast(socket, message.records.first.data);
       });
     });

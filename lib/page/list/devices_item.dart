@@ -175,6 +175,7 @@ class _DevicesItemState extends State<DevicesItem>
                             tooltip: '断开连接',
                             icon: const Icon(Icons.clear),
                             onPressed: () async {
+                              print('IconButton');
                               Provider.of<ProcessState>(context).clear();
                               final String result = await exec(
                                   'adb disconnect ${widget.devicesEntity.serial}');

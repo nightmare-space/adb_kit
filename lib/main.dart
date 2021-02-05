@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:adb_tool/drawer.dart';
+import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +16,7 @@ import 'page/exec_cmd_page.dart';
 import 'page/home_page.dart';
 import 'page/install/adb_install_page.dart';
 import 'page/install/adb_insys_page.dart';
+import 'page/logo_page.dart';
 import 'page/net_debug/remote_debug_page.dart';
 import 'page/search_ip_page.dart';
 
@@ -27,6 +30,30 @@ void main() {
       home: AdbTool(),
     ),
   );
+  log(
+    'error',
+    level: 0,
+    // le
+  );
+  log(
+    'error',
+    level: 1,
+    // le
+  );
+  log(
+    'error',
+    level: 2,
+    // le
+  );
+  log(
+    'error',
+    level: 3,
+    // le
+  );
+  Log.w('waring');
+  Log.e('error');
+  Log.i('info');
+  Log.d('debug');
   // if (Platform.isAndroid) {
   //   final MethodChannel methodChannel = MethodChannel('multicast-lock');
   //   methodChannel.invokeMethod<void>('aquire');
@@ -122,8 +149,9 @@ class _AdbToolState extends State<AdbTool> {
                 allowFontScaling: false,
               );
             }
+            return LogoPage();
             // if (Platform.isAndroid) return NFCReader();
-            // return _AdbTool();
+            return _AdbTool();
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 print('还没有开始网络请求');

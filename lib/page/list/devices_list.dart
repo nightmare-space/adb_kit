@@ -72,6 +72,7 @@ class _DevicesListState extends State<DevicesList> {
           ),
       child: DevicesItem(
         onTap: () {
+          print('object');
           // return;
           Navigator.of(
             context,

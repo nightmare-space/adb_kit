@@ -39,20 +39,22 @@ class _LogoPageState extends State<LogoPage> {
       body: Center(
         child: NiCardButton(
           borderRadius: 32,
-          child: RepaintBoundary(
-            key: _globalKey,
-            child: Material(
-              borderRadius: BorderRadius.circular(32),
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 16.0,
-                ),
-                child: Icon(
-                  Icons.adb_rounded,
-                  size: 160,
-                  color: Color(0xff282b3e),
+          child: SingleChildScrollView(
+            child: RepaintBoundary(
+              key: _globalKey,
+              child: Material(
+                borderRadius: BorderRadius.circular(32 * 1024 / 160),
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 16.0 * 1024 / 160,
+                    horizontal: 16.0 * 1024 / 160,
+                  ),
+                  child: Icon(
+                    Icons.adb_rounded,
+                    size: 1024,
+                    color: Color(0xff282b3e),
+                  ),
                 ),
               ),
             ),

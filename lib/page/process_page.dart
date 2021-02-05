@@ -56,7 +56,7 @@ class _ProcessPageState extends State<ProcessPage> {
       child: Container(
         padding: EdgeInsets.all(Dimens.gap_dp8),
         decoration: BoxDecoration(
-          color: const Color(0xFFF0F1F2),
+          color: const Color(0xFFF0F0F0),
           borderRadius: BorderRadius.circular(
             Dimens.gap_dp12,
           ),

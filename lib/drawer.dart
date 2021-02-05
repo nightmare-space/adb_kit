@@ -136,9 +136,6 @@ class _DrawerPageState extends State<DrawerPage> {
                 groupValue: widget.index,
                 title: 'ADB命令手册',
                 onTap: (index) async {
-                  final String data = await rootBundle.loadString(
-                    'assets/README.md',
-                  );
                   Navigator.of(context).push<HelpPage>(
                     MaterialPageRoute(
                       builder: (_) {

@@ -46,79 +46,87 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
       );
     }
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(Dimens.gap_dp8),
-              child: Stack(
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height -
-                          kToolbarHeight -
-                          120,
-                    ),
-                    // height: MediaQuery.of(context).size.height * 3 / 4,
-                    child: const ProcessPage(),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height -
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              Dimens.gap_dp8,
+              0,
+              Dimens.gap_dp8,
+              Dimens.gap_dp8,
+            ),
+            child: Stack(
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height -
                         kToolbarHeight -
                         120,
                   ),
-                ],
+                  // height: MediaQuery.of(context).size.height * 3 / 4,
+                  child: const ProcessPage(),
+                ),
+                SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height - kToolbarHeight - 120,
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  Dimens.gap_dp8,
+                  0,
+                  Dimens.gap_dp8,
+                  Dimens.gap_dp28,
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(Dimens.gap_dp12),
+                      child: TextField(
+                        controller: editingController,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          // border: OutlineInputBorder(
+                          //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                          // ),
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: Color(0xFFF0F0F0),
+                        ),
+                        onSubmitted: (_) {
+                          execCmd();
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.black.withOpacity(0.6),
+                        ),
+                        onPressed: () async {
+                          execCmd();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                Dimens.gap_dp8,
-                0,
-                Dimens.gap_dp8,
-                Dimens.gap_dp28,
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                    child: TextField(
-                      controller: editingController,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        // border: OutlineInputBorder(
-                        //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                        // ),
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.3),
-                      ),
-                      onSubmitted: (_) {
-                        execCmd();
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black.withOpacity(0.6),
-                      ),
-                      onPressed: () async {
-                        execCmd();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -84,30 +84,22 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           Global.instance.deviceEntitys = Provider.of(_);
           return Scaffold(
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () async {
-            //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-            //         .then((RawDatagramSocket socket) async {
-            //       socket.broadcastEnabled = true;
-            //       final List<String> address =
-            //           await PlatformUtil.localAddress();
-            //       for (final String addr in address) {
-            //         final tmp = addr.split('.');
-            //         tmp.removeLast();
-            //         final String addrPrfix = tmp.join('.');
-            //         print('addrPrfix -> $addrPrfix');
-            //         final InternetAddress address = InternetAddress(
-            //           '$addrPrfix\.255',
-            //         );
-            //         socket.send(
-            //           UniqueKey().toString().codeUnits,
-            //           address,
-            //           Config.udpPort,
-            //         );
-            //       }
-            //     });
-            //   },
-            // ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+                    .then((RawDatagramSocket socket) async {
+                  socket.broadcastEnabled = true;
+                  // for (int i = 0; i < 255; i++) {
+                  //   socket.send(
+                  //     UniqueKey().toString().codeUnits,
+                  //     InternetAddress('192.168.39.$i'),
+                  //     Config.udpPort,
+                  //   );
+                  // }
+                  UdpUtil.boardcast(socket, UniqueKey().toString());
+                });
+              },
+            ),
             appBar: appBar,
             body: Padding(
               padding: const EdgeInsets.symmetric(
@@ -342,13 +334,16 @@ class ItemHeader extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        right: Dimens.gap_dp6,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.only(
+          right: Dimens.gap_dp6,
+        ),
+        color: color,
+        width: Dimens.gap_dp4,
+        height: Dimens.gap_dp16,
       ),
-      color: color,
-      width: 6,
-      height: 32,
     );
   }
 }

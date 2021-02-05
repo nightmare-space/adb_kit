@@ -11,9 +11,16 @@
             "deviceId": "macos"
         },
         {
-            "name": "adb_tool",
+            "name": "小米10",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "deviceId": "Mi 10"
+        },
+        {
+            "name": "红米K30",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "Redmi K30"
         }
     ]
 }
