@@ -84,22 +84,22 @@ class _HomePageState extends State<HomePage> {
         builder: (_) {
           Global.instance.deviceEntitys = Provider.of(_);
           return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-                    .then((RawDatagramSocket socket) async {
-                  socket.broadcastEnabled = true;
-                  // for (int i = 0; i < 255; i++) {
-                  //   socket.send(
-                  //     UniqueKey().toString().codeUnits,
-                  //     InternetAddress('192.168.39.$i'),
-                  //     Config.udpPort,
-                  //   );
-                  // }
-                  UdpUtil.boardcast(socket, UniqueKey().toString());
-                });
-              },
-            ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () async {
+            //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+            //         .then((RawDatagramSocket socket) async {
+            //       socket.broadcastEnabled = true;
+            //       // for (int i = 0; i < 255; i++) {
+            //       //   socket.send(
+            //       //     UniqueKey().toString().codeUnits,
+            //       //     InternetAddress('192.168.39.$i'),
+            //       //     Config.udpPort,
+            //       //   );
+            //       // }
+            //       UdpUtil.boardcast(socket, UniqueKey().toString());
+            //     });
+            //   },
+            // ),
             appBar: appBar,
             body: Padding(
               padding: const EdgeInsets.symmetric(

@@ -140,8 +140,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               NiCardButton(
-                blurRadius: 4,
-                borderRadius: 24.0,
+                blurRadius: 2,
+                borderRadius: 12.0,
                 onTap: () async {
                   NiProcess.exec('su');
                   Provider.of<ProcessState>(context).clear();
@@ -173,7 +173,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 },
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  height: 48.0,
+                  height: Dimens.gap_dp48,
                   child: Center(
                     child: Text(
                       '安装',

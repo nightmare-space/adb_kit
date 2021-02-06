@@ -100,10 +100,35 @@ class _DeveloperToolState extends State<DeveloperTool> {
               title: '开启单手模式',
               putKey: 'handy_mode_state',
             ),
-            _DeveloperItem(
-              serial: widget.serial,
-              title: '一键转无线调试',
-              putKey: 'show_touches',
+            InkWell(
+              onTap: () {
+                // Navigator.of(context).push<void>(
+                //   MaterialPageRoute(
+                //     builder: (_) {
+                //       return UploadFile(
+                //         serial: widget.serial,
+                //       );
+                //     },
+                //   ),
+                // );
+              },
+              child: SizedBox(
+                height: Dimens.gap_dp48,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.gap_dp12,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '一键转无线调试',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             _DeveloperItem(
               serial: widget.serial,

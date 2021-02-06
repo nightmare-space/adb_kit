@@ -23,6 +23,10 @@ import 'page/search_ip_page.dart';
 void main() {
   runApp(
     MaterialApp(
+      shortcuts: <LogicalKeySet, Intent>{
+        ...WidgetsApp.defaultShortcuts,
+        LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'sarasa',
@@ -149,9 +153,9 @@ class _AdbToolState extends State<AdbTool> {
                 allowFontScaling: false,
               );
             }
-            return LogoPage();
+            // return LogoPage();
             // if (Platform.isAndroid) return NFCReader();
-            return _AdbTool();
+            // return _AdbTool();
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 print('还没有开始网络请求');

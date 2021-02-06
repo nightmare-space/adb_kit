@@ -15,6 +15,7 @@ class ExecCmdPage extends StatefulWidget {
 
 class _ExecCmdPageState extends State<ExecCmdPage> {
   TextEditingController editingController = TextEditingController();
+  FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {
     // Provider.of<ProcessState>(context).clear();
     // final String cmd = editingController.text;
@@ -34,6 +35,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
         Provider.of<ProcessState>(context).appendOut(output);
       },
     );
+    editingController.clear();
+    focusNode.requestFocus();
   }
 
   @override
@@ -54,7 +57,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
           Padding(
             padding: EdgeInsets.fromLTRB(
               Dimens.gap_dp8,
-              0,
+              Dimens.gap_dp8,
               Dimens.gap_dp8,
               Dimens.gap_dp8,
             ),
@@ -64,14 +67,10 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height -
                         kToolbarHeight -
-                        120,
+                        Dimens.setWidth(140),
                   ),
                   // height: MediaQuery.of(context).size.height * 3 / 4,
                   child: const ProcessPage(),
-                ),
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height - kToolbarHeight - 120,
                 ),
               ],
             ),
@@ -79,49 +78,62 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  Dimens.gap_dp8,
-                  0,
-                  Dimens.gap_dp8,
-                  Dimens.gap_dp28,
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(Dimens.gap_dp12),
-                      child: TextField(
-                        controller: editingController,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+              child: Material(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    Dimens.gap_dp8,
+                    Dimens.gap_dp8,
+                    Dimens.gap_dp8,
+                    Dimens.gap_dp12,
+                  ),
+                  child: SizedBox(
+                    height: Dimens.setWidth(72),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimens.gap_dp12),
+                          child: TextField(
+                            focusNode: focusNode,
+                            controller: editingController,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              // border: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                              // ),
+                              border: InputBorder.none,
+                              filled: true,
+                              fillColor: Color(0xFFF0F0F0),
+                            ),
+                            onSubmitted: (_) {
+                              execCmd();
+                            },
+                          ),
                         ),
-                        decoration: InputDecoration(
-                          // border: OutlineInputBorder(
-                          //   borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                          // ),
-                          border: InputBorder.none,
-                          filled: true,
-                          fillColor: Color(0xFFF0F0F0),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                            height: Dimens.setWidth(72),
+                            width: Dimens.setWidth(72),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black.withOpacity(0.6),
+                                ),
+                                onPressed: () async {
+                                  execCmd();
+                                },
+                              ),
+                            ),
+                          ),
                         ),
-                        onSubmitted: (_) {
-                          execCmd();
-                        },
-                      ),
+                      ],
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.black.withOpacity(0.6),
-                        ),
-                        onPressed: () async {
-                          execCmd();
-                        },
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
