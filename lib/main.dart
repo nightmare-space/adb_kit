@@ -13,7 +13,7 @@ import 'global/provider/devices_state.dart';
 import 'global/provider/process_info.dart';
 import 'global/widget/custom_scaffold.dart';
 import 'page/exec_cmd_page.dart';
-import 'page/home_page.dart';
+import 'page/home/pages/home_page.dart';
 import 'page/install/adb_install_page.dart';
 import 'page/install/adb_insys_page.dart';
 import 'page/logo_page.dart';

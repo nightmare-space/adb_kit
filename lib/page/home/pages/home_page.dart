@@ -16,11 +16,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
-import 'dialog/connect_remote.dart';
-import 'home/provider/device_entitys.dart';
-import 'home/qr_scan_page.dart';
-import 'list/devices_list.dart';
-import 'process_page.dart';
+import '../../dialog/connect_remote.dart';
+import '../provider/device_entitys.dart';
+import 'qr_scan_page.dart';
+import '../../list/devices_list.dart';
+import '../../process_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

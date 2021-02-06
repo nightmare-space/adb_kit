@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
-import '../home_page.dart';
+import '../home/pages/home_page.dart';
 
 class RemoteDebugPage extends StatefulWidget {
   @override

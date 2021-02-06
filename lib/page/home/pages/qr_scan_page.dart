@@ -5,7 +5,7 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/home/provider/device_entitys.dart';
-import 'package:adb_tool/page/home_page.dart';
+import 'package:adb_tool/page/home/pages/home_page.dart';
 import 'package:adb_tool/page/list/devices_list.dart';
 import 'package:adb_tool/utils/socket_util.dart';
 import 'package:custom_log/custom_log.dart';

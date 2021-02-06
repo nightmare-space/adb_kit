@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
-import '../home_page.dart';
+import '../home/pages/home_page.dart';
 import '../process_page.dart';
 
 class AdbInstallToSystemPage extends StatefulWidget {

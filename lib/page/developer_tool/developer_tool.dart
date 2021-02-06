@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 import 'download_file.dart';
-import '../upload_file.dart';
+import 'upload_file.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({Key key, this.serial, this.providerContext})
