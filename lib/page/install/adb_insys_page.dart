@@ -159,7 +159,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     getStderr: true,
                     callback: (s) {
                       print('ss======>$s');
-                      if (s.trim() == 'exitCode') {
+                      if (s.trim() == 'process_exit') {
                         return;
                       }
                       Provider.of<ProcessState>(context).appendOut(s);

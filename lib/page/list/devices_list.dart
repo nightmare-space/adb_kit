@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/page/developer_tool/developer_tool.dart';
 import 'package:adb_tool/page/list/devices_item.dart';
 import 'package:custom_log/custom_log.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -93,6 +94,9 @@ class _DevicesListState extends State<DevicesList> {
   }
 
   Future<void> getDevices() async {
+    if (kIsWeb) {
+      return;
+    }
     while (mounted) {
       String out;
       if (Platform.isWindows) {

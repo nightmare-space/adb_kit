@@ -1,4 +1,5 @@
 import 'package:adb_tool/config/candy_colors.dart';
+import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -158,8 +159,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
-                  child: Text(
+                  padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
+                  child: const Text(
                     '2.打开PC的终端模拟器，执行连接',
                     // style: TextStyle(
                     //   fontSize: 14.0,
@@ -174,8 +175,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     vertical: 8.0,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0F1F2),
-                    borderRadius: BorderRadius.circular(20),
+                    color: const Color(0xFFF0F0F0),
+                    borderRadius: BorderRadius.circular(Dimens.gap_dp12),
                   ),
                   child: RichText(
                     text: TextSpan(
@@ -199,21 +200,21 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                   child: const Text('3.执行adb devices查看设备列表是有新增'),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 8.0,
                     vertical: 8.0,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFF0F1F2),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(Dimens.gap_dp12),
                   ),
                   child: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       children: [
                         TextSpan(
                           text: 'adb devices',
@@ -229,37 +230,37 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment(0, 0.8),
-            child: Builder(
-              builder: (_) {
-                bool open = adbDebugOpen;
-                return NiCardButton(
-                  shadowColor:
-                      open ? Theme.of(context).accentColor : Colors.white,
-                  onTap: changeState,
-                  borderRadius: 48,
-                  child: Container(
-                    color: open ? Theme.of(context).accentColor : Colors.white,
-                    width: 96,
-                    height: 96,
-                    child: Center(
-                      child: Text(
-                        open ? '关' : '开',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0,
-                          color: open
-                              ? Colors.white
-                              : Theme.of(context).accentColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment(0, 0.8),
+          //   child: Builder(
+          //     builder: (_) {
+          //       bool open = adbDebugOpen;
+          //       return NiCardButton(
+          //         shadowColor:
+          //             open ? Theme.of(context).accentColor : Colors.white,
+          //         onTap: changeState,
+          //         borderRadius: 48,
+          //         child: Container(
+          //           color: open ? Theme.of(context).accentColor : Colors.white,
+          //           width: 96,
+          //           height: 96,
+          //           child: Center(
+          //             child: Text(
+          //               open ? '关' : '开',
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.bold,
+          //                 fontSize: 24.0,
+          //                 color: open
+          //                     ? Colors.white
+          //                     : Theme.of(context).accentColor,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

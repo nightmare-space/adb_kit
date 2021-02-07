@@ -7,20 +7,19 @@ import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
-import 'package:adb_tool/utils/permission_utils.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
-import 'package:adb_tool/utils/udp_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../../dialog/connect_remote.dart';
-import '../provider/device_entitys.dart';
-import 'qr_scan_page.dart';
 import '../../list/devices_list.dart';
 import '../../process_page.dart';
+import '../provider/device_entitys.dart';
+import 'qr_scan_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Platform.isAndroid) {
+    if (kIsWeb || Platform.isAndroid) {
       appBar = AppBar(
         brightness: Brightness.light,
         backgroundColor: const Color(0x00f7f7f7),

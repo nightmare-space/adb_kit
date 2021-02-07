@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class Config {
   Config._();
   static String packageName = 'com.nightmare.adbtools';

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -27,7 +28,7 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     double width = 0;
-    if (PlatformUtil.isDesktop()) {
+    if (!kIsWeb && PlatformUtil.isDesktop()) {
       width = MediaQuery.of(context).size.width * 1 / 5;
     } else {
       width = MediaQuery.of(context).size.width * 2 / 3;
@@ -68,7 +69,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   widget.onChange?.call(index);
                 },
               ),
-              if (Platform.isAndroid)
+              if (!kIsWeb && Platform.isAndroid)
                 _DrawerItem(
                   value: 1,
                   groupValue: widget.index,
@@ -81,7 +82,7 @@ class _DrawerPageState extends State<DrawerPage> {
               //   title: '当前设备ip',
               //   onTap: () {},
               // ),
-              if (Platform.isAndroid)
+              if (!kIsWeb && Platform.isAndroid)
                 Column(
                   children: [
                     _DrawerItem(

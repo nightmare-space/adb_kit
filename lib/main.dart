@@ -1,8 +1,7 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:adb_tool/drawer.dart';
 import 'package:custom_log/custom_log.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,19 +20,43 @@ import 'page/net_debug/remote_debug_page.dart';
 import 'page/search_ip_page.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      shortcuts: <LogicalKeySet, Intent>{
-        ...WidgetsApp.defaultShortcuts,
-        LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
-      },
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'sarasa',
+  if (kIsWeb) {
+    runApp(
+      SizedBox(
+        width: 414,
+        height: 896,
+        child: MediaQuery(
+          data: MediaQueryData(size: Size(414, 896)),
+          child: MaterialApp(
+            shortcuts: <LogicalKeySet, Intent>{
+              ...WidgetsApp.defaultShortcuts,
+              LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+            },
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: 'sarasa',
+            ),
+            home: AdbTool(),
+          ),
+        ),
       ),
-      home: AdbTool(),
-    ),
-  );
+    );
+  } else {
+    runApp(
+      MaterialApp(
+        shortcuts: <LogicalKeySet, Intent>{
+          ...WidgetsApp.defaultShortcuts,
+          LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+        },
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'sarasa',
+        ),
+        home: AdbTool(),
+      ),
+    );
+  }
+
   log(
     'error',
     level: 0,
@@ -85,6 +108,9 @@ class _AdbToolState extends State<AdbTool> {
   }
 
   Future<bool> adbExist() async {
+    if (kIsWeb) {
+      return true;
+    }
     await Global.instance.initGlobal();
     // print(PlatformUtil.environment()['PATH']);
     // print(await NiProcess.exec('echo \$PATH'));
@@ -136,9 +162,9 @@ class _AdbToolState extends State<AdbTool> {
         child: FutureBuilder<bool>(
           future: adbExist(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            Global.instance.processState = Provider.of(context);
+            // Global.instance.processState = Provider.of(context);
             NiToast.initContext(context);
-            if (PlatformUtil.isDesktop()) {
+            if (kIsWeb || PlatformUtil.isDesktop()) {
               ScreenUtil.init(
                 context,
                 width: MediaQuery.of(context).size.width,
@@ -173,6 +199,18 @@ class _AdbToolState extends State<AdbTool> {
                 if (!snapshot.data) {
                   return AdbInstallPage();
                 }
+                if (kIsWeb) {
+                  return Center(
+                    child: SizedBox(
+                      width: 414,
+                      height: 896,
+                      child: MediaQuery(
+                        data: MediaQueryData(size: Size(414, 896)),
+                        child: _AdbTool(),
+                      ),
+                    ),
+                  );
+                }
                 return _AdbTool();
               default:
                 return null;
@@ -202,17 +240,13 @@ class __AdbToolState extends State<_AdbTool> {
     Global.instance.processState = Provider.of<ProcessState>(context);
     return Material(
       child: Scaffold(
-        // backgroundColor: Colors.white,
-        // floatingActionButton: FloatingActionButton(onPressed: () {
-        //   NiProcess.exit();
-        // }),
         body: NiScaffold(
           drawer: DrawerPage(
             index: pageIndex,
             onChange: (index) {
               pageIndex = index;
               setState(() {});
-              if (PlatformUtil.isMobilePhone()) {
+              if (kIsWeb || PlatformUtil.isMobilePhone()) {
                 Navigator.pop(context);
               }
             },

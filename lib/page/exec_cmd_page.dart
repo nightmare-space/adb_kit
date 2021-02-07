@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('执行命令'),

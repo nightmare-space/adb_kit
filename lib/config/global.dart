@@ -11,6 +11,7 @@ import 'package:adb_tool/utils/socket_util.dart';
 import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:custom_log/custom_log.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
@@ -120,7 +121,7 @@ class Global {
         },
       );
     });
-    if (!Platform.isAndroid) {
+    if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
     NFC.isNDEFSupported.then((bool isSupported) {
@@ -178,7 +179,7 @@ class Global {
     isInit = true;
     _initNfcModule();
     _socketServer();
-    if (!Platform.isAndroid) {
+    if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
   }

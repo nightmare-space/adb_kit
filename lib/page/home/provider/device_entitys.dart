@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/page/list/devices_list.dart';
 import 'package:custom_log/custom_log.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 // 仅仅用于MaterialApp上的更新
@@ -14,6 +15,9 @@ class DeviceEntitys extends ChangeNotifier {
   List<DevicesEntity> devicesEntitys = [];
 
   Future<void> getDevices() async {
+    if (kIsWeb) {
+      return;
+    }
     while (true) {
       // print('执行中');
       // print('mounted -> $mounted');
