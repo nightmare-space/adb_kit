@@ -170,12 +170,12 @@ class _DeveloperToolState extends State<DeveloperTool> {
             ),
             InkWell(
               onTap: () {
-                showDialog<void>(
-                  context: context,
-                  child: DownloadFile(
-                    serial: widget.serial,
-                  ),
-                );
+                // showDialog<void>(
+                //   context: context,
+                //   child: DownloadFile(
+                //     serial: widget.serial,
+                //   ),
+                // );
               },
               child: SizedBox(
                 height: Dimens.gap_dp48,

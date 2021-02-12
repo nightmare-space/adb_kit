@@ -9,7 +9,6 @@ dependencies:
     sdk: flutter
   qr_flutter: ^3.1.0
   dio: ^3.0.3
-  provider: ^3.1.0
   flutter_screenutil: ^2.3.0
   custom_log:
     path: ../../custom_log
@@ -17,7 +16,9 @@ dependencies:
     git: https://github.com/nightmare-space/global_repository
   permission_handler: ^5.0.1+1
   qrscan: ^0.2.21
-  flutter_svg: ^0.19.1
+
+  # svg图像
+  flutter_svg: 0.20.0-nullsafety.3
   url_launcher: ^5.7.10
   flutter_markdown: ^0.5.2
   nfc_in_flutter: 2.0.5

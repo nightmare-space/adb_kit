@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
     return MultiProvider(
-      providers: <SingleChildCloneableWidget>[
+      providers: [
         ChangeNotifierProvider<DeviceEntitys>(
           create: (_) => DeviceEntitys(),
         ),

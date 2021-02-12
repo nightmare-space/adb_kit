@@ -134,7 +134,7 @@ class _AdbToolState extends State<AdbTool> {
   Widget build(BuildContext context) {
     // test();
     return MultiProvider(
-      providers: <SingleChildCloneableWidget>[
+      providers: [
         ChangeNotifierProvider<ProcessState>(
           create: (_) => ProcessState(),
         ),
