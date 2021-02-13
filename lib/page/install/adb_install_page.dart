@@ -65,16 +65,16 @@ class _DownloadFileState extends State<_DownloadFile> {
   Response<String> response;
   final String filesPath = PlatformUtil.getBinaryPath();
   List<String> androidAdbFiles = [
-    'https://nightmare.fun/File/MToolkit/android/adb/adb',
-    'https://nightmare.fun/File/MToolkit/android/adb/adb.bin'
+    'http://nightmare.fun/File/MToolkit/android/adb/adb',
+    'http://nightmare.fun/File/MToolkit/android/adb/adb.bin'
   ];
   List<String> macAdbFiles = [
-    'https://nightmare.fun/File/MToolkit/mac/adb.zip',
+    'http://nightmare.fun/File/MToolkit/mac/adb.zip',
   ];
   List<String> winAdbFiles = [
-    'https://nightmare.fun/File/MToolkit/windows/adb.exe',
-    'https://nightmare.fun/File/MToolkit/windows/AdbWinUsbApi.dll',
-    'https://nightmare.fun/File/MToolkit/windows/AdbWinApi.dll',
+    'http://nightmare.fun/File/MToolkit/windows/adb.exe',
+    'http://nightmare.fun/File/MToolkit/windows/AdbWinUsbApi.dll',
+    'http://nightmare.fun/File/MToolkit/windows/AdbWinApi.dll',
   ];
   double fileDownratio = 0.0;
   String downloadName = '';
