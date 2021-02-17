@@ -1,11 +1,17 @@
 import 'dart:io';
 
+import 'package:adb_tool/config/global.dart';
+import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/page/developer_tool/developer_tool.dart';
-import 'package:adb_tool/page/list/devices_item.dart';
+import 'package:adb_tool/page/dialog/connect_remote.dart';
+import 'package:adb_tool/page/home/pages/home_page.dart';
 import 'package:custom_log/custom_log.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:provider/provider.dart';
+
+import 'devices_item.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
@@ -26,8 +32,6 @@ class DevicesEntity {
     return false;
   }
 
-  @override
-  int get hashCode => serial.hashCode;
   bool connect() {
     return stat == 'device';
   }
@@ -36,6 +40,9 @@ class DevicesEntity {
   String toString() {
     return 'serial:$serial  stat:$stat';
   }
+
+  @override
+  int get hashCode => serial.hashCode;
 }
 
 class DevicesList extends StatefulWidget {
@@ -44,215 +51,177 @@ class DevicesList extends StatefulWidget {
 }
 
 class _DevicesListState extends State<DevicesList> {
-  List<DevicesEntity> devicesEntitys = [];
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  DeviceListState deviceListState = Global.instance.deviceListState;
+  List<DevicesEntity> devicesEntitys = [];
   @override
   void initState() {
     super.initState();
-    getDevices();
+    devicesEntitys = List.from(deviceListState.devicesEntitys);
+    Log.d(deviceListState.devicesEntitys);
+    Log.d(devicesEntitys);
+    deviceListState.addListener(updateList);
+    Future.delayed(const Duration(milliseconds: 100), () {
+      deviceListState.getDevices();
+    });
+  }
+
+  @override
+  void dispose() {
+    deviceListState.removeListener(updateList);
+    super.dispose();
+  }
+
+  void updateList() {
+    // infos.clear();
+    for (final DevicesEntity devicesEntity in deviceListState.devicesEntitys) {
+      // Log.i('devicesEntity -> $devicesEntity');
+      // if (devicesEntity.serial.contains('emulator')) {
+      //   Log.e('devicesEntity.serial 包含 emulator');
+      //   // TODO，在将来可能会有bug
+      //   continue;
+      // }
+      if (!devicesEntitys.contains(devicesEntity)) {
+        print('devicesEntity ->$devicesEntity');
+        _addItem(devicesEntity);
+      }
+    }
+
+    // 遍历当前state的list
+    for (final DevicesEntity devicesEntity in List.from(devicesEntitys)) {
+      // Log.w('devicesEntity -> $devicesEntity');
+      // Log.e(scripts.indexOf(script));
+      //
+      if (!deviceListState.devicesEntitys.contains(devicesEntity)) {
+        print('需要删除devicesEntity ->$devicesEntity');
+        final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
+
+        Future.delayed(const Duration(milliseconds: 300), () {
+          setState(() {});
+        });
+        _listKey.currentState.removeItem(
+          deleteIndex,
+          (context, animation) => SlideTransition(
+            position: animation
+                .drive(
+                  CurveTween(curve: Curves.easeIn),
+                )
+                .drive(
+                  Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: const Offset(0, 0),
+                  ),
+                ),
+            child: itemBuilder(devicesEntity),
+          ),
+          duration: const Duration(milliseconds: 300),
+        );
+        // devicesEntitys.setRange(start, end, iterable)
+        devicesEntitys.removeAt(deleteIndex);
+      }
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback(_onAfterRendering);
+    super.didChangeDependencies();
+  }
+
+  Future<void> _onAfterRendering(Duration timeStamp) async {
+    // deviceEntitys.addListener(() {
+    //   // pritn
+    // });
   }
 
   void _addItem(DevicesEntity devicesEntity) {
-    final int _index = devicesEntitys.length;
-    devicesEntitys.insert(_index, devicesEntity);
+    final int index = devicesEntitys.length;
+    devicesEntitys.add(devicesEntity);
     setState(() {});
-    _listKey.currentState.insertItem(_index);
-  }
-
-  Widget _buildItem(DevicesEntity devicesEntity, Animation _animation) {
-    return SlideTransition(
-      position: _animation
-          .drive(CurveTween(
-            curve: Curves.easeIn,
-          ))
-          .drive(
-            Tween<Offset>(
-              begin: const Offset(1, 0),
-              end: const Offset(0, 0),
-            ),
-          ),
-      child: DevicesItem(
-        onTap: () {
-          print('object');
-          // return;
-          Navigator.of(
-            context,
-          ).push<void>(
-            MaterialPageRoute(
-              builder: (_) {
-                return DeveloperTool(
-                  serial: devicesEntity.serial,
-                  providerContext: context,
-                );
-              },
-            ),
-          );
-        },
-        devicesEntity: devicesEntity,
+    _listKey.currentState.insertItem(
+      index,
+      duration: const Duration(
+        milliseconds: 300,
       ),
     );
-  }
-
-  Future<void> getDevices() async {
-    if (kIsWeb) {
-      return;
-    }
-    while (mounted) {
-      String out;
-      if (Platform.isWindows) {
-        String stderr;
-        String stdout;
-        final ProcessResult result = await Process.run(
-          'adb',
-          ['devices'],
-          environment: PlatformUtil.environment(),
-          runInShell: true,
-        );
-        stdout = result.stdout.toString();
-        stderr = result.stderr.toString();
-        out = stdout.trim();
-        // print('stderr->$stderr');
-        // print('stdout->$stdout');
-      } else {
-        out = (await NiProcess.exec('adb devices')).trim();
-      }
-      // Log.w(out);
-      // print('------------------');
-      // 说明adb服务开启了
-      if (out.startsWith('List of devices')) {
-        final List<String> tmp = out.split('\n')..removeAt(0);
-        final List<String> addressList = [];
-        // print(tmp);
-        // devicesEntitys.clear();
-        for (final String str in tmp) {
-          // print('s====>$s');
-          final List<String> listTmp = str.split(RegExp('\\s+'));
-          final DevicesEntity devicesEntity =
-              DevicesEntity(listTmp.first, listTmp.last);
-          // print(devicesEntity.hashCode);
-          addressList.add(listTmp.first);
-          // 如果devicesEntitys没有这个设备，就需要更新
-          if (!devicesEntitys.contains(devicesEntity)) {
-            _addItem(devicesEntity);
-            // devicesEntitys.add(devicesEntity);
-          } else {
-            // 更新数据
-            devicesEntitys.forEach((element) {
-              if (element == devicesEntity) {
-                // 找到元素
-                if (element.stat != devicesEntity.stat) {
-                  element.stat = devicesEntity.stat;
-                  setState(() {});
-                }
-                // print('pre->$element');
-                // print('devicesEntity->$devicesEntity');
-              }
-            });
-          }
-        }
-        // print('addressList===>$addressList');
-        int length = devicesEntitys.length;
-        int curIndex = 0;
-        for (; curIndex < length; curIndex++) {
-          if (!addressList.contains(devicesEntitys[curIndex].serial)) {
-            print('要删除的====>${devicesEntitys[curIndex].serial}');
-            final DevicesEntity devicesEntity = devicesEntitys[curIndex];
-            _listKey.currentState.removeItem(
-              curIndex,
-              (context, animation) => _buildItem(
-                devicesEntity,
-                animation,
-              ),
-              duration: const Duration(milliseconds: 300),
-            );
-
-            devicesEntitys.removeAt(curIndex);
-            Future.delayed(const Duration(milliseconds: 300), () {
-              setState(() {});
-            });
-            // setState(() {});
-            curIndex--;
-            length--;
-          }
-        }
-        for (final DevicesEntity devicesEntity in devicesEntitys) {
-          // print(devicesEntity.serial);
-        }
-      }
-      await Future<void>.delayed(const Duration(milliseconds: 100), () {});
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (devicesEntitys.isEmpty)
-          const Text(
-            '未发现设备',
-            style: TextStyle(color: Colors.grey),
-          ),
-        SizedBox(
-          height: 48.0 * devicesEntitys.length,
-          child: AnimatedList(
-            shrinkWrap: false,
-            padding: const EdgeInsets.only(top: 0),
-            key: _listKey,
-            initialItemCount: devicesEntitys.length,
-            itemBuilder: (
-              BuildContext context,
-              int index,
-              Animation animation,
-            ) {
-              return _buildItem(
-                devicesEntitys[index],
-                animation,
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              height: 48.0 * devicesEntitys.length,
+              child: AnimatedList(
+                // physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: false,
+                padding: const EdgeInsets.only(top: 0),
+                key: _listKey,
+                initialItemCount: devicesEntitys.length,
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                  Animation<double> animation,
+                ) {
+                  final DevicesEntity devicesEntity = devicesEntitys[index];
+                  return SlideTransition(
+                    position: animation
+                        .drive(
+                          CurveTween(curve: Curves.easeIn),
+                        )
+                        .drive(
+                          Tween<Offset>(
+                            begin: const Offset(1, 0),
+                            end: const Offset(0, 0),
+                          ),
+                        ),
+                    child: itemBuilder(devicesEntity),
+                  );
+                },
+              ),
+            ),
+            if (deviceListState.devicesEntitys.isEmpty)
+              const Text(
+                '未发现设备',
+                style: TextStyle(color: Colors.grey),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget itemBuilder(DevicesEntity entity) {
+    final DevicesEntity devicesEntity = entity;
+    return DevicesItem(
+      onTap: () async {
+        if (!devicesEntity.connect()) {
+          NiToast.showToast('设备未正常连接');
+          return;
+        }
+        // print(devicesEntity.serial);
+        // if (Platform.isAndroid) {
+        //   Global.instance.lockAdb = true;
+        //   const MethodChannel channel = MethodChannel('scrcpy');
+        //  String result=await channel.invokeMethod<String>('-s ${devicesEntity.serial}');
+        //  print('result -> $result');
+        // } else
+        Navigator.of(
+          context,
+        ).push<void>(
+          MaterialPageRoute(
+            builder: (_) {
+              return DeveloperTool(
+                serial: devicesEntity.serial,
               );
             },
           ),
-        ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: <Widget>[
-        //     FloatingActionButton(
-        //       onPressed: () => addItem(),
-        //       child: Icon(Icons.add),
-        //     ),
-        //     SizedBox(
-        //       width: 60,
-        //     ),
-        //     FloatingActionButton(
-        //       onPressed: () => removeItem(),
-        //       child: Icon(Icons.remove),
-        //     ),
-        //   ],
-        // ),
-        // for (DevicesEntity devicesEntity in devicesEntitys)
-        //   DevicesItem(
-        //     onTap: () {
-        //       Navigator.of(
-        //         context,
-        //       ).push<void>(
-        //         MaterialPageRoute(
-        //           builder: (_) {
-        //             return DeveloperTool(
-        //               serial: devicesEntity.serial,
-        //               providerContext: context,
-        //             );
-        //           },
-        //         ),
-        //       );
-        //     },
-        //     devicesEntity: devicesEntity,
-        //   ),
-        // const DevicesItem(
-        //   serial: '192.168.43.1:5555',
-        // ),
-        // const DevicesItem(
-        //   serial: '192.168.43.209:5555',
-        // ),
-      ],
+        );
+      },
+      devicesEntity: devicesEntity,
     );
   }
 }

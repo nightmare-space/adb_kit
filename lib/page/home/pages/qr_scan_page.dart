@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/global.dart';
+import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
-import 'package:adb_tool/page/home/provider/device_entitys.dart';
 import 'package:adb_tool/page/home/pages/home_page.dart';
 import 'package:adb_tool/page/list/devices_list.dart';
 import 'package:adb_tool/utils/socket_util.dart';
@@ -39,14 +39,14 @@ class _QrScanPageState extends State<QrScanPage> {
   }
 
   Future<void> connectDevices(String ip) async {
-    final DeviceEntitys deviceEntitys = Global.instance.deviceEntitys;
+    final DeviceListState deviceListState = Global.instance.deviceListState;
     NiToast.initContext(context);
     NiToast.showToast('扫描成功');
 
     DevicesEntity devicesEntity;
-    for (int i = 0; i < deviceEntitys.devicesEntitys.length; i++) {
-      if (deviceEntitys.devicesEntitys[i].serial.contains(ip)) {
-        devicesEntity = deviceEntitys.devicesEntitys[i];
+    for (int i = 0; i < deviceListState.devicesEntitys.length; i++) {
+      if (deviceListState.devicesEntitys[i].serial.contains(ip)) {
+        devicesEntity = deviceListState.devicesEntitys[i];
       }
     }
     if (devicesEntity != null) {
@@ -83,9 +83,9 @@ class _QrScanPageState extends State<QrScanPage> {
     while (true) {
       await Future<void>.delayed(const Duration(milliseconds: 100), () {});
       DevicesEntity devicesEntity;
-      for (int i = 0; i < deviceEntitys.devicesEntitys.length; i++) {
-        if (deviceEntitys.devicesEntitys[i].serial.contains(ip)) {
-          devicesEntity = deviceEntitys.devicesEntitys[i];
+      for (int i = 0; i < deviceListState.devicesEntitys.length; i++) {
+        if (deviceListState.devicesEntitys[i].serial.contains(ip)) {
+          devicesEntity = deviceListState.devicesEntitys[i];
           //  if(deviceEntitys.devicesEntitys[i].connect()){
           //    break;
           //  }

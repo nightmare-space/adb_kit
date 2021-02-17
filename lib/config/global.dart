@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/provider/devices_state.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
-import 'package:adb_tool/page/home/provider/device_entitys.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
@@ -43,19 +43,14 @@ class DeviceEntity {
 
 class Global {
   factory Global() => _getInstance();
-  Global._internal() {
-    environment = PlatformUtil.environment();
-    themeFollowSystem = true;
-  }
+  Global._internal() {}
   bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   // 由于使用的是页面级别的Provider，所以push后的context会找不到Provider的祖先节点
   ProcessState processState;
   DevicesState devicesState;
-  DeviceEntitys deviceEntitys;
-  Map<String, String> environment;
-  bool themeFollowSystem;
+  DeviceListState deviceListState;
   String _documentsDir;
   void Function(DeviceEntity deviceEntity) findDevicesCall;
   static Global get instance => _getInstance();
@@ -71,7 +66,6 @@ class Global {
       InternetAddress.anyIPv4,
       Config.udpPort,
     ).then((RawDatagramSocket socket) {
-      print('启动_initNfcModule');
       socket.broadcastEnabled = true;
       socket.listen((RawSocketEvent rawSocketEvent) async {
         // 开启广播支持
@@ -81,7 +75,7 @@ class Global {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        print('message -> $message');
+        // print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
           if (unique != await UniqueUtil.getUniqueId()) {
@@ -129,10 +123,12 @@ class Global {
   }
 
   Future<void> _initNfcModule() async {
+    print('启动_initNfcModule');
     if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
     NFC.isNDEFSupported.then((bool isSupported) {
+      print('isSupported -> $isSupported');
       // setState(() {
       //   _supportsNFC = isSupported;
       // });

@@ -4,6 +4,7 @@ import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/config/global.dart';
+import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
@@ -18,7 +19,6 @@ import 'package:provider/provider.dart';
 import '../../dialog/connect_remote.dart';
 import '../../list/devices_list.dart';
 import '../../process_page.dart';
-import '../provider/device_entitys.dart';
 import 'qr_scan_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,6 +37,8 @@ class _HomePageState extends State<HomePage> {
       }
       // print('$this deviceEntity->$deviceEntity');
     };
+    Global.instance.processState = ProcessState();
+    Global.instance.deviceListState = DeviceListState();
     super.initState();
   }
 
@@ -75,13 +77,15 @@ class _HomePageState extends State<HomePage> {
     }
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<DeviceEntitys>(
-          create: (_) => DeviceEntitys(),
+        ChangeNotifierProvider<DeviceListState>.value(
+          value: Global.instance.deviceListState,
         ),
+        ChangeNotifierProvider<ProcessState>.value(
+          value: Global.instance.processState,
+        )
       ],
       child: Builder(
         builder: (_) {
-          Global.instance.deviceEntitys = Provider.of(_);
           return Scaffold(
             // floatingActionButton: FloatingActionButton(
             //   onPressed: () async {

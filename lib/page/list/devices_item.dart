@@ -1,5 +1,6 @@
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/config/global.dart';
 import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
@@ -176,11 +177,13 @@ class _DevicesItemState extends State<DevicesItem>
                             tooltip: '断开连接',
                             icon: const Icon(Icons.clear),
                             onPressed: () async {
+                              ProcessState processState =
+                                  Global.instance.processState;
                               print('IconButton');
-                              Provider.of<ProcessState>(context).clear();
+                              processState.clear();
                               final String result = await exec(
                                   'adb disconnect ${widget.devicesEntity.serial}');
-                              Provider.of<ProcessState>(context).appendOut(
+                              processState.appendOut(
                                 result,
                               );
                             },
