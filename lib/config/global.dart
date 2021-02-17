@@ -66,7 +66,7 @@ class Global {
     return _instance;
   }
 
-  Future<void> _initNfcModule() async {
+  Future<void> _receiveBoardCast() async {
     RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       Config.udpPort,
@@ -74,6 +74,7 @@ class Global {
       print('启动_initNfcModule');
       socket.broadcastEnabled = true;
       socket.listen((RawSocketEvent rawSocketEvent) async {
+        // 开启广播支持
         socket.broadcastEnabled = true;
         final Datagram datagram = socket.receive();
         if (datagram == null) {
@@ -84,6 +85,7 @@ class Global {
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
           if (unique != await UniqueUtil.getUniqueId()) {
+            // 触发UI上的更新
             findDevicesCall?.call(
               DeviceEntity(unique, datagram.address.address),
             );
@@ -102,6 +104,9 @@ class Global {
         }
       });
     });
+  }
+
+  Future<void> _sendBoardCast() async {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((
       RawDatagramSocket socket,
     ) async {
@@ -121,6 +126,9 @@ class Global {
         },
       );
     });
+  }
+
+  Future<void> _initNfcModule() async {
     if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
@@ -160,6 +168,7 @@ class Global {
   }
 
   Future<void> _socketServer() async {
+    // 等待扫描二维码的连接
     NetworkManager networkManager;
     networkManager = NetworkManager(
       InternetAddress.anyIPv4,
@@ -177,6 +186,8 @@ class Global {
       return;
     }
     isInit = true;
+    _receiveBoardCast();
+    _sendBoardCast();
     _initNfcModule();
     _socketServer();
     if (!kIsWeb && !Platform.isAndroid) {
