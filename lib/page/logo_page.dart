@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 
 class LogoPage extends StatefulWidget {
@@ -42,18 +43,45 @@ class _LogoPageState extends State<LogoPage> {
           child: SingleChildScrollView(
             child: RepaintBoundary(
               key: _globalKey,
-              child: Material(
-                borderRadius: BorderRadius.circular(32 * 1024 / 160),
-                color: Colors.white,
+              child: SizedBox(
+                width: 1024,
+                height: 1024,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16.0 * 1024 / 160,
-                    horizontal: 16.0 * 1024 / 160,
-                  ),
-                  child: Icon(
-                    Icons.adb_rounded,
-                    size: 1024,
-                    color: Color(0xff282b3e),
+                  padding: const EdgeInsets.all(32.0),
+                  child: Builder(
+                    builder: (_) {
+                      double size = 1024 - 64.0;
+                      double padding = 16.0 * size / 160;
+                      return Material(
+                        borderRadius: BorderRadius.circular(32 * size / 160),
+                        color: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: padding,
+                            horizontal: padding,
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icon/remote.svg',
+                              ),
+                              // Icon(
+                              //   Icons.share,
+                              //   // color: Color(0xff282b3e),
+                              //   color: Colors.black,
+                              //   size: size - 2 * padding,
+                              // ),
+                            ],
+                          ),
+                          // child: Icon(
+                          //   Icons.adb_rounded,
+                          //   size: 1024,
+                          //   color: Color(0xff282b3e),
+                          // ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

@@ -99,6 +99,7 @@ class _DevicesListState extends State<DevicesList> {
         Future.delayed(const Duration(milliseconds: 300), () {
           setState(() {});
         });
+        devicesEntitys.removeAt(deleteIndex);
         _listKey.currentState.removeItem(
           deleteIndex,
           (context, animation) => SlideTransition(
@@ -117,7 +118,6 @@ class _DevicesListState extends State<DevicesList> {
           duration: const Duration(milliseconds: 300),
         );
         // devicesEntitys.setRange(start, end, iterable)
-        devicesEntitys.removeAt(deleteIndex);
       }
     }
   }
