@@ -65,8 +65,8 @@ class _DownloadFileState extends State<_DownloadFile> {
   Response<String> response;
   final String filesPath = PlatformUtil.getBinaryPath();
   List<String> androidAdbFiles = [
-    'http://nightmare.fun/File/MToolkit/android/adb/adb',
-    'http://nightmare.fun/File/MToolkit/android/adb/adb.bin'
+    'http://nightmare.fun/YanTool/android/adb',
+    'http://nightmare.fun/YanTool/android/adb.bin'
   ];
   List<String> macAdbFiles = [
     'http://nightmare.fun/File/MToolkit/mac/adb.zip',
