@@ -59,7 +59,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
               InkWell(
                 onTap: () async {
                   await Clipboard.setData(ClipboardData(text: ip));
-                  NiToast.showToast('IP已复制');
+                  showToast('IP已复制');
                 },
                 child: Container(
                   height: Dimens.gap_dp48,

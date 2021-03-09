@@ -162,8 +162,6 @@ class _AdbToolState extends State<AdbTool> {
         child: FutureBuilder<bool>(
           future: adbExist(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            // Global.instance.processState = Provider.of(context);
-            NiToast.initContext(context);
             if (kIsWeb || PlatformUtil.isDesktop()) {
               ScreenUtil.init(
                 context,

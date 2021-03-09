@@ -199,7 +199,7 @@ class _DevicesListState extends State<DevicesList> {
     return DevicesItem(
       onTap: () async {
         if (!devicesEntity.connect()) {
-          NiToast.showToast('设备未正常连接');
+          showToast('设备未正常连接');
           return;
         }
         // print(devicesEntity.serial);

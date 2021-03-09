@@ -120,7 +120,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     await Clipboard.setData(ClipboardData(
                       text: address.join('\n'),
                     ));
-                    NiToast.showToast('IP已复制');
+                    showToast('IP已复制');
                   },
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,

@@ -89,7 +89,7 @@ class Global {
           return;
         }
         if (message == 'macos10.15.7') {
-          NiToast.showToast('发现来自IP：${datagram.address.address}的碰一碰');
+          showToast('发现来自IP：${datagram.address.address}的碰一碰');
           print('发现来自IP：${datagram.address.address}的碰一碰');
           ScrcpyUtil.showDeviceScreen(datagram.address.address);
         } else {

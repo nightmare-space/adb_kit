@@ -43,7 +43,7 @@ class _DrawerPageState extends State<DrawerPage> {
             children: [
               NiCardButton(
                 onTap: () {
-                  NiToast.showToast('按着玩的~');
+                  showToast('按着玩的~');
                 },
                 borderRadius: 12,
                 child: const Material(
