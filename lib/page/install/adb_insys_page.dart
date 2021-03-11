@@ -34,6 +34,12 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
         brightness: Brightness.light,
         title: Text('安装ADB到系统'),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
       ),
       body: Stack(
         alignment: Alignment.center,

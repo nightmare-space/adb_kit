@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:adb_tool/drawer.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/foundation.dart';
@@ -10,12 +12,10 @@ import 'package:provider/provider.dart';
 import 'config/global.dart';
 import 'global/provider/devices_state.dart';
 import 'global/provider/process_info.dart';
-import 'global/widget/custom_scaffold.dart';
 import 'page/exec_cmd_page.dart';
 import 'page/home/pages/home_page.dart';
 import 'page/install/adb_install_page.dart';
 import 'page/install/adb_insys_page.dart';
-import 'page/logo_page.dart';
 import 'page/net_debug/remote_debug_page.dart';
 import 'page/search_ip_page.dart';
 
@@ -43,16 +43,18 @@ void main() {
     );
   } else {
     runApp(
-      MaterialApp(
-        shortcuts: <LogicalKeySet, Intent>{
-          ...WidgetsApp.defaultShortcuts,
-          LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
-        },
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'sarasa',
+      NiToastNew(
+        child: MaterialApp(
+          shortcuts: <LogicalKeySet, Intent>{
+            ...WidgetsApp.defaultShortcuts,
+            LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+          },
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'sarasa',
+          ),
+          home: AdbTool(),
         ),
-        home: AdbTool(),
       ),
     );
   }
@@ -96,6 +98,11 @@ void main() {
   );
 }
 
+List<String> androidFiles = [
+  'assets/android/adb',
+  'assets/android/adb.bin',
+];
+
 class AdbTool extends StatefulWidget {
   @override
   _AdbToolState createState() => _AdbToolState();
@@ -107,28 +114,28 @@ class _AdbToolState extends State<AdbTool> {
     super.initState();
   }
 
-  Future<bool> adbExist() async {
+  Future<void> adbExist() async {
     if (kIsWeb) {
       return true;
     }
     await Global.instance.initGlobal();
-    // print(PlatformUtil.environment()['PATH']);
-    // print(await NiProcess.exec('echo \$PATH'));
-    // print("-> ${await PlatformUtil.cmdIsExist('scrcpy')}");
-    return PlatformUtil.cmdIsExist('adb');
+    if (Platform.isAndroid) {
+      for (final String fileKey in androidFiles) {
+        final ByteData byteData = await rootBundle.load(
+          fileKey,
+        );
+        final Uint8List picBytes = byteData.buffer.asUint8List();
+        final String filePath = PlatformUtil.getBinaryPath() +
+            '/' +
+            PlatformUtil.getFileName(fileKey);
+        final File file = File(filePath);
+        if (!await file.exists()) {
+          await file.writeAsBytes(picBytes);
+          await Process.run('chmod', <String>['+x', filePath]);
+        }
+      }
+    }
   }
-
-  // void test() {
-  //   if (Platform.isAndroid) {
-  //     RawDatagramSocket.bind(InternetAddress('192.168.208.0'), 0)
-  //         .then((RawDatagramSocket socket) {
-  //       print('Sending from ${socket.address.address}:${socket.port}');
-  //       int port = 6666;
-  //       socket.send('Hello from UDP land!\n'.codeUnits,
-  //           InternetAddress.LOOPBACK_IP_V4, port);
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -159,9 +166,9 @@ class _AdbToolState extends State<AdbTool> {
             ),
           ),
         ),
-        child: FutureBuilder<bool>(
+        child: FutureBuilder<void>(
           future: adbExist(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             if (kIsWeb || PlatformUtil.isDesktop()) {
               ScreenUtil.init(
                 context,
@@ -177,15 +184,12 @@ class _AdbToolState extends State<AdbTool> {
                 allowFontScaling: false,
               );
             }
-            // return LogoPage();
-            // if (Platform.isAndroid) return NFCReader();
-            // return _AdbTool();
             switch (snapshot.connectionState) {
               case ConnectionState.none:
-                print('还没有开始网络请求');
-                return const Text('');
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               case ConnectionState.active:
-                return const Text('ConnectionState.active');
               case ConnectionState.waiting:
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -194,16 +198,14 @@ class _AdbToolState extends State<AdbTool> {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }
-                if (!snapshot.data) {
-                  return AdbInstallPage();
-                }
+
                 if (kIsWeb) {
                   return Center(
                     child: SizedBox(
                       width: 414,
                       height: 896,
                       child: MediaQuery(
-                        data: MediaQueryData(size: Size(414, 896)),
+                        data: const MediaQueryData(size: Size(414, 896)),
                         child: _AdbTool(),
                       ),
                     ),

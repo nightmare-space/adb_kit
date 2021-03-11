@@ -191,7 +191,8 @@ class _HomePageState extends State<HomePage> {
                             if (cmd == null) {
                               return;
                             }
-                            Provider.of<ProcessState>(context).clear();
+                            Provider.of<ProcessState>(context, listen: false)
+                                .clear();
                             final String result = await exec('echo $cmd\n$cmd');
                             Provider.of<ProcessState>(context)
                                 .appendOut(result);

@@ -57,6 +57,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  dart_pty:
+    dependency: "direct main"
+    description:
+      path: "../../../termare-space/dart_pty"
+      relative: true
+    source: path
+    version: "0.0.3"
   dio:
     dependency: "direct main"
     description:
@@ -71,6 +78,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.1"
+  executorservices:
+    dependency: transitive
+    description:
+      name: executorservices
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -133,7 +147,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: f7f185df8fd352d2ce15c88c3ccc81aba9dffd97
+      resolved-ref: "9b5b168dbb9a5dc6082c794f755156e451d30cf2"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -312,6 +326,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.22"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -352,6 +373,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  termare_pty:
+    dependency: "direct main"
+    description:
+      path: "../../../termare-space/termare_pty"
+      relative: true
+    source: path
+    version: "1.0.0+1"
+  termare_view:
+    dependency: transitive
+    description:
+      path: "../../../termare-space/termare_view"
+      relative: true
+    source: path
+    version: "0.0.2"
   test_api:
     dependency: transitive
     description:

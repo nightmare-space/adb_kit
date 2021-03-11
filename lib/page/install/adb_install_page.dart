@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -78,32 +80,20 @@ class _DownloadFileState extends State<_DownloadFile> {
   ];
   double fileDownratio = 0.0;
   String downloadName = '';
-  Future<void> downloadFile(String urlPath) async {
-    print(urlPath);
-    response = await dio.head<String>(urlPath);
-    final int fullByte = int.tryParse(
-      response.headers.value('content-length'),
-    ); //得到服务器文件返回的字节大小
-    // final String _human = getFileSize(_fullByte); //拿到可读的文件大小返回给用户
-    print('fullByte======$fullByte');
-    final String savePath =
-        filesPath + Platform.pathSeparator + PlatformUtil.getFileName(urlPath);
-    // updateBusyboxProgress(fullByte, savePath);
-    await dio.download(
-      urlPath,
-      savePath,
-      onReceiveProgress: (count, total) {
-        final double process = count / total;
-        fileDownratio = process;
-        setState(() {});
-        // );
-      },
+  Future<void> downloadFile(String assetKey) async {
+    final ByteData byteData = await rootBundle.load(
+      assetKey,
     );
-    Process.runSync('chmod', <String>[
-      '0777',
-      savePath,
-    ]);
-    installModule(savePath);
+    final Uint8List picBytes = byteData.buffer.asUint8List();
+    final String savePath =
+        filesPath + Platform.pathSeparator + PlatformUtil.getFileName(assetKey);
+    final File file = File(savePath);
+    IOSink ioSink = file.openWrite();
+    if (!await file.exists()) {
+      await file.writeAsBytes(picBytes);
+      await Process.run('chmod', <String>['+x', savePath]);
+    }
+    // installModule(savePath);
   }
 
   void installModule(String modulePath) {

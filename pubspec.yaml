@@ -1,7 +1,7 @@
 name: adb_tool
 description: A new Flutter project.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 1.0.4+5
+version: 1.0.5+6
 environment:
   sdk: ">=2.7.0 <3.0.0"
 dependencies:
@@ -16,7 +16,11 @@ dependencies:
     git: https://github.com/nightmare-space/global_repository
   permission_handler: ^5.0.1+1
   qrscan: ^0.2.21
+  termare_pty:
+    path: ../../../termare-space/termare_pty
 
+  dart_pty:
+    path: ../../../termare-space/dart_pty
   # svg图像
   flutter_svg: 0.20.0-nullsafety.3
   url_launcher: ^5.7.10
@@ -29,5 +33,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/android/
     - assets/icon/
-    - assets/
+    # - assets/macos/
+    - assets/README.md

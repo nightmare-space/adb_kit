@@ -40,8 +40,7 @@ class _QrScanPageState extends State<QrScanPage> {
 
   Future<void> connectDevices(String ip) async {
     final DeviceListState deviceListState = Global.instance.deviceListState;
-    NiToast.initContext(context);
-    NiToast.showToast('扫描成功');
+    showToast('扫描成功');
 
     DevicesEntity devicesEntity;
     for (int i = 0; i < deviceListState.devicesEntitys.length; i++) {
@@ -76,10 +75,10 @@ class _QrScanPageState extends State<QrScanPage> {
     Log.w(result.stdout);
     if (result.stdout.toString().contains('unable to connect') ||
         result.stdout.toString().contains('failed to connect')) {
-      NiToast.showToast('连接失败，对方设备可能未打开网络ADB调试');
+      showToast('连接失败，对方设备可能未打开网络ADB调试');
       return;
     }
-    NiToast.showToast((devicesEntity != null ? '尝试重新连接，' : '') + '等待授权');
+    showToast((devicesEntity != null ? '尝试重新连接，' : '') + '等待授权');
     while (true) {
       await Future<void>.delayed(const Duration(milliseconds: 100), () {});
       DevicesEntity devicesEntity;

@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 

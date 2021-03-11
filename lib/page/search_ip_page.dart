@@ -50,6 +50,12 @@ class _SearchIpPageState extends State<SearchIpPage> {
       appBar: AppBar(
         brightness: Brightness.light,
         title: const Text('IP查看'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimens.gap_dp8),
