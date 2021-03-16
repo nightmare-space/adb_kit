@@ -145,29 +145,6 @@ class _QrScanPageState extends State<QrScanPage> {
             ),
           ),
         ), // Center(
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                color: Colors.transparent,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: Text(
-                    '使用魇系列任意app扫描即可快速连接\n- 扫码设备与本设备需要在同一局域网\n- 扫码设备需要打开wifi adb调试',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ],
     );
     // return Image.memory(result);
