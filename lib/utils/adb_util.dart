@@ -16,7 +16,9 @@ class AdbUtil {
       environment: PlatformUtil.environment(),
     );
     final String stdout = result.stdout.toString();
-    if (stdout.contains('unable to connect')) {
+    if (stdout.contains('refused')) {
+      showToast('连接被拒绝' * 5);
+    } else if (stdout.contains('unable to connect')) {
       showToast('连接失败，对方设备可能未打开网络ADB调试');
     } else if (stdout.contains('already connected')) {
       showToast('该设备已连接');
