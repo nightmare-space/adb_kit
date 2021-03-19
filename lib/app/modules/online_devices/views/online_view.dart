@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/utils/adb_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -23,32 +24,36 @@ class OnlineView extends GetView<OnlineController> {
               onTap: () async {},
               borderRadius: BorderRadius.circular(Dimens.gap_dp8),
               child: SizedBox(
-                height: 48.0,
+                height: Dimens.gap_dp48,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.deepPurple,
-                      ),
-                      height: Dimens.gap_dp8,
-                      width: Dimens.gap_dp8,
-                    ),
-                    SizedBox(
-                      width: Dimens.gap_dp4,
-                    ),
                     Center(
                       child: Row(
                         children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.deepPurple,
+                            ),
+                            margin: EdgeInsets.only(
+                              left: Dimens.gap_dp8,
+                            ),
+                            height: Dimens.gap_dp8,
+                            width: Dimens.gap_dp8,
+                          ),
+                          SizedBox(
+                            width: Dimens.gap_dp4,
+                          ),
                           Text(
                             ' ${entity.address}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             '(${entity.unique})',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.grey,
                             ),
@@ -56,36 +61,34 @@ class OnlineView extends GetView<OnlineController> {
                         ],
                       ),
                     ),
-                    IconButton(
-                      tooltip: '让对方设备连接我',
-                      icon: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()..rotateZ(pi),
-                        child: const Icon(Icons.send),
-                      ),
-                      onPressed: () async {
-                        Dio().get<void>(
-                          'http://${entity.address}:$adbToolQrPort',
-                        );
-                        // final NetworkManager socket = NetworkManager(
-                        //   list[i].address,
-                        //   adbToolQrPort,
-                        // );
-                        // await socket.connect();
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () async {
-                        Dio().get<void>(
-                          'http://${entity.address}:$adbToolQrPort',
-                        );
-                        // final NetworkManager socket = NetworkManager(
-                        //   list[i].address,
-                        //   adbToolQrPort,
-                        // );
-                        // await socket.connect();
-                      },
+                    Row(
+                      children: [
+                        IconButton(
+                          tooltip: '让对方设备连接我',
+                          icon: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..rotateZ(pi / 2),
+                            child: const Icon(Icons.send),
+                          ),
+                          onPressed: () async {
+                            showToast('发送请求成功');
+                            Dio().get<void>(
+                              'http://${entity.address}:$adbToolQrPort',
+                            );
+                          },
+                        ),
+                        IconButton(
+                          tooltip: '尝试连接这个设备',
+                          icon: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.identity()..rotateZ(-pi / 2),
+                            child: const Icon(Icons.send),
+                          ),
+                          onPressed: () async {
+                            AdbUtil.connectDevices(entity.address);
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

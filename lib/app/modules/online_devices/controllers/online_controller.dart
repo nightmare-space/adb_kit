@@ -46,6 +46,10 @@ class OnlineController extends GetxController {
   void onClose() {}
 
   void addDevices(DeviceEntity devices) {
+    // this.addListener(() { });
+    // removeListener(() { });
+    // notifyChildrens();
+    update();
     if (!list.contains(devices)) {
       list.add(devices);
     }
