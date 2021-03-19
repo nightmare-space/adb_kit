@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:adb_tool/config/global.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/page/developer_tool/developer_tool.dart';
 import 'package:adb_tool/page/dialog/connect_remote.dart';
-import 'package:adb_tool/page/home/pages/home_page.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
