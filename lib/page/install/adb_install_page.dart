@@ -126,11 +126,11 @@ class _DownloadFileState extends State<_DownloadFile> {
       setState(() {});
       await downloadFile(urlPath);
     }
-    Navigator.of(context).pushReplacement<MaterialPageRoute, void>(
-      MaterialPageRoute(builder: (_) {
-        return AdbTool();
-      }),
-    );
+    // Navigator.of(context).pushReplacement<MaterialPageRoute, void>(
+    //   MaterialPageRoute(builder: (_) {
+    //     return AdbTool();
+    //   }),
+    // );
     widget.callback?.call();
   }
 

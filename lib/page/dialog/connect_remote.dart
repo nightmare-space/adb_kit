@@ -45,19 +45,26 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                 controller: textEditingController,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  fillColor: Colors.grey.withOpacity(0.2),
+                  fillColor: Color(0xfff0f0f0),
                   filled: true,
                   labelText: '输入设备的 ip 地址',
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: Dimens.gap_dp4,
+                    horizontal: Dimens.gap_dp8,
+                  ),
                 ),
               ),
             ),
+            SizedBox(
+              height: Dimens.gap_dp12,
+            ),
             Align(
               alignment: Alignment.centerRight,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () async {
                   Config.historyIp = textEditingController.text;
                   Navigator.of(context).pop(
-                    'adb connect ${textEditingController.text}',
+                    'adb connect ${textEditingController.text}\n',
                   );
                 },
                 child: const Text('连接'),

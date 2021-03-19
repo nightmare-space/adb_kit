@@ -2,14 +2,11 @@
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
+import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
-
-import '../home/pages/home_page.dart';
-import '../process_page.dart';
 
 class AdbInstallToSystemPage extends StatefulWidget {
   @override
@@ -130,15 +127,15 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 SizedBox(
                   height: 8,
                 ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height -
-                        kToolbarHeight -
-                        500,
-                  ),
-                  // height: MediaQuery.of(context).size.height * 3 / 4,
-                  child: const ProcessPage(),
-                ),
+                // ConstrainedBox(
+                //   constraints: BoxConstraints(
+                //     maxHeight: MediaQuery.of(context).size.height -
+                //         kToolbarHeight -
+                //         500,
+                //   ),
+                //   // height: MediaQuery.of(context).size.height * 3 / 4,
+                //   child: const ProcessPage(),
+                // ),
               ],
             ),
           ),
@@ -150,7 +147,6 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 borderRadius: 12.0,
                 onTap: () async {
                   NiProcess.exec('su');
-                  Provider.of<ProcessState>(context).clear();
                   final List<String> cmds = [
                     'cp ${PlatformUtil.getBinaryPath()}/adb $choosePath/adb',
                     'cp ${PlatformUtil.getBinaryPath()}/adb.bin $choosePath/adb.bin',
@@ -168,7 +164,6 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                       if (s.trim() == 'process_exit') {
                         return;
                       }
-                      Provider.of<ProcessState>(context).appendOut(s);
                     },
                   );
                   // String result = '';
