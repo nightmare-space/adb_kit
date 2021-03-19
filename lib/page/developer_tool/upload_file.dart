@@ -1,13 +1,10 @@
 // 有动画
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/config/global.dart';
-import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
-
-import '../process_page.dart';
 
 class UploadFile extends StatefulWidget {
   const UploadFile({Key key, this.serial}) : super(key: key);
@@ -142,41 +139,41 @@ class _UploadFileState extends State<UploadFile>
                             )
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: FlatButton(
-                            onPressed: () async {
-                              final ProcessState processState =
-                                  Global.instance.processState;
-                              processState.clear();
-                              // final String result = await exec(
-                              //   'adb -s ${widget.serial} push ${devicesFilePathCTL.text} ${localFilePathCTL.text}',
-                              // );
-                              NiProcess.exec(
-                                '/Users/nightmare/Desktop/nightmare-space/adb_tool/lib/page/list/1.sh',
-                                getStderr: true,
-                                callback: (s) {
-                                  print('ss======>$s');
-                                  if (s.trim() == 'exitCode') {
-                                    return;
-                                  }
-                                  processState.appendOut(s);
-                                },
-                              );
-                              // final String result = await exec(
-                              //   '/Users/nightmare/Desktop/nightmare-space/adb_tool/lib/page/list/1.sh',
-                              // );
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: FlatButton(
+                        //     onPressed: () async {
+                        //       final ProcessState processState =
+                        //           Global.instance.processState;
+                        //       processState.clear();
+                        //       // final String result = await exec(
+                        //       //   'adb -s ${widget.serial} push ${devicesFilePathCTL.text} ${localFilePathCTL.text}',
+                        //       // );
+                        //       NiProcess.exec(
+                        //         '/Users/nightmare/Desktop/nightmare-space/adb_tool/lib/page/list/1.sh',
+                        //         getStderr: true,
+                        //         callback: (s) {
+                        //           print('ss======>$s');
+                        //           if (s.trim() == 'exitCode') {
+                        //             return;
+                        //           }
+                        //           processState.appendOut(s);
+                        //         },
+                        //       );
+                        //       // final String result = await exec(
+                        //       //   '/Users/nightmare/Desktop/nightmare-space/adb_tool/lib/page/list/1.sh',
+                        //       // );
 
-                              // final String result = await exec(
-                              //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
-                              // );
-                              //
-                              // print(result);
-                            },
-                            child: const Text('上传'),
-                          ),
-                        ),
-                        const ProcessPage(),
+                        //       // final String result = await exec(
+                        //       //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
+                        //       // );
+                        //       //
+                        //       // print(result);
+                        //     },
+                        //     child: const Text('上传'),
+                        //   ),
+                        // ),
+                        // const ProcessPage(),
                       ],
                     ),
                   ),

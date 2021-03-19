@@ -1,13 +1,10 @@
 // 有动画
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/config/global.dart';
-import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
-
-import '../process_page.dart';
 
 class InstallApkPage extends StatefulWidget {
   const InstallApkPage({Key key, this.serial}) : super(key: key);
@@ -104,36 +101,36 @@ class _InstallApkPageState extends State<InstallApkPage>
                             )
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: FlatButton(
-                            onPressed: () async {
-                              final ProcessState processState =
-                                  Global.instance.processState;
-                              processState.clear();
-                              NiProcess.exec(
-                                'adb -s ${widget.serial} install ${devicesFilePathCTL.text}',
-                                getStderr: true,
-                                callback: (s) {
-                                  print('ss======>$s');
-                                  if (s.trim() == 'exitCode') {
-                                    return;
-                                  }
-                                  processState.appendOut(s);
-                                },
-                              );
-                              // final String result = await exec(
-                              //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
-                              // );
-                              //
-                              // print(result);
-                            },
-                            child: const Text('安装'),
-                          ),
-                        ),
-                        const ProcessPage(
-                          height: 100,
-                        ),
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: FlatButton(
+                        //     onPressed: () async {
+                        //       final ProcessState processState =
+                        //           Global.instance.processState;
+                        //       processState.clear();
+                        //       NiProcess.exec(
+                        //         'adb -s ${widget.serial} install ${devicesFilePathCTL.text}',
+                        //         getStderr: true,
+                        //         callback: (s) {
+                        //           print('ss======>$s');
+                        //           if (s.trim() == 'exitCode') {
+                        //             return;
+                        //           }
+                        //           processState.appendOut(s);
+                        //         },
+                        //       );
+                        //       // final String result = await exec(
+                        //       //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
+                        //       // );
+                        //       //
+                        //       // print(result);
+                        //     },
+                        //     child: const Text('安装'),
+                        //   ),
+                        // ),
+                        // const ProcessPage(
+                        //   height: 100,
+                        // ),
                       ],
                     ),
                   ),

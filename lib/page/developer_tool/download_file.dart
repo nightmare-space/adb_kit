@@ -1,14 +1,11 @@
 // 有动画
 
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/config/global.dart';
-import 'package:adb_tool/global/provider/process_info.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
-
-import '../process_page.dart';
 
 class DownloadFile extends StatefulWidget {
   const DownloadFile({Key key, this.serial}) : super(key: key);
@@ -143,36 +140,36 @@ class _DownloadFileState extends State<DownloadFile>
                             )
                           ],
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: FlatButton(
-                            onPressed: () async {
-                              // print(Map.from(Platform.environment));
-                              // return;
-                              final ProcessState processState =
-                                  Global.instance.processState;
-                              processState.clear();
-                              final String result = await exec(
-                                'adb -s ${widget.serial} pull ${devicesFilePathCTL.text} ${localFilePathCTL.text}',
-                              );
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: FlatButton(
+                        //     onPressed: () async {
+                        //       // print(Map.from(Platform.environment));
+                        //       // return;
+                        //       final ProcessState processState =
+                        //           Global.instance.processState;
+                        //       processState.clear();
+                        //       final String result = await exec(
+                        //         'adb -s ${widget.serial} pull ${devicesFilePathCTL.text} ${localFilePathCTL.text}',
+                        //       );
 
-                              processState.appendOut(result);
-                              // final String result = await exec(
-                              //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
-                              // );
-                              //
-                              // print(result);
-                            },
-                            child: const Text('下载'),
-                          ),
-                        ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxHeight: 100,
-                          ),
-                          // height: MediaQuery.of(context).size.height * 3 / 4,
-                          child: const ProcessPage(),
-                        ),
+                        //       processState.appendOut(result);
+                        //       // final String result = await exec(
+                        //       //   'adb -s ${widget.serial} install /Users/nightmare/Desktop/scrcpy_client/scrcpy_client/build/app/outputs/apk/release/app-release.apk',
+                        //       // );
+                        //       //
+                        //       // print(result);
+                        //     },
+                        //     child: const Text('下载'),
+                        //   ),
+                        // ),
+                        // ConstrainedBox(
+                        //   constraints: const BoxConstraints(
+                        //     maxHeight: 100,
+                        //   ),
+                        //   // height: MediaQuery.of(context).size.height * 3 / 4,
+                        //   child: const ProcessPage(),
+                        // ),
                       ],
                     ),
                   ),
