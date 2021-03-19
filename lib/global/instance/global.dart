@@ -1,57 +1,50 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:ui';
+import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/provider/device_list_state.dart';
-import 'package:adb_tool/global/provider/devices_state.dart';
-import 'package:adb_tool/global/provider/process_info.dart';
 import 'package:adb_tool/utils/adb_util.dart';
+import 'package:adb_tool/utils/http_server_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
-import 'package:adb_tool/utils/socket_util.dart';
 import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:custom_log/custom_log.dart';
+import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
-
-class DeviceEntity {
-  DeviceEntity(this.unique, this.address);
-  final String unique;
-  final String address;
-  @override
-  String toString() {
-    return 'unique:$unique address:$address';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    // 判断是否是非
-    if (other is! DeviceEntity) {
-      return false;
-    }
-    if (other is DeviceEntity) {
-      return other.address == address;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => '$address'.hashCode;
-}
+import 'package:termare_view/termare_view.dart';
 
 class Global {
   factory Global() => _getInstance();
-  Global._internal() {}
+  Global._internal() {
+    final Map<String, String> environment = {
+      'TERM': 'screen-256color',
+      'PATH': PlatformUtil.environment()['PATH'],
+    };
+    if (Platform.isAndroid) {
+      // environment['HOME'] = Config.homePath;
+    }
+    // Log.v('object');
+    final TermSize size = TermSize.getTermSize(window.physicalSize);
+    pseudoTerminal = PseudoTerminal(
+      executable: 'sh',
+      // workingDirectory: Config.homePath,
+      environment: environment,
+      row: size.row,
+      column: size.column,
+    );
+    pseudoTerminal.write('clear\n');
+  }
   bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  // 由于使用的是页面级别的Provider，所以push后的context会找不到Provider的祖先节点
-  ProcessState processState;
-  DevicesState devicesState;
   DeviceListState deviceListState;
   String _documentsDir;
+  PseudoTerminal pseudoTerminal;
   void Function(DeviceEntity deviceEntity) findDevicesCall;
   static Global get instance => _getInstance();
   static Global _instance;
@@ -64,7 +57,7 @@ class Global {
   Future<void> _receiveBoardCast() async {
     RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
-      Config.udpPort,
+      adbToolUdpPort,
     ).then((RawDatagramSocket socket) {
       socket.broadcastEnabled = true;
       socket.listen((RawSocketEvent rawSocketEvent) async {
@@ -75,17 +68,20 @@ class Global {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        // print('message -> $message');
+        print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
+
           if (unique != await UniqueUtil.getUniqueId()) {
             // 触发UI上的更新
-            findDevicesCall?.call(
-              DeviceEntity(unique, datagram.address.address),
+            final onlineController = Get.find<OnlineController>();
+            onlineController.addDevices(
+              DeviceEntity(
+                unique,
+                datagram.address.address,
+              ),
             );
           }
-
-          // print('发现设备');
           return;
         }
         if (message == 'macos10.15.7') {
@@ -105,17 +101,10 @@ class Global {
       RawDatagramSocket socket,
     ) async {
       socket.broadcastEnabled = true;
-      print('发送自己');
+      // print('发送自己');
       Timer.periodic(
         const Duration(seconds: 1),
         (Timer t) async {
-          // for (int i = 0; i < 255; i++) {
-          //   socket.send(
-          //     'find ${await UniqueUtil.getUniqueId()}'.codeUnits,
-          //     InternetAddress('192.168.39.$i'),
-          //     Config.udpPort,
-          //   );
-          // }
           UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
         },
       );
@@ -165,14 +154,18 @@ class Global {
 
   Future<void> _socketServer() async {
     // 等待扫描二维码的连接
-    NetworkManager networkManager;
-    networkManager = NetworkManager(
-      InternetAddress.anyIPv4,
-      Config.qrPort,
-    );
-    await networkManager.startServer((data) {
-      Log.v('data -> $data');
-      AdbUtil.connectDevices(data);
+    // NetworkManager networkManager;
+    // networkManager = NetworkManager(
+    //   InternetAddress.anyIPv4,
+    //   adbToolQrPort,
+    // );
+    // await networkManager.startServer((data) {
+    //   Log.v('data -> $data');
+    //   AdbUtil.connectDevices(data);
+    // });
+
+    HttpServerUtil.bindServer((address) {
+      AdbUtil.connectDevices(address);
     });
   }
 
