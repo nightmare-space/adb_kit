@@ -85,57 +85,68 @@ class _AdbToolState extends State<AdbTool> {
           ),
         ),
       ),
-      child: FutureBuilder<void>(
-        future: adbExist(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-          if (kIsWeb || PlatformUtil.isDesktop()) {
-            ScreenUtil.init(
-              context,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              allowFontScaling: false,
-            );
-          } else {
-            ScreenUtil.init(
-              context,
-              width: 414,
-              height: 896,
-              allowFontScaling: false,
-            );
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const Center(
-                child: CircularProgressIndicator(),
+      child: OrientationBuilder(builder: (_, Orientation orientation) {
+        return FutureBuilder<void>(
+          future: adbExist(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (kIsWeb || PlatformUtil.isDesktop()) {
+              ScreenUtil.init(
+                context,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                allowFontScaling: false,
               );
-            case ConnectionState.active:
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-
-              if (kIsWeb) {
-                return Center(
-                  child: SizedBox(
-                    width: 414,
-                    height: 896,
-                    child: MediaQuery(
-                      data: const MediaQueryData(size: Size(414, 896)),
-                      child: _AdbTool(),
-                    ),
-                  ),
+            } else {
+              if (orientation == Orientation.landscape) {
+                ScreenUtil.init(
+                  context,
+                  width: 896,
+                  height: 414,
+                  allowFontScaling: false,
+                );
+              } else {
+                ScreenUtil.init(
+                  context,
+                  width: 414,
+                  height: 896,
+                  allowFontScaling: false,
                 );
               }
-              return _AdbTool();
-            default:
-              return null;
-          }
-        },
-      ),
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.active:
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (kIsWeb) {
+                  return Center(
+                    child: SizedBox(
+                      width: 414,
+                      height: 896,
+                      child: MediaQuery(
+                        data: const MediaQueryData(size: Size(414, 896)),
+                        child: _AdbTool(),
+                      ),
+                    ),
+                  );
+                }
+                return _AdbTool();
+              default:
+                return null;
+            }
+          },
+        );
+      }),
     );
   }
 }
@@ -163,7 +174,7 @@ class __AdbToolState extends State<_AdbTool> {
             onChange: (index) {
               pageIndex = index;
               setState(() {});
-              if (kIsWeb || PlatformUtil.isMobilePhone()) {
+              if (MediaQuery.of(context).orientation == Orientation.portrait) {
                 Navigator.pop(context);
               }
             },
