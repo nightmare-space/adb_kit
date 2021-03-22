@@ -13,8 +13,16 @@ class OnlineView extends GetView<OnlineController> {
   @override
   Widget build(BuildContext context) {
     print('$this build');
-    return Obx(
-      () => SizedBox(
+    return Obx(() {
+      if (controller.list.isEmpty) {
+        return const Center(
+          child: Text(
+            '未发现运行设备',
+            style: TextStyle(color: Colors.grey),
+          ),
+        );
+      }
+      return SizedBox(
         height: controller.list.length * Dimens.gap_dp54,
         child: ListView.builder(
           itemCount: controller.list.length,
@@ -96,7 +104,7 @@ class OnlineView extends GetView<OnlineController> {
             );
           },
         ),
-      ),
-    );
+      );
+    });
   }
 }
