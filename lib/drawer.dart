@@ -27,142 +27,153 @@ class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     double width = 0;
-    if (!kIsWeb && PlatformUtil.isDesktop()) {
+    if (!kIsWeb &&
+        MediaQuery.of(context).orientation == Orientation.landscape) {
       width = MediaQuery.of(context).size.width * 1 / 5;
     } else {
       width = MediaQuery.of(context).size.width * 2 / 3;
     }
-    return Material(
-      color: Colors.white,
-      child: SafeArea(
-        child: SizedBox(
-          width: width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  NiCardButton(
-                    onTap: () {
-                      showToast('按着玩的~');
-                    },
-                    borderRadius: 12,
-                    child: const Material(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 16.0,
-                          horizontal: 16.0,
-                        ),
-                        child: Icon(
-                          Icons.adb_rounded,
-                          size: 36,
-                          color: Color(0xff282b3e),
-                        ),
-                      ),
-                    ),
-                  ),
-                  _DrawerItem(
-                    title: '主页',
-                    value: 0,
-                    groupValue: widget.index,
-                    onTap: (index) {
-                      widget.onChange?.call(index);
-                    },
-                  ),
-                  if (!kIsWeb && Platform.isAndroid)
-                    _DrawerItem(
-                      value: 1,
-                      groupValue: widget.index,
-                      title: '安装到系统',
-                      onTap: (index) {
-                        widget.onChange?.call(index);
-                      },
-                    ),
-                  // _DrawerItem(
-                  //   title: '当前设备ip',
-                  //   onTap: () {},
-                  // ),
-                  if (!kIsWeb && Platform.isAndroid)
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        return Material(
+          color: Colors.white,
+          child: SafeArea(
+            child: SizedBox(
+              width: width,
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        NiCardButton(
+                          onTap: () {
+                            showToast('按着玩的~');
+                          },
+                          borderRadius: 12,
+                          blurRadius: 0,
+                          shadowColor: Colors.transparent,
+                          child: const Material(
+                            color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 16.0,
+                                horizontal: 16.0,
+                              ),
+                              child: Icon(
+                                Icons.adb_rounded,
+                                size: 36,
+                                color: Color(0xff282b3e),
+                              ),
+                            ),
+                          ),
+                        ),
                         _DrawerItem(
-                          value: 2,
+                          title: '主页',
+                          value: 0,
                           groupValue: widget.index,
-                          title: '查看局域网ip',
                           onTap: (index) {
                             widget.onChange?.call(index);
                           },
                         ),
+                        if (!kIsWeb && Platform.isAndroid)
+                          _DrawerItem(
+                            value: 1,
+                            groupValue: widget.index,
+                            title: '安装到系统',
+                            onTap: (index) {
+                              widget.onChange?.call(index);
+                            },
+                          ),
+                        // _DrawerItem(
+                        //   title: '当前设备ip',
+                        //   onTap: () {},
+                        // ),
+                        if (!kIsWeb && Platform.isAndroid)
+                          Column(
+                            children: [
+                              _DrawerItem(
+                                value: 2,
+                                groupValue: widget.index,
+                                title: '查看局域网ip',
+                                onTap: (index) {
+                                  widget.onChange?.call(index);
+                                },
+                              ),
+                              _DrawerItem(
+                                value: 3,
+                                groupValue: widget.index,
+                                title: '远程调试',
+                                onTap: (index) {
+                                  widget.onChange?.call(index);
+                                },
+                              ),
+                            ],
+                          ),
                         _DrawerItem(
-                          value: 3,
+                          value: 4,
                           groupValue: widget.index,
-                          title: '远程调试',
+                          title: '执行自定义命令',
                           onTap: (index) {
                             widget.onChange?.call(index);
+                          },
+                        ),
+
+                        _DrawerItem(
+                          value: 5,
+                          groupValue: widget.index,
+                          title: '其他平台下载',
+                          onTap: (index) async {
+                            const String url = 'http://nightmare.fun/adbtool';
+                            if (await canLaunch(url)) {
+                              await launch(
+                                url,
+                                forceSafariVC: false,
+                                forceWebView: false,
+                                // headers: <String, String>{'my_header_key': 'my_header_value'},
+                              );
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                            // http://nightmare.fun/adbtool
+                            // widget.onChange?.call(index);
+                          },
+                        ),
+                        _DrawerItem(
+                          value: 5,
+                          groupValue: widget.index,
+                          title: 'ADB命令手册',
+                          onTap: (index) async {
+                            Navigator.of(context).push<HelpPage>(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return HelpPage();
+                                },
+                              ),
+                            );
                           },
                         ),
                       ],
                     ),
-                  _DrawerItem(
-                    value: 4,
-                    groupValue: widget.index,
-                    title: '执行自定义命令',
-                    onTap: (index) {
-                      widget.onChange?.call(index);
-                    },
-                  ),
-
-                  _DrawerItem(
-                    value: 5,
-                    groupValue: widget.index,
-                    title: '其他平台下载',
-                    onTap: (index) async {
-                      const String url = 'http://nightmare.fun/adbtool';
-                      if (await canLaunch(url)) {
-                        await launch(
-                          url,
-                          forceSafariVC: false,
-                          forceWebView: false,
-                          // headers: <String, String>{'my_header_key': 'my_header_value'},
-                        );
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                      // http://nightmare.fun/adbtool
-                      // widget.onChange?.call(index);
-                    },
-                  ),
-                  _DrawerItem(
-                    value: 5,
-                    groupValue: widget.index,
-                    title: 'ADB命令手册',
-                    onTap: (index) async {
-                      Navigator.of(context).push<HelpPage>(
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return HelpPage();
-                          },
+                    Padding(
+                      padding: EdgeInsets.all(Dimens.gap_dp16),
+                      child: Text(
+                        '版本：${Config.version}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(Dimens.gap_dp16),
-                child: Text(
-                  '版本：${Config.version}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -187,6 +198,7 @@ class _DrawerItem extends StatelessWidget {
     return InkWell(
       onTap: () => onTap(value),
       child: Stack(
+        alignment: Alignment.centerLeft,
         children: [
           Container(
             height: 48.0,
