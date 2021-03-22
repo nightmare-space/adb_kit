@@ -11,6 +11,7 @@ import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:provider/provider.dart';
@@ -188,6 +189,24 @@ class _OverviewPageState extends State<OverviewPage> {
                         return QrScanPage();
                       },
                     );
+                  },
+                ),
+                ItemButton(
+                  title: '复制ADB KEY',
+                  onTap: () async {
+                    final File adbKey = File(
+                      '${PlatformUtil.getBinaryPath()}/.android/adbkey',
+                    );
+                    if (adbKey.existsSync()) {
+                      await Clipboard.setData(
+                        ClipboardData(
+                          text: adbKey.readAsStringSync(),
+                        ),
+                      );
+                      showToast('已复制');
+                    } else {
+                      showToast('未发现adb key');
+                    }
                   },
                 ),
               ],

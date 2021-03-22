@@ -17,7 +17,7 @@ class AdbUtil {
     );
     final String stdout = result.stdout.toString();
     if (stdout.contains('refused')) {
-      showToast('连接被拒绝' * 5);
+      showToast('连接被拒绝');
     } else if (stdout.contains('unable to connect')) {
       showToast('连接失败，对方设备可能未打开网络ADB调试');
     } else if (stdout.contains('already connected')) {
