@@ -195,7 +195,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   title: '复制ADB KEY',
                   onTap: () async {
                     final File adbKey = File(
-                      '${PlatformUtil.getBinaryPath()}/.android/adbkey',
+                      '${PlatformUtil.getBinaryPath()}/.android/adbkey.pub',
                     );
                     if (adbKey.existsSync()) {
                       await Clipboard.setData(
