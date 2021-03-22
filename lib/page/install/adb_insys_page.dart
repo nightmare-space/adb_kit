@@ -2,6 +2,8 @@
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
@@ -39,104 +41,117 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
         ),
       ),
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: Dimens.gap_dp8,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: const <Widget>[
-                    ItemHeader(
-                      color: CandyColors.candyCyan,
-                    ),
-                    Text(
-                      '安装到系统(需要root)',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: const <Widget>[
+                      ItemHeader(
+                        color: CandyColors.candyCyan,
                       ),
-                    ),
-                  ],
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    '请选择安装路径',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            xbinPath,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Radio(
-                            value: xbinPath,
-                            groupValue: choosePath,
-                            onChanged: (String value) {
-                              choosePath = value;
-                              setState(() {});
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            binPath,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Radio<String>(
-                            value: binPath,
-                            groupValue: choosePath,
-                            onChanged: (String value) {
-                              choosePath = value;
-                              setState(() {});
-                            },
-                          ),
-                        ],
+                      Text(
+                        '安装到系统(需要root)',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Text(
-                  'tips:建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: Dimens.font_sp12,
-                    fontWeight: FontWeight.bold,
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      '请选择安装路径',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                // ConstrainedBox(
-                //   constraints: BoxConstraints(
-                //     maxHeight: MediaQuery.of(context).size.height -
-                //         kToolbarHeight -
-                //         500,
-                //   ),
-                //   // height: MediaQuery.of(context).size.height * 3 / 4,
-                //   child: const ProcessPage(),
-                // ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              xbinPath,
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Radio(
+                              value: xbinPath,
+                              groupValue: choosePath,
+                              onChanged: (String value) {
+                                choosePath = value;
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              binPath,
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Radio<String>(
+                              value: binPath,
+                              groupValue: choosePath,
+                              onChanged: (String value) {
+                                choosePath = value;
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    'tips:建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: Dimens.font_sp12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      const ItemHeader(color: CandyColors.candyPink),
+                      const Text(
+                        '终端',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Dimens.gap_dp16,
+                  ),
+                  SizedBox(
+                    height: 200,
+                    child: TerminalPage(),
+                  ),
+                ],
+              ),
             ),
           ),
           Column(
@@ -146,31 +161,17 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 blurRadius: 2,
                 borderRadius: 12.0,
                 onTap: () async {
-                  NiProcess.exec('su');
-                  final List<String> cmds = [
+                  StringBuffer buffer = StringBuffer();
+                  buffer.writeln('su -c "');
+                  buffer.writeln(
                     'cp ${PlatformUtil.getBinaryPath()}/adb $choosePath/adb',
-                    'cp ${PlatformUtil.getBinaryPath()}/adb.bin $choosePath/adb.bin',
-                  ];
-                  String execCmd = 'mount -o rw,remount /\n';
-                  for (final String cmd in cmds) {
-                    execCmd += 'echo $cmd\n$cmd\n';
-                  }
-                  print(execCmd);
-                  NiProcess.exec(
-                    execCmd,
-                    getStderr: true,
-                    callback: (s) {
-                      print('ss======>$s');
-                      if (s.trim() == 'process_exit') {
-                        return;
-                      }
-                    },
                   );
-                  // String result = '';
-                  // for (final String cmd in cmds) {
-                  //   result += await exec('echo $cmd\n$cmd');
-                  //   Provider.of<ProcessState>(context).appendOut(result);
-                  // }
+                  buffer.writeln(
+                    'cp ${PlatformUtil.getBinaryPath()}/adb.bin $choosePath/adb.bin',
+                  );
+                  buffer.writeln('chmod 0777 $choosePath/adb');
+                  buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
+                  Global.instance.pseudoTerminal.write(buffer.toString());
                 },
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,

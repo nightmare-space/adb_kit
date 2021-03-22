@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
@@ -61,14 +62,20 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     return Scaffold(
       // backgroundColor: Colors.white,
       appBar: appBar,
-      body: Column(
-        children: [
-          Expanded(
-            child: TerminalPage(
-              enableInput: true,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: Dimens.gap_dp4,
+          horizontal: Dimens.gap_dp4,
+        ),
+        child: Column(
+          children: [
+            const Expanded(
+              child: TerminalPage(
+                enableInput: true,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       // body: Stack(
       //   alignment: Alignment.topCenter,

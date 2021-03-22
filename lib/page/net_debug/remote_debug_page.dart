@@ -1,5 +1,7 @@
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
@@ -48,22 +50,17 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     adbDebugOpen = !adbDebugOpen;
     setState(() {});
     final int value = adbDebugOpen ? 5555 : -1;
-    // String result = await exec(
-    //   'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
-    //   'adb -s ${widget.serial} shell stop adbd\n'
-    //   'adb -s ${widget.serial} shell start adbd\n',
-    // );
-    // print(result);
-    String result;
-    result = await NiProcess.exec(
-      '''
-      su -c '
-        setprop service.adb.tcp.port $value
-        stop adbd
-        start adbd
-        '
-        ''',
+
+    final StringBuffer buffer = StringBuffer();
+    buffer.writeln('su -c "');
+    buffer.writeln(
+      'setprop service.adb.tcp.port $value',
     );
+    buffer.writeln(
+      'stop adbd',
+    );
+    buffer.writeln('start adbd"\n');
+    Global.instance.pseudoTerminal.write(buffer.toString());
   }
 
   @override
@@ -231,6 +228,28 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: Dimens.gap_dp8,
+                ),
+                Row(
+                  children: [
+                    const ItemHeader(color: CandyColors.candyPink),
+                    const Text(
+                      '终端',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: Dimens.gap_dp8,
+                ),
+                SizedBox(
+                  height: 200,
+                  child: TerminalPage(),
                 ),
               ],
             ),
