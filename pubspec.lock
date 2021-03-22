@@ -154,7 +154,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: bb80a31883f2af5c58c63c703d89e29e3fd25f04
+      resolved-ref: "793e10eae86cc85f99ae5cbbe2c62d8ddec09b32"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -304,7 +304,7 @@ packages:
       name: process
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.1.0"
+    version: "4.1.1"
   provider:
     dependency: transitive
     description:
