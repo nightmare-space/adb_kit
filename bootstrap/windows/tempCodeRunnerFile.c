@@ -1,2 +1,0 @@
-
-    system("del start.vbs");
