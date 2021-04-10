@@ -13,6 +13,7 @@ import 'package:custom_log/custom_log.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
@@ -28,6 +29,11 @@ class Global {
     if (Platform.isAndroid) {
       // environment['HOME'] = Config.homePath;
     }
+    String libPath=Platform.resolvedExecutable.replaceAll(RegExp('.app/.*'), '.app/');
+    libPath+='Contents/Frameworks/App.framework/';
+    libPath+='Resources/flutter_assets/assets/lib/libterm.dylib';
+    // rootBundle;
+    Log.d('libPath->$libPath');
     // Log.v('object');
     final TermSize size = TermSize.getTermSize(window.physicalSize);
     pseudoTerminal = PseudoTerminal(
@@ -36,6 +42,7 @@ class Global {
       environment: environment,
       row: size.row,
       column: size.column,
+      libPath:libPath,
     );
     pseudoTerminal.write('clear\n');
   }

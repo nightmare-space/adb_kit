@@ -9,7 +9,6 @@ import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adb_tool/utils/socket_util.dart';
-import 'package:context_menu_macos/context_menu_macos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
