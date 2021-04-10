@@ -22,8 +22,6 @@ dependencies:
   qrscan: ^0.2.21
   termare_pty:
     git: https://github.com/termare/termare_pty
-  context_menu_macos:
-    git: git@github.com:TerminalStudio/context_menu_macos.git
   # svg图像
   flutter_svg: 0.20.0-nullsafety.3
   url_launcher: ^5.7.10
