@@ -166,9 +166,15 @@ class __AdbToolState extends State<_AdbTool> {
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   backgroundColor: Colors.transparent,
+    // );
     return Material(
+      color: Colors.transparent,
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         body: NiScaffold(
+          backgroundColor: Colors.transparent,
           drawer: DrawerPage(
             index: pageIndex,
             onChange: (index) {

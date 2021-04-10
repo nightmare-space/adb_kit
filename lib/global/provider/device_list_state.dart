@@ -58,7 +58,7 @@ emulator-5554	device
         // 删除 List of devices attached
         outList.removeAt(0);
         // final List<String> addressList = [];
-        Log.e('outList->$outList');
+        // Log.e('outList->$outList');
         devicesEntitys.clear();
         for (final String str in outList) {
           // print('s====>$s');

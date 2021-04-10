@@ -68,7 +68,7 @@ class Global {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        print('message -> $message');
+        // print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
 
@@ -90,7 +90,8 @@ class Global {
           ScrcpyUtil.showDeviceScreen(datagram.address.address);
         } else {
           print(
-              'NFC标签的序列化为 $message 本设备的序列化为 ${await UniqueUtil.getUniqueId()}');
+            'NFC标签的序列化为 $message 本设备的序列化为 ${await UniqueUtil.getUniqueId()}',
+          );
         }
       });
     });
