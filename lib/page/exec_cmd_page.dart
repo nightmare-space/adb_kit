@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:adb_tool/config/dimens.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +18,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   PseudoTerminal pseudoTerminal = PseudoTerminal(
     executable: 'sh',
     environment: PlatformUtil.environment(),
+    libPath: Global.instance.libPath,
   );
   FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {

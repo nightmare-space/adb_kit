@@ -29,9 +29,10 @@ class Global {
     if (Platform.isAndroid) {
       // environment['HOME'] = Config.homePath;
     }
-    String libPath=Platform.resolvedExecutable.replaceAll(RegExp('.app/.*'), '.app/');
-    libPath+='Contents/Frameworks/App.framework/';
-    libPath+='Resources/flutter_assets/assets/lib/libterm.dylib';
+    libPath =
+        Platform.resolvedExecutable.replaceAll(RegExp('.app/.*'), '.app/');
+    libPath += 'Contents/Frameworks/App.framework/';
+    libPath += 'Resources/flutter_assets/assets/lib/libterm.dylib';
     // rootBundle;
     Log.d('libPath->$libPath');
     // Log.v('object');
@@ -42,10 +43,12 @@ class Global {
       environment: environment,
       row: size.row,
       column: size.column,
-      libPath:libPath,
+      libPath: libPath,
     );
     pseudoTerminal.write('clear\n');
   }
+
+  String libPath = '';
   bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
