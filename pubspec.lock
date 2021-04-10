@@ -69,11 +69,13 @@ packages:
     source: git
     version: "0.0.1"
   dart_pty:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "../../../termare-space/dart_pty"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "51a5b53de9ca5a5e2eaf87122bf6fde5c837a2c7"
+      url: "https://github.com/termare/dart_pty"
+    source: git
     version: "0.0.3"
   dio:
     dependency: "direct main"
@@ -165,7 +167,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "166488e5939955c747679738ace41aca70e2bc22"
+      resolved-ref: e0c78b95dec53b053591a9d8566df650fe69b46c
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -231,14 +233,14 @@ packages:
       name: path_drawing
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.5.0-nullsafety.0"
+    version: "0.5.0"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.0-nullsafety.0"
+    version: "0.2.0"
   path_provider:
     dependency: transitive
     description:
@@ -294,7 +296,7 @@ packages:
       name: petitparser
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.0"
   platform:
     dependency: transitive
     description:
@@ -350,7 +352,7 @@ packages:
       name: quiver
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -394,16 +396,20 @@ packages:
   termare_pty:
     dependency: "direct main"
     description:
-      path: "../../../termare-space/termare_pty"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "4320e77fcf4397ba2dab52fff115b79991717be9"
+      url: "https://github.com/termare/termare_pty"
+    source: git
     version: "1.0.0+1"
   termare_view:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "../../../termare-space/termare_view"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "52ba531c6517d8e75df6c3d3b665ad1e5b8235b6"
+      url: "https://github.com/termare/termare_view"
+    source: git
     version: "0.0.2"
   test_api:
     dependency: transitive
@@ -488,7 +494,7 @@ packages:
       name: xml
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.0.2"
+    version: "5.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
   flutter: ">=2.0.0"

@@ -8,8 +8,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  termare_view:
-    path: ../../../termare-space/termare_view
   get: ^4.1.3
   qr_flutter: ^3.1.0
   dio: ^3.0.3
@@ -23,11 +21,9 @@ dependencies:
   permission_handler: ^5.0.1+1
   qrscan: ^0.2.21
   termare_pty:
-    path: ../../../termare-space/termare_pty
+    git: https://github.com/termare/termare_pty
   context_menu_macos:
     git: git@github.com:TerminalStudio/context_menu_macos.git
-  dart_pty:
-    path: ../../../termare-space/dart_pty
   # svg图像
   flutter_svg: 0.20.0-nullsafety.3
   url_launcher: ^5.7.10
