@@ -50,15 +50,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.15.0"
-  context_menu_macos:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "34113f2ba45abb0b900368a5d75576dbd1f3e8e4"
-      url: "git@github.com:TerminalStudio/context_menu_macos.git"
-    source: git
-    version: "0.0.1"
   custom_log:
     dependency: "direct main"
     description:
@@ -417,7 +408,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:
@@ -497,4 +488,4 @@ packages:
     version: "5.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=1.24.0-7.0"
