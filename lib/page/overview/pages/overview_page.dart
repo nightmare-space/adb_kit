@@ -33,7 +33,7 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (kIsWeb || Platform.isAndroid) {
+    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
       appBar = AppBar(
         brightness: Brightness.light,
         backgroundColor: const Color(0x00f7f7f7),

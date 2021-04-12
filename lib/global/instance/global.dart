@@ -188,9 +188,6 @@ class Global {
     _sendBoardCast();
     _initNfcModule();
     _socketServer();
-    if (!kIsWeb && !Platform.isAndroid) {
-      return;
-    }
   }
 
   static String get documentsDir => instance._documentsDir;

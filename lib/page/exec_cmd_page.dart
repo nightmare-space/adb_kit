@@ -49,7 +49,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (!kIsWeb && Platform.isAndroid) {
+    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
       appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('执行命令'),
