@@ -1,6 +1,5 @@
 // 有动画
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -90,7 +89,7 @@ class _InstallApkPageState extends State<InstallApkPage>
                                 ),
                               ),
                             ),
-                            FlatButton(
+                            TextButton(
                               onPressed: () async {
                                 final String text =
                                     (await Clipboard.getData('text/plain'))
@@ -103,7 +102,7 @@ class _InstallApkPageState extends State<InstallApkPage>
                         ),
                         // Align(
                         //   alignment: Alignment.centerRight,
-                        //   child: FlatButton(
+                        //   child: TextButton(
                         //     onPressed: () async {
                         //       final ProcessState processState =
                         //           Global.instance.processState;

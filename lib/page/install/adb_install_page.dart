@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
-import 'package:adb_tool/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +21,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
   }
 
   Future<void> init() async {
-    String result = await NiProcess.exec('echo \$PATH');
+    final String result = await NiProcess.exec('echo \$PATH');
     print('result->$result');
   }
 
@@ -88,7 +87,6 @@ class _DownloadFileState extends State<_DownloadFile> {
     final String savePath =
         filesPath + Platform.pathSeparator + PlatformUtil.getFileName(assetKey);
     final File file = File(savePath);
-    IOSink ioSink = file.openWrite();
     if (!await file.exists()) {
       await file.writeAsBytes(picBytes);
       await Process.run('chmod', <String>['+x', savePath]);

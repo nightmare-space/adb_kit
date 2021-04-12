@@ -1,10 +1,8 @@
 // 有动画
 import 'package:adb_tool/config/dimens.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:global_repository/global_repository.dart';
 
 class UploadFile extends StatefulWidget {
   const UploadFile({Key key, this.serial}) : super(key: key);
@@ -93,7 +91,7 @@ class _UploadFileState extends State<UploadFile>
                                 ),
                               ),
                             ),
-                            FlatButton(
+                            TextButton(
                               onPressed: () async {
                                 final String text =
                                     (await Clipboard.getData('text/plain'))
@@ -128,7 +126,7 @@ class _UploadFileState extends State<UploadFile>
                                 ),
                               ),
                             ),
-                            FlatButton(
+                            TextButton(
                               onPressed: () async {
                                 final String text =
                                     (await Clipboard.getData('text/plain'))
@@ -141,7 +139,7 @@ class _UploadFileState extends State<UploadFile>
                         ),
                         // Align(
                         //   alignment: Alignment.centerRight,
-                        //   child: FlatButton(
+                        //   child: TextButton(
                         //     onPressed: () async {
                         //       final ProcessState processState =
                         //           Global.instance.processState;

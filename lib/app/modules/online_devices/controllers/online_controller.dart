@@ -1,4 +1,3 @@
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:get/get.dart';
 
 class DeviceEntity {

@@ -1,6 +1,5 @@
 // 安装 adb 工具到系统
 import 'package:adb_tool/config/candy_colors.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
@@ -8,7 +7,6 @@ import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:provider/provider.dart';
 
 class AdbInstallToSystemPage extends StatefulWidget {
   @override
@@ -31,7 +29,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.light,
-        title: Text('安装ADB到系统'),
+        title: const Text('安装ADB到系统'),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu),
@@ -128,7 +126,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Row(
@@ -146,7 +144,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   SizedBox(
                     height: Dimens.gap_dp16,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 200,
                     child: TerminalPage(),
                   ),
@@ -161,7 +159,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 blurRadius: 2,
                 borderRadius: 12.0,
                 onTap: () async {
-                  StringBuffer buffer = StringBuffer();
+                  final StringBuffer buffer = StringBuffer();
                   buffer.writeln('su -c "');
                   buffer.writeln(
                     'cp ${PlatformUtil.getBinaryPath()}/adb $choosePath/adb',
@@ -176,7 +174,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: Dimens.gap_dp48,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       '安装',
                       style: TextStyle(
@@ -186,7 +184,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32.0,
               ),
             ],

@@ -4,7 +4,6 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:provider/provider.dart';
 
 import 'devices_list.dart';
 

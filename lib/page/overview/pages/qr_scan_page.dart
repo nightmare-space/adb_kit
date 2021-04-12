@@ -1,16 +1,11 @@
 import 'dart:io';
-
-import 'package:adb_tool/config/candy_colors.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/list/devices_list.dart';
-import 'package:adb_tool/utils/socket_util.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrScanPage extends StatefulWidget {
@@ -134,9 +129,8 @@ class _QrScanPageState extends State<QrScanPage> {
             version: QrVersions.auto,
             size: 300.0,
           ),
-        ), // Center(
+        ),
       ],
     );
-    // return Image.memory(result);
   }
 }

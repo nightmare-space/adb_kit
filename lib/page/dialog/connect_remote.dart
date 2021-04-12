@@ -45,7 +45,7 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                 controller: textEditingController,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  fillColor: Color(0xfff0f0f0),
+                  fillColor: const Color(0xfff0f0f0),
                   filled: true,
                   labelText: '输入设备的 ip 地址',
                   contentPadding: EdgeInsets.symmetric(
