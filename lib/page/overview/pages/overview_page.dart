@@ -4,7 +4,6 @@ import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/utils/scan_util.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:provider/provider.dart';
 import '../../dialog/connect_remote.dart';
 import '../../list/devices_list.dart';
 import 'qr_scan_page.dart';
@@ -26,7 +24,6 @@ class OverviewPage extends StatefulWidget {
 class _OverviewPageState extends State<OverviewPage> {
   @override
   void initState() {
-    Global.instance.deviceListState = DeviceListState();
     super.initState();
   }
 
@@ -63,38 +60,30 @@ class _OverviewPageState extends State<OverviewPage> {
         ],
       );
     }
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<DeviceListState>.value(
-          value: Global.instance.deviceListState,
-        ),
-      ],
-      child: Builder(
-        builder: (_) {
-          return Scaffold(
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () async {
-            //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-            //         .then((RawDatagramSocket socket) async {
-            //       socket.broadcastEnabled = true;
-            //       // for (int i = 0; i < 255; i++) {
-            //       //   socket.send(
-            //       //     UniqueKey().toString().codeUnits,
-            //       //     InternetAddress('192.168.39.$i'),
-            //       //     Config.udpPort,
-            //       //   );
-            //       // }
-            //       UdpUtil.boardcast(socket, UniqueKey().toString());
-            //     });
-            //   },
-            // ),
-
-            // backgroundColor: Colors.white,
-            appBar: appBar,
-            body: buildBody(context, _),
-          );
-        },
-      ),
+    return Builder(
+      builder: (_) {
+        return Scaffold(
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () async {
+          //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+          //         .then((RawDatagramSocket socket) async {
+          //       socket.broadcastEnabled = true;
+          //       // for (int i = 0; i < 255; i++) {
+          //       //   socket.send(
+          //       //     UniqueKey().toString().codeUnits,
+          //       //     InternetAddress('192.168.39.$i'),
+          //       //     Config.udpPort,
+          //       //   );
+          //       // }
+          //       UdpUtil.boardcast(socket, UniqueKey().toString());
+          //     });
+          //   },
+          // ),
+          // backgroundColor: Colors.white,
+          appBar: appBar,
+          body: buildBody(context, _),
+        );
+      },
     );
   }
 
@@ -198,11 +187,15 @@ class _OverviewPageState extends State<OverviewPage> {
                 ItemButton(
                   title: '复制ADB KEY',
                   onTap: () async {
-                    String adbKeyPath = '';
+                    String homePath = '';
+                    if (Platform.isMacOS) {
+                      homePath = Platform.environment['HOME'];
+                    } else if (Platform.isAndroid) {
+                      homePath = PlatformUtil.getBinaryPath();
+                    }
                     final File adbKey = File(
-                      '${PlatformUtil.getBinaryPath()}/.android/adbkey.pub',
+                      '$homePath/.android/adbkey.pub',
                     );
-                    if (Platform.isMacOS) {}
                     if (adbKey.existsSync()) {
                       await Clipboard.setData(
                         ClipboardData(

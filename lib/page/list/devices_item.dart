@@ -40,7 +40,8 @@ class _DevicesItemState extends State<DevicesItem>
         }
         if (widget.devicesEntity.connect()) {
           final String value = await exec(
-              'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}');
+            'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}',
+          );
           Log.i('value->$value');
           if (value.isNotEmpty && value.length <= 10)
             Config.devicesMap[widget.devicesEntity.serial] = value;

@@ -27,17 +27,14 @@ class DeviceEntity {
 
 class OnlineController extends GetxController {
   final list = <DeviceEntity>[].obs;
+
   @override
   void onInit() {
-    print('init了');
     super.onInit();
   }
 
   @override
   void onReady() {
-    //
-    // int a = 0;
-    print('onReady');
     super.onReady();
   }
 

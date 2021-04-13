@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
@@ -27,8 +28,10 @@ class Global {
     if (Platform.isAndroid) {
       // environment['HOME'] = Config.homePath;
     }
-    libPath =
-        Platform.resolvedExecutable.replaceAll(RegExp('.app/.*'), '.app/');
+    libPath = Platform.resolvedExecutable.replaceAll(
+      RegExp('.app/.*'),
+      '.app/',
+    );
     libPath += 'Contents/Frameworks/App.framework/';
     libPath += 'Resources/flutter_assets/assets/lib/libterm.dylib';
     // rootBundle;
@@ -50,7 +53,6 @@ class Global {
   bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  DeviceListState deviceListState;
   String _documentsDir;
   PseudoTerminal pseudoTerminal;
   void Function(DeviceEntity deviceEntity) findDevicesCall;

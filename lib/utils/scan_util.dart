@@ -1,6 +1,7 @@
 import 'package:global_repository/global_repository.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
+import 'http/http.dart';
 import 'permission_utils.dart';
 import 'socket_util.dart';
 
@@ -28,16 +29,12 @@ class ScanUtil {
     print('cameraScanResult -> $cameraScanResult');
     final List<String> localAddress = await PlatformUtil.localAddress();
     print(localAddress);
+    // 这里应该优先排序，将同网关的地址放在最前面
+    //
     for (final String localAddress in localAddress) {
       for (final String serverAddress in cameraScanResult.split(';')) {
         // 遍历二维码中的ip地址
-        if (serverAddress.isSameSegment(localAddress)) {
-          final NetworkManager socket = NetworkManager(
-            serverAddress.split(':').first,
-            int.tryParse(serverAddress.split(':').last),
-          );
-          await socket.connect();
-        }
+        httpInstance.get(serverAddress);
       }
     }
   }

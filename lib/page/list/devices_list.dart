@@ -1,8 +1,9 @@
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/page/developer_tool/developer_tool.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 import 'devices_item.dart';
@@ -46,29 +47,30 @@ class DevicesList extends StatefulWidget {
 
 class _DevicesListState extends State<DevicesList> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  DeviceListState deviceListState = Global.instance.deviceListState;
   List<DevicesEntity> devicesEntitys = [];
+  final DevicesController controller = Get.find<DevicesController>();
+
   @override
   void initState() {
     super.initState();
-    devicesEntitys = List.from(deviceListState.devicesEntitys);
-    Log.d(deviceListState.devicesEntitys);
+    devicesEntitys = List.from(controller.devicesEntitys);
+    Log.d(controller.devicesEntitys);
     Log.d(devicesEntitys);
-    deviceListState.addListener(updateList);
+    controller.addListener(updateList);
     Future.delayed(const Duration(milliseconds: 100), () {
-      deviceListState.getDevices();
+      controller.poolingGetDevices();
     });
   }
 
   @override
   void dispose() {
-    deviceListState.removeListener(updateList);
+    controller.removeListener(updateList);
     super.dispose();
   }
 
   void updateList() {
     // infos.clear();
-    for (final DevicesEntity devicesEntity in deviceListState.devicesEntitys) {
+    for (final DevicesEntity devicesEntity in controller.devicesEntitys) {
       // Log.i('devicesEntity -> $devicesEntity');
       // if (devicesEntity.serial.contains('emulator')) {
       //   Log.e('devicesEntity.serial 包含 emulator');
@@ -86,10 +88,9 @@ class _DevicesListState extends State<DevicesList> {
       // Log.w('devicesEntity -> $devicesEntity');
       // Log.e(scripts.indexOf(script));
       //
-      if (!deviceListState.devicesEntitys.contains(devicesEntity)) {
+      if (!controller.devicesEntitys.contains(devicesEntity)) {
         print('需要删除devicesEntity ->$devicesEntity');
         final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
-
         Future.delayed(const Duration(milliseconds: 300), () {
           setState(() {});
         });
@@ -177,7 +178,7 @@ class _DevicesListState extends State<DevicesList> {
                 },
               ),
             ),
-            if (deviceListState.devicesEntitys.isEmpty)
+            if (controller.devicesEntitys.isEmpty)
               const Text(
                 '未发现设备',
                 style: TextStyle(color: Colors.grey),
