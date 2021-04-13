@@ -11,13 +11,12 @@ import 'global/instance/global.dart';
 void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
   Global.instance;
-
   runApp(
     NiToastNew(
       child: GetMaterialApp(
         title: 'ADB TOOL',
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
+        initialRoute: AdbPages.INITIAL,
+        getPages: AdbPages.routes,
         defaultTransition: Transition.fade,
       ),
     ),

@@ -68,9 +68,11 @@ class Global {
     RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       adbToolUdpPort,
+      reuseAddress: true,
+      reusePort: true,
     ).then((RawDatagramSocket socket) {
       socket.broadcastEnabled = true;
-      socket.joinMulticast(InternetAddress("224.0.0.1"));
+      socket.joinMulticast(InternetAddress('224.0.0.1'));
       socket.listen((RawSocketEvent rawSocketEvent) async {
         // 开启广播支持
         socket.broadcastEnabled = true;

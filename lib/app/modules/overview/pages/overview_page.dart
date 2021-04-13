@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/config/candy_colors.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
@@ -53,7 +54,7 @@ class _OverviewPageState extends State<OverviewPage> {
         actions: [
           NiIconButton(
             child: SvgPicture.asset(
-              'assets/icon/QR_code.svg',
+              '${Config.flutterPackage}assets/icon/QR_code.svg',
               color: Colors.black,
             ),
             onTap: () async {

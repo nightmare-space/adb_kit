@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/drawer.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
@@ -25,12 +26,23 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-List<String> androidFiles = [
-  'assets/android/adb',
-  'assets/android/adb.bin',
-];
-
 class AdbTool extends StatefulWidget {
+  AdbTool({
+    Key key,
+    this.packageName,
+  }) : super(key: key) {
+    if (packageName != null) {
+      // 改包可能是被其他项目集成的
+      Config.packageName = packageName;
+      Config.flutterPackage = 'packages/adb_tool/';
+    }
+    if (Get.arguments != null) {
+      Config.packageName = Get.arguments.toString();
+      Config.flutterPackage = 'packages/adb_tool/';
+    }
+  }
+
+  final String packageName;
   @override
   _AdbToolState createState() => _AdbToolState();
 }
@@ -42,6 +54,10 @@ class _AdbToolState extends State<AdbTool> {
     installAdbToEnvir();
   }
 
+  List<String> androidFiles = [
+    '${Config.flutterPackage}assets/android/adb',
+    '${Config.flutterPackage}assets/android/adb.bin',
+  ];
   Future<void> installAdbToEnvir() async {
     if (kIsWeb) {
       return true;
