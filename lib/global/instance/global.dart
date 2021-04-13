@@ -43,7 +43,7 @@ class Global {
       environment: environment,
       row: size.row,
       column: size.column,
-      libPath: libPath,
+      libPath: Platform.isMacOS ? libPath : null,
     );
     pseudoTerminal.write('clear\n');
   }

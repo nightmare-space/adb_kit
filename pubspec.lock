@@ -64,7 +64,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: fc7515fd935f50a512a94f9b539786b09fd52e32
+      resolved-ref: "47d757ea5324e675a26a2387b06147a49b1df696"
       url: "https://github.com/termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -158,7 +158,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e0c78b95dec53b053591a9d8566df650fe69b46c
+      resolved-ref: a7977cbd62a34af432836c2b9ab5092b8961064d
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -389,7 +389,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "4320e77fcf4397ba2dab52fff115b79991717be9"
+      resolved-ref: ac509112ff75aef2963fb831bcfa06dd05275c9e
       url: "https://github.com/termare/termare_pty"
     source: git
     version: "1.0.0+1"
