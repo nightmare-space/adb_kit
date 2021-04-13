@@ -1,3 +1,4 @@
+import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 
 class NiIconButton extends StatelessWidget {
@@ -8,13 +9,13 @@ class NiIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 40.0,
-        height: 40.0,
+        width: Dimens.gap_dp48,
+        height: Dimens.gap_dp48,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(Dimens.gap_dp24),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(Dimens.gap_dp12),
             child: child,
           ),
         ),

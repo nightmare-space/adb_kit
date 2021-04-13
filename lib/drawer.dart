@@ -7,7 +7,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'config/config.dart';
 import 'global/widget/custom_card.dart';
-import 'page/help_page.dart';
+import 'app/modules/help_page.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({

@@ -3,7 +3,7 @@ part of http;
 class HeaderInterceptor extends InterceptorsWrapper {
   @override
   Future onRequest(RequestOptions options) async {
-    options.connectTimeout = 1000 * 15;
+    options.connectTimeout = 300;
     options.receiveTimeout = 10000 * 15;
     options.cancelToken = DioUtils.cancelToken = CancelToken();
     options.headers['content-type'] = Headers.jsonContentType;

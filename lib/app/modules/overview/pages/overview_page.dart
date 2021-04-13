@@ -52,11 +52,15 @@ class _OverviewPageState extends State<OverviewPage> {
         ),
         actions: [
           NiIconButton(
-            child: SvgPicture.asset('assets/icon/QR_code.svg'),
+            child: SvgPicture.asset(
+              'assets/icon/QR_code.svg',
+              color: Colors.black,
+            ),
             onTap: () async {
               ScanUtil.parseScan();
             },
           ),
+          SizedBox(width: Dimens.gap_dp12),
         ],
       );
     }

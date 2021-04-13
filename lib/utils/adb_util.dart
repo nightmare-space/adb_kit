@@ -1,13 +1,33 @@
 import 'dart:io';
 
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
+import 'package:adb_tool/app/modules/list/devices_list.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
   static Future<void> connectDevices(String ipAndPort) async {
     String port = '5555';
-    String ip = ipAndPort.split(':').first;
+    final String ip = ipAndPort.split(':').first;
     if (ipAndPort.contains(':')) {
       port = ipAndPort.split(':').last;
+    }
+    final DevicesController controller = Get.find<DevicesController>();
+    final DevicesEntity devicesEntity = controller.getDevicesByIp(ip);
+    if (devicesEntity != null && !devicesEntity.connect()) {
+      // 注释先别删，投屏 app 可能需要
+      await Process.run(
+        'adb',
+        [
+          'disconnect',
+          ip + ':5555',
+        ],
+        runInShell: true,
+        includeParentEnvironment: true,
+        environment: PlatformUtil.environment(),
+      );
+      // TODO 这儿有问题，有的设备远程调试的端口可能不是5555
+      // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
     }
     // Todo
     final ProcessResult result = await Process.run(

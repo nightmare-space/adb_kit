@@ -59,7 +59,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimens.gap_dp8),
-        child: Column(
+        child: ListView(
           children: [
             for (String ip in addressList)
               InkWell(

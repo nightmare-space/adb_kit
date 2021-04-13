@@ -1,8 +1,8 @@
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
@@ -26,15 +26,9 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
       'ip route',
     );
     for (String ip in ipRoute.split('\n')) {
-      if (ip.startsWith('192')) {
-        ip = ip.trim().replaceAll(RegExp('.* '), '');
-        print(ip);
-        address.add(ip);
-        // connectDevices(ip);
-        // ProcessResult result = Process.runSync('scrcpy', []);
-        // print(result.stderr);
-        // print(result.stdout);
-      }
+      ip = ip.trim().replaceAll(RegExp('.* '), '');
+      print(ip);
+      address.add(ip);
     }
     print('address->$address');
     setState(() {});
@@ -65,11 +59,10 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff7f7f7),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         brightness: Brightness.light,
         title: const Text('网络ADB调试'),
-        backgroundColor: const Color(0xfff7f7f7),
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
+import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/drawer.dart';
-import 'package:adb_tool/page/exec_cmd_page.dart';
-import 'package:adb_tool/page/install/adb_insys_page.dart';
-import 'package:adb_tool/page/net_debug/remote_debug_page.dart';
-import 'package:adb_tool/page/overview/pages/overview_page.dart';
-import 'package:adb_tool/page/search_ip_page.dart';
+import 'package:adb_tool/app/modules/exec_cmd_page.dart';
+import 'package:adb_tool/app/modules/search_ip_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +70,7 @@ class _AdbToolState extends State<AdbTool> {
     return Theme(
       data: ThemeData(
         appBarTheme: const AppBarTheme(
-          color: Colors.transparent,
+          backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
           iconTheme: IconThemeData(color: Colors.black),

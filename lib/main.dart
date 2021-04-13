@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,6 +11,7 @@ import 'global/instance/global.dart';
 void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
   Global.instance;
+
   runApp(
     NiToastNew(
       child: GetMaterialApp(
@@ -26,4 +30,13 @@ void main() {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
+  enableUdpMulti();
+}
+
+Future<void> enableUdpMulti() async {
+  if (Platform.isAndroid) {
+    final MethodChannel methodChannel = const MethodChannel('multicast-lock');
+    bool result = await methodChannel.invokeMethod<bool>('aquire');
+    Log.d('result -> $result');
+  }
 }

@@ -1,6 +1,5 @@
+import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
-import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/page/developer_tool/developer_tool.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,3 +1,5 @@
+import 'package:adb_tool/app/modules/overview/pages/parse_qrcode_page.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -27,15 +29,15 @@ class ScanUtil {
       return;
     }
     print('cameraScanResult -> $cameraScanResult');
+    final List<String> connectAddress = cameraScanResult.split('\n');
     final List<String> localAddress = await PlatformUtil.localAddress();
     print(localAddress);
     // 这里应该优先排序，将同网关的地址放在最前面
     //
-    for (final String localAddress in localAddress) {
-      for (final String serverAddress in cameraScanResult.split(';')) {
-        // 遍历二维码中的ip地址
-        httpInstance.get(serverAddress);
-      }
-    }
+    Get.dialog(ParseQrcodePage(
+      addressList: [
+        ...connectAddress,
+      ],
+    ));
   }
 }

@@ -70,19 +70,21 @@ class Global {
       adbToolUdpPort,
     ).then((RawDatagramSocket socket) {
       socket.broadcastEnabled = true;
+      socket.joinMulticast(InternetAddress("224.0.0.1"));
       socket.listen((RawSocketEvent rawSocketEvent) async {
         // 开启广播支持
         socket.broadcastEnabled = true;
+        socket.multicastHops = 10;
         final Datagram datagram = socket.receive();
         if (datagram == null) {
           return;
         }
         final String message = String.fromCharCodes(datagram.data);
-        // print('message -> $message');
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
 
           if (unique != await UniqueUtil.getUniqueId()) {
+            print('message -> $message');
             // 触发UI上的更新
             final onlineController = Get.find<OnlineController>();
             onlineController.addDevices(
