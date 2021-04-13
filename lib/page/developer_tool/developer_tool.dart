@@ -101,6 +101,32 @@ class _DeveloperToolState extends State<DeveloperTool> {
             ),
             InkWell(
               onTap: () {
+                exec(
+                  'adb -s ${widget.serial} shell settings put system handy_mode_state 1\n'
+                  'adb -s ${widget.serial} shell settings put system handy_mode_size 5.5\n'
+                  'adb -s ${widget.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
+                );
+              },
+              child: SizedBox(
+                height: Dimens.gap_dp48,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.gap_dp12,
+                  ),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '开启单手模式',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
                 // Navigator.of(context).push<void>(
                 //   MaterialPageRoute(
                 //     builder: (_) {
@@ -362,7 +388,8 @@ class __DeveloperItemState extends State<_DeveloperItem> {
 
   Future<void> initCheckState() async {
     final String result = await exec(
-        'adb -s ${widget.serial} shell settings get system ${widget.putKey}');
+      'adb -s ${widget.serial} shell settings get system ${widget.putKey}',
+    );
     if (result == '1') {
       isCheck = true;
       setState(() {});

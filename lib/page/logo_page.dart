@@ -50,13 +50,13 @@ class _LogoPageState extends State<LogoPage> {
                   padding: const EdgeInsets.all(32.0),
                   child: Builder(
                     builder: (_) {
-                      double size = 1024 - 64.0;
-                      double padding = 16.0 * size / 160;
+                      const double size = 1024 - 64.0;
+                      const double padding = 16.0 * size / 160;
                       return Material(
                         borderRadius: BorderRadius.circular(32 * size / 160),
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             vertical: padding,
                             horizontal: padding,
                           ),

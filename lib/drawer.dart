@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'config/config.dart';
 import 'global/widget/custom_card.dart';
 import 'page/help_page.dart';
@@ -163,7 +162,8 @@ class _DrawerPageState extends State<DrawerPage> {
                       child: Text(
                         '版本：${Config.version}',
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.black87,
                         ),
                       ),
                     ),

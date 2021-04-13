@@ -2,7 +2,6 @@ import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/overview/pages/overview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,8 +105,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   ],
                 ),
                 Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyPurpleAccent),
+                  children: const [
+                    ItemHeader(color: CandyColors.candyPurpleAccent),
                     Text(
                       '本机IP',
                       style: TextStyle(

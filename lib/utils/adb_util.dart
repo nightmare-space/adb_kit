@@ -3,13 +3,18 @@ import 'dart:io';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
-  static Future<void> connectDevices(String ip) async {
+  static Future<void> connectDevices(String ipAndPort) async {
+    String port = '5555';
+    String ip = ipAndPort.split(':').first;
+    if (ipAndPort.contains(':')) {
+      port = ipAndPort.split(':').last;
+    }
     // Todo
     final ProcessResult result = await Process.run(
       'adb',
       [
         'connect',
-        ip + ':5555',
+        ipAndPort,
       ],
       runInShell: true,
       includeParentEnvironment: true,
@@ -17,7 +22,7 @@ class AdbUtil {
     );
     final String stdout = result.stdout.toString();
     if (stdout.contains('refused')) {
-      showToast('连接被拒绝，对方设备可能未打开网络ADB调试');
+      showToast('$ip 下的 $port 端口无法连接');
     } else if (stdout.contains('unable to connect')) {
       showToast('连接失败，对方设备可能未打开网络ADB调试');
     } else if (stdout.contains('already connected')) {

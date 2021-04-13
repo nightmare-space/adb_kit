@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
+    Get.put<DevicesController>(DevicesController());
     Get.put<OnlineController>(OnlineController());
   }
 }

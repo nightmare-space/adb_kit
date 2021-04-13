@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:global_repository/global_repository.dart';
-
 const int msgByteLen = 2;
 const int msgCodeByteLen = 2;
 const int minMsgByteLen = msgByteLen + msgCodeByteLen;
@@ -56,8 +54,8 @@ class NetworkManager {
       mStream = socket.asBroadcastStream();
       return true;
     } catch (e) {
-      return false;
       print('连接socket出现异常，e=${e.toString()}');
+      return false;
     }
     // socket.listen(decodeHandle,
     //     onError: errorHandler, onDone: doneHandler, cancelOnError: false);

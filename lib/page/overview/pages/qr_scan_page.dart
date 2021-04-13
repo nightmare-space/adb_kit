@@ -1,16 +1,16 @@
 import 'dart:io';
-
-import 'package:adb_tool/config/candy_colors.dart';
-import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
+import 'package:adb_tool/app/modules/home/views/parse_qrcode_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:adb_tool/page/list/devices_list.dart';
-import 'package:adb_tool/utils/socket_util.dart';
+import 'package:adb_tool/utils/adb_util.dart';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/parse_route.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrScanPage extends StatefulWidget {
@@ -19,48 +19,40 @@ class QrScanPage extends StatefulWidget {
 }
 
 class _QrScanPageState extends State<QrScanPage> {
-  String content = '';
-  // Random random = Random();
-  Future<void> getQrCode() async {
-    // port = 9000 + Random().nextInt(9) * 10 + Random().nextInt(9);
-    // print('port -> $port');
+  final DevicesController controller = Get.find<DevicesController>();
 
-    final List<String> localAddress = await PlatformUtil.localAddress();
-    print(localAddress);
-    for (final String localAddress in localAddress) {
-      if (localAddress.startsWith('192.')) {
-        content += localAddress + ':$adbToolQrPort\n';
-      }
+  String content = '';
+  List<String> localAddresList;
+  Future<void> getQrCode() async {
+    localAddresList = await PlatformUtil.localAddress();
+    for (int i = 0; i < localAddresList.length; i++) {
+      localAddresList[i] += ':$adbToolQrPort';
     }
-    content = content.trim().replaceAll('\n', ';');
+    content = localAddresList.join('\n').trim();
     setState(() {});
     Log.v('content -> $content');
   }
 
   Future<void> connectDevices(String ip) async {
-    final DeviceListState deviceListState = Global.instance.deviceListState;
     showToast('扫描成功');
+    final DevicesEntity devicesEntity = controller.getDevicesByIp(ip);
+    if (devicesEntity != null && !devicesEntity.connect()) {
+      // 注释先别删，投屏 app 可能需要
+      final ProcessResult result = await Process.run(
+        'adb',
+        [
+          'disconnect',
+          ip + ':5555',
+        ],
+        runInShell: true,
+        includeParentEnvironment: true,
+        environment: PlatformUtil.environment(),
+      );
+      // TODO 这儿有问题，有的设备远程调试的端口可能不是5555
+      // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
+    }
 
-    DevicesEntity devicesEntity;
-    for (int i = 0; i < deviceListState.devicesEntitys.length; i++) {
-      if (deviceListState.devicesEntitys[i].serial.contains(ip)) {
-        devicesEntity = deviceListState.devicesEntitys[i];
-      }
-    }
-    if (devicesEntity != null) {
-      if (!devicesEntity.connect()) {
-        final ProcessResult result = await Process.run(
-          'adb',
-          [
-            'disconnect',
-            ip + ':5555',
-          ],
-          runInShell: true,
-          includeParentEnvironment: true,
-          environment: PlatformUtil.environment(),
-        );
-      }
-    }
+    // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
     final ProcessResult result = await Process.run(
       'adb',
       [
@@ -81,12 +73,9 @@ class _QrScanPageState extends State<QrScanPage> {
     while (true) {
       await Future<void>.delayed(const Duration(milliseconds: 100), () {});
       DevicesEntity devicesEntity;
-      for (int i = 0; i < deviceListState.devicesEntitys.length; i++) {
-        if (deviceListState.devicesEntitys[i].serial.contains(ip)) {
-          devicesEntity = deviceListState.devicesEntitys[i];
-          //  if(deviceEntitys.devicesEntitys[i].connect()){
-          //    break;
-          //  }
+      for (int i = 0; i < controller.devicesEntitys.length; i++) {
+        if (controller.devicesEntitys[i].serial.contains(ip)) {
+          devicesEntity = controller.devicesEntitys[i];
         }
       }
       if (devicesEntity == null) {
@@ -127,6 +116,17 @@ class _QrScanPageState extends State<QrScanPage> {
       children: [
         NiCardButton(
           onTap: () {
+            // AdbUtil.connectDevices('172.24.85.34:5555');
+            Get.dialog(ParseQrcodePage(
+              addressList: [
+                '172.24.85.34:5555',
+                '172.24.85.34:5555',
+                '172.24.85.34:5555',
+                '172.24.85.34:5555',
+                '172.24.85.34:5555'
+              ],
+            ));
+            // Get.defaultDialog(title: '', content: ParseQrcodePage());
             setState(() {});
           },
           child: QrImage(
@@ -134,9 +134,8 @@ class _QrScanPageState extends State<QrScanPage> {
             version: QrVersions.auto,
             size: 300.0,
           ),
-        ), // Center(
+        ),
       ],
     );
-    // return Image.memory(result);
   }
 }

@@ -14,6 +14,7 @@ void main() {
         title: 'ADB TOOL',
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
+        defaultTransition: Transition.fade,
       ),
     ),
   );

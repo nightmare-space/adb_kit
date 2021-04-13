@@ -13,7 +13,6 @@ import 'package:custom_log/custom_log.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
@@ -29,8 +28,10 @@ class Global {
     if (Platform.isAndroid) {
       // environment['HOME'] = Config.homePath;
     }
-    libPath =
-        Platform.resolvedExecutable.replaceAll(RegExp('.app/.*'), '.app/');
+    libPath = Platform.resolvedExecutable.replaceAll(
+      RegExp('.app/.*'),
+      '.app/',
+    );
     libPath += 'Contents/Frameworks/App.framework/';
     libPath += 'Resources/flutter_assets/assets/lib/libterm.dylib';
     // rootBundle;
@@ -52,7 +53,6 @@ class Global {
   bool lockAdb = false;
   bool isInit = false;
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  DeviceListState deviceListState;
   String _documentsDir;
   PseudoTerminal pseudoTerminal;
   void Function(DeviceEntity deviceEntity) findDevicesCall;
@@ -190,9 +190,6 @@ class Global {
     _sendBoardCast();
     _initNfcModule();
     _socketServer();
-    if (!kIsWeb && !Platform.isAndroid) {
-      return;
-    }
   }
 
   static String get documentsDir => instance._documentsDir;
