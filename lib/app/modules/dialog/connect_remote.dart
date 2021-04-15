@@ -1,5 +1,4 @@
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 

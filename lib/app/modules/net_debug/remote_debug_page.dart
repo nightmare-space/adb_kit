@@ -1,6 +1,5 @@
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/candy_colors.dart';
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:flutter/material.dart';

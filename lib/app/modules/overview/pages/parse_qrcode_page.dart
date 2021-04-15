@@ -1,4 +1,3 @@
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/utils/http/http.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

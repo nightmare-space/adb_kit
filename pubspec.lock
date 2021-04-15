@@ -159,13 +159,13 @@ packages:
       name: get
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.1.3"
+    version: "4.1.4"
   global_repository:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a7977cbd62a34af432836c2b9ab5092b8961064d
+      resolved-ref: c5f726c792570964577afcd429192c5a17ca27c6
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -396,7 +396,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ac509112ff75aef2963fb831bcfa06dd05275c9e
+      resolved-ref: "5921c81f988ffed122b2fbe5d52bcbf3709a5c3c"
       url: "https://github.com/termare/termare_pty"
     source: git
     version: "1.0.0+1"
@@ -405,7 +405,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "52ba531c6517d8e75df6c3d3b665ad1e5b8235b6"
+      resolved-ref: "36bdace988621425ae0b183c8805ca487e436d7d"
       url: "https://github.com/termare/termare_view"
     source: git
     version: "0.0.2"
@@ -415,7 +415,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:

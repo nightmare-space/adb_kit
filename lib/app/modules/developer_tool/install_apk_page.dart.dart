@@ -1,5 +1,4 @@
 // 有动画
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

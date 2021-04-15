@@ -1,13 +1,11 @@
 import 'dart:io';
-
-import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'app/modules/help_page.dart';
 import 'config/config.dart';
 import 'global/widget/custom_card.dart';
-import 'app/modules/help_page.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({

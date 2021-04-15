@@ -1,6 +1,6 @@
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
 

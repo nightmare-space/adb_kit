@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_card.dart';

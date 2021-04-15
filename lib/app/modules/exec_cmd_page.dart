@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:adb_tool/config/dimens.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:dart_pty/dart_pty.dart';

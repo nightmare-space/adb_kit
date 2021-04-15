@@ -1,7 +1,6 @@
 // 这是 android 端才有的页面
 // 只有当 android 端作为热点的时候才行。
 
-import 'package:adb_tool/config/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
