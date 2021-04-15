@@ -1,5 +1,6 @@
-import 'dart:io';
+library adb_tool;
 
+import 'dart:io';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'app/routes/app_pages.dart';
 import 'global/instance/global.dart';
+export 'app/routes/app_pages.dart';
+export 'app/routes/app_routes.dart';
 
 void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
