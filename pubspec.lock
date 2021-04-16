@@ -405,7 +405,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "36bdace988621425ae0b183c8805ca487e436d7d"
+      resolved-ref: "6561cc240a303c6f482478b2d5b653196e0350f2"
       url: "https://github.com/termare/termare_view"
     source: git
     version: "0.0.2"
