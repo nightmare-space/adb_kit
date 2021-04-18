@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
@@ -21,30 +23,32 @@ import 'package:termare_view/termare_view.dart';
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
+    String executable = '';
+    if (Platform.environment.containsKey('SHELL')) {
+      executable = Platform.environment['SHELL'];
+      executable = executable.replaceAll(RegExp('.*/'), '');
+    } else {
+      if (Platform.isMacOS) {
+        executable = 'bash';
+      } else if (Platform.isWindows) {
+        executable = 'wsl';
+      } else if (Platform.isAndroid) {
+        executable = 'sh';
+      }
+    }
     final Map<String, String> environment = {
-      'TERM': 'screen-256color',
+      'TERM': 'xterm-256color',
       'PATH': PlatformUtil.environment()['PATH'],
     };
-    if (Platform.isAndroid) {
-      // environment['HOME'] = Config.homePath;
-    }
-    libPath = Platform.resolvedExecutable.replaceAll(
-      RegExp('.app/.*'),
-      '.app/',
-    );
-    libPath += 'Contents/Frameworks/App.framework/';
-    libPath += 'Resources/flutter_assets/assets/lib/libterm.dylib';
-    // rootBundle;
-    Log.d('libPath->$libPath');
-    // Log.v('object');
-    final TermSize size = TermSize.getTermSize(window.physicalSize);
+    final String workingDirectory = '.';
+    final Size size = window.physicalSize;
+    final double screenWidth = size.width / window.devicePixelRatio;
+    final double screenHeight = size.height / window.devicePixelRatio;
     pseudoTerminal = PseudoTerminal(
-      executable: 'sh',
-      // workingDirectory: Config.homePath,
+      executable: executable,
+      workingDirectory: workingDirectory,
       environment: environment,
-      row: size.row,
-      column: size.column,
-      libPath: Platform.isMacOS ? libPath : null,
+      arguments: ['-l'],
     );
     pseudoTerminal.write('clear\n');
   }
@@ -186,6 +190,12 @@ class Global {
 
   Future<void> initGlobal() async {
     print('initGlobal');
+    log(
+      '\x1b[32mvalue',
+      name: 'Termare',
+      level: 0,
+      error: 'asdd',
+    );
     if (isInit) {
       return;
     }

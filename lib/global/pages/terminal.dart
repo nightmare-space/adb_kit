@@ -20,7 +20,8 @@ class TerminalPage extends StatelessWidget {
           child: TermarePty(
             enableInput: enableInput,
             controller: TermareController(
-              theme: TermareStyles.termux.copyWith(
+              fontFamily: 'MenloforPowerline',
+              theme: TermareStyles.vsCode.copyWith(
                 backgroundColor: const Color(0xFFF0F0F0),
                 defaultFontColor: Colors.black,
               ),

@@ -13,11 +13,6 @@ class ExecCmdPage extends StatefulWidget {
 
 class _ExecCmdPageState extends State<ExecCmdPage> {
   TextEditingController editingController = TextEditingController();
-  PseudoTerminal pseudoTerminal = PseudoTerminal(
-    executable: 'sh',
-    environment: PlatformUtil.environment(),
-    libPath: Global.instance.libPath,
-  );
   FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {
     // Provider.of<ProcessState>(context).clear();
@@ -26,7 +21,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     // Provider.of<ProcessState>(context).appendOut(result);
 
     // Provider.of<ProcessState>(context).clear();
-    pseudoTerminal.write(editingController.text + '\n');
+    Global.instance.pseudoTerminal.write(editingController.text + '\n');
     // NiProcess.exec(
     //   editingController.text,
     //   getStderr: true,

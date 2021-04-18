@@ -64,7 +64,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "47d757ea5324e675a26a2387b06147a49b1df696"
+      resolved-ref: "78020032ff13a7b4a74bc2f66f8dce56e03a2cc9"
       url: "https://github.com/termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -396,7 +396,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5921c81f988ffed122b2fbe5d52bcbf3709a5c3c"
+      resolved-ref: "175c9505d13da6a6cc6ab220a4328ad3904034e3"
       url: "https://github.com/termare/termare_pty"
     source: git
     version: "1.0.0+1"
@@ -405,7 +405,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "6561cc240a303c6f482478b2d5b653196e0350f2"
+      resolved-ref: b64427514e82badb18bc7c214f7f748f80cd291c
       url: "https://github.com/termare/termare_view"
     source: git
     version: "0.0.2"
@@ -415,7 +415,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   typed_data:
     dependency: transitive
     description:

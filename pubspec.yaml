@@ -34,6 +34,10 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
+  fonts:
+    - family: MenloforPowerline
+      fonts:
+        - asset: assets/fonts/MenloforPowerline.ttf
   assets:
     - assets/android/
     - assets/icon/

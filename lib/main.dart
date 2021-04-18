@@ -1,5 +1,6 @@
 library adb_tool;
 
+import 'dart:developer';
 import 'dart:io';
 import 'package:custom_log/custom_log.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'global/instance/global.dart';
 void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
   Global.instance;
+
   runApp(
     NiToastNew(
       child: GetMaterialApp(

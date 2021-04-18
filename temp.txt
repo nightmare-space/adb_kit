@@ -1,0 +1,44 @@
+Launching lib/main.dart on Mi 10 in debug mode...
+✓ Built build/app/outputs/flutter-apk/app-debug.apk.
+Connecting to VM Service at ws://127.0.0.1:51477/-ykcLmDPLVw=/ws
+I/flutter ( 4826): <- pseudoTerminalId : 74 ->
+I/flutter ( 4826): <- processId.value : 4884 ->
+I/adb     ( 4826): aquire
+[38;5;244m[GETX] [39;49mInstance "GetMaterialController" has been created
+[38;5;244m[GETX] [39;49mInstance "GetMaterialController" has been initialized
+[38;5;244m[GETX] [39;49mGOING TO ROUTE /adb/home
+[38;5;244m[GETX] [39;49mInstance "DevicesController" has been created
+[38;5;244m[GETX] [39;49mInstance "DevicesController" has been initialized
+[38;5;244m[GETX] [39;49mInstance "OnlineController" has been created
+I/flutter ( 4826): initGlobal
+[38;5;244m[GETX] [39;49mInstance "OnlineController" has been initialized
+[38;5;244m[Termare] [39;49mvalue
+[38;5;244m[Termare] [39;49masdd
+I/flutter ( 4826): 启动_initNfcModule
+D/NFC     ( 4826): Register Nfc adapter state changed receiver
+I/NFC     ( 4826): registerAdapterStateChangedEvent()
+E/Dart    ( 4826): Dart Socket ERROR: ../../third_party/dart/runtime/bin/socket_android.cc:147: `reusePort` not supported for Android.
+I/flutter ( 4826): Serving at InternetAddress('0.0.0.0', IPv4):9000
+I/flutter ( 4826): [1;44;37m result -> true 
+I/flutter ( 4826): [1;44;37m [] 
+I/flutter ( 4826): [1;44;37m [] 
+I/flutter ( 4826): OnlineView build
+I/flutter ( 4826): setPtyWindowSize Size(360.7, 184.0) row:11 column:45
+I/flutter ( 4826): setViewPoint -> 11
+I/flutter ( 4826): Debouncer cancel
+I/flutter ( 4826): curSeq -> 2J
+I/flutter ( 4826): ps 2
+I/flutter ( 4826): curSeq -> H
+I/flutter ( 4826):  H CUP	Cursor Position
+I/flutter ( 4826): row 1 column 1
+I/flutter ( 4826): < x:0 y:0>
+D/DecorView[]( 4826): getWindowModeFromSystem  windowmode is 1
+I/htmare.adbtool( 4826): ProcessProfilingInfo new_methods=0 is saved saved_to_disk=0 resolve_classes_delay=8000
+I/flutter ( 4826): isSupported -> true
+I/flutter ( 4826): 执行回调 sizeChangedCall
+I/flutter ( 4826): setPtyWindowSize Size(360.7, 184.0) row:11 column:45
+I/flutter ( 4826): setViewPoint -> 11
+I/flutter ( 4826): Debouncer cancel
+I/flutter ( 4826): NiProcess------>processStderr * daemon not running; starting now at tcp:5037
+I/flutter ( 4826): * daemon started successfully
+I/flutter ( 4826): 执行回调 sizeChangedCall
