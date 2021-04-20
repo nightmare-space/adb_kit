@@ -121,6 +121,7 @@ class Global {
     ) async {
       socket.broadcastEnabled = true;
       // print('发送自己');
+      // TODO 优先发送到历史ip
       Timer.periodic(
         const Duration(seconds: 1),
         (Timer t) async {
