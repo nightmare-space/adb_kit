@@ -40,7 +40,7 @@ class Global {
       'TERM': 'xterm-256color',
       'PATH': PlatformUtil.environment()['PATH'],
     };
-    final String workingDirectory = '.';
+    const String workingDirectory = '.';
     final Size size = window.physicalSize;
     final double screenWidth = size.width / window.devicePixelRatio;
     final double screenHeight = size.height / window.devicePixelRatio;
@@ -191,12 +191,7 @@ class Global {
 
   Future<void> initGlobal() async {
     print('initGlobal');
-    log(
-      '\x1b[32mvalue',
-      name: 'Termare',
-      level: 0,
-      error: 'asdd',
-    );
+
     if (isInit) {
       return;
     }

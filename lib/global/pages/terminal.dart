@@ -21,7 +21,7 @@ class TerminalPage extends StatelessWidget {
             enableInput: enableInput,
             controller: TermareController(
               fontFamily: 'MenloforPowerline',
-              theme: TermareStyles.vsCode.copyWith(
+              theme: TermareStyles.macos.copyWith(
                 backgroundColor: const Color(0xFFF0F0F0),
                 defaultFontColor: Colors.black,
               ),
