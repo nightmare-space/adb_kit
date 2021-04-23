@@ -19,13 +19,7 @@ class TerminalPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: TermarePty(
             enableInput: enableInput,
-            controller: TermareController(
-              fontFamily: 'MenloforPowerline',
-              theme: TermareStyles.macos.copyWith(
-                backgroundColor: const Color(0xFFF0F0F0),
-                defaultFontColor: Colors.black,
-              ),
-            )..hideCursor(),
+            controller: Global.instance.termareController,
             pseudoTerminal: Global.instance.pseudoTerminal,
           ),
         ),

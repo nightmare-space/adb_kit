@@ -1,11 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'dart:ui';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/global/provider/device_list_state.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
@@ -41,10 +36,8 @@ class Global {
       'PATH': PlatformUtil.environment()['PATH'],
     };
     const String workingDirectory = '.';
-    final Size size = window.physicalSize;
-    final double screenWidth = size.width / window.devicePixelRatio;
-    final double screenHeight = size.height / window.devicePixelRatio;
     pseudoTerminal = PseudoTerminal(
+      column: 10,
       executable: executable,
       workingDirectory: workingDirectory,
       environment: environment,
@@ -59,6 +52,12 @@ class Global {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   String _documentsDir;
   PseudoTerminal pseudoTerminal;
+  TermareController termareController = TermareController(
+    fontFamily: 'MenloforPowerline',
+    theme: TermareStyles.macos.copyWith(
+      backgroundColor: const Color(0xFFF0F0F0),
+    ),
+  )..hideCursor();
   void Function(DeviceEntity deviceEntity) findDevicesCall;
   static Global get instance => _getInstance();
   static Global _instance;
