@@ -21,6 +21,7 @@ class Global {
     String executable = '';
     if (Platform.environment.containsKey('SHELL')) {
       executable = Platform.environment['SHELL'];
+      // 取的只是执行的文件名
       executable = executable.replaceAll(RegExp('.*/'), '');
     } else {
       if (Platform.isMacOS) {
@@ -47,8 +48,11 @@ class Global {
   }
 
   String libPath = '';
+
   bool lockAdb = false;
+
   bool isInit = false;
+
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   String _documentsDir;
   PseudoTerminal pseudoTerminal;
