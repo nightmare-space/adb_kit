@@ -6,12 +6,9 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
-  static Future<void> connectDevices(String ipAndPort) async {
-    String port = '5555';
-    final String ip = ipAndPort.split(':').first;
-    if (ipAndPort.contains(':')) {
-      port = ipAndPort.split(':').last;
-    }
+  static Future<void> connectDevices(String ip, [String port]) async {
+    port ??= '5555';
+    final String ipAndPort = '$ip:$port';
     final DevicesController controller = Get.find<DevicesController>();
     final DevicesEntity devicesEntity = controller.getDevicesByIp(ip);
     if (devicesEntity != null && !devicesEntity.connect()) {
