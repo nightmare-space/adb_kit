@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +137,10 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                   return Text('空');
                 }
                 return SizedBox(
-                  height: Dimens.gap_dp56 * controller.adbEntitys.length,
+                  height: max(
+                    Dimens.gap_dp56 * controller.adbEntitys.length,
+                    300,
+                  ),
                   child: ListView.builder(
                     itemCount: controller.adbEntitys.length,
                     itemBuilder: (c, i) {
