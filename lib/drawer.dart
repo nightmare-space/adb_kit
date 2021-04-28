@@ -120,7 +120,6 @@ class _DrawerPageState extends State<DrawerPage> {
                         ),
 
                         _DrawerItem(
-                          value: 5,
                           groupValue: widget.index,
                           title: '其他平台下载',
                           onTap: (index) async {
@@ -140,7 +139,6 @@ class _DrawerPageState extends State<DrawerPage> {
                           },
                         ),
                         _DrawerItem(
-                          value: 5,
                           groupValue: widget.index,
                           title: 'ADB命令手册',
                           onTap: (index) async {
@@ -153,6 +151,14 @@ class _DrawerPageState extends State<DrawerPage> {
                             );
                           },
                         ),
+                        _DrawerItem(
+                          value: 5,
+                          groupValue: widget.index,
+                          title: '历史连接',
+                          onTap: (index) async {
+                            widget.onChange?.call(index);
+                          },
+                        ),
                       ],
                     ),
                     Padding(
@@ -161,7 +167,7 @@ class _DrawerPageState extends State<DrawerPage> {
                         '版本：${Config.version}',
                         style: const TextStyle(
                           // fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: Colors.grey,
                         ),
                       ),
                     ),

@@ -17,6 +17,7 @@ class _HelpPageState extends State<HelpPage> {
   }
 
   Future<void> getReadme() async {
+    RawImage;
     data = await rootBundle.loadString(
       'assets/README.md',
     );

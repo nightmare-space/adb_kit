@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
@@ -190,4 +190,5 @@ List<Widget> listWidget = [
   SearchIpPage(),
   RemoteDebugPage(),
   ExecCmdPage(),
+  HistoryPage(),
 ];

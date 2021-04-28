@@ -8,10 +8,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'app/routes/app_pages.dart';
+import 'config/config.dart';
 import 'global/instance/global.dart';
 
 void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
+  if (Platform.isAndroid) {
+    RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  }
   Global.instance;
 
   runApp(

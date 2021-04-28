@@ -55,7 +55,7 @@ packages:
     description:
       path: "."
       ref: dart
-      resolved-ref: "7f2d1519692631dee8f0d0134d4c3bb2fa75b807"
+      resolved-ref: "01e0b8d295b91834f5f19d45ccadc1d6e4151173"
       url: "https://github.com/nightmare-space/custom_log"
     source: git
     version: "0.0.1"
@@ -64,7 +64,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "78020032ff13a7b4a74bc2f66f8dce56e03a2cc9"
+      resolved-ref: "091d3abba74b2f8d771a961839102cf9080c788d"
       url: "https://github.com/termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -165,7 +165,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c5f726c792570964577afcd429192c5a17ca27c6
+      resolved-ref: be0b25ca6e22c2e5a537a784d7e94e1e44079339
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -273,7 +273,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   permission_handler:
     dependency: "direct main"
     description:
@@ -405,10 +405,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: b64427514e82badb18bc7c214f7f748f80cd291c
+      resolved-ref: "00e86791e9a78c24f72522c77d31a11f10c09f21"
       url: "https://github.com/termare/termare_view"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   test_api:
     dependency: transitive
     description:
