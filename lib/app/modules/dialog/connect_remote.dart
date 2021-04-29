@@ -137,7 +137,7 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                   return Text('空');
                 }
                 return SizedBox(
-                  height: max(
+                  height: min(
                     Dimens.gap_dp56 * controller.adbEntitys.length,
                     300,
                   ),
