@@ -22,6 +22,9 @@
         <!-- <data android:scheme="yan" android:host="nightmare.fun" android:pathPrefix="/index.html" /> -->
       </intent-filter>
     </activity>
+    <meta-data
+      android:name="com.google.android.gms.ads.APPLICATION_ID"
+      android:value="ca-app-pub-5706997398641654~8967869271"/>
     <meta-data android:name="flutterEmbedding" android:value="2" />
   </application>
 </manifest>
