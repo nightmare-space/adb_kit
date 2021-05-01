@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
+  static Future<void> reconnectDevices(String ip, [String port]) {}
   static Future<void> connectDevices(String ip, [String port]) async {
     port ??= '5555';
     final String ipAndPort = '$ip:$port';
@@ -39,7 +40,7 @@ class AdbUtil {
     );
     final String stdout = result.stdout.toString();
     if (stdout.contains('refused')) {
-      showToast('$ip 下的 $port 端口无法连接');
+      showToast('$ip 下的 $port 端口无法连接，对方可能未打开网络ADB调试');
     } else if (stdout.contains('unable to connect')) {
       showToast('连接失败，对方设备可能未打开网络ADB调试');
     } else if (stdout.contains('already connected')) {
