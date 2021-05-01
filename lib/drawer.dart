@@ -26,7 +26,7 @@ class _DrawerPageState extends State<DrawerPage> {
     double width = 0;
     if (!kIsWeb &&
         MediaQuery.of(context).orientation == Orientation.landscape) {
-      width = MediaQuery.of(context).size.width * 2 / 9;
+      width = MediaQuery.of(context).size.width * 3 / 10;
     } else {
       width = MediaQuery.of(context).size.width * 2 / 3;
     }
@@ -105,7 +105,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   style: TextStyle(
                     fontSize: 26.0,
                     fontWeight: FontWeight.bold,
-                    color: accent,
+                    color: AppColors.accent,
                   ),
                 ),
               ),
@@ -124,7 +124,7 @@ class _DrawerPageState extends State<DrawerPage> {
                 value: 1,
                 groupValue: widget.index,
                 title: '安装到系统',
-                iconData: Icons.download,
+                iconData: Icons.file_download,
                 onTap: (index) {
                   widget.onChange?.call(index);
                 },
@@ -148,7 +148,7 @@ class _DrawerPageState extends State<DrawerPage> {
                   _DrawerItem(
                     value: 3,
                     groupValue: widget.index,
-                    iconData: Icons.signal_wifi_statusbar_null,
+                    iconData: Icons.signal_wifi_4_bar,
                     title: '远程调试',
                     onTap: (index) {
                       widget.onChange?.call(index);
@@ -229,8 +229,6 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 }
 
-Color accent = const Color(0xff3573e0);
-
 class _DrawerItem extends StatelessWidget {
   const _DrawerItem({
     Key key,
@@ -264,10 +262,10 @@ class _DrawerItem extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              height: Dimens.gap_dp40,
+              height: Dimens.gap_dp44,
               decoration: isChecked
                   ? BoxDecoration(
-                      color: accent.withOpacity(0.1),
+                      color: AppColors.accent.withOpacity(0.1),
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(24),
                         bottomRight: Radius.circular(24),
@@ -287,7 +285,8 @@ class _DrawerItem extends StatelessWidget {
                       Icon(
                         iconData ?? Icons.open_in_new,
                         size: 18,
-                        color: isChecked ? accent : AppColors.fontTitle,
+                        color:
+                            isChecked ? AppColors.accent : AppColors.fontTitle,
                       ),
                       SizedBox(
                         width: Dimens.gap_dp8,
@@ -295,7 +294,9 @@ class _DrawerItem extends StatelessWidget {
                       Text(
                         title,
                         style: TextStyle(
-                          color: isChecked ? accent : AppColors.fontTitle,
+                          color: isChecked
+                              ? AppColors.accent
+                              : AppColors.fontTitle,
                           fontSize: Dimens.font_sp14,
                           fontWeight: FontWeight.bold,
                         ),
