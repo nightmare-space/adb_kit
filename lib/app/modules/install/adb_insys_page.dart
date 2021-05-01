@@ -1,9 +1,9 @@
 // 安装 adb 工具到系统
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/candy_colors.dart';
+import 'package:adb_tool/drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -67,9 +67,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     alignment: Alignment.center,
                     child: Text(
                       '请选择安装路径',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(),
                     ),
                   ),
                   Padding(
@@ -120,9 +118,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   Text(
                     'tips:建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Color(0xff707076),
                       fontSize: Dimens.font_sp12,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
@@ -155,8 +152,10 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               NiCardButton(
-                blurRadius: 2,
+                blurRadius: 0,
+                shadowColor: Colors.transparent,
                 borderRadius: 12.0,
+                color: accent,
                 onTap: () async {
                   final StringBuffer buffer = StringBuffer();
                   buffer.writeln('su -c "');
@@ -177,6 +176,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     child: Text(
                       '安装',
                       style: TextStyle(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
