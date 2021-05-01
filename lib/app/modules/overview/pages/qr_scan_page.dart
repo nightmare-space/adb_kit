@@ -1,9 +1,5 @@
-import 'dart:io';
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
-import 'package:adb_tool/app/modules/overview/pages/parse_qrcode_page.dart';
-import 'package:adb_tool/app/modules/list/devices_list.dart';
-import 'package:adb_tool/global/widget/custom_card.dart';
-import 'package:custom_log/custom_log.dart';
+import 'package:signale/signale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
