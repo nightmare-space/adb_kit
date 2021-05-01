@@ -6,7 +6,7 @@ import 'package:adb_tool/utils/http_server_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
 import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
-import 'package:custom_log/custom_log.dart';
+import 'package:signale/signale.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
