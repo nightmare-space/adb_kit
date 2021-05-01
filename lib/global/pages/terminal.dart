@@ -1,3 +1,4 @@
+import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
@@ -13,7 +14,7 @@ class TerminalPage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       child: Material(
-        color: const Color(0xFFF0F0F0),
+        color: AppColors.contentBorder,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TermarePty(
