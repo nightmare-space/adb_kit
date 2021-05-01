@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-
-import 'package:adb_tool/global/widget/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
