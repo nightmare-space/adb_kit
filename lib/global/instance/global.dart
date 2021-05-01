@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
+import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
 import 'package:adb_tool/utils/scrcpy_util.dart';
@@ -59,7 +60,7 @@ class Global {
   TermareController termareController = TermareController(
     fontFamily: 'MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
-      backgroundColor: const Color(0xFFF0F0F0),
+      backgroundColor: AppColors.contentBorder,
     ),
   )..hideCursor();
   void Function(DeviceEntity deviceEntity) findDevicesCall;
