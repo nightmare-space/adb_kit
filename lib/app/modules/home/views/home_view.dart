@@ -5,6 +5,7 @@ import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/drawer.dart';
@@ -86,20 +87,23 @@ class _AdbToolState extends State<AdbTool> {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(
+            color: AppColors.fontTitle,
+          ),
           textTheme: TextTheme(
             headline6: TextStyle(
               height: 1.0,
               fontSize: 20.0,
-              color: Colors.black,
+              color: AppColors.fontTitle,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
+        accentColor: AppColors.accent,
       ),
       child: OrientationBuilder(
         builder: (_, Orientation orientation) {
