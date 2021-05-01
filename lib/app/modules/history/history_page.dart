@@ -1,4 +1,6 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/config/app_colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:global_repository/global_repository.dart';
@@ -6,8 +8,9 @@ import 'package:global_repository/global_repository.dart';
 class HistoryPage extends GetView<HistoryController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar;
+    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
+      appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('历史连接'),
         leading: IconButton(
@@ -16,29 +19,57 @@ class HistoryPage extends GetView<HistoryController> {
             Scaffold.of(context).openDrawer();
           },
         ),
-      ),
-      body: ListView.builder(
-        itemCount: controller.adbEntitys.length,
-        itemBuilder: (c, i) {
-          return InkWell(
-            onTap: () {},
-            child: SizedBox(
-              height: Dimens.gap_dp56,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.gap_dp16,
-                  ),
-                  child: Text(
-                    '${controller.adbEntitys.toList()[i]}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+      );
+    }
+    return Scaffold(
+      appBar: appBar,
+      body: GetBuilder<HistoryController>(
+        builder: (_) {
+          if (controller.adbEntitys.isEmpty) {
+            return Center(
+              child: Text(
+                '这里就像开发者的钱包一样，什么也没有',
+                style: TextStyle(
+                  color: AppColors.fontDetail,
+                ),
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: controller.adbEntitys.length,
+            itemBuilder: (c, i) {
+              AdbEntity adbEntity = controller.adbEntitys.toList()[i];
+              return InkWell(
+                onTap: () {},
+                child: SizedBox(
+                  height: Dimens.gap_dp56,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimens.gap_dp16,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'IP地址：${adbEntity.ip} 端口：${adbEntity.port}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '上次连接时间：${adbEntity.getTimeString()}',
+                            style: const TextStyle(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),
