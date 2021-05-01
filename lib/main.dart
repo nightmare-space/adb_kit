@@ -2,7 +2,7 @@ library adb_tool;
 
 import 'dart:developer';
 import 'dart:io';
-import 'package:custom_log/custom_log.dart';
+import 'package:signale/signale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,6 +15,8 @@ void main() {
   PlatformUtil.setPackageName('com.nightmare.adbtools');
   if (Platform.isAndroid) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  } else {
+    RuntimeEnvir.initEnvirForDesktop();
   }
   Global.instance;
 
@@ -29,6 +31,10 @@ void main() {
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize without device test ids.
+  if (Platform.isAndroid) {
+    // MobileAds.instance.initialize();÷、
+  }
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
