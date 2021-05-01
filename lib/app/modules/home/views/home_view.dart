@@ -162,23 +162,19 @@ class __AdbToolState extends State<_AdbTool> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: NiScaffold(
-          backgroundColor: Colors.transparent,
-          drawer: DrawerPage(
-            index: pageIndex,
-            onChange: (index) {
-              pageIndex = index;
-              setState(() {});
-              if (MediaQuery.of(context).orientation == Orientation.portrait) {
-                // 这个if可能会有点问题
-                Navigator.pop(context);
-              }
-            },
-          ),
-          body: listWidget[pageIndex],
+      child: NiScaffold(
+        drawer: DrawerPage(
+          index: pageIndex,
+          onChange: (index) {
+            pageIndex = index;
+            setState(() {});
+            if (MediaQuery.of(context).orientation == Orientation.portrait) {
+              // 这个if可能会有点问题
+              Navigator.pop(context);
+            }
+          },
         ),
+        body: listWidget[pageIndex],
       ),
     );
   }
