@@ -129,12 +129,25 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                 child: const Text('连接'),
               ),
             ),
-            Text('历史地址'),
+            Text(
+              '历史地址',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: Dimens.font_sp16,
+              ),
+            ),
             Builder(
               builder: (_) {
                 final HistoryController controller = Get.find();
                 if (controller.adbEntitys.isEmpty) {
-                  return Text('空');
+                  return Center(
+                    child: Text(
+                      '空',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  );
                 }
                 return SizedBox(
                   height: min(
@@ -144,7 +157,8 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                   child: ListView.builder(
                     itemCount: controller.adbEntitys.length,
                     itemBuilder: (c, i) {
-                      AdbEntity adbEntity = controller.adbEntitys.toList()[i];
+                      final AdbEntity adbEntity =
+                          controller.adbEntitys.toList()[i];
                       return InkWell(
                         onTap: () {
                           Navigator.of(context).pop(
@@ -160,7 +174,10 @@ class _ConnectRemoteState extends State<ConnectRemote> {
                                 horizontal: Dimens.gap_dp16,
                               ),
                               child: Text(
-                                '${controller.adbEntitys.toList()[i]}',
+                                controller.adbEntitys
+                                    .toList()[i]
+                                    .toString()
+                                    .replaceAll('<>', '    '),
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
