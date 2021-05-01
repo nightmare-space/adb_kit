@@ -11,6 +11,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut(() => HomeController());
     Get.put(DevicesController());
     Get.put(OnlineController());
-    Get.lazyPut(() => HistoryController());
+    Get.put(HistoryController());
   }
 }
