@@ -50,21 +50,12 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.15.0"
-  custom_log:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: dart
-      resolved-ref: "01e0b8d295b91834f5f19d45ccadc1d6e4151173"
-      url: "https://github.com/nightmare-space/custom_log"
-    source: git
-    version: "0.0.1"
   dart_pty:
     dependency: transitive
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "091d3abba74b2f8d771a961839102cf9080c788d"
+      resolved-ref: "62869d8b5a48f9f0e3cf793c746ef0b8cbe352d1"
       url: "https://github.com/termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -142,7 +133,7 @@ packages:
       name: flutter_svg
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.20.0-nullsafety.3"
+    version: "0.22.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -165,7 +156,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: be0b25ca6e22c2e5a537a784d7e94e1e44079339
+      resolved-ref: f744ef979a4c59c582b7308a5ebbd42ed3536b17
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -351,6 +342,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  signale:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "8edb0192348d6e63ec63a3c653e6949fb9ff494d"
+      url: "https://github.com/Nightmare-MY/signale"
+    source: git
+    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -405,10 +405,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "00e86791e9a78c24f72522c77d31a11f10c09f21"
+      resolved-ref: "4fa54fdff20a6c94cc03c182a1983c75f63f771c"
       url: "https://github.com/termare/termare_view"
     source: git
-    version: "0.0.3"
+    version: "0.0.4"
   test_api:
     dependency: transitive
     description:
