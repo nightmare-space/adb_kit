@@ -1,5 +1,6 @@
 // 安装 adb 工具到系统
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
@@ -155,7 +156,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                 blurRadius: 0,
                 shadowColor: Colors.transparent,
                 borderRadius: 12.0,
-                color: accent,
+                color: AppColors.accent,
                 onTap: () async {
                   final StringBuffer buffer = StringBuffer();
                   buffer.writeln('su -c "');
