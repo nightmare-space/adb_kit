@@ -32,6 +32,7 @@ class _DrawerPageState extends State<DrawerPage> {
     }
     return OrientationBuilder(
       builder: (context, orientation) {
+        print('orientation -> $orientation');
         return Material(
           color: Colors.white,
           shape: RoundedRectangleBorder(
