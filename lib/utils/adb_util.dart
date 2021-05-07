@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/app/modules/list/devices_list.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,14 @@ class AdbUtil {
     } else if (stdout.contains('already connected')) {
       showToast('该设备已连接');
     } else if (stdout.contains('connect')) {
+      final HistoryController historyController = Get.find();
+      historyController.addAdbEntity(
+        AdbEntity(
+          ip,
+          port,
+          DateTime.now(),
+        ),
+      );
       showToast('连接成功');
     }
     print('result.stdout -> ${result.stdout}');
