@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'package:adb_tool/config/config.dart';
 import 'package:signale/signale.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:global_repository/global_repository.dart';
 
 // 考虑是否加时间
 class AdbEntity {

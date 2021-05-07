@@ -82,9 +82,9 @@ emulator-5554	device
             devicesEntitys.add(devicesEntity);
           }
         }
-        for (final DevicesEntity devicesEntity in devicesEntitys) {
-          // print(devicesEntity.serial);
-        }
+        // for (final DevicesEntity devicesEntity in devicesEntitys) {
+        //   // print(devicesEntity.serial);
+        // }
         update();
       }
       await Future<void>.delayed(const Duration(milliseconds: 300), () {});

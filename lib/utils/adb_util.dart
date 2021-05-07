@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
-  static Future<void> reconnectDevices(String ip, [String port]) {}
+  static Future<void> reconnectDevices(String ip, [String port]) async {}
   static Future<void> connectDevices(String ip, [String port]) async {
     port ??= '5555';
     final String ipAndPort = '$ip:$port';

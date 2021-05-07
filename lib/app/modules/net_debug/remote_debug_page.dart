@@ -99,7 +99,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                 ),
                 Row(
                   children: [
-                    ItemHeader(color: CandyColors.candyPurpleAccent),
+                    const ItemHeader(color: CandyColors.candyPurpleAccent),
                     Text(
                       '本机IP',
                       style: TextStyle(
@@ -120,7 +120,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
                         address.join('\n'),
                         style: TextStyle(
@@ -144,7 +144,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Text(
                     '1.设备与PC处于于一个局域网',
                     style: TextStyle(
@@ -174,7 +174,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                   ),
                   child: RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       children: [
                         TextSpan(
                           text: 'adb connect \$IP',
@@ -232,12 +232,11 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                   height: Dimens.gap_dp8,
                 ),
                 Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyPink),
-                    const Text(
+                  children: const [
+                    ItemHeader(color: CandyColors.candyPink),
+                    Text(
                       '终端',
                       style: TextStyle(
-                        fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -246,7 +245,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                 SizedBox(
                   height: Dimens.gap_dp8,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 200,
                   child: TerminalPage(),
                 ),

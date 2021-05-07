@@ -1,6 +1,5 @@
 library adb_tool;
 
-import 'dart:developer';
 import 'dart:io';
 import 'package:signale/signale.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +30,6 @@ void main() {
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize without device test ids.
-  if (Platform.isAndroid) {
-    // MobileAds.instance.initialize();÷、
-  }
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -47,8 +42,8 @@ void main() {
 
 Future<void> enableUdpMulti() async {
   if (Platform.isAndroid) {
-    final MethodChannel methodChannel = const MethodChannel('multicast-lock');
-    bool result = await methodChannel.invokeMethod<bool>('aquire');
+    const MethodChannel methodChannel = MethodChannel('multicast-lock');
+    final bool result = await methodChannel.invokeMethod<bool>('aquire');
     Log.d('result -> $result');
   }
 }

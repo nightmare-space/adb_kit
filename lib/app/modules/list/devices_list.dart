@@ -150,7 +150,7 @@ class _DevicesListState extends State<DevicesList> {
             SizedBox(
               height: 48.0 * devicesEntitys.length,
               child: AnimatedList(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: false,
                 padding: const EdgeInsets.only(top: 0),
                 key: _listKey,

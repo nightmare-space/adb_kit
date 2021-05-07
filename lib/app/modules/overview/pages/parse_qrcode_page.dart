@@ -46,7 +46,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
         await httpInstance.post('http://' + entitys[i].address);
         entitys[i].state = ConnectState.success;
         setState(() {});
-        Future.delayed(Duration(milliseconds: 600), () {
+        Future.delayed(const Duration(milliseconds: 600), () {
           showToast('已经成功发送连接消息');
           Navigator.pop(context);
         });
@@ -55,7 +55,6 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
         entitys[i].state = ConnectState.failed;
         setState(() {});
         print('e->$e');
-        // TODO
       }
     }
   }
@@ -77,7 +76,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
                 children: [
                   Text(
                     element.address,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

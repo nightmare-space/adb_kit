@@ -38,7 +38,7 @@ class HistoryPage extends GetView<HistoryController> {
           return ListView.builder(
             itemCount: controller.adbEntitys.length,
             itemBuilder: (c, i) {
-              AdbEntity adbEntity = controller.adbEntitys.toList()[i];
+              final AdbEntity adbEntity = controller.adbEntitys.toList()[i];
               return InkWell(
                 onTap: () {},
                 child: SizedBox(

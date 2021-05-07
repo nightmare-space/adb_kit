@@ -104,9 +104,9 @@ class _OverviewPageState extends State<OverviewPage> {
             //   content: Text('data'),
             // ),
             Row(
-              children: [
-                const ItemHeader(color: CandyColors.candyPink),
-                const Text(
+              children: const [
+                ItemHeader(color: CandyColors.candyPink),
+                Text(
                   '已成功连接的设备',
                   style: TextStyle(
                     fontSize: 16.0,
@@ -122,9 +122,9 @@ class _OverviewPageState extends State<OverviewPage> {
               child: DevicesList(),
             ),
             Row(
-              children: [
-                const ItemHeader(color: CandyColors.candyBlue),
-                const Text(
+              children: const [
+                ItemHeader(color: CandyColors.candyBlue),
+                Text(
                   '快捷命令',
                   style: TextStyle(
                     fontSize: 16.0,
@@ -216,10 +216,10 @@ class _OverviewPageState extends State<OverviewPage> {
             Row(
               children: [
                 const ItemHeader(color: CandyColors.candyPurpleAccent),
-                const Text(
+                Text(
                   '运行ADB TOOL的设备',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -232,10 +232,10 @@ class _OverviewPageState extends State<OverviewPage> {
             Row(
               children: [
                 const ItemHeader(color: CandyColors.candyCyan),
-                const Text(
+                Text(
                   '终端',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -244,7 +244,7 @@ class _OverviewPageState extends State<OverviewPage> {
             SizedBox(
               height: Dimens.gap_dp16,
             ),
-            SizedBox(
+            const SizedBox(
               height: 200,
               child: TerminalPage(),
             ),

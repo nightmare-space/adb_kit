@@ -10,7 +10,7 @@ class UdpUtil {
     //     Config.udpPort,
     //   );
     // }
-    socket.send(msg.codeUnits, InternetAddress("224.0.0.1"), adbToolUdpPort);
+    socket.send(msg.codeUnits, InternetAddress('224.0.0.1'), adbToolUdpPort);
     await Future.delayed(const Duration(milliseconds: 10));
     // return;
     final List<String> address = await PlatformUtil.localAddress();

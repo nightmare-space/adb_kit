@@ -140,7 +140,7 @@ class _ConnectRemoteState extends State<ConnectRemote> {
               builder: (_) {
                 final HistoryController controller = Get.find();
                 if (controller.adbEntitys.isEmpty) {
-                  return Center(
+                  return const Center(
                     child: Text(
                       '空',
                       style: TextStyle(

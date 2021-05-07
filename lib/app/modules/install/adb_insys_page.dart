@@ -2,7 +2,6 @@
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/config/candy_colors.dart';
-import 'package:adb_tool/drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +118,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   Text(
                     'tips:建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
                     style: TextStyle(
-                      color: Color(0xff707076),
+                      color: const Color(0xff707076),
                       fontSize: Dimens.font_sp12,
                     ),
                   ),
@@ -129,10 +128,10 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   Row(
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
-                      const Text(
+                      Text(
                         '终端',
                         style: TextStyle(
-                          fontSize: 16.0,
+                          fontSize: Dimens.font_sp16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

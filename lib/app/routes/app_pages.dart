@@ -1,4 +1,3 @@
-import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ class AdbPages {
       name: Routes.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
-      bindings: [],
     ),
   ];
 }

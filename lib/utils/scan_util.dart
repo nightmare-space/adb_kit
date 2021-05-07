@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
-import 'http/http.dart';
 import 'permission_utils.dart';
-import 'socket_util.dart';
 
 extension IpString on String {
   bool isSameSegment(String other) {
