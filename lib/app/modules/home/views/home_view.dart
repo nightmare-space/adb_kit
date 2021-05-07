@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
@@ -8,15 +10,16 @@ import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/app_colors.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/drawer.dart';
+import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
+import 'package:adb_tool/responsive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 import '../controllers/home_controller.dart';
@@ -108,10 +111,11 @@ class _AdbToolState extends State<AdbTool> {
       child: OrientationBuilder(
         builder: (_, Orientation orientation) {
           if (kIsWeb || PlatformUtil.isDesktop()) {
+            final Size size = window.physicalSize / window.devicePixelRatio;
             ScreenUtil.init(
               context,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              width: size.width,
+              height: size.height,
               allowFontScaling: false,
             );
           } else {
@@ -164,22 +168,70 @@ class __AdbToolState extends State<_AdbTool> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: NiScaffold(
-        drawer: DrawerPage(
-          index: pageIndex,
-          onChange: (index) {
-            pageIndex = index;
-            setState(() {});
-            if (MediaQuery.of(context).orientation == Orientation.portrait) {
-              // 这个if可能会有点问题
-              Navigator.pop(context);
-            }
-          },
-        ),
-        body: listWidget[pageIndex],
-      ),
+    return Responsive(
+      builder: (_, ScreenType screenType) {
+        switch (screenType) {
+          case ScreenType.desktop:
+            return Scaffold(
+              body: Row(
+                children: [
+                  DesktopPhoneDrawer(
+                    width: Dimens.setWidth(200),
+                    index: pageIndex,
+                    onChange: (index) {
+                      pageIndex = index;
+                      setState(() {});
+                    },
+                  ),
+                  Expanded(
+                    child: listWidget[pageIndex],
+                  ),
+                ],
+              ),
+            );
+            break;
+          case ScreenType.tablet:
+            return Scaffold(
+              body: Row(
+                children: [
+                  TabletDrawer(
+                    index: pageIndex,
+                    onChange: (index) {
+                      pageIndex = index;
+                      setState(() {});
+                    },
+                  ),
+                  Expanded(
+                    child: listWidget[pageIndex],
+                  ),
+                ],
+              ),
+            );
+            break;
+          case ScreenType.phone:
+            return Scaffold(
+              drawer: DesktopPhoneDrawer(
+                width: MediaQuery.of(context).size.width * 2 / 3,
+                index: pageIndex,
+                onChange: (index) {
+                  pageIndex = index;
+                  setState(() {});
+                  Navigator.pop(context);
+                },
+              ),
+              body: Row(
+                children: [
+                  Expanded(
+                    child: listWidget[pageIndex],
+                  ),
+                ],
+              ),
+            );
+            break;
+          default:
+            return Text('phone');
+        }
+      },
     );
   }
 }
