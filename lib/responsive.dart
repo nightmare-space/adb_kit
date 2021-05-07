@@ -42,12 +42,15 @@ class _ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
     print(' Build');
     return OrientationBuilder(
       builder: (_, Orientation orientation) {
-        if (orientation == Orientation.portrait) {
+        final Size size = window.physicalSize / window.devicePixelRatio;
+        print(window.devicePixelRatio);
+        if (size.width < 500) {
           return widget.builder(_, ScreenType.phone);
+        } else if (size.width > 600) {
+          return widget.builder(_, ScreenType.desktop);
+        } else {
+          return widget.builder(_, ScreenType.tablet);
         }
-        print(window.physicalSize);
-        print('$this Build');
-        return Text('data');
       },
     );
   }
