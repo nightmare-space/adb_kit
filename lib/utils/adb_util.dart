@@ -19,14 +19,12 @@ class AdbUtil {
         'adb',
         [
           'disconnect',
-          ip + ':5555',
+          ip,
         ],
         runInShell: true,
         includeParentEnvironment: true,
         environment: PlatformUtil.environment(),
       );
-      // TODO 这儿有问题，有的设备远程调试的端口可能不是5555
-      // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
     }
     // Todo
     final ProcessResult result = await Process.run(
