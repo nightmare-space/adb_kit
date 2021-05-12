@@ -39,5 +39,4 @@ flutter:
   assets:
     - assets/android/
     - assets/icon/
-    - assets/lib/
     - assets/README.md
