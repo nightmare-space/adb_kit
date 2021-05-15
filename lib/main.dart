@@ -26,6 +26,7 @@ void main() {
         initialRoute: AdbPages.INITIAL,
         getPages: AdbPages.routes,
         defaultTransition: Transition.fade,
+        debugShowCheckedModeBanner: false,
       ),
     ),
   );
