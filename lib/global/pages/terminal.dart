@@ -14,7 +14,7 @@ class TerminalPage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       child: Material(
-        color: AppColors.contentBorder,
+        color: AppColors.terminalBack,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TermarePty(

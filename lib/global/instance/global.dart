@@ -60,7 +60,7 @@ class Global {
   TermareController termareController = TermareController(
     fontFamily: 'MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
-      backgroundColor: AppColors.contentBorder,
+      backgroundColor: AppColors.terminalBack,
     ),
   )..hideCursor();
   void Function(DeviceEntity deviceEntity) findDevicesCall;

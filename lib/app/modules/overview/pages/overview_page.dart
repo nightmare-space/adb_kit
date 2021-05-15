@@ -32,7 +32,6 @@ class _OverviewPageState extends State<OverviewPage> {
     if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
       appBar = AppBar(
         brightness: Brightness.light,
-        backgroundColor: const Color(0x00f7f7f7),
         centerTitle: true,
         elevation: 0.0,
         leading: IconButton(
