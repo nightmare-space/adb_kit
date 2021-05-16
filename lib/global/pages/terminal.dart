@@ -19,7 +19,7 @@ class TerminalPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: TermarePty(
             enableInput: enableInput,
-            controller: Global.instance.termareController,
+            controller: Global.instance.termareController..enableCursor(),
             pseudoTerminal: Global.instance.pseudoTerminal,
           ),
         ),
