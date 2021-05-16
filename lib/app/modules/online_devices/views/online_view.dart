@@ -73,8 +73,8 @@ class OnlineView extends GetView<OnlineController> {
                           tooltip: '让对方设备连接我',
                           icon: Transform(
                             alignment: Alignment.center,
-                            transform: Matrix4.identity()..rotateZ(pi / 2),
-                            child: const Icon(Icons.arrow_forward_ios),
+                            transform: Matrix4.identity(),
+                            child: const Icon(Icons.arrow_drop_down),
                           ),
                           onPressed: () async {
                             showToast('发送请求成功');
@@ -90,8 +90,8 @@ class OnlineView extends GetView<OnlineController> {
                           tooltip: '尝试连接这个设备',
                           icon: Transform(
                             alignment: Alignment.center,
-                            transform: Matrix4.identity()..rotateZ(-pi / 2),
-                            child: const Icon(Icons.arrow_forward_ios),
+                            transform: Matrix4.identity(),
+                            child: const Icon(Icons.arrow_drop_up),
                           ),
                           onPressed: () async {
                             AdbUtil.connectDevices(entity.address);
