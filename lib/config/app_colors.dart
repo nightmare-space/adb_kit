@@ -9,5 +9,5 @@ class AppColors {
   static Color fontTitle = const Color(0xff0d0d14);
   static Color fontDetail = const Color(0xff707076);
   static Color contentBorder = const Color(0xfff7f7f8);
-  static Color terminalBack = const Color(0xfff2f5fa);
+  static Color terminalBack = const Color(0xfff5f5f4);
 }
