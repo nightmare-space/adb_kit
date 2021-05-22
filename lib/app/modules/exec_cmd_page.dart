@@ -53,7 +53,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
       );
     }
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: appBar,
       body: Padding(
         padding: EdgeInsets.symmetric(

@@ -81,7 +81,7 @@ class _OverviewPageState extends State<OverviewPage> {
           //     });
           //   },
           // ),
-          // backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           appBar: appBar,
           body: buildBody(context, _),
         );
@@ -265,7 +265,9 @@ class ItemButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NiCardButton(
-      shadowColor: Colors.grey,
+      shadowColor: Colors.black,
+      blurRadius: 4,
+      spreadRadius: 0,
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(

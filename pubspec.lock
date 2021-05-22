@@ -7,7 +7,7 @@ packages:
       name: args
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.6.0"
+    version: "2.1.0"
   async:
     dependency: transitive
     description:
@@ -55,7 +55,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "62869d8b5a48f9f0e3cf793c746ef0b8cbe352d1"
+      resolved-ref: "74dad8298c2b6901e86cad86d2a3e3e93785f32b"
       url: "https://github.com/termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -100,7 +100,7 @@ packages:
       name: file
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -112,7 +112,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.5.2"
+    version: "0.6.2"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -156,7 +156,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: f744ef979a4c59c582b7308a5ebbd42ed3536b17
+      resolved-ref: "8d251ec7245a5c77ce638980a729190c06c93020"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -180,7 +180,7 @@ packages:
       name: markdown
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.0"
+    version: "4.0.0"
   matcher:
     dependency: transitive
     description:
@@ -195,13 +195,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.3.0"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.5"
   nfc_in_flutter:
     dependency: "direct main"
     description:
@@ -222,14 +215,14 @@ packages:
       name: path_drawing
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1"
   path_provider:
     dependency: transitive
     description:
@@ -307,13 +300,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.1"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "5.0.0-nullsafety.3"
   qr:
     dependency: transitive
     description:
@@ -347,10 +333,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8edb0192348d6e63ec63a3c653e6949fb9ff494d"
+      resolved-ref: "97d9e0bd8ada22ee4bc6c8eb1f8e0040ecd6af5a"
       url: "https://github.com/Nightmare-MY/signale"
     source: git
-    version: "0.0.3"
+    version: "0.0.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -396,7 +382,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "175c9505d13da6a6cc6ab220a4328ad3904034e3"
+      resolved-ref: "1cd9841c0894c2a8e091df56b0d7714329d2e301"
       url: "https://github.com/termare/termare_pty"
     source: git
     version: "1.0.0+1"
@@ -405,17 +391,17 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "4fa54fdff20a6c94cc03c182a1983c75f63f771c"
+      resolved-ref: f5a3370792627b989352bad52012cff1862fa0d3
       url: "https://github.com/termare/termare_view"
     source: git
-    version: "0.0.4"
+    version: "0.0.7"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:
@@ -492,7 +478,7 @@ packages:
       name: xml
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
 sdks:
   dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.24.0-7.0"
