@@ -7,7 +7,6 @@ import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../config/config.dart';
 import '../help_page.dart';
 
 class TabletDrawer extends StatefulWidget {
