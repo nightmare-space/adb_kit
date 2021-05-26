@@ -14,6 +14,7 @@ class HttpServerUtil {
         //HttpResponse对象用于返回客户端
         print('${request.connectionInfo.remoteAddress}');
         request.response
+          ..headers.contentType = ContentType('text', 'plain', charset: 'utf-8')
           ..write('success')
           //结束与客户端连接
           ..close();
