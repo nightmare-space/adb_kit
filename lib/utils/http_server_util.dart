@@ -18,6 +18,7 @@ class HttpServerUtil {
           ..write('success')
           //结束与客户端连接
           ..close();
+        // 这儿感觉短时间内call了两次，考虑做个防抖
         callBack?.call(request.connectionInfo.remoteAddress.address);
       });
     });
