@@ -62,7 +62,7 @@ class _ConnectPageState extends State<ConnectPage> {
     return Scaffold(
       appBar: appBar,
       body: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 8,
           vertical: 16,
         ),
