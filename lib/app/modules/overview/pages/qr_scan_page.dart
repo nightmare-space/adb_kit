@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:signale/signale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,7 +107,10 @@ class _QrScanPageState extends State<QrScanPage> {
       alignment: Alignment.center,
       children: [
         NiCardButton(
-          color: Colors.transparent,
+          shadowColor: Colors.transparent,
+          blurRadius: 0,
+          spreadRadius: 0,
+          color: AppColors.contentBorder,
           onTap: () {
             // AdbUtil.connectDevices('172.24.85.34:5555');
           },
