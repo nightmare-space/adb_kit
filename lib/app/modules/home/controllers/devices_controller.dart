@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:adb_tool/app/modules/list/devices_list.dart';
+import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

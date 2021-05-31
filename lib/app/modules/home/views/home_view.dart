@@ -1,24 +1,23 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-
+import 'package:adb_tool/app/modules/connect/connect_page.dart';
+import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/config/app_colors.dart';
+import 'package:adb_tool/app/modules/search_ip_page.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
-import 'package:adb_tool/app/modules/exec_cmd_page.dart';
-import 'package:adb_tool/app/modules/search_ip_page.dart';
-import 'package:adb_tool/responsive.dart';
+import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
@@ -147,7 +146,15 @@ class _AdbToolState extends State<AdbTool> {
               ),
             );
           }
-          return _AdbTool();
+          final bool isDark = Theme.of(context).brightness == Brightness.dark;
+          final ThemeData theme =
+              isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
+          return Theme(
+            data: theme,
+            child: NiToastNew(
+              child: _AdbTool(),
+            ),
+          );
         },
       ),
     );
@@ -229,7 +236,7 @@ class __AdbToolState extends State<_AdbTool> {
             );
             break;
           default:
-            return Text('phone');
+            return const Text('ERROR');
         }
       },
     );
@@ -238,6 +245,7 @@ class __AdbToolState extends State<_AdbTool> {
 
 List<Widget> listWidget = [
   OverviewPage(),
+  ConnectPage(),
   AdbInstallToSystemPage(),
   SearchIpPage(),
   RemoteDebugPage(),

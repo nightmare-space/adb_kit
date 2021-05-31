@@ -1,12 +1,13 @@
-// 安装 adb 工具到系统
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/config/app_colors.dart';
-import 'package:adb_tool/config/candy_colors.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
+import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
+// 安装 adb 工具到系统
 class AdbInstallToSystemPage extends StatefulWidget {
   @override
   _AdbInstallToSystemPageState createState() => _AdbInstallToSystemPageState();
