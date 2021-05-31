@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:adb_tool/config/app_colors.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
@@ -88,7 +87,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               ),
             ),
             _DrawerItem(
-              title: '主页',
+              title: '概览',
               value: 0,
               groupValue: widget.index,
               onTap: (index) {
@@ -96,9 +95,18 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               },
               iconData: Icons.home,
             ),
+            _DrawerItem(
+              title: '连接设备',
+              value: 1,
+              groupValue: widget.index,
+              onTap: (index) {
+                widget.onChange?.call(index);
+              },
+              iconData: Icons.data_saver_off,
+            ),
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
-                value: 1,
+                value: 2,
                 groupValue: widget.index,
                 title: '安装到系统',
                 iconData: Icons.file_download,
@@ -114,7 +122,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               Column(
                 children: [
                   _DrawerItem(
-                    value: 2,
+                    value: 3,
                     groupValue: widget.index,
                     title: '查看局域网ip',
                     onTap: (index) {
@@ -123,7 +131,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                     iconData: Icons.wifi_tethering,
                   ),
                   _DrawerItem(
-                    value: 3,
+                    value: 4,
                     groupValue: widget.index,
                     iconData: Icons.signal_wifi_4_bar,
                     title: '远程调试',
@@ -134,7 +142,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                 ],
               ),
             _DrawerItem(
-              value: 4,
+              value: 5,
               groupValue: widget.index,
               title: '执行自定义命令',
               iconData: Icons.code,
@@ -144,7 +152,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
             ),
 
             _DrawerItem(
-              value: 5,
+              value: 6,
               groupValue: widget.index,
               title: '历史连接',
               iconData: Icons.history,
