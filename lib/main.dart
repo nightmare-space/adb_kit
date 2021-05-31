@@ -20,14 +20,12 @@ void main() {
   Global.instance;
 
   runApp(
-    NiToastNew(
-      child: GetMaterialApp(
-        title: 'ADB TOOL',
-        initialRoute: AdbPages.INITIAL,
-        getPages: AdbPages.routes,
-        defaultTransition: Transition.fade,
-        debugShowCheckedModeBanner: false,
-      ),
+    GetMaterialApp(
+      title: 'ADB TOOL',
+      initialRoute: AdbPages.INITIAL,
+      getPages: AdbPages.routes,
+      defaultTransition: Transition.fade,
+      debugShowCheckedModeBanner: false,
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +40,8 @@ void main() {
 }
 
 Future<void> enableUdpMulti() async {
+  // 这个是为了开启安卓的组播，安卓开启组播会增加耗电，所以默认是关闭的
+  // 不过好像不生效
   if (Platform.isAndroid) {
     const MethodChannel methodChannel = MethodChannel('multicast-lock');
     final bool result = await methodChannel.invokeMethod<bool>('aquire');
