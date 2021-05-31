@@ -83,13 +83,13 @@ class _DevicesItemState extends State<DevicesItem>
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(
-        milliseconds: 500,
+        milliseconds: 600,
       ),
     );
     progressAnimaCTL = AnimationController(
       vsync: this,
       duration: const Duration(
-        milliseconds: 500,
+        milliseconds: 600,
       ),
     );
     progressAnimaCTL.forward();

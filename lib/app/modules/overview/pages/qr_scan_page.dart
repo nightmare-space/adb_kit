@@ -106,6 +106,7 @@ class _QrScanPageState extends State<QrScanPage> {
       alignment: Alignment.center,
       children: [
         NiCardButton(
+          color: Colors.transparent,
           onTap: () {
             // AdbUtil.connectDevices('172.24.85.34:5555');
           },

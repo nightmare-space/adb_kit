@@ -1,18 +1,21 @@
 import 'dart:io';
+
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
-import 'package:adb_tool/config/candy_colors.dart';
+import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
+import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
+
 import '../../dialog/connect_remote.dart';
-import '../../list/devices_list.dart';
 import 'qr_scan_page.dart';
 
 class OverviewPage extends StatefulWidget {
@@ -80,8 +83,7 @@ class _OverviewPageState extends State<OverviewPage> {
           //       UdpUtil.boardcast(socket, UniqueKey().toString());
           //     });
           //   },
-          // ),
-          backgroundColor: Colors.white,
+
           appBar: appBar,
           body: buildBody(context, _),
         );
@@ -286,25 +288,6 @@ class ItemButton extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ItemHeader extends StatelessWidget {
-  const ItemHeader({Key key, this.color}) : super(key: key);
-  final Color color;
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.only(
-          right: Dimens.gap_dp6,
-        ),
-        color: color,
-        width: Dimens.gap_dp4,
-        height: Dimens.gap_dp16,
       ),
     );
   }
