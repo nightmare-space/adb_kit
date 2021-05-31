@@ -1,7 +1,7 @@
 name: adb_tool
-description: A new Flutter project.
+description: 支持Android、macOS的adb工具，提供更方便的连接与设备操作.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 1.0.9+10
+version: 1.1.0+11
 environment:
   sdk: ">=2.7.0 <3.0.0"
 dependencies:
@@ -27,12 +27,11 @@ dependencies:
   nfc_in_flutter: 2.0.5
 
 dependency_overrides:
-
   termare_view:
     path: /Users/nightmare/Desktop/termare-space/termare_view
   dart_pty:
     path: /Users/nightmare/Desktop/termare-space/dart_pty
-    
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
