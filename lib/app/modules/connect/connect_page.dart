@@ -2,6 +2,7 @@ import 'package:adb_tool/app/modules/overview/pages/qr_scan_page.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,7 +37,30 @@ class _ConnectPageState extends State<ConnectPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar appBar;
+    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
+      appBar = AppBar(
+        brightness: Brightness.light,
+        centerTitle: true,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+        title: Text(
+          '连接设备',
+          style: TextStyle(
+            height: 1.0,
+            color: Theme.of(context).textTheme.bodyText2.color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
     return Scaffold(
+      appBar: appBar,
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 8,
