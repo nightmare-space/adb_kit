@@ -26,6 +26,13 @@ dependencies:
   flutter_markdown: ^0.6.1
   nfc_in_flutter: 2.0.5
 
+dependency_overrides:
+
+  termare_view:
+    path: /Users/nightmare/Desktop/termare-space/termare_view
+  dart_pty:
+    path: /Users/nightmare/Desktop/termare-space/dart_pty
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
