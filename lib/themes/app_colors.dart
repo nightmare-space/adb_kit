@@ -7,7 +7,7 @@ class AppColors {
   static const Color fontColor = Color(0xff201b1a);
 
   // static const Color fontColor = Color(0xff355c7d);
-  static const Color inputBorderColor = Color(0xffeeeeee);
+  static const Color inputBorderColor = Color(0xffebebed);
   // static const Color accentColor = Color(0xff811016);
   // dribble
   // static const Color accentColor = Color(0xffd85988);
@@ -26,6 +26,6 @@ class AppColors {
   static const Color background =
       Color(0xfff5f5f7); // static Color accent = const Color(0xff3573e0);
   static const Color accent = CandyColors.indigo;
-  static Color contentBorder = const Color(0xfff7f7f8);
-  static Color terminalBack = const Color(0xffeeeeee);
+  static Color contentBorder = const Color(0xffebebed);
+  static Color terminalBack = const Color(0xffebebed);
 }
