@@ -103,6 +103,7 @@ class _ConnectPageState extends State<ConnectPage> {
                   alignment: Alignment.center,
                   children: [
                     TextField(
+                      controller: editingController,
                       decoration: InputDecoration(
                         hintText: '输入安卓设备的IP地址:端口号(可省略)',
                       ),
