@@ -214,7 +214,7 @@ class DefaultThemeData {
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12,
-          vertical: 16,
+          vertical: 12,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
