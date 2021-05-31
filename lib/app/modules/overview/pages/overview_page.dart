@@ -65,33 +65,28 @@ class _OverviewPageState extends State<OverviewPage> {
         ],
       );
     }
-    return Builder(
-      builder: (_) {
-        return Scaffold(
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () async {
-          //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-          //         .then((RawDatagramSocket socket) async {
-          //       socket.broadcastEnabled = true;
-          //       // for (int i = 0; i < 255; i++) {
-          //       //   socket.send(
-          //       //     UniqueKey().toString().codeUnits,
-          //       //     InternetAddress('192.168.39.$i'),
-          //       //     Config.udpPort,
-          //       //   );
-          //       // }
-          //       UdpUtil.boardcast(socket, UniqueKey().toString());
-          //     });
-          //   },
-
-          appBar: appBar,
-          body: buildBody(context, _),
-        );
-      },
+    return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+      //         .then((RawDatagramSocket socket) async {
+      //       socket.broadcastEnabled = true;
+      //       // for (int i = 0; i < 255; i++) {
+      //       //   socket.send(
+      //       //     UniqueKey().toString().codeUnits,
+      //       //     InternetAddress('192.168.39.$i'),
+      //       //     Config.udpPort,
+      //       //   );
+      //       // }
+      //       UdpUtil.boardcast(socket, UniqueKey().toString());
+      //     });
+      //   },
+      appBar: appBar,
+      body: buildBody(context),
     );
   }
 
-  Padding buildBody(BuildContext context, BuildContext _) {
+  Padding buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8,
@@ -181,7 +176,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   title: '连接二维码',
                   onTap: () async {
                     await showDialog<String>(
-                      context: _,
+                      context: context,
                       builder: (_) {
                         return QrScanPage();
                       },
