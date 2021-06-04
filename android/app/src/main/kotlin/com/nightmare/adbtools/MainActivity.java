@@ -47,6 +47,7 @@ public class MainActivity extends FlutterActivity {
         wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
         mLock = wifi.createMulticastLock("discovery-multicast-lock");
+        mLock.setReferenceCounted(true);
         mLock.acquire();
         return true;
     }
