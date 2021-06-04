@@ -138,21 +138,21 @@ class _OverviewPageState extends State<OverviewPage> {
                 ItemButton(
                   title: '开启服务',
                   onTap: () async {
-                    const String cmd = 'adb start-server\n';
+                    const String cmd = 'adb start-server\r';
                     Global.instance.pseudoTerminal.write(cmd);
                   },
                 ),
                 ItemButton(
                   title: '停止服务',
                   onTap: () async {
-                    const String cmd = 'adb kill-server\n';
+                    const String cmd = 'adb kill-server\r';
                     Global.instance.pseudoTerminal.write(cmd);
                   },
                 ),
                 ItemButton(
                   title: '重启服务',
                   onTap: () async {
-                    const String cmd = 'adb kill-server && adb start-server\n';
+                    const String cmd = 'adb kill-server && adb start-server\r';
                     Global.instance.pseudoTerminal.write(cmd);
                   },
                 ),
