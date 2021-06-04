@@ -13,26 +13,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   TextEditingController editingController = TextEditingController();
   FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {
-    // Provider.of<ProcessState>(context).clear();
-    // final String cmd = editingController.text;
-    // final String result = await exec('echo $cmd\n$cmd');
-    // Provider.of<ProcessState>(context).appendOut(result);
-
-    // Provider.of<ProcessState>(context).clear();
     Global.instance.pseudoTerminal.write(editingController.text + '\n');
-    // NiProcess.exec(
-    //   editingController.text,
-    //   getStderr: true,
-    //   callback: (output) {
-    //     print('ss======>$output');
 
-    //     if (output.trim() == 'process_exit') {
-    //       return;
-    //     }
-    //     output = output.replaceAll('process_exit', '');
-    //     Provider.of<ProcessState>(context).appendOut(output);
-    //   },
-    // );
     editingController.clear();
     focusNode.requestFocus();
   }
@@ -53,7 +35,6 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
       );
     }
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: appBar,
       body: Padding(
         padding: EdgeInsets.symmetric(
