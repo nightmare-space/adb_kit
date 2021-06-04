@@ -25,6 +25,7 @@ dependencies:
   url_launcher: ^5.7.10
   flutter_markdown: ^0.6.1
   nfc_in_flutter: 2.0.5
+  multicast_dns: ^0.3.0
 
 dependency_overrides:
   termare_view:
