@@ -1,5 +1,8 @@
+import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
+import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/utils/adb_util.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
@@ -7,11 +10,12 @@ import 'package:signale/signale.dart';
 import 'devices_list.dart';
 
 class DevicesItem extends StatefulWidget {
-  const DevicesItem({Key key, this.devicesEntity, this.onTap})
-      : super(key: key);
+  const DevicesItem({
+    Key key,
+    this.devicesEntity,
+  }) : super(key: key);
   // 可能是ip地址可能是设备编号
   final DevicesEntity devicesEntity;
-  final void Function() onTap;
 
   @override
   _DevicesItemState createState() => _DevicesItemState();
@@ -37,7 +41,7 @@ class _DevicesItemState extends State<DevicesItem>
         if (mounted) {
           setState(() {});
         }
-        if (widget.devicesEntity.connect()) {
+        if (widget.devicesEntity.isConnect) {
           final String value = await exec(
             'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}',
           );
@@ -179,6 +183,17 @@ class _DevicesItemState extends State<DevicesItem>
                                 'adb disconnect ${widget.devicesEntity.serial}\n',
                               );
                             },
+                          ),
+                        if (!widget.devicesEntity.isConnect)
+                          IconButton(
+                            tooltip: '重新连接',
+                            icon: const Icon(Icons.refresh),
+                            onPressed: () async {
+                              Log.e(widget.devicesEntity.serial);
+                              // AdbUtil.reconnectDevices(
+                              //   widget.devicesEntity.serial,
+                              // );
+                            },
                           )
                       ],
                     ),
@@ -198,7 +213,23 @@ class _DevicesItemState extends State<DevicesItem>
                             size: 18,
                             color: Colors.black87,
                           ),
-                          onPressed: widget.onTap,
+                          onPressed: () async {
+                            if (!widget.devicesEntity.isConnect) {
+                              showToast('设备未正常连接');
+                              return;
+                            }
+                            Navigator.of(
+                              context,
+                            ).push<void>(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return DeveloperTool(
+                                    serial: widget.devicesEntity.serial,
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
                         // Radio<String>(
                         //   value: widget.devicesEntity.serial,
