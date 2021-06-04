@@ -6,7 +6,7 @@ class UniqueUtil {
   UniqueUtil._();
   static Future<String> getUniqueId() async {
     if (PlatformUtil.isDesktop()) {
-      return '${Platform.operatingSystem}${Platform.operatingSystemVersion}';
+      return Platform.operatingSystem;
     } else {
       props ??= await NiProcess.exec('getprop');
       // print(props);
