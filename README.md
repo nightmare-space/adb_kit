@@ -43,7 +43,7 @@ PC版下载[(链接)](http://nightmare.fun/adbtool/)
 ## 关于设备的发现功能
 
 在 Android  热点，PC 端连接的情况，PC 端检测 Android 端 ADB TOOL 的启动会有延迟，具体视局域网而定。
-简单说，Android 端监听 PC 端的启动的延迟比 PC 端监听 Android 要高。
+简单说，PC 端监听 Android 比 Android 端监听 PC 端的延迟要高 。
 
 ### 相关资料
 

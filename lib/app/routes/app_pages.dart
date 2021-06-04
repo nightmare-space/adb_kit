@@ -11,7 +11,7 @@ class AdbPages {
   static final routes = [
     GetPage(
       name: Routes.HOME,
-      page: () => HomeView(),
+      page: () => AdbTool(),
       binding: HomeBinding(),
     ),
   ];

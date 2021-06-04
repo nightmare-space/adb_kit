@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:dio/dio.dart';

@@ -18,30 +18,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-
-import '../controllers/home_controller.dart';
-
-class HomeView extends GetView<HomeController> {
-  @override
-  Widget build(BuildContext context) {
-    return AdbTool();
-  }
-}
 
 class AdbTool extends StatefulWidget {
   AdbTool({
     Key key,
     this.packageName,
   }) : super(key: key) {
-    if (packageName != null) {
-      // 改包可能是被其他项目集成的
-      Config.packageName = packageName;
-      Config.flutterPackage = 'packages/adb_tool/';
-    }
-    if (Get.arguments != null) {
-      Config.packageName = Get.arguments.toString();
+    if (RuntimeEnvir.packageName != Config.packageName) {
+      // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
       Config.flutterPackage = 'packages/adb_tool/';
     }
   }

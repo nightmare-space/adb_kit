@@ -95,8 +95,8 @@ class _DownloadFileState extends State<_DownloadFile> {
   void installModule(String modulePath) {
     Process.runSync('sh', <String>[
       '-c',
-      'unzip -o $modulePath -d ${PlatformUtil.getTmpPath()}/ \n' +
-          'mv ${PlatformUtil.getTmpPath()}/* ${PlatformUtil.getBinaryPath()}/ \n' +
+      'unzip -o $modulePath -d ${PlatformUtil.getTmpPath()}/ \n'
+          'mv ${PlatformUtil.getTmpPath()}/* ${PlatformUtil.getBinaryPath()}/ \n'
           'chmod 0777 ${PlatformUtil.getBinaryPath()}/* \n',
     ]);
   }
