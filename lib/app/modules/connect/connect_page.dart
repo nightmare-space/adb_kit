@@ -104,7 +104,7 @@ class _ConnectPageState extends State<ConnectPage> {
                   children: [
                     TextField(
                       controller: editingController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: '输入安卓设备的IP地址:端口号(可省略)',
                       ),
                     ),
