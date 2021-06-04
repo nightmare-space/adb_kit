@@ -7,13 +7,17 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbUtil {
-  static Future<void> reconnectDevices(String ip, [String port]) async {}
+  static Future<void> reconnectDevices(String ip, [String port]) async {
+    await disconnectDevices(ip);
+    connectDevices(ip);
+  }
+
   static Future<void> connectDevices(String ip, [String port]) async {
     port ??= '5555';
     final String ipAndPort = '$ip:$port';
     final DevicesController controller = Get.find<DevicesController>();
     final DevicesEntity devicesEntity = controller.getDevicesByIp(ip);
-    if (devicesEntity != null && !devicesEntity.connect()) {
+    if (devicesEntity != null && !devicesEntity.isConnect) {
       // 注释先别删，投屏 app 可能需要
       await Process.run(
         'adb',
