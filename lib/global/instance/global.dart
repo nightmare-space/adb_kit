@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
@@ -78,14 +79,14 @@ class Global {
       InternetAddress.anyIPv4,
       adbToolUdpPort,
       reuseAddress: true,
-      reusePort: true,
+      reusePort: false,
+      ttl: 1,
     ).then((RawDatagramSocket socket) {
+      socket.joinMulticast(Config.mDnsAddressIPv4);
+      // 开启广播支持
       socket.broadcastEnabled = true;
-      socket.joinMulticast(InternetAddress('224.0.0.1'));
+      socket.readEventsEnabled = true;
       socket.listen((RawSocketEvent rawSocketEvent) async {
-        // 开启广播支持
-        socket.broadcastEnabled = true;
-        socket.multicastHops = 10;
         final Datagram datagram = socket.receive();
         if (datagram == null) {
           return;
@@ -94,8 +95,8 @@ class Global {
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
 
+          print('message -> $message');
           if (unique != await UniqueUtil.getUniqueId()) {
-            print('message -> $message');
             // 触发UI上的更新
             final onlineController = Get.find<OnlineController>();
             onlineController.addDevices(
@@ -121,10 +122,15 @@ class Global {
   }
 
   Future<void> _sendBoardCast() async {
-    RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((
+    RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      0,
+      ttl: 255,
+    ).then((
       RawDatagramSocket socket,
     ) async {
       socket.broadcastEnabled = true;
+      socket.readEventsEnabled = true;
       // print('发送自己');
       // TODO 优先发送到历史ip
       Timer.periodic(
@@ -142,7 +148,7 @@ class Global {
       return;
     }
     NFC.isNDEFSupported.then((bool isSupported) {
-      print('isSupported -> $isSupported');
+      // print('isSupported -> $isSupported');
       // setState(() {
       //   _supportsNFC = isSupported;
       // });
