@@ -148,11 +148,11 @@ class _DevicesItemState extends State<DevicesItem>
                             borderRadius: BorderRadius.circular(12),
                             color: Colors.deepPurple,
                           ),
-                          height: Dimens.gap_dp8,
-                          width: Dimens.gap_dp8,
+                          height: Dimens.gap_dp6,
+                          width: Dimens.gap_dp6,
                         ),
                         SizedBox(
-                          width: Dimens.gap_dp4,
+                          width: Dimens.gap_dp8,
                         ),
                         Text(
                           _title,
