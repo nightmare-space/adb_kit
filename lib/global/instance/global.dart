@@ -133,12 +133,10 @@ class Global {
       socket.readEventsEnabled = true;
       // print('发送自己');
       // TODO 优先发送到历史ip
-      Timer.periodic(
-        const Duration(seconds: 1),
-        (Timer t) async {
-          UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
-        },
-      );
+      while (true) {
+        UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
+        await Future.delayed(const Duration(seconds: 1));
+      }
     });
   }
 
