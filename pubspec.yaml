@@ -27,12 +27,6 @@ dependencies:
   nfc_in_flutter: 2.0.5
   multicast_dns: ^0.3.0
 
-dependency_overrides:
-  termare_view:
-    path: /Users/nightmare/Desktop/termare-space/termare_view
-  dart_pty:
-    path: /Users/nightmare/Desktop/termare-space/dart_pty
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,3 +41,8 @@ flutter:
     - assets/android/
     - assets/icon/
     - assets/README.md
+
+dependency_overrides:
+  dart_pty:
+    # path: /Users/nightmare/Desktop/termare-space/dart_pty
+    path: C:\Users\Nightmare\Documents\termare-space\dart_pty

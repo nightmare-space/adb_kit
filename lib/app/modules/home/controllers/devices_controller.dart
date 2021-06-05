@@ -57,7 +57,7 @@ emulator-5554	device
         stderr = result.stderr.toString();
         out = stdout.trim();
         // print('stderr->$stderr');
-        print('stdout->$stdout');
+        // print('stdout->$stdout');
       } else {
         // NiProcess 是一个自定义的 Process，因为可能存在使用一个带 root
         // 权限的流

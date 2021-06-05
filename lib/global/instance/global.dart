@@ -30,7 +30,7 @@ class Global {
       if (Platform.isMacOS) {
         executable = 'bash';
       } else if (Platform.isWindows) {
-        executable = 'wsl';
+        executable = 'cmd';
       } else if (Platform.isAndroid) {
         executable = 'sh';
       }
@@ -47,7 +47,7 @@ class Global {
       environment: environment,
       arguments: ['-l'],
     );
-    pseudoTerminal.write('clear\n');
+    pseudoTerminal.write('clear\r');
   }
 
   String libPath = '';
@@ -95,7 +95,7 @@ class Global {
         if (message.startsWith('find')) {
           final String unique = message.replaceAll('find ', '');
 
-          print('message -> $message');
+          // print('message -> $message');
           if (unique != await UniqueUtil.getUniqueId()) {
             // 触发UI上的更新
             final onlineController = Get.find<OnlineController>();
@@ -107,15 +107,6 @@ class Global {
             );
           }
           return;
-        }
-        if (message == 'macos10.15.7') {
-          showToast('发现来自IP：${datagram.address.address}的碰一碰');
-          print('发现来自IP：${datagram.address.address}的碰一碰');
-          ScrcpyUtil.showDeviceScreen(datagram.address.address);
-        } else {
-          print(
-            'NFC标签的序列化为 $message 本设备的序列化为 ${await UniqueUtil.getUniqueId()}',
-          );
         }
       });
     });

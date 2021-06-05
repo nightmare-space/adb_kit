@@ -26,7 +26,8 @@ class DevicesEntity {
     return false;
   }
 
-  bool connect() {
+  bool get isConnect => _isConnect();
+  bool _isConnect() {
     return stat == 'device';
   }
 
@@ -191,30 +192,6 @@ class _DevicesListState extends State<DevicesList> {
   Widget itemBuilder(DevicesEntity entity) {
     final DevicesEntity devicesEntity = entity;
     return DevicesItem(
-      onTap: () async {
-        if (!devicesEntity.connect()) {
-          showToast('设备未正常连接');
-          return;
-        }
-        // print(devicesEntity.serial);
-        // if (Platform.isAndroid) {
-        //   Global.instance.lockAdb = true;
-        //   const MethodChannel channel = MethodChannel('scrcpy');
-        //  String result=await channel.invokeMethod<String>('-s ${devicesEntity.serial}');
-        //  print('result -> $result');
-        // } else
-        Navigator.of(
-          context,
-        ).push<void>(
-          MaterialPageRoute(
-            builder: (_) {
-              return DeveloperTool(
-                serial: devicesEntity.serial,
-              );
-            },
-          ),
-        );
-      },
       devicesEntity: devicesEntity,
     );
   }

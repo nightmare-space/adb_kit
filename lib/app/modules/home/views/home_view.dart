@@ -18,6 +18,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AdbTool extends StatefulWidget {
@@ -25,7 +26,8 @@ class AdbTool extends StatefulWidget {
     Key key,
     this.packageName,
   }) : super(key: key) {
-    if (RuntimeEnvir.packageName != Config.packageName) {
+    if (RuntimeEnvir.packageName != Config.packageName &&
+        !GetPlatform.isDesktop) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
       Config.flutterPackage = 'packages/adb_tool/';
     }

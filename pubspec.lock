@@ -53,7 +53,7 @@ packages:
   dart_pty:
     dependency: "direct overridden"
     description:
-      path: "/Users/nightmare/Desktop/termare-space/dart_pty"
+      path: "C:\\Users\\Nightmare\\Documents\\termare-space\\dart_pty"
       relative: false
     source: path
     version: "0.0.3"
@@ -392,11 +392,13 @@ packages:
     source: git
     version: "1.0.0+1"
   termare_view:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/termare-space/termare_view"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: dc5e56fce00de3ecfac5312135255e5bdb168230
+      url: "https://github.com/termare/termare_view"
+    source: git
     version: "0.0.7"
   test_api:
     dependency: transitive

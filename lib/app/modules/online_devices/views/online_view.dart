@@ -1,7 +1,9 @@
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -44,11 +46,11 @@ class OnlineView extends GetView<OnlineController> {
                             margin: EdgeInsets.only(
                               left: Dimens.gap_dp8,
                             ),
-                            height: Dimens.gap_dp8,
-                            width: Dimens.gap_dp8,
+                            height: Dimens.gap_dp6,
+                            width: Dimens.gap_dp6,
                           ),
                           SizedBox(
-                            width: Dimens.gap_dp4,
+                            width: Dimens.gap_dp8,
                           ),
                           Text(
                             ' ${entity.address}',
@@ -73,7 +75,10 @@ class OnlineView extends GetView<OnlineController> {
                           icon: Transform(
                             alignment: Alignment.center,
                             transform: Matrix4.identity(),
-                            child: const Icon(Icons.arrow_drop_down),
+                            child: const Icon(
+                              Icons.wifi_tethering,
+                              color: Colors.black54,
+                            ),
                           ),
                           onPressed: () async {
                             showToast('发送请求成功');
@@ -87,10 +92,12 @@ class OnlineView extends GetView<OnlineController> {
                         ),
                         IconButton(
                           tooltip: '尝试连接这个设备',
-                          icon: Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.identity(),
-                            child: const Icon(Icons.arrow_drop_up),
+                          icon: Center(
+                            child: SvgPicture.asset(
+                              '${Config.flutterPackage}assets/icon/connect.svg',
+                              color: Colors.black54,
+                              width: 20,
+                            ),
                           ),
                           onPressed: () async {
                             AdbUtil.connectDevices(entity.address);
