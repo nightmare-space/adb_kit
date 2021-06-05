@@ -236,6 +236,7 @@ class _DevicesItemState extends State<DevicesItem>
                     borderRadius: BorderRadius.circular(16),
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(proColor),
+                      backgroundColor: Colors.grey,
                       value: progressAnimaCTL.value * progress / progressMax,
                     ),
                   ),
