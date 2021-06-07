@@ -59,7 +59,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         brightness: Brightness.light,
         title: const Text('网络ADB调试'),

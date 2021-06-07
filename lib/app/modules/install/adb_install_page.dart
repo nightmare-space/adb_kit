@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:path/path.dart' as p;
 
 class AdbInstallPage extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class _DownloadFile extends StatefulWidget {
 class _DownloadFileState extends State<_DownloadFile> {
   final Dio dio = Dio();
   Response<String> response;
-  final String filesPath = PlatformUtil.getBinaryPath();
+  final String filesPath = RuntimeEnvir.binPath;
   List<String> androidAdbFiles = [
     'http://nightmare.fun/YanTool/android/adb',
     'http://nightmare.fun/YanTool/android/adb.bin'
@@ -83,7 +84,7 @@ class _DownloadFileState extends State<_DownloadFile> {
     );
     final Uint8List picBytes = byteData.buffer.asUint8List();
     final String savePath =
-        filesPath + Platform.pathSeparator + PlatformUtil.getFileName(assetKey);
+        filesPath + Platform.pathSeparator + p.basename(assetKey);
     final File file = File(savePath);
     if (!await file.exists()) {
       await file.writeAsBytes(picBytes);
@@ -95,9 +96,9 @@ class _DownloadFileState extends State<_DownloadFile> {
   void installModule(String modulePath) {
     Process.runSync('sh', <String>[
       '-c',
-      'unzip -o $modulePath -d ${PlatformUtil.getTmpPath()}/ \n'
-          'mv ${PlatformUtil.getTmpPath()}/* ${PlatformUtil.getBinaryPath()}/ \n'
-          'chmod 0777 ${PlatformUtil.getBinaryPath()}/* \n',
+      'unzip -o $modulePath -d ${RuntimeEnvir.tmpPath}/ \n'
+          'mv ${RuntimeEnvir.tmpPath}/* ${RuntimeEnvir.binPath}/ \n'
+          'chmod 0777 ${RuntimeEnvir.binPath}/* \n',
     ]);
   }
 
@@ -118,7 +119,7 @@ class _DownloadFileState extends State<_DownloadFile> {
       needDownloadFile = androidAdbFiles;
     }
     for (final String urlPath in needDownloadFile) {
-      downloadName = PlatformUtil.getFileName(urlPath);
+      downloadName = p.basename(urlPath);
       setState(() {});
       await downloadFile(urlPath);
     }

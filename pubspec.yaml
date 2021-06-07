@@ -26,6 +26,8 @@ dependencies:
   flutter_markdown: ^0.6.1
   nfc_in_flutter: 2.0.5
   multicast_dns: ^0.3.0
+  multicast:
+    git: https://github.com/nightmare-space/multicast
 
 dev_dependencies:
   flutter_test:
@@ -44,5 +46,5 @@ flutter:
 
 dependency_overrides:
   dart_pty:
-    # path: /Users/nightmare/Desktop/termare-space/dart_pty
-    path: C:\Users\Nightmare\Documents\termare-space\dart_pty
+    path: /Users/nightmare/Desktop/termare-space/dart_pty
+    # path: C:\Users\Nightmare\Documents\termare-space\dart_pty

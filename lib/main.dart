@@ -13,7 +13,6 @@ import 'config/config.dart';
 import 'global/instance/global.dart';
 
 void main() {
-  PlatformUtil.setPackageName('com.nightmare.adbtools');
   if (Platform.isAndroid) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   } else {

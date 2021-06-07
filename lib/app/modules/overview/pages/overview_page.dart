@@ -190,7 +190,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     if (Platform.isMacOS) {
                       homePath = Platform.environment['HOME'];
                     } else if (Platform.isAndroid) {
-                      homePath = PlatformUtil.getBinaryPath();
+                      homePath = RuntimeEnvir.binPath;
                     }
                     final File adbKey = File(
                       '$homePath/.android/adbkey.pub',

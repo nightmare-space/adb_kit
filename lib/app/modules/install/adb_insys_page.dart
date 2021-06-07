@@ -160,10 +160,10 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   final StringBuffer buffer = StringBuffer();
                   buffer.writeln('su -c "');
                   buffer.writeln(
-                    'cp ${PlatformUtil.getBinaryPath()}/adb $choosePath/adb',
+                    'cp ${RuntimeEnvir.binPath}/adb $choosePath/adb',
                   );
                   buffer.writeln(
-                    'cp ${PlatformUtil.getBinaryPath()}/adb.bin $choosePath/adb.bin',
+                    'cp ${RuntimeEnvir.binPath}/adb.bin $choosePath/adb.bin',
                   );
                   buffer.writeln('chmod 0777 $choosePath/adb');
                   buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');

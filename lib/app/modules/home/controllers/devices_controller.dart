@@ -26,6 +26,7 @@ class DevicesController extends GetxController {
   List<DevicesEntity> devicesEntitys = [];
 
   Future<void> poolingGetDevices() async {
+    Log.e(PlatformUtil.environment());
     while (hasListeners) {
       // Log.e('this $this $hasListeners');
       // print('执行中');

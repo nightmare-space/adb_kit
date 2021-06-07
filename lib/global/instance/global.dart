@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
-import 'package:adb_tool/utils/scrcpy_util.dart';
 import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:dart_pty/dart_pty.dart';
@@ -14,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:multicast/multicast.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
 import 'package:signale/signale.dart';
 import 'package:termare_view/termare_view.dart';
@@ -49,23 +48,6 @@ class Global {
     );
     pseudoTerminal.write('clear\r');
   }
-
-  String libPath = '';
-
-  bool lockAdb = false;
-
-  bool isInit = false;
-
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  String _documentsDir;
-  PseudoTerminal pseudoTerminal;
-  TermareController termareController = TermareController(
-    fontFamily: 'MenloforPowerline',
-    theme: TermareStyles.macos.copyWith(
-      backgroundColor: AppColors.terminalBack,
-    ),
-  )..hideCursor();
-  void Function(DeviceEntity deviceEntity) findDevicesCall;
   static Global get instance => _getInstance();
   static Global _instance;
 
@@ -74,61 +56,42 @@ class Global {
     return _instance;
   }
 
-  Future<void> _receiveBoardCast() async {
-    RawDatagramSocket.bind(
-      InternetAddress.anyIPv4,
-      adbToolUdpPort,
-      reuseAddress: true,
-      reusePort: false,
-      ttl: 1,
-    ).then((RawDatagramSocket socket) {
-      socket.joinMulticast(Config.mDnsAddressIPv4);
-      // 开启广播支持
-      socket.broadcastEnabled = true;
-      socket.readEventsEnabled = true;
-      socket.listen((RawSocketEvent rawSocketEvent) async {
-        final Datagram datagram = socket.receive();
-        if (datagram == null) {
-          return;
-        }
-        final String message = String.fromCharCodes(datagram.data);
-        if (message.startsWith('find')) {
-          final String unique = message.replaceAll('find ', '');
+  bool lockAdb = false;
+  bool isInit = false;
+  Multicast multicast = Multicast(
+    port: adbToolUdpPort,
+  );
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  PseudoTerminal pseudoTerminal;
+  TermareController termareController = TermareController(
+    fontFamily: '${Config.flutterPackage}MenloforPowerline',
+    theme: TermareStyles.macos.copyWith(
+      backgroundColor: AppColors.terminalBack,
+    ),
+  )..hideCursor();
 
-          // print('message -> $message');
-          if (unique != await UniqueUtil.getUniqueId()) {
-            // 触发UI上的更新
-            final onlineController = Get.find<OnlineController>();
-            onlineController.addDevices(
-              DeviceEntity(
-                unique,
-                datagram.address.address,
-              ),
-            );
-          }
-          return;
+  Future<void> _receiveBoardCast() async {
+    multicast.addListener((message, address) async {
+      if (message.startsWith('find')) {
+        final String unique = message.replaceAll('find ', '');
+        // print('message -> $message');
+        if (unique != await UniqueUtil.getUniqueId()) {
+          // 触发UI上的更新
+          final onlineController = Get.find<OnlineController>();
+          onlineController.addDevices(
+            DeviceEntity(
+              unique,
+              address,
+            ),
+          );
         }
-      });
+        return;
+      }
     });
   }
 
   Future<void> _sendBoardCast() async {
-    RawDatagramSocket.bind(
-      InternetAddress.anyIPv4,
-      0,
-      ttl: 255,
-    ).then((
-      RawDatagramSocket socket,
-    ) async {
-      socket.broadcastEnabled = true;
-      socket.readEventsEnabled = true;
-      // print('发送自己');
-      // TODO 优先发送到历史ip
-      while (true) {
-        UdpUtil.boardcast(socket, 'find ${await UniqueUtil.getUniqueId()}');
-        await Future.delayed(const Duration(seconds: 1));
-      }
-    });
+    multicast.startSendBoardcast('find ${await UniqueUtil.getUniqueId()}');
   }
 
   Future<void> _initNfcModule() async {
@@ -156,17 +119,9 @@ class Global {
       //   NDEFRecord.plain('macos10.15.7'),
       // ]);
       // message.tag.write(newMessage);
-
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
           .then((RawDatagramSocket socket) async {
         socket.broadcastEnabled = true;
-        // for (int i = 0; i < 255; i++) {
-        //   socket.send(
-        //     message.records.first.data.codeUnits,
-        //     InternetAddress('192.168.39.$i'),
-        //     Config.udpPort,
-        //   );
-        // }
         UdpUtil.boardcast(socket, message.records.first.data);
       });
     });
@@ -201,6 +156,4 @@ class Global {
     _initNfcModule();
     _socketServer();
   }
-
-  static String get documentsDir => instance._documentsDir;
 }

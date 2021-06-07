@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:path/path.dart' as p;
 
 class AdbTool extends StatefulWidget {
   AdbTool({
@@ -60,9 +61,8 @@ class _AdbToolState extends State<AdbTool> {
           fileKey,
         );
         final Uint8List picBytes = byteData.buffer.asUint8List();
-        final String filePath = PlatformUtil.getBinaryPath() +
-            '/' +
-            PlatformUtil.getFileName(fileKey);
+        final String filePath =
+            RuntimeEnvir.binPath + '/' + p.basename(fileKey);
         final File file = File(filePath);
         if (!await file.exists()) {
           await file.writeAsBytes(picBytes);
