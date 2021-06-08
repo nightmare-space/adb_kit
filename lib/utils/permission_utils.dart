@@ -4,7 +4,7 @@ class PermissionUtil {
   static Future<bool> request() async {
     var status = await Permission.camera.status;
     print(status);
-    if (status.isUndetermined) {
+    if (status.isDenied) {
       await Permission.camera.request();
       // We didn't ask for permission yet.
     } else if (status.isPermanentlyDenied) {

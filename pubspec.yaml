@@ -16,13 +16,13 @@ dependencies:
   flutter_screenutil: ^2.3.0
   global_repository:
     git: https://github.com/nightmare-space/global_repository
-  permission_handler: ^5.0.1+1
+  permission_handler: ^8.0.0+1
   qrscan: ^0.2.21
   termare_pty:
     git: https://github.com/termare/termare_pty
   # svg图像
   flutter_svg: ^0.22.0
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.4
   flutter_markdown: ^0.6.1
   nfc_in_flutter: 2.0.5
   multicast_dns: ^0.3.0
