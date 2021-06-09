@@ -85,7 +85,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               onTap: (index) {
                 widget.onChange?.call(index);
               },
-              iconData: Icons.home,
+              iconData: Icons.data_saver_off,
             ),
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
