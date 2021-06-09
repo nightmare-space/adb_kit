@@ -24,7 +24,6 @@ dependencies:
   flutter_svg: ^0.22.0
   url_launcher: ^6.0.4
   flutter_markdown: ^0.6.1
-  nfc_in_flutter: 2.0.5
   multicast_dns: ^0.3.0
   multicast:
     git: https://github.com/nightmare-space/multicast
