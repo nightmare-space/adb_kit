@@ -177,9 +177,7 @@ class __AdbToolState extends State<_AdbTool> {
                       setState(() {});
                     },
                   ),
-                  Expanded(
-                    child: listWidget[pageIndex],
-                  ),
+                  Expanded(child: getWidget(pageIndex)),
                 ],
               ),
             );
@@ -195,9 +193,7 @@ class __AdbToolState extends State<_AdbTool> {
                       setState(() {});
                     },
                   ),
-                  Expanded(
-                    child: listWidget[pageIndex],
-                  ),
+                  Expanded(child: getWidget(pageIndex)),
                 ],
               ),
             );
@@ -215,9 +211,7 @@ class __AdbToolState extends State<_AdbTool> {
               ),
               body: Row(
                 children: [
-                  Expanded(
-                    child: listWidget[pageIndex],
-                  ),
+                  Expanded(child: getWidget(pageIndex)),
                 ],
               ),
             );
@@ -230,12 +224,14 @@ class __AdbToolState extends State<_AdbTool> {
   }
 }
 
-List<Widget> listWidget = [
-  OverviewPage(),
-  ConnectPage(),
-  AdbInstallToSystemPage(),
-  SearchIpPage(),
-  RemoteDebugPage(),
-  ExecCmdPage(),
-  HistoryPage(),
-];
+Widget getWidget(int index) {
+  return [
+    OverviewPage(),
+    ConnectPage(),
+    AdbInstallToSystemPage(),
+    SearchIpPage(),
+    RemoteDebugPage(),
+    ExecCmdPage(),
+    HistoryPage(),
+  ][index];
+}

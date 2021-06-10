@@ -26,7 +26,6 @@ class _TabletDrawerState extends State<TabletDrawer> {
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
-        print('orientation -> $orientation');
         return Material(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -41,7 +40,6 @@ class _TabletDrawerState extends State<TabletDrawer> {
               child: Builder(
                 builder: (_) {
                   if (orientation == Orientation.portrait) {
-                    Log.e('asdasdasd');
                     return buildBody(context);
                   }
                   return SingleChildScrollView(

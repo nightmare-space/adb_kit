@@ -31,8 +31,9 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    Log.d('回调 ${Responsive.of(context).screenType}');
     AppBar appBar;
-    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
+    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         brightness: Brightness.light,
         centerTitle: true,

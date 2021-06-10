@@ -5,7 +5,7 @@ import 'package:adb_tool/utils/adb_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class ConnectPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _ConnectPageState extends State<ConnectPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
+    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         brightness: Brightness.light,
         centerTitle: true,

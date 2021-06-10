@@ -29,7 +29,6 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
     final double width = widget.width;
     return OrientationBuilder(
       builder: (context, orientation) {
-        print('orientation -> $orientation');
         return Material(
           color: Colors.white,
           shape: RoundedRectangleBorder(

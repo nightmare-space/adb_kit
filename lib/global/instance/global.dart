@@ -67,6 +67,7 @@ class Global {
     theme: TermareStyles.macos.copyWith(
       backgroundColor: AppColors.terminalBack,
     ),
+    enableLog: false,
   )..hideCursor();
 
   Future<void> _receiveBoardCast() async {
