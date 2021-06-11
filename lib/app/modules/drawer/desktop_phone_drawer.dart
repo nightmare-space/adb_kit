@@ -29,7 +29,6 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
     final double width = widget.width;
     return OrientationBuilder(
       builder: (context, orientation) {
-        print('orientation -> $orientation');
         return Material(
           color: Colors.white,
           shape: RoundedRectangleBorder(
@@ -76,7 +75,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                   horizontal: Dimens.gap_dp12,
                   vertical: Dimens.gap_dp8,
                 ),
-                child: Text(
+                child: const Text(
                   'ADB TOOL',
                   style: TextStyle(
                     fontSize: 26.0,

@@ -5,7 +5,6 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/http_server_util.dart';
-import 'package:adb_tool/utils/udp_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
@@ -13,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
-import 'package:nfc_in_flutter/nfc_in_flutter.dart';
-import 'package:signale/signale.dart';
 import 'package:termare_view/termare_view.dart';
 
 class Global {
@@ -68,6 +65,7 @@ class Global {
     theme: TermareStyles.macos.copyWith(
       backgroundColor: AppColors.terminalBack,
     ),
+    enableLog: false,
   )..hideCursor();
 
   Future<void> _receiveBoardCast() async {
@@ -99,32 +97,32 @@ class Global {
     if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
-    NFC.isNDEFSupported.then((bool isSupported) {
-      // print('isSupported -> $isSupported');
-      // setState(() {
-      //   _supportsNFC = isSupported;
-      // });
-    }); // NFC.readNDEF returns a stream of NDEFMessage
-    final Stream<NDEFMessage> stream = NFC.readNDEF(once: false);
+    // NFC.isNDEFSupported.then((bool isSupported) {
+    //   // print('isSupported -> $isSupported');
+    //   // setState(() {
+    //   //   _supportsNFC = isSupported;
+    //   // });
+    // }); // NFC.readNDEF returns a stream of NDEFMessage
+    // final Stream<NDEFMessage> stream = NFC.readNDEF(once: false);
 
-    stream.listen((NDEFMessage message) {
-      Log.i('records.length ${message.records.length}');
+    // stream.listen((NDEFMessage message) {
+    //   Log.i('records.length ${message.records.length}');
 
-      Log.i('records.length ${message.records.first.data}');
-      // for (final record in message.records) {
-      //   print(
-      //       'records: ${record.payload} ${record.data} ${record.type} ${record.tnf} ${record.languageCode}');
-      // }
-      // final NDEFMessage newMessage = NDEFMessage.withRecords([
-      //   NDEFRecord.plain('macos10.15.7'),
-      // ]);
-      // message.tag.write(newMessage);
-      RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-          .then((RawDatagramSocket socket) async {
-        socket.broadcastEnabled = true;
-        UdpUtil.boardcast(socket, message.records.first.data);
-      });
-    });
+    //   Log.i('records.length ${message.records.first.data}');
+    //   // for (final record in message.records) {
+    //   //   print(
+    //   //       'records: ${record.payload} ${record.data} ${record.type} ${record.tnf} ${record.languageCode}');
+    //   // }
+    //   // final NDEFMessage newMessage = NDEFMessage.withRecords([
+    //   //   NDEFRecord.plain('macos10.15.7'),
+    //   // ]);
+    //   // message.tag.write(newMessage);
+    //   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+    //       .then((RawDatagramSocket socket) async {
+    //     socket.broadcastEnabled = true;
+    //     UdpUtil.boardcast(socket, message.records.first.data);
+    //   });
+    // });
   }
 
   Future<void> _socketServer() async {

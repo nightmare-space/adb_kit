@@ -2,7 +2,6 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 

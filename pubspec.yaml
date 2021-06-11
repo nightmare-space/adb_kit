@@ -4,30 +4,30 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.1.0+11
 environment:
   sdk: ">=2.7.0 <3.0.0"
+
 dependencies:
+  dio: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_spinkit: "^4.1.2"
-  get: ^4.1.3
-  qr_flutter: ^3.1.0
-  dio: ^4.0.0
-  signale:
-    git: https://github.com/Nightmare-MY/signale
+  flutter_markdown: ^0.6.1
   flutter_screenutil: ^2.3.0
+  flutter_spinkit: "^4.1.2"
+  flutter_svg: ^0.22.0
+  get: ^4.1.3
   global_repository:
     git: https://github.com/nightmare-space/global_repository
-  permission_handler: ^5.0.1+1
+  multicast:
+    git: https://github.com/nightmare-space/multicast
+  multicast_dns: ^0.3.0
+  permission_handler: ^8.0.0+1
+  qr_flutter: ^3.1.0
   qrscan: ^0.2.21
+  signale:
+    git: https://github.com/Nightmare-MY/signale
   termare_pty:
     git: https://github.com/termare/termare_pty
   # svg图像
-  flutter_svg: ^0.22.0
-  url_launcher: ^5.7.10
-  flutter_markdown: ^0.6.1
-  nfc_in_flutter: 2.0.5
-  multicast_dns: ^0.3.0
-  multicast:
-    git: https://github.com/nightmare-space/multicast
+  url_launcher: ^6.0.4
 
 dev_dependencies:
   flutter_test:

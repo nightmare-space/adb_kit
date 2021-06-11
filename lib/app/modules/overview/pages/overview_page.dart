@@ -7,7 +7,6 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
-import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +30,9 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    Log.d('回调 ${Responsive.of(context).screenType}');
     AppBar appBar;
-    if (kIsWeb || MediaQuery.of(context).orientation == Orientation.portrait) {
+    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         brightness: Brightness.light,
         centerTitle: true,
