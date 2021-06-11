@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/modules/overview/pages/qr_scan_page.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -183,12 +184,12 @@ class _ConnectPageState extends State<ConnectPage> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Colors.deepPurple,
+                  color: AppColors.accent,
                 ),
                 height: Dimens.gap_dp8,
                 width: Dimens.gap_dp8,
               ),
-              SizedBox(width: Dimens.gap_dp16),
+              SizedBox(width: Dimens.gap_dp8),
               Text(
                 uri,
                 style: const TextStyle(),
