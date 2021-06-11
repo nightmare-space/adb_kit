@@ -1,10 +1,10 @@
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:signale/signale.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:signale/signale.dart';
 
 class QrScanPage extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _QrScanPageState extends State<QrScanPage> {
   //       includeParentEnvironment: true,
   //       environment: PlatformUtil.environment(),
   //     );
-  //     // TODO 这儿有问题，有的设备远程调试的端口可能不是5555
+  //
   //     // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
   //   }
 

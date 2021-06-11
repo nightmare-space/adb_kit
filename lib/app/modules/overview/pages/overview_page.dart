@@ -7,7 +7,6 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
-import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

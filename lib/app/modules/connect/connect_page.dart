@@ -1,6 +1,5 @@
 import 'package:adb_tool/app/modules/overview/pages/qr_scan_page.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
-import 'package:adb_tool/themes/candy_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +70,7 @@ class _ConnectPageState extends State<ConnectPage> {
             children: [
               Row(
                 children: [
-                  const ItemHeader(color: CandyColors.redPurple),
+                  const ItemHeader(color: CandyColors.orange),
                   Text(
                     '使用ADB TOOL安卓端扫码连接',
                     style: TextStyle(
@@ -192,7 +191,7 @@ class _ConnectPageState extends State<ConnectPage> {
               SizedBox(width: Dimens.gap_dp16),
               Text(
                 uri,
-                style: TextStyle(),
+                style: const TextStyle(),
               ),
             ],
           ),

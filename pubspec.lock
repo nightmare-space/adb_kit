@@ -154,7 +154,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "0ca0f656c2580d59adbfa900f4f9ee68537ff6d0"
+      resolved-ref: "60a70605a761bcf1110e19af14c0e1df99d53d38"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -198,7 +198,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3bb0596635d929be4c2a6845436680725bc5e303"
+      resolved-ref: ebb0ce9776c9b4c589ec1fffe9ebe31fb270159e
       url: "https://github.com/nightmare-space/multicast"
     source: git
     version: "0.0.1"
@@ -278,7 +278,7 @@ packages:
       name: permission_handler_platform_interface
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.5.1"
+    version: "3.6.0"
   petitparser:
     dependency: transitive
     description:

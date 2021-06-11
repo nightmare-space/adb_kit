@@ -28,7 +28,6 @@ class DefaultThemeData {
   static const Color _on_surface = Color(0xFF8C8C8C);
   static const Color _on_dark_surface = Color(0xFF696969);
 
-  static const Color _background = Color(0xfffdf9fc);
   static const Color _dark_background = Color(0xFF1B1B1B);
 
   static const Color _on_background = Color(0xFF8C8C8C);
@@ -212,14 +211,14 @@ class DefaultThemeData {
       inputDecorationTheme: InputDecorationTheme(
         fillColor: AppColors.inputBorderColor,
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(
+        contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
           vertical: 12,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           gapPadding: 0,
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             width: 0,
             color: Colors.transparent,
           ),
@@ -227,7 +226,7 @@ class DefaultThemeData {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           gapPadding: 0,
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             width: 0,
             color: Colors.transparent,
           ),

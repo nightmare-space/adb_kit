@@ -1,4 +1,3 @@
-import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,12 +70,6 @@ class _DevicesListState extends State<DevicesList> {
   void updateList() {
     // infos.clear();
     for (final DevicesEntity devicesEntity in controller.devicesEntitys) {
-      // Log.i('devicesEntity -> $devicesEntity');
-      // if (devicesEntity.serial.contains('emulator')) {
-      //   Log.e('devicesEntity.serial 包含 emulator');
-      //   // TODO，在将来可能会有bug
-      //   continue;
-      // }
       if (!devicesEntitys.contains(devicesEntity)) {
         print('devicesEntity ->$devicesEntity');
         _addItem(devicesEntity);

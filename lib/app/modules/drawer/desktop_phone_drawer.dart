@@ -75,7 +75,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                   horizontal: Dimens.gap_dp12,
                   vertical: Dimens.gap_dp8,
                 ),
-                child: Text(
+                child: const Text(
                   'ADB TOOL',
                   style: TextStyle(
                     fontSize: 26.0,

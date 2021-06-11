@@ -96,9 +96,11 @@ class _DownloadFileState extends State<_DownloadFile> {
   void installModule(String modulePath) {
     Process.runSync('sh', <String>[
       '-c',
-      'unzip -o $modulePath -d ${RuntimeEnvir.tmpPath}/ \n'
-          'mv ${RuntimeEnvir.tmpPath}/* ${RuntimeEnvir.binPath}/ \n'
-          'chmod 0777 ${RuntimeEnvir.binPath}/* \n',
+      '''
+      unzip -o $modulePath -d ${RuntimeEnvir.tmpPath}/
+      mv ${RuntimeEnvir.tmpPath}/* ${RuntimeEnvir.binPath}/
+      chmod 0777 ${RuntimeEnvir.binPath}/* 
+      ''',
     ]);
   }
 

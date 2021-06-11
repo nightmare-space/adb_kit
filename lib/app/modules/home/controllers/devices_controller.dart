@@ -45,7 +45,6 @@ emulator-5554	device
 ''';
         out = out.trim();
       } else if (Platform.isWindows) {
-        String stderr;
         String stdout;
         final ProcessResult result = await Process.run(
           'adb',
@@ -54,7 +53,6 @@ emulator-5554	device
           runInShell: true,
         );
         stdout = result.stdout.toString();
-        stderr = result.stderr.toString();
         out = stdout.trim();
         // print('stderr->$stderr');
         // print('stdout->$stdout');

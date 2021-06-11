@@ -92,7 +92,9 @@ class _AdbToolState extends State<AdbTool> {
             ),
           ),
         ),
-        accentColor: AppColors.accent,
+        colorScheme: const ColorScheme.light().copyWith(
+          secondary: AppColors.accent,
+        ),
       ),
       child: OrientationBuilder(
         builder: (_, Orientation orientation) {

@@ -90,14 +90,14 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
                         builder: (_) {
                           if (element.state == ConnectState.connecting) {
                             return SpinKitThreeBounce(
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                               size: Dimens.gap_dp12,
                             );
                           }
                           if (element.state == ConnectState.success) {
                             return Icon(
                               Icons.check,
-                              color: Theme.of(context).accentColor,
+                              color: Theme.of(context).colorScheme.secondary,
                             );
                           }
                           if (element.state == ConnectState.wait) {

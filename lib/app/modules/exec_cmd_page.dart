@@ -42,8 +42,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
           horizontal: Dimens.gap_dp8,
         ),
         child: Column(
-          children: [
-            const Expanded(
+          children: const [
+            Expanded(
               child: TerminalPage(
                 enableInput: true,
               ),
