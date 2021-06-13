@@ -19,7 +19,6 @@ dependencies:
   multicast:
     git: https://github.com/nightmare-space/multicast
   multicast_dns: ^0.3.0
-  permission_handler: ^8.0.0+1
   qr_flutter: ^3.1.0
   qrscan: ^0.2.21
   signale:
