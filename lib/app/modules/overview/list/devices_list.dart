@@ -6,39 +6,6 @@ import 'package:signale/signale.dart';
 
 import 'devices_item.dart';
 
-class DevicesEntity {
-  DevicesEntity(this.serial, this.stat);
-  // 有可能是ip或者设备序列号
-  final String serial;
-  // 连接的状态
-  String stat;
-  @override
-  bool operator ==(dynamic other) {
-    // 判断是否是非
-    if (other is! DevicesEntity) {
-      return false;
-    }
-    if (other is DevicesEntity) {
-      final DevicesEntity devicesEntity = other;
-      return serial == devicesEntity.serial;
-    }
-    return false;
-  }
-
-  bool get isConnect => _isConnect();
-  bool _isConnect() {
-    return stat == 'device';
-  }
-
-  @override
-  String toString() {
-    return 'serial:$serial  stat:$stat';
-  }
-
-  @override
-  int get hashCode => serial.hashCode;
-}
-
 class DevicesList extends StatefulWidget {
   @override
   _DevicesListState createState() => _DevicesListState();

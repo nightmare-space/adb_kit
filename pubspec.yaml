@@ -46,4 +46,7 @@ flutter:
 dependency_overrides:
   dart_pty:
     path: /Users/nightmare/Desktop/termare-space/dart_pty
+
+  global_repository:
+    path: /Users/nightmare/Desktop/nightmare-space/global_repository
     # path: C:\Users\Nightmare\Documents\termare-space\dart_pty

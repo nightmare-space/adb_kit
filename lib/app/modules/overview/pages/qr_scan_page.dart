@@ -12,7 +12,7 @@ class QrScanPage extends StatefulWidget {
 }
 
 class _QrScanPageState extends State<QrScanPage> {
-  final DevicesController controller = Get.find<DevicesController>();
+  final DevicesController controller = Get.find();
 
   String content = '';
   List<String> localAddresList;
@@ -25,62 +25,6 @@ class _QrScanPageState extends State<QrScanPage> {
     setState(() {});
     Log.v('content -> $content');
   }
-
-  // Future<void> connectDevices(String ip) async {
-  //   final DevicesEntity devicesEntity = controller.getDevicesByIp(ip);
-  //   if (devicesEntity != null && !devicesEntity.connect()) {
-  //     // 注释先别删，投屏 app 可能需要
-  //     final ProcessResult result = await Process.run(
-  //       'adb',
-  //       [
-  //         'disconnect',
-  //         ip + ':5555',
-  //       ],
-  //       runInShell: true,
-  //       includeParentEnvironment: true,
-  //       environment: PlatformUtil.environment(),
-  //     );
-  //
-  //     // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
-  //   }
-
-  //   // Global.instance.pseudoTerminal.write('adb disconnect $ip:5555\n');
-  //   final ProcessResult result = await Process.run(
-  //     'adb',
-  //     [
-  //       'connect',
-  //       ip + ':5555',
-  //     ],
-  //     runInShell: true,
-  //     includeParentEnvironment: true,
-  //     environment: PlatformUtil.environment(),
-  //   );
-  //   Log.w(result.stdout);
-  //   if (result.stdout.toString().contains('unable to connect') ||
-  //       result.stdout.toString().contains('failed to connect')) {
-  //     showToast('连接失败，对方设备可能未打开网络ADB调试');
-  //     return;
-  //   }
-  //   showToast((devicesEntity != null ? '尝试重新连接，' : '') + '等待授权');
-  //   while (true) {
-  //     await Future<void>.delayed(const Duration(milliseconds: 100), () {});
-  //     DevicesEntity devicesEntity;
-  //     for (int i = 0; i < controller.devicesEntitys.length; i++) {
-  //       if (controller.devicesEntitys[i].serial.contains(ip)) {
-  //         devicesEntity = controller.devicesEntitys[i];
-  //       }
-  //     }
-  //     if (devicesEntity == null) {
-  //       continue;
-  //     }
-  //     if (devicesEntity.connect()) {
-  //       break;
-  //     }
-  //   }
-
-  //   Log.v('result.stdout -> ${result.stdout}');
-  //   Log.e('result.stderr -> ${result.stderr}');
-  // }
 
   @override
   void initState() {

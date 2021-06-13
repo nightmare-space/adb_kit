@@ -4,7 +4,6 @@ import 'package:adb_tool/app/modules/online_devices/controllers/online_controlle
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
-import 'package:adb_tool/utils/http_server_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
@@ -127,24 +126,16 @@ class Global {
 
   Future<void> _socketServer() async {
     // 等待扫描二维码的连接
-    // NetworkManager networkManager;
-    // networkManager = NetworkManager(
-    //   InternetAddress.anyIPv4,
-    //   adbToolQrPort,
-    // );
-    // await networkManager.startServer((data) {
-    //   Log.v('data -> $data');
-    //   AdbUtil.connectDevices(data);
-    // });
-
-    HttpServerUtil.bindServer((address) {
-      AdbUtil.connectDevices(address);
-    });
+    HttpServerUtil.bindServer(
+      adbToolQrPort,
+      (address) {
+        AdbUtil.connectDevices(address);
+      },
+    );
   }
 
   Future<void> initGlobal() async {
     print('initGlobal');
-
     if (isInit) {
       return;
     }

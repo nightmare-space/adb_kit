@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';

@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
-import 'permission_utils.dart';
-
 extension IpString on String {
   bool isSameSegment(String other) {
     final List<String> serverAddressList = split('.');
@@ -21,7 +19,7 @@ extension IpString on String {
 
 class ScanUtil {
   static Future<void> parseScan() async {
-    await PermissionUtil.request();
+    await PermissionUtil.requestCamera();
     final String cameraScanResult = await scanner.scan();
     if (cameraScanResult == null) {
       return;
