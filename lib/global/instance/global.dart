@@ -72,14 +72,11 @@ class Global {
       if (message.startsWith('find')) {
         final String unique = message.replaceAll('find ', '');
         // print('message -> $message');
-        if (unique != await UniqueUtil.getUniqueId()) {
+        if (unique != await UniqueUtil.getDevicesId()) {
           // 触发UI上的更新
           final onlineController = Get.find<OnlineController>();
           onlineController.addDevices(
-            DeviceEntity(
-              unique,
-              address,
-            ),
+            DeviceEntity(unique, address),
           );
         }
         return;
@@ -88,7 +85,7 @@ class Global {
   }
 
   Future<void> _sendBoardCast() async {
-    multicast.startSendBoardcast('find ${await UniqueUtil.getUniqueId()}');
+    multicast.startSendBoardcast('find ${await UniqueUtil.getDevicesId()}');
   }
 
   Future<void> _initNfcModule() async {

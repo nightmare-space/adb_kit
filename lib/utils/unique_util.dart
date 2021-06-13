@@ -4,7 +4,7 @@ import 'package:global_repository/global_repository.dart';
 
 class UniqueUtil {
   UniqueUtil._();
-  static Future<String> getUniqueId() async {
+  static Future<String> getDevicesId() async {
     if (PlatformUtil.isDesktop()) {
       return Platform.operatingSystem;
     } else {
