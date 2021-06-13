@@ -10,11 +10,11 @@ import '../help_page.dart';
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
     Key key,
-    this.onChange,
-    this.index,
+    this.onChanged,
+    this.groupValue,
   }) : super(key: key);
-  final void Function(int index) onChange;
-  final int index;
+  final void Function(int index) onChanged;
+  final int groupValue;
 
   @override
   _TabletDrawerState createState() => _TabletDrawerState();
@@ -69,29 +69,29 @@ class _TabletDrawerState extends State<TabletDrawer> {
             _DrawerItem(
               title: '主页',
               value: 0,
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               onTap: (index) {
-                widget.onChange?.call(index);
+                widget.onChanged?.call(index);
               },
               iconData: Icons.home,
             ),
             _DrawerItem(
               title: '连接设备',
               value: 1,
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               onTap: (index) {
-                widget.onChange?.call(index);
+                widget.onChanged?.call(index);
               },
               iconData: Icons.data_saver_off,
             ),
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
                 value: 2,
-                groupValue: widget.index,
+                groupValue: widget.groupValue,
                 title: '安装到系统',
                 iconData: Icons.file_download,
                 onTap: (index) {
-                  widget.onChange?.call(index);
+                  widget.onChanged?.call(index);
                 },
               ),
             // _DrawerItem(
@@ -103,41 +103,41 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 children: [
                   _DrawerItem(
                     value: 3,
-                    groupValue: widget.index,
+                    groupValue: widget.groupValue,
                     title: '查看局域网ip',
                     onTap: (index) {
-                      widget.onChange?.call(index);
+                      widget.onChanged?.call(index);
                     },
                     iconData: Icons.wifi_tethering,
                   ),
                   _DrawerItem(
                     value: 4,
-                    groupValue: widget.index,
+                    groupValue: widget.groupValue,
                     iconData: Icons.signal_wifi_4_bar,
                     title: '远程调试',
                     onTap: (index) {
-                      widget.onChange?.call(index);
+                      widget.onChanged?.call(index);
                     },
                   ),
                 ],
               ),
             _DrawerItem(
               value: 5,
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               title: '执行自定义命令',
               iconData: Icons.code,
               onTap: (index) {
-                widget.onChange?.call(index);
+                widget.onChanged?.call(index);
               },
             ),
 
             _DrawerItem(
               value: 6,
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               title: '历史连接',
               iconData: Icons.history,
               onTap: (index) async {
-                widget.onChange?.call(index);
+                widget.onChanged?.call(index);
               },
             ),
           ],
@@ -146,7 +146,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _DrawerItem(
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               title: '其他平台下载',
               onTap: (index) async {
                 const String url = 'http://nightmare.fun/adbtool';
@@ -165,7 +165,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
             ),
             _DrawerItem(
-              groupValue: widget.index,
+              groupValue: widget.groupValue,
               title: 'ADB命令手册',
               onTap: (index) async {
                 Navigator.of(context).push<HelpPage>(

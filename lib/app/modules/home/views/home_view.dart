@@ -173,8 +173,8 @@ class __AdbToolState extends State<_AdbTool> {
                 children: [
                   DesktopPhoneDrawer(
                     width: Dimens.setWidth(200),
-                    index: pageIndex,
-                    onChange: (index) {
+                    groupValue: pageIndex,
+                    onChanged: (index) {
                       pageIndex = index;
                       setState(() {});
                     },
@@ -189,8 +189,8 @@ class __AdbToolState extends State<_AdbTool> {
               body: Row(
                 children: [
                   TabletDrawer(
-                    index: pageIndex,
-                    onChange: (index) {
+                    groupValue: pageIndex,
+                    onChanged: (index) {
                       pageIndex = index;
                       setState(() {});
                     },
@@ -204,8 +204,8 @@ class __AdbToolState extends State<_AdbTool> {
             return Scaffold(
               drawer: DesktopPhoneDrawer(
                 width: MediaQuery.of(context).size.width * 2 / 3,
-                index: pageIndex,
-                onChange: (index) {
+                groupValue: pageIndex,
+                onChanged: (index) {
                   pageIndex = index;
                   setState(() {});
                   Navigator.pop(context);
@@ -226,6 +226,7 @@ class __AdbToolState extends State<_AdbTool> {
   }
 }
 
+// 不单独写这样一个函数而是写一个列表的话，会导致在pc端改变窗口大小，这部分的widget得不到刷新
 Widget getWidget(int index) {
   return [
     OverviewPage(),
