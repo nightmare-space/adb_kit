@@ -1,7 +1,5 @@
-import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:signale/signale.dart';
@@ -12,8 +10,6 @@ class QrScanPage extends StatefulWidget {
 }
 
 class _QrScanPageState extends State<QrScanPage> {
-  final DevicesController controller = Get.find();
-
   String content = '';
   List<String> localAddresList;
   Future<void> getQrCode() async {
