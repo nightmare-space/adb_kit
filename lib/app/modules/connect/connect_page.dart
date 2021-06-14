@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/modules/overview/pages/qr_scan_page.dart';
+import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adb_util.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ConnectPage extends StatefulWidget {
   @override
@@ -68,12 +69,13 @@ class _ConnectPageState extends State<ConnectPage> {
         ),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  const ItemHeader(color: CandyColors.orange),
+                  const ItemHeader(color: CandyColors.purple),
                   Text(
-                    '使用ADB TOOL安卓端扫码连接',
+                    '使用无界投屏安卓端扫码连接',
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
@@ -81,7 +83,9 @@ class _ConnectPageState extends State<ConnectPage> {
                   ),
                 ],
               ),
+              SizedBox(height: Dimens.gap_dp4),
               QrScanPage(),
+              SizedBox(height: Dimens.gap_dp4),
               Row(
                 children: [
                   const ItemHeader(color: CandyColors.candyBlue),
@@ -94,11 +98,9 @@ class _ConnectPageState extends State<ConnectPage> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: Dimens.gap_dp8,
-              ),
-              SizedBox(
-                height: Dimens.setWidth(72),
+              SizedBox(height: Dimens.gap_dp4),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -135,6 +137,7 @@ class _ConnectPageState extends State<ConnectPage> {
                   ],
                 ),
               ),
+              SizedBox(height: Dimens.gap_dp4),
               Row(
                 children: [
                   const ItemHeader(color: CandyColors.candyCyan),
@@ -156,7 +159,21 @@ class _ConnectPageState extends State<ConnectPage> {
                 return Column(
                   children: list,
                 );
-              })
+              }),
+              SizedBox(height: Dimens.gap_dp4),
+              Row(
+                children: [
+                  const ItemHeader(color: CandyColors.candyPink),
+                  Text(
+                    '通过设备发现',
+                    style: TextStyle(
+                      fontSize: Dimens.font_sp16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              OnlineView(),
             ],
           ),
         ),
@@ -186,17 +203,75 @@ class _ConnectPageState extends State<ConnectPage> {
                   borderRadius: BorderRadius.circular(12),
                   color: AppColors.accent,
                 ),
-                height: Dimens.gap_dp8,
-                width: Dimens.gap_dp8,
+                height: Dimens.gap_dp6,
+                width: Dimens.gap_dp6,
               ),
               SizedBox(width: Dimens.gap_dp8),
               Text(
                 uri,
-                style: const TextStyle(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class QrScanPage extends StatefulWidget {
+  @override
+  _QrScanPageState createState() => _QrScanPageState();
+}
+
+class _QrScanPageState extends State<QrScanPage> {
+  String content = '';
+  List<String> localAddresList;
+  Future<void> getQrCode() async {
+    localAddresList = await PlatformUtil.localAddress();
+    for (int i = 0; i < localAddresList.length; i++) {
+      localAddresList[i] += ':$adbToolQrPort';
+    }
+    content = localAddresList.join('\n').trim();
+    setState(() {});
+    Log.v('content -> $content');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getQrCode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (content.isEmpty) {
+      return const Material(
+        color: Colors.transparent,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    return NiCardButton(
+      shadowColor: Colors.transparent,
+      blurRadius: 0,
+      spreadRadius: 0,
+      color: AppColors.contentBorder,
+      onTap: () {
+        // AdbUtil.connectDevices('172.24.85.34:5555');
+      },
+      child: QrImage(
+        data: content,
+        version: QrVersions.auto,
+        size: 120.0,
       ),
     );
   }

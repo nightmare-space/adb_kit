@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adb_tool/app/modules/connect/connect_page.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/config/config.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 
 import '../../dialog/connect_remote.dart';
-import 'qr_scan_page.dart';
 
 class OverviewPage extends StatefulWidget {
   @override
