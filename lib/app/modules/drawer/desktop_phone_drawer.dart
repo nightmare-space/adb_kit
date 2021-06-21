@@ -168,7 +168,8 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               groupValue: widget.groupValue,
               title: '其他平台下载',
               onTap: (index) async {
-                const String url = 'http://nightmare.fun/adbtool';
+                const String url =
+                    'http://39.96.60.133/YanTool/resources/AdbTool/';
                 if (await canLaunch(url)) {
                   await launch(
                     url,
