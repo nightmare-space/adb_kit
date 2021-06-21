@@ -56,6 +56,7 @@ class _AdbToolState extends State<AdbTool> {
     }
     await Global.instance.initGlobal();
     if (Platform.isAndroid) {
+      await Directory(RuntimeEnvir.binPath).create(recursive: true);
       for (final String fileKey in androidFiles) {
         final ByteData byteData = await rootBundle.load(
           fileKey,
