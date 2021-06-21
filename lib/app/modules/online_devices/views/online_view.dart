@@ -94,7 +94,7 @@ class OnlineView extends GetView<OnlineController> {
                           tooltip: '尝试连接这个设备',
                           icon: Center(
                             child: SvgPicture.asset(
-                              '${Config.flutterPackage}assets/icon/connect.svg',
+                              GlobalAssets.connect,
                               color: Colors.black54,
                               width: 20,
                             ),
@@ -102,6 +102,9 @@ class OnlineView extends GetView<OnlineController> {
                           onPressed: () async {
                             AdbUtil.connectDevices(entity.address);
                           },
+                        ),
+                        SizedBox(
+                          width: Dimens.gap_dp8,
                         ),
                       ],
                     ),
