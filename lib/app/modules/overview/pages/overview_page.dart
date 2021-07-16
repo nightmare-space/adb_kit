@@ -13,6 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 import '../../dialog/connect_remote.dart';
@@ -52,15 +53,16 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
         actions: [
-          NiIconButton(
-            child: SvgPicture.asset(
-              '${Config.flutterPackage}assets/icon/QR_code.svg',
-              color: Colors.black,
+          if (GetPlatform.isAndroid)
+            NiIconButton(
+              child: SvgPicture.asset(
+                GlobalAssets.qrCode,
+                color: Colors.black,
+              ),
+              onTap: () async {
+                ScanUtil.parseScan();
+              },
             ),
-            onTap: () async {
-              ScanUtil.parseScan();
-            },
-          ),
           SizedBox(width: Dimens.gap_dp12),
         ],
       );
