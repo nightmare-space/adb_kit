@@ -1,7 +1,7 @@
 import 'package:adb_tool/app/modules/overview/pages/parse_qrcode_page.dart';
+import 'package:adb_tool/app/modules/qrscan_page.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 extension IpString on String {
   bool isSameSegment(String other) {
@@ -20,7 +20,11 @@ extension IpString on String {
 class ScanUtil {
   static Future<void> parseScan() async {
     await PermissionUtil.requestCamera();
-    final String cameraScanResult = await scanner.scan();
+    final String cameraScanResult = await Get.to(
+      const QrScan(),
+      preventDuplicates: false,
+      fullscreenDialog: true,
+    );
     if (cameraScanResult == null) {
       return;
     }
