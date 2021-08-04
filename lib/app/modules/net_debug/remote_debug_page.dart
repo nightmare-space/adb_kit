@@ -21,7 +21,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   }
 
   Future<void> init() async {
-    final String ipRoute = await NiProcess.exec(
+    final String ipRoute = await YanProcess().exec(
       'ip route',
     );
     for (String ip in ipRoute.split('\n')) {
@@ -31,7 +31,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     }
     print('address->$address');
     setState(() {});
-    final String result = await NiProcess.exec('getprop service.adb.tcp.port');
+    final String result =
+        await YanProcess().exec('getprop service.adb.tcp.port');
     if (result == '5555') {
       adbDebugOpen = true;
       setState(() {});

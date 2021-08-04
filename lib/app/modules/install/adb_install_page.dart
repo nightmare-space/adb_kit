@@ -20,8 +20,8 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
   }
 
   Future<void> init() async {
-    final String result = await NiProcess.exec('echo \$PATH');
-    print('result->$result');
+    // final String result = await NiProcess.exec('echo \$PATH');
+    // print('result->$result');
   }
 
   @override

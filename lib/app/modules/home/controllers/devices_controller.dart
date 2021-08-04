@@ -42,6 +42,7 @@ class DevicesController extends GetxController {
   DevicesController() {
     poolingGetDevices();
   }
+  bool getRoot = false;
   @override
   void onInit() {
     super.onInit();
@@ -55,9 +56,20 @@ class DevicesController extends GetxController {
   @override
   void onClose() {}
 
+  Future<void> checkRoot() async {
+    if(GetPlatform.isDesktop){
+      return;
+    }
+    getRoot = await Global().process.isRoot();
+    if (getRoot) {
+      await Global().process.exec('su');
+    }
+  }
+
   List<DevicesEntity> devicesEntitys = [];
 
   Future<void> poolingGetDevices() async {
+    checkRoot();
     while (hasListeners) {
       // Log.e('this $this $hasListeners');
       // print('执行中');
@@ -91,8 +103,13 @@ emulator-5554	device
       } else {
         // NiProcess 是一个自定义的 Process，因为可能存在使用一个带 root
         // 权限的流
-        out = (await NiProcess.exec('adb devices')).trim();
+        String script = 'adb devices';
+        // if (getRoot) {
+        //   script = 'su -c "adb devices"';
+        // }
+        out = (await Global().process.exec(script)).trim();
       }
+      // Log.e('out -> $out');
       // 说明adb服务开启了
       if (out.startsWith('List of devices')) {
         final List<String> outList = out.split('\n');

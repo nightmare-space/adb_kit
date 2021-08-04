@@ -2,6 +2,8 @@ import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/utils/dex_server.dart';
+import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
@@ -203,6 +205,34 @@ class _DevicesItemState extends State<DevicesItem>
                             color: Colors.grey,
                             fontSize: 12.0,
                           ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.app_registration,
+                            size: 18,
+                            color: Colors.black87,
+                          ),
+                          onPressed: () async {
+                            if (!widget.devicesEntity.isConnect) {
+                              showToast('设备未正常连接');
+                              return;
+                            }
+                            await DexServer.startServer(
+                                widget.devicesEntity.serial);
+                            Navigator.of(
+                              context,
+                            ).push<void>(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return AppManager(
+                                    process: YanProcess()
+                                      ..exec(
+                                          'adb -s ${widget.devicesEntity.serial} shell'),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
                         IconButton(
                           icon: const Icon(

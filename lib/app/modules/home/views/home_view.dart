@@ -141,9 +141,7 @@ class _AdbToolState extends State<AdbTool> {
               isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
           return Theme(
             data: theme,
-            child: NiToastNew(
-              child: _AdbTool(),
-            ),
+            child:_AdbTool(),
           );
         },
       ),

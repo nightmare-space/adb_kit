@@ -6,6 +6,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  app_manager: 
+    path: /Users/nightmare/Desktop/Server/app_manager
   dio: ^4.0.0
   flutter:
     sdk: flutter
@@ -41,7 +43,7 @@ flutter:
   assets:
     - assets/android/
     - assets/icon/
-    - assets/README.md
+    - assets/
 
 dependency_overrides:
   dart_pty:

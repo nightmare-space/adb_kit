@@ -8,7 +8,7 @@ class UniqueUtil {
     if (PlatformUtil.isDesktop()) {
       return Platform.operatingSystem;
     } else {
-      props ??= await NiProcess.exec('getprop');
+      props ??= await YanProcess().exec('getprop');
       // print(props);
       // print(getValueFromProps('ro.product.model'));
       return getValueFromProps('ro.product.model');

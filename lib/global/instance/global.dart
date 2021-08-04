@@ -44,6 +44,7 @@ class Global {
     );
     pseudoTerminal.write('clear\r');
   }
+
   static Global get instance => _getInstance();
   static Global _instance;
 
@@ -51,6 +52,8 @@ class Global {
     _instance ??= Global._internal();
     return _instance;
   }
+
+  YanProcess process = YanProcess();
 
   bool lockAdb = false;
   bool isInit = false;
