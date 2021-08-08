@@ -1,0 +1,1 @@
+rm -rf ./build/macos/Build/Products/Debug/*

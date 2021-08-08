@@ -102,12 +102,12 @@ class _OverviewPageState extends State<OverviewPage> {
             //   content: Text('data'),
             // ),
             Row(
-              children: const [
+              children: [
                 ItemHeader(color: CandyColors.candyPink),
                 Text(
                   '已成功连接的设备',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -120,12 +120,12 @@ class _OverviewPageState extends State<OverviewPage> {
               child: DevicesList(),
             ),
             Row(
-              children: const [
+              children: [
                 ItemHeader(color: CandyColors.candyBlue),
                 Text(
                   '快捷命令',
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -264,14 +264,15 @@ class ItemButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NiCardButton(
+      borderRadius: Dimens.gap_dp8,
       shadowColor: Colors.black,
-      blurRadius: 4,
+      blurRadius: Dimens.gap_dp4,
       spreadRadius: 0,
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 8.0,
+        padding: EdgeInsets.symmetric(
+          horizontal: Dimens.gap_dp16,
+          vertical: Dimens.gap_dp8,
         ),
         child: Column(
           children: [

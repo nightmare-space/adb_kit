@@ -4,6 +4,8 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+
         {
             "name": "Mac Desktop",
             "request": "launch",
@@ -21,6 +23,12 @@
             "request": "launch",
             "type": "dart",
             "deviceId": "Mi 10"
+        },
+        {
+            "name": "平板",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "Lenovo TB J606F"
         },
         {
             "name": "红米K30",

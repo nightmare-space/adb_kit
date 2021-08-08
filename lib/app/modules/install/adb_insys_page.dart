@@ -143,49 +143,47 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     height: 200,
                     child: TerminalPage(),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              NiCardButton(
-                blurRadius: 0,
-                shadowColor: Colors.transparent,
-                borderRadius: 12.0,
-                color: AppColors.accent,
-                onTap: () async {
-                  final StringBuffer buffer = StringBuffer();
-                  buffer.writeln('su -c "');
-                  buffer.writeln(
-                    'cp ${RuntimeEnvir.binPath}/adb $choosePath/adb',
-                  );
-                  buffer.writeln(
-                    'cp ${RuntimeEnvir.binPath}/adb.bin $choosePath/adb.bin',
-                  );
-                  buffer.writeln('chmod 0777 $choosePath/adb');
-                  buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
-                  Global.instance.pseudoTerminal.write(buffer.toString());
-                },
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: Dimens.gap_dp48,
-                  child: const Center(
-                    child: Text(
-                      '安装',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 32.0,
+                  ),
+                  NiCardButton(
+                    blurRadius: 0,
+                    shadowColor: Colors.transparent,
+                    borderRadius: 12.0,
+                    color: AppColors.accent,
+                    onTap: () async {
+                      final StringBuffer buffer = StringBuffer();
+                      buffer.writeln('su -c "');
+                      buffer.writeln(
+                        'cp ${RuntimeEnvir.binPath}/adb $choosePath/adb',
+                      );
+                      buffer.writeln(
+                        'cp ${RuntimeEnvir.binPath}/adb.bin $choosePath/adb.bin',
+                      );
+                      buffer.writeln('chmod 0777 $choosePath/adb');
+                      buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
+                      Global.instance.pseudoTerminal.write(buffer.toString());
+                    },
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: Dimens.gap_dp48,
+                      child: const Center(
+                        child: Text(
+                          '安装',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 32.0,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 32.0,
-              ),
-            ],
+            ),
           ),
         ],
       ),

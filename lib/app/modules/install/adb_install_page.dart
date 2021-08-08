@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 
@@ -142,14 +141,14 @@ class _DownloadFileState extends State<_DownloadFile> {
       child: NiCardButton(
         child: Padding(
           padding: EdgeInsets.all(
-            12.w.toDouble(),
+            12.w,
           ),
           child: Column(
             children: [
               Text(
                 '下载 $downloadName 中',
                 style: TextStyle(
-                  fontSize: 18.w.toDouble(),
+                  fontSize: 18.w,
                   fontWeight: FontWeight.bold,
                 ),
               ),

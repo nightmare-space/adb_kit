@@ -236,7 +236,7 @@ class _DrawerItem extends StatelessWidget {
                     : null,
                 child: Icon(
                   iconData ?? Icons.open_in_new,
-                  size: 18,
+                  size: Dimens.gap_dp18,
                   color: isChecked ? AppColors.accent : AppColors.fontTitle,
                 ),
               ),

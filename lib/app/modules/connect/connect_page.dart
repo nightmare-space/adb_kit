@@ -150,17 +150,26 @@ class _ConnectPageState extends State<ConnectPage> {
                   ),
                 ],
               ),
+              SizedBox(height: Dimens.gap_dp8),
               Builder(builder: (_) {
                 final List<Widget> list = [];
                 for (final String address in addreses) {
                   final String uri = 'http://$address:$adbToolQrPort';
                   list.add(addressItem(uri));
                 }
-                return Column(
-                  children: list,
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.inputBorderColor,
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  child: Column(
+                    children: list,
+                  ),
                 );
               }),
-              SizedBox(height: Dimens.gap_dp4),
+              SizedBox(
+                height: Dimens.gap_dp8,
+              ),
               Row(
                 children: [
                   const ItemHeader(color: CandyColors.candyPink),
@@ -172,6 +181,9 @@ class _ConnectPageState extends State<ConnectPage> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: Dimens.gap_dp8,
               ),
               OnlineView(),
             ],

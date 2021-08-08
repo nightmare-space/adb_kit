@@ -233,28 +233,20 @@ class _DrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
     return Padding(
-      padding: EdgeInsets.only(
-        right: Dimens.gap_dp32,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(
         onTap: () => onTap(value),
         splashColor: Colors.transparent,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
+        borderRadius: BorderRadius.circular(8.w),
         child: Stack(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.center,
           children: [
             Container(
-              height: Dimens.gap_dp44,
+              height: 50.w,
               decoration: isChecked
                   ? BoxDecoration(
                       color: AppColors.accent.withOpacity(0.1),
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(24),
-                        bottomRight: Radius.circular(24),
-                      ),
+                      borderRadius: BorderRadius.circular(8.w),
                     )
                   : null,
             ),
@@ -269,7 +261,7 @@ class _DrawerItem extends StatelessWidget {
                     children: [
                       Icon(
                         iconData ?? Icons.open_in_new,
-                        size: 18,
+                        size: 18.w,
                         color:
                             isChecked ? AppColors.accent : AppColors.fontTitle,
                       ),
@@ -282,7 +274,7 @@ class _DrawerItem extends StatelessWidget {
                           color: isChecked
                               ? AppColors.accent
                               : AppColors.fontTitle,
-                          fontSize: Dimens.font_sp14,
+                          fontSize: 14.w,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

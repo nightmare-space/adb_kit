@@ -99,30 +99,14 @@ class _AdbToolState extends State<AdbTool> {
       ),
       child: OrientationBuilder(
         builder: (_, Orientation orientation) {
-          if (kIsWeb || PlatformUtil.isDesktop()) {
-            final Size size = window.physicalSize / window.devicePixelRatio;
-            ScreenUtil.init(
-              context,
-              width: size.width,
-              height: size.height,
-              allowFontScaling: false,
-            );
+          final Size size = window.physicalSize / window.devicePixelRatio;
+          Log.w(MediaQuery.of(context).size.width);
+          Log.w(window.physicalSize / window.devicePixelRatio);
+          Log.w(window.devicePixelRatio);
+          if (orientation == Orientation.landscape) {
+            ScreenAdapter.init(896);
           } else {
-            if (orientation == Orientation.landscape) {
-              ScreenUtil.init(
-                context,
-                width: 896,
-                height: 414,
-                allowFontScaling: false,
-              );
-            } else {
-              ScreenUtil.init(
-                context,
-                width: 414,
-                height: 896,
-                allowFontScaling: false,
-              );
-            }
+            ScreenAdapter.init(414);
           }
           if (kIsWeb) {
             return Center(
@@ -141,7 +125,7 @@ class _AdbToolState extends State<AdbTool> {
               isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
           return Theme(
             data: theme,
-            child:_AdbTool(),
+            child: _AdbTool(),
           );
         },
       ),
@@ -165,6 +149,8 @@ class __AdbToolState extends State<_AdbTool> {
   Widget build(BuildContext context) {
     return Responsive(
       builder: (_, ScreenType screenType) {
+        Log.e(MediaQuery.of(context).size.width);
+        Log.e(screenType);
         switch (screenType) {
           case ScreenType.desktop:
             return Scaffold(

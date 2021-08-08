@@ -22,7 +22,7 @@ class DexServer {
     //   }
 
     // });
-    Global().pseudoTerminal.out.transform(utf8.decoder).listen((event) {
+    Global().pseudoTerminal.out.listen((event) {
       Log.e('event -> $event');
       if (event.contains('wait')) {
         completer.complete();
