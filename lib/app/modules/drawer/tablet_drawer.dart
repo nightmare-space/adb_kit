@@ -219,6 +219,9 @@ class _DrawerItem extends StatelessWidget {
       child: Tooltip(
         message: title,
         child: InkWell(
+          onTapDown: (_) {
+            Feedback.forLongPress(context);
+          },
           onTap: () => onTap(value),
           splashColor: Colors.transparent,
           borderRadius: BorderRadius.circular(Dimens.gap_dp12),

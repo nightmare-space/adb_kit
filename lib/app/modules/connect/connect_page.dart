@@ -79,6 +79,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
+                      height: 1.0,
                     ),
                   ),
                 ],
@@ -94,6 +95,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
+                      height: 1.0,
                     ),
                   ),
                 ],
@@ -146,6 +148,7 @@ class _ConnectPageState extends State<ConnectPage> {
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
+                      height: 1.0,
                     ),
                   ),
                 ],
@@ -159,8 +162,12 @@ class _ConnectPageState extends State<ConnectPage> {
                 }
                 return Container(
                   decoration: BoxDecoration(
-                    color: AppColors.inputBorderColor,
+                    color: AppColors.background,
                     borderRadius: BorderRadius.circular(12.w),
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.2),
+                      width: 1.w,
+                    ),
                   ),
                   child: Column(
                     children: list,

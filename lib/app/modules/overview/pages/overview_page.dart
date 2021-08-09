@@ -109,6 +109,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   style: TextStyle(
                     fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
+                    height: 1.0,
                   ),
                 ),
               ],
@@ -127,6 +128,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   style: TextStyle(
                     fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
+                    height: 1.0,
                   ),
                 ),
               ],
@@ -219,6 +221,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   style: TextStyle(
                     fontSize: Dimens.font_sp16,
                     fontWeight: FontWeight.bold,
+                    height: 1.0,
                   ),
                 ),
               ],

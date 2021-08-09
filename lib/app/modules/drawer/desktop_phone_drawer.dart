@@ -236,6 +236,9 @@ class _DrawerItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(
         onTap: () => onTap(value),
+        onTapDown: (_) {
+          Feedback.forLongPress(context);
+        },
         splashColor: Colors.transparent,
         borderRadius: BorderRadius.circular(8.w),
         child: Stack(
