@@ -30,13 +30,17 @@ class Global {
         executable = 'sh';
       }
     }
+    Directory(RuntimeEnvir.homePath).createSync(recursive: true);
+    Directory(RuntimeEnvir.tmpPath).createSync(recursive: true);
     final Map<String, String> environment = {
       'TERM': 'xterm-256color',
+      'LD_LIBRARY_PATH': RuntimeEnvir.binPath,
       'PATH': PlatformUtil.environment()['PATH'],
+      'TMPDIR': RuntimeEnvir.tmpPath,
+      'HOME': RuntimeEnvir.homePath,
     };
     const String workingDirectory = '.';
     pseudoTerminal = PseudoTerminal(
-      column: 10,
       executable: executable,
       workingDirectory: workingDirectory,
       environment: environment,
@@ -53,7 +57,13 @@ class Global {
     return _instance;
   }
 
-  YanProcess process = YanProcess();
+  YanProcess process = YanProcess(
+    envir: {
+      'LD_LIBRARY_PATH': RuntimeEnvir.binPath,
+      'TMPDIR': RuntimeEnvir.tmpPath,
+      'HOME': RuntimeEnvir.homePath,
+    },
+  );
 
   bool lockAdb = false;
   bool isInit = false;

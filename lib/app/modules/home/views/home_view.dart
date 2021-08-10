@@ -47,9 +47,18 @@ class _AdbToolState extends State<AdbTool> {
   }
 
   List<String> androidFiles = [
-    '${Config.flutterPackage}assets/android/adb',
-    '${Config.flutterPackage}assets/android/adb.bin',
+    'adb',
+    'libbrotlidec.so',
+    'libbrotlienc.so',
+    'libc++_shared.so',
+    'liblz4.so.1',
+    'libprotobuf.so',
+    'libusb-1.0.so',
+    'libz.so.1',
+    'libzstd.so.1',
+    'libbrotlicommon.so',
   ];
+
   Future<void> installAdbToEnvir() async {
     if (kIsWeb) {
       return true;
@@ -59,11 +68,10 @@ class _AdbToolState extends State<AdbTool> {
       await Directory(RuntimeEnvir.binPath).create(recursive: true);
       for (final String fileKey in androidFiles) {
         final ByteData byteData = await rootBundle.load(
-          fileKey,
+          '${Config.flutterPackage}assets/android/' + fileKey,
         );
         final Uint8List picBytes = byteData.buffer.asUint8List();
-        final String filePath =
-            RuntimeEnvir.binPath + '/' + p.basename(fileKey);
+        final String filePath = RuntimeEnvir.binPath + '/' + fileKey;
         final File file = File(filePath);
         if (!await file.exists()) {
           await file.writeAsBytes(picBytes);

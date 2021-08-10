@@ -5,6 +5,38 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
+Future<String> execCmd(String cmd) async {
+  final List<String> args = cmd.split(' ');
+  String out;
+  if (kIsWeb) {
+    out = '''
+List of devices attached
+192.168.213.32:5555	device
+emulator-5554	device
+''';
+    out = out.trim();
+  } else if (Platform.isWindows) {
+    String stdout;
+    final ProcessResult result = await Process.run(
+      args[0],
+      args.sublist(1),
+      environment: PlatformUtil.environment(),
+      runInShell: true,
+    );
+    stdout = result.stdout.toString();
+    out = stdout.trim();
+  } else {
+    // NiProcess 是一个自定义的 Process，因为可能存在使用一个带 root
+    // 权限的流
+    Log.e('exec');
+    Log.w(await Global().process.exec('env'));
+    out = (await Global().process.exec(cmd)).trim();
+    Log.w(out);
+    Log.e('exec down');
+  }
+  return out;
+}
+
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
   // 有可能是ip或者设备序列号
@@ -43,34 +75,34 @@ class DevicesController extends GetxController {
     poolingGetDevices();
   }
   bool getRoot = false;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // adb是否在启动中
+  bool adbIsStarting = true;
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-
-  Future<void> checkRoot() async {
-    if(GetPlatform.isDesktop){
-      return;
-    }
-    getRoot = await Global().process.isRoot();
-    if (getRoot) {
-      await Global().process.exec('su');
-    }
-  }
-
+  // 这个count
+  //
+  // int count = 0;
   List<DevicesEntity> devicesEntitys = [];
 
+  void clearDevices() {
+    devicesEntitys.clear();
+    update();
+  }
+
+  Future<void> startAdb() async {
+    adbIsStarting = true;
+    update();
+    getRoot = await Global().process.isRoot();
+    if (getRoot) {
+      await Global().process.exec('su -p HOME');
+    }
+    Log.e('start');
+    await execCmd('adb start-server');
+    Log.e('end');
+  }
+
   Future<void> poolingGetDevices() async {
-    checkRoot();
-    while (hasListeners) {
+    await startAdb();
+    while (true) {
       // Log.e('this $this $hasListeners');
       // print('执行中');
       // print('mounted -> $mounted');
@@ -79,44 +111,22 @@ class DevicesController extends GetxController {
         await Future<void>.delayed(const Duration(milliseconds: 100), () {});
         continue;
       }
-      String out;
-      // Log.i('adb devices');
-      if (kIsWeb) {
-        out = '''
-List of devices attached
-192.168.213.32:5555	device
-emulator-5554	device
-''';
-        out = out.trim();
-      } else if (Platform.isWindows) {
-        String stdout;
-        final ProcessResult result = await Process.run(
-          'adb',
-          ['devices'],
-          environment: PlatformUtil.environment(),
-          runInShell: true,
-        );
-        stdout = result.stdout.toString();
-        out = stdout.trim();
-        // print('stderr->$stderr');
-        // print('stdout->$stdout');
-      } else {
-        // NiProcess 是一个自定义的 Process，因为可能存在使用一个带 root
-        // 权限的流
-        String script = 'adb devices';
-        // if (getRoot) {
-        //   script = 'su -c "adb devices"';
-        // }
-        out = (await Global().process.exec(script)).trim();
+      final String out = await execCmd('adb devices');
+      Log.d(out);
+      // if (count < 2) {
+      //   count++;
+      // }
+      if (adbIsStarting) {
+        adbIsStarting = false;
+        update();
       }
-      // Log.e('out -> $out');
-      // 说明adb服务开启了
+      // if (kReleaseMode) {
+      // Log.d('adb devices out -> $out');
+      // }
       if (out.startsWith('List of devices')) {
         final List<String> outList = out.split('\n');
-        // 删除 List of devices attached
+        // 删除 `List of devices attached`
         outList.removeAt(0);
-        // final List<String> addressList = [];
-        // Log.e('outList->$outList');
         devicesEntitys.clear();
         for (final String str in outList) {
           // print('s====>$s');
@@ -134,7 +144,7 @@ emulator-5554	device
         // }
         update();
       }
-      await Future<void>.delayed(const Duration(milliseconds: 300), () {});
+      await Future<void>.delayed(const Duration(milliseconds: 400), () {});
     }
   }
 

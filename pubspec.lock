@@ -406,20 +406,16 @@ packages:
   termare_pty:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "80987b5458d749f6130c300c9daf266170af4e21"
-      url: "https://github.com/termare/termare_pty"
-    source: git
+      path: "/Users/nightmare/Desktop/termare-space/termare_pty"
+      relative: false
+    source: path
     version: "1.0.0+1"
   termare_view:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: e8f831b4185c3776da1f7c690a12d3662878d597
-      url: "https://github.com/termare/termare_view"
-    source: git
+      path: "/Users/nightmare/Desktop/termare-space/termare_view"
+      relative: false
+    source: path
     version: "0.0.7"
   test_api:
     dependency: transitive

@@ -46,9 +46,12 @@ flutter:
     - assets/
 
 dependency_overrides:
+  termare_view:
+    path: /Users/nightmare/Desktop/termare-space/termare_view
+  termare_pty:
+    path: /Users/nightmare/Desktop/termare-space/termare_pty
   dart_pty:
     path: /Users/nightmare/Desktop/termare-space/dart_pty
-
   global_repository:
     path: /Users/nightmare/Desktop/nightmare-space/global_repository
     # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
