@@ -29,6 +29,8 @@ dependencies:
   termare_pty:
     git: https://github.com/termare/termare_pty
   url_launcher: ^6.0.4
+  adbutil:
+    path: /Users/nightmare/Desktop/nightmare-space/adbutil
 
 dev_dependencies:
   flutter_test:

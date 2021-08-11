@@ -11,10 +11,17 @@ class TerminalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(12.w),
+        border: Border.all(
+          color: Colors.black.withOpacity(0.1),
+          width: 1.w,
+        ),
+      ),
       child: Material(
-        color: AppColors.terminalBack,
+        color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TermarePty(

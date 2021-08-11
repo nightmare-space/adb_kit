@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:adb_tool/global/instance/global.dart';
-import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DexServer {
   static Future<void> startServer(String devicesId) async {
-    Completer<void> completer = Completer();
+    final Completer<void> completer = Completer();
     final YanProcess process = YanProcess();
     Log.w('adb -s $devicesId forward tcp:4041 local:app_manager');
     Log.w(await process.exec('adb -s $devicesId forward tcp:6001 tcp:6000'));

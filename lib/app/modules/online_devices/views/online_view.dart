@@ -1,7 +1,6 @@
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/utils/adb_util.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -104,18 +103,23 @@ class OnlineView extends GetView<OnlineController> {
                           SizedBox(
                             width: Dimens.gap_dp16,
                           ),
-                          IconButton(
-                            tooltip: '尝试连接这个设备',
-                            icon: Center(
-                              child: SvgPicture.asset(
-                                GlobalAssets.connect,
-                                color: Colors.black54,
-                                width: 20,
+                          Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                              splashRadius: 40,
+                              tooltip: '尝试连接这个设备',
+                              icon: Center(
+                                child: SvgPicture.asset(
+                                  GlobalAssets.connect,
+                                  color: Colors.black54,
+                                  width: 20,
+                                ),
                               ),
+                              onPressed: () async {
+                                AdbUtil.startPoolingListDevices();
+                                AdbUtil.connectDevices(entity.address);
+                              },
                             ),
-                            onPressed: () async {
-                              AdbUtil.connectDevices(entity.address);
-                            },
                           ),
                           SizedBox(
                             width: Dimens.gap_dp8,

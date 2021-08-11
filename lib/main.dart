@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:multicast_dns/multicast_dns.dart';
 import 'package:signale/signale.dart';
 
 import 'app/routes/app_pages.dart';

@@ -17,10 +17,8 @@ import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:path/path.dart' as p;
 
 class AdbTool extends StatefulWidget {
   AdbTool({
@@ -48,6 +46,7 @@ class _AdbToolState extends State<AdbTool> {
 
   List<String> androidFiles = [
     'adb',
+    'adb_binary',
     'libbrotlidec.so',
     'libbrotlienc.so',
     'libc++_shared.so',

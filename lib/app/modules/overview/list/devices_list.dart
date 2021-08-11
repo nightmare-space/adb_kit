@@ -23,9 +23,6 @@ class _DevicesListState extends State<DevicesList> {
     Log.d(controller.devicesEntitys);
     Log.d(devicesEntitys);
     controller.addListener(updateList);
-    Future.delayed(const Duration(milliseconds: 100), () {
-      controller.poolingGetDevices();
-    });
   }
 
   @override

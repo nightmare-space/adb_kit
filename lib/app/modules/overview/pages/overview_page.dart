@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:adb_tool/app/modules/connect/connect_page.dart';
+import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/custom_icon_button.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,9 +40,9 @@ class _OverviewPageState extends State<OverviewPage> {
         brightness: Brightness.light,
         centerTitle: true,
         elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
+        leading: NiIconButton(
+          child: const Icon(Icons.menu),
+          onTap: () {
             Scaffold.of(context).openDrawer();
           },
         ),
@@ -90,10 +92,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Padding buildBody(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 16,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +102,7 @@ class _OverviewPageState extends State<OverviewPage> {
             // ),
             Row(
               children: [
-                ItemHeader(color: CandyColors.candyPink),
+                const ItemHeader(color: CandyColors.candyPink),
                 Text(
                   '已成功连接的设备',
                   style: TextStyle(
@@ -120,9 +119,10 @@ class _OverviewPageState extends State<OverviewPage> {
               ),
               child: DevicesList(),
             ),
+            SizedBox(height: 12.w),
             Row(
               children: [
-                ItemHeader(color: CandyColors.candyBlue),
+                const ItemHeader(color: CandyColors.candyBlue),
                 Text(
                   '快捷命令',
                   style: TextStyle(
@@ -135,6 +135,7 @@ class _OverviewPageState extends State<OverviewPage> {
             ),
             Wrap(
               spacing: 0,
+              runSpacing: 0,
               alignment: WrapAlignment.start,
               runAlignment: WrapAlignment.start,
               crossAxisAlignment: WrapCrossAlignment.start,
@@ -144,6 +145,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   onTap: () async {
                     const String cmd = 'adb start-server\r';
                     Global.instance.pseudoTerminal.write(cmd);
+                    AdbUtil.startPoolingListDevices();
                   },
                 ),
                 ItemButton(
@@ -151,6 +153,9 @@ class _OverviewPageState extends State<OverviewPage> {
                   onTap: () async {
                     const String cmd = 'adb kill-server\r';
                     Global.instance.pseudoTerminal.write(cmd);
+                    AdbUtil.stopPoolingListDevices();
+                    DevicesController controller = Get.find();
+                    controller.clearDevices();
                   },
                 ),
                 ItemButton(
@@ -213,6 +218,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 ),
               ],
             ),
+            SizedBox(height: 12.w),
             Row(
               children: [
                 const ItemHeader(color: CandyColors.candyPurpleAccent),
@@ -230,6 +236,7 @@ class _OverviewPageState extends State<OverviewPage> {
               height: Dimens.gap_dp8,
             ),
             OnlineView(),
+            SizedBox(height: 12.w),
             Row(
               children: [
                 const ItemHeader(color: CandyColors.candyCyan),
@@ -242,9 +249,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 ),
               ],
             ),
-            SizedBox(
-              height: Dimens.gap_dp16,
-            ),
+            SizedBox(height: 12.w),
             const SizedBox(
               height: 200,
               child: TerminalPage(),

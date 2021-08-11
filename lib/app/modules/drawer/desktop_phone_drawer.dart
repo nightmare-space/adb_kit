@@ -233,7 +233,7 @@ class _DrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: InkWell(
         onTap: () => onTap(value),
         onTapDown: (_) {

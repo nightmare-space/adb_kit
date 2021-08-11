@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/utils/adb_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,6 @@ class Global {
     Directory(RuntimeEnvir.tmpPath).createSync(recursive: true);
     final Map<String, String> environment = {
       'TERM': 'xterm-256color',
-      'LD_LIBRARY_PATH': RuntimeEnvir.binPath,
       'PATH': PlatformUtil.environment()['PATH'],
       'TMPDIR': RuntimeEnvir.tmpPath,
       'HOME': RuntimeEnvir.homePath,
@@ -59,7 +58,6 @@ class Global {
 
   YanProcess process = YanProcess(
     envir: {
-      'LD_LIBRARY_PATH': RuntimeEnvir.binPath,
       'TMPDIR': RuntimeEnvir.tmpPath,
       'HOME': RuntimeEnvir.homePath,
     },
@@ -75,7 +73,7 @@ class Global {
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
-      backgroundColor: AppColors.terminalBack,
+      backgroundColor: AppColors.background,
     ),
     enableLog: false,
   )..hideCursor();
@@ -139,6 +137,7 @@ class Global {
     HttpServerUtil.bindServer(
       adbToolQrPort,
       (address) {
+        // 弹窗ß
         AdbUtil.connectDevices(address);
       },
     );
