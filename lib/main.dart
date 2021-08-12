@@ -14,7 +14,9 @@ import 'global/instance/global.dart';
 import 'utils/assets_utils.dart';
 
 void main() {
+  // 初始化运行时环境
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  // 初始化终端等
   Global.instance;
   runApp(ToastApp(
     child: GetMaterialApp(
@@ -37,6 +39,7 @@ void main() {
   installRes();
 }
 
+/// 安装资源
 Future<void> installRes() async {
   if (kIsWeb) {
     return;
@@ -52,7 +55,7 @@ Future<void> installRes() async {
     <String>['+x', filePath],
   );
   Log.d(
-    '写入文件 release 输出 stdout:${result.stdout} stderr；${result.stderr}',
+    '更改 app-release.apk 权限输出 stdout:${result.stdout} stderr；${result.stderr}',
   );
   // print(await exec('scrcpy'));
 }

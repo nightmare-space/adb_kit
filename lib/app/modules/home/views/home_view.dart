@@ -58,6 +58,7 @@ class _AdbToolState extends State<AdbTool> {
     'libbrotlicommon.so',
   ];
 
+  /// 复制一堆执行文件
   Future<void> installAdbToEnvir() async {
     if (kIsWeb) {
       return true;
@@ -106,10 +107,6 @@ class _AdbToolState extends State<AdbTool> {
       ),
       child: OrientationBuilder(
         builder: (_, Orientation orientation) {
-          final Size size = window.physicalSize / window.devicePixelRatio;
-          Log.w(MediaQuery.of(context).size.width);
-          Log.w(window.physicalSize / window.devicePixelRatio);
-          Log.w(window.devicePixelRatio);
           if (orientation == Orientation.landscape) {
             ScreenAdapter.init(896);
           } else {
@@ -156,8 +153,6 @@ class __AdbToolState extends State<_AdbTool> {
   Widget build(BuildContext context) {
     return Responsive(
       builder: (_, ScreenType screenType) {
-        Log.e(MediaQuery.of(context).size.width);
-        Log.e(screenType);
         switch (screenType) {
           case ScreenType.desktop:
             return Scaffold(

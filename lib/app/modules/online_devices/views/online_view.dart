@@ -117,7 +117,15 @@ class OnlineView extends GetView<OnlineController> {
                               ),
                               onPressed: () async {
                                 AdbUtil.startPoolingListDevices();
-                                AdbUtil.connectDevices(entity.address);
+                                AdbResult result;
+                                try {
+                                  result = await AdbUtil.connectDevices(
+                                    entity.address,
+                                  );
+                                  showToast(result.message);
+                                } on AdbException catch (e) {
+                                  showToast(e.message);
+                                }
                               },
                             ),
                           ),

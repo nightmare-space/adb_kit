@@ -128,9 +128,15 @@ class _ConnectPageState extends State<ConnectPage> {
                               if (editingController.text.isEmpty) {
                                 showToast('IP不可为空');
                               }
-                              await AdbUtil.connectDevices(
-                                editingController.text,
-                              );
+                              AdbResult result;
+                              try {
+                                result = await AdbUtil.connectDevices(
+                                  editingController.text,
+                                );
+                                showToast(result.message);
+                              } on AdbException catch (e) {
+                                showToast(e.message);
+                              }
                             },
                           ),
                         ),

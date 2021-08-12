@@ -136,9 +136,17 @@ class Global {
     // 等待扫描二维码的连接
     HttpServerUtil.bindServer(
       adbToolQrPort,
-      (address) {
-        // 弹窗ß
-        AdbUtil.connectDevices(address);
+      (address) async {
+        // 弹窗
+        AdbResult result;
+        try {
+          result = await AdbUtil.connectDevices(
+            address,
+          );
+          showToast(result.message);
+        } on AdbException catch (e) {
+          showToast(e.message);
+        }
       },
     );
   }
