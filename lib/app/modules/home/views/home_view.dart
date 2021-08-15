@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:adb_tool/app/modules/connect/connect_page.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/drawer/log_page.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
@@ -223,5 +224,6 @@ Widget getWidget(int index) {
     RemoteDebugPage(),
     ExecCmdPage(),
     HistoryPage(),
+    LogPage(),
   ][index];
 }

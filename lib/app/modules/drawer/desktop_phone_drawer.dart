@@ -159,6 +159,15 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                 widget.onChanged?.call(index);
               },
             ),
+            _DrawerItem(
+              value: 7,
+              groupValue: widget.groupValue,
+              title: '日志',
+              iconData: Icons.history,
+              onTap: (index) async {
+                widget.onChanged?.call(index);
+              },
+            ),
           ],
         ),
         Column(

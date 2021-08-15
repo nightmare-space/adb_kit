@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -128,6 +130,7 @@ class _ConnectPageState extends State<ConnectPage> {
                               if (editingController.text.isEmpty) {
                                 showToast('IP不可为空');
                               }
+                              Log.d('adb 连接开始');
                               AdbResult result;
                               try {
                                 result = await AdbUtil.connectDevices(
@@ -137,6 +140,7 @@ class _ConnectPageState extends State<ConnectPage> {
                               } on AdbException catch (e) {
                                 showToast(e.message);
                               }
+                              Log.d('adb 连接结束');
                             },
                           ),
                         ),
