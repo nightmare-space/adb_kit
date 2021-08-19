@@ -62,146 +62,150 @@ class _ConnectPageState extends State<ConnectPage> {
         ),
       );
     }
-    return Scaffold(
-      appBar: appBar,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.purple),
-                    Text(
-                      '使用无界投屏安卓端扫码连接',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp16,
-                        fontWeight: FontWeight.bold,
-                        height: 1.0,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: Dimens.gap_dp4),
-                QrScanPage(),
-                SizedBox(height: Dimens.gap_dp4),
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyBlue),
-                    Text(
-                      '输入对方设备IP连接',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp16,
-                        fontWeight: FontWeight.bold,
-                        height: 1.0,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: Dimens.gap_dp4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Stack(
-                    alignment: Alignment.center,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        appBar: appBar,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 12.w),
+                  Row(
                     children: [
-                      TextField(
-                        controller: editingController,
-                        decoration: const InputDecoration(
-                          hintText: '输入安卓设备的IP地址:端口号(可省略)',
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: SizedBox(
-                          height: Dimens.setWidth(72),
-                          width: Dimens.setWidth(72),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.black.withOpacity(0.6),
-                              ),
-                              onPressed: () async {
-                                if (editingController.text.isEmpty) {
-                                  showToast('IP不可为空');
-                                }
-                                Log.d('adb 连接开始');
-                                AdbResult result;
-                                try {
-                                  result = await AdbUtil.connectDevices(
-                                    editingController.text,
-                                  );
-                                  showToast(result.message);
-                                } on AdbException catch (e) {
-                                  showToast(e.message);
-                                }
-                                Log.d('adb 连接结束');
-                              },
-                            ),
-                          ),
+                      const ItemHeader(color: CandyColors.purple),
+                      Text(
+                        '使用无界投屏安卓端扫码连接',
+                        style: TextStyle(
+                          fontSize: Dimens.font_sp16,
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
                         ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: Dimens.gap_dp4),
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyCyan),
-                    Text(
-                      '安卓设备访问URL进行连接',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp16,
-                        fontWeight: FontWeight.bold,
-                        height: 1.0,
+                  SizedBox(height: Dimens.gap_dp4),
+                  QrScanPage(),
+                  SizedBox(height: Dimens.gap_dp4),
+                  Row(
+                    children: [
+                      const ItemHeader(color: CandyColors.candyBlue),
+                      Text(
+                        '输入对方设备IP连接',
+                        style: TextStyle(
+                          fontSize: Dimens.font_sp16,
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                        ),
                       ),
+                    ],
+                  ),
+                  SizedBox(height: Dimens.gap_dp4),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        TextField(
+                          controller: editingController,
+                          decoration: const InputDecoration(
+                            hintText: '输入安卓设备的IP地址:端口号(可省略)',
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                            height: Dimens.setWidth(72),
+                            width: Dimens.setWidth(72),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.black.withOpacity(0.6),
+                                ),
+                                onPressed: () async {
+                                  if (editingController.text.isEmpty) {
+                                    showToast('IP不可为空');
+                                  }
+                                  Log.d('adb 连接开始');
+                                  AdbResult result;
+                                  try {
+                                    result = await AdbUtil.connectDevices(
+                                      editingController.text,
+                                    );
+                                    showToast(result.message);
+                                  } on AdbException catch (e) {
+                                    showToast(e.message);
+                                  }
+                                  Log.d('adb 连接结束');
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(height: Dimens.gap_dp8),
-                Builder(builder: (_) {
-                  final List<Widget> list = [];
-                  for (final String address in addreses) {
-                    final String uri = 'http://$address:$adbToolQrPort';
-                    list.add(addressItem(uri));
-                  }
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.background,
-                      borderRadius: BorderRadius.circular(12.w),
-                      border: Border.all(
-                        color: Colors.grey.withOpacity(0.2),
-                        width: 1.w,
+                  ),
+                  SizedBox(height: Dimens.gap_dp4),
+                  Row(
+                    children: [
+                      const ItemHeader(color: CandyColors.candyCyan),
+                      Text(
+                        '安卓设备访问URL进行连接',
+                        style: TextStyle(
+                          fontSize: Dimens.font_sp16,
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: list,
-                    ),
-                  );
-                }),
-                SizedBox(
-                  height: Dimens.gap_dp8,
-                ),
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyPink),
-                    Text(
-                      '通过设备发现',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp16,
-                        fontWeight: FontWeight.bold,
+                    ],
+                  ),
+                  SizedBox(height: Dimens.gap_dp8),
+                  Builder(builder: (_) {
+                    final List<Widget> list = [];
+                    for (final String address in addreses) {
+                      final String uri = 'http://$address:$adbToolQrPort';
+                      list.add(addressItem(uri));
+                    }
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.background,
+                        borderRadius: BorderRadius.circular(12.w),
+                        border: Border.all(
+                          color: Colors.grey.withOpacity(0.2),
+                          width: 1.w,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: Dimens.gap_dp8,
-                ),
-                OnlineView(),
-              ],
+                      child: Column(
+                        children: list,
+                      ),
+                    );
+                  }),
+                  SizedBox(
+                    height: Dimens.gap_dp8,
+                  ),
+                  Row(
+                    children: [
+                      const ItemHeader(color: CandyColors.candyPink),
+                      Text(
+                        '通过设备发现',
+                        style: TextStyle(
+                          fontSize: Dimens.font_sp16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: Dimens.gap_dp8,
+                  ),
+                  OnlineView(),
+                ],
+              ),
             ),
           ),
         ),

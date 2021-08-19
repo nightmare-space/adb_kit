@@ -5,6 +5,7 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/utils/dex_server.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
 
@@ -218,19 +219,13 @@ class _DevicesItemState extends State<DevicesItem>
                               return;
                             }
                             await DexServer.startServer(
-                                widget.devicesEntity.serial);
-                            Navigator.of(
-                              context,
-                            ).push<void>(
-                              MaterialPageRoute(
-                                builder: (_) {
-                                  return AppManager(
-                                    process: YanProcess()
-                                      ..exec(
-                                          'adb -s ${widget.devicesEntity.serial} shell'),
-                                  );
-                                },
-                              ),
+                              widget.devicesEntity.serial,
+                            );
+                            Get.toNamed(
+                              AppManagerRoutes.home,
+                              arguments: YanProcess()
+                                ..exec(
+                                    'adb -s ${widget.devicesEntity.serial} shell'),
                             );
                           },
                         ),

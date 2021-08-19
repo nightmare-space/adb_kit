@@ -1,6 +1,7 @@
 library adb_tool;
 
 import 'dart:io';
+import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ void main() {
       enableLog: false,
       title: 'ADB TOOL',
       initialRoute: AdbPages.INITIAL,
-      getPages: AdbPages.routes,
+      getPages: AdbPages.routes + AppPages.routes,
       defaultTransition: Transition.fade,
       debugShowCheckedModeBanner: false,
     ),

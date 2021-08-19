@@ -67,24 +67,27 @@ class _OverviewPageState extends State<OverviewPage> {
         ],
       );
     }
-    return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-      //         .then((RawDatagramSocket socket) async {
-      //       socket.broadcastEnabled = true;
-      //       // for (int i = 0; i < 255; i++) {
-      //       //   socket.send(
-      //       //     UniqueKey().toString().codeUnits,
-      //       //     InternetAddress('192.168.39.$i'),
-      //       //     Config.udpPort,
-      //       //   );
-      //       // }
-      //       UdpUtil.boardcast(socket, UniqueKey().toString());
-      //     });
-      //   },
-      appBar: appBar,
-      body: buildBody(context),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () async {
+        //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
+        //         .then((RawDatagramSocket socket) async {
+        //       socket.broadcastEnabled = true;
+        //       // for (int i = 0; i < 255; i++) {
+        //       //   socket.send(
+        //       //     UniqueKey().toString().codeUnits,
+        //       //     InternetAddress('192.168.39.$i'),
+        //       //     Config.udpPort,
+        //       //   );
+        //       // }
+        //       UdpUtil.boardcast(socket, UniqueKey().toString());
+        //     });
+        //   },
+        appBar: appBar,
+        body: buildBody(context),
+      ),
     );
   }
 
@@ -99,6 +102,7 @@ class _OverviewPageState extends State<OverviewPage> {
               // MacosContextMenuItem(
               //   content: Text('data'),
               // ),
+              SizedBox(height: 12.w),
               Row(
                 children: [
                   const ItemHeader(color: CandyColors.candyPink),
