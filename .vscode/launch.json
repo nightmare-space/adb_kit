@@ -28,7 +28,7 @@
             "name": "平板",
             "request": "launch",
             "type": "dart",
-            "deviceId": "Lenovo TB J606F"
+            "deviceId": "M2105K81AC"
         },
         {
             "name": "红米K30",

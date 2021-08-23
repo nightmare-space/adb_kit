@@ -45,8 +45,9 @@ class _SearchIpPageState extends State<SearchIpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar;
+    if (Responsive.of(context).screenType == ScreenType.phone) {
+      appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('IP查看'),
         leading: IconButton(
@@ -55,41 +56,63 @@ class _SearchIpPageState extends State<SearchIpPage> {
             Scaffold.of(context).openDrawer();
           },
         ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: Dimens.gap_dp8),
-        child: ListView(
-          children: [
-            for (String ip in addressList)
-              InkWell(
-                onTap: () async {
-                  await Clipboard.setData(ClipboardData(text: ip));
-                  showToast('IP已复制');
-                },
-                child: Container(
-                  height: Dimens.gap_dp48,
-                  child: Row(
-                    children: [
-                      Text(
-                        ip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: Dimens.font_sp16,
-                        ),
+      );
+    }
+    return Scaffold(
+      appBar: appBar,
+      body: SafeArea(
+        child: Container(
+          margin: EdgeInsets.all(8.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.w),
+            border: Border.all(
+              color: Colors.black.withOpacity(0.1),
+              width: 1.w,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.gap_dp8),
+            child: ListView(
+              children: [
+                for (String ip in addressList)
+                  InkWell(
+                    onTap: () async {
+                      await Clipboard.setData(ClipboardData(text: ip));
+                      showToast('IP已复制');
+                    },
+                    child: Container(
+                      height: Dimens.gap_dp48,
+                      child: Row(
+                        children: [
+                          Text(
+                            ip,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Dimens.font_sp16,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                  ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10.w),
+                  ),
+                  child: Text(
+                    '该页面列表的是能与本机互通的IP，末尾为.1结尾的通常代表路由器的IP地址，其余的代表连接到本机的IP地址',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 12.w,
+                    ),
                   ),
                 ),
-              ),
-            Text(
-              '该页面列表的是能与本机互通的IP，末尾为.1结尾的通常代表路由器的IP地址，其余的代表连接到本机的IP地址',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: Dimens.font_sp12,
-                fontWeight: FontWeight.bold,
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

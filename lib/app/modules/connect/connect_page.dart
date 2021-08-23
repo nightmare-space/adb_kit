@@ -7,6 +7,7 @@ import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -293,6 +294,7 @@ class _QrScanPageState extends State<QrScanPage> {
       );
     }
     return NiCardButton(
+      margin: EdgeInsets.zero,
       shadowColor: Colors.transparent,
       blurRadius: 0,
       spreadRadius: 0,

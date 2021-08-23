@@ -1,7 +1,9 @@
 package com.nightmare.adbtools;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -18,17 +20,24 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 public class MainActivity extends FlutterActivity {
 
     private WifiManager.MulticastLock mLock;
+
+    BroadcastReceiver L = new UsbReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
+        intentFilter.addAction("htetznaing.usb.permission");
+        registerReceiver(this.L, intentFilter);
     }
+
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "multicast-lock").setMethodCallHandler((call, result) -> {
             if (call.method.equals("aquire")) {
-                Log.i("adb","aquire");
+                Log.i("adb", "aquire");
                 result.success(aquireMulticastLock());
             } else if (call.method.equals("release")) {
                 result.success(releaseMulticastLock());
@@ -37,6 +46,7 @@ public class MainActivity extends FlutterActivity {
             }
         });
     }
+
     protected boolean aquireMulticastLock() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.DONUT) {
             return false;

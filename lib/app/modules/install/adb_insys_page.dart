@@ -24,168 +24,219 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar;
+    if (Responsive.of(context).screenType == ScreenType.phone) {
+      appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('安装ADB到系统'),
-        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
         ),
-      ),
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Dimens.gap_dp8,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: const <Widget>[
-                      ItemHeader(
-                        color: CandyColors.candyCyan,
-                      ),
-                      Text(
-                        '安装到系统(需要root)',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+      );
+    }
+    return Scaffold(
+      appBar: appBar,
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Dimens.gap_dp8,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        ItemHeader(
+                          color: CandyColors.candyCyan,
                         ),
-                      ),
-                    ],
-                  ),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '请选择安装路径',
-                      style: TextStyle(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              xbinPath,
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Radio(
-                              value: xbinPath,
-                              groupValue: choosePath,
-                              onChanged: (String value) {
-                                choosePath = value;
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              binPath,
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Radio<String>(
-                              value: binPath,
-                              groupValue: choosePath,
-                              onChanged: (String value) {
-                                choosePath = value;
-                                setState(() {});
-                              },
-                            ),
-                          ],
+                        Text(
+                          '选择安装路径',
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Text(
-                    'tips:建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
-                    style: TextStyle(
-                      color: const Color(0xff707076),
-                      fontSize: Dimens.font_sp12,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      const ItemHeader(color: CandyColors.candyPink),
-                      Text(
-                        '终端',
-                        style: TextStyle(
-                          fontSize: Dimens.font_sp16,
-                          fontWeight: FontWeight.bold,
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.background,
+                        borderRadius: BorderRadius.circular(12.w),
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.1),
+                          width: 1.w,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Dimens.gap_dp16,
-                  ),
-                  const SizedBox(
-                    height: 200,
-                    child: TerminalPage(),
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  NiCardButton(
-                    blurRadius: 0,
-                    shadowColor: Colors.transparent,
-                    borderRadius: 12.0,
-                    color: AppColors.accent,
-                    onTap: () async {
-                      final StringBuffer buffer = StringBuffer();
-                      buffer.writeln('su -c "');
-                      buffer.writeln(
-                        'cp ${RuntimeEnvir.binPath}/adb $choosePath/adb',
-                      );
-                      buffer.writeln(
-                        'cp ${RuntimeEnvir.binPath}/adb.bin $choosePath/adb.bin',
-                      );
-                      buffer.writeln('chmod 0777 $choosePath/adb');
-                      buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
-                      Global.instance.pseudoTerminal.write(buffer.toString());
-                    },
-                    child: SizedBox(
+                      margin: EdgeInsets.symmetric(vertical: 8.w),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  xbinPath,
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Radio(
+                                  value: xbinPath,
+                                  groupValue: choosePath,
+                                  onChanged: (String value) {
+                                    choosePath = value;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  binPath,
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Radio<String>(
+                                  value: binPath,
+                                  groupValue: choosePath,
+                                  onChanged: (String value) {
+                                    choosePath = value;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
                       width: MediaQuery.of(context).size.width,
-                      height: Dimens.gap_dp48,
-                      child: const Center(
-                        child: Text(
-                          '安装',
+                      padding:  EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 12.w,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.w),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding:  EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '该功能暂未适配动态分区',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.w,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.w,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding:  EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '该功能需要ROOT权限',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.w,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimens.gap_dp16,
+                    ),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyPink),
+                        Text(
+                          '终端',
                           style: TextStyle(
-                            color: Colors.white,
+                            fontSize: Dimens.font_sp16,
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Dimens.gap_dp16,
+                    ),
+                    const SizedBox(
+                      height: 200,
+                      child: TerminalPage(),
+                    ),
+                    const SizedBox(
+                      height: 32.0,
+                    ),
+                    NiCardButton(
+                      blurRadius: 0,
+                      shadowColor: Colors.transparent,
+                      borderRadius: 12.w,
+                      color: AppColors.accent,
+                      onTap: () async {
+                        final StringBuffer buffer = StringBuffer();
+                        buffer.writeln('su -c "');
+                        buffer.writeln(
+                          'cp ${RuntimeEnvir.binPath}/adb $choosePath/adb',
+                        );
+                        buffer.writeln(
+                          'cp ${RuntimeEnvir.binPath}/adb.bin $choosePath/adb.bin',
+                        );
+                        buffer.writeln('chmod 0777 $choosePath/adb');
+                        buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
+                        Global.instance.pseudoTerminal.write(buffer.toString());
+                      },
+                      child: SizedBox(
+                        width: 414.w,
+                        height: 48.w,
+                        child: const Center(
+                          child: Text(
+                            '安装',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 32.0,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

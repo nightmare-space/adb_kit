@@ -71,9 +71,9 @@ class DevicesController extends GetxController {
     if (getRoot) {
       await Global().process.exec('su -p HOME');
     }
-    Log.e('start');
+    // Log.e('start');
     await execCmd('adb start-server');
-    Log.e('end');
+    // Log.e('end');
   }
 
   Future<void> handleResult(String data) async {

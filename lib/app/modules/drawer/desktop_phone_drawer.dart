@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,41 +95,22 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               },
               iconData: Icons.home,
             ),
-            _DrawerItem(
-              title: '连接设备',
-              value: 1,
-              groupValue: widget.groupValue,
-              onTap: (index) {
-                widget.onChanged?.call(index);
-              },
-              iconData: Icons.data_saver_off,
-            ),
-            if (!kIsWeb && Platform.isAndroid)
-              _DrawerItem(
-                value: 2,
-                groupValue: widget.groupValue,
-                title: '安装到系统',
-                iconData: Icons.file_download,
-                onTap: (index) {
-                  widget.onChanged?.call(index);
-                },
-              ),
+            // _DrawerItem(
+            //   title: '连接设备',
+            //   value: 1,
+            //   groupValue: widget.groupValue,
+            //   onTap: (index) {
+            //     widget.onChanged?.call(index);
+            //   },
+            //   iconData: Icons.data_saver_off,
+            // ),
             // _DrawerItem(
             //   title: '当前设备ip',
             //   onTap: () {},
             // ),
-            if (!kIsWeb && Platform.isAndroid)
+            if (GetPlatform.isAndroid)
               Column(
                 children: [
-                  _DrawerItem(
-                    value: 3,
-                    groupValue: widget.groupValue,
-                    title: '查看局域网ip',
-                    onTap: (index) {
-                      widget.onChanged?.call(index);
-                    },
-                    iconData: Icons.wifi_tethering,
-                  ),
                   _DrawerItem(
                     value: 4,
                     groupValue: widget.groupValue,
@@ -138,7 +120,26 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                       widget.onChanged?.call(index);
                     },
                   ),
+                  _DrawerItem(
+                    value: 3,
+                    groupValue: widget.groupValue,
+                    title: '查看局域网ip',
+                    onTap: (index) {
+                      widget.onChanged?.call(index);
+                    },
+                    iconData: Icons.wifi_tethering,
+                  ),
                 ],
+              ),
+            if (GetPlatform.isAndroid)
+              _DrawerItem(
+                value: 2,
+                groupValue: widget.groupValue,
+                title: '安装到系统',
+                iconData: Icons.file_download,
+                onTap: (index) {
+                  widget.onChanged?.call(index);
+                },
               ),
             _DrawerItem(
               value: 5,
@@ -163,7 +164,16 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               value: 7,
               groupValue: widget.groupValue,
               title: '日志',
-              iconData: Icons.history,
+              iconData: Icons.pending_outlined,
+              onTap: (index) async {
+                widget.onChanged?.call(index);
+              },
+            ),
+            _DrawerItem(
+              value: 8,
+              groupValue: widget.groupValue,
+              title: '关于软件',
+              iconData: Icons.info_outline,
               onTap: (index) async {
                 widget.onChanged?.call(index);
               },
@@ -192,29 +202,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                 // http://nightmare.fun/adbtool
                 // widget.onChange?.call(index);
               },
-            ),
-            _DrawerItem(
-              groupValue: widget.groupValue,
-              title: 'ADB命令手册',
-              onTap: (index) async {
-                Navigator.of(context).push<HelpPage>(
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return HelpPage();
-                    },
-                  ),
-                );
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.all(Dimens.gap_dp16),
-              child: Text(
-                '版本：${Config.version}',
-                style: const TextStyle(
-                  // fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
+            
             ),
           ],
         ),

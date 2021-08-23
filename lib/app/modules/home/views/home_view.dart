@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:adb_tool/app/modules/about_page.dart';
 import 'package:adb_tool/app/modules/connect/connect_page.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/log_page.dart';
@@ -225,5 +226,6 @@ Widget getWidget(int index) {
     ExecCmdPage(),
     HistoryPage(),
     LogPage(),
+    AboutPage(),
   ][index];
 }

@@ -75,15 +75,15 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
               iconData: Icons.home,
             ),
-            _DrawerItem(
-              title: '连接设备',
-              value: 1,
-              groupValue: widget.groupValue,
-              onTap: (index) {
-                widget.onChanged?.call(index);
-              },
-              iconData: Icons.data_saver_off,
-            ),
+            // _DrawerItem(
+            //   title: '连接设备',
+            //   value: 1,
+            //   groupValue: widget.groupValue,
+            //   onTap: (index) {
+            //     widget.onChanged?.call(index);
+            //   },
+            //   iconData: Icons.data_saver_off,
+            // ),
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
                 value: 2,
@@ -140,6 +140,15 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 widget.onChanged?.call(index);
               },
             ),
+            _DrawerItem(
+              value: 7,
+              groupValue: widget.groupValue,
+              title: '日志',
+              iconData: Icons.pending_outlined,
+              onTap: (index) async {
+                widget.onChanged?.call(index);
+              },
+            ),
           ],
         ),
         Column(
@@ -164,19 +173,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 // widget.onChange?.call(index);
               },
             ),
-            _DrawerItem(
-              groupValue: widget.groupValue,
-              title: 'ADB命令手册',
-              onTap: (index) async {
-                Navigator.of(context).push<HelpPage>(
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return HelpPage();
-                    },
-                  ),
-                );
-              },
-            ),
+           
             // Padding(
             //   padding: EdgeInsets.all(Dimens.gap_dp16),
             //   child: Text(
@@ -229,8 +226,8 @@ class _DrawerItem extends StatelessWidget {
             alignment: Alignment.centerLeft,
             children: [
               Container(
-                height: Dimens.gap_dp44,
-                width: Dimens.gap_dp44,
+                height: Dimens.gap_dp54,
+                width: Dimens.gap_dp54,
                 decoration: isChecked
                     ? BoxDecoration(
                         color: AppColors.accent.withOpacity(0.1),
@@ -239,7 +236,7 @@ class _DrawerItem extends StatelessWidget {
                     : null,
                 child: Icon(
                   iconData ?? Icons.open_in_new,
-                  size: Dimens.gap_dp18,
+                  size: 24.w,
                   color: isChecked ? AppColors.accent : AppColors.fontTitle,
                 ),
               ),

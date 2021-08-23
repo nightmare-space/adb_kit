@@ -22,7 +22,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
+    if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         brightness: Brightness.light,
         title: const Text('执行命令'),
@@ -36,19 +36,21 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     }
     return Scaffold(
       appBar: appBar,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: Dimens.gap_dp8,
-          horizontal: Dimens.gap_dp8,
-        ),
-        child: Column(
-          children: const [
-            Expanded(
-              child: TerminalPage(
-                enableInput: true,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: Dimens.gap_dp8,
+            horizontal: Dimens.gap_dp8,
+          ),
+          child: Column(
+            children: const [
+              Expanded(
+                child: TerminalPage(
+                  enableInput: true,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
