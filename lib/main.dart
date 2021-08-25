@@ -38,6 +38,7 @@ void main() {
     ),
   );
   installRes();
+  // DateTime();
 }
 
 /// 安装资源
@@ -45,18 +46,18 @@ Future<void> installRes() async {
   if (kIsWeb) {
     return;
   }
-  final filePath = RuntimeEnvir.binPath + '/app-release.apk';
+  final filePath = RuntimeEnvir.binPath + '/server.jar';
   final Directory dir = Directory(RuntimeEnvir.binPath);
   if (!dir.existsSync()) {
     dir.createSync(recursive: true);
   }
-  AssetsUtils.copyAssetToPath('assets/app-release.apk', filePath);
+  AssetsUtils.copyAssetToPath('assets/server.jar', filePath);
   final ProcessResult result = await Process.run(
     'chmod',
     <String>['+x', filePath],
   );
   Log.d(
-    '更改 app-release.apk 权限输出 stdout:${result.stdout} stderr；${result.stderr}',
+    '更改 server.jar 权限输出 stdout:${result.stdout} stderr；${result.stderr}',
   );
   // print(await exec('scrcpy'));
 }

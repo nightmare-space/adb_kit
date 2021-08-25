@@ -9,7 +9,7 @@ class DexServer {
     Log.w('adb -s $devicesId forward tcp:4041 local:app_manager');
     Log.w(await process.exec('adb -s $devicesId forward tcp:6001 tcp:6000'));
     Log.w(await process.exec(
-      'adb -s $devicesId push "${RuntimeEnvir.binPath}/app-release.apk" /data/local/tmp/base.apk',
+      'adb -s $devicesId push "${RuntimeEnvir.binPath}/server.jar" /data/local/tmp/base.apk',
     ));
     Global().pseudoTerminal.write(
         'adb -s $devicesId shell CLASSPATH=/data/local/tmp/base.apk app_process /data/local/tmp/ com.nightmare.appmanager.AppInfo\n');

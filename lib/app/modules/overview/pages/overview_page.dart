@@ -80,21 +80,6 @@ class _OverviewPageState extends State<OverviewPage> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () async {
-        //     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-        //         .then((RawDatagramSocket socket) async {
-        //       socket.broadcastEnabled = true;
-        //       // for (int i = 0; i < 255; i++) {
-        //       //   socket.send(
-        //       //     UniqueKey().toString().codeUnits,
-        //       //     InternetAddress('192.168.39.$i'),
-        //       //     Config.udpPort,
-        //       //   );
-        //       // }
-        //       UdpUtil.boardcast(socket, UniqueKey().toString());
-        //     });
-        //   },
         appBar: appBar,
         body: buildBody(context),
       ),
@@ -103,7 +88,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Padding buildBody(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      padding: EdgeInsets.symmetric(horizontal: 4.w),
       child: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -112,140 +97,193 @@ class _OverviewPageState extends State<OverviewPage> {
               // MacosContextMenuItem(
               //   content: Text('data'),
               // ),
-              SizedBox(height: 12.w),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyPink),
-                  Text(
-                    '已成功连接的设备',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(12.w),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.2),
+                    width: 1.w,
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: Dimens.gap_dp8,
                 ),
-                child: DevicesList(),
-              ),
-              SizedBox(height: 12.w),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.purple),
-                  Text(
-                    '使用无界投屏安卓端扫码连接',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8.w),
-              QrScanPage(),
-              SizedBox(height: 8.w),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyBlue),
-                  Text(
-                    '输入对方设备IP连接',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: Dimens.gap_dp4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: SizedBox(
-                  width: 414.w,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      TextField(
-                        controller: editingController,
-                        decoration: const InputDecoration(
-                          hintText: '输入安卓设备的IP地址:端口号(可省略)',
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: SizedBox(
-                          height: Dimens.setWidth(72),
-                          width: Dimens.setWidth(72),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.black.withOpacity(0.6),
-                              ),
-                              onPressed: () async {
-                                if (editingController.text.isEmpty) {
-                                  showToast('IP不可为空');
-                                }
-                                Log.d('adb 连接开始');
-                                AdbResult result;
-                                try {
-                                  result = await AdbUtil.connectDevices(
-                                    editingController.text,
-                                  );
-                                  showToast(result.message);
-                                } on AdbException catch (e) {
-                                  showToast(e.message);
-                                }
-                                Log.d('adb 连接结束');
-                              },
-                            ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 12.w),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyPink),
+                        Text(
+                          '已成功连接的设备',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
                           ),
                         ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: Dimens.gap_dp8,
                       ),
-                    ],
-                  ),
+                      child: DevicesList(),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: Dimens.gap_dp4),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyCyan),
-                  Text(
-                    '安卓设备访问URL进行连接',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                    ),
+              SizedBox(height: 12.w),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(12.w),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.2),
+                    width: 1.w,
                   ),
-                ],
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 8.w),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyPurpleAccent),
+                        Text(
+                          '运行ADB TOOL的设备',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Dimens.gap_dp8,
+                    ),
+                    OnlineView(),
+                  ],
+                ),
               ),
-              SizedBox(height: Dimens.gap_dp8),
-              Builder(builder: (_) {
-                final List<Widget> list = [];
-                for (final String address in addreses) {
-                  final String uri = 'http://$address:$adbToolQrPort';
-                  list.add(addressItem(uri));
-                }
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.w),
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.2),
-                      width: 1.w,
+              SizedBox(height: 12.w),
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.circular(12.w),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.2),
+                    width: 1.w,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 12.w),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.purple),
+                        Text(
+                          '使用无界投屏安卓端扫码连接',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  child: Column(
-                    children: list,
-                  ),
-                );
-              }),
+                    SizedBox(height: 8.w),
+                    QrScanPage(),
+                    SizedBox(height: 8.w),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyBlue),
+                        Text(
+                          '输入对方设备IP连接',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Dimens.gap_dp4),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SizedBox(
+                        width: 414.w,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            TextField(
+                              controller: editingController,
+                              decoration: const InputDecoration(
+                                hintText: '输入安卓设备的IP地址:端口号(可省略)',
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: SizedBox(
+                                height: Dimens.setWidth(72),
+                                width: Dimens.setWidth(72),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                    onPressed: () async {
+                                      if (editingController.text.isEmpty) {
+                                        showToast('IP不可为空');
+                                      }
+                                      Log.d('adb 连接开始');
+                                      AdbResult result;
+                                      try {
+                                        result = await AdbUtil.connectDevices(
+                                          editingController.text,
+                                        );
+                                        showToast(result.message);
+                                      } on AdbException catch (e) {
+                                        showToast(e.message);
+                                      }
+                                      Log.d('adb 连接结束');
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Dimens.gap_dp4),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyCyan),
+                        Text(
+                          '安卓设备访问URL进行连接',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Dimens.gap_dp8),
+                    Builder(builder: (_) {
+                      final List<Widget> list = [];
+                      for (final String address in addreses) {
+                        final String uri = 'http://$address:$adbToolQrPort';
+                        list.add(addressItem(uri));
+                      }
+                      return Column(
+                        children: list,
+                      );
+                    }),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: Dimens.gap_dp8,
               ),
@@ -348,42 +386,7 @@ class _OverviewPageState extends State<OverviewPage> {
               //     ),
               //   ],
               // ),
-              SizedBox(height: 12.w),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyPurpleAccent),
-                  Text(
-                    '运行ADB TOOL的设备',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: Dimens.gap_dp8,
-              ),
-              OnlineView(),
-              SizedBox(height: 12.w),
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyCyan),
-                  Text(
-                    '终端',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12.w),
-              const SizedBox(
-                height: 200,
-                child: TerminalPage(),
-              ),
+
               // ProcessPage(
               //   height: 100,
               // ),
