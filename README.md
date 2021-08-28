@@ -58,18 +58,3 @@ Android 默认关闭组播，意味着，局域网其他设备发送的组播消
 在 Android 设备打开热点，PC 端连接的情况，PC 设备收不到来自 Android 设备的组播消息，所以监听UDP的代码中，同时支持了组播与广播，发送UDP也同时将
 消息发送到组播地址与广播地址中。
 
-
-## Q&A
-### 沙盒问题
-
-在需要重新执行```flutter create .```来创建windows/linux/macos的情况下，由于mac桌面端是默认开启沙盒模式，所以在运行时你会遇见如下报错。
-Operation not permitted
-所以你需要用xcode打开对应的mac工程来关闭沙盒模式即可。
-
-### 提示 SocketException: Connection failed
-
-用 xode 打开 macos/Runner.xcodeproj 找到 Runner -> TARGET/Runner -> info
-添加`App Transport Security Settings`并添加子项`Allow Arbitrary Loads`并设置为true
-### 始终是unauthorized
-
-需要保证对方设备此时还没有被另外的adb连接。
