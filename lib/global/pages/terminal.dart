@@ -11,25 +11,12 @@ class TerminalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(12.w),
-        border: Border.all(
-          color: Colors.black.withOpacity(0.1),
-          width: 1.w,
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TermarePty(
-            enableInput: enableInput,
-            controller: Global.instance.termareController..enableCursor(),
-            pseudoTerminal: Global.instance.pseudoTerminal,
-          ),
-        ),
+    return Material(
+      color: Colors.transparent,
+      child: TermarePty(
+        enableInput: enableInput,
+        controller: Global.instance.termareController..enableCursor(),
+        pseudoTerminal: Global.instance.pseudoTerminal,
       ),
     );
   }

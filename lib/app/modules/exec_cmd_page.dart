@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:flutter/foundation.dart';
@@ -45,8 +46,10 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
           child: Column(
             children: const [
               Expanded(
-                child: TerminalPage(
-                  enableInput: true,
+                child: CardItem(
+                  child: TerminalPage(
+                    enableInput: true,
+                  ),
                 ),
               ),
             ],
