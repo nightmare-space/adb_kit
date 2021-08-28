@@ -95,7 +95,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
                       ),
                     ),
                   ),
-                Container(
+               if(addressList.isNotEmpty) Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(8.w),
                   decoration: BoxDecoration(

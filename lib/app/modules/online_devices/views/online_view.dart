@@ -48,7 +48,7 @@ class OnlineView extends GetView<OnlineController> {
                               color: Colors.deepPurple,
                             ),
                             margin: EdgeInsets.only(
-                              left: Dimens.gap_dp8,
+                              left: 4.w,
                             ),
                             height: Dimens.gap_dp6,
                             width: Dimens.gap_dp6,

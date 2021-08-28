@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
@@ -189,9 +190,11 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     SizedBox(
                       height: Dimens.gap_dp16,
                     ),
-                    const SizedBox(
-                      height: 200,
-                      child: TerminalPage(),
+                    CardItem(
+                      child: const SizedBox(
+                        height: 200,
+                        child: TerminalPage(),
+                      ),
                     ),
                     const SizedBox(
                       height: 32.0,

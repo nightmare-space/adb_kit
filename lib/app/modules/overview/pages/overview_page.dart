@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:adb_tool/app/modules/connect/connect_page.dart';
-import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/global/instance/global.dart';
@@ -55,7 +55,7 @@ class _OverviewPageState extends State<OverviewPage> {
           },
         ),
         title: Text(
-          '概览',
+          '面板',
           style: TextStyle(
             height: 1.0,
             color: Theme.of(context).textTheme.bodyText2.color,
@@ -88,8 +88,10 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Padding buildBody(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4.w),
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 100.w),
+        physics: BouncingScrollPhysics(),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,18 +99,12 @@ class _OverviewPageState extends State<OverviewPage> {
               // MacosContextMenuItem(
               //   content: Text('data'),
               // ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(12.w),
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.2),
-                    width: 1.w,
-                  ),
-                ),
+              SizedBox(
+                height: 8.w,
+              ),
+              CardItem(
                 child: Column(
                   children: [
-                    SizedBox(height: 12.w),
                     Row(
                       children: [
                         const ItemHeader(color: CandyColors.candyPink),
@@ -122,28 +118,22 @@ class _OverviewPageState extends State<OverviewPage> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: Dimens.gap_dp8,
-                      ),
-                      child: DevicesList(),
-                    ),
+                    DevicesList(),
                   ],
                 ),
               ),
-              SizedBox(height: 12.w),
+              SizedBox(height: 8.w),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(12.w),
                   border: Border.all(
                     color: Colors.grey.withOpacity(0.2),
                     width: 1.w,
                   ),
                 ),
+                padding: EdgeInsets.all(8.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 8.w),
                     Row(
                       children: [
                         const ItemHeader(color: CandyColors.candyPurpleAccent),
@@ -161,10 +151,28 @@ class _OverviewPageState extends State<OverviewPage> {
                       height: Dimens.gap_dp8,
                     ),
                     OnlineView(),
+                    SizedBox(
+                      height: Dimens.gap_dp8,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '这儿发现了其他设备运行了本软件，也能快速连接~',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 12.w,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 12.w),
+              SizedBox(height: 8.w),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.background,
@@ -174,9 +182,73 @@ class _OverviewPageState extends State<OverviewPage> {
                     width: 1.w,
                   ),
                 ),
+                padding: EdgeInsets.all(8.w),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 12.w),
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.candyBlue),
+                        Text(
+                          '输入对方设备IP连接',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Dimens.gap_dp4),
+                    SizedBox(
+                      width: 414.w,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          TextField(
+                            controller: editingController,
+                            decoration: InputDecoration(
+                              hintText: '格式为\"IP地址:端口号 配对码\"',
+                              hintStyle: TextStyle(
+                                fontSize: 14.w,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: SizedBox(
+                              height: Dimens.setWidth(72),
+                              width: Dimens.setWidth(72),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.black.withOpacity(0.6),
+                                  ),
+                                  onPressed: () async {
+                                    if (editingController.text.isEmpty) {
+                                      showToast('IP不可为空');
+                                    }
+                                    Log.d('adb 连接开始');
+                                    AdbResult result;
+                                    try {
+                                      result = await AdbUtil.connectDevices(
+                                        editingController.text,
+                                      );
+                                      showToast(result.message);
+                                    } on AdbException catch (e) {
+                                      showToast(e.message);
+                                    }
+                                    Log.d('adb 连接结束 ${result.message}');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Row(
                       children: [
                         const ItemHeader(color: CandyColors.purple),
@@ -193,203 +265,115 @@ class _OverviewPageState extends State<OverviewPage> {
                     SizedBox(height: 8.w),
                     QrScanPage(),
                     SizedBox(height: 8.w),
-                    Row(
-                      children: [
-                        const ItemHeader(color: CandyColors.candyBlue),
-                        Text(
-                          '输入对方设备IP连接',
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp16,
-                            fontWeight: FontWeight.bold,
-                            height: 1.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Dimens.gap_dp4),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: SizedBox(
-                        width: 414.w,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            TextField(
-                              controller: editingController,
-                              decoration: const InputDecoration(
-                                hintText: '输入安卓设备的IP地址:端口号(可省略)',
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: Dimens.setWidth(72),
-                                width: Dimens.setWidth(72),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.black.withOpacity(0.6),
-                                    ),
-                                    onPressed: () async {
-                                      if (editingController.text.isEmpty) {
-                                        showToast('IP不可为空');
-                                      }
-                                      Log.d('adb 连接开始');
-                                      AdbResult result;
-                                      try {
-                                        result = await AdbUtil.connectDevices(
-                                          editingController.text,
-                                        );
-                                        showToast(result.message);
-                                      } on AdbException catch (e) {
-                                        showToast(e.message);
-                                      }
-                                      Log.d('adb 连接结束');
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 12.w,
                         ),
                       ),
                     ),
-                    SizedBox(height: Dimens.gap_dp4),
-                    Row(
-                      children: [
-                        const ItemHeader(color: CandyColors.candyCyan),
-                        Text(
-                          '安卓设备访问URL进行连接',
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp16,
-                            fontWeight: FontWeight.bold,
-                            height: 1.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Dimens.gap_dp8),
-                    Builder(builder: (_) {
-                      final List<Widget> list = [];
-                      for (final String address in addreses) {
-                        final String uri = 'http://$address:$adbToolQrPort';
-                        list.add(addressItem(uri));
-                      }
-                      return Column(
-                        children: list,
-                      );
-                    }),
+                    SizedBox(height: 8.w),
                   ],
                 ),
               ),
               SizedBox(
-                height: Dimens.gap_dp8,
+                height: 8.w,
               ),
-              // Row(
-              //   children: [
-              //     const ItemHeader(color: CandyColors.candyBlue),
-              //     Text(
-              //       '快捷命令',
-              //       style: TextStyle(
-              //         fontSize: Dimens.font_sp16,
-              //         fontWeight: FontWeight.bold,
-              //         height: 1.0,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // Wrap(
-              //   spacing: 0,
-              //   runSpacing: 0,
-              //   alignment: WrapAlignment.start,
-              //   runAlignment: WrapAlignment.start,
-              //   crossAxisAlignment: WrapCrossAlignment.start,
-              //   children: [
-              //     ItemButton(
-              //       title: '开启服务',
-              //       onTap: () async {
-              //         const String cmd = 'adb start-server\r';
-              //         Global.instance.pseudoTerminal.write(cmd);
-              //         AdbUtil.startPoolingListDevices();
-              //       },
-              //     ),
-              //     ItemButton(
-              //       title: '停止服务',
-              //       onTap: () async {
-              //         const String cmd = 'adb kill-server\r';
-              //         Global.instance.pseudoTerminal.write(cmd);
-              //         AdbUtil.stopPoolingListDevices();
-              //         DevicesController controller = Get.find();
-              //         controller.clearDevices();
-              //       },
-              //     ),
-              //     ItemButton(
-              //       title: '重启服务',
-              //       onTap: () async {
-              //         const String cmd =
-              //             'adb kill-server && adb start-server\r';
-              //         Global.instance.pseudoTerminal.write(cmd);
-              //       },
-              //     ),
-              //     ItemButton(
-              //       title: '连接远程设备',
-              //       onTap: () async {
-              //         final String cmd = await showCustomDialog<String>(
-              //           context: context,
-              //           child: Theme(
-              //             data: Theme.of(context),
-              //             child: ConnectRemote(),
-              //           ),
-              //         );
-              //         if (cmd == null) {
-              //           return;
-              //         }
-              //         Global.instance.pseudoTerminal.write(cmd);
-              //       },
-              //     ),
-              //     ItemButton(
-              //       title: '连接二维码',
-              //       onTap: () async {
-              //         await showDialog<String>(
-              //           context: context,
-              //           builder: (_) {
-              //             return QrScanPage();
-              //           },
-              //         );
-              //       },
-              //     ),
-              //     ItemButton(
-              //       title: '复制ADB KEY',
-              //       onTap: () async {
-              //         String homePath = '';
-              //         if (Platform.isMacOS) {
-              //           homePath = Platform.environment['HOME'];
-              //         } else if (Platform.isAndroid) {
-              //           homePath = RuntimeEnvir.binPath;
-              //         }
-              //         final File adbKey = File(
-              //           '$homePath/.android/adbkey.pub',
-              //         );
-              //         if (adbKey.existsSync()) {
-              //           await Clipboard.setData(
-              //             ClipboardData(
-              //               text: adbKey.readAsStringSync(),
-              //             ),
-              //           );
-              //           showToast('已复制');
-              //         } else {
-              //           showToast('未发现adb key');
-              //         }
-              //       },
-              //     ),
-              //   ],
-              // ),
 
-              // ProcessPage(
-              //   height: 100,
-              // ),
+              CardItem(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const ItemHeader(color: CandyColors.yellow),
+                        Text(
+                          '快捷命令',
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: 4.w,
+                      runSpacing: 0,
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: [
+                        ItemButton(
+                          title: '开启服务',
+                          onTap: () async {
+                            const String cmd = 'adb start-server\r';
+                            Global.instance.pseudoTerminal.write(cmd);
+                            AdbUtil.startPoolingListDevices();
+                          },
+                        ),
+                        ItemButton(
+                          title: '停止服务',
+                          onTap: () async {
+                            const String cmd = 'adb kill-server\r';
+                            Global.instance.pseudoTerminal.write(cmd);
+                            AdbUtil.stopPoolingListDevices();
+                            DevicesController controller = Get.find();
+                            controller.clearDevices();
+                          },
+                        ),
+                        ItemButton(
+                          title: '重启服务',
+                          onTap: () async {
+                            const String cmd =
+                                'adb kill-server && adb start-server\r';
+                            Global.instance.pseudoTerminal.write(cmd);
+                          },
+                        ),
+                        ItemButton(
+                          title: '复制ADB KEY',
+                          onTap: () async {
+                            String homePath = '';
+                            if (Platform.isMacOS) {
+                              homePath = Platform.environment['HOME'];
+                            } else if (Platform.isAndroid) {
+                              homePath = RuntimeEnvir.binPath;
+                            }
+                            final File adbKey = File(
+                              '$homePath/.android/adbkey.pub',
+                            );
+                            if (adbKey.existsSync()) {
+                              await Clipboard.setData(
+                                ClipboardData(
+                                  text: adbKey.readAsStringSync(),
+                                ),
+                              );
+                              showToast('已复制');
+                            } else {
+                              showToast('未发现adb key');
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.w,
+                    ),
+                    const SizedBox(
+                      height: 120,
+                      child: TerminalPage(),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -448,13 +432,22 @@ class ItemButton extends StatelessWidget {
     return NiCardButton(
       borderRadius: Dimens.gap_dp8,
       shadowColor: Colors.black,
-      blurRadius: Dimens.gap_dp4,
+      blurRadius: 0,
       spreadRadius: 0,
       onTap: onTap,
-      child: Padding(
+      color: AppColors.background,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          borderRadius: BorderRadius.circular(12.w),
+          border: Border.all(
+            color: AppColors.accent,
+            width: 1.w,
+          ),
+        ),
         padding: EdgeInsets.symmetric(
-          horizontal: Dimens.gap_dp16,
-          vertical: Dimens.gap_dp8,
+          horizontal: 12.w,
+          vertical: 8.w,
         ),
         child: Column(
           children: [
@@ -469,6 +462,25 @@ class ItemButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CardItem extends StatelessWidget {
+  const CardItem({Key key, this.child}) : super(key: key);
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.w),
+        border: Border.all(
+          color: Colors.grey.withOpacity(0.2),
+          width: 1.w,
+        ),
+      ),
+      padding: EdgeInsets.all(8.w),
+      child: child,
     );
   }
 }

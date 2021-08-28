@@ -250,24 +250,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                 SizedBox(
                   height: Dimens.gap_dp8,
                 ),
-                Row(
-                  children: const [
-                    ItemHeader(color: CandyColors.candyPink),
-                    Text(
-                      '终端',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: Dimens.gap_dp8,
-                ),
-                const SizedBox(
-                  height: 200,
-                  child: TerminalPage(),
-                ),
               ],
             ),
           ),
