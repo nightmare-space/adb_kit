@@ -1,8 +1,11 @@
 import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
-import 'package:adb_tool/app/modules/home/controllers/devices_controller.dart';
+import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/dex_server.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,14 +29,16 @@ class _DevicesItemState extends State<DevicesItem>
   String _title;
   AnimationController animationController;
   AnimationController progressAnimaCTL;
-  Color proColor = Colors.blue;
   Animation<double> shadow;
   double progress = 0;
   double progressMax = 1;
   // 当前在干嘛
-  String curProcess = '';
+  String curProcess;
 
   Future<void> getDeviceInfo() async {
+    await Future.delayed(const Duration(milliseconds: 100), () {
+      progressAnimaCTL.forward();
+    });
     for (final String key in DevicesInfo.shellApi.keys) {
       if (!Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
         curProcess = '获取$key信息中...';
@@ -52,13 +57,21 @@ class _DevicesItemState extends State<DevicesItem>
       }
       progress++;
       if (progress == progressMax) {
-        await animationController?.forward();
-        await Future<void>.delayed(const Duration(milliseconds: 300));
-        await animationController?.reverse();
-        proColor = Colors.blue;
-        curProcess = '';
+        curProcess = null;
         if (mounted) {
           setState(() {});
+        }
+        int time = 0;
+        while (time < 3) {
+          if (!mounted) {
+            break;
+          }
+          await animationController?.forward();
+          await Future<void>.delayed(const Duration(milliseconds: 100));
+          if (mounted) {
+            await animationController?.reverse();
+          }
+          time++;
         }
       }
       if (mounted) {
@@ -87,7 +100,7 @@ class _DevicesItemState extends State<DevicesItem>
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(
-        milliseconds: 600,
+        milliseconds: 300,
       ),
     );
     progressAnimaCTL = AnimationController(
@@ -96,16 +109,11 @@ class _DevicesItemState extends State<DevicesItem>
         milliseconds: 600,
       ),
     );
-    progressAnimaCTL.forward();
     shadow = Tween<double>(begin: 0, end: 1).animate(animationController);
     shadow.addListener(() {
-      // if (animationController.isCompleted) {
-      //   animationController.reverse();
-      // }
-      // if (animationController.isDismissed) {
-      //   animationController.forward();
-      // }
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
     getDeviceInfo();
   }
@@ -128,11 +136,9 @@ class _DevicesItemState extends State<DevicesItem>
     }
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+      onTap: () {},
       child: Container(
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(colors: [Colors.green.withOpacity(0.2),Colors.green.withOpacity(0.6)])
-        // ),
-        height: 48,
+        height: 54,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -140,7 +146,7 @@ class _DevicesItemState extends State<DevicesItem>
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Dimens.gap_dp8,
+                  horizontal: 4.w,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,38 +156,59 @@ class _DevicesItemState extends State<DevicesItem>
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Colors.deepPurple,
+                            color: AppColors.accent,
                           ),
                           height: Dimens.gap_dp6,
                           width: Dimens.gap_dp6,
                         ),
                         SizedBox(
-                          width: Dimens.gap_dp8,
+                          width: Dimens.gap_dp10,
                         ),
-                        Text(
-                          _title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _title,
+                              style: const TextStyle(
+                                height: 1.2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: CandyColors.orange,
+                                borderRadius: BorderRadius.circular(6.w)
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 2.w),
+                              child: Text(
+                                curProcess ?? widget.devicesEntity.stat,
+                                style:  TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: Dimens.gap_dp8,
-                        ),
-                        Text(
-                          widget.devicesEntity.stat,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
                         if (isAddress(widget.devicesEntity.serial))
                           IconButton(
                             tooltip: '断开连接',
                             icon: const Icon(Icons.clear),
                             onPressed: () async {
-                              Global.instance.pseudoTerminal.write(
-                                'adb disconnect ${widget.devicesEntity.serial}\n',
+                              AdbUtil.stopPoolingListDevices();
+                              await AdbUtil.disconnectDevices(
+                                widget.devicesEntity.serial,
                               );
+                              AdbUtil.startPoolingListDevices();
+                              // Global.instance.pseudoTerminal.write(
+                              //   'adb disconnect ${widget.devicesEntity.serial}\n',
+                              // );
                             },
                           ),
                         if (!widget.devicesEntity.isConnect)
@@ -190,23 +217,11 @@ class _DevicesItemState extends State<DevicesItem>
                             icon: const Icon(Icons.refresh),
                             onPressed: () async {
                               Log.e(widget.devicesEntity.serial);
-                              // AdbUtil.reconnectDevices(
-                              //   widget.devicesEntity.serial,
-                              // );
+                              AdbUtil.reconnectDevices(
+                                widget.devicesEntity.serial,
+                              );
                             },
-                          )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          curProcess,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            fontSize: 12.0,
                           ),
-                        ),
                         IconButton(
                           icon: const Icon(
                             Icons.app_registration,
@@ -288,8 +303,11 @@ class _DevicesItemState extends State<DevicesItem>
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: LinearProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation(proColor),
-                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(
+                        Theme.of(context).primaryColor,
+                      ),
+                      backgroundColor:
+                          Theme.of(context).primaryColor.withOpacity(0.15),
                       value: progressAnimaCTL.value * progress / progressMax,
                     ),
                   ),
