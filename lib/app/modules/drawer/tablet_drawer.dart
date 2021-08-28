@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,8 @@ class TabletDrawer extends StatefulWidget {
     this.onChanged,
     this.groupValue,
   }) : super(key: key);
-  final void Function(int index) onChanged;
-  final int groupValue;
+  final void Function(String index) onChanged;
+  final String groupValue;
 
   @override
   _TabletDrawerState createState() => _TabletDrawerState();
@@ -67,14 +68,37 @@ class _TabletDrawerState extends State<TabletDrawer> {
               height: Dimens.gap_dp16,
             ),
             _DrawerItem(
-              title: '主页',
-              value: 0,
-              groupValue: widget.groupValue,
-              onTap: (index) {
-                widget.onChanged?.call(index);
+              title: '面板',
+              value: Routes.overview,
+              groupValue: widget.groupValue as String,
+              onTap: (value) {
+                widget.onChanged.call(value);
               },
               iconData: Icons.home,
             ),
+            if (!kIsWeb && Platform.isAndroid)
+              Column(
+                children: [
+                  _DrawerItem(
+                    value: Routes.netDebug,
+                    groupValue: widget.groupValue as String,
+                    iconData: Icons.signal_wifi_4_bar,
+                    title: '远程调试',
+                    onTap: (value) {
+                      widget.onChanged.call(value);
+                    },
+                  ),
+                  _DrawerItem(
+                    value: Routes.searchIp,
+                    groupValue: widget.groupValue as String,
+                    title: '查看局域网ip',
+                    onTap: (value) {
+                      widget.onChanged.call(value);
+                    },
+                    iconData: Icons.wifi_tethering,
+                  ),
+                ],
+              ),
             // _DrawerItem(
             //   title: '连接设备',
             //   value: 1,
@@ -86,65 +110,53 @@ class _TabletDrawerState extends State<TabletDrawer> {
             // ),
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
-                value: 2,
-                groupValue: widget.groupValue,
+                value: Routes.installToSystem,
+                groupValue: widget.groupValue as String,
                 title: '安装到系统',
                 iconData: Icons.file_download,
-                onTap: (index) {
-                  widget.onChanged?.call(index);
+                onTap: (value) {
+                  Log.e(value);
+                  widget.onChanged.call(value);
                 },
               ),
             // _DrawerItem(
             //   title: '当前设备ip',
             //   onTap: () {},
             // ),
-            if (!kIsWeb && Platform.isAndroid)
-              Column(
-                children: [
-                  _DrawerItem(
-                    value: 3,
-                    groupValue: widget.groupValue,
-                    title: '查看局域网ip',
-                    onTap: (index) {
-                      widget.onChanged?.call(index);
-                    },
-                    iconData: Icons.wifi_tethering,
-                  ),
-                  _DrawerItem(
-                    value: 4,
-                    groupValue: widget.groupValue,
-                    iconData: Icons.signal_wifi_4_bar,
-                    title: '远程调试',
-                    onTap: (index) {
-                      widget.onChanged?.call(index);
-                    },
-                  ),
-                ],
-              ),
+
             _DrawerItem(
-              value: 5,
-              groupValue: widget.groupValue,
-              title: '执行自定义命令',
+              value: Routes.terminal,
+              groupValue: widget.groupValue as String,
+              title: '终端模拟器',
               iconData: Icons.code,
-              onTap: (index) {
-                widget.onChanged?.call(index);
+              onTap: (value) {
+                widget.onChanged.call(value);
               },
             ),
 
             _DrawerItem(
-              value: 6,
-              groupValue: widget.groupValue,
+              value: Routes.history,
+              groupValue: widget.groupValue as String,
               title: '历史连接',
               iconData: Icons.history,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
+              onTap: (value) {
+                widget.onChanged.call(value);
               },
             ),
             _DrawerItem(
-              value: 7,
-              groupValue: widget.groupValue,
+              value: Routes.log,
+              groupValue: widget.groupValue as String,
               title: '日志',
               iconData: Icons.pending_outlined,
+              onTap: (value) {
+                widget.onChanged.call(value);
+              },
+            ),
+            _DrawerItem(
+              value: Routes.about,
+              groupValue: widget.groupValue,
+              title: '关于软件',
+              iconData: Icons.info_outline,
               onTap: (index) async {
                 widget.onChanged?.call(index);
               },
@@ -155,7 +167,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _DrawerItem(
-              groupValue: widget.groupValue,
+              groupValue: widget.groupValue as String,
               title: '其他平台下载',
               onTap: (index) async {
                 const String url = 'http://nightmare.fun/adbtool';
@@ -173,7 +185,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 // widget.onChange?.call(index);
               },
             ),
-           
+
             // Padding(
             //   padding: EdgeInsets.all(Dimens.gap_dp16),
             //   child: Text(
@@ -201,9 +213,9 @@ class _DrawerItem extends StatelessWidget {
     this.iconData,
   }) : super(key: key);
   final String title;
-  final void Function(int index) onTap;
-  final int value;
-  final int groupValue;
+  final void Function(String value) onTap;
+  final String value;
+  final String groupValue;
   final IconData iconData;
 
   @override

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,15 @@ class DesktopPhoneDrawer extends StatefulWidget {
     this.groupValue,
     this.width,
   }) : super(key: key);
-  final void Function(int index) onChanged;
-  final int groupValue;
+  final void Function(String index) onChanged;
+  final String groupValue;
   final double width;
 
   @override
   _DesktopPhoneDrawerState createState() => _DesktopPhoneDrawerState();
 }
 
-class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
+class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   @override
   Widget build(BuildContext context) {
     final double width = widget.width;
@@ -87,8 +88,8 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               ),
             ),
             _DrawerItem(
-              title: '概览',
-              value: 0,
+              title: '面板',
+              value: Routes.overview,
               groupValue: widget.groupValue,
               onTap: (index) {
                 widget.onChanged?.call(index);
@@ -112,16 +113,17 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               Column(
                 children: [
                   _DrawerItem(
-                    value: 4,
+                    value: Routes.netDebug,
                     groupValue: widget.groupValue,
                     iconData: Icons.signal_wifi_4_bar,
                     title: '远程调试',
                     onTap: (index) {
+                      Log.e(index);
                       widget.onChanged?.call(index);
                     },
                   ),
                   _DrawerItem(
-                    value: 3,
+                    value: Routes.searchIp,
                     groupValue: widget.groupValue,
                     title: '查看局域网ip',
                     onTap: (index) {
@@ -133,7 +135,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               ),
             if (GetPlatform.isAndroid)
               _DrawerItem(
-                value: 2,
+                value: Routes.installToSystem,
                 groupValue: widget.groupValue,
                 title: '安装到系统',
                 iconData: Icons.file_download,
@@ -142,9 +144,9 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                 },
               ),
             _DrawerItem(
-              value: 5,
+              value: Routes.terminal,
               groupValue: widget.groupValue,
-              title: '执行自定义命令',
+              title: '终端模拟器',
               iconData: Icons.code,
               onTap: (index) {
                 widget.onChanged?.call(index);
@@ -152,7 +154,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
             ),
 
             _DrawerItem(
-              value: 6,
+              value: Routes.history,
               groupValue: widget.groupValue,
               title: '历史连接',
               iconData: Icons.history,
@@ -161,7 +163,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               },
             ),
             _DrawerItem(
-              value: 7,
+              value: Routes.log,
               groupValue: widget.groupValue,
               title: '日志',
               iconData: Icons.pending_outlined,
@@ -170,7 +172,7 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
               },
             ),
             _DrawerItem(
-              value: 8,
+              value: Routes.about,
               groupValue: widget.groupValue,
               title: '关于软件',
               iconData: Icons.info_outline,
@@ -202,7 +204,6 @@ class _DesktopPhoneDrawerState extends State<DesktopPhoneDrawer> {
                 // http://nightmare.fun/adbtool
                 // widget.onChange?.call(index);
               },
-            
             ),
           ],
         ),
@@ -221,9 +222,9 @@ class _DrawerItem extends StatelessWidget {
     this.iconData,
   }) : super(key: key);
   final String title;
-  final void Function(int index) onTap;
-  final int value;
-  final int groupValue;
+  final void Function(String value) onTap;
+  final String value;
+  final String groupValue;
   final IconData iconData;
 
   @override

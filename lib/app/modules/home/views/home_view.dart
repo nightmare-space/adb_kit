@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:adb_tool/app/modules/about_page.dart';
-import 'package:adb_tool/app/modules/connect/connect_page.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/log_page.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
@@ -12,6 +11,7 @@ import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
+import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -145,7 +145,7 @@ class _AdbTool extends StatefulWidget {
 }
 
 class __AdbToolState extends State<_AdbTool> {
-  int pageIndex = 0;
+  String route = Routes.overview;
   @override
   void initState() {
     super.initState();
@@ -162,13 +162,13 @@ class __AdbToolState extends State<_AdbTool> {
                 children: [
                   DesktopPhoneDrawer(
                     width: Dimens.setWidth(200),
-                    groupValue: pageIndex,
-                    onChanged: (index) {
-                      pageIndex = index;
+                    groupValue: route,
+                    onChanged: (value) {
+                      route = value;
                       setState(() {});
                     },
                   ),
-                  Expanded(child: getWidget(pageIndex)),
+                  Expanded(child: getWidget(route)),
                 ],
               ),
             );
@@ -178,13 +178,13 @@ class __AdbToolState extends State<_AdbTool> {
               body: Row(
                 children: [
                   TabletDrawer(
-                    groupValue: pageIndex,
+                    groupValue: route,
                     onChanged: (index) {
-                      pageIndex = index;
+                      route = index;
                       setState(() {});
                     },
                   ),
-                  Expanded(child: getWidget(pageIndex)),
+                  Expanded(child: getWidget(route)),
                 ],
               ),
             );
@@ -193,16 +193,16 @@ class __AdbToolState extends State<_AdbTool> {
             return Scaffold(
               drawer: DesktopPhoneDrawer(
                 width: MediaQuery.of(context).size.width * 2 / 3,
-                groupValue: pageIndex,
-                onChanged: (index) {
-                  pageIndex = index;
+                groupValue: route,
+                onChanged: (value) {
+                  route = value;
                   setState(() {});
                   Navigator.pop(context);
                 },
               ),
               body: Row(
                 children: [
-                  Expanded(child: getWidget(pageIndex)),
+                  Expanded(child: getWidget(route)),
                 ],
               ),
             );
@@ -216,16 +216,3 @@ class __AdbToolState extends State<_AdbTool> {
 }
 
 // 不单独写这样一个函数而是写一个列表的话，会导致在pc端改变窗口大小，这部分的widget得不到刷新
-Widget getWidget(int index) {
-  return [
-    OverviewPage(),
-    ConnectPage(),
-    AdbInstallToSystemPage(),
-    SearchIpPage(),
-    RemoteDebugPage(),
-    ExecCmdPage(),
-    HistoryPage(),
-    LogPage(),
-    AboutPage(),
-  ][index];
-}
