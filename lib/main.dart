@@ -25,7 +25,7 @@ void main() {
       title: 'ADB TOOL',
       initialRoute: AdbPages.INITIAL,
       getPages: AdbPages.routes + AppPages.routes,
-      defaultTransition: Transition.fade,
+      defaultTransition: Transition.fadeIn,
       debugShowCheckedModeBanner: false,
     ),
   ));
