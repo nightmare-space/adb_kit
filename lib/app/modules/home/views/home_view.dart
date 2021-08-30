@@ -1,16 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:adb_tool/app/modules/about_page.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
-import 'package:adb_tool/app/modules/drawer/log_page.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
-import 'package:adb_tool/app/modules/exec_cmd_page.dart';
-import 'package:adb_tool/app/modules/history/history_page.dart';
-import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
-import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
-import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/app/modules/search_ip_page.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';

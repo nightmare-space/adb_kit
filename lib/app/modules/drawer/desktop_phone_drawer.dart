@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
@@ -7,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../config/config.dart';
-import '../help_page.dart';
 
 class DesktopPhoneDrawer extends StatefulWidget {
   const DesktopPhoneDrawer({

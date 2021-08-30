@@ -17,7 +17,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
-import '../../dialog/connect_remote.dart';
 
 class OverviewPage extends StatefulWidget {
   @override
@@ -253,7 +252,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       children: [
                         const ItemHeader(color: CandyColors.purple),
                         Text(
-                          '使用无界投屏安卓端扫码连接',
+                          '扫码连接',
                           style: TextStyle(
                             fontSize: Dimens.font_sp16,
                             fontWeight: FontWeight.bold,
@@ -273,7 +272,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         borderRadius: BorderRadius.circular(10.w),
                       ),
                       child: Text(
-                        '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描',
+                        '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接',
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 12.w,

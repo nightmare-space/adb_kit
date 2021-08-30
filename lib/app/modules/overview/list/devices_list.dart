@@ -3,10 +3,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/src/utils/screen_util.dart';
-import 'package:signale/signale.dart';
-
-import 'devices_item.dart';
+import 'package:global_repository/global_repository.dart';
 
 class DevicesList extends StatefulWidget {
   @override

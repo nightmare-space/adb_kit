@@ -1,5 +1,4 @@
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

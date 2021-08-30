@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -70,6 +68,7 @@ class DevicesController extends GetxController {
 
   Future<void> startAdb() async {
     adbIsStarting = true;
+    // TODO
     await Future.delayed(Duration(seconds: 1));
     update();
     getRoot = await Global().process.isRoot();

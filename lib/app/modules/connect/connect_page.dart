@@ -1,13 +1,7 @@
-import 'dart:io';
 
-import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
-import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
-import 'package:adbutil/adbutil.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
@@ -50,16 +44,16 @@ class _QrScanPageState extends State<QrScanPage> {
       );
     }
     return Builder(builder: (_) {
-      List<Widget> children = [];
-      for (String addr in localAddresList) {
-        Widget child = Column(
+      final List<Widget> children = [];
+      for (final String addr in localAddresList) {
+        final Widget child = Column(
           children: [
             QrImage(
               data: addr,
               version: QrVersions.auto,
               size: 140.w,
             ),
-            Text('$addr'),
+            Text(addr),
             SizedBox(height: 4.w),
           ],
         );
@@ -124,7 +118,7 @@ class _QrScanPageState extends State<QrScanPage> {
       }
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Row(
           children: children,
         ),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../help_page.dart';
 
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
@@ -70,7 +69,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             _DrawerItem(
               title: '面板',
               value: Routes.overview,
-              groupValue: widget.groupValue as String,
+              groupValue: widget.groupValue,
               onTap: (value) {
                 widget.onChanged.call(value);
               },
@@ -81,7 +80,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 children: [
                   _DrawerItem(
                     value: Routes.netDebug,
-                    groupValue: widget.groupValue as String,
+                    groupValue: widget.groupValue,
                     iconData: Icons.signal_wifi_4_bar,
                     title: '远程调试',
                     onTap: (value) {
@@ -90,7 +89,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                   ),
                   _DrawerItem(
                     value: Routes.searchIp,
-                    groupValue: widget.groupValue as String,
+                    groupValue: widget.groupValue,
                     title: '查看局域网ip',
                     onTap: (value) {
                       widget.onChanged.call(value);
@@ -111,7 +110,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             if (!kIsWeb && Platform.isAndroid)
               _DrawerItem(
                 value: Routes.installToSystem,
-                groupValue: widget.groupValue as String,
+                groupValue: widget.groupValue,
                 title: '安装到系统',
                 iconData: Icons.file_download,
                 onTap: (value) {
@@ -126,7 +125,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
 
             _DrawerItem(
               value: Routes.terminal,
-              groupValue: widget.groupValue as String,
+              groupValue: widget.groupValue,
               title: '终端模拟器',
               iconData: Icons.code,
               onTap: (value) {
@@ -136,7 +135,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
 
             _DrawerItem(
               value: Routes.history,
-              groupValue: widget.groupValue as String,
+              groupValue: widget.groupValue,
               title: '历史连接',
               iconData: Icons.history,
               onTap: (value) {
@@ -145,7 +144,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             ),
             _DrawerItem(
               value: Routes.log,
-              groupValue: widget.groupValue as String,
+              groupValue: widget.groupValue,
               title: '日志',
               iconData: Icons.pending_outlined,
               onTap: (value) {
@@ -167,7 +166,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _DrawerItem(
-              groupValue: widget.groupValue as String,
+              groupValue: widget.groupValue,
               title: '其他平台下载',
               onTap: (index) async {
                 const String url = 'http://nightmare.fun/adbtool';
