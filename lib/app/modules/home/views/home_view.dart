@@ -35,6 +35,7 @@ class _AdbToolState extends State<AdbTool> {
   @override
   void initState() {
     super.initState();
+    // TODO 扔单例里面
     installAdbToEnvir();
   }
 

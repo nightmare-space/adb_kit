@@ -228,6 +228,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   onPressed: () async {
                                     if (editingController.text.isEmpty) {
                                       showToast('IP不可为空');
+                                      return;
                                     }
                                     Log.d('adb 连接开始');
                                     AdbResult result;

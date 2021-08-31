@@ -31,7 +31,7 @@ class _LogPageState extends State<LogPage> {
     controller.setWindowSize(
       Size(screenWidth, screenHeight),
     );
-    for (String line in Log.buffer.toString().split('\n')) {
+    for (final String line in Log.buffer.toString().split('\n')) {
       controller.write(line + '\r\n');
     }
     AppBar appBar;
