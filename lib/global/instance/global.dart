@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/utils/terminal_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
@@ -16,35 +17,7 @@ import 'package:termare_view/termare_view.dart';
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
-    String executable = '';
-    if (Platform.environment.containsKey('SHELL')) {
-      executable = Platform.environment['SHELL'];
-      // 取的只是执行的文件名
-      executable = executable.replaceAll(RegExp('.*/'), '');
-    } else {
-      if (Platform.isMacOS) {
-        executable = 'bash';
-      } else if (Platform.isWindows) {
-        executable = 'cmd';
-      } else if (Platform.isAndroid) {
-        executable = 'sh';
-      }
-    }
-    Directory(RuntimeEnvir.homePath).createSync(recursive: true);
-    Directory(RuntimeEnvir.tmpPath).createSync(recursive: true);
-    final Map<String, String> environment = {
-      'TERM': 'xterm-256color',
-      'PATH': PlatformUtil.environment()['PATH'],
-      'TMPDIR': RuntimeEnvir.tmpPath,
-      'HOME': RuntimeEnvir.homePath,
-    };
-    const String workingDirectory = '.';
-    pseudoTerminal = PseudoTerminal(
-      executable: executable,
-      workingDirectory: workingDirectory,
-      environment: environment,
-      arguments: ['-l'],
-    );
+    pseudoTerminal = TerminalUtil.getShellTerminal();
     pseudoTerminal.write('clear\r');
   }
 
