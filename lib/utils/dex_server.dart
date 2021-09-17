@@ -3,10 +3,10 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DexServer {
+  DexServer._();
   static Future<void> startServer(String devicesId) async {
     final Completer<void> completer = Completer();
     final YanProcess process = YanProcess();
-    Log.w('adb -s $devicesId forward tcp:4041 local:app_manager');
     Log.w(await process.exec('adb -s $devicesId forward tcp:6001 tcp:6000'));
     Log.w(await process.exec(
       'adb -s $devicesId push "${RuntimeEnvir.binPath}/server.jar" /data/local/tmp/base.apk',
