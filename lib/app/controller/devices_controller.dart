@@ -76,7 +76,9 @@ class DevicesController extends GetxController {
       await Global().process.exec('su -p HOME');
     }
     // Log.e('start');
-    await execCmd('adb start-server');
+    try {
+      await execCmd('adb start-server');
+    } catch (e) {}
     // Log.e('end');
   }
 
@@ -86,7 +88,6 @@ class DevicesController extends GetxController {
     //   count++;
     // }
     if (adbIsStarting) {
-      Log.e('object');
       adbIsStarting = false;
       update();
     }
@@ -179,12 +180,15 @@ class DevicesController extends GetxController {
     final int index = devicesEntitys.length;
     devicesEntitys.add(devicesEntity);
     update();
-    listKey.currentState.insertItem(
-      index,
-      duration: const Duration(
-        milliseconds: 300,
-      ),
-    );
+    // TODO 没验证是否生效
+    if (listKey.currentContext != null) {
+      listKey.currentState.insertItem(
+        index,
+        duration: const Duration(
+          milliseconds: 300,
+        ),
+      );
+    }
   }
 
   DevicesEntity getDevicesByIp(String ip) {
