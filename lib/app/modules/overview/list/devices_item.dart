@@ -40,10 +40,6 @@ class _DevicesItemState extends State<DevicesItem>
     for (final String key in DevicesInfo.shellApi.keys) {
       if (!Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
         curProcess = '获取$key信息中...';
-        // Log.i(widget.devicesEntity.stat);
-        if (mounted) {
-          setState(() {});
-        }
         if (widget.devicesEntity.isConnect) {
           final String value = await exec(
             'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}',
@@ -54,42 +50,28 @@ class _DevicesItemState extends State<DevicesItem>
         }
       }
       progress++;
-      if (progress == progressMax) {
-        curProcess = null;
-        if (mounted) {
-          setState(() {});
-        }
-        int time = 0;
-        while (time < 3) {
-          if (!mounted) {
-            break;
-          }
-          await animationController?.forward();
-          await Future<void>.delayed(const Duration(milliseconds: 100));
-          if (mounted) {
-            await animationController?.reverse();
-          }
-          time++;
-        }
-      }
-      if (mounted) {
-        setState(() {});
-      }
     }
     if (mounted) {
       setState(() {});
     }
-    // for (final String str in deviceStat) {
-    //   // deviceInfo[key] =
-    //   if (await NiProcess.exec(
-    //           'adb -s ${widget.devicesEntity.serial} shell settings get system $str') ==
-    //       '1')
-    //     _list.add(true);
-    //   else
-    //     _list.add(false);
-    //   // setState(() {});
-    // }
-    // print(_list);
+    if (progress == progressMax) {
+      curProcess = null;
+      if (mounted) {
+        setState(() {});
+      }
+      int time = 0;
+      while (time < 3) {
+        if (!mounted) {
+          break;
+        }
+        await animationController?.forward();
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        if (mounted) {
+          await animationController?.reverse();
+        }
+        time++;
+      }
+    }
   }
 
   @override
@@ -175,13 +157,13 @@ class _DevicesItemState extends State<DevicesItem>
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: CandyColors.orange,
-                                borderRadius: BorderRadius.circular(6.w)
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 4.w,vertical: 2.w),
+                                  color: CandyColors.orange,
+                                  borderRadius: BorderRadius.circular(6.w)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 4.w, vertical: 2.w),
                               child: Text(
                                 curProcess ?? widget.devicesEntity.stat,
-                                style:  TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white.withOpacity(0.8),
                                   fontSize: 10,
@@ -266,15 +248,6 @@ class _DevicesItemState extends State<DevicesItem>
                             );
                           },
                         ),
-                        // Radio<String>(
-                        //   value: widget.devicesEntity.serial,
-                        //   groupValue: Config.curDevicesSerial,
-                        //   onChanged: (_) {
-                        //     Config.curDevicesSerial =
-                        //         widget.devicesEntity.serial;
-                        //     setState(() {});
-                        //   },
-                        // )
                       ],
                     ),
                   ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DefaultThemeData {
+  DefaultThemeData._();
   static const Color _primary = AppColors.accent;
   static const Color _dark_primary = Color(0xFF01AAFF);
 
@@ -195,8 +196,8 @@ class DefaultThemeData {
       onError: _on_error,
     );
     return lightThemeData.copyWith(
+      primaryColor: colorSchema.primary,
       colorScheme: colorSchema,
-      accentColor: colorSchema.primary,
       scaffoldBackgroundColor: colorSchema.background,
       primaryColorBrightness: Brightness.light,
       cupertinoOverrideTheme: const CupertinoThemeData(
@@ -236,7 +237,7 @@ class DefaultThemeData {
       appBarTheme: lightThemeData.appBarTheme.copyWith(
         centerTitle: true,
         brightness: Brightness.light,
-        color: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: lightThemeData.iconTheme.copyWith(
           color: const Color(0xFF595959),

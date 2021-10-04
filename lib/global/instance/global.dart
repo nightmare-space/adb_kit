@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/utils/terminal_util.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
+import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_view/termare_view.dart';
 
 class Global {

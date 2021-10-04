@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class PopButton extends StatelessWidget {
   /// 路由栈使用的时候会有些问题
-  const PopButton({Key key, this.navigatorContext}) : super(key: key);
-  final BuildContext navigatorContext;
+  const PopButton({Key key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +15,11 @@ class PopButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(25),
           child: const Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
           onTap: () {
-            Navigator.pop(context ?? navigatorContext);
+            Navigator.pop(context);
           },
         ),
       ),

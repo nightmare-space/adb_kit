@@ -12,6 +12,7 @@ import 'package:signale/signale.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'global/instance/global.dart';
+import 'themes/theme.dart';
 import 'utils/assets_utils.dart';
 
 void main() {
@@ -19,16 +20,7 @@ void main() {
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   // 初始化终端等
   Global.instance;
-  runApp(ToastApp(
-    child: GetMaterialApp(
-      enableLog: false,
-      title: 'ADB TOOL',
-      initialRoute: AdbPages.INITIAL,
-      getPages: AdbPages.routes + AppPages.routes,
-      defaultTransition: Transition.fadeIn,
-      debugShowCheckedModeBanner: false,
-    ),
-  ));
+  runApp(MyApp());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -60,4 +52,52 @@ Future<void> installRes() async {
     '更改 server.jar 权限输出 stdout:${result.stdout} stderr；${result.stderr}',
   );
   // print(await exec('scrcpy'));
+}
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return OrientationBuilder(
+      builder: (_, Orientation orientation) {
+        return ToastApp(
+          child: GetMaterialApp(
+            enableLog: false,
+            debugShowCheckedModeBanner: false,
+            title: 'ADB Manager',
+            navigatorKey: Global.instance.navigatorKey,
+            themeMode: ThemeMode.light,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            defaultTransition: Transition.fadeIn,
+            initialRoute: AdbPages.INITIAL,
+            getPages: AdbPages.routes + AppPages.routes,
+            builder: (BuildContext context, Widget navigator) {
+              if (orientation == Orientation.landscape) {
+                context.init(896);
+              } else {
+                context.init(414);
+              }
+              // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+              // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+              final bool isDark =
+                  Theme.of(context).brightness == Brightness.dark;
+              final ThemeData theme =
+                  isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
+              return Responsive(
+                builder: (_, __) {
+                  return Theme(
+                    data: theme,
+                    child: navigator,
+                  );
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 }

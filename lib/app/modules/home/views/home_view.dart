@@ -78,57 +78,7 @@ class _AdbToolState extends State<AdbTool> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          centerTitle: true,
-          iconTheme: IconThemeData(
-            color: AppColors.fontTitle,
-          ),
-          textTheme: TextTheme(
-            headline6: TextStyle(
-              height: 1.0,
-              fontSize: 20.0,
-              color: AppColors.fontTitle,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        colorScheme: const ColorScheme.light().copyWith(
-          secondary: AppColors.accent,
-        ),
-      ),
-      child: OrientationBuilder(
-        builder: (_, Orientation orientation) {
-          if (orientation == Orientation.landscape) {
-            ScreenAdapter.init(896);
-          } else {
-            ScreenAdapter.init(414);
-          }
-          if (kIsWeb) {
-            return Center(
-              child: SizedBox(
-                width: 414,
-                height: 896,
-                child: MediaQuery(
-                  data: const MediaQueryData(size: Size(414, 896)),
-                  child: _AdbTool(),
-                ),
-              ),
-            );
-          }
-          final bool isDark = Theme.of(context).brightness == Brightness.dark;
-          final ThemeData theme =
-              isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
-          return Theme(
-            data: theme,
-            child: _AdbTool(),
-          );
-        },
-      ),
-    );
+    return _AdbTool();
   }
 }
 
