@@ -12,7 +12,10 @@ class ItemHeader extends StatelessWidget {
         margin: EdgeInsets.only(
           right: Dimens.gap_dp6,
         ),
-        color: color,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(4.w)
+        ),
         width: Dimens.gap_dp4,
         height: Dimens.gap_dp16,
       ),

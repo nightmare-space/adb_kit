@@ -1,4 +1,3 @@
-
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -73,28 +72,32 @@ class _QrScanPageState extends State<QrScanPage> {
                     Theme(
                       data: DefaultThemeData.light(),
                       child: Center(
-                        child: Hero(
-                          tag: addr,
-                          child: Material(
-                            color: Colors.black.withOpacity(0.8),
-                            child: Center(
-                              child: NiCardButton(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                borderRadius: 12.w,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    QrImage(
-                                      data: addr,
-                                      version: QrVersions.auto,
-                                      size: 400.w,
-                                    ),
-                                    Text('$addr'),
-                                    SizedBox(height: 4.w),
-                                  ],
+                        child: Material(
+                          color: Colors.black.withOpacity(0.8),
+                          child: Hero(
+                            tag: addr,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Center(
+                                child: NiCardButton(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  borderRadius: 12.w,
+                                  color: AppColors.contentBorder,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      QrImage(
+                                        data: addr,
+                                        version: QrVersions.auto,
+                                        size: 400.w,
+                                      ),
+                                      Text('$addr'),
+                                      SizedBox(height: 4.w),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

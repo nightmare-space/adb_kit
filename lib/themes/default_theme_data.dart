@@ -1,6 +1,7 @@
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DefaultThemeData {
@@ -244,6 +245,12 @@ class DefaultThemeData {
         ),
         actionsIconTheme: lightThemeData.iconTheme.copyWith(
           color: colorSchema.primary,
+        ),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
+          fontSize: Dimens.font_sp20,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),
         textTheme: TextTheme(
           headline6: lightThemeData.textTheme.headline6.copyWith(

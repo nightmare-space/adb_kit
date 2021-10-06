@@ -1,5 +1,5 @@
 import 'package:adb_tool/app/modules/about_page.dart';
-import 'package:adb_tool/app/modules/drawer/log_page.dart';
+import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';

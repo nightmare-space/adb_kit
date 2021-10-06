@@ -7,6 +7,7 @@ import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adbutil/adbutil.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-
 
 class OverviewPage extends StatefulWidget {
   @override
@@ -47,20 +47,8 @@ class _OverviewPageState extends State<OverviewPage> {
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
         elevation: 0.0,
-        leading: NiIconButton(
-          child: const Icon(Icons.menu),
-          onTap: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
-        title: Text(
-          '面板',
-          style: TextStyle(
-            height: 1.0,
-            color: Theme.of(context).textTheme.bodyText2.color,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        leading: Menubutton(scaffoldContext: context),
+        title: const Text('面板'),
         actions: [
           if (GetPlatform.isAndroid)
             NiIconButton(
@@ -201,55 +189,61 @@ class _OverviewPageState extends State<OverviewPage> {
                     SizedBox(height: Dimens.gap_dp4),
                     SizedBox(
                       width: 414.w,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          TextField(
-                            controller: editingController,
-                            decoration: InputDecoration(
-                              hintText: '格式为\"IP地址:端口号 配对码\"',
-                              hintStyle: TextStyle(
-                                fontSize: 14.w,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: SizedBox(
-                              height: Dimens.setWidth(72),
-                              width: Dimens.setWidth(72),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.black.withOpacity(0.6),
+                      child: Padding(
+                        padding:  EdgeInsets.symmetric(vertical: 8.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: editingController,
+                                decoration: InputDecoration(
+                                  hintText: '格式为\"IP地址:端口号 配对码\"',
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.w,
                                   ),
-                                  onPressed: () async {
-                                    if (editingController.text.isEmpty) {
-                                      showToast('IP不可为空');
-                                      return;
-                                    }
-                                    Log.d('adb 连接开始');
-                                    AdbResult result;
-                                    try {
-                                      result = await AdbUtil.connectDevices(
-                                        editingController.text,
-                                      );
-                                      showToast(result.message);
-                                    } on AdbException catch (e) {
-                                      showToast(e.message);
-                                    }
-                                    Log.d('adb 连接结束 ${result.message}');
-                                  },
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Center(
+                                  child: NiIconButton(
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.black.withOpacity(0.6),
+                                    ),
+                                    onTap: () async {
+                                      if (editingController.text.isEmpty) {
+                                        showToast('IP不可为空');
+                                        return;
+                                      }
+                                      Log.d('adb 连接开始');
+                                      AdbResult result;
+                                      try {
+                                        result = await AdbUtil.connectDevices(
+                                          editingController.text,
+                                        );
+                                        showToast(result.message);
+                                      } on AdbException catch (e) {
+                                        showToast(e.message);
+                                      }
+                                      Log.d('adb 连接结束 ${result.message}');
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const ItemHeader(color: CandyColors.purple),
                         Text(
@@ -288,92 +282,6 @@ class _OverviewPageState extends State<OverviewPage> {
                 height: 8.w,
               ),
 
-              CardItem(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const ItemHeader(color: CandyColors.yellow),
-                        Text(
-                          '快捷命令',
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp16,
-                            fontWeight: FontWeight.bold,
-                            height: 1.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      spacing: 4.w,
-                      runSpacing: 0,
-                      alignment: WrapAlignment.start,
-                      runAlignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      children: [
-                        ItemButton(
-                          title: '开启服务',
-                          onTap: () async {
-                            const String cmd = 'adb start-server\r';
-                            Global.instance.pseudoTerminal.write(cmd);
-                            AdbUtil.startPoolingListDevices();
-                          },
-                        ),
-                        ItemButton(
-                          title: '停止服务',
-                          onTap: () async {
-                            const String cmd = 'adb kill-server\r';
-                            Global.instance.pseudoTerminal.write(cmd);
-                            AdbUtil.stopPoolingListDevices();
-                            DevicesController controller = Get.find();
-                            controller.clearDevices();
-                          },
-                        ),
-                        ItemButton(
-                          title: '重启服务',
-                          onTap: () async {
-                            const String cmd =
-                                'adb kill-server && adb start-server\r';
-                            Global.instance.pseudoTerminal.write(cmd);
-                          },
-                        ),
-                        ItemButton(
-                          title: '复制ADB KEY',
-                          onTap: () async {
-                            String homePath = '';
-                            if (Platform.isMacOS) {
-                              homePath = Platform.environment['HOME'];
-                            } else if (Platform.isAndroid) {
-                              homePath = RuntimeEnvir.binPath;
-                            }
-                            final File adbKey = File(
-                              '$homePath/.android/adbkey.pub',
-                            );
-                            if (adbKey.existsSync()) {
-                              await Clipboard.setData(
-                                ClipboardData(
-                                  text: adbKey.readAsStringSync(),
-                                ),
-                              );
-                              showToast('已复制');
-                            } else {
-                              showToast('未发现adb key');
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.w,
-                    ),
-                    const SizedBox(
-                      height: 120,
-                      child: TerminalPage(),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -416,50 +324,6 @@ class _OverviewPageState extends State<OverviewPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class ItemButton extends StatelessWidget {
-  const ItemButton({Key key, this.title, this.onTap}) : super(key: key);
-  final String title;
-  final void Function() onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return NiCardButton(
-      borderRadius: Dimens.gap_dp8,
-      shadowColor: Colors.black,
-      blurRadius: 0,
-      spreadRadius: 0,
-      onTap: onTap,
-      color: AppColors.background,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.background,
-          borderRadius: BorderRadius.circular(12.w),
-          border: Border.all(
-            color: AppColors.accent,
-            width: 1.w,
-          ),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 12.w,
-          vertical: 8.w,
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

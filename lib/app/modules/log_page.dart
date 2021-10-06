@@ -1,5 +1,7 @@
+
 import 'dart:ui';
 
+import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
@@ -37,13 +39,9 @@ class _LogPageState extends State<LogPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        brightness: Brightness.light,
         title: const Text('日志'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
+        leading: Menubutton(
+          scaffoldContext: context,
         ),
       );
     }
@@ -51,7 +49,7 @@ class _LogPageState extends State<LogPage> {
       appBar: appBar,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.w),
           child: Container(
             decoration: BoxDecoration(
               color: AppColors.background,
@@ -62,7 +60,7 @@ class _LogPageState extends State<LogPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.w),
               child: TermareView(
                 controller: controller,
               ),
