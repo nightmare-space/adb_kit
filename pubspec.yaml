@@ -33,6 +33,8 @@ dependencies:
   url_launcher: ^6.0.4
   adbutil:
     path: /Users/nightmare/Desktop/nightmare-space/adbutil
+  termare_view:
+    path: /Users/nightmare/Desktop/termare-space/termare_view
 
 dev_dependencies:
   flutter_test:
