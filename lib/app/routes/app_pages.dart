@@ -21,7 +21,7 @@ class AdbPages {
   static final routes = [
     GetPage(
       name: Routes.HOME,
-      page: () => OtgTerminal(),
+      page: () => AdbTool(),
       binding: HomeBinding(),
     ),
   ];
@@ -30,7 +30,7 @@ class AdbPages {
 Widget getWidget(String route) {
   switch (route) {
     case Routes.about:
-      return AboutPage();
+      return const AboutPage();
       break;
     case Routes.overview:
       return OverviewPage();

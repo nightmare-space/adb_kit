@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:nativeshell/nativeshell.dart';
 import 'package:signale/signale.dart';
+import 'package:termare_pty/main.dart';
 
+import 'app/modules/drag_drop.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'global/instance/global.dart';
@@ -20,7 +23,7 @@ void main() {
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   // 初始化终端等
   Global.instance;
-  runApp(MyApp());
+  runApp(NativeShell());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -86,18 +89,51 @@ class MyApp extends StatelessWidget {
                   Theme.of(context).brightness == Brightness.dark;
               final ThemeData theme =
                   isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
-              return Responsive(
-                builder: (_, __) {
-                  return Theme(
-                    data: theme,
-                    child: navigator,
-                  );
-                },
+              return WindowLayoutProbe(
+                child: Container(
+                  width: 800,
+                  height: 600,
+                  child: Responsive(
+                    builder: (_, __) {
+                      return Theme(
+                        data: theme,
+                        child: navigator,
+                      );
+                    },
+                  ),
+                ),
               );
             },
           ),
         );
       },
     );
+  }
+}
+
+class NativeShell extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      child: WindowWidget(
+        onCreateState: (initData) {
+          WindowState state;
+          state ??= MainWindowState();
+          return state;
+        },
+      ),
+    );
+  }
+}
+
+class MainWindowState extends WindowState {
+  @override
+  WindowSizingMode get windowSizingMode =>
+      WindowSizingMode.atLeastIntrinsicSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return MyApp();
   }
 }

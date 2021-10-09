@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/modules/drag_drop.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
@@ -181,46 +182,47 @@ class _DeveloperToolState extends State<DeveloperTool> {
       constraints: BoxConstraints(
         maxWidth: 414.w,
       ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
-          child: SizedBox(
-            child: Padding(
-              padding: padding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '上传文件',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
+      child: NiCardButton(
+        margin: EdgeInsets.zero,
+        child: SizedBox(
+          child: Padding(
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  '上传文件',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    height: 1.0,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  Container(
-                    height: 100.w,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.background,
-                      borderRadius: BorderRadius.circular(4.w),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '拖拽上传',
-                        style: TextStyle(
-                          color: AppColors.fontColor.withOpacity(0.6),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 4.0,
+                ),
+                SizedBox(
+                  height: 300,
+                  child: DragDropPage(),
+                ),
+                // Container(
+                //   height: 100.w,
+                //   width: double.infinity,
+                //   decoration: BoxDecoration(
+                //     color: AppColors.background,
+                //     borderRadius: BorderRadius.circular(4.w),
+                //   ),
+                //   child: Center(
+                //     child: Text(
+                //       '拖拽上传',
+                //       style: TextStyle(
+                //         color: AppColors.fontColor.withOpacity(0.6),
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
           ),
         ),
