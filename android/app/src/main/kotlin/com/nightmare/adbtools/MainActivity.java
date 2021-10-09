@@ -5,12 +5,12 @@ import static com.nightmare.adbtools.Message.CONNECTING;
 import static com.nightmare.adbtools.Message.DEVICE_FOUND;
 import static com.nightmare.adbtools.Message.DEVICE_NOT_FOUND;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbInterface;
@@ -21,16 +21,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -39,13 +29,10 @@ import com.cgutman.adblib.AdbConnection;
 import com.cgutman.adblib.AdbCrypto;
 import com.cgutman.adblib.AdbStream;
 import com.cgutman.adblib.UsbChannel;
-import com.nightmare.adbtools.UI.SpinnerDialog;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
@@ -58,10 +45,7 @@ public class MainActivity extends FlutterActivity {
     private AdbCrypto adbCrypto;
     private AdbConnection adbConnection;
     private UsbManager mManager;
-    private String user = null;
-    private boolean doubleBackToExitPressedOnce = false;
     private AdbStream stream;
-    private SpinnerDialog waitingDialog;
     // 组播相关的锁
     // 安卓默认关闭组播，因为会耗电，所以用完记得释放
     private WifiManager.MulticastLock mLock;
@@ -99,23 +83,21 @@ public class MainActivity extends FlutterActivity {
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
         handler = new Handler() {
+            @SuppressLint("HandlerLeak")
             @Override
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
                     case DEVICE_FOUND:
                         closeWaiting();
                         initCommand();
-                        showKeyboard();
                         break;
 
                     case CONNECTING:
                         waitingDialog();
-                        closeKeyboard();
                         break;
 
                     case DEVICE_NOT_FOUND:
                         closeWaiting();
-                        closeKeyboard();
                         break;
                 }
             }
@@ -138,13 +120,15 @@ public class MainActivity extends FlutterActivity {
         }
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
-        intentFilter.addAction("htetznaing.usb.permission");
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        intentFilter.addAction(Message.USB_PERMISSION);
         registerReceiver(mUsbReceiver, intentFilter);
 
         //Check USB
         UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
         if (device != null) {
+            // 说明是静态广播启动起来的
+            // 用户再收到系统弹窗"是否打开ADB工具"，用户点击了是
             System.out.println("From Intent!");
             asyncRefreshAdbConnection(device);
         } else {
@@ -177,11 +161,11 @@ public class MainActivity extends FlutterActivity {
         initPlugin(flutterEngine);
     }
 
+    // 申请组播锁
     protected boolean aquireMulticastLock() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.DONUT) {
             return false;
         }
-
         WifiManager wifi;
         Context context = getApplicationContext();
         wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -202,22 +186,18 @@ public class MainActivity extends FlutterActivity {
     }
 
     private void closeWaiting() {
-        if (waitingDialog != null)
-            waitingDialog.dismiss();
+        // 关闭弹窗
     }
 
     private void waitingDialog() {
-        closeWaiting();
-        waitingDialog = SpinnerDialog.displayDialog(this, "IMPORTANT ⚡",
-                "You may need to accept a prompt on the target device if you are connecting " +
-                        "to it for the first time from this device.", false);
+        // 展示弹窗
     }
 
-
+    // app已经在前台了会走这个
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
-        System.out.println("From onNewIntent");
+        Log.d("Nightmare", "From onNewIntent");
         asyncRefreshAdbConnection((UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE));
     }
 
@@ -254,7 +234,7 @@ public class MainActivity extends FlutterActivity {
                     }
                 }
             } else if (Message.USB_PERMISSION.equals(action)) {
-                System.out.println("From receiver!");
+                Log.d(Const.TAG, "From receiver!");
                 UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                 handler.sendEmptyMessage(CONNECTING);
                 if (mManager.hasPermission(usbDevice))
@@ -280,24 +260,30 @@ public class MainActivity extends FlutterActivity {
 
     // Sets the current USB device and interface
     private synchronized boolean setAdbInterface(UsbDevice device, UsbInterface intf) throws IOException, InterruptedException {
+        Log.d("Nightmare", "setAdbInterface");
         if (adbConnection != null) {
             adbConnection.close();
             adbConnection = null;
             mDevice = null;
         }
 
+        UsbManager mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         if (device != null && intf != null) {
             UsbDeviceConnection connection = mManager.openDevice(device);
             if (connection != null) {
                 if (connection.claimInterface(intf, false)) {
-                    handler.sendEmptyMessage(CONNECTING);
+
+                    handler.sendEmptyMessage(Message.CONNECTING);
+
                     adbConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
+
                     adbConnection.connect();
+
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
                     adbConnection.open("shell:exec date");
 
                     mDevice = device;
-                    handler.sendEmptyMessage(DEVICE_FOUND);
+                    handler.sendEmptyMessage(Message.DEVICE_FOUND);
                     return true;
                 } else {
                     connection.close();
@@ -305,22 +291,26 @@ public class MainActivity extends FlutterActivity {
             }
         }
 
-        handler.sendEmptyMessage(DEVICE_NOT_FOUND);
+        handler.sendEmptyMessage(Message.DEVICE_NOT_FOUND);
 
         mDevice = null;
         return false;
     }
 
+
     @Override
     public void onResume() {
+        Log.d("Nightmare", "onResume");
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // 取消注册广播
         unregisterReceiver(mUsbReceiver);
         try {
+            // 关闭adb连接
             if (adbConnection != null) {
                 adbConnection.close();
                 adbConnection = null;
@@ -335,17 +325,13 @@ public class MainActivity extends FlutterActivity {
         // Open the shell stream of ADB
         try {
             stream = adbConnection.open("shell:");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
         }
-
+        runOnUiThread(() -> {
+            channel.invokeMethod("output", "OTG已连接\r\n");
+        });
         // Start the receiving thread
         new Thread(() -> {
             while (!stream.isClosed()) {
@@ -357,6 +343,12 @@ public class MainActivity extends FlutterActivity {
                     e.printStackTrace();
                 }
                 Log.d("Nightmare", "data -> " + data);
+                if (data == null) {
+                    runOnUiThread(() -> {
+                        channel.invokeMethod("output", "OTG断开\r\n");
+                    });
+                    continue;
+                }
                 String finalData = data;
                 runOnUiThread(() -> {
                     channel.invokeMethod("output", finalData);
@@ -374,37 +366,6 @@ public class MainActivity extends FlutterActivity {
         }
     }
 
-    public void showKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-    public void closeKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
-    }
 
     private void test() {
         File local = new File(Environment.getExternalStorageDirectory() + "/adm.apk");
@@ -417,3 +378,4 @@ public class MainActivity extends FlutterActivity {
         }
     }
 }
+

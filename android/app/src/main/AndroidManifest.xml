@@ -14,7 +14,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher"
-        android:label="ADB工具"
+        android:label="ADB工具箱"
         android:networkSecurityConfig="@xml/network_security_config">
         <activity
             android:name=".MainActivity"
@@ -41,23 +41,23 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <receiver
-            android:name="com.nightmare.adbtools.UsbReceiver">
-            <intent-filter>
-                <action
-                    android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-            </intent-filter>
-            <meta-data
-                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-                android:resource="@xml/device_filter" />
-            <intent-filter>
-                <action
-                    android:name="android.hardware.usb.action.USB_STATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.hardware.usb.action.USB_STATE"
-                android:resource="@xml/device_filter" />
-        </receiver>
+<!--        <receiver-->
+<!--            android:name="com.nightmare.adbtools.UsbReceiver">-->
+<!--            <intent-filter>-->
+<!--                <action-->
+<!--                    android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
+<!--                android:resource="@xml/device_filter" />-->
+<!--            <intent-filter>-->
+<!--                <action-->
+<!--                    android:name="android.hardware.usb.action.USB_STATE" />-->
+<!--            </intent-filter>-->
+<!--            <meta-data-->
+<!--                android:name="android.hardware.usb.action.USB_STATE"-->
+<!--                android:resource="@xml/device_filter" />-->
+<!--        </receiver>-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5706997398641654~8967869271" />
