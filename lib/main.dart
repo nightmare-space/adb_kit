@@ -23,7 +23,8 @@ void main() {
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   // 初始化终端等
   Global.instance;
-  runApp(NativeShell());
+  // runApp(NativeShellWrapper());
+  runApp(AppEntryPoint());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -57,7 +58,8 @@ Future<void> installRes() async {
   // print(await exec('scrcpy'));
 }
 
-class MyApp extends StatelessWidget {
+// App 的顶级widget
+class AppEntryPoint extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -89,19 +91,33 @@ class MyApp extends StatelessWidget {
                   Theme.of(context).brightness == Brightness.dark;
               final ThemeData theme =
                   isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
-              return WindowLayoutProbe(
-                child: Container(
-                  width: 800,
-                  height: 600,
-                  child: Responsive(
-                    builder: (_, __) {
-                      return Theme(
-                        data: theme,
-                        child: navigator,
-                      );
-                    },
-                  ),
-                ),
+              /// NativeShell
+              // return WindowLayoutProbe(
+              //   child: Container(
+              //     width: 800,
+              //     height: 600,
+              //     child: Responsive(
+              //       builder: (_, __) {
+              //         return Theme(
+              //           data: theme,
+              //           child: navigator,
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // );
+              ///
+              ///
+              ///
+              /// Default Mode
+              /// 
+              return Responsive(
+                builder: (_, __) {
+                  return Theme(
+                    data: theme,
+                    child: navigator,
+                  );
+                },
               );
             },
           ),
@@ -111,7 +127,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class NativeShell extends StatelessWidget {
+class NativeShellWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -134,6 +150,6 @@ class MainWindowState extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return MyApp();
+    return AppEntryPoint();
   }
 }
