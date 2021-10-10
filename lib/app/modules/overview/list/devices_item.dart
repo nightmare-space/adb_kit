@@ -241,7 +241,7 @@ class _DevicesItemState extends State<DevicesItem>
                               MaterialPageRoute(
                                 builder: (_) {
                                   return DeveloperTool(
-                                    serial: widget.devicesEntity.serial,
+                                    entity: widget.devicesEntity,
                                   );
                                 },
                               ),

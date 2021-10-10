@@ -10,7 +10,7 @@ class ItemHeader extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.only(
-          right: Dimens.gap_dp6,
+          right: Dimens.gap_dp4,
         ),
         decoration: BoxDecoration(
           color: color,

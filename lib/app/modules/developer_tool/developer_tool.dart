@@ -1,6 +1,9 @@
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/drag_drop.dart';
+import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +16,12 @@ import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
 import 'install_apk_page.dart.dart';
 import 'upload_file.dart';
+import 'package:get/get.dart' hide ScreenType;
 
 class DeveloperTool extends StatefulWidget {
-  const DeveloperTool({Key key, this.serial, this.providerContext})
+  const DeveloperTool({Key key, this.entity, this.providerContext})
       : super(key: key);
-  final String serial;
+  final DevicesEntity entity;
   final BuildContext providerContext;
   @override
   _DeveloperToolState createState() => _DeveloperToolState();
@@ -25,9 +29,22 @@ class DeveloperTool extends StatefulWidget {
 
 class _DeveloperToolState extends State<DeveloperTool> {
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
-  @override
-  void initState() {
-    super.initState();
+
+  double getCardWidth() {
+    final ScreenType screenType = Responsive.of(context).screenType;
+    switch (screenType) {
+      case ScreenType.phone:
+        return context.mediaQuerySize.width;
+        break;
+      case ScreenType.tablet:
+        return context.mediaQuerySize.width / 2;
+        break;
+      case ScreenType.desktop:
+        return context.mediaQuerySize.width / 2;
+        break;
+      default:
+        return context.mediaQuerySize.width;
+    }
   }
 
   @override
@@ -38,7 +55,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         centerTitle: true,
         elevation: 0.0,
         title: Text(
-          widget.serial,
+          widget.entity.serial,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText2.color,
             fontWeight: FontWeight.bold,
@@ -70,9 +87,9 @@ class _DeveloperToolState extends State<DeveloperTool> {
             InkWell(
               onTap: () {
                 exec(
-                  'adb -s ${widget.serial} shell settings put system handy_mode_state 1\n'
-                  'adb -s ${widget.serial} shell settings put system handy_mode_size 5.5\n'
-                  'adb -s ${widget.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
+                  'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
+                  'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
+                  'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
                 );
               },
               child: SizedBox(
@@ -102,25 +119,31 @@ class _DeveloperToolState extends State<DeveloperTool> {
   ConstrainedBox buildOptions() {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: 414.w,
+        maxWidth: getCardWidth(),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
+            height: 228.w,
             child: Padding(
               padding: padding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '常用开关',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                  Row(
+                    children: [
+                      const ItemHeader(color: CandyColors.candyPurpleAccent),
+                      Text(
+                        '常用开关',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 4.0,
@@ -128,22 +151,22 @@ class _DeveloperToolState extends State<DeveloperTool> {
                   Column(
                     children: [
                       _DeveloperItem(
-                        serial: widget.serial,
+                        serial: widget.entity.serial,
                         title: '显示点按操作反馈',
                         putKey: 'show_touches',
                       ),
                       _DeveloperItem(
-                        serial: widget.serial,
+                        serial: widget.entity.serial,
                         title: '开启单手模式',
                         putKey: 'handy_mode_state',
                       ),
                       _DeveloperItem(
-                        serial: widget.serial,
+                        serial: widget.entity.serial,
                         title: '显示屏幕指针',
                         putKey: 'pointer_location',
                       ),
                       _OpenRemoteDebug(
-                        serial: widget.serial,
+                        serial: widget.entity.serial,
                       ),
                     ],
                   ),
@@ -180,49 +203,52 @@ class _DeveloperToolState extends State<DeveloperTool> {
   ConstrainedBox uploadFileBox() {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: 414.w,
+        maxWidth: getCardWidth(),
       ),
-      child: NiCardButton(
-        margin: EdgeInsets.zero,
-        child: SizedBox(
-          child: Padding(
-            padding: padding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  '上传文件',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    height: 1.0,
-                    color: Theme.of(context).primaryColor,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: NiCardButton(
+          margin: EdgeInsets.zero,
+          child: SizedBox(
+            child: Padding(
+              padding: padding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '上传文件',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      height: 1.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 4.0,
-                ),
-                SizedBox(
-                  height: 300,
-                  child: DragDropPage(),
-                ),
-                // Container(
-                //   height: 100.w,
-                //   width: double.infinity,
-                //   decoration: BoxDecoration(
-                //     color: AppColors.background,
-                //     borderRadius: BorderRadius.circular(4.w),
-                //   ),
-                //   child: Center(
-                //     child: Text(
-                //       '拖拽上传',
-                //       style: TextStyle(
-                //         color: AppColors.fontColor.withOpacity(0.6),
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  SizedBox(
+                    height: 200.w,
+                    child: DragDropPage(),
+                  ),
+                  // Container(
+                  //   height: 100.w,
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     color: AppColors.background,
+                  //     borderRadius: BorderRadius.circular(4.w),
+                  //   ),
+                  //   child: Center(
+                  //     child: Text(
+                  //       '拖拽上传',
+                  //       style: TextStyle(
+                  //         color: AppColors.fontColor.withOpacity(0.6),
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           ),
         ),
@@ -233,89 +259,117 @@ class _DeveloperToolState extends State<DeveloperTool> {
   ConstrainedBox buildTerminal() {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxWidth: 414.w,
+        maxWidth: getCardWidth(),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
-            child: Padding(
-              padding: padding,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'SHELL',
-                    style: TextStyle(
-                      height: 1.0,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  LayoutBuilder(
-                    builder: (_, box) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(4.w),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.background,
-                          ),
-                          height: 200,
-                          child: Padding(
-                            padding: EdgeInsets.all(4.w),
-                            child: TermarePty(
-                              pseudoTerminal: TerminalUtil.getShellTerminal(
-                                useIsolate: false,
-                                exec: 'adb',
-                                arguments: ['-s', widget.serial, 'shell'],
-                              ),
-                              controller: TermareController(
-                                fontFamily:
-                                    '${Config.flutterPackage}MenloforPowerline',
-                                theme: TermareStyles.macos.copyWith(
-                                  backgroundColor: AppColors.background,
-                                ),
+            height: 228.w,
+            child: LayoutBuilder(builder: (context, box) {
+              Log.w(box);
+              return Padding(
+                padding: padding,
+                child: LayoutBuilder(builder: (context, box) {
+                  Log.e(box);
+                  return SizedBox(
+                    height: box.maxHeight,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const ItemHeader(
+                                color: CandyColors.candyPurpleAccent),
+                            Text(
+                              'SHELL',
+                              style: TextStyle(
+                                // height: 1.0,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 4.0,
+                        ),
+                        Expanded(
+                          child: LayoutBuilder(
+                            builder: (_, box) {
+                              Log.w(box);
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(4.w),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.background,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(4.w),
+                                    child: Builder(builder: (context) {
+                                      if (widget.entity.isOTG) {
+                                        return const OTGTerminal();
+                                      }
+                                      return TermarePty(
+                                        pseudoTerminal:
+                                            TerminalUtil.getShellTerminal(
+                                          useIsolate: false,
+                                          exec: 'adb',
+                                          arguments: [
+                                            '-s',
+                                            widget.entity.serial,
+                                            'shell'
+                                          ],
+                                        ),
+                                        controller: TermareController(
+                                          fontFamily:
+                                              '${Config.flutterPackage}MenloforPowerline',
+                                          theme: TermareStyles.macos.copyWith(
+                                            backgroundColor: AppColors.background,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
-                  ),
-                  // Expanded(
-                  //   child: TermarePty(
-                  //     pseudoTerminal: TerminalUtil.getShellTerminal(useIsolate: false),
-                  //   ),
-                  // ),
-                  // Row(
-                  //   children: const <Widget>[
-                  //     Text('标题'),
-                  //     SizedBox(
-                  //       width: 16.0,
-                  //     ),
-                  //     SizedBox(
-                  //       width: 120,
-                  //       child: TextField(
-                  //         decoration: InputDecoration(
-                  //           isDense: true,
-                  //           // border: OutlineInputBorder(),
-                  //           contentPadding: EdgeInsets.symmetric(
-                  //             horizontal: 08.0,
-                  //             vertical: 8.0,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
-                ],
-              ),
-            ),
+                        // Expanded(
+                        //   child: TermarePty(
+                        //     pseudoTerminal: TerminalUtil.getShellTerminal(useIsolate: false),
+                        //   ),
+                        // ),
+                        // Row(
+                        //   children: const <Widget>[
+                        //     Text('标题'),
+                        //     SizedBox(
+                        //       width: 16.0,
+                        //     ),
+                        //     SizedBox(
+                        //       width: 120,
+                        //       child: TextField(
+                        //         decoration: InputDecoration(
+                        //           isDense: true,
+                        //           // border: OutlineInputBorder(),
+                        //           contentPadding: EdgeInsets.symmetric(
+                        //             horizontal: 08.0,
+                        //             vertical: 8.0,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                      ],
+                    ),
+                  );
+                }),
+              );
+            }),
           ),
         ),
       ),

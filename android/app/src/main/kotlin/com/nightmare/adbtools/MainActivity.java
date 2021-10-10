@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.cgutman.adblib.AdbBase64;
 import com.cgutman.adblib.AdbConnection;
@@ -40,8 +41,8 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
-    private Handler handler;
-    private UsbDevice mDevice;
+    static String tag = "Nightmare";
+    UsbDevice mDevice;
     private AdbCrypto adbCrypto;
     private AdbConnection adbConnection;
     private UsbManager mManager;
@@ -60,6 +61,9 @@ public class MainActivity extends FlutterActivity {
                     String data = (String) call.arguments;
                     putCommand(data);
                     break;
+                case "init_terminal":
+                    initCommand();
+                    break;
                 case "read":
                     // Print each thing we read from the shell stream
                     Log.d("Nightmare", "Print each thing we read from the shell stream");
@@ -77,32 +81,12 @@ public class MainActivity extends FlutterActivity {
         });
     }
 
+    private final Handler handler = new AdbMessageHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-
-        handler = new Handler() {
-            @SuppressLint("HandlerLeak")
-            @Override
-            public void handleMessage(android.os.Message msg) {
-                switch (msg.what) {
-                    case DEVICE_FOUND:
-                        closeWaiting();
-                        initCommand();
-                        break;
-
-                    case CONNECTING:
-                        waitingDialog();
-                        break;
-
-                    case DEVICE_NOT_FOUND:
-                        closeWaiting();
-                        break;
-                }
-            }
-        };
-
         AdbBase64 base64 = new MyAdbBase64();
         try {
             adbCrypto = AdbCrypto.loadAdbKeyPair(base64, new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
@@ -185,11 +169,11 @@ public class MainActivity extends FlutterActivity {
         return true;
     }
 
-    private void closeWaiting() {
+    void closeWaiting() {
         // 关闭弹窗
     }
 
-    private void waitingDialog() {
+    void waitingDialog() {
         // 展示弹窗
     }
 
@@ -321,7 +305,7 @@ public class MainActivity extends FlutterActivity {
 
     }
 
-    private void initCommand() {
+    void initCommand() {
         // Open the shell stream of ADB
         try {
             stream = adbConnection.open("shell:");
@@ -379,3 +363,33 @@ public class MainActivity extends FlutterActivity {
     }
 }
 
+class AdbMessageHandler extends Handler {
+    MainActivity activity;
+
+    public AdbMessageHandler(MainActivity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public void handleMessage(android.os.Message msg) {
+        switch (msg.what) {
+            case DEVICE_FOUND:
+                activity.closeWaiting();
+                activity.initCommand();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Log.d(MainActivity.tag, activity.mDevice.toString());
+                    Log.d(MainActivity.tag, activity.mDevice.getDeviceName() + activity.mDevice.getProductName());
+                    activity.channel.invokeMethod("DeviceAttach", activity.mDevice.getProductName());
+                }
+                break;
+
+            case CONNECTING:
+                activity.waitingDialog();
+                break;
+
+            case DEVICE_NOT_FOUND:
+                activity.closeWaiting();
+                break;
+        }
+    }
+}

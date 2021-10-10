@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:termare_view/termare_view.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
@@ -28,7 +32,12 @@ class DevicesEntity {
 
   bool get isConnect => _isConnect();
   bool _isConnect() {
-    return stat == 'device';
+    return stat == 'device' || stat == 'OTG';
+  }
+
+  bool get isOTG => _isOTG();
+  bool _isOTG() {
+    return stat == 'OTG';
   }
 
   @override
@@ -46,16 +55,37 @@ class DevicesController extends GetxController {
   }
 
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+
   Future<void> init() async {
+    PluginUtil.addHandler((call) {
+      if (call.method == 'DeviceAttach') {
+        otgDevices.add(DevicesEntity(
+          call.arguments.toString(),
+          'OTG',
+        ));
+      }
+    });
+    PluginUtil.addHandler((call) {
+      if (call.method == 'output') {
+        otgTerm.write(call.arguments.toString());
+      }
+    });
     await startAdb();
     AdbUtil.addListener(handleResult);
     AdbUtil.startPoolingListDevices();
   }
 
+  List<DevicesEntity> otgDevices = [];
+
   bool getRoot = false;
   // adb是否在启动中
   bool adbIsStarting = true;
-
+  final TermareController otgTerm = TermareController(
+    fontFamily: '${Config.flutterPackage}MenloforPowerline',
+    theme: TermareStyles.macos.copyWith(
+      backgroundColor: AppColors.background,
+    ),
+  );
   // 这个count
   //
   // int count = 0;
@@ -109,6 +139,9 @@ class DevicesController extends GetxController {
           tmp.add(devicesEntity);
         }
       }
+      otgDevices.forEach((value) {
+        tmp.add(value);
+      });
       // for (final DevicesEntity devicesEntity in devicesEntitys) {
       //   // print(devicesEntity.serial);
       // }
