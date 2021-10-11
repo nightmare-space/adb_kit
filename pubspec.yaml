@@ -30,6 +30,7 @@ dependencies:
   qr_code_scanner: ^0.5.1
   signale:
     git: https://github.com/Nightmare-MY/signale
+  path: ^1.8.0
   termare_pty:
     git: https://github.com/termare/termare_pty
   url_launcher: ^6.0.4

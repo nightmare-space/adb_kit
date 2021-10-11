@@ -60,6 +60,12 @@ Future<void> installRes() async {
 
 // App 的顶级widget
 class AppEntryPoint extends StatelessWidget {
+  const AppEntryPoint({
+    Key key,
+    this.isNativeShell = false,
+  }) : super(key: key);
+
+  final bool isNativeShell;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -91,26 +97,30 @@ class AppEntryPoint extends StatelessWidget {
                   Theme.of(context).brightness == Brightness.dark;
               final ThemeData theme =
                   isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
+
               /// NativeShell
-              // return WindowLayoutProbe(
-              //   child: Container(
-              //     width: 800,
-              //     height: 600,
-              //     child: Responsive(
-              //       builder: (_, __) {
-              //         return Theme(
-              //           data: theme,
-              //           child: navigator,
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // );
+              if (isNativeShell) {
+                return WindowLayoutProbe(
+                  child: Container(
+                    width: 800,
+                    height: 600,
+                    child: Responsive(
+                      builder: (_, __) {
+                        return Theme(
+                          data: theme,
+                          child: navigator,
+                        );
+                      },
+                    ),
+                  ),
+                );
+              }
+
               ///
               ///
               ///
               /// Default Mode
-              /// 
+              ///
               return Responsive(
                 builder: (_, __) {
                   return Theme(

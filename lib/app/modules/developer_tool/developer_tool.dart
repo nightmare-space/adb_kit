@@ -1,8 +1,10 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/implement/binadb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/implement/otgadb_channel.dart';
 import 'package:adb_tool/app/modules/drag_drop.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -10,13 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:path/path.dart' as p;
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
-import 'install_apk_page.dart.dart';
-import 'upload_file.dart';
-import 'package:get/get.dart' hide ScreenType;
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({Key key, this.entity, this.providerContext})
@@ -29,6 +30,7 @@ class DeveloperTool extends StatefulWidget {
 
 class _DeveloperToolState extends State<DeveloperTool> {
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
+  ADBChannel adbChannel;
 
   double getCardWidth() {
     final ScreenType screenType = Responsive.of(context).screenType;
@@ -44,6 +46,16 @@ class _DeveloperToolState extends State<DeveloperTool> {
         break;
       default:
         return context.mediaQuerySize.width;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.entity.isOTG) {
+      adbChannel = OTGADBChannel();
+    } else {
+      adbChannel = BinADBChannel();
     }
   }
 
@@ -64,7 +76,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         leading: const PopButton(),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Wrap(
@@ -80,13 +92,13 @@ class _DeveloperToolState extends State<DeveloperTool> {
             Wrap(
               runSpacing: 8.w,
               children: [
-                uploadFileBox(),
+                installApkBox(),
                 uploadFileBox(),
               ],
             ),
             InkWell(
               onTap: () {
-                exec(
+                adbChannel.execCmmand(
                   'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
                   'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
                   'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
@@ -133,8 +145,9 @@ class _DeveloperToolState extends State<DeveloperTool> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const ItemHeader(color: CandyColors.candyPurpleAccent),
+                      const ItemHeader(color: CandyColors.candyPink),
                       Text(
                         '常用开关',
                         style: TextStyle(
@@ -151,21 +164,19 @@ class _DeveloperToolState extends State<DeveloperTool> {
                   Column(
                     children: [
                       _DeveloperItem(
+                        adbChannel: adbChannel,
                         serial: widget.entity.serial,
                         title: '显示点按操作反馈',
                         putKey: 'show_touches',
                       ),
                       _DeveloperItem(
-                        serial: widget.entity.serial,
-                        title: '开启单手模式',
-                        putKey: 'handy_mode_state',
-                      ),
-                      _DeveloperItem(
+                        adbChannel: adbChannel,
                         serial: widget.entity.serial,
                         title: '显示屏幕指针',
                         putKey: 'pointer_location',
                       ),
                       _OpenRemoteDebug(
+                        adbChannel: adbChannel,
                         serial: widget.entity.serial,
                       ),
                     ],
@@ -200,6 +211,78 @@ class _DeveloperToolState extends State<DeveloperTool> {
     );
   }
 
+  ConstrainedBox installApkBox() {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: getCardWidth(),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: NiCardButton(
+          margin: EdgeInsets.zero,
+          child: SizedBox(
+            child: Padding(
+              padding: padding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const ItemHeader(color: CandyColors.candyBlue),
+                      Text(
+                        '安装APK',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  SizedBox(
+                    height: 200.w,
+                    child: DropTarget(
+                      onPerform: (paths) async {
+                        for (final String path in paths) {
+                          await adbChannel.execCmmand(
+                            'adb -s ${widget.entity.serial} install -t $path',
+                          );
+                          final String name = p.basename(path);
+                          showToast('$name 已安装');
+                        }
+                      },
+                    ),
+                  ),
+                  // Container(
+                  //   height: 100.w,
+                  //   width: double.infinity,
+                  //   decoration: BoxDecoration(
+                  //     color: AppColors.background,
+                  //     borderRadius: BorderRadius.circular(4.w),
+                  //   ),
+                  //   child: Center(
+                  //     child: Text(
+                  //       '拖拽上传',
+                  //       style: TextStyle(
+                  //         color: AppColors.fontColor.withOpacity(0.6),
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   ConstrainedBox uploadFileBox() {
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -215,20 +298,26 @@ class _DeveloperToolState extends State<DeveloperTool> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    '上传文件',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      height: 1.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const ItemHeader(color: CandyColors.candyCyan),
+                      Text(
+                        '上传文件',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 4.0,
                   ),
                   SizedBox(
                     height: 200.w,
-                    child: DragDropPage(),
+                    child: DropTarget(),
                   ),
                   // Container(
                   //   height: 100.w,
@@ -267,109 +356,73 @@ class _DeveloperToolState extends State<DeveloperTool> {
           margin: EdgeInsets.zero,
           child: SizedBox(
             height: 228.w,
-            child: LayoutBuilder(builder: (context, box) {
-              Log.w(box);
-              return Padding(
-                padding: padding,
-                child: LayoutBuilder(builder: (context, box) {
-                  Log.e(box);
-                  return SizedBox(
-                    height: box.maxHeight,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const ItemHeader(
-                                color: CandyColors.candyPurpleAccent),
-                            Text(
-                              'SHELL',
-                              style: TextStyle(
-                                // height: 1.0,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
+            child: Padding(
+              padding: padding,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const ItemHeader(color: CandyColors.candyGreen),
+                      Text(
+                        'SHELL',
+                        style: TextStyle(
+                          height: 1.0,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (_, box) {
+                        Log.w(box);
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(4.w),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.background,
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 4.0,
-                        ),
-                        Expanded(
-                          child: LayoutBuilder(
-                            builder: (_, box) {
-                              Log.w(box);
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(4.w),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.background,
+                            child: Padding(
+                              padding: EdgeInsets.all(4.w),
+                              child: Builder(builder: (context) {
+                                if (widget.entity.isOTG) {
+                                  return const OTGTerminal();
+                                }
+                                return TermarePty(
+                                  pseudoTerminal: TerminalUtil.getShellTerminal(
+                                    useIsolate: false,
+                                    exec: 'adb',
+                                    arguments: [
+                                      '-s',
+                                      widget.entity.serial,
+                                      'shell'
+                                    ],
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(4.w),
-                                    child: Builder(builder: (context) {
-                                      if (widget.entity.isOTG) {
-                                        return const OTGTerminal();
-                                      }
-                                      return TermarePty(
-                                        pseudoTerminal:
-                                            TerminalUtil.getShellTerminal(
-                                          useIsolate: false,
-                                          exec: 'adb',
-                                          arguments: [
-                                            '-s',
-                                            widget.entity.serial,
-                                            'shell'
-                                          ],
-                                        ),
-                                        controller: TermareController(
-                                          fontFamily:
-                                              '${Config.flutterPackage}MenloforPowerline',
-                                          theme: TermareStyles.macos.copyWith(
-                                            backgroundColor: AppColors.background,
-                                          ),
-                                        ),
-                                      );
-                                    }),
+                                  controller: TermareController(
+                                    fontFamily:
+                                        '${Config.flutterPackage}MenloforPowerline',
+                                    theme: TermareStyles.macos.copyWith(
+                                      backgroundColor: AppColors.background,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              }),
+                            ),
                           ),
-                        ),
-                        // Expanded(
-                        //   child: TermarePty(
-                        //     pseudoTerminal: TerminalUtil.getShellTerminal(useIsolate: false),
-                        //   ),
-                        // ),
-                        // Row(
-                        //   children: const <Widget>[
-                        //     Text('标题'),
-                        //     SizedBox(
-                        //       width: 16.0,
-                        //     ),
-                        //     SizedBox(
-                        //       width: 120,
-                        //       child: TextField(
-                        //         decoration: InputDecoration(
-                        //           isDense: true,
-                        //           // border: OutlineInputBorder(),
-                        //           contentPadding: EdgeInsets.symmetric(
-                        //             horizontal: 08.0,
-                        //             vertical: 8.0,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                      ],
+                        );
+                      },
                     ),
-                  );
-                }),
-              );
-            }),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -381,8 +434,10 @@ class _OpenRemoteDebug extends StatefulWidget {
   const _OpenRemoteDebug({
     Key key,
     this.serial,
+    @required this.adbChannel,
   }) : super(key: key);
   final String serial;
+  final ADBChannel adbChannel;
   @override
   __OpenRemoteDebugState createState() => __OpenRemoteDebugState();
 }
@@ -396,7 +451,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await exec(
+    final String result = await widget.adbChannel.execCmmand(
       'adb -s ${widget.serial} shell getprop service.adb.tcp.port',
     );
     print(result);
@@ -459,12 +514,12 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 // print(result);
                 String result;
                 if (isCheck) {
-                  result = await exec(
+                  result = await widget.adbChannel.execCmmand(
                     'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
                     'adb -s ${widget.serial} tcpip 5555',
                   );
                 } else {
-                  result = await exec(
+                  result = await widget.adbChannel.execCmmand(
                     'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
                     'adb -s ${widget.serial} usb',
                   );
@@ -486,12 +541,12 @@ class _DeveloperItem extends StatefulWidget {
     this.title,
     this.serial,
     this.putKey,
-    this.putType,
+    @required this.adbChannel,
   }) : super(key: key);
   final String title;
   final String serial;
   final String putKey;
-  final String putType;
+  final ADBChannel adbChannel;
   @override
   __DeveloperItemState createState() => __DeveloperItemState();
 }
@@ -505,7 +560,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await exec(
+    final String result = await widget.adbChannel.execCmmand(
       'adb -s ${widget.serial} shell settings get system ${widget.putKey}',
     );
     if (result == '1') {
@@ -519,9 +574,6 @@ class __DeveloperItemState extends State<_DeveloperItem> {
     return InkWell(
       onTap: () {},
       child: Container(
-        margin: EdgeInsets.symmetric(
-            // horizontal: Dimens.gap_dp12,
-            ),
         width: MediaQuery.of(context).size.width,
         height: Dimens.gap_dp48,
         child: Row(
@@ -538,12 +590,9 @@ class __DeveloperItemState extends State<_DeveloperItem> {
               onChanged: (_) {
                 isCheck = !isCheck;
                 final int value = isCheck ? 1 : 0;
-                print(
-                    'adb -s ${widget.serial} shell settings put system show_touches 1');
-                exec(
+                widget.adbChannel.execCmmand(
                   'adb -s ${widget.serial} shell settings put system ${widget.putKey} $value',
                 );
-
                 setState(() {});
               },
             )

@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-MethodChannel _channel = MethodChannel('scrcpy');
+MethodChannel _channel = const MethodChannel('scrcpy');
 typedef MethodHandler = void Function(MethodCall call);
 
 class PluginUtil {
@@ -22,7 +22,7 @@ class PluginUtil {
 
   static void _setMethodCallHandler() {
     _channel.setMethodCallHandler((call) async {
-      for (MethodHandler handler in handlers) {
+      for (final MethodHandler handler in handlers) {
         handler(call);
       }
     });

@@ -14,7 +14,7 @@ fn build_flutter() -> BuildResult<()> {
         };
         let resources = MacOSBundle::build(options)?;
         resources.mkdir("icons")?;
-        resources.link("resources/mac_icon.icns", "icons/AppIcon.icns")?;
+        resources.link("resources/icon.icns", "icons/AppIcon.icns")?;
     }
 
     Ok(())

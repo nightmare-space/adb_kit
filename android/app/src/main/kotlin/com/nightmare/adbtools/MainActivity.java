@@ -5,7 +5,6 @@ import static com.nightmare.adbtools.Message.CONNECTING;
 import static com.nightmare.adbtools.Message.DEVICE_FOUND;
 import static com.nightmare.adbtools.Message.DEVICE_NOT_FOUND;
 
-import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,7 +22,6 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.cgutman.adblib.AdbBase64;
 import com.cgutman.adblib.AdbConnection;
@@ -44,7 +42,10 @@ public class MainActivity extends FlutterActivity {
     static String tag = "Nightmare";
     UsbDevice mDevice;
     private AdbCrypto adbCrypto;
-    private AdbConnection adbConnection;
+    // 给 Shell 用的，
+    private AdbConnection adbShellConnection;
+    // 给 Terminal 用的，
+    private AdbConnection adbTerminalConnection;
     private UsbManager mManager;
     private AdbStream stream;
     // 组播相关的锁
@@ -245,9 +246,9 @@ public class MainActivity extends FlutterActivity {
     // Sets the current USB device and interface
     private synchronized boolean setAdbInterface(UsbDevice device, UsbInterface intf) throws IOException, InterruptedException {
         Log.d("Nightmare", "setAdbInterface");
-        if (adbConnection != null) {
-            adbConnection.close();
-            adbConnection = null;
+        if (adbTerminalConnection != null) {
+            adbTerminalConnection.close();
+            adbTerminalConnection = null;
             mDevice = null;
         }
 
@@ -259,13 +260,16 @@ public class MainActivity extends FlutterActivity {
 
                     handler.sendEmptyMessage(Message.CONNECTING);
 
-                    adbConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
+                    adbTerminalConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
 
-                    adbConnection.connect();
+                    adbTerminalConnection.connect();
 
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
-                    adbConnection.open("shell:exec date");
-
+                    adbTerminalConnection.open("shell:exec date");
+//                    adbShellConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
+//                    adbShellConnection.connect();
+//                    //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
+//                    adbShellConnection.open("shell:exec date");
                     mDevice = device;
                     handler.sendEmptyMessage(Message.DEVICE_FOUND);
                     return true;
@@ -295,9 +299,9 @@ public class MainActivity extends FlutterActivity {
         unregisterReceiver(mUsbReceiver);
         try {
             // 关闭adb连接
-            if (adbConnection != null) {
-                adbConnection.close();
-                adbConnection = null;
+            if (adbTerminalConnection != null) {
+                adbTerminalConnection.close();
+                adbTerminalConnection = null;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -308,7 +312,7 @@ public class MainActivity extends FlutterActivity {
     void initCommand() {
         // Open the shell stream of ADB
         try {
-            stream = adbConnection.open("shell:");
+            stream = adbTerminalConnection.open("shell:");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -355,8 +359,9 @@ public class MainActivity extends FlutterActivity {
         File local = new File(Environment.getExternalStorageDirectory() + "/adm.apk");
         String remotePath = "/sdcard/" + local.getName();
         try {
-            new Push(adbConnection, local, remotePath).execute(handler);
-            new Install(adbConnection, remotePath, local.length() / 1024).execute(handler);
+
+            new Push(adbTerminalConnection, local, remotePath).execute(handler);
+            new Install(adbTerminalConnection, remotePath, local.length() / 1024).execute(handler);
         } catch (Exception e) {
             Log.w(Const.TAG, "exception caught", e);
         }

@@ -18,7 +18,7 @@ class AppColors {
 
   static const Color accentColor = Color(0xff4e51f8);
   static const Color borderColor = Color(0xffeeeeee);
-  static const Color surface = Color(0xffede8f8);
+  static const Color surface = Color(0xfff5f5f7);
 }
 
 const MaterialColor _grey = MaterialColor(
