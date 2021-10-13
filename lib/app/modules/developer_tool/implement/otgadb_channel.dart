@@ -8,4 +8,15 @@ class OTGADBChannel extends ADBChannel {
     PluginUtil.writeToOTG(shell + '\n');
     return '';
   }
+
+  @override
+  Future<void> install(String file) async {
+    // TODO: implement install
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> push(String file) async {
+    await PluginUtil.pushToOTG(file);
+  }
 }

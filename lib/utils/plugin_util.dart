@@ -32,4 +32,8 @@ class PluginUtil {
   static void writeToOTG(String data) {
     _channel.invokeMethod('write', data);
   }
+
+  static Future<void> pushToOTG(String path) async{
+    await _channel.invokeMethod('push', path);
+  }
 }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Created by xudong on 2/25/14.
@@ -27,7 +28,6 @@ public class Push {
     }
 
     public void execute(Handler handler) throws InterruptedException, IOException {
-
         AdbStream stream = adbConnection.open("sync:");
 
         String sendId = "SEND";
@@ -42,7 +42,8 @@ public class Push {
 
         stream.write(mode.getBytes());
 
-        byte[] buff = new byte[adbConnection.getMaxData()];
+        byte[] buff = new byte[500];
+
         InputStream is = new FileInputStream(local);
 
         long sent = 0;
@@ -61,15 +62,17 @@ public class Push {
             } else {
                 byte[] tmp = new byte[read];
                 System.arraycopy(buff, 0, tmp, 0, read);
+                Log.d(MainActivity.tag, Arrays.toString(tmp));
                 stream.write(tmp);
             }
 
             sent += read;
 
-            final int progress = (int)(sent * 100 / total);
+            final int progress = (int) (sent * 100 / total);
             if (lastProgress != progress) {
                 handler.sendMessage(handler.obtainMessage(Message.INSTALLING_PROGRESS, Message.PUSH_PART, progress));
                 lastProgress = progress;
+                Log.d(MainActivity.tag, "progress->" + lastProgress);
             }
 
         }

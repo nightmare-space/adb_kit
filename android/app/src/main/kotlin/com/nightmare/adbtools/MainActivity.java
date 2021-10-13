@@ -4,6 +4,7 @@ package com.nightmare.adbtools;
 import static com.nightmare.adbtools.Message.CONNECTING;
 import static com.nightmare.adbtools.Message.DEVICE_FOUND;
 import static com.nightmare.adbtools.Message.DEVICE_NOT_FOUND;
+import static com.nightmare.adbtools.Message.INSTALLING_PROGRESS;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -62,8 +63,20 @@ public class MainActivity extends FlutterActivity {
                     String data = (String) call.arguments;
                     putCommand(data);
                     break;
-                case "init_terminal":
-                    initCommand();
+                case "push":
+                    File local = new File((String) call.arguments);
+                    String remotePath = "/data/local/tmp/" + local.getName();
+                    new Thread(() -> {
+                        try {
+                            new Push(adbTerminalConnection, local, remotePath).execute(handler);
+                            runOnUiThread(()->{
+                                result.success("ok");
+                            });
+                        } catch (InterruptedException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+
                     break;
                 case "read":
                     // Print each thing we read from the shell stream
@@ -214,6 +227,7 @@ public class MainActivity extends FlutterActivity {
                     try {
                         Log.d(Const.TAG, "setAdbInterface(null, null)");
                         setAdbInterface(null, null);
+                        channel.invokeMethod("DeviceDetach", null);
                     } catch (Exception e) {
                         Log.w(Const.TAG, "setAdbInterface(null,null) failed", e);
                     }
@@ -265,7 +279,7 @@ public class MainActivity extends FlutterActivity {
                     adbTerminalConnection.connect();
 
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
-                    adbTerminalConnection.open("shell:exec date");
+//                    adbTerminalConnection.open("shell:exec date");
 //                    adbShellConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
 //                    adbShellConnection.connect();
 //                    //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
@@ -357,7 +371,7 @@ public class MainActivity extends FlutterActivity {
 
     private void test() {
         File local = new File(Environment.getExternalStorageDirectory() + "/adm.apk");
-        String remotePath = "/sdcard/" + local.getName();
+        String remotePath = "/data/local/tmp/" + local.getName();
         try {
 
             new Push(adbTerminalConnection, local, remotePath).execute(handler);
@@ -370,6 +384,8 @@ public class MainActivity extends FlutterActivity {
 
 class AdbMessageHandler extends Handler {
     MainActivity activity;
+
+    private int currentProgress = 0;
 
     public AdbMessageHandler(MainActivity activity) {
         this.activity = activity;
@@ -394,6 +410,18 @@ class AdbMessageHandler extends Handler {
 
             case DEVICE_NOT_FOUND:
                 activity.closeWaiting();
+                break;
+            case INSTALLING_PROGRESS:
+                int step = msg.arg1;
+                int progress = msg.arg2;
+
+                if (step == Message.PUSH_PART) {
+                    currentProgress = (int) (progress * Const.PUSH_PERCENT);
+                } else if (step == Message.PM_INST_PART) {
+                    currentProgress = (int) (100 * Const.PUSH_PERCENT + (1 - Const.PUSH_PERCENT) * progress);
+                }
+                Log.d(MainActivity.tag, String.valueOf(currentProgress));
+
                 break;
         }
     }

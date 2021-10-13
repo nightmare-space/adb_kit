@@ -24,7 +24,7 @@ void main() {
   // 初始化终端等
   Global.instance;
   // runApp(NativeShellWrapper());
-  runApp(AppEntryPoint());
+  runApp(const AppEntryPoint());
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -47,7 +47,7 @@ Future<void> installRes() async {
   if (!dir.existsSync()) {
     dir.createSync(recursive: true);
   }
-  AssetsUtils.copyAssetToPath('assets/server.jar', filePath);
+  await AssetsUtils.copyAssetToPath('assets/server.jar', filePath);
   final ProcessResult result = await Process.run(
     'chmod',
     <String>['+x', filePath],
@@ -160,6 +160,8 @@ class MainWindowState extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return AppEntryPoint();
+    return const AppEntryPoint(
+      isNativeShell: true,
+    );
   }
 }

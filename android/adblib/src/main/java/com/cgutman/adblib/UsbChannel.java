@@ -5,6 +5,9 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbRequest;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -85,37 +88,16 @@ public class UsbChannel implements AdbChannel {
 
     // API LEVEL 18 is needed to invoke bulkTransfer(mEndpointOut, buffer, offset, buffer.length - offset, defaultTimeout)
 //    @Override
-//    public void writex(byte[] buffer) throws IOException{
-//
-//        int offset = 0;
-//        int transferred = 0;
-//
-//        while ((transferred = mDeviceConnection.bulkTransfer(mEndpointOut, buffer, offset, buffer.length - offset, defaultTimeout)) >= 0) {
-//            offset += transferred;
-//            if (offset >= buffer.length) {
-//                break;
-//            }
-//        }
-//        if (transferred < 0) {
-//            throw new IOException("bulk transfer fail");
-//        }
-//    }
-
-    // A dirty solution, only API level 12 is needed, not 18
-    private void writex(byte[] buffer) throws IOException{
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    public void writex(byte[] buffer) throws IOException{
 
         int offset = 0;
         int transferred = 0;
 
-        byte[] tmp = new byte[buffer.length];
-        System.arraycopy(buffer, 0, tmp, 0, buffer.length);
-
-        while ((transferred = mDeviceConnection.bulkTransfer(mEndpointOut, tmp, buffer.length - offset, defaultTimeout)) >= 0) {
+        while ((transferred = mDeviceConnection.bulkTransfer(mEndpointOut, buffer, offset, buffer.length - offset, defaultTimeout)) >= 0) {
             offset += transferred;
             if (offset >= buffer.length) {
                 break;
-            } else {
-                System.arraycopy(buffer, offset, tmp, 0, buffer.length - offset);
             }
         }
         if (transferred < 0) {
@@ -123,6 +105,8 @@ public class UsbChannel implements AdbChannel {
         }
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void writex(AdbMessage message) throws IOException {
         // TODO: here is the weirdest thing

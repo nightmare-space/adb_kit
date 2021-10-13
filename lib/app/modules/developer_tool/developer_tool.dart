@@ -8,6 +8,7 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:file_manager_view/file_manager_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -49,13 +50,21 @@ class _DeveloperToolState extends State<DeveloperTool> {
     }
   }
 
+  double getMiddlePadding() {
+    final ScreenType screenType = Responsive.of(context).screenType;
+    if (screenType == ScreenType.phone) {
+      return 8.w;
+    }
+    return 4.w;
+  }
+
   @override
   void initState() {
     super.initState();
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
-      adbChannel = BinADBChannel();
+      adbChannel = BinADBChannel(widget.entity.serial);
     }
   }
 
@@ -87,7 +96,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
               ],
             ),
             SizedBox(
-              height: 12.w,
+              height: 8.w,
             ),
             Wrap(
               runSpacing: 8.w,
@@ -134,7 +143,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         maxWidth: getCardWidth(),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
@@ -217,7 +226,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         maxWidth: getCardWidth(),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
@@ -248,32 +257,13 @@ class _DeveloperToolState extends State<DeveloperTool> {
                     child: DropTarget(
                       onPerform: (paths) async {
                         for (final String path in paths) {
-                          await adbChannel.execCmmand(
-                            'adb -s ${widget.entity.serial} install -t $path',
-                          );
+                          await adbChannel.install(path);
                           final String name = p.basename(path);
                           showToast('$name 已安装');
                         }
                       },
                     ),
                   ),
-                  // Container(
-                  //   height: 100.w,
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     color: AppColors.background,
-                  //     borderRadius: BorderRadius.circular(4.w),
-                  //   ),
-                  //   child: Center(
-                  //     child: Text(
-                  //       '拖拽上传',
-                  //       style: TextStyle(
-                  //         color: AppColors.fontColor.withOpacity(0.6),
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -289,7 +279,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         maxWidth: getCardWidth(),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
@@ -317,25 +307,27 @@ class _DeveloperToolState extends State<DeveloperTool> {
                   ),
                   SizedBox(
                     height: 200.w,
-                    child: DropTarget(),
+                    child: DropTarget(
+                      onTap: () async {
+                        final List<FileEntity> files =
+                            await FileManager.pickFiles(context);
+                        for (final FileEntity entity in files) {
+                          await adbChannel.push(entity.path);
+                          final String name = p.basename(entity.path);
+                          showToast('$name 已上传');
+                        }
+                      },
+                      onPerform: (paths) async {
+                        if (GetPlatform.isDesktop) {
+                          for (final String path in paths) {
+                            await adbChannel.push(path);
+                            final String name = p.basename(path);
+                            showToast('$name 已上传');
+                          }
+                        }
+                      },
+                    ),
                   ),
-                  // Container(
-                  //   height: 100.w,
-                  //   width: double.infinity,
-                  //   decoration: BoxDecoration(
-                  //     color: AppColors.background,
-                  //     borderRadius: BorderRadius.circular(4.w),
-                  //   ),
-                  //   child: Center(
-                  //     child: Text(
-                  //       '拖拽上传',
-                  //       style: TextStyle(
-                  //         color: AppColors.fontColor.withOpacity(0.6),
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -351,7 +343,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
         maxWidth: getCardWidth(),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
@@ -376,13 +368,12 @@ class _DeveloperToolState extends State<DeveloperTool> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 4.0,
+                  SizedBox(
+                    height: 4.w,
                   ),
                   Expanded(
                     child: LayoutBuilder(
                       builder: (_, box) {
-                        Log.w(box);
                         return ClipRRect(
                           borderRadius: BorderRadius.circular(4.w),
                           child: Container(

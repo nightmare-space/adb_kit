@@ -9,8 +9,12 @@ final customDragData = DragDataKey<Map>('custom-drag-data');
 typedef PerformCall = void Function(List<String> paths);
 
 class DropTarget extends StatefulWidget {
-  const DropTarget({Key key, this.onPerform}) : super(key: key);
-
+  const DropTarget({
+    Key key,
+    this.onPerform,
+    this.onTap,
+  }) : super(key: key);
+  final void Function() onTap;
   final PerformCall onPerform;
   @override
   State<StatefulWidget> createState() {
@@ -34,7 +38,6 @@ class _DropTargetState extends State<DropTarget> {
     return DropRegion(
       onDropOver: (event) async {
         final res = pickEffect(event.info.allowedEffects);
-
         final data = event.info.data;
         _files = await data.get(DragData.files);
         _uris = await data.get(DragData.uris);
@@ -82,13 +85,37 @@ class _DropTargetState extends State<DropTarget> {
                     ),
                   )
                 : Center(
-                    child: DefaultTextStyle.merge(
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.w,
-                        color: AppColors.fontColor,
-                      ),
-                      child: const Text('拖放或点击按钮选择Apk进行安装'),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Material(
+                          color: AppColors.inputBorderColor,
+                          borderRadius: BorderRadius.circular(24.w),
+                          child: Container(
+                            width: 54.w,
+                            height: 54.w,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(24.w),
+                              onTap: () {
+                                widget.onTap?.call();
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.all(12.w),
+                                child: const Icon(Icons.add),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10.w),
+                        DefaultTextStyle.merge(
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.w,
+                            color: AppColors.fontColor,
+                          ),
+                          child: const Text('拖放到此或点击按钮选择Apk进行安装'),
+                        ),
+                      ],
                     ),
                   ),
           ),

@@ -2,4 +2,7 @@
 // 所以抽象了这一层
 abstract class ADBChannel{
   Future<String> execCmmand(String cmd);
+
+  Future<void> push(String file);
+  Future<void> install(String file);
 }

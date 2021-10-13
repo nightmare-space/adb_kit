@@ -15,6 +15,7 @@ class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
   // 有可能是ip或者设备序列号
   final String serial;
+  String productModel;
   // 连接的状态
   String stat;
   @override
@@ -63,13 +64,14 @@ class DevicesController extends GetxController {
           call.arguments.toString(),
           'OTG',
         ));
-      }
-    });
-    PluginUtil.addHandler((call) {
-      if (call.method == 'output') {
+      } else if (call.method == 'DeviceDetach') {
+        Log.e('DeviceDetach');
+        otgDevices.clear();
+      } else if (call.method == 'output') {
         otgTerm.write(call.arguments.toString());
       }
     });
+
     await startAdb();
     AdbUtil.addListener(handleResult);
     AdbUtil.startPoolingListDevices();

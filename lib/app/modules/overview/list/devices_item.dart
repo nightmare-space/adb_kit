@@ -27,50 +27,23 @@ class _DevicesItemState extends State<DevicesItem>
   String _title;
   AnimationController animationController;
   AnimationController progressAnimaCTL;
-  Animation<double> shadow;
-  double progress = 0;
   double progressMax = 1;
-  // 当前在干嘛
-  String curProcess;
 
   Future<void> getDeviceInfo() async {
-    await Future.delayed(const Duration(milliseconds: 100), () {
+    await Future.delayed(const Duration(milliseconds: 300), () {
       progressAnimaCTL.forward();
     });
-    for (final String key in DevicesInfo.shellApi.keys) {
-      if (!Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
-        curProcess = '获取$key信息中...';
-        if (widget.devicesEntity.isConnect) {
-          final String value = await exec(
-            'adb -s ${widget.devicesEntity.serial} shell getprop ${DevicesInfo.shellApi[key]}',
-          );
-          Log.i('value->$value');
-          if (value.isNotEmpty && value.length <= 10)
-            Config.devicesMap[widget.devicesEntity.serial] = value;
-        }
+    int time = 0;
+    while (time < 3) {
+      if (!mounted) {
+        break;
       }
-      progress++;
-    }
-    if (mounted) {
-      setState(() {});
-    }
-    if (progress == progressMax) {
-      curProcess = null;
+      await animationController?.forward();
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       if (mounted) {
-        setState(() {});
+        await animationController?.reverse();
       }
-      int time = 0;
-      while (time < 3) {
-        if (!mounted) {
-          break;
-        }
-        await animationController?.forward();
-        await Future<void>.delayed(const Duration(milliseconds: 100));
-        if (mounted) {
-          await animationController?.reverse();
-        }
-        time++;
-      }
+      time++;
     }
   }
 
@@ -89,8 +62,12 @@ class _DevicesItemState extends State<DevicesItem>
         milliseconds: 600,
       ),
     );
-    shadow = Tween<double>(begin: 0, end: 1).animate(animationController);
-    shadow.addListener(() {
+    progressAnimaCTL.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    animationController.addListener(() {
       if (mounted) {
         setState(() {});
       }
@@ -162,7 +139,7 @@ class _DevicesItemState extends State<DevicesItem>
                               padding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 2.w),
                               child: Text(
-                                curProcess ?? widget.devicesEntity.stat,
+                                widget.devicesEntity.stat,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white.withOpacity(0.8),
@@ -264,7 +241,7 @@ class _DevicesItemState extends State<DevicesItem>
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Colors.blue.withOpacity(shadow.value),
+                        color: Colors.blue.withOpacity(animationController.value),
                         offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
                         blurRadius: 16.0, //阴影模糊程度
                         spreadRadius: 1.0, //阴影扩散程度
@@ -279,7 +256,7 @@ class _DevicesItemState extends State<DevicesItem>
                       ),
                       backgroundColor:
                           Theme.of(context).primaryColor.withOpacity(0.15),
-                      value: progressAnimaCTL.value * progress / progressMax,
+                      value: progressAnimaCTL.value * progressMax,
                     ),
                   ),
                 ),
