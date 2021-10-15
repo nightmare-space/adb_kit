@@ -22,7 +22,7 @@ void main() {
   // 初始化运行时环境
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   // 初始化终端等
-  Global.instance;
+  Global.instance.initGlobal();
   // runApp(NativeShellWrapper());
   runApp(const AppEntryPoint());
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,29 +33,7 @@ void main() {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
-  installRes();
   // DateTime();
-}
-
-/// 安装资源
-Future<void> installRes() async {
-  if (kIsWeb) {
-    return;
-  }
-  final filePath = RuntimeEnvir.binPath + '/server.jar';
-  final Directory dir = Directory(RuntimeEnvir.binPath);
-  if (!dir.existsSync()) {
-    dir.createSync(recursive: true);
-  }
-  await AssetsUtils.copyAssetToPath('assets/server.jar', filePath);
-  final ProcessResult result = await Process.run(
-    'chmod',
-    <String>['+x', filePath],
-  );
-  Log.d(
-    '更改 server.jar 权限输出 stdout:${result.stdout} stderr；${result.stderr}',
-  );
-  // print(await exec('scrcpy'));
 }
 
 // App 的顶级widget
@@ -75,7 +53,7 @@ class AppEntryPoint extends StatelessWidget {
           child: GetMaterialApp(
             enableLog: false,
             debugShowCheckedModeBanner: false,
-            title: 'ADB Manager',
+            title: 'ADB工具箱',
             navigatorKey: Global.instance.navigatorKey,
             themeMode: ThemeMode.light,
             theme: ThemeData(

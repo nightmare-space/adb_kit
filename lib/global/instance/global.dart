@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/utils/assets_utils.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
@@ -77,32 +80,6 @@ class Global {
     if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
-    // NFC.isNDEFSupported.then((bool isSupported) {
-    //   // print('isSupported -> $isSupported');
-    //   // setState(() {
-    //   //   _supportsNFC = isSupported;
-    //   // });
-    // }); // NFC.readNDEF returns a stream of NDEFMessage
-    // final Stream<NDEFMessage> stream = NFC.readNDEF(once: false);
-
-    // stream.listen((NDEFMessage message) {
-    //   Log.i('records.length ${message.records.length}');
-
-    //   Log.i('records.length ${message.records.first.data}');
-    //   // for (final record in message.records) {
-    //   //   print(
-    //   //       'records: ${record.payload} ${record.data} ${record.type} ${record.tnf} ${record.languageCode}');
-    //   // }
-    //   // final NDEFMessage newMessage = NDEFMessage.withRecords([
-    //   //   NDEFRecord.plain('macos10.15.7'),
-    //   // ]);
-    //   // message.tag.write(newMessage);
-    //   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0)
-    //       .then((RawDatagramSocket socket) async {
-    //     socket.broadcastEnabled = true;
-    //     UdpUtil.boardcast(socket, message.records.first.data);
-    //   });
-    // });
   }
 
   Future<void> _socketServer() async {
@@ -124,12 +101,62 @@ class Global {
     );
   }
 
+  List<String> androidFiles = [
+    'adb',
+    'adb_binary',
+    'libbrotlidec.so',
+    'libbrotlienc.so',
+    'libc++_shared.so',
+    'liblz4.so.1',
+    'libprotobuf.so',
+    'libusb-1.0.so',
+    'libz.so.1',
+    'libzstd.so.1',
+    'libbrotlicommon.so',
+  ];
+  List<String> globalFiles = [
+    'server.jar',
+  ];
+
+  /// 复制一堆执行文件
+  Future<void> installAdbToEnvir() async {
+    if (kIsWeb) {
+      return true;
+    }
+    if (Platform.isAndroid) {
+      await Directory(RuntimeEnvir.binPath).create(recursive: true);
+      for (final String fileName in androidFiles) {
+        final filePath = RuntimeEnvir.binPath + '/$fileName';
+        await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+        final ProcessResult result = await Process.run(
+          'chmod',
+          <String>['+x', filePath],
+        );
+        Log.d(
+          '写入文件 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+        );
+      }
+    }
+    for (final String fileName in globalFiles) {
+      final filePath = RuntimeEnvir.binPath + '/$fileName';
+      await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+      final ProcessResult result = await Process.run(
+        'chmod',
+        <String>['+x', filePath],
+      );
+      Log.d(
+        '写入文件 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+      );
+    }
+  }
+
   Future<void> initGlobal() async {
     print('initGlobal');
     if (isInit) {
       return;
     }
     isInit = true;
+    installAdbToEnvir();
     _receiveBoardCast();
     _sendBoardCast();
     _initNfcModule();
