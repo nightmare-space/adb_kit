@@ -13,9 +13,11 @@ class DropTarget extends StatefulWidget {
     Key key,
     this.onPerform,
     this.onTap,
+    this.title,
   }) : super(key: key);
   final void Function() onTap;
   final PerformCall onPerform;
+  final String title;
   @override
   State<StatefulWidget> createState() {
     return _DropTargetState();
@@ -90,17 +92,17 @@ class _DropTargetState extends State<DropTarget> {
                       children: [
                         Material(
                           color: AppColors.inputBorderColor,
-                          borderRadius: BorderRadius.circular(24.w),
+                          borderRadius: BorderRadius.circular(28.w),
                           child: Container(
                             width: 54.w,
                             height: 54.w,
                             child: InkWell(
-                              borderRadius: BorderRadius.circular(24.w),
+                              borderRadius: BorderRadius.circular(28.w),
                               onTap: () {
                                 widget.onTap?.call();
                               },
                               child: Padding(
-                                padding: EdgeInsets.all(12.w),
+                                padding: EdgeInsets.all(8.w),
                                 child: const Icon(Icons.add),
                               ),
                             ),
@@ -113,7 +115,7 @@ class _DropTargetState extends State<DropTarget> {
                             fontSize: 16.w,
                             color: AppColors.fontColor,
                           ),
-                          child: const Text('拖放到此或点击按钮选择Apk进行安装'),
+                          child: Text(widget.title),
                         ),
                       ],
                     ),

@@ -14,11 +14,14 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
+import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
+
+import 'dialog/push_file.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({Key key, this.entity, this.providerContext})
@@ -255,6 +258,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
+                      title: '拖放到此或点击按钮选择Apk进行安装',
                       onPerform: (paths) async {
                         for (final String path in paths) {
                           await adbChannel.install(path);
@@ -270,6 +274,19 @@ class _DeveloperToolState extends State<DeveloperTool> {
           ),
         ),
       ),
+    );
+  }
+
+  void pushFileWithPaths(List<String> paths) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return PushFileDialog(
+          adbChannel: adbChannel,
+          paths: paths,
+        );
+      },
     );
   }
 
@@ -308,22 +325,24 @@ class _DeveloperToolState extends State<DeveloperTool> {
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
+                      title: '拖放到此或点击按钮选择文件进行上传',
                       onTap: () async {
+                        if (GetPlatform.isAndroid) {
+                          if (!await PermissionUtil.requestStorage()) {
+                            return;
+                          }
+                        }
                         final List<FileEntity> files =
                             await FileManager.pickFiles(context);
+                        final List<String> paths = [];
                         for (final FileEntity entity in files) {
-                          await adbChannel.push(entity.path);
-                          final String name = p.basename(entity.path);
-                          showToast('$name 已上传');
+                          paths.add(entity.path);
                         }
+                        pushFileWithPaths(paths);
                       },
                       onPerform: (paths) async {
                         if (GetPlatform.isDesktop) {
-                          for (final String path in paths) {
-                            await adbChannel.push(path);
-                            final String name = p.basename(path);
-                            showToast('$name 已上传');
-                          }
+                          pushFileWithPaths(paths);
                         }
                       },
                     ),
