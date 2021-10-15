@@ -69,7 +69,7 @@ public class MainActivity extends FlutterActivity {
                     new Thread(() -> {
                         try {
                             new Push(adbTerminalConnection, local, remotePath).execute(handler);
-                            runOnUiThread(()->{
+                            runOnUiThread(() -> {
                                 result.success("ok");
                             });
                         } catch (InterruptedException | IOException e) {
@@ -133,7 +133,6 @@ public class MainActivity extends FlutterActivity {
             System.out.println("From onCreate!");
             for (String k : mManager.getDeviceList().keySet()) {
                 UsbDevice usbDevice = mManager.getDeviceList().get(k);
-                handler.sendEmptyMessage(CONNECTING);
                 if (mManager.hasPermission(usbDevice)) {
                     asyncRefreshAdbConnection(usbDevice);
                 } else {
@@ -235,7 +234,6 @@ public class MainActivity extends FlutterActivity {
             } else if (Message.USB_PERMISSION.equals(action)) {
                 Log.d(Const.TAG, "From receiver!");
                 UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                handler.sendEmptyMessage(CONNECTING);
                 if (mManager.hasPermission(usbDevice))
                     asyncRefreshAdbConnection(usbDevice);
                 else
@@ -280,10 +278,6 @@ public class MainActivity extends FlutterActivity {
 
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
 //                    adbTerminalConnection.open("shell:exec date");
-//                    adbShellConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
-//                    adbShellConnection.connect();
-//                    //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
-//                    adbShellConnection.open("shell:exec date");
                     mDevice = device;
                     handler.sendEmptyMessage(Message.DEVICE_FOUND);
                     return true;
@@ -396,6 +390,7 @@ class AdbMessageHandler extends Handler {
         switch (msg.what) {
             case DEVICE_FOUND:
                 activity.closeWaiting();
+                activity.channel.invokeMethod("CloseOTGDialog", null);
                 activity.initCommand();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Log.d(MainActivity.tag, activity.mDevice.toString());
@@ -406,10 +401,12 @@ class AdbMessageHandler extends Handler {
 
             case CONNECTING:
                 activity.waitingDialog();
+                activity.channel.invokeMethod("ShowOTGDialog", null);
                 break;
 
             case DEVICE_NOT_FOUND:
                 activity.closeWaiting();
+                activity.channel.invokeMethod("CloseOTGDialog", null);
                 break;
             case INSTALLING_PROGRESS:
                 int step = msg.arg1;
@@ -421,7 +418,7 @@ class AdbMessageHandler extends Handler {
                     currentProgress = (int) (100 * Const.PUSH_PERCENT + (1 - Const.PUSH_PERCENT) * progress);
                 }
                 Log.d(MainActivity.tag, String.valueOf(currentProgress));
-
+                activity.channel.invokeMethod("Progress", currentProgress);
                 break;
         }
     }
