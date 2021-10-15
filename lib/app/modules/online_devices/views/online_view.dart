@@ -46,14 +46,11 @@ class OnlineView extends GetView<OnlineController> {
                               borderRadius: BorderRadius.circular(12),
                               color: Colors.deepPurple,
                             ),
-                            margin: EdgeInsets.only(
-                              left: 4.w,
-                            ),
                             height: Dimens.gap_dp6,
                             width: Dimens.gap_dp6,
                           ),
                           SizedBox(
-                            width: Dimens.gap_dp8,
+                            width:2.w,
                           ),
                           Text(
                             ' ${entity.address}',

@@ -101,134 +101,135 @@ class _DevicesItemState extends State<DevicesItem>
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 4.w,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: AppColors.accent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: AppColors.accent,
+                        ),
+                        height: Dimens.gap_dp6,
+                        width: Dimens.gap_dp6,
+                      ),
+                      SizedBox(
+                        width: 4.w,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _title,
+                            style: const TextStyle(
+                              height: 1.2,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          height: Dimens.gap_dp6,
-                          width: Dimens.gap_dp6,
-                        ),
-                        SizedBox(
-                          width: Dimens.gap_dp10,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _title,
-                              style: const TextStyle(
-                                height: 1.2,
-                                fontWeight: FontWeight.bold,
+                          SizedBox(
+                            height: 2.w,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: CandyColors.orange,
+                              borderRadius: BorderRadius.circular(4.w),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 4.w,
+                              vertical: 2.w,
+                            ),
+                            child: Text(
+                              widget.devicesEntity.stat,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 10.w,
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: CandyColors.orange,
-                                  borderRadius: BorderRadius.circular(6.w)),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 2.w),
-                              child: Text(
-                                widget.devicesEntity.stat,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        if (isAddress(widget.devicesEntity.serial))
-                          IconButton(
-                            tooltip: '断开连接',
-                            icon: const Icon(Icons.clear),
-                            onPressed: () async {
-                              AdbUtil.stopPoolingListDevices();
-                              await AdbUtil.disconnectDevices(
-                                widget.devicesEntity.serial,
-                              );
-                              AdbUtil.startPoolingListDevices();
-                              // Global.instance.pseudoTerminal.write(
-                              //   'adb disconnect ${widget.devicesEntity.serial}\n',
-                              // );
-                            },
                           ),
-                        if (!widget.devicesEntity.isConnect)
-                          IconButton(
-                            tooltip: '重新连接',
-                            icon: const Icon(Icons.refresh),
-                            onPressed: () async {
-                              Log.e(widget.devicesEntity.serial);
-                              AdbUtil.reconnectDevices(
-                                widget.devicesEntity.serial,
-                              );
-                            },
-                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      if (isAddress(widget.devicesEntity.serial))
                         IconButton(
-                          icon: const Icon(
-                            Icons.app_registration,
-                            size: 18,
-                            color: Colors.black87,
-                          ),
+                          tooltip: '断开连接',
+                          icon: const Icon(Icons.clear),
                           onPressed: () async {
-                            if (!widget.devicesEntity.isConnect) {
-                              showToast('设备未正常连接');
-                              return;
-                            }
-                            await DexServer.startServer(
+                            AdbUtil.stopPoolingListDevices();
+                            await AdbUtil.disconnectDevices(
                               widget.devicesEntity.serial,
                             );
-                            Get.toNamed(
-                              AppManagerRoutes.home,
-                              arguments: YanProcess()
-                                ..exec(
-                                    'adb -s ${widget.devicesEntity.serial} shell'),
-                            );
+                            AdbUtil.startPoolingListDevices();
+                            // Global.instance.pseudoTerminal.write(
+                            //   'adb disconnect ${widget.devicesEntity.serial}\n',
+                            // );
                           },
                         ),
+                      if (!widget.devicesEntity.isConnect)
                         IconButton(
-                          icon: const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 18,
-                            color: Colors.black87,
-                          ),
+                          tooltip: '重新连接',
+                          icon: const Icon(Icons.refresh),
                           onPressed: () async {
-                            if (!widget.devicesEntity.isConnect) {
-                              showToast('设备未正常连接');
-                              return;
-                            }
-                            Navigator.of(
-                              context,
-                            ).push<void>(
-                              MaterialPageRoute(
-                                builder: (_) {
-                                  return DeveloperTool(
-                                    entity: widget.devicesEntity,
-                                  );
-                                },
-                              ),
+                            Log.e(widget.devicesEntity.serial);
+                            AdbUtil.reconnectDevices(
+                              widget.devicesEntity.serial,
                             );
                           },
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.app_registration,
+                          size: 18,
+                          color: Colors.black87,
+                        ),
+                        onPressed: () async {
+                          if (!widget.devicesEntity.isConnect) {
+                            showToast('设备未正常连接');
+                            return;
+                          }
+                          await DexServer.startServer(
+                            widget.devicesEntity.serial,
+                          );
+                          Get.toNamed(
+                            AppManagerRoutes.home,
+                            arguments: YanProcess()
+                              ..exec(
+                                  'adb -s ${widget.devicesEntity.serial} shell'),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                          color: Colors.black87,
+                        ),
+                        onPressed: () async {
+                          if (!widget.devicesEntity.isConnect) {
+                            showToast('设备未正常连接');
+                            return;
+                          }
+                          Navigator.of(
+                            context,
+                          ).push<void>(
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return DeveloperTool(
+                                  entity: widget.devicesEntity,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Align(
@@ -241,7 +242,8 @@ class _DevicesItemState extends State<DevicesItem>
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Colors.blue.withOpacity(animationController.value),
+                        color:
+                            Colors.blue.withOpacity(animationController.value),
                         offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
                         blurRadius: 16.0, //阴影模糊程度
                         spreadRadius: 1.0, //阴影扩散程度

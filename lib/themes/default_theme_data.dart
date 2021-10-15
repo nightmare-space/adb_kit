@@ -236,6 +236,7 @@ class DefaultThemeData {
         filled: true,
       ),
       appBarTheme: lightThemeData.appBarTheme.copyWith(
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
         brightness: Brightness.light,
         backgroundColor: Colors.transparent,
@@ -246,7 +247,6 @@ class DefaultThemeData {
         actionsIconTheme: lightThemeData.iconTheme.copyWith(
           color: colorSchema.primary,
         ),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
         titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
           fontSize: Dimens.font_sp20,
           fontWeight: FontWeight.bold,
@@ -285,13 +285,6 @@ class DefaultThemeData {
         unselectedLabelColor: colorSchema.onSurface,
         unselectedLabelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
-        ),
-      ),
-      accentTextTheme: lightThemeData.textTheme.copyWith(
-        headline6: lightThemeData.textTheme.headline6.copyWith(
-          fontSize: Dimens.font_sp18,
-          fontWeight: FontWeight.w500,
-          color: colorSchema.onPrimary,
         ),
       ),
       unselectedWidgetColor: const Color(0xFFBFBFBF),
