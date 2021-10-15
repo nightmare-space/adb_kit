@@ -22,16 +22,6 @@ class _OTGTerminalState extends State<OTGTerminal> {
     super.initState();
   }
 
-  // Future<void> loop() async {
-  //   while (mounted) {
-  //     Log.w('等待');
-  //     final String data = await channel.invokeMethod('read');
-  //     Log.w('data -> $data');
-  //     _controller.write(data);
-  //     await Future.delayed(const Duration(milliseconds: 600));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
