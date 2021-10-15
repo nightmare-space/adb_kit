@@ -16,7 +16,6 @@ class AppColors {
   static Color contentBorder = const Color(0xffebebed);
   static Color terminalBack = const Color(0xffebebed);
 
-  static const Color accentColor = Color(0xff4e51f8);
   static const Color borderColor = Color(0xffeeeeee);
   static const Color surface = Color(0xfff5f5f7);
 }

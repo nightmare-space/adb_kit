@@ -18,6 +18,7 @@ extension IpString on String {
 }
 
 class ScanUtil {
+  ScanUtil._();
   static Future<void> parseScan() async {
     await PermissionUtil.requestCamera();
     final String cameraScanResult = await Get.to(
