@@ -20,7 +20,7 @@ class AboutPage extends StatelessWidget {
     }
     return Column(
       children: [
-        appBar,
+        if (appBar != null) appBar,
         Expanded(
           child: Center(
             child: Column(
