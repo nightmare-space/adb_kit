@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
@@ -25,14 +27,17 @@ class _PushFileDialogState extends State<PushFileDialog> {
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) {
+      progress = 0;
+    }
     push();
   }
 
   Future<void> push() async {
     PluginUtil.addHandler((call) {
       if (call.method == 'Progress') {
-        Log.e('Progress -> ${call.arguments}');
-        progress = (call.arguments as int) / 100.0;
+        progress = (call.arguments as double) / 100.0;
+        Log.e('Progress -> $progress');
         setState(() {});
       }
     });
@@ -40,7 +45,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
-      await widget.adbChannel.push(path);
+      await widget.adbChannel.push(path, '/sdcard/');
       // showToast('$name 已上传');
     }
     Navigator.of(context).pop();
