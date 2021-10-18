@@ -125,7 +125,7 @@ class Global {
       await Directory(RuntimeEnvir.binPath).create(recursive: true);
       for (final String fileName in androidFiles) {
         final filePath = RuntimeEnvir.binPath + '/$fileName';
-        await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+        await AssetsUtils.copyAssetToPath('assets/android/$fileName', filePath);
         final ProcessResult result = await Process.run(
           'chmod',
           <String>['+x', filePath],
