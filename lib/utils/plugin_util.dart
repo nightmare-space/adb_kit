@@ -33,7 +33,7 @@ class PluginUtil {
     _channel.invokeMethod('write', data);
   }
 
-  static Future<void> pushToOTG(String path) async{
-    await _channel.invokeMethod('push', path);
+  static Future<void> pushToOTG(String local, String remote) async {
+    await _channel.invokeMethod('push', [local, remote]);
   }
 }
