@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.nightmare.adbtools.adblib;
 
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDeviceConnection;

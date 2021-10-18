@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.nightmare.adbtools.adblib;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

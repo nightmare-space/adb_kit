@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.nightmare.adbtools.adblib;
 
 /**
  * This interface specifies the required functions for AdbCrypto to

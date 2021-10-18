@@ -1,4 +1,4 @@
-package com.cgutman.adblib;
+package com.nightmare.adbtools.adblib;
 
 import java.io.Closeable;
 import java.io.IOException;
