@@ -24,15 +24,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.cgutman.adblib.AdbBase64;
-import com.cgutman.adblib.AdbConnection;
-import com.cgutman.adblib.AdbCrypto;
-import com.cgutman.adblib.AdbStream;
-import com.cgutman.adblib.UsbChannel;
+
+import com.nightmare.adbtools.adblib.AdbBase64;
+import com.nightmare.adbtools.adblib.AdbConnection;
+import com.nightmare.adbtools.adblib.AdbCrypto;
+import com.nightmare.adbtools.adblib.AdbStream;
+import com.nightmare.adbtools.adblib.UsbChannel;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
@@ -43,8 +45,6 @@ public class MainActivity extends FlutterActivity {
     static String tag = "Nightmare";
     UsbDevice mDevice;
     private AdbCrypto adbCrypto;
-    // 给 Shell 用的，
-    private AdbConnection adbShellConnection;
     // 给 Terminal 用的，
     private AdbConnection adbTerminalConnection;
     private UsbManager mManager;
@@ -64,8 +64,10 @@ public class MainActivity extends FlutterActivity {
                     putCommand(data);
                     break;
                 case "push":
-                    File local = new File((String) call.arguments);
-                    String remotePath = "/data/local/tmp/" + local.getName();
+                    ArrayList<String> args = (ArrayList<String>) call.arguments;
+                    String localPath = args.get(0);
+                    File local = new File(localPath);
+                    String remotePath = args.get(1) + local.getName();
                     new Thread(() -> {
                         try {
                             new Push(adbTerminalConnection, local, remotePath).execute(handler);
@@ -379,7 +381,7 @@ public class MainActivity extends FlutterActivity {
 class AdbMessageHandler extends Handler {
     MainActivity activity;
 
-    private int currentProgress = 0;
+    private double currentProgress = 0;
 
     public AdbMessageHandler(MainActivity activity) {
         this.activity = activity;
@@ -410,12 +412,12 @@ class AdbMessageHandler extends Handler {
                 break;
             case INSTALLING_PROGRESS:
                 int step = msg.arg1;
-                int progress = msg.arg2;
+                double progress = (double) msg.obj;
 
                 if (step == Message.PUSH_PART) {
-                    currentProgress = (int) (progress * Const.PUSH_PERCENT);
+                    currentProgress = progress;
                 } else if (step == Message.PM_INST_PART) {
-                    currentProgress = (int) (100 * Const.PUSH_PERCENT + (1 - Const.PUSH_PERCENT) * progress);
+                    currentProgress = 100 * Const.PUSH_PERCENT + (1 - Const.PUSH_PERCENT) * progress;
                 }
                 Log.d(MainActivity.tag, String.valueOf(currentProgress));
                 activity.channel.invokeMethod("Progress", currentProgress);
