@@ -53,7 +53,7 @@ class _QrScanPageState extends State<QrScanPage> {
             spreadRadius: 0,
             color: AppColors.contentBorder,
             onTap: () {
-              Get.dialog(
+              Get.to(
                 Theme(
                   data: DefaultThemeData.light(),
                   child: Material(
@@ -81,9 +81,8 @@ class _QrScanPageState extends State<QrScanPage> {
                     ),
                   ),
                 ),
-                // opaque: false,
-                // fullscreenDialog: false,
-                // duration: Duration(seconds: 3),
+                opaque: false,
+                fullscreenDialog: false,
               );
               // AdbUtil.connectDevices('172.24.85.34:5555');
             },
