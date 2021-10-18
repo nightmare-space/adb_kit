@@ -11,7 +11,6 @@ class HistoryPage extends GetView<HistoryController> {
     AppBar appBar;
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        brightness: Brightness.light,
         title: const Text('历史连接'),
         leading: IconButton(
           icon: const Icon(Icons.menu),

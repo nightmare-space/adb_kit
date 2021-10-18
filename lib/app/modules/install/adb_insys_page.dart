@@ -28,7 +28,6 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        brightness: Brightness.light,
         title: const Text('安装ADB到系统'),
         leading: IconButton(
           icon: const Icon(Icons.menu),
@@ -55,7 +54,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   children: [
                     Row(
                       children: <Widget>[
-                        ItemHeader(
+                        const ItemHeader(
                           color: CandyColors.candyCyan,
                         ),
                         Text(
@@ -125,7 +124,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding:  EdgeInsets.all(8.w),
+                      padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: Colors.green.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10.w),
@@ -141,7 +140,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     SizedBox(height: 8.w),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding:  EdgeInsets.all(8.w),
+                      padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: Colors.red.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10.w),
@@ -159,7 +158,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding:  EdgeInsets.all(8.w),
+                      padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
                         color: Colors.red.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10.w),
@@ -190,8 +189,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     SizedBox(
                       height: Dimens.gap_dp16,
                     ),
-                    CardItem(
-                      child: const SizedBox(
+                    const CardItem(
+                      child: SizedBox(
                         height: 200,
                         child: TerminalPage(),
                       ),

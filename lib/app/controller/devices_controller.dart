@@ -100,8 +100,8 @@ class DevicesController extends GetxController {
 
   Future<void> startAdb() async {
     adbIsStarting = true;
-    // TODO
-    await Future.delayed(Duration(seconds: 1));
+    // 显示一会动画
+    await Future.delayed(const Duration(milliseconds: 300));
     update();
     getRoot = await Global().process.isRoot();
     if (getRoot) {
@@ -110,6 +110,7 @@ class DevicesController extends GetxController {
     // Log.e('start');
     try {
       await execCmd('adb start-server');
+      // ignore: empty_catches
     } catch (e) {}
     // Log.e('end');
   }
@@ -215,7 +216,6 @@ class DevicesController extends GetxController {
     final int index = devicesEntitys.length;
     devicesEntitys.add(devicesEntity);
     update();
-    // TODO 没验证是否生效
     if (listKey.currentContext != null) {
       listKey.currentState.insertItem(
         index,

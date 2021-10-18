@@ -1,6 +1,5 @@
 library adb_tool;
 
-import 'dart:io';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'package:signale/signale.dart';
-import 'package:termare_pty/main.dart';
-
-import 'app/modules/drag_drop.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'global/instance/global.dart';
 import 'themes/theme.dart';
-import 'utils/assets_utils.dart';
 
 void main() {
   // 初始化运行时环境

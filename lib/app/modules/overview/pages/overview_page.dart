@@ -1,11 +1,6 @@
-import 'dart:io';
-
-import 'package:adb_tool/app/modules/connect/connect_page.dart';
-import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
-import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/pages/terminal.dart';
+import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -78,7 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 100.w),
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +185,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     SizedBox(
                       width: 414.w,
                       child: Padding(
-                        padding:  EdgeInsets.symmetric(vertical: 8.w),
+                        padding: EdgeInsets.symmetric(vertical: 8.w),
                         child: Row(
                           children: [
                             Expanded(
@@ -281,7 +276,6 @@ class _OverviewPageState extends State<OverviewPage> {
               SizedBox(
                 height: 8.w,
               ),
-
             ],
           ),
         ),

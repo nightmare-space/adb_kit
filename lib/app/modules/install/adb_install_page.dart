@@ -28,7 +28,6 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        brightness: Brightness.light,
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,

@@ -1,11 +1,7 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
 import 'package:termare_view/termare_view.dart';
 
 class OTGTerminal extends StatefulWidget {

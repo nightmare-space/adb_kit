@@ -1,12 +1,11 @@
 import 'package:adb_tool/app/modules/about_page.dart';
-import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
+import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
-import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +53,6 @@ Widget getWidget(String route) {
       return LogPage();
       break;
     default:
-    return SizedBox();
+    return const SizedBox();
   }
 }

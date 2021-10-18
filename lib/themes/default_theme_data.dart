@@ -62,7 +62,7 @@ class DefaultThemeData {
     );
     return darkThemeData.copyWith(
       colorScheme: colorSchema,
-      accentColor: colorSchema.onPrimary,
+      primaryColor: colorSchema.onPrimary,
       scaffoldBackgroundColor: colorSchema.background,
       primaryColorBrightness: Brightness.dark,
       cupertinoOverrideTheme: const CupertinoThemeData(
@@ -118,11 +118,6 @@ class DefaultThemeData {
         unselectedLabelColor: colorSchema.onSurface,
         unselectedLabelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
-        ),
-      ),
-      accentTextTheme: darkThemeData.textTheme.copyWith(
-        headline6: darkThemeData.textTheme.headline6.copyWith(
-          color: colorSchema.onPrimary,
         ),
       ),
       unselectedWidgetColor: const Color(0xFF696969),

@@ -1,8 +1,8 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/modules/developer_tool/drag_drop.dart';
 import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/binadb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/otgadb_channel.dart';
-import 'package:adb_tool/app/modules/drag_drop.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/widget/item_header.dart';

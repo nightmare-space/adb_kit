@@ -51,7 +51,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
           child: CardItem(
             child: Column(
               children: [
-                Expanded(
+                const Expanded(
                   child: TerminalPage(
                     enableInput: true,
                   ),
