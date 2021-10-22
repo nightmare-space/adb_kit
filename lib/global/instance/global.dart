@@ -136,6 +136,7 @@ class Global {
       }
     }
     for (final String fileName in globalFiles) {
+      await Directory(RuntimeEnvir.binPath).create(recursive: true);
       final filePath = RuntimeEnvir.binPath + '/$fileName';
       await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
       final ProcessResult result = await Process.run(
