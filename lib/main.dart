@@ -16,10 +16,10 @@ void main() {
   // 初始化运行时环境
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   // 初始化终端等
-  Global.instance.initGlobal();
-  // runApp(NativeShellWrapper());
-  runApp(const AppEntryPoint());
+  runApp(NativeShellWrapper());
+  // runApp(const AppEntryPoint());
   WidgetsFlutterBinding.ensureInitialized();
+  Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
