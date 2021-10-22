@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PopButton extends StatelessWidget {
-  /// 路由栈使用的时候会有些问题
   const PopButton({Key key,}) : super(key: key);
 
   @override
