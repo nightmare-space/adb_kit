@@ -43,10 +43,11 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
     static String tag = "Nightmare";
+    final String channelName = "adb";
     UsbDevice mDevice;
     private AdbCrypto adbCrypto;
     // 给 Terminal 用的，
-    private AdbConnection adbTerminalConnection;
+    private AdbConnection adbConnection;
     private UsbManager mManager;
     private AdbStream stream;
     // 组播相关的锁
@@ -55,13 +56,18 @@ public class MainActivity extends FlutterActivity {
     MethodChannel channel;
 
     private void initPlugin(FlutterEngine flutterEngine) {
-        Log.d("nightmare", "init plugin");
-        channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "scrcpy");
+        channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), channelName);
         channel.setMethodCallHandler((call, result) -> {
             switch (call.method) {
                 case "write":
                     String data = (String) call.arguments;
                     putCommand(data);
+                    break;
+                case "exec_cmd":
+                    String cmd = (String) call.arguments;
+                    new Thread(() -> {
+                        execCmmandFromFlutter(cmd, result);
+                    }).start();
                     break;
                 case "push":
                     ArrayList<String> args = (ArrayList<String>) call.arguments;
@@ -70,7 +76,7 @@ public class MainActivity extends FlutterActivity {
                     String remotePath = args.get(1) + local.getName();
                     new Thread(() -> {
                         try {
-                            new Push(adbTerminalConnection, local, remotePath).execute(handler);
+                            new Push(adbConnection, local, remotePath).execute(handler);
                             runOnUiThread(() -> {
                                 result.success("ok");
                             });
@@ -78,11 +84,8 @@ public class MainActivity extends FlutterActivity {
                             e.printStackTrace();
                         }
                     }).start();
-
                     break;
                 case "read":
-                    // Print each thing we read from the shell stream
-                    Log.d("Nightmare", "Print each thing we read from the shell stream");
                     runOnUiThread(() -> {
                         try {
                             result.success(new String(stream.read()));
@@ -95,6 +98,29 @@ public class MainActivity extends FlutterActivity {
                     break;
             }
         });
+    }
+
+    public synchronized void execCmmandFromFlutter(String cmd, MethodChannel.Result result) {
+        Log.d(tag, "execCmmandFromFlutter");
+        String resultData = "";
+        try {
+            AdbStream cmdStream = adbConnection.open("shell:" + cmd);
+            while (!cmdStream.isClosed()) {
+                try {
+                    resultData = new String(cmdStream.read()).trim();
+                    Log.d(Const.TAG, resultData);
+                } catch (IOException e) {
+                    // there must be a Stream Close Exception
+                    break;
+                }
+            }
+            String finalResultData = resultData;
+            runOnUiThread(() -> {
+                result.success(finalResultData);
+            });
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private final Handler handler = new AdbMessageHandler(this);
@@ -260,9 +286,9 @@ public class MainActivity extends FlutterActivity {
     // Sets the current USB device and interface
     private synchronized boolean setAdbInterface(UsbDevice device, UsbInterface intf) throws IOException, InterruptedException {
         Log.d("Nightmare", "setAdbInterface");
-        if (adbTerminalConnection != null) {
-            adbTerminalConnection.close();
-            adbTerminalConnection = null;
+        if (adbConnection != null) {
+            adbConnection.close();
+            adbConnection = null;
             mDevice = null;
         }
 
@@ -274,9 +300,9 @@ public class MainActivity extends FlutterActivity {
 
                     handler.sendEmptyMessage(Message.CONNECTING);
 
-                    adbTerminalConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
+                    adbConnection = AdbConnection.create(new UsbChannel(connection, intf), adbCrypto);
 
-                    adbTerminalConnection.connect();
+                    adbConnection.connect();
 
                     //TODO: DO NOT DELETE IT, I CAN'T EXPLAIN WHY
 //                    adbTerminalConnection.open("shell:exec date");
@@ -298,7 +324,6 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     public void onResume() {
-        Log.d("Nightmare", "onResume");
         super.onResume();
     }
 
@@ -309,9 +334,9 @@ public class MainActivity extends FlutterActivity {
         unregisterReceiver(mUsbReceiver);
         try {
             // 关闭adb连接
-            if (adbTerminalConnection != null) {
-                adbTerminalConnection.close();
-                adbTerminalConnection = null;
+            if (adbConnection != null) {
+                adbConnection.close();
+                adbConnection = null;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -322,7 +347,7 @@ public class MainActivity extends FlutterActivity {
     void initCommand() {
         // Open the shell stream of ADB
         try {
-            stream = adbTerminalConnection.open("shell:");
+            stream = adbConnection.open("shell:");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return;
@@ -340,7 +365,6 @@ public class MainActivity extends FlutterActivity {
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
-                Log.d("Nightmare", "data -> " + data);
                 if (data == null) {
                     runOnUiThread(() -> {
                         channel.invokeMethod("output", "OTG断开\r\n");
@@ -364,18 +388,6 @@ public class MainActivity extends FlutterActivity {
         }
     }
 
-
-    private void test() {
-        File local = new File(Environment.getExternalStorageDirectory() + "/adm.apk");
-        String remotePath = "/data/local/tmp/" + local.getName();
-        try {
-
-            new Push(adbTerminalConnection, local, remotePath).execute(handler);
-            new Install(adbTerminalConnection, remotePath, local.length() / 1024).execute(handler);
-        } catch (Exception e) {
-            Log.w(Const.TAG, "exception caught", e);
-        }
-    }
 }
 
 class AdbMessageHandler extends Handler {
@@ -395,8 +407,6 @@ class AdbMessageHandler extends Handler {
                 activity.channel.invokeMethod("CloseOTGDialog", null);
                 activity.initCommand();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Log.d(MainActivity.tag, activity.mDevice.toString());
-                    Log.d(MainActivity.tag, activity.mDevice.getDeviceName() + activity.mDevice.getProductName());
                     activity.channel.invokeMethod("DeviceAttach", activity.mDevice.getProductName());
                 }
                 break;

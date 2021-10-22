@@ -6,12 +6,16 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbRequest;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.nightmare.adbtools.MainActivity;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -89,8 +93,8 @@ public class UsbChannel implements AdbChannel {
     // API LEVEL 18 is needed to invoke bulkTransfer(mEndpointOut, buffer, offset, buffer.length - offset, defaultTimeout)
 //    @Override
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void writex(byte[] buffer) throws IOException{
-
+    public void writex(byte[] buffer) throws IOException {
+        Log.i("Nightmare", new String(buffer));
         int offset = 0;
         int transferred = 0;
 

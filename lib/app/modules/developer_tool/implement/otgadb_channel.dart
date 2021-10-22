@@ -1,19 +1,23 @@
 import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
+import 'package:path/path.dart';
+import 'package:signale/signale.dart';
 
 // 使用安卓串口通信实现的adb通道
 class OTGADBChannel extends ADBChannel {
   @override
   Future<String> execCmmand(String cmd) async {
     final String shell = cmd.replaceAll(RegExp('.*shell'), '');
-    PluginUtil.writeToOTG(shell + '\n');
-    return '';
+    final String data = await PluginUtil.execCmd(shell);
+    Log.e('data -> $data');
+    return data;
   }
 
   @override
   Future<void> install(String file) async {
-    // TODO: implement install
-    throw UnimplementedError();
+    final String fileName = basename(file);
+    await PluginUtil.pushToOTG(file, '/data/local/tmp/');
+    await PluginUtil.execCmd('pm install -r /data/local/tmp/$fileName');
   }
 
   @override
