@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/modules/app_manager/app_manager_wrapper.dart';
 import 'package:adb_tool/app/modules/developer_tool/drag_drop.dart';
 import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/binadb_channel.dart';
@@ -16,11 +17,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:path/path.dart' as p;
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
 
+import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
 
 class DeveloperTool extends StatefulWidget {
@@ -32,9 +33,11 @@ class DeveloperTool extends StatefulWidget {
   _DeveloperToolState createState() => _DeveloperToolState();
 }
 
-class _DeveloperToolState extends State<DeveloperTool> {
+class _DeveloperToolState extends State<DeveloperTool>
+    with SingleTickerProviderStateMixin {
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
   ADBChannel adbChannel;
+  TabController controller;
 
   double getCardWidth() {
     final ScreenType screenType = Responsive.of(context).screenType;
@@ -64,6 +67,7 @@ class _DeveloperToolState extends State<DeveloperTool> {
   @override
   void initState() {
     super.initState();
+    controller = TabController(length: 2, vsync: this);
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
@@ -78,64 +82,75 @@ class _DeveloperToolState extends State<DeveloperTool> {
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
         elevation: 0.0,
-        title: Text(
-          widget.entity.serial,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodyText2.color,
-            fontWeight: FontWeight.bold,
+        title: TabBar(
+          controller: controller,
+          labelStyle: TextStyle(
+            color: Colors.black,
           ),
+          tabs: [
+            Text('控制面板'),
+            Text('应用管理器'),
+          ],
         ),
         leading: const PopButton(),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Wrap(
-              runSpacing: 8.w,
+      body: TabBarView(
+        controller: controller,
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
               children: [
-                buildOptions(),
-                buildTerminal(),
-              ],
-            ),
-            SizedBox(
-              height: 8.w,
-            ),
-            Wrap(
-              runSpacing: 8.w,
-              children: [
-                installApkBox(),
-                uploadFileBox(),
-              ],
-            ),
-            InkWell(
-              onTap: () {
-                adbChannel.execCmmand(
-                  'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
-                  'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
-                  'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
-                );
-              },
-              child: SizedBox(
-                height: Dimens.gap_dp48,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.gap_dp12,
-                  ),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '开启单手模式',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                Wrap(
+                  runSpacing: 8.w,
+                  children: [
+                    buildOptions(),
+                    buildTerminal(),
+                  ],
+                ),
+                SizedBox(
+                  height: 8.w,
+                ),
+                Wrap(
+                  runSpacing: 8.w,
+                  children: [
+                    installApkBox(),
+                    uploadFileBox(),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    adbChannel.execCmmand(
+                      'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
+                      'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
+                      'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
+                    );
+                  },
+                  child: SizedBox(
+                    height: Dimens.gap_dp48,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimens.gap_dp12,
+                      ),
+                      child: const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '开启单手模式',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          AppManagerWrapper(
+            devicesEntity: widget.entity,
+          ),
+        ],
       ),
     );
   }
@@ -259,11 +274,23 @@ class _DeveloperToolState extends State<DeveloperTool> {
                     height: 200.w,
                     child: DropTarget(
                       title: '拖放到此或点击按钮选择Apk进行安装',
+                      onTap: () async {
+                        if (GetPlatform.isAndroid) {
+                          if (!await PermissionUtil.requestStorage()) {
+                            return;
+                          }
+                        }
+                        final List<FileEntity> files =
+                            await FileManager.pickFiles(context);
+                        final List<String> paths = [];
+                        for (final FileEntity entity in files) {
+                          paths.add(entity.path);
+                        }
+                        installApkWithPaths(paths);
+                      },
                       onPerform: (paths) async {
-                        for (final String path in paths) {
-                          await adbChannel.install(path);
-                          final String name = p.basename(path);
-                          showToast('$name 已安装');
+                        if (GetPlatform.isDesktop) {
+                          installApkWithPaths(paths);
                         }
                       },
                     ),
@@ -283,6 +310,19 @@ class _DeveloperToolState extends State<DeveloperTool> {
       barrierDismissible: false,
       builder: (_) {
         return PushFileDialog(
+          adbChannel: adbChannel,
+          paths: paths,
+        );
+      },
+    );
+  }
+
+  void installApkWithPaths(List<String> paths) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return InstallApkDialog(
           adbChannel: adbChannel,
           paths: paths,
         );
@@ -464,7 +504,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
     final String result = await widget.adbChannel.execCmmand(
       'adb -s ${widget.serial} shell getprop service.adb.tcp.port',
     );
-    print(result);
+    Log.w(result);
     if (result == '5555') {
       isCheck = true;
       setState(() {});
@@ -524,13 +564,17 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 // print(result);
                 String result;
                 if (isCheck) {
-                  result = await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
+                  await widget.adbChannel.execCmmand(
+                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value',
+                  );
+                  await widget.adbChannel.execCmmand(
                     'adb -s ${widget.serial} tcpip 5555',
                   );
                 } else {
-                  result = await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
+                  await widget.adbChannel.execCmmand(
+                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value',
+                  );
+                  await widget.adbChannel.execCmmand(
                     'adb -s ${widget.serial} usb',
                   );
                 }
@@ -573,6 +617,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
     final String result = await widget.adbChannel.execCmmand(
       'adb -s ${widget.serial} shell settings get system ${widget.putKey}',
     );
+    Log.w('result -> $result');
     if (result == '1') {
       isCheck = true;
       setState(() {});

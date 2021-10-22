@@ -183,28 +183,6 @@ class _DevicesItemState extends State<DevicesItem>
                         ),
                       IconButton(
                         icon: const Icon(
-                          Icons.app_registration,
-                          size: 18,
-                          color: Colors.black87,
-                        ),
-                        onPressed: () async {
-                          if (!widget.devicesEntity.isConnect) {
-                            showToast('设备未正常连接');
-                            return;
-                          }
-                          await DexServer.startServer(
-                            widget.devicesEntity.serial,
-                          );
-                          Get.toNamed(
-                            AppManagerRoutes.home,
-                            arguments: YanProcess()
-                              ..exec(
-                                  'adb -s ${widget.devicesEntity.serial} shell'),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(
                           Icons.arrow_forward_ios,
                           size: 18,
                           color: Colors.black87,
