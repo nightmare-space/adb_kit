@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-MethodChannel _channel = const MethodChannel('scrcpy');
+MethodChannel _channel = const MethodChannel('adb');
 typedef MethodHandler = void Function(MethodCall call);
 
 class PluginUtil {
@@ -35,5 +35,9 @@ class PluginUtil {
 
   static Future<void> pushToOTG(String local, String remote) async {
     await _channel.invokeMethod('push', [local, remote]);
+  }
+
+  static Future<String> execCmd(String cmd) async {
+    return await _channel.invokeMethod('exec_cmd', cmd);
   }
 }
