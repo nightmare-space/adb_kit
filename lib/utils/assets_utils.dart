@@ -9,7 +9,7 @@ class AssetsUtils {
     final ByteData byteData = await rootBundle.load(key);
     final Uint8List picBytes = byteData.buffer.asUint8List();
     final File file = File(path);
-    if (!await file.exists()) {
+    if (!await file.exists() || file.lengthSync() != picBytes.length) {
       await file.writeAsBytes(picBytes);
     }
   }
