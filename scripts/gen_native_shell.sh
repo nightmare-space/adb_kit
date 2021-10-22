@@ -1,1 +1,0 @@
-cargo bundle-tool -v macos-bundle "target/release/ADB TOOL.app" target/
