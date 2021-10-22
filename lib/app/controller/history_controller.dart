@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:signale/signale.dart';
@@ -52,6 +55,8 @@ class HistoryController extends GetxController {
     }
   }
 
+  ADBHistorys adbHistorys = ADBHistorys(data: []);
+
   @override
   void onInit() {
     super.onInit();
@@ -65,31 +70,32 @@ class HistoryController extends GetxController {
     Log.w('$this onReady');
   }
 
-  Set<AdbEntity> adbEntitys = {};
   Future<void> saveToLocal() async {
-    final StringBuffer buffer = StringBuffer();
-    for (final AdbEntity adbEntity in adbEntitys) {
-      buffer.write('${adbEntity.getLocalString()}\n');
-    }
-    Config.historySaveFile.writeAsString(buffer.toString().trim());
+    Config.historySaveFile.writeAsString(adbHistorys.toString());
   }
 
   Future<void> readLocalStorage() async {
     if (!Config.historySaveFile.existsSync()) {
       return;
     }
-    String data = await Config.historySaveFile.readAsString();
-    data = data.trim();
-    for (final String line in data.split('\n')) {
-      adbEntitys.add(AdbEntity.parse(line));
-    }
+    final String data = await Config.historySaveFile.readAsString();
+    adbHistorys =
+        ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
     update();
   }
 
-  void addAdbEntity(AdbEntity adbEntity) {
-    Log.d('添加 $adbEntity');
-    adbEntitys.add(adbEntity);
-    Log.d('当前 adbEntitys => $adbEntitys');
+  void updateHistory(Data data) {
+    try {
+      final Data preData = adbHistorys.data.firstWhere(
+        (element) {
+          return element.address == data.address;
+        },
+      );
+      preData.connectTime = data.connectTime;
+    } catch (e) {
+      adbHistorys.data.add(data);
+    }
+
     saveToLocal();
   }
 }
