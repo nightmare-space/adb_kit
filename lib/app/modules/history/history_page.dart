@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class HistoryPage extends GetView<HistoryController> {
       appBar: appBar,
       body: GetBuilder<HistoryController>(
         builder: (_) {
-          if (controller.adbEntitys.isEmpty) {
+          if (controller.adbHistorys.data.isEmpty) {
             return Center(
               child: Text(
                 '这里就像开发者的钱包一样，什么也没有',
@@ -35,9 +36,10 @@ class HistoryPage extends GetView<HistoryController> {
             );
           }
           return ListView.builder(
-            itemCount: controller.adbEntitys.length,
+            itemCount: controller.adbHistorys.data.length,
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (c, i) {
-              final AdbEntity adbEntity = controller.adbEntitys.toList()[i];
+              final Data adbEntity = controller.adbHistorys.data[i];
               return InkWell(
                 onTap: () {},
                 child: SizedBox(
@@ -53,13 +55,13 @@ class HistoryPage extends GetView<HistoryController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'IP地址：${adbEntity.ip} 端口：${adbEntity.port}',
+                            'IP地址：${adbEntity.address} 端口：${adbEntity.port}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            '上次连接时间：${adbEntity.getTimeString()}',
+                            '上次连接时间：${DateTime.parse(adbEntity.connectTime).getTimeString()}',
                             style: const TextStyle(),
                           ),
                         ],

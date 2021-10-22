@@ -11,7 +11,6 @@ import 'package:global_repository/global_repository.dart';
 class OnlineView extends GetView<OnlineController> {
   @override
   Widget build(BuildContext context) {
-    print('$this build');
     return Obx(() {
       if (controller.list.isEmpty) {
         return const Center(
