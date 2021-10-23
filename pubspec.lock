@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/adbutil"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1389d16e321b5d10cb6382bf3480f16870fc38ec"
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -18,9 +20,11 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: c0f89e81a4ea2c510258d869d1f96827c106ef70
+      url: "https://github.com/nightmare-space/app_manager"
+    source: git
     version: "1.0.0+1"
   args:
     dependency: transitive
@@ -315,9 +319,11 @@ packages:
   pseudo_terminal_utils:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/pseudo_terminal_utils"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "49b7179b258106de12fd4bbeee746812c782670d"
+      url: "https://github.com/Termare/pseudo_terminal_utils"
+    source: git
     version: "0.0.1"
   qr:
     dependency: transitive

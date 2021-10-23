@@ -7,7 +7,7 @@ environment:
 
 dependencies:
   app_manager:
-    path: /Users/nightmare/Desktop/nightmare-space/app_manager
+    git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
   nativeshell:
     version: ^0.1.10
@@ -17,7 +17,7 @@ dependencies:
   flutter_screenutil: ^2.3.0
   flutter_spinkit: "^4.1.2"
   pseudo_terminal_utils:
-    path: /Users/nightmare/Desktop/nightmare-space/pseudo_terminal_utils
+    git: https://github.com/Termare/pseudo_terminal_utils
   # svg图像
   flutter_svg: ^0.22.0
   get: ^4.1.3
@@ -35,9 +35,9 @@ dependencies:
     git: https://github.com/termare/termare_pty
   url_launcher: ^6.0.4
   adbutil:
-    path: /Users/nightmare/Desktop/nightmare-space/adbutil
+    git: https://github.com/nightmare-space/adbutil
   termare_view:
-    path: /Users/nightmare/Desktop/termare-space/termare_view
+    git: https://github.com/Termare/termare_view
 
   # 文件选择自实现方案
   file_manager_view:
