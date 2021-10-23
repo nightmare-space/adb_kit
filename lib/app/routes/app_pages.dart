@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/modules/about_page.dart';
+import 'package:adb_tool/app/modules/about/about_page.dart';
 import 'package:adb_tool/app/modules/exec_cmd_page.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';

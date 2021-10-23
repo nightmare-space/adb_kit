@@ -1,8 +1,10 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:get/get_state_manager/get_state_manager.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
@@ -41,9 +43,25 @@ class HistoryPage extends GetView<HistoryController> {
             itemBuilder: (c, i) {
               final Data adbEntity = controller.adbHistorys.data[i];
               return InkWell(
-                onTap: () {},
+                onTap: () async {
+                  AdbResult result;
+                  try {
+                    result = await AdbUtil.connectDevices(
+                      adbEntity.address + ':' + adbEntity.port,
+                    );
+                    showToast(result.message);
+                    final HistoryController historyController = Get.find();
+                    historyController.updateHistory(Data(
+                      address: adbEntity.address,
+                      port: adbEntity.port,
+                      connectTime: DateTime.now().toString(),
+                    ));
+                  } on AdbException catch (e) {
+                    showToast(e.message);
+                  }
+                },
                 child: SizedBox(
-                  height: Dimens.gap_dp56,
+                  height: 64.w,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
