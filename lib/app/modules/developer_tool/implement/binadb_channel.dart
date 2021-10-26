@@ -9,7 +9,12 @@ class BinADBChannel extends ADBChannel {
   final String serial;
   @override
   Future<String> execCmmand(String cmd) async {
-    return await execCmd(cmd);
+    String out = '';
+    final List<String> cmds = cmd.split('\n');
+    for (final String cmd in cmds) {
+      out += await execCmd(cmd);
+    }
+    return out;
   }
 
   @override

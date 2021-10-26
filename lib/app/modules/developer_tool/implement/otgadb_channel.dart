@@ -7,9 +7,10 @@ import 'package:signale/signale.dart';
 class OTGADBChannel extends ADBChannel {
   @override
   Future<String> execCmmand(String cmd) async {
+    // otg 会去掉 adb -s xxx shell
     final String shell = cmd.replaceAll(RegExp('.*shell'), '');
     final String data = await PluginUtil.execCmd(shell);
-    Log.e('data -> $data');
+    Log.e('OTGADBChannel execCmmand -> $data');
     return data;
   }
 

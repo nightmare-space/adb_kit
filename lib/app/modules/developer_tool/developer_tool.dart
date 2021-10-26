@@ -10,6 +10,7 @@ import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:file_manager_view/file_manager_view.dart';
+import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +24,7 @@ import 'package:termare_view/termare_view.dart';
 
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
+import 'tab_indicator.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({Key key, this.entity, this.providerContext})
@@ -78,21 +80,43 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        centerTitle: true,
-        elevation: 0.0,
-        title: TabBar(
-          controller: controller,
-          labelStyle: TextStyle(
-            color: Colors.black,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(48.w),
+        child: SafeArea(
+          child: Row(
+            children: [
+              const PopButton(),
+              Expanded(
+                child: TabBar(
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelColor: AppColors.fontColor,
+                  indicator: RoundedUnderlineTabIndicator(
+                    // insets:EdgeInsets.all(16.0),
+                    radius: 30.w,
+                    width: 25.w,
+                    borderSide: BorderSide(
+                      width: 6.w,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    // color: Color(0xff6002ee),
+                    // borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                  ),
+                  controller: controller,
+                  tabs: <Widget>[
+                    Tab(text: '控制面板'),
+                    Tab(text: '应用管理器'),
+                  ],
+                ),
+              ),
+            ],
           ),
-          tabs: [
-            Text('控制面板'),
-            Text('应用管理器'),
-          ],
         ),
-        leading: const PopButton(),
       ),
       body: TabBarView(
         controller: controller,
@@ -273,18 +297,18 @@ class _DeveloperToolState extends State<DeveloperTool>
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
-                      title: '拖放到此或点击按钮选择Apk进行安装',
+                      title:
+                          GetPlatform.isDesktop ? '拖放到此或' : '' '点击按钮选择Apk进行安装',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
                             return;
                           }
                         }
-                        final List<FileEntity> files =
-                            await FileManager.pickFiles(context);
-                        final List<String> paths = [];
-                        for (final FileEntity entity in files) {
-                          paths.add(entity.path);
+                        final List<String> paths =
+                            await FileSelector.pick(context);
+                        if (paths.isEmpty) {
+                          return;
                         }
                         installApkWithPaths(paths);
                       },
@@ -365,7 +389,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
-                      title: '拖放到此或点击按钮选择文件进行上传',
+                      title:
+                          GetPlatform.isDesktop ? '拖放到此或' : '' '点击按钮选择文件进行上传',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
