@@ -20,11 +20,9 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: c0f89e81a4ea2c510258d869d1f96827c106ef70
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
+      relative: false
+    source: path
     version: "1.0.0+1"
   args:
     dependency: transitive
@@ -102,7 +100,7 @@ packages:
       name: dio
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   event_bus:
     dependency: transitive
     description:
@@ -125,13 +123,18 @@ packages:
     source: hosted
     version: "1.1.2"
   file_manager_view:
+    dependency: transitive
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/file_manager_view"
+      relative: false
+    source: path
+    version: "1.0.0+1"
+  file_selector_nightmare:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "4a95307c83df7c866ca07e5e5a03a031af2676cf"
-      url: "https://github.com/nightmare-space/file_manager_view"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/file_selector"
+      relative: false
+    source: path
     version: "1.0.0+1"
   flutter:
     dependency: "direct main"
