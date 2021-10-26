@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
     Key key,
@@ -75,6 +74,15 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
               iconData: Icons.home,
             ),
+            _DrawerItem(
+              value: Routes.history,
+              groupValue: widget.groupValue,
+              title: '历史连接',
+              iconData: Icons.history,
+              onTap: (value) {
+                widget.onChanged.call(value);
+              },
+            ),
             if (!kIsWeb && Platform.isAndroid)
               Column(
                 children: [
@@ -122,22 +130,11 @@ class _TabletDrawerState extends State<TabletDrawer> {
             //   title: '当前设备ip',
             //   onTap: () {},
             // ),
-
             _DrawerItem(
               value: Routes.terminal,
               groupValue: widget.groupValue,
               title: '终端模拟器',
               iconData: Icons.code,
-              onTap: (value) {
-                widget.onChanged.call(value);
-              },
-            ),
-
-            _DrawerItem(
-              value: Routes.history,
-              groupValue: widget.groupValue,
-              title: '历史连接',
-              iconData: Icons.history,
               onTap: (value) {
                 widget.onChanged.call(value);
               },

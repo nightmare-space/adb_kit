@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:adbutil/adbutil.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
@@ -11,27 +12,29 @@ class DexServer {
       return;
     }
     final Completer<void> completer = Completer();
+
     final YanProcess process = YanProcess();
     await process.exec('adb -s $devicesId forward tcp:6001 tcp:6000');
-    await process.exec(
-      'adb -s $devicesId push "${RuntimeEnvir.binPath}/server.jar" /data/local/tmp/base.apk',
+    await AdbUtil.pushFile(
+      devicesId,
+      '${RuntimeEnvir.binPath}/server.jar',
+      '/data/local/tmp/base.apk',
     );
     final List<String> processArg =
         '-s $devicesId shell CLASSPATH=/data/local/tmp/base.apk app_process /data/local/tmp/ com.nightmare.appmanager.AppChannel'
             .split(' ');
     final PseudoTerminal pty = TerminalUtil.getShellTerminal(
-      useIsolate: true,
       exec: 'adb',
       arguments: processArg,
     );
     pty.startPolling();
     pty.out.listen((event) {
       Log.e('event -> $event');
-      if (event.contains('wait')) {
+      if (event.contains('success start')) {
         serverStart = true;
         completer.complete();
       }
-      // pty.schedulingRead();
+      pty.schedulingRead();
     });
     return completer.future;
   }

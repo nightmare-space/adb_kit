@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class DesktopPhoneDrawer extends StatefulWidget {
   const DesktopPhoneDrawer({
     Key key,
@@ -85,13 +84,22 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               ),
             ),
             _DrawerItem(
-              title: '面板',
+              title: '主页',
               value: Routes.overview,
               groupValue: widget.groupValue,
               onTap: (index) {
                 widget.onChanged?.call(index);
               },
               iconData: Icons.home,
+            ),
+            _DrawerItem(
+              value: Routes.history,
+              groupValue: widget.groupValue,
+              title: '历史连接',
+              iconData: Icons.history,
+              onTap: (index) async {
+                widget.onChanged?.call(index);
+              },
             ),
             // _DrawerItem(
             //   title: '连接设备',
@@ -150,15 +158,6 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               },
             ),
 
-            _DrawerItem(
-              value: Routes.history,
-              groupValue: widget.groupValue,
-              title: '历史连接',
-              iconData: Icons.history,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
             _DrawerItem(
               value: Routes.log,
               groupValue: widget.groupValue,
