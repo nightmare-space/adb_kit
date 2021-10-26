@@ -30,6 +30,7 @@ import com.nightmare.adbtools.adblib.AdbConnection;
 import com.nightmare.adbtools.adblib.AdbCrypto;
 import com.nightmare.adbtools.adblib.AdbStream;
 import com.nightmare.adbtools.adblib.UsbChannel;
+import com.nightmare.applib.AppChannel;
 
 import java.io.File;
 import java.io.IOException;
@@ -128,6 +129,13 @@ public class MainActivity extends FlutterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new Thread(() -> {
+            try {
+                AppChannel.startServer(getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         AdbBase64 base64 = new MyAdbBase64();
         try {

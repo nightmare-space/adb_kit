@@ -74,4 +74,5 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.github.nightmare-space:applib:v0.0.4'
 }
