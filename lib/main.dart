@@ -12,12 +12,17 @@ import 'config/config.dart';
 import 'global/instance/global.dart';
 import 'themes/theme.dart';
 
+// 这个值由shell去替换
+bool useNativeShell = false;
+
 void main() {
   // 初始化运行时环境
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
-  // 初始化终端等
-  // runApp(NativeShellWrapper());
-  runApp(const AppEntryPoint());
+  if (useNativeShell) {
+    runApp(NativeShellWrapper());
+  } else {
+    runApp(const AppEntryPoint());
+  }
   WidgetsFlutterBinding.ensureInitialized();
   Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
