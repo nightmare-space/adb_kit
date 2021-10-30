@@ -297,8 +297,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
-                      title:
-                          GetPlatform.isDesktop ? '拖放到此或' : '' '点击按钮选择Apk进行安装',
+                      title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
+                          '点击按钮选择Apk进行安装',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -389,8 +389,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                   SizedBox(
                     height: 200.w,
                     child: DropTarget(
-                      title:
-                          GetPlatform.isDesktop ? '拖放到此或' : '' '点击按钮选择文件进行上传',
+                      title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
+                          '点击按钮选择文件进行上传',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -472,7 +472,6 @@ class _DeveloperToolState extends State<DeveloperTool>
                                 }
                                 return TermarePty(
                                   pseudoTerminal: TerminalUtil.getShellTerminal(
-                                    useIsolate: false,
                                     exec: 'adb',
                                     arguments: [
                                       '-s',

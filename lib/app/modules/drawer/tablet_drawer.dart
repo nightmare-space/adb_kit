@@ -166,7 +166,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               groupValue: widget.groupValue,
               title: '其他平台下载',
               onTap: (index) async {
-                const String url = 'http://nightmare.fun/adbtool';
+                const String url = 'http://nightmare.fun/adb';
                 if (await canLaunch(url)) {
                   await launch(
                     url,
@@ -242,10 +242,24 @@ class _DrawerItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimens.gap_dp12),
                       )
                     : null,
-                child: Icon(
-                  iconData ?? Icons.open_in_new,
-                  size: 24.w,
-                  color: isChecked ? AppColors.accent : AppColors.fontTitle,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      iconData ?? Icons.open_in_new,
+                      size: 24.w,
+                      color: isChecked ? AppColors.accent : AppColors.fontTitle,
+                    ),
+                    SizedBox(height: 4.w),
+                    Text(
+                      title.substring(0, 2),
+                      style: TextStyle(
+                        height: 1.0,
+                        color: AppColors.fontColor,
+                        fontSize: 12.w,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

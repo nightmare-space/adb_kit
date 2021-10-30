@@ -13,8 +13,10 @@ import 'package:termare_view/termare_view.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
+  static String modelGetKey = 'ro.product.model';
   // 有可能是ip或者设备序列号
   final String serial;
+  // ro.product.model
   String productModel;
   // 连接的状态
   String stat;
@@ -50,6 +52,7 @@ class DevicesEntity {
   int get hashCode => serial.hashCode;
 }
 
+// ro.product.model
 class DevicesController extends GetxController {
   DevicesController() {
     init();
@@ -138,6 +141,10 @@ class DevicesController extends GetxController {
           listTmp.first,
           listTmp.last,
         );
+        final String model = await execCmd(
+          'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+        );
+        devicesEntity.productModel = model;
         if (!devicesEntity.serial.contains('emulator')) {
           tmp.add(devicesEntity);
         }

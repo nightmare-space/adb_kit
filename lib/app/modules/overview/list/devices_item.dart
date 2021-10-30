@@ -85,12 +85,7 @@ class _DevicesItemState extends State<DevicesItem>
 
   @override
   Widget build(BuildContext context) {
-    if (Config.devicesMap.containsKey(widget.devicesEntity.serial)) {
-      // print('object');
-      _title = Config.devicesMap[widget.devicesEntity.serial];
-    } else {
-      _title = widget.devicesEntity.serial;
-    }
+    _title = widget.devicesEntity.productModel;
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () {},
@@ -243,85 +238,6 @@ class _DevicesItemState extends State<DevicesItem>
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class DevicesInfo {
-  // 架构
-  String get abi => _devicesInfo['架构'];
-  // 芯片
-  String get hardware => _devicesInfo['芯片'];
-  // Android版本
-  String get version => _devicesInfo['Android版本'];
-  // 品牌
-  String get manufacturer => _devicesInfo['品牌'];
-  // 设备代号
-  String get device => _devicesInfo['设备代号'];
-  // 型号
-  String get model => _devicesInfo['型号'];
-  final Map<String, String> _devicesInfo = {};
-  Map get devicesInfo => _devicesInfo;
-  static Map<String, String> shellApi = <String, String>{
-    // '架构': 'ro.product.cpu.abi',
-    // '芯片': 'ro.boot.hardware',
-    // 'Android版本': 'ro.build.version.release',
-    // '品牌': 'ro.product.manufacturer',
-    // '设备代号': 'ro.product.device',
-    '型号': 'ro.product.model',
-  };
-  // final List<String> _deviceStat = <String>[
-  //   'show_touches',
-  //   'pointer_location',
-  // ];
-  void setValue(String key, String value) {
-    _devicesInfo[key] = value;
-  }
-
-  String getValue(
-    String key,
-  ) {
-    if (_devicesInfo.containsKey(key)) {
-      return _devicesInfo[key];
-    }
-    return '';
-  }
-}
-
-class DevicesInfoDialog extends StatelessWidget {
-  const DevicesInfoDialog({Key key, this.devicesInfo}) : super(key: key);
-
-  final DevicesInfo devicesInfo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 200,
-        height: 300,
-        child: Material(
-          borderRadius: BorderRadius.circular(16),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 16,
-            ),
-            child: Column(
-              children: [
-                for (var key in DevicesInfo.shellApi.keys)
-                  Row(
-                    children: [
-                      Text(key),
-                      Text(
-                        devicesInfo.getValue(key),
-                      ),
-                    ],
-                  )
-              ],
-            ),
-          ),
         ),
       ),
     );
