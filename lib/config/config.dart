@@ -8,7 +8,6 @@ class Config {
   static Directory localDir = Directory(RuntimeEnvir.dataPath + '/AdbTool');
   static File historySaveFile = File(localDir.path + '/.history');
   static String curDevicesSerial = '';
-  static Map<String, String> devicesMap = {};
   static String historyIp = '';
   static bool conWhenScan = true;
   static String version = '1.1.3';

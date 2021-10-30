@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/utils/assets_utils.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
