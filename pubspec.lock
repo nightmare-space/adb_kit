@@ -4,11 +4,9 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "1389d16e321b5d10cb6382bf3480f16870fc38ec"
-      url: "https://github.com/nightmare-space/adbutil"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/adbutil"
+      relative: false
+    source: path
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -24,6 +22,13 @@ packages:
       relative: false
     source: path
     version: "1.0.0+1"
+  apputils:
+    dependency: transitive
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/apputils"
+      relative: false
+    source: path
+    version: "0.0.1"
   args:
     dependency: transitive
     description:
@@ -238,9 +243,11 @@ packages:
   multicast:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/Flutter_Package/multicast"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: d9e379f0dc839e894bc01f52f40d6b71d5c54d50
+      url: "https://github.com/nightmare-space/multicast"
+    source: git
     version: "0.0.1"
   multicast_dns:
     dependency: "direct main"

@@ -32,7 +32,7 @@ dependencies:
     git: https://github.com/Nightmare-MY/signale
   path: ^1.8.0
   termare_pty:
-    git: https://github.com/termare/termare_pty
+    git: https://github.com/Termare/termare_pty
   url_launcher: ^6.0.4
   adbutil:
     git: https://github.com/nightmare-space/adbutil
@@ -59,6 +59,7 @@ flutter:
     - assets/
 
 dependency_overrides:
+# 下面代码注释掉，
   termare_view:
     path: /Users/nightmare/Desktop/termare-space/termare_view
   termare_pty:
@@ -67,8 +68,8 @@ dependency_overrides:
     path: /Users/nightmare/Desktop/termare-space/dart_pty
   global_repository:
     path: /Users/nightmare/Desktop/nightmare-space/global_repository
-  multicast:
-    path: /Users/nightmare/Desktop/Flutter_Package/multicast
   app_manager:
     path: /Users/nightmare/Desktop/nightmare-space/app_manager
+  adbutil:
+    path: /Users/nightmare/Desktop/nightmare-space/adbutil
     # path: C:\Users\Nightmare\Documents\termare-space\dart_pty

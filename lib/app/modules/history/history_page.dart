@@ -50,12 +50,10 @@ class HistoryPage extends GetView<HistoryController> {
                       adbEntity.address + ':' + adbEntity.port,
                     );
                     showToast(result.message);
-                    final HistoryController historyController = Get.find();
-                    historyController.updateHistory(Data(
-                      address: adbEntity.address,
-                      port: adbEntity.port,
-                      connectTime: DateTime.now().toString(),
-                    ));
+                    HistoryController.updateHistory(
+                      adbEntity.address,
+                      adbEntity.port,
+                    );
                   } on AdbException catch (e) {
                     showToast(e.message);
                   }

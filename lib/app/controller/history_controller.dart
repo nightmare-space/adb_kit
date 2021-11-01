@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:signale/signale.dart';
 
 class AdbEntity {
@@ -54,6 +54,14 @@ class HistoryController extends GetxController {
       );
     }
   }
+  static void updateHistory(String address, String port) {
+    final HistoryController historyController = Get.find();
+    historyController._updateHistory(Data(
+      address: address,
+      port: port,
+      connectTime: DateTime.now().toString(),
+    ));
+  }
 
   ADBHistorys adbHistorys = ADBHistorys(data: []);
 
@@ -84,7 +92,7 @@ class HistoryController extends GetxController {
     update();
   }
 
-  void updateHistory(Data data) {
+  void _updateHistory(Data data) {
     try {
       final Data preData = adbHistorys.data.firstWhere(
         (element) {

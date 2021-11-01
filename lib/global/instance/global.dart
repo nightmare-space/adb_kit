@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -91,6 +92,10 @@ class Global {
             address,
           );
           showToast(result.message);
+          HistoryController.updateHistory(
+            address,
+            '5555',
+          );
         } on AdbException catch (e) {
           showToast(e.message);
         }

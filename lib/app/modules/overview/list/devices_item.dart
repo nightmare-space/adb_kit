@@ -1,12 +1,8 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/utils/dex_server.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
 
@@ -187,7 +183,9 @@ class _DevicesItemState extends State<DevicesItem>
                             showToast('设备未正常连接');
                             return;
                           }
-                          Navigator.of(
+
+                          AdbUtil.stopPoolingListDevices();
+                          await Navigator.of(
                             context,
                           ).push<void>(
                             MaterialPageRoute(
@@ -198,6 +196,7 @@ class _DevicesItemState extends State<DevicesItem>
                               },
                             ),
                           );
+                          AdbUtil.startPoolingListDevices();
                         },
                       ),
                     ],
