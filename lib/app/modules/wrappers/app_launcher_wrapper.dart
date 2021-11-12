@@ -1,22 +1,23 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:app_launcher/app_launcher.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:global_repository/global_repository.dart';
 
-class AppManagerWrapper extends StatefulWidget {
-  const AppManagerWrapper({
+class AppLauncherWrapper extends StatefulWidget {
+  const AppLauncherWrapper({
     Key key,
     @required this.devicesEntity,
   }) : super(key: key);
   final DevicesEntity devicesEntity;
 
   @override
-  _AppManagerWrapperState createState() => _AppManagerWrapperState();
+  _AppLauncherWrapperState createState() => _AppLauncherWrapperState();
 }
 
-class _AppManagerWrapperState extends State<AppManagerWrapper> {
+class _AppLauncherWrapperState extends State<AppLauncherWrapper> {
   @override
   void initState() {
     super.initState();
@@ -39,9 +40,6 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
         lineWidth: 2.w,
       );
     }
-    return AppManagerEntryPoint(
-      process: YanProcess()
-        ..exec('adb -s ${widget.devicesEntity.serial} shell'),
-    );
+    return const AppLauncher();
   }
 }
