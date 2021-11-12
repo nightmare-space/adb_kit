@@ -15,6 +15,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.2"
+  animations:
+    dependency: "direct main"
+    description:
+      name: animations
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.2"
+  app_launcher:
+    dependency: "direct main"
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/app_launcher"
+      relative: false
+    source: path
+    version: "1.0.0+1"
   app_manager:
     dependency: "direct main"
     description:
@@ -25,9 +39,11 @@ packages:
   apputils:
     dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/apputils"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: b72ec09f7ee91a646e2de0af27146617b68b26e5
+      url: "https://github.com/nightmare-space/apputils"
+    source: git
     version: "0.0.1"
   args:
     dependency: transitive
@@ -130,16 +146,20 @@ packages:
   file_manager_view:
     dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/file_manager_view"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "8609fac05905469a0e8a3114a9cc1fddd86cc62b"
+      url: "https://github.com/nightmare-space/file_manager_view.git"
+    source: git
     version: "1.0.0+1"
   file_selector_nightmare:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/file_selector"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: bacda1c55597f44009e0dac9d6387a1dd99c9ba4
+      url: "https://github.com/nightmare-space/file_selector"
+    source: git
     version: "1.0.0+1"
   flutter:
     dependency: "direct main"

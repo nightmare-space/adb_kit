@@ -3,6 +3,7 @@ import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:signale/signale.dart';
 
@@ -113,7 +114,7 @@ class _DevicesItemState extends State<DevicesItem>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _title,
+                            _title ?? '',
                             style: const TextStyle(
                               height: 1.2,
                               fontWeight: FontWeight.bold,
@@ -183,19 +184,10 @@ class _DevicesItemState extends State<DevicesItem>
                             showToast('设备未正常连接');
                             return;
                           }
-
                           AdbUtil.stopPoolingListDevices();
-                          await Navigator.of(
-                            context,
-                          ).push<void>(
-                            MaterialPageRoute(
-                              builder: (_) {
-                                return DeveloperTool(
-                                  entity: widget.devicesEntity,
-                                );
-                              },
-                            ),
-                          );
+                          Get.to(DeveloperTool(
+                            entity: widget.devicesEntity,
+                          ));
                           AdbUtil.startPoolingListDevices();
                         },
                       ),

@@ -1,7 +1,7 @@
 name: adb_tool
 description: 支持Android、macOS的adb工具，提供更方便的连接与设备操作.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
-version: 1.2.3+18
+version: 1.2.4+19
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
@@ -11,6 +11,8 @@ dependencies:
   dio: ^4.0.0
   nativeshell:
     version: ^0.1.10
+
+  animations: ^1.0.0+5
   flutter:
     sdk: flutter
   flutter_markdown: ^0.6.1
@@ -38,11 +40,11 @@ dependencies:
     git: https://github.com/nightmare-space/adbutil
   termare_view:
     git: https://github.com/Termare/termare_view
-
   # 文件选择自实现方案
-
   file_selector_nightmare:
-    path: /Users/nightmare/Desktop/nightmare-space/file_selector
+    git: https://github.com/nightmare-space/file_selector
+  app_launcher:
+    path: /Users/nightmare/Desktop/nightmare-space/app_launcher
 dev_dependencies:
   flutter_test:
     sdk: flutter
