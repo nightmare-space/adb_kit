@@ -1,7 +1,8 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/modules/app_manager/app_manager_wrapper.dart';
+import 'package:adb_tool/app/modules/wrappers/app_launcher_wrapper.dart';
+import 'package:adb_tool/app/modules/wrappers/app_manager_wrapper.dart';
 import 'package:adb_tool/app/modules/developer_tool/drag_drop.dart';
-import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/binadb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/otgadb_channel.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
@@ -9,6 +10,8 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:animations/animations.dart';
+import 'package:app_launcher/app_launcher.dart';
 import 'package:file_manager_view/file_manager_view.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +43,14 @@ class _DeveloperToolState extends State<DeveloperTool>
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
   ADBChannel adbChannel;
   TabController controller;
+  PseudoTerminal adbShell;
+  bool enableInput = true;
+  TermareController adbShellController = TermareController(
+    fontFamily: '${Config.flutterPackage}MenloforPowerline',
+    theme: TermareStyles.macos.copyWith(
+      backgroundColor: AppColors.background,
+    ),
+  );
 
   double getCardWidth() {
     final ScreenType screenType = Responsive.of(context).screenType;
@@ -69,7 +80,8 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(length: 3, vsync: this);
+    adbShell = TerminalUtil.getShellTerminal();
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
@@ -108,9 +120,10 @@ class _DeveloperToolState extends State<DeveloperTool>
                     //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
                   ),
                   controller: controller,
-                  tabs: <Widget>[
+                  tabs: const <Widget>[
                     Tab(text: '控制面板'),
                     Tab(text: '应用管理器'),
+                    Tab(text: '桌面启动器'),
                   ],
                 ),
               ),
@@ -174,6 +187,9 @@ class _DeveloperToolState extends State<DeveloperTool>
           AppManagerWrapper(
             devicesEntity: widget.entity,
           ),
+          AppLauncherWrapper(
+            devicesEntity: widget.entity,
+          ),
         ],
       ),
     );
@@ -189,7 +205,7 @@ class _DeveloperToolState extends State<DeveloperTool>
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
-            height: 228.w,
+            height: 230.w,
             child: Padding(
               padding: padding,
               child: Column(
@@ -225,6 +241,27 @@ class _DeveloperToolState extends State<DeveloperTool>
                         serial: widget.entity.serial,
                         title: '显示屏幕指针',
                         putKey: 'pointer_location',
+                      ),
+                      SwitchItem(
+                        title: '打开布局边界',
+                        onOpen: () {
+                          adbChannel.execCmmand(
+                            'adb -s ${widget.entity.serial} shell setprop debug.layout true',
+                          );
+                          adbChannel.execCmmand(
+                            'adb -s ${widget.entity.serial} shell service call activity 1599295570',
+                          );
+                          return true;
+                        },
+                        onClose: () {
+                          adbChannel.execCmmand(
+                            'adb -s ${widget.entity.serial} shell setprop debug.layout false',
+                          );
+                          adbChannel.execCmmand(
+                            'adb -s ${widget.entity.serial} shell service call activity 1599295570',
+                          );
+                          return false;
+                        },
                       ),
                       _OpenRemoteDebug(
                         adbChannel: adbChannel,
@@ -397,11 +434,10 @@ class _DeveloperToolState extends State<DeveloperTool>
                             return;
                           }
                         }
-                        final List<FileEntity> files =
-                            await FileManager.pickFiles(context);
-                        final List<String> paths = [];
-                        for (final FileEntity entity in files) {
-                          paths.add(entity.path);
+                        final List<String> paths =
+                            await FileSelector.pick(context);
+                        if (paths.isEmpty) {
+                          return;
                         }
                         pushFileWithPaths(paths);
                       },
@@ -431,71 +467,94 @@ class _DeveloperToolState extends State<DeveloperTool>
         child: NiCardButton(
           margin: EdgeInsets.zero,
           child: SizedBox(
-            height: 228.w,
-            child: Padding(
-              padding: padding,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            height: 230.w,
+            child: OpenContainer<String>(
+              useRootNavigator: false,
+              tappable: true,
+              transitionType: ContainerTransitionType.fade,
+              openBuilder: (BuildContext context, _) {
+                return TermarePty(
+                  pseudoTerminal: adbShell,
+                  controller: adbShellController,
+                );
+              },
+              transitionDuration: const Duration(milliseconds: 300),
+              openColor: Colors.transparent,
+              closedElevation: 0.0,
+              openElevation: 0.0,
+              closedColor: Colors.transparent,
+              closedBuilder: (
+                BuildContext context,
+                VoidCallback openContainer,
+              ) {
+                return Padding(
+                  padding: padding,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const ItemHeader(color: CandyColors.candyGreen),
-                      Text(
-                        'SHELL',
-                        style: TextStyle(
-                          height: 1.0,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const ItemHeader(color: CandyColors.candyGreen),
+                              Text(
+                                'SHELL',
+                                style: TextStyle(
+                                  height: 1.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          GestureWithScale(
+                            onTap: () {
+                              enableInput = false;
+                              setState(() {});
+                              openContainer();
+                            },
+                            child: const Icon(Icons.fullscreen),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4.w,
+                      ),
+                      Expanded(
+                        child: LayoutBuilder(
+                          builder: (_, box) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(4.w),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: AppColors.background,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(4.w),
+                                  child: Builder(builder: (context) {
+                                    if (widget.entity.isOTG) {
+                                      return const OTGTerminal();
+                                    }
+                                    return TermarePty(
+                                      key: const Key('TermarePty'),
+                                      pseudoTerminal: adbShell,
+                                      controller: adbShellController,
+                                      enableInput: enableInput,
+                                    );
+                                  }),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 4.w,
-                  ),
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (_, box) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(4.w),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.background,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(4.w),
-                              child: Builder(builder: (context) {
-                                if (widget.entity.isOTG) {
-                                  return const OTGTerminal();
-                                }
-                                return TermarePty(
-                                  pseudoTerminal: TerminalUtil.getShellTerminal(
-                                    exec: 'adb',
-                                    arguments: [
-                                      '-s',
-                                      widget.entity.serial,
-                                      'shell'
-                                    ],
-                                  ),
-                                  controller: TermareController(
-                                    fontFamily:
-                                        '${Config.flutterPackage}MenloforPowerline',
-                                    theme: TermareStyles.macos.copyWith(
-                                      backgroundColor: AppColors.background,
-                                    ),
-                                  ),
-                                );
-                              }),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),
@@ -531,7 +590,9 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
     Log.w(result);
     if (result == '5555') {
       isCheck = true;
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     }
   }
 
@@ -579,7 +640,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
               value: isCheck,
               onChanged: (_) async {
                 isCheck = !isCheck;
-                final int value = isCheck ? 5555 : -1;
+                final int value = isCheck ? 5555 : 0;
                 // String result = await exec(
                 //   'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
                 //   'adb -s ${widget.serial} shell stop adbd\n'
@@ -587,22 +648,63 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 // );
                 // print(result);
                 String result;
-                if (isCheck) {
-                  await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value',
-                  );
-                  await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} tcpip 5555',
-                  );
-                } else {
-                  await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value',
-                  );
-                  await widget.adbChannel.execCmmand(
-                    'adb -s ${widget.serial} usb',
-                  );
-                }
+                await widget.adbChannel.changeNetDebugStatus(value);
                 print(result);
+                setState(() {});
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SwitchItem extends StatefulWidget {
+  const SwitchItem({
+    Key key,
+    this.title,
+    this.onOpen,
+    this.onClose,
+  }) : super(key: key);
+  final String title;
+  final bool Function() onOpen;
+  final bool Function() onClose;
+  @override
+  _SwitchItemState createState() => _SwitchItemState();
+}
+
+class _SwitchItemState extends State<SwitchItem> {
+  bool isCheck = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: Dimens.gap_dp48,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Switch(
+              value: isCheck,
+              onChanged: (_) {
+                if (isCheck) {
+                  isCheck = widget.onClose();
+                } else {
+                  isCheck = widget.onOpen();
+                }
                 setState(() {});
               },
             )
@@ -677,6 +779,83 @@ class __DeveloperItemState extends State<_DeveloperItem> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class GestureWithScale extends StatefulWidget {
+  const GestureWithScale({
+    Key key,
+    this.onTap,
+    this.child,
+  }) : super(key: key);
+  final void Function() onTap;
+  final Widget child;
+
+  @override
+  _GestureWithScaleState createState() => _GestureWithScaleState();
+}
+
+class _GestureWithScaleState extends State<GestureWithScale>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()
+        ..scale(
+          1.0 - animationController.value * 0.02,
+        ),
+      child: GestureDetector(
+        onTap: () {
+          if (widget.onTap == null) {
+            return;
+          }
+          setState(() {});
+          Feedback.forLongPress(context);
+          Feedback.forTap(context);
+          animationController.reverse();
+          widget.onTap();
+        },
+        onTapDown: (_) {
+          if (widget.onTap == null) {
+            return;
+          }
+          animationController.forward();
+          Feedback.forLongPress(context);
+          setState(() {});
+        },
+        onTapCancel: () {
+          if (widget.onTap == null) {
+            return;
+          }
+          animationController.reverse();
+          Feedback.forLongPress(context);
+          Feedback.forTap(context);
+          setState(() {});
+        },
+        child: widget.child,
       ),
     );
   }

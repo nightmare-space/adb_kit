@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
+import 'package:path/path.dart' as p;
 
 final customDragData = DragDataKey<Map>('custom-drag-data');
 typedef PerformCall = void Function(List<String> paths);
@@ -83,7 +84,13 @@ class _DropTargetState extends State<DropTarget> {
                         fontSize: 14.w,
                         color: AppColors.fontColor,
                       ),
-                      child: Text(_describeDragData()),
+                      child: Text(
+                        _describeDragData(),
+                        style: const TextStyle(
+                          color: AppColors.accent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   )
                 : Center(
@@ -129,8 +136,8 @@ class _DropTargetState extends State<DropTarget> {
   String _describeDragData() {
     final res = StringBuffer();
 
-    for (final f in _files ?? []) {
-      res.writeln('$f');
+    for (final String f in _files ?? []) {
+      res.writeln('${p.basename(f)},');
     }
     for (final uri in _uris ?? []) {
       res.writeln('$uri');

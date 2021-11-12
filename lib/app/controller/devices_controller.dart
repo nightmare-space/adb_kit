@@ -63,10 +63,12 @@ class DevicesController extends GetxController {
   Future<void> init() async {
     PluginUtil.addHandler((call) {
       if (call.method == 'DeviceAttach') {
-        otgDevices.add(DevicesEntity(
-          call.arguments.toString(),
+        final DevicesEntity entity = DevicesEntity(
+          '',
           'OTG',
-        ));
+        );
+        entity.productModel = call.arguments.toString();
+        otgDevices.add(entity);
       } else if (call.method == 'DeviceDetach') {
         Log.e('DeviceDetach');
         otgDevices.clear();

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +24,13 @@ class InstallApkDialog extends StatefulWidget {
 class _InstallApkDialogState extends State<InstallApkDialog> {
   String currentFile = '';
   double progress = 1;
+  int fileIndex = 0;
+  int fileNum = 0;
+
   @override
   void initState() {
     super.initState();
+    fileNum = widget.paths.length;
     if (Platform.isAndroid) {
       progress = 0;
     }
@@ -46,6 +50,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       currentFile = name;
       setState(() {});
       await widget.adbChannel.install(path);
+      fileIndex++;
       // showToast('$name 已上传');
     }
     Navigator.of(context).pop();
@@ -64,13 +69,43 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '安装 $currentFile 中...',
-                  style: TextStyle(
-                    color: AppColors.accent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.w,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      '安装 $currentFile 中...',
+                      style: TextStyle(
+                        color: AppColors.fontColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.w,
+                      ),
+                    ),
+                    RichText(
+                        text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: '(',
+                          style: TextStyle(
+                            color: AppColors.fontColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '$fileIndex',
+                          style: const TextStyle(
+                            color: AppColors.accent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '/$fileNum)',
+                          style: const TextStyle(
+                            color: AppColors.fontColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )),
+                  ],
                 ),
                 SizedBox(
                   height: 12.w,
