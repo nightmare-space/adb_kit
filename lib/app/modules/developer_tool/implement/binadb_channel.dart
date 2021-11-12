@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:path/path.dart';
 
@@ -26,5 +26,18 @@ class BinADBChannel extends ADBChannel {
   Future<void> push(String localPath, String remotePath) async {
     final String fileName = basename(localPath);
     await execCmmand('adb -s $serial push $localPath $remotePath$fileName');
+  }
+
+  @override
+  Future<void> changeNetDebugStatus(int port) async {
+    if (port == 5555) {
+      await execCmmand(
+        'adb -s $serial tcpip 5555',
+      );
+    } else {
+      await execCmmand(
+        'adb -s $serial usb',
+      );
+    }
   }
 }

@@ -69,6 +69,34 @@ public class MainActivity extends FlutterActivity {
                         execCmmandFromFlutter(cmd, result);
                     }).start();
                     break;
+                case "tcpip":
+                    int port = (int) call.arguments;
+                    String resultData = "";
+                    String sendData = "tcpip:" + port;
+                    try {
+                        AdbStream cmdStream;
+                        if (port == 5555) {
+                            cmdStream = adbConnection.open(sendData);
+                        } else {
+                            cmdStream = adbConnection.open("usb:");
+                        }
+                        while (!cmdStream.isClosed()) {
+                            try {
+                                resultData = new String(cmdStream.read()).trim();
+                                Log.d(Const.TAG, resultData);
+                            } catch (IOException e) {
+                                // there must be a Stream Close Exception
+                                break;
+                            }
+                        }
+                        String finalResultData = resultData;
+                        runOnUiThread(() -> {
+                            result.success(finalResultData);
+                        });
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "push":
                     ArrayList<String> args = (ArrayList<String>) call.arguments;
                     String localPath = args.get(0);
@@ -406,6 +434,7 @@ class AdbMessageHandler extends Handler {
                 activity.closeWaiting();
                 activity.channel.invokeMethod("CloseOTGDialog", null);
                 activity.initCommand();
+                Log.w(MainActivity.tag, activity.mDevice.toString());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     activity.channel.invokeMethod("DeviceAttach", activity.mDevice.getProductName());
                 }

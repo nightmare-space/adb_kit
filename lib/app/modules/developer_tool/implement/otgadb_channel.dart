@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/modules/developer_tool/foundation/adb_channel.dart';
+import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:path/path.dart';
 import 'package:signale/signale.dart';
@@ -24,5 +24,11 @@ class OTGADBChannel extends ADBChannel {
   @override
   Future<void> push(String localPath, String remotePath) async {
     await PluginUtil.pushToOTG(localPath, remotePath);
+  }
+
+  @override
+  Future<void> changeNetDebugStatus(int port) async {
+    final String data = await PluginUtil.changeNetDbugStatus(port);
+    Log.w('changeNetDebugStatus ->$data');
   }
 }
