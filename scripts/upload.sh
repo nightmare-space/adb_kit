@@ -1,4 +1,4 @@
-version='1.2.3'
+version='1.2.4'
 app_name='AdbTool'
 target=root@$server:/home/nightmare/YanTool/resources/AdbTool
 if [ -f $app_name'_macOS.tar' ]; then

@@ -185,7 +185,7 @@ class _DevicesItemState extends State<DevicesItem>
                             return;
                           }
                           AdbUtil.stopPoolingListDevices();
-                          Get.to(DeveloperTool(
+                          await Get.to(DeveloperTool(
                             entity: widget.devicesEntity,
                           ));
                           AdbUtil.startPoolingListDevices();
