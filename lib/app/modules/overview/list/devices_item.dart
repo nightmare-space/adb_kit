@@ -82,12 +82,12 @@ class _DevicesItemState extends State<DevicesItem>
 
   @override
   Widget build(BuildContext context) {
-    _title = widget.devicesEntity.productModel;
+    _title = widget.devicesEntity.productModel ?? widget.devicesEntity.serial;
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () {},
       child: Container(
-        height: 54,
+        height: 54.w,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -150,7 +150,10 @@ class _DevicesItemState extends State<DevicesItem>
                       if (isAddress(widget.devicesEntity.serial))
                         IconButton(
                           tooltip: '断开连接',
-                          icon: const Icon(Icons.clear),
+                          icon: Icon(
+                            Icons.clear,
+                            size: 24.w,
+                          ),
                           onPressed: () async {
                             AdbUtil.stopPoolingListDevices();
                             await AdbUtil.disconnectDevices(
@@ -165,7 +168,10 @@ class _DevicesItemState extends State<DevicesItem>
                       if (!widget.devicesEntity.isConnect)
                         IconButton(
                           tooltip: '重新连接',
-                          icon: const Icon(Icons.refresh),
+                          icon: Icon(
+                            Icons.refresh,
+                            size: 24.w,
+                          ),
                           onPressed: () async {
                             Log.e(widget.devicesEntity.serial);
                             AdbUtil.reconnectDevices(
@@ -174,9 +180,9 @@ class _DevicesItemState extends State<DevicesItem>
                           },
                         ),
                       IconButton(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_forward_ios,
-                          size: 18,
+                          size: 24.w,
                           color: Colors.black87,
                         ),
                         onPressed: () async {
@@ -199,10 +205,11 @@ class _DevicesItemState extends State<DevicesItem>
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 6.w,
                 ),
                 child: Container(
+                  height: 4.w,
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -215,7 +222,7 @@ class _DevicesItemState extends State<DevicesItem>
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.w),
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation(
                         Theme.of(context).primaryColor,

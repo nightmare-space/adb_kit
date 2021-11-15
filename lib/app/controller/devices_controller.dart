@@ -127,6 +127,7 @@ class DevicesController extends GetxController {
     // }
     if (adbIsStarting) {
       adbIsStarting = false;
+      Log.w('adbIsStarting = false');
       update();
     }
     // if (kReleaseMode) {
@@ -143,9 +144,13 @@ class DevicesController extends GetxController {
           listTmp.first,
           listTmp.last,
         );
-        final String model = await execCmd(
-          'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
-        );
+        // Log.w('获取${listTmp.first}信息...');
+        String model;
+        try {
+          model = await execCmd(
+            'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+          );
+        } catch (e) {}
         devicesEntity.productModel = model;
         if (!devicesEntity.serial.contains('emulator')) {
           tmp.add(devicesEntity);

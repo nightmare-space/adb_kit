@@ -49,7 +49,7 @@ class OnlineView extends GetView<OnlineController> {
                             width: Dimens.gap_dp6,
                           ),
                           SizedBox(
-                            width:2.w,
+                            width: 2.w,
                           ),
                           Text(
                             ' ${entity.address}',
@@ -74,9 +74,10 @@ class OnlineView extends GetView<OnlineController> {
                           icon: Transform(
                             alignment: Alignment.center,
                             transform: Matrix4.identity(),
-                            child: const Icon(
+                            child: Icon(
                               Icons.wifi_tethering,
                               color: Colors.black54,
+                              size: 20.w,
                             ),
                           ),
                           onPressed: () async {
@@ -89,31 +90,28 @@ class OnlineView extends GetView<OnlineController> {
                         SizedBox(
                           width: Dimens.gap_dp16,
                         ),
-                        Material(
-                          color: Colors.transparent,
-                          child: IconButton(
-                            splashRadius: 40,
-                            tooltip: '尝试连接这个设备',
-                            icon: Center(
-                              child: SvgPicture.asset(
-                                GlobalAssets.connect,
-                                color: Colors.black54,
-                                width: 20,
-                              ),
+                        IconButton(
+                          splashRadius: 40,
+                          tooltip: '尝试连接这个设备',
+                          icon: Center(
+                            child: SvgPicture.asset(
+                              GlobalAssets.connect,
+                              color: Colors.black54,
+                              width: 20.w,
                             ),
-                            onPressed: () async {
-                              AdbUtil.startPoolingListDevices();
-                              AdbResult result;
-                              try {
-                                result = await AdbUtil.connectDevices(
-                                  entity.address,
-                                );
-                                showToast(result.message);
-                              } on AdbException catch (e) {
-                                showToast(e.message);
-                              }
-                            },
                           ),
+                          onPressed: () async {
+                            AdbUtil.startPoolingListDevices();
+                            AdbResult result;
+                            try {
+                              result = await AdbUtil.connectDevices(
+                                entity.address,
+                              );
+                              showToast(result.message);
+                            } on AdbException catch (e) {
+                              showToast(e.message);
+                            }
+                          },
                         ),
                         SizedBox(
                           width: Dimens.gap_dp8,

@@ -5,5 +5,5 @@ abstract class ADBChannel {
 
   Future<void> push(String localPath, String remotePath);
   Future<void> install(String file);
-  Future<void> changeNetDebugStatus(int port );
+  Future<void> changeNetDebugStatus(int port);
 }

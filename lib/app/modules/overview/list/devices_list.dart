@@ -29,14 +29,14 @@ class _DevicesListState extends State<DevicesList> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DevicesController>(builder: (context) {
-      // Log.e('刷新');
+      Log.e('DevicesList 刷新');
       return Column(
         children: [
           Stack(
             alignment: Alignment.center,
             children: [
               SizedBox(
-                height: 54.0 * controller.devicesEntitys.length,
+                height: 54.w * controller.devicesEntitys.length,
                 child: AnimatedList(
                   controller: ScrollController(),
                   physics: const NeverScrollableScrollPhysics(),

@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/model/adb_historys.dart';
+import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
@@ -15,12 +16,7 @@ class HistoryPage extends GetView<HistoryController> {
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('历史连接'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        leading: const Menubutton(),
       );
     }
     return Scaffold(

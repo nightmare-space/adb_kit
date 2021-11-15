@@ -1,6 +1,6 @@
-
 import 'dart:ui';
 
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -20,22 +20,6 @@ class _LogPageState extends State<LogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final TermareController controller = TermareController(
-      enableLog: false,
-      theme: TermareStyles.macos.copyWith(
-        cursorColor: Colors.transparent,
-        backgroundColor: AppColors.background,
-      ),
-    );
-    final Size size = window.physicalSize;
-    final double screenWidth = size.width / window.devicePixelRatio;
-    final double screenHeight = size.height / window.devicePixelRatio;
-    controller.setWindowSize(
-      Size(screenWidth, screenHeight),
-    );
-    for (final String line in Log.buffer.toString().split('\n')) {
-      controller.write(line + '\r\n');
-    }
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
@@ -62,7 +46,7 @@ class _LogPageState extends State<LogPage> {
             child: Padding(
               padding: EdgeInsets.all(8.w),
               child: TermareView(
-                controller: controller,
+                controller: Global().logTerminalCTL,
               ),
             ),
           ),

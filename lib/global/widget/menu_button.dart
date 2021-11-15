@@ -9,7 +9,10 @@ class Menubutton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: NiIconButton(
-        child: const Icon(Icons.menu),
+        child: Icon(
+          Icons.menu,
+          size: 24.w,
+        ),
         onTap: () {
           Scaffold.of(scaffoldContext).openDrawer();
         },

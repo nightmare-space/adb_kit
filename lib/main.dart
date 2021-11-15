@@ -1,15 +1,19 @@
 library adb_tool;
 
+import 'dart:io';
+import 'dart:ui';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'global/instance/global.dart';
+import 'themes/app_colors.dart';
 import 'themes/theme.dart';
 
 // 这个值由shell去替换
@@ -18,12 +22,13 @@ bool useNativeShell = false;
 void main() {
   // 初始化运行时环境
   RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  WidgetsFlutterBinding.ensureInitialized();
   if (useNativeShell) {
     runApp(NativeShellWrapper());
   } else {
     runApp(const AppEntryPoint());
   }
-  WidgetsFlutterBinding.ensureInitialized();
+
   Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -36,16 +41,62 @@ void main() {
 }
 
 // App 的顶级widget
-class AppEntryPoint extends StatelessWidget {
+class AppEntryPoint extends StatefulWidget {
   const AppEntryPoint({
     Key key,
     this.isNativeShell = false,
   }) : super(key: key);
-
   final bool isNativeShell;
-  // This widget is the root of your application.
+
+  @override
+  _AppEntryPointState createState() => _AppEntryPointState();
+}
+
+class _AppEntryPointState extends State<AppEntryPoint>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    _lastSize = WidgetsBinding.instance.window.physicalSize;
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  Size _lastSize;
+
+  @override
+  void didChangeMetrics() {
+    _lastSize = WidgetsBinding.instance.window.physicalSize;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Log.w('_lastSize -> $_lastSize');
+    if (Platform.isAndroid && _lastSize == null) {
+      return Material(
+        child: Center(
+          child: SpinKitDualRing(
+            color: AppColors.accent,
+            size: 20.w,
+            lineWidth: 2.w,
+          ),
+        ),
+      );
+    }
+    if (_lastSize != null) {
+      final double screenWidth = _lastSize.width / window.devicePixelRatio;
+      final double screenHeight = _lastSize.height / window.devicePixelRatio;
+      Global().initTerminalSize(
+        Size(screenWidth, screenHeight),
+      );
+    }
+
     return OrientationBuilder(
       builder: (_, Orientation orientation) {
         return ToastApp(
@@ -76,7 +127,7 @@ class AppEntryPoint extends StatelessWidget {
                   isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
 
               /// NativeShell
-              if (isNativeShell) {
+              if (widget.isNativeShell) {
                 return WindowLayoutProbe(
                   child: Container(
                     width: 800,
@@ -134,6 +185,11 @@ class MainWindowState extends WindowState {
   @override
   WindowSizingMode get windowSizingMode =>
       WindowSizingMode.atLeastIntrinsicSize;
+
+  @override
+  Future<void> windowCloseRequested() async {
+    exit(0);
+  }
 
   @override
   Widget build(BuildContext context) {

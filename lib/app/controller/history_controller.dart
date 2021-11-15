@@ -68,14 +68,14 @@ class HistoryController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Log.w('$this init');
+    // Log.w('$this init');
     readLocalStorage();
   }
 
   @override
   void onReady() {
     super.onReady();
-    Log.w('$this onReady');
+    // Log.w('$this onReady');
   }
 
   Future<void> saveToLocal() async {

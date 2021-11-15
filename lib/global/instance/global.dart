@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
@@ -18,8 +19,7 @@ import 'package:termare_view/termare_view.dart';
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
-    pseudoTerminal = TerminalUtil.getShellTerminal();
-    pseudoTerminal.write('clear\r');
+    defaultLogger.logDelegate = const Print();
   }
 
   static Global get instance => _getInstance();
@@ -52,6 +52,15 @@ class Global {
     enableLog: false,
   )..hideCursor();
 
+  final TermareController logTerminalCTL = TermareController(
+    enableLog: false,
+    theme: TermareStyles.macos.copyWith(
+      cursorColor: Colors.transparent,
+      backgroundColor: AppColors.background,
+      fontSize: 10,
+    ),
+  );
+
   Future<void> _receiveBoardCast() async {
     multicast.addListener((message, address) async {
       if (message.startsWith('find')) {
@@ -59,10 +68,14 @@ class Global {
         // print('message -> $message');
         if (unique != await UniqueUtil.getDevicesId()) {
           // 触发UI上的更新
-          final onlineController = Get.find<OnlineController>();
-          onlineController.addDevices(
-            DeviceEntity(unique, address),
-          );
+          try {
+            // try不能省
+            // MaterialApp 可能还没加载
+            final onlineController = Get.find<OnlineController>();
+            onlineController.addDevices(
+              DeviceEntity(unique, address),
+            );
+          } catch (e) {}
         }
         return;
       }
@@ -105,16 +118,16 @@ class Global {
 
   List<String> androidFiles = [
     'adb',
-    'adb_binary',
-    'libbrotlidec.so',
-    'libbrotlienc.so',
-    'libc++_shared.so',
-    'liblz4.so.1',
-    'libprotobuf.so',
-    'libusb-1.0.so',
-    'libz.so.1',
-    'libzstd.so.1',
-    'libbrotlicommon.so',
+    'adb.bin',
+    // 'libbrotlidec.so',
+    // 'libbrotlienc.so',
+    // 'libc++_shared.so',
+    // 'liblz4.so.1',
+    // 'libprotobuf.so',
+    // 'libusb-1.0.so',
+    // 'libz.so.1',
+    // 'libzstd.so.1',
+    // 'libbrotlicommon.so',
   ];
   List<String> globalFiles = [
     'server.jar',
@@ -132,10 +145,10 @@ class Global {
         await AssetsUtils.copyAssetToPath('assets/android/$fileName', filePath);
         final ProcessResult result = await Process.run(
           'chmod',
-          <String>['+x', filePath],
+          ['+x', filePath],
         );
         Log.d(
-          '写入文件 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+          '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
         );
       }
     }
@@ -145,24 +158,58 @@ class Global {
       await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
       final ProcessResult result = await Process.run(
         'chmod',
-        <String>['+x', filePath],
+        ['+x', filePath],
       );
       Log.d(
-        '写入文件 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+        '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
       );
     }
   }
 
   Future<void> initGlobal() async {
-    print('initGlobal');
+    Log.i('initGlobal');
     if (isInit) {
       return;
     }
     isInit = true;
+    // 等待 MaterialApp 加载完成，正确获取到屏幕大小
+    // 不然logTerminalCTL不能正常的换行
+    await Future.delayed(const Duration(milliseconds: 200));
+    // final double screenWidth = size.width / window.devicePixelRatio;
+    // final double screenHeight = size.height / window.devicePixelRatio;
+    // logTerminalCTL.setWindowSize(
+    //   Size(screenWidth, screenHeight),
+    // );
+    pseudoTerminal = TerminalUtil.getShellTerminal();
+    pseudoTerminal.write('clear\r');
     installAdbToEnvir();
     _receiveBoardCast();
     _sendBoardCast();
     _initNfcModule();
     _socketServer();
   }
+
+  void initTerminalSize(Size size) {
+    if (size == Size.zero) {
+      return;
+    }
+    // 32 是日志界面的边距
+    logTerminalCTL.setWindowSize(Size(size.width - 32.w, size.height));
+  }
+}
+
+class Print implements Logable {
+  const Print();
+  @override
+  void log(DateTime time, Object object) {
+    final String data =
+        '[${_twoDigits(time.hour)}:${_twoDigits(time.minute)}:${_twoDigits(time.second)}] $object';
+    Global().logTerminalCTL.write(data + '\r\n');
+    print(data);
+  }
+}
+
+String _twoDigits(int n) {
+  if (n >= 10) return "${n}";
+  return "0${n}";
 }

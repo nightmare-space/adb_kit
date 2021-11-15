@@ -81,7 +81,10 @@ class _DeveloperToolState extends State<DeveloperTool>
   void initState() {
     super.initState();
     controller = TabController(length: 3, vsync: this);
-    adbShell = TerminalUtil.getShellTerminal();
+    adbShell = TerminalUtil.getShellTerminal(
+      exec: 'adb',
+      arguments: ['-s', widget.entity.serial, 'shell'],
+    );
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
