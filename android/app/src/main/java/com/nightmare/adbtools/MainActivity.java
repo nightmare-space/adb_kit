@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -290,10 +291,15 @@ public class MainActivity extends FlutterActivity {
             } else if (Message.USB_PERMISSION.equals(action)) {
                 Log.d(Const.TAG, "From receiver!");
                 UsbDevice usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                if (mManager.hasPermission(usbDevice))
-                    asyncRefreshAdbConnection(usbDevice);
-                else
-                    mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), 0));
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    //user choose YES for your previously popup window asking for grant perssion for this usb device
+                    if (null != usbDevice) {
+                        asyncRefreshAdbConnection(usbDevice);
+                    }
+                } else {
+                    //user choose NO for your previously popup window asking for grant perssion for this usb device
+                    Toast.makeText(context, String.valueOf("您没有授予权限,我没法使用这个设备喔"), Toast.LENGTH_LONG).show();
+                }
             }
         }
     };

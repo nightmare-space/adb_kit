@@ -98,14 +98,14 @@ public class AdbConnection implements Closeable {
                     try {
                         /* Read and parse a message off the socket's input stream */
                         AdbMessage msg = AdbMessage.parseAdbMessage(channel);
-                        Log.e("Nightmare", "消息头->" + new String(msg.getMessage()));
+                        Log.e("Nightmare", "<<<<<<<<" + new String(msg.getMessage()));
                         /* Verify magic and checksum */
                         if (!AdbProtocol.validateMessage(msg)) {
                             continue;
                         }
 //                        Log.e("Nightmare", "getCommand" + msg.getCommand());
                         if (msg.getPayloadLength() != 0) {
-                            Log.e("Nightmare", "消息体->" + new String(msg.getPayload()));
+                            Log.e("Nightmare", "<<<<<<<<" + new String(msg.getPayload()));
                         }
                         switch (msg.getCommand()) {
                             /* Stream-oriented commands */

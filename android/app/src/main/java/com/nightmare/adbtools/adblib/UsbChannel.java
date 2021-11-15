@@ -94,7 +94,7 @@ public class UsbChannel implements AdbChannel {
 //    @Override
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void writex(byte[] buffer) throws IOException {
-        Log.i("Nightmare", new String(buffer));
+        Log.i("Nightmare", ">>>>>>>>" + new String(buffer));
         int offset = 0;
         int transferred = 0;
 
