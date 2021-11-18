@@ -89,7 +89,8 @@ class _AppEntryPointState extends State<AppEntryPoint>
         ),
       );
     }
-    if (_lastSize != null) {
+    // desktop初始会是 2,2
+    if (_lastSize != null && _lastSize.width > 100) {
       final double screenWidth = _lastSize.width / window.devicePixelRatio;
       final double screenHeight = _lastSize.height / window.devicePixelRatio;
       Global().initTerminalSize(

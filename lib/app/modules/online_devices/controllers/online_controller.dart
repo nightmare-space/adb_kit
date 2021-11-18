@@ -45,9 +45,9 @@ class OnlineController extends GetxController {
     // this.addListener(() { });
     // removeListener(() { });
     // notifyChildrens();
-    update();
     if (!list.contains(devices)) {
       list.add(devices);
     }
+    update();
   }
 }

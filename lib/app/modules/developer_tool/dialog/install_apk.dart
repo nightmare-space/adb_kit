@@ -49,7 +49,11 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
-      await widget.adbChannel.install(path);
+      try {
+        await widget.adbChannel.install(path);
+      } catch (e) {
+        showToast('$name 安装失败，输出:$e');
+      }
       fileIndex++;
       // showToast('$name 已上传');
     }

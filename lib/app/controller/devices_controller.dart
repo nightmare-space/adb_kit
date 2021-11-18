@@ -150,7 +150,9 @@ class DevicesController extends GetxController {
           model = await execCmd(
             'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
           );
-        } catch (e) {}
+        } catch (e) {
+          Log.w(e);
+        }
         devicesEntity.productModel = model;
         if (!devicesEntity.serial.contains('emulator')) {
           tmp.add(devicesEntity);
