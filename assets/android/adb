@@ -7,5 +7,5 @@ dir="$(cd "$(dirname "$0")"; pwd)";
 export HOME=$dir;
 export TMPDIR=$dir;
 export LD_LIBRARY_PATH=$dir
-$dir/adb.bin "$@";
+$dir/adb_binary "$@";
 
