@@ -245,7 +245,11 @@ class _OverviewPageState extends State<OverviewPage> {
                               if (tmp.length >= 2) {
                                 port = tmp[1];
                               }
-                              HistoryController.updateHistory(address, port);
+                              HistoryController.updateHistory(
+                                address: address,
+                                port: port,
+                                name: address,
+                              );
                             } on AdbException catch (e) {
                               showToast(e.message);
                             }

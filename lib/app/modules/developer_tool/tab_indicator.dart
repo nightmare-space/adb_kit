@@ -89,6 +89,8 @@ class _RoundedUnderlinePainter extends BoxPainter {
             ),
       topLeft: Radius.circular(radius),
       topRight: Radius.circular(radius),
+      bottomLeft: Radius.circular(radius),
+      bottomRight: Radius.circular(radius),
     );
   }
 

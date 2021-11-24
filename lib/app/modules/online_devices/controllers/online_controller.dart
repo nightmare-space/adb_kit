@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 
 class DeviceEntity {
   DeviceEntity(this.unique, this.address);
@@ -27,7 +28,11 @@ class DeviceEntity {
 
 class OnlineController extends GetxController {
   final list = <DeviceEntity>[].obs;
-
+  final Debouncer _debouncer = Debouncer(
+    delay: const Duration(
+      milliseconds: 800,
+    ),
+  );
   @override
   void onInit() {
     super.onInit();
@@ -41,13 +46,23 @@ class OnlineController extends GetxController {
   @override
   void onClose() {}
 
-  void addDevices(DeviceEntity devices) {
-    // this.addListener(() { });
-    // removeListener(() { });
-    // notifyChildrens();
+  void updateDevices(DeviceEntity devices) {
+    // Log.w('list -> $list');
     if (!list.contains(devices)) {
       list.add(devices);
+    } else {
+      // list.firstWhere((element) =>element.address== devices.address);
     }
+
+    _debouncer.call(() {
+      removeOnlineItem(devices);
+    });
     update();
+  }
+
+  void removeOnlineItem(DeviceEntity devices) {
+    list.remove(devices);
+    update();
+    // Log.w('removeOnlineItem -> $list');
   }
 }

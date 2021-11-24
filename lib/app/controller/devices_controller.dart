@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:termare_view/termare_view.dart';
 
+import 'history_controller.dart';
+
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
   static String modelGetKey = 'ro.product.model';
@@ -54,10 +56,6 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {
-    init();
-  }
-
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -137,7 +135,7 @@ class DevicesController extends GetxController {
       final List<String> outList = data.split('\n');
       // 删除 `List of devices attached`
       outList.removeAt(0);
-      final List<DevicesEntity> tmp = [];
+      final List<DevicesEntity> tmpDevices = [];
       for (final String str in outList) {
         final List<String> listTmp = str.split(RegExp('\\s+'));
         final DevicesEntity devicesEntity = DevicesEntity(
@@ -155,16 +153,20 @@ class DevicesController extends GetxController {
         }
         devicesEntity.productModel = model;
         if (!devicesEntity.serial.contains('emulator')) {
-          tmp.add(devicesEntity);
+          // 更新这个设备的历史记录的设备名
+          final List<String> tmp = devicesEntity.serial.split(':');
+          final String address = tmp[0];
+          HistoryController.updateHistory(
+            name: model,
+            address: address,
+          );
+          tmpDevices.add(devicesEntity);
         }
       }
       otgDevices.forEach((value) {
-        tmp.add(value);
+        tmpDevices.add(value);
       });
-      // for (final DevicesEntity devicesEntity in devicesEntitys) {
-      //   // print(devicesEntity.serial);
-      // }
-      updateWithAnima(tmp);
+      updateWithAnima(tmpDevices);
     }
   }
 

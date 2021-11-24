@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -99,150 +100,173 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    const ItemHeader(color: CandyColors.candyPurpleAccent),
-                    Text(
-                      '本机IP',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.fontTitle,
+                CardItem(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const ItemHeader(
+                              color: CandyColors.candyPurpleAccent),
+                          Text(
+                            '本机IP',
+                            style: TextStyle(
+                              fontSize: Dimens.font_sp20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.fontTitle,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8.w,
-                ),
-                InkWell(
-                  onTap: () async {
-                    await Clipboard.setData(ClipboardData(
-                      text: address.join('\n'),
-                    ));
-                    showToast('IP已复制');
-                  },
-                  borderRadius: BorderRadius.circular(12.w),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.w),
-                      border: Border.all(
-                        color: Colors.black.withOpacity(0.1),
-                        width: 1.w,
+                      SizedBox(
+                        height: 8.w,
                       ),
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.w, horizontal: 8.w),
-                      child: Text(
-                        address.join('\n'),
-                        style: TextStyle(
-                          fontSize: Dimens.font_sp16,
+                      InkWell(
+                        onTap: () async {
+                          await Clipboard.setData(ClipboardData(
+                            text: address.join('\n'),
+                          ));
+                          showToast('IP已复制');
+                        },
+                        borderRadius: BorderRadius.circular(12.w),
+                        child: Text(
+                          address.join('\n'),
+                          style: TextStyle(
+                            fontSize: Dimens.font_sp16,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 SizedBox(
                   height: 8.w,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const ItemHeader(color: CandyColors.candyBlue),
-                    Text(
-                      '连接方法',
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp20,
-                        fontWeight: FontWeight.bold,
+                CardItem(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const ItemHeader(color: CandyColors.candyBlue),
+                          Text(
+                            '连接方法',
+                            style: TextStyle(
+                              fontSize: Dimens.font_sp20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Text(
-                    '1.设备与PC处于于一个局域网',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
-                  child: Text(
-                    '2.打开PC的终端模拟器，执行连接',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimens.gap_dp8,
-                    vertical: Dimens.gap_dp8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.contentBorder,
-                    borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                  ),
-                  child: RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'adb connect \$IP',
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Row(
+                          children: [
+                            // Container(
+                            //   width: 24.w,
+                            //   height: 24.w,
+                            //   decoration: BoxDecoration(
+                            //     color: AppColors.accent.withOpacity(0.1),
+                            //     borderRadius: BorderRadius.circular(12.w),
+                            //   ),
+                            //   child: Center(
+                            //     child: Text(
+                            //       '1',
+                            //       style: TextStyle(
+                            //         fontSize: 12.w,
+                            //         fontWeight: FontWeight.w500,
+                            //         height: 1.0,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            Text(
+                              '1.设备与PC处于于一个局域网',
+                              style: TextStyle(
+                                fontSize: Dimens.font_sp14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
+                        child: Text(
+                          '2.打开PC的终端模拟器，执行连接',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                            fontSize: Dimens.font_sp14,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(
-                          text: '    \$IP代表的是本机IP',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Dimens.gap_dp8,
+                          vertical: Dimens.gap_dp8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.contentBorder,
+                          borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                        ),
+                        child: RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'adb connect \$IP',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '    \$IP代表的是本机IP',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
-                  child: Text(
-                    '3.执行adb devices查看设备列表是有新增',
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 8.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.contentBorder,
-                    borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-                  ),
-                  child: RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'adb devices',
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
+                        child: Text(
+                          '3.执行adb devices查看设备列表是有新增',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
+                            fontSize: Dimens.font_sp14,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                          vertical: 8.0,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.contentBorder,
+                          borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                        ),
+                        child: RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'adb devices',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

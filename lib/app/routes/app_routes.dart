@@ -12,4 +12,5 @@ abstract class Routes {
   static const history = '$prefix/history';
   static const about = '$prefix/about';
   static const log = '$prefix/log';
+  static const TES = '/tes';
 }

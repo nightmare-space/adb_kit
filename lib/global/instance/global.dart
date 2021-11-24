@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -20,6 +22,7 @@ class Global {
   factory Global() => _getInstance();
   Global._internal() {
     defaultLogger.logDelegate = const Print();
+    HomeBinding().dependencies();
   }
 
   static Global get instance => _getInstance();
@@ -42,8 +45,12 @@ class Global {
   Multicast multicast = Multicast(
     port: adbToolUdpPort,
   );
+
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-  PseudoTerminal pseudoTerminal;
+
+  PseudoTerminal pseudoTerminal = TerminalUtil.getShellTerminal()
+    ..write('clear\r');
+
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
@@ -59,7 +66,7 @@ class Global {
       backgroundColor: AppColors.background,
       fontSize: 10,
     ),
-  );
+  )..hideCursor();
 
   Future<void> _receiveBoardCast() async {
     multicast.addListener((message, address) async {
@@ -72,7 +79,7 @@ class Global {
             // try不能省
             // MaterialApp 可能还没加载
             final onlineController = Get.find<OnlineController>();
-            onlineController.addDevices(
+            onlineController.updateDevices(
               DeviceEntity(unique, address),
             );
           } catch (e) {}
@@ -83,7 +90,12 @@ class Global {
   }
 
   Future<void> _sendBoardCast() async {
-    multicast.startSendBoardcast('find ${await UniqueUtil.getDevicesId()}');
+    multicast.startSendBoardcast(
+      'find ${await UniqueUtil.getDevicesId()}',
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
   }
 
   Future<void> _initNfcModule() async {
@@ -106,8 +118,9 @@ class Global {
           );
           showToast(result.message);
           HistoryController.updateHistory(
-            address,
-            '5555',
+            address: address,
+            port: '5555',
+            name: address,
           );
         } on AdbException catch (e) {
           showToast(e.message);
@@ -118,16 +131,16 @@ class Global {
 
   List<String> androidFiles = [
     'adb',
-    'adb.bin',
-    // 'libbrotlidec.so',
-    // 'libbrotlienc.so',
-    // 'libc++_shared.so',
-    // 'liblz4.so.1',
-    // 'libprotobuf.so',
-    // 'libusb-1.0.so',
-    // 'libz.so.1',
-    // 'libzstd.so.1',
-    // 'libbrotlicommon.so',
+    'adb_binary',
+    'libbrotlidec.so',
+    'libbrotlienc.so',
+    'libc++_shared.so',
+    'liblz4.so.1',
+    'libprotobuf.so',
+    'libusb-1.0.so',
+    'libz.so.1',
+    'libzstd.so.1',
+    'libbrotlicommon.so',
   ];
   List<String> globalFiles = [
     'server.jar',
@@ -180,13 +193,13 @@ class Global {
     // logTerminalCTL.setWindowSize(
     //   Size(screenWidth, screenHeight),
     // );
-    pseudoTerminal = TerminalUtil.getShellTerminal();
-    pseudoTerminal.write('clear\r');
-    installAdbToEnvir();
     _receiveBoardCast();
     _sendBoardCast();
     _initNfcModule();
     _socketServer();
+    await installAdbToEnvir();
+    final DevicesController devicesController = Get.find();
+    devicesController.init();
   }
 
   void initTerminalSize(Size size) {

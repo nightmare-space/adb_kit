@@ -16,7 +16,9 @@ class HistoryPage extends GetView<HistoryController> {
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('历史连接'),
-        leading: const Menubutton(),
+        leading: Menubutton(
+          scaffoldContext: context,
+        ),
       );
     }
     return Scaffold(
@@ -42,14 +44,14 @@ class HistoryPage extends GetView<HistoryController> {
                 onTap: () async {
                   AdbResult result;
                   try {
+                    String suffix = '';
+                    if (adbEntity.port != null) {
+                      suffix = ':${adbEntity.port}';
+                    }
                     result = await AdbUtil.connectDevices(
-                      adbEntity.address + ':' + adbEntity.port,
+                      adbEntity.address + suffix,
                     );
                     showToast(result.message);
-                    HistoryController.updateHistory(
-                      adbEntity.address,
-                      adbEntity.port,
-                    );
                   } on AdbException catch (e) {
                     showToast(e.message);
                   }
@@ -66,15 +68,39 @@ class HistoryPage extends GetView<HistoryController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'IP地址：${adbEntity.address} 端口：${adbEntity.port}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                adbEntity.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: CandyColors.orange,
+                                  borderRadius: BorderRadius.circular(4.w),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 4.w,
+                                  vertical: 2.w,
+                                ),
+                                child: Text(
+                                  adbEntity.address,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontSize: 10.w,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Text(
                             '上次连接时间：${DateTime.parse(adbEntity.connectTime).getTimeString()}',
-                            style: const TextStyle(),
+                            style: const TextStyle(
+                              color: AppColors.grey,
+                            ),
                           ),
                         ],
                       ),

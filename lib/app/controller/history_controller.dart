@@ -54,13 +54,20 @@ class HistoryController extends GetxController {
       );
     }
   }
-  static void updateHistory(String address, String port) {
+  static void updateHistory({
+    String address,
+    String port,
+    String name,
+  }) {
     final HistoryController historyController = Get.find();
-    historyController._updateHistory(Data(
-      address: address,
-      port: port,
-      connectTime: DateTime.now().toString(),
-    ));
+    historyController._updateHistory(
+      Data(
+        address: address,
+        port: port,
+        connectTime: DateTime.now().toString(),
+        name: name,
+      ),
+    );
   }
 
   ADBHistorys adbHistorys = ADBHistorys(data: []);
@@ -75,7 +82,6 @@ class HistoryController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    // Log.w('$this onReady');
   }
 
   Future<void> saveToLocal() async {
@@ -100,6 +106,7 @@ class HistoryController extends GetxController {
         },
       );
       preData.connectTime = data.connectTime;
+      preData.name = data.name;
     } catch (e) {
       adbHistorys.data.add(data);
     }

@@ -227,6 +227,7 @@ class _DrawerItem extends StatelessWidget {
           onTapDown: (_) {
             Feedback.forLongPress(context);
           },
+          canRequestFocus: false,
           onTap: () => onTap(value),
           splashColor: Colors.transparent,
           borderRadius: BorderRadius.circular(Dimens.gap_dp12),
@@ -234,12 +235,12 @@ class _DrawerItem extends StatelessWidget {
             alignment: Alignment.centerLeft,
             children: [
               Container(
-                height: Dimens.gap_dp54,
-                width: Dimens.gap_dp54,
+                height: 54.w,
+                width: 54.w,
                 decoration: isChecked
                     ? BoxDecoration(
-                        color: AppColors.accent.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(Dimens.gap_dp12),
+                        color: AppColors.accent.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(12.w),
                       )
                     : null,
                 child: Column(
@@ -247,7 +248,7 @@ class _DrawerItem extends StatelessWidget {
                   children: [
                     Icon(
                       iconData ?? Icons.open_in_new,
-                      size: 24.w,
+                      size: 20.w,
                       color: isChecked ? AppColors.accent : AppColors.fontTitle,
                     ),
                     SizedBox(height: 4.w),
@@ -257,6 +258,7 @@ class _DrawerItem extends StatelessWidget {
                         height: 1.0,
                         color: AppColors.fontColor,
                         fontSize: 12.w,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

@@ -229,6 +229,7 @@ class _DrawerItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: InkWell(
         onTap: () => onTap(value),
+        canRequestFocus: false,
         onTapDown: (_) {
           Feedback.forLongPress(context);
         },
@@ -238,7 +239,7 @@ class _DrawerItem extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Container(
-              height: 50.w,
+              height: 48.w,
               decoration: isChecked
                   ? BoxDecoration(
                       color: AppColors.accent.withOpacity(0.1),
@@ -250,8 +251,8 @@ class _DrawerItem extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16.0,
+                  padding: EdgeInsets.only(
+                    left: 16.w,
                   ),
                   child: Row(
                     children: [

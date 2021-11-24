@@ -44,7 +44,6 @@ class _DeveloperToolState extends State<DeveloperTool>
   ADBChannel adbChannel;
   TabController controller;
   PseudoTerminal adbShell;
-  bool enableInput = true;
   TermareController adbShellController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
@@ -111,11 +110,11 @@ class _DeveloperToolState extends State<DeveloperTool>
                   ),
                   unselectedLabelColor: AppColors.fontColor,
                   indicator: RoundedUnderlineTabIndicator(
-                    // insets:EdgeInsets.all(16.0),
-                    radius: 30.w,
-                    width: 25.w,
+                    insets: EdgeInsets.only(bottom: 6.w),
+                    radius: 12.w,
+                    // width: 50.w,
                     borderSide: BorderSide(
-                      width: 6.w,
+                      width: 4.w,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     // color: Color(0xff6002ee),
@@ -158,32 +157,32 @@ class _DeveloperToolState extends State<DeveloperTool>
                     uploadFileBox(),
                   ],
                 ),
-                InkWell(
-                  onTap: () {
-                    adbChannel.execCmmand(
-                      'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
-                      'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
-                      'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
-                    );
-                  },
-                  child: SizedBox(
-                    height: Dimens.gap_dp48,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Dimens.gap_dp12,
-                      ),
-                      child: const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '开启单手模式',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     adbChannel.execCmmand(
+                //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
+                //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
+                //       'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
+                //     );
+                //   },
+                //   child: SizedBox(
+                //     height: Dimens.gap_dp48,
+                //     child: Padding(
+                //       padding: EdgeInsets.symmetric(
+                //         horizontal: Dimens.gap_dp12,
+                //       ),
+                //       child: const Align(
+                //         alignment: Alignment.centerLeft,
+                //         child: Text(
+                //           '开启单手模式',
+                //           style: TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -477,7 +476,10 @@ class _DeveloperToolState extends State<DeveloperTool>
               transitionType: ContainerTransitionType.fade,
               openBuilder: (BuildContext context, _) {
                 return TermarePty(
-                  pseudoTerminal: adbShell,
+                  pseudoTerminal: TerminalUtil.getShellTerminal(
+                    exec: 'adb',
+                    arguments: ['-s', widget.entity.serial, 'shell'],
+                  ),
                   controller: adbShellController,
                 );
               },
@@ -515,8 +517,6 @@ class _DeveloperToolState extends State<DeveloperTool>
                           ),
                           GestureWithScale(
                             onTap: () {
-                              enableInput = false;
-                              setState(() {});
                               openContainer();
                             },
                             child: const Icon(Icons.fullscreen),
@@ -545,7 +545,6 @@ class _DeveloperToolState extends State<DeveloperTool>
                                       key: const Key('TermarePty'),
                                       pseudoTerminal: adbShell,
                                       controller: adbShellController,
-                                      enableInput: enableInput,
                                     );
                                   }),
                                 ),

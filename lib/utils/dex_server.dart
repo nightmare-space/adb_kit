@@ -37,7 +37,7 @@ class DexServer {
     pty.startPolling();
     const String startTag = 'success start:';
     pty.out.listen((event) async {
-      Log.w('pty:$event');
+      Log.w(event, tag: 'dex server');
       if (event.contains(startTag)) {
         serverStartList.add(devicesId);
         for (final String line in event.split('\n')) {

@@ -50,6 +50,7 @@ class Data {
     this.address,
     this.port,
     this.connectTime,
+    this.name,
   });
 
   factory Data.fromJson(Map<String, dynamic> jsonRes) => jsonRes == null
@@ -58,11 +59,13 @@ class Data {
           address: asT<String>(jsonRes['address']),
           port: asT<String>(jsonRes['port']),
           connectTime: asT<String>(jsonRes['connect_time']),
+          name: asT<String>(jsonRes['name']),
         );
 
   String address;
   String port;
   String connectTime;
+  String name;
 
   @override
   String toString() {
@@ -73,6 +76,7 @@ class Data {
         'address': address,
         'port': port,
         'connect_time': connectTime,
+        'name': name,
       };
 
   Data clone() =>
