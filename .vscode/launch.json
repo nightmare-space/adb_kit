@@ -23,6 +23,12 @@
             "deviceId": "Mi 10"
         },
         {
+            "name": "小米10s",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "M2102J2SC"
+        },
+        {
             "name": "平板",
             "request": "launch",
             "type": "dart",
