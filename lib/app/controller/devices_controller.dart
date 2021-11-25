@@ -124,7 +124,7 @@ class DevicesController extends GetxController {
   // 这是model的缓存
   Map<String, String> modelCache = {};
   Future<void> handleResult(String data) async {
-    Log.d('data -> $data');
+    // Log.d('data -> $data');
     // if (count < 2) {
     //   count++;
     // }
