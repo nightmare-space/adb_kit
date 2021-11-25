@@ -56,6 +56,9 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
+  DevicesController() {
+    init();
+  }
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -118,8 +121,10 @@ class DevicesController extends GetxController {
     // Log.e('end');
   }
 
+  // 这是model的缓存
+  Map<String, String> modelCache = {};
   Future<void> handleResult(String data) async {
-    // Log.d('data -> $data');
+    Log.d('data -> $data');
     // if (count < 2) {
     //   count++;
     // }
@@ -144,15 +149,19 @@ class DevicesController extends GetxController {
         );
         // Log.w('获取${listTmp.first}信息...');
         String model;
-        try {
-          model = await execCmd(
-            'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
-          );
-        } catch (e) {
-          Log.w(e);
+        if (modelCache.containsKey(listTmp.first)) {
+          model = listTmp.first;
+        } else {
+          try {
+            model = await execCmd(
+              'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+            );
+          } catch (e) {
+            Log.w(e);
+          }
         }
         devicesEntity.productModel = model;
-        if (!devicesEntity.serial.contains('emulator')) {
+        if (!devicesEntity.serial.contains('emulator') && model != null) {
           // 更新这个设备的历史记录的设备名
           final List<String> tmp = devicesEntity.serial.split(':');
           final String address = tmp[0];

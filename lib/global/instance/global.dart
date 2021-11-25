@@ -198,8 +198,6 @@ class Global {
     _initNfcModule();
     _socketServer();
     await installAdbToEnvir();
-    final DevicesController devicesController = Get.find();
-    devicesController.init();
   }
 
   void initTerminalSize(Size size) {

@@ -9,6 +9,10 @@ dependencies:
   app_manager:
     git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
+  file_selector: ^0.8.2+1
+  file_selector_linux: 0.0.2+1
+  file_selector_macos: ^0.0.4+1
+  file_selector_windows: ^0.0.2+1
   nativeshell:
     version: ^0.1.10
   animations: ^1.0.0+5

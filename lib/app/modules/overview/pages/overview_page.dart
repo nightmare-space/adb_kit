@@ -74,7 +74,7 @@ class _OverviewPageState extends State<OverviewPage> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 100.w),
+        // padding: EdgeInsets.only(bottom: 100.w),
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Column(

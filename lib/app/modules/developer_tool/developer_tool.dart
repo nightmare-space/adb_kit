@@ -13,6 +13,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:animations/animations.dart';
 import 'package:app_launcher/app_launcher.dart';
 import 'package:file_manager_view/file_manager_view.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -99,6 +100,9 @@ class _DeveloperToolState extends State<DeveloperTool>
         child: SafeArea(
           child: Row(
             children: [
+              SizedBox(
+                width: 8.w,
+              ),
               const PopButton(),
               Expanded(
                 child: TabBar(
@@ -344,8 +348,21 @@ class _DeveloperToolState extends State<DeveloperTool>
                             return;
                           }
                         }
-                        final List<String> paths =
-                            await FileSelector.pick(context);
+                        List<String> paths;
+                        if (GetPlatform.isDesktop) {
+                          paths = [];
+                          final typeGroup = XTypeGroup(label: 'images');
+                          final files =
+                              await openFiles(acceptedTypeGroups: [typeGroup]);
+                          if (files.isEmpty) {
+                            return;
+                          }
+                          for (final XFile xFile in files) {
+                            paths.add(xFile.path);
+                          }
+                        } else {
+                          paths = await FileSelector.pick(context);
+                        }
                         if (paths.isEmpty) {
                           return;
                         }
@@ -436,8 +453,21 @@ class _DeveloperToolState extends State<DeveloperTool>
                             return;
                           }
                         }
-                        final List<String> paths =
-                            await FileSelector.pick(context);
+                        List<String> paths;
+                        if (GetPlatform.isDesktop) {
+                          paths = [];
+                          final typeGroup = XTypeGroup(label: 'images');
+                          final files =
+                              await openFiles(acceptedTypeGroups: [typeGroup]);
+                          if (files.isEmpty) {
+                            return;
+                          }
+                          for (final XFile xFile in files) {
+                            paths.add(xFile.path);
+                          }
+                        } else {
+                          paths = await FileSelector.pick(context);
+                        }
                         if (paths.isEmpty) {
                           return;
                         }
@@ -475,12 +505,28 @@ class _DeveloperToolState extends State<DeveloperTool>
               tappable: true,
               transitionType: ContainerTransitionType.fade,
               openBuilder: (BuildContext context, _) {
-                return TermarePty(
-                  pseudoTerminal: TerminalUtil.getShellTerminal(
-                    exec: 'adb',
-                    arguments: ['-s', widget.entity.serial, 'shell'],
-                  ),
-                  controller: adbShellController,
+                return Stack(
+                  children: [
+                    TermarePty(
+                      pseudoTerminal: TerminalUtil.getShellTerminal(
+                        exec: 'adb',
+                        arguments: ['-s', widget.entity.serial, 'shell'],
+                      ),
+                      controller: adbShellController,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: GestureWithScale(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Padding(
+                          padding:  EdgeInsets.all(8.w),
+                          child:  Icon(Icons.fullscreen_exit,size: 24.w,),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
               transitionDuration: const Duration(milliseconds: 300),

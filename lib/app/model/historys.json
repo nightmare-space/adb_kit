@@ -2,10 +2,12 @@
     "data": [{
         "address": "",
         "port": "",
-        "connect_time": ""
+        "connect_time": "",
+        "name": ""
     }, {
         "address": "",
         "port": "",
-        "connect_time": ""
+        "connect_time": "",
+        "name": ""
     }]
 }
