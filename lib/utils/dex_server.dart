@@ -27,7 +27,7 @@ class DexServer {
       targetPath,
     );
     final List<String> processArg =
-        '-s $devicesId shell CLASSPATH=$targetPath app_process /data/local/tmp/ com.nightmare.applib.AppChannel'
+        '-s $devicesId shell CLASSPATH=$targetPath app_process /data/local/tmp/ com.nightmare.apputils.AppChannel'
             .split(' ');
     // CLASSPATH=/data/local/tmp/test app_process /data/local/tmp/ com.nightmare.applib.AppChannel
     final PseudoTerminal pty = TerminalUtil.getShellTerminal(
@@ -51,6 +51,7 @@ class DexServer {
               rangeEnd: 6010,
               targetArg: 'tcp:$remotePort',
             );
+            Log.d('localPort -> $localPort');
             // 这样才能保证列表正常
             final AppChannel appChannel = AppManager.globalInstance.appChannel;
             appChannel.port = localPort;

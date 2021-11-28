@@ -150,12 +150,18 @@ class DevicesController extends GetxController {
         // Log.w('获取${listTmp.first}信息...');
         String model;
         if (modelCache.containsKey(listTmp.first)) {
-          model = listTmp.first;
+          model = modelCache[listTmp.first];
         } else {
           try {
             model = await execCmd(
-              'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+              'adb -s ${listTmp.first} shell getprop ro.product.marketname',
             );
+            if (model.trim().isEmpty) {
+              model = await execCmd(
+                'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+              );
+            }
+            modelCache[listTmp.first] = model;
           } catch (e) {
             Log.w(e);
           }
