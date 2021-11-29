@@ -2,6 +2,7 @@ library adb_tool;
 
 import 'dart:io';
 import 'dart:ui';
+import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -174,6 +175,9 @@ class NativeShellWrapper extends StatelessWidget {
       child: WindowWidget(
         onCreateState: (initData) {
           WindowState state;
+
+          state ??= OtherWindowState.fromInitData(initData);
+          // possibly no init data, this is main window
           state ??= MainWindowState();
           return state;
         },
@@ -198,4 +202,33 @@ class MainWindowState extends WindowState {
       isNativeShell: true,
     );
   }
+}
+
+class OtherWindowState extends WindowState {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Responsive(
+        builder: (_, __) {
+          return LogPage();
+        },
+      ),
+    );
+  }
+
+  // This can be anything that fromInitData recognizes
+  static dynamic toInitData() => {
+        'class': 'OtherWindow',
+      };
+
+  static OtherWindowState fromInitData(dynamic initData) {
+    if (initData is Map && initData['class'] == 'OtherWindow') {
+      return OtherWindowState();
+    }
+    return null;
+  }
+
+  @override
+  WindowSizingMode get windowSizingMode =>
+      WindowSizingMode.atLeastIntrinsicSize;
 }

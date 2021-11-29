@@ -143,7 +143,7 @@ class Global {
     'libbrotlicommon.so',
   ];
   List<String> globalFiles = [
-    'server.jar',
+    'app_server',
   ];
 
   /// 复制一堆执行文件

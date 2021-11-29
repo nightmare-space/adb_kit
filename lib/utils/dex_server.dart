@@ -7,8 +7,7 @@ import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
 
 ///
-/// 仓库本身不使用这个类，对外提供
-/// 无界投屏和 ADB工具箱
+/// 无界投屏也会直接依赖这个
 ///
 class DexServer {
   DexServer._();
@@ -23,11 +22,11 @@ class DexServer {
     // 上传server文件
     await AdbUtil.pushFile(
       devicesId,
-      '${RuntimeEnvir.binPath}/server.jar',
+      '${RuntimeEnvir.binPath}/app_server',
       targetPath,
     );
     final List<String> processArg =
-        '-s $devicesId shell CLASSPATH=$targetPath app_process /data/local/tmp/ com.nightmare.apputils.AppChannel'
+        '-s $devicesId shell CLASSPATH=$targetPath app_process /data/local/tmp/ com.nightmare.applib.AppChannel'
             .split(' ');
     // CLASSPATH=/data/local/tmp/test app_process /data/local/tmp/ com.nightmare.applib.AppChannel
     final PseudoTerminal pty = TerminalUtil.getShellTerminal(

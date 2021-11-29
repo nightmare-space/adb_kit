@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:adb_tool/app/routes/app_pages.dart';
+import 'package:adb_tool/main.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:nativeshell/nativeshell.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TabletDrawer extends StatefulWidget {
@@ -144,7 +146,14 @@ class _TabletDrawerState extends State<TabletDrawer> {
               groupValue: widget.groupValue,
               title: '日志',
               iconData: Icons.pending_outlined,
-              onTap: (value) {
+              onTap: (value) async {
+                // final window =
+                //     await Window.create(OtherWindowState.toInitData());
+                // // you can use the window object to communicate with newly created
+                // // window or register handlers for window events
+                // window.closeEvent.addListener(() {
+                //   print('Window closed');
+                // });
                 widget.onChanged.call(value);
               },
             ),
