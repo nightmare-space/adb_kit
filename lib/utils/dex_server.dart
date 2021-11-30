@@ -52,11 +52,10 @@ class DexServer {
             );
             Log.d('localPort -> $localPort');
             // 这样才能保证列表正常
-            final AppChannel appChannel = AppManager.globalInstance.appChannel;
-            appChannel.port = localPort;
-            if (appChannel is RemoteAppChannel) {
-              appChannel.serial = devicesId;
-            }
+            final RemoteAppChannel channel = RemoteAppChannel();
+            channel.port = localPort;
+            channel.serial = devicesId;
+            AppManager.globalInstance.appChannel = channel;
             AppManager.globalInstance.process = YanProcess()
               ..exec('adb -s $devicesId shell');
           }
