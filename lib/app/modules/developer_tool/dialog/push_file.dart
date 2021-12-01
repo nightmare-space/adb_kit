@@ -62,7 +62,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
       child: Material(
         borderRadius: BorderRadius.circular(12.w),
         child: SizedBox(
-          width: 300.w,
+          width: 400.w,
           height: 64.w,
           child: Padding(
             padding: EdgeInsets.all(8.w),
@@ -70,6 +70,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       '上传 $currentFile 中...',

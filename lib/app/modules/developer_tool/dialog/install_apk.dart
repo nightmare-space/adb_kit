@@ -66,7 +66,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       child: Material(
         borderRadius: BorderRadius.circular(12.w),
         child: SizedBox(
-          width: 300.w,
+          width: 400.w,
           height: 64.w,
           child: Padding(
             padding: EdgeInsets.all(8.w),

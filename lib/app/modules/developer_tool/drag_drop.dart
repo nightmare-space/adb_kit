@@ -1,16 +1,16 @@
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:desktop_drop/desktop_drop.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:nativeshell/nativeshell.dart';
 import 'package:path/path.dart' as p;
 
-final customDragData = DragDataKey<Map>('custom-drag-data');
 typedef PerformCall = void Function(List<String> paths);
 
-class DropTarget extends StatefulWidget {
-  const DropTarget({
+class DropTargetContainer extends StatefulWidget {
+  const DropTargetContainer({
     Key key,
     this.onPerform,
     this.onTap,
@@ -21,49 +21,42 @@ class DropTarget extends StatefulWidget {
   final String title;
   @override
   State<StatefulWidget> createState() {
-    return _DropTargetState();
+    return _DropTargetContainerState();
   }
 }
 
-class _DropTargetState extends State<DropTarget> {
-  DragEffect pickEffect(Set<DragEffect> allowedEffects) {
-    if (allowedEffects.contains(DragEffect.Copy)) {
-      return DragEffect.Copy;
-    } else if (allowedEffects.contains(DragEffect.Link)) {
-      return DragEffect.Link;
-    } else {
-      return allowedEffects.isNotEmpty ? allowedEffects.first : DragEffect.None;
-    }
-  }
-
+class _DropTargetContainerState extends State<DropTargetContainer> {
+  final List<XFile> _list = [];
   @override
   Widget build(BuildContext context) {
-    return DropRegion(
-      onDropOver: (event) async {
-        final res = pickEffect(event.info.allowedEffects);
-        final data = event.info.data;
-        _files = await data.get(DragData.files);
-        _uris = await data.get(DragData.uris);
-        _customData = await data.get(customDragData);
-
-        return res;
+    return DropTarget(
+      onDragDone: (detail) {
+        _list.addAll(detail.urls.map((e) => XFile(e.path)));
+        setState(() {});
+        final List<String> paths = [];
+        for (final XFile file in _list) {
+          paths.add(file.path);
+        }
+        Log.d('paths -> $paths');
+        widget.onPerform(paths);
+        _list.clear();
       },
-      onDropExit: () {
+      onDragUpdated: (details) {
         setState(() {
-          _files = null;
-          _uris = null;
-          _customData = null;
-          dropping = false;
+          // offset = details.localPosition;
         });
       },
-      onDropEnter: () {
+      onDragEntered: (detail) {
         setState(() {
           dropping = true;
+          // offset = detail.localPosition;
         });
       },
-      onPerformDrop: (e) {
-        widget.onPerform?.call(_files);
-        print('Performed drop!');
+      onDragExited: (detail) {
+        setState(() {
+          dropping = false;
+          // offset = null;
+        });
       },
       child: AnimatedContainer(
         decoration: BoxDecoration(
@@ -85,7 +78,7 @@ class _DropTargetState extends State<DropTarget> {
                         color: AppColors.fontColor,
                       ),
                       child: Text(
-                        _describeDragData(),
+                        '释放执行操作',
                         style: const TextStyle(
                           color: AppColors.accent,
                           fontWeight: FontWeight.bold,
@@ -132,30 +125,6 @@ class _DropTargetState extends State<DropTarget> {
       ),
     );
   }
-
-  String _describeDragData() {
-    final res = StringBuffer();
-
-    for (final String f in _files ?? []) {
-      res.writeln('${p.basename(f)},');
-    }
-    for (final uri in _uris ?? []) {
-      res.writeln('$uri');
-    }
-    final custom = _customData;
-    if (custom != null) {
-      if (res.isNotEmpty) {
-        res.writeln();
-      }
-      res.writeln('Custom Data:');
-      res.writeln('$custom');
-    }
-    return res.toString();
-  }
-
-  List<Uri> _uris;
-  List<String> _files;
-  Map _customData;
 
   bool dropping = false;
 }

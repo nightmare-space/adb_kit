@@ -339,7 +339,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                   ),
                   SizedBox(
                     height: 200.w,
-                    child: DropTarget(
+                    child: DropTargetContainer(
                       title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
                           '点击按钮选择Apk进行安装',
                       onTap: () async {
@@ -444,7 +444,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                   ),
                   SizedBox(
                     height: 200.w,
-                    child: DropTarget(
+                    child: DropTargetContainer(
                       title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
                           '点击按钮选择文件进行上传',
                       onTap: () async {
