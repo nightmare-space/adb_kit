@@ -41,7 +41,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: b72ec09f7ee91a646e2de0af27146617b68b26e5
+      resolved-ref: "88a0d5f99edc168d77d7d430a5948f989c176e82"
       url: "https://github.com/nightmare-space/apputils"
     source: git
     version: "0.0.1"
@@ -122,13 +122,20 @@ packages:
       relative: false
     source: path
     version: "0.0.4"
+  desktop_drop:
+    dependency: "direct main"
+    description:
+      name: desktop_drop
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.0"
   dio:
     dependency: "direct main"
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.3"
+    version: "4.0.4"
   event_bus:
     dependency: transitive
     description:
@@ -162,7 +169,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8609fac05905469a0e8a3114a9cc1fddd86cc62b"
+      resolved-ref: d3289f9841ab3d46ee235dab00806f0db6f4ce2a
       url: "https://github.com/nightmare-space/file_manager_view.git"
     source: git
     version: "1.0.0+1"
@@ -264,7 +271,7 @@ packages:
       name: get
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.3.8"
+    version: "4.5.1"
   global_repository:
     dependency: "direct main"
     description:
@@ -306,7 +313,7 @@ packages:
       name: markdown
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   matcher:
     dependency: transitive
     description:
@@ -468,7 +475,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "49b7179b258106de12fd4bbeee746812c782670d"
+      resolved-ref: bf984df24432c8bf52ef11f462ba9b5b7c8c8053
       url: "https://github.com/Termare/pseudo_terminal_utils"
     source: git
     version: "0.0.1"
@@ -595,7 +602,21 @@ packages:
       name: url_launcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "6.0.12"
+    version: "6.0.16"
+  url_launcher_android:
+    dependency: transitive
+    description:
+      name: url_launcher_android
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "6.0.13"
+  url_launcher_ios:
+    dependency: transitive
+    description:
+      name: url_launcher_ios
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "6.0.13"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -644,7 +665,7 @@ packages:
       name: win32
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   xdg_directories:
     dependency: transitive
     description:

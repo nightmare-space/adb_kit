@@ -8,6 +8,7 @@
  ![Platform](https://img.shields.io/badge/support%20platform-android%20%7C%20web%20%7C%20windows%20%7C%20macos%20%7C%20linux-green) ![download time](https://img.shields.io/github/downloads/nightmare-space/adb_tool/total) ![open issues](https://img.shields.io/github/issues/nightmare-space/adb_tool) ![fork](https://img.shields.io/github/forks/nightmare-space/adb_tool?style=social) ![code line](https://img.shields.io/tokei/lines/github/nightmare-space/adb_tool) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f969750dc4aa424ead664219ddcf321d)](https://app.codacy.com/gh/nightmare-space/adb_tool?utm_source=github.com&utm_medium=referral&utm_content=nightmare-space/adb_tool&utm_campaign=Badge_Grade)
  
 这是一个很强大的 ADB GUI，支持 Windows、macOS、Linux 与 Android，能够更方便的使用 adb 命令行的功能，也能使用 adb 命令行不能直接使用的功能，例如应用管理、桌面启动器。
+
 adb 这个简单的可执行文件其实远比我们想象中的强大，adb shell命令在android设备上能获取的权限也非常高，一些需要动态申请的权限adb shell都能直接获取到。
 但 adb 始终作为命令行工具，我们无法快捷的使用各部分功能，这也是这个 ADB 客户端工具存在的意义。
 ## 注意！！！
