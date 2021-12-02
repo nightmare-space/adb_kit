@@ -58,9 +58,9 @@ class DexServer {
             AppManager.globalInstance.appChannel = channel;
             AppManager.globalInstance.process = YanProcess()
               ..exec('adb -s $devicesId shell');
+            completer.complete();
           }
         }
-        completer.complete();
       }
       pty.schedulingRead();
     });

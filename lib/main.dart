@@ -22,7 +22,9 @@ bool useNativeShell = false;
 
 void main() {
   // 初始化运行时环境
-  RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  if (!GetPlatform.isIOS) {
+    RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  }
   WidgetsFlutterBinding.ensureInitialized();
   if (useNativeShell) {
     runApp(NativeShellWrapper());

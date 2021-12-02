@@ -34,10 +34,12 @@ class Global {
   }
 
   YanProcess process = YanProcess(
-    envir: {
-      'TMPDIR': RuntimeEnvir.tmpPath,
-      'HOME': RuntimeEnvir.homePath,
-    },
+    envir: GetPlatform.isIOS
+        ? {}
+        : {
+            'TMPDIR': RuntimeEnvir.tmpPath,
+            'HOME': RuntimeEnvir.homePath,
+          },
   );
 
   bool lockAdb = false;
