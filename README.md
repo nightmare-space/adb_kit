@@ -33,21 +33,6 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 - 历史记录
 - 应用管理器，桌面启动器
 
-## 截图
-### 安卓
-### PC端
-## 测试平台
-
-- Android：小米10、小米8青春版、红米4
-
-- MacOS：macOS Catalina 10.15.7
-
-- Linux：Manjaro 20.02
-
-- Window：Win10 20H0
-
-PC版下载[(链接)](http://nightmare.fun/adbtool/)
-
 ## 设备的发现功能
 
 在 Android  热点，PC 端连接的情况，PC 端检测 Android 端 ADB TOOL 的启动会有延迟，具体视局域网而定。
