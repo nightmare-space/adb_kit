@@ -21,7 +21,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 
 <img src="screenshot/adb_desktop.png" width="100%" height="100%" /> <img src="screenshot/adb_pad.png" width="100%" height="100%" />
 
-<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/adb_phone.png" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/adb_drawer.png" width="30%" height="30%" />
+<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/adb_phone.png" width="50%" height="50%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/adb_drawer.png" width="50%" height="50%" />
 
 <img src="screenshot/adb_app.png" width="100%" height="100%" /> <img src="screenshot/adb_launcher.png" width="100%" height="100%" /> 
 
