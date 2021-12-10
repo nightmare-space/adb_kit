@@ -49,6 +49,8 @@ dependencies:
     git: https://github.com/nightmare-space/file_selector
   app_launcher:
     path: /Users/nightmare/Desktop/nightmare-space/app_launcher
+  settings:
+    path: /Users/nightmare/Desktop/Flutter_Package/settings
 dev_dependencies:
   flutter_test:
     sdk: flutter

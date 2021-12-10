@@ -158,6 +158,15 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
             ),
             _DrawerItem(
+              value: Routes.setting,
+              groupValue: widget.groupValue,
+              title: '设置',
+              iconData: Icons.settings,
+              onTap: (index) async {
+                widget.onChanged?.call(index);
+              },
+            ),
+            _DrawerItem(
               value: Routes.about,
               groupValue: widget.groupValue,
               title: '关于软件',

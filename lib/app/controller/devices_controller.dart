@@ -109,13 +109,14 @@ class DevicesController extends GetxController {
     // 显示一会动画
     await Future.delayed(const Duration(milliseconds: 300));
     update();
-    getRoot = await Global().process.isRoot();
-    if (getRoot) {
-      await Global().process.exec('su -p HOME');
-    }
+    // getRoot = await Global().process.isRoot();
+    // if (getRoot) {
+    //   await Global().process.exec('su -p HOME');
+    // }
     // Log.e('start');
     try {
-      await execCmd('adb start-server');
+     String out= await execCmd('adb start-server');
+     Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {}
     // Log.e('end');

@@ -67,6 +67,11 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    project.android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.versionCodeOverride = flutterVersionCode.toInteger()
+        }
+    }
 }
 
 flutter {

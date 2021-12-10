@@ -8,6 +8,7 @@ import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
+import 'package:adb_tool/app/modules/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,6 +52,9 @@ Widget getWidget(String route) {
       break;
     case Routes.log:
       return LogPage();
+      break;
+    case Routes.setting:
+      return const SettingsPage();
       break;
     default:
     return const SizedBox();

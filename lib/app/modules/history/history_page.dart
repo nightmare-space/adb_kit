@@ -71,7 +71,7 @@ class HistoryPage extends GetView<HistoryController> {
                           Row(
                             children: [
                               Text(
-                                adbEntity.name,
+                                adbEntity.name ?? '',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

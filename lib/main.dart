@@ -3,6 +3,7 @@ library adb_tool;
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/modules/log_page.dart';
+import 'package:adb_tool/config/settings.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'config/config.dart';
 import 'global/instance/global.dart';
 import 'themes/app_colors.dart';
 import 'themes/theme.dart';
+import 'package:settings/settings.dart';
 
 // 这个值由shell去替换
 bool useNativeShell = false;
@@ -31,7 +33,7 @@ void main() {
   } else {
     runApp(const AppEntryPoint());
   }
-
+  initSetting();
   Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -40,7 +42,17 @@ void main() {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
+  // ValueListenableBuilder
   // DateTime();
+}
+
+Future<void> initSetting() async {
+  await initSettingStore(RuntimeEnvir.filesPath);
+  Log.e(Settings.serverPath.get);
+  if (Settings.serverPath.get.isEmpty) {
+    Settings.serverPath.set = Config.adbLocalPath;
+  }
+  Log.e(Settings.serverPath.get);
 }
 
 // App 的顶级widget

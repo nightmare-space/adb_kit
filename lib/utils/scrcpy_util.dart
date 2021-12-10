@@ -13,7 +13,7 @@ class ScrcpyUtil {
       ],
       runInShell: true,
       includeParentEnvironment: true,
-      environment: PlatformUtil.environment(),
+      environment: RuntimeEnvir.envir(),
     );
 
     print('result.stdout -> ${result.stdout}');
