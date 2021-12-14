@@ -71,7 +71,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: OverlayStyle.dark,
       child: Responsive(
         builder: (_, ScreenType screenType) {
           switch (screenType) {

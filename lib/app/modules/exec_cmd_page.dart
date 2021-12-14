@@ -32,6 +32,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('终端模拟器'),
+        systemOverlayStyle: OverlayStyle.dark,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

@@ -49,6 +49,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('IP查看'),
+        systemOverlayStyle: OverlayStyle.dark,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

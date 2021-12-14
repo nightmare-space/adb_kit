@@ -35,9 +35,11 @@ void main() {
   }
   initSetting();
   Global.instance.initGlobal();
-  SystemChrome.setSystemUIOverlayStyle(
+ SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarDividerColor: Colors.transparent,
     ),

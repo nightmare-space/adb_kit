@@ -41,7 +41,7 @@ class _OverviewPageState extends State<OverviewPage> {
     AppBar appBar;
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle: OverlayStyle.dark,
         centerTitle: true,
         elevation: 0.0,
         leading: Menubutton(scaffoldContext: context),
@@ -62,7 +62,7 @@ class _OverviewPageState extends State<OverviewPage> {
       );
     }
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: OverlayStyle.dark,
       child: Scaffold(
         appBar: appBar,
         body: buildBody(context),

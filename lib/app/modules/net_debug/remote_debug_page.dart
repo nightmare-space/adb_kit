@@ -63,6 +63,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('网络ADB调试'),
+        systemOverlayStyle: OverlayStyle.dark,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

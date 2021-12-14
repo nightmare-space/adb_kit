@@ -28,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('设置'),
+        // systemOverlayStyle: OverlayStyle.dark,
         leading: Menubutton(
           scaffoldContext: context,
         ),
