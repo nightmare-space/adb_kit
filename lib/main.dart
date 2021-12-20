@@ -50,11 +50,9 @@ void main() {
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.filesPath);
-  Log.e(Settings.serverPath.get);
   if (Settings.serverPath.get.isEmpty) {
     Settings.serverPath.set = Config.adbLocalPath;
   }
-  Log.e(Settings.serverPath.get);
 }
 
 // App 的顶级widget

@@ -27,7 +27,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: Colors.white,
+          color: Color(0xfffbfbfb),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.gap_dp20),

@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/adbutil"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "28dcc4989e69a1e3899900b955cf0b4c428ebdaa"
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -25,25 +27,27 @@ packages:
   app_launcher:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/app_launcher"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "325eecc5f34c914f40b6d892ba861013e947c8a4"
+      url: "https://github.com/nightmare-space/app_launcher"
+    source: git
     version: "1.0.0+1"
   app_manager:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
-      relative: false
-    source: path
-    version: "1.0.0+1"
-  apputils:
-    dependency: transitive
-    description:
       path: "."
       ref: HEAD
-      resolved-ref: "88a0d5f99edc168d77d7d430a5948f989c176e82"
-      url: "https://github.com/nightmare-space/apputils"
+      resolved-ref: d0921fd9f98fd645745b523382ee8a041ef14ebb
+      url: "https://github.com/nightmare-space/app_manager"
     source: git
+    version: "1.0.0+1"
+  apputils:
+    dependency: "direct overridden"
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/apputils"
+      relative: false
+    source: path
     version: "0.0.1"
   args:
     dependency: transitive
@@ -58,7 +62,7 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.8.1"
+    version: "2.8.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -72,7 +76,7 @@ packages:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -116,12 +120,14 @@ packages:
     source: hosted
     version: "1.0.4"
   dart_pty:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/termare-space/dart_pty"
-      relative: false
-    source: path
-    version: "0.0.4"
+      path: "."
+      ref: HEAD
+      resolved-ref: "780ac18a3da379a6166787739e73fa4d86c39b22"
+      url: "https://github.com/Termare/dart_pty"
+    source: git
+    version: "0.0.3"
   desktop_drop:
     dependency: "direct main"
     description:
@@ -197,9 +203,11 @@ packages:
   file_selector_nightmare:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/file_selector"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "6d81b74c9b3fb1af4a559adc345763623fb0da9a"
+      url: "https://github.com/nightmare-space/file_selector"
+    source: git
     version: "1.0.0+1"
   file_selector_platform_interface:
     dependency: transitive
@@ -233,7 +241,7 @@ packages:
       name: flutter_markdown
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.6.8"
+    version: "0.6.9"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -271,13 +279,15 @@ packages:
       name: get
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.5.1"
+    version: "4.6.1"
   global_repository:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/global_repository"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "8ae0e1b004241124cad124a1a343fa07a4acf279"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -285,7 +295,7 @@ packages:
       name: hive
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   http:
     dependency: transitive
     description:
@@ -320,7 +330,7 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.10"
+    version: "0.12.11"
   meta:
     dependency: transitive
     description:
@@ -378,7 +388,7 @@ packages:
       name: path_provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   path_provider_android:
     dependency: transitive
     description:
@@ -399,14 +409,14 @@ packages:
       name: path_provider_linux
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.4"
   path_provider_macos:
     dependency: transitive
     description:
       name: path_provider_macos
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   path_provider_platform_interface:
     dependency: transitive
     description:
@@ -455,7 +465,7 @@ packages:
       name: platform
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -475,7 +485,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: bf984df24432c8bf52ef11f462ba9b5b7c8c8053
+      resolved-ref: "55877213cc41e71b065a4aba5e6b33c847e6bd59"
       url: "https://github.com/Termare/pseudo_terminal_utils"
     source: git
     version: "0.0.1"
@@ -507,6 +517,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1+1"
+  settings:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "9e7867808cf8526c2af2701d40ecba1c48a63d36"
+      url: "https://github.com/nightmare-space/settings"
+    source: git
+    version: "0.0.1"
   shortcut:
     dependency: transitive
     description:
@@ -515,11 +534,13 @@ packages:
     source: hosted
     version: "0.0.1"
   signale:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/signale"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "99e278923e468ca882dd13208255fd0944ad5da3"
+      url: "https://github.com/nightmare-space/signale"
+    source: git
     version: "0.0.6"
   sky_engine:
     dependency: transitive
@@ -571,16 +592,20 @@ packages:
   termare_pty:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/termare-space/termare_pty"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: b58c7178619a7a97388a4c7004871e6ec373d25a
+      url: "https://github.com/Termare/termare_pty"
+    source: git
     version: "1.0.0+1"
   termare_view:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/termare-space/termare_view"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1d2e49d18f042e1c4ea55fedcda1d096622d1ad0"
+      url: "https://github.com/Termare/termare_view"
+    source: git
     version: "0.0.7"
   test_api:
     dependency: transitive
@@ -588,7 +613,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.2"
+    version: "0.4.3"
   typed_data:
     dependency: transitive
     description:
@@ -602,7 +627,7 @@ packages:
       name: url_launcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "6.0.16"
+    version: "6.0.17"
   url_launcher_android:
     dependency: transitive
     description:
@@ -644,7 +669,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   url_launcher_windows:
     dependency: transitive
     description:
@@ -658,7 +683,7 @@ packages:
       name: vector_math
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   win32:
     dependency: transitive
     description:

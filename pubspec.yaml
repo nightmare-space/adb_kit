@@ -34,8 +34,6 @@ dependencies:
   multicast_dns: ^0.3.0
   qr_flutter: ^3.1.0
   qr_code_scanner: ^0.5.1
-  signale:
-    git: https://github.com/Nightmare-MY/signale
   path: ^1.8.0
   termare_pty:
     git: https://github.com/Termare/termare_pty
@@ -48,9 +46,9 @@ dependencies:
   file_selector_nightmare:
     git: https://github.com/nightmare-space/file_selector
   app_launcher:
-    path: /Users/nightmare/Desktop/nightmare-space/app_launcher
+    git: https://github.com/nightmare-space/app_launcher
   settings:
-    path: /Users/nightmare/Desktop/Flutter_Package/settings
+    git: https://github.com/nightmare-space/settings
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,27 +61,28 @@ flutter:
         - asset: assets/fonts/MenloforPowerline.ttf
   assets:
     - assets/android/
-    - assets/icon/
     - assets/
 
 dependency_overrides:
+  apputils:
+    path: /Users/nightmare/Desktop/nightmare-space/apputils
 # 下面代码注释掉，
-  termare_view:
-    path: /Users/nightmare/Desktop/termare-space/termare_view
-  termare_pty:
-    path: /Users/nightmare/Desktop/termare-space/termare_pty
-  dart_pty:
-    path: /Users/nightmare/Desktop/termare-space/dart_pty
-  global_repository:
-    path: /Users/nightmare/Desktop/nightmare-space/global_repository
-  app_manager:
-    path: /Users/nightmare/Desktop/nightmare-space/app_manager
-  adbutil:
-    path: /Users/nightmare/Desktop/nightmare-space/adbutil
-    # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
-  signale:
-    path: /Users/nightmare/Desktop/nightmare-space/signale
-  app_launcher:
-    path: /Users/nightmare/Desktop/nightmare-space/app_launcher
-  file_selector_nightmare:
-    path: /Users/nightmare/Desktop/nightmare-space/file_selector
+  # termare_view:
+  #   path: /Users/nightmare/Desktop/termare-space/termare_view
+  # termare_pty:
+  #   path: /Users/nightmare/Desktop/termare-space/termare_pty
+  # dart_pty:
+  #   path: /Users/nightmare/Desktop/termare-space/dart_pty
+  # global_repository:
+  #   path: /Users/nightmare/Desktop/nightmare-space/global_repository
+  # app_manager:
+  #   path: /Users/nightmare/Desktop/nightmare-space/app_manager
+  # adbutil:
+  #   path: /Users/nightmare/Desktop/nightmare-space/adbutil
+  #   # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
+  # signale:
+  #   path: /Users/nightmare/Desktop/nightmare-space/signale
+  # app_launcher:
+  #   path: /Users/nightmare/Desktop/nightmare-space/app_launcher
+  # file_selector_nightmare:
+  #   path: /Users/nightmare/Desktop/nightmare-space/file_selector
