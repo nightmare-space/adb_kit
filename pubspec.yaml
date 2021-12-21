@@ -64,8 +64,8 @@ flutter:
     - assets/
 
 dependency_overrides:
-  apputils:
-    path: /Users/nightmare/Desktop/nightmare-space/apputils
+  # apputils:
+  #   path: /Users/nightmare/Desktop/nightmare-space/apputils
 # 下面代码注释掉，
   # termare_view:
   #   path: /Users/nightmare/Desktop/termare-space/termare_view

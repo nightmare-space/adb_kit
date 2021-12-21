@@ -81,10 +81,12 @@ class _DeveloperToolState extends State<DeveloperTool>
   void initState() {
     super.initState();
     controller = TabController(length: 3, vsync: this);
-    adbShell = TerminalUtil.getShellTerminal(
-      exec: 'adb',
-      arguments: ['-s', widget.entity.serial, 'shell'],
-    );
+    if (!GetPlatform.isWindows) {
+      adbShell = TerminalUtil.getShellTerminal(
+        exec: 'adb',
+        arguments: ['-s', widget.entity.serial, 'shell'],
+      );
+    }
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
@@ -521,8 +523,11 @@ class _DeveloperToolState extends State<DeveloperTool>
                           Get.back();
                         },
                         child: Padding(
-                          padding:  EdgeInsets.all(8.w),
-                          child:  Icon(Icons.fullscreen_exit,size: 24.w,),
+                          padding: EdgeInsets.all(8.w),
+                          child: Icon(
+                            Icons.fullscreen_exit,
+                            size: 24.w,
+                          ),
                         ),
                       ),
                     ),
@@ -584,6 +589,9 @@ class _DeveloperToolState extends State<DeveloperTool>
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(builder: (context) {
+                                    if (GetPlatform.isWindows) {
+                                      return const SizedBox();
+                                    }
                                     if (widget.entity.isOTG) {
                                       return const OTGTerminal();
                                     }

@@ -22,6 +22,9 @@ class Global {
   factory Global() => _getInstance();
   Global._internal() {
     defaultLogger.logDelegate = const Print();
+    if (!GetPlatform.isWindows) {
+      pseudoTerminal = TerminalUtil.getShellTerminal()..write('clear\r');
+    }
     HomeBinding().dependencies();
   }
 
@@ -50,8 +53,7 @@ class Global {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  PseudoTerminal pseudoTerminal = TerminalUtil.getShellTerminal()
-    ..write('clear\r');
+  PseudoTerminal pseudoTerminal;
 
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
