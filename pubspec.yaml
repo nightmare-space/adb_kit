@@ -44,7 +44,7 @@ dependencies:
     git: https://github.com/Termare/termare_view
   # 文件选择自实现方案
   file_selector_nightmare:
-    git: https://github.com/nightmare-space/file_selector
+    git: https://github.com/nightmare-space/file_selector_meng
   app_launcher:
     git: https://github.com/nightmare-space/app_launcher
   settings:

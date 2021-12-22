@@ -43,11 +43,13 @@ packages:
     source: git
     version: "1.0.0+1"
   apputils:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/apputils"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ba2a5fed682b6c9a2dcf0c6e824010b62dc07745
+      url: "https://github.com/nightmare-space/apputils"
+    source: git
     version: "0.0.1"
   args:
     dependency: transitive
@@ -205,8 +207,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "6d81b74c9b3fb1af4a559adc345763623fb0da9a"
-      url: "https://github.com/nightmare-space/file_selector"
+      resolved-ref: a5cc81d4e7cba24f5cc6f7ce089d0d59eb19dd4f
+      url: "https://github.com/nightmare-space/file_selector_meng"
     source: git
     version: "1.0.0+1"
   file_selector_platform_interface:
