@@ -133,9 +133,11 @@ packages:
   desktop_drop:
     dependency: "direct main"
     description:
-      name: desktop_drop
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "packages/desktop_drop"
+      ref: HEAD
+      resolved-ref: "1b4d26816d26743b03dd71c5b33c2a2138e10866"
+      url: "https://github.com/mengyanshou/flutter-plugins"
+    source: git
     version: "0.2.0"
   dio:
     dependency: "direct main"
