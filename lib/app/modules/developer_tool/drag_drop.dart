@@ -26,20 +26,17 @@ class DropTargetContainer extends StatefulWidget {
 }
 
 class _DropTargetContainerState extends State<DropTargetContainer> {
-  final List<XFile> _list = [];
   @override
   Widget build(BuildContext context) {
     return DropTarget(
       onDragDone: (detail) {
-        _list.addAll(detail.urls.map((e) => XFile(e.path)));
         setState(() {});
         final List<String> paths = [];
-        for (final XFile file in _list) {
+        for (final XFile file in detail.files) {
           paths.add(file.path);
         }
         Log.d('paths -> $paths');
         widget.onPerform(paths);
-        _list.clear();
       },
       onDragUpdated: (details) {
         setState(() {
