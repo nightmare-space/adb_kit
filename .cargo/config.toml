@@ -1,5 +1,0 @@
-[target.'cfg(target_os = "macos")']
-rustflags = ["-C", "link-arg=-Wl,-rpath,@executable_path"]
-
-[target.'cfg(target_os = "linux")']
-rustflags = ["-C", "link-arg=-Wl,-rpath,$ORIGIN/lib"]
