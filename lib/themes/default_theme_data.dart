@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
@@ -76,7 +78,6 @@ class DefaultThemeData {
       ),
       appBarTheme: darkThemeData.appBarTheme.copyWith(
         centerTitle: true,
-        brightness: Brightness.dark,
         color: colorSchema.surface,
         elevation: 0,
         iconTheme: darkThemeData.iconTheme.copyWith(
@@ -85,22 +86,10 @@ class DefaultThemeData {
         actionsIconTheme: darkThemeData.iconTheme.copyWith(
           color: const Color(0xFF8C8C8C),
         ),
-        textTheme: TextTheme(
-          headline6: darkThemeData.textTheme.headline6.copyWith(
-            fontSize: Dimens.font_sp20,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFFA8A8A8),
-          ),
-          button: darkThemeData.textTheme.button.copyWith(
-            fontSize: 16,
-            color: colorSchema.primary,
-            fontWeight: FontWeight.w400,
-          ),
-          caption: darkThemeData.textTheme.caption.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: const Color(0xFF8C8C8C),
-          ),
+        toolbarTextStyle: darkThemeData.textTheme.headline6.copyWith(
+          fontSize: Dimens.font_sp20,
+          fontWeight: FontWeight.w500,
+          color: const Color(0xFFA8A8A8),
         ),
       ),
       tabBarTheme: darkThemeData.tabBarTheme.copyWith(
@@ -233,7 +222,6 @@ class DefaultThemeData {
       appBarTheme: lightThemeData.appBarTheme.copyWith(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
-        brightness: Brightness.light,
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: lightThemeData.iconTheme.copyWith(
@@ -247,22 +235,10 @@ class DefaultThemeData {
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
-        textTheme: TextTheme(
-          headline6: lightThemeData.textTheme.headline6.copyWith(
-            fontSize: Dimens.font_sp20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-          button: lightThemeData.textTheme.button.copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: colorSchema.primary,
-          ),
-          caption: lightThemeData.textTheme.caption.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: const Color(0xFF8C8C8C),
-          ),
+        toolbarTextStyle: lightThemeData.textTheme.headline6.copyWith(
+          fontSize: Dimens.font_sp20,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),
       ),
       tabBarTheme: lightThemeData.tabBarTheme.copyWith(

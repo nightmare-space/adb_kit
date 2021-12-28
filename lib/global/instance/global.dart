@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
-import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
@@ -22,9 +20,6 @@ class Global {
   factory Global() => _getInstance();
   Global._internal() {
     defaultLogger.logDelegate = const Print();
-    if (!GetPlatform.isWindows) {
-      pseudoTerminal = TerminalUtil.getShellTerminal()..write('clear\r');
-    }
     HomeBinding().dependencies();
   }
 
@@ -53,7 +48,9 @@ class Global {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  PseudoTerminal pseudoTerminal;
+  PseudoTerminal pseudoTerminal =
+      GetPlatform.isWindows ? null : TerminalUtil.getShellTerminal()
+        ..write('clear\r');
 
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
@@ -86,7 +83,9 @@ class Global {
             onlineController.updateDevices(
               DeviceEntity(unique, address),
             );
-          } catch (e) {}
+          } catch (e) {
+            Log.e('receiveBoardCast error : $e');
+          }
         }
         return;
       }
@@ -103,7 +102,7 @@ class Global {
   }
 
   Future<void> _initNfcModule() async {
-    print('启动_initNfcModule');
+    Log.v('启动_initNfcModule');
     if (!kIsWeb && !Platform.isAndroid) {
       return;
     }
@@ -220,11 +219,12 @@ class Print implements Logable {
     final String data =
         '[${_twoDigits(time.hour)}:${_twoDigits(time.minute)}:${_twoDigits(time.second)}] $object';
     Global().logTerminalCTL.write(data + '\r\n');
+    // ignore: avoid_print
     print(data);
   }
 }
 
 String _twoDigits(int n) {
-  if (n >= 10) return "${n}";
-  return "0${n}";
+  if (n >= 10) return "$n";
+  return "0$n";
 }

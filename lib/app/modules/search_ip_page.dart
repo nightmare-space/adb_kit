@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class SearchIpPage extends StatefulWidget {
+  const SearchIpPage({Key key}) : super(key: key);
+
   @override
   _SearchIpPageState createState() => _SearchIpPageState();
 }
@@ -20,14 +22,14 @@ class _SearchIpPageState extends State<SearchIpPage> {
 
   Future<void> getIp() async {
     while (mounted) {
-      print('-----------------');
+      Log.v('-----------------');
       final String result = await exec('ip neigh');
       final List<String> tmp = [];
       for (final String line in result.split('\n')) {
         if (isAddress(line)) {
           final String address = line.split(' ').first;
           tmp.add(address);
-          print(line);
+          Log.v(line);
           if (addressList.contains(address)) {
             continue;
           } else {
@@ -80,7 +82,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
                       await Clipboard.setData(ClipboardData(text: ip));
                       showToast('IP已复制');
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: Dimens.gap_dp48,
                       child: Row(
                         children: [

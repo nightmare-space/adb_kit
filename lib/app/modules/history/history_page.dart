@@ -5,12 +5,13 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:get/get_state_manager/get_state_manager.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class HistoryPage extends GetView<HistoryController> {
+  const HistoryPage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     AppBar appBar;

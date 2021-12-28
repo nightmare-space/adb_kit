@@ -16,7 +16,7 @@ class ScrcpyUtil {
       environment: RuntimeEnvir.envir(),
     );
 
-    print('result.stdout -> ${result.stdout}');
-    print('result.stderr -> ${result.stderr}');
+    Log.v('result.stdout -> ${result.stdout}');
+    Log.v('result.stderr -> ${result.stderr}');
   }
 }

@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:adb_tool/app/routes/app_pages.dart';
-import 'package:adb_tool/main.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:nativeshell/nativeshell.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TabletDrawer extends StatefulWidget {
@@ -27,7 +25,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: Color(0xfffbfbfb),
+          color: const Color(0xfffbfbfb),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.gap_dp20),

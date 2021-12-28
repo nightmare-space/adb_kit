@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:get/get.dart';
-import 'package:signale/signale.dart';
 
 class AdbEntity {
   AdbEntity(this.ip, this.port, this.dateTime);

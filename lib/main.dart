@@ -2,22 +2,23 @@ library adb_tool;
 
 import 'dart:io';
 import 'dart:ui';
+
 import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:app_manager/app_manager.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
+import 'package:settings/settings.dart';
+
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'global/instance/global.dart';
 import 'themes/app_colors.dart';
 import 'themes/theme.dart';
-import 'package:settings/settings.dart';
 
 // 这个值由shell去替换
 bool useNativeShell = false;
@@ -29,7 +30,7 @@ void main() {
   }
   WidgetsFlutterBinding.ensureInitialized();
   if (useNativeShell) {
-    runApp(NativeShellWrapper());
+    runApp(const NativeShellWrapper());
   } else {
     runApp(const AppEntryPoint());
   }
@@ -127,7 +128,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             defaultTransition: Transition.fadeIn,
-            initialRoute: AdbPages.INITIAL,
+            initialRoute: AdbPages.initial,
             getPages: AdbPages.routes + AppPages.routes,
             builder: (BuildContext context, Widget navigator) {
               if (orientation == Orientation.landscape) {
@@ -145,7 +146,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
               /// NativeShell
               if (widget.isNativeShell) {
                 return WindowLayoutProbe(
-                  child: Container(
+                  child: SizedBox(
                     width: 800,
                     height: 600,
                     child: Responsive(
@@ -182,6 +183,8 @@ class _AppEntryPointState extends State<AppEntryPoint>
 }
 
 class NativeShellWrapper extends StatelessWidget {
+  const NativeShellWrapper({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -224,7 +227,7 @@ class OtherWindowState extends WindowState {
     return MaterialApp(
       home: Responsive(
         builder: (_, __) {
-          return LogPage();
+          return const LogPage();
         },
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:settings/src/setting_extension.dart';
+import 'package:settings/settings.dart';
 
 class SettingController {
   Future<void> changeServerPath(BuildContext context) async {

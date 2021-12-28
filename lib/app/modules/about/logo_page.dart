@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:global_repository/global_repository.dart';
 
 class LogoPage extends StatefulWidget {
+  const LogoPage({Key key}) : super(key: key);
+
   @override
   _LogoPageState createState() => _LogoPageState();
 }

@@ -2,13 +2,14 @@ import 'package:adb_tool/app/modules/online_devices/controllers/online_controlle
 import 'package:adbutil/adbutil.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class OnlineView extends GetView<OnlineController> {
+  const OnlineView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {

@@ -11,16 +11,10 @@ import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:animations/animations.dart';
-import 'package:app_launcher/app_launcher.dart';
-import 'package:file_manager_view/file_manager_view.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
-import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
@@ -656,7 +650,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Dimens.gap_dp48,
         child: Row(
@@ -703,9 +697,9 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 //   'adb -s ${widget.serial} shell start adbd\n',
                 // );
                 // print(result);
-                String result;
+                // String result;
                 await widget.adbChannel.changeNetDebugStatus(value);
-                print(result);
+                // Log.v(result);
                 setState(() {});
               },
             )
@@ -741,7 +735,7 @@ class _SwitchItemState extends State<SwitchItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Dimens.gap_dp48,
         child: Row(
@@ -810,7 +804,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: Dimens.gap_dp48,
         child: Row(

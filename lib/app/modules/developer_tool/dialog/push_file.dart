@@ -4,7 +4,6 @@ import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 

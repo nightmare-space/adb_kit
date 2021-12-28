@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DevicesList extends StatefulWidget {
+  const DevicesList({Key key}) : super(key: key);
+
   @override
   _DevicesListState createState() => _DevicesListState();
 }
@@ -68,7 +70,7 @@ class _DevicesListState extends State<DevicesList> {
                   ),
                 ),
                 Builder(builder: (_) {
-                  if (controller.adbIsStarting)
+                  if (controller.adbIsStarting) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -88,15 +90,17 @@ class _DevicesListState extends State<DevicesList> {
                         ),
                       ],
                     );
+                  }
                   return const SizedBox();
                 }),
                 Builder(builder: (_) {
                   if (!controller.adbIsStarting &&
-                      controller.devicesEntitys.isEmpty)
+                      controller.devicesEntitys.isEmpty) {
                     return const Text(
                       '未发现设备',
                       style: TextStyle(color: Colors.grey),
                     );
+                  }
                   return const SizedBox();
                 }),
               ],

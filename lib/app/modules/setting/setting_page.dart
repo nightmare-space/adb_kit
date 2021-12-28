@@ -4,7 +4,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-import 'package:settings/src/setting_extension.dart';
+import 'package:settings/settings.dart';
 
 import 'setting_ctl.dart';
 

@@ -2,10 +2,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:path/path.dart' as p;
 
 typedef PerformCall = void Function(List<String> paths);
 
@@ -74,9 +71,9 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                         fontSize: 14.w,
                         color: AppColors.fontColor,
                       ),
-                      child: Text(
+                      child: const Text(
                         '释放执行操作',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.accent,
                           fontWeight: FontWeight.bold,
                         ),
@@ -90,7 +87,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                         Material(
                           color: AppColors.inputBorderColor,
                           borderRadius: BorderRadius.circular(28.w),
-                          child: Container(
+                          child: SizedBox(
                             width: 54.w,
                             height: 54.w,
                             child: InkWell(

@@ -7,6 +7,8 @@ import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 
 class AdbInstallPage extends StatefulWidget {
+  const AdbInstallPage({Key key}) : super(key: key);
+
   @override
   _AdbInstallPageState createState() => _AdbInstallPageState();
 }

@@ -6,11 +6,8 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/main.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
-import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
-import 'package:settings/src/setting_extension.dart';
-import 'package:termare_pty/termare_pty.dart';
+import 'package:settings/settings.dart';
 
 ///
 /// 无界投屏也会直接依赖这个

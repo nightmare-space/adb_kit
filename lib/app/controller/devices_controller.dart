@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
@@ -115,8 +114,8 @@ class DevicesController extends GetxController {
     // }
     // Log.e('start');
     try {
-     String out= await execCmd('adb start-server');
-     Log.d('adb start-server out:$out');
+      String out = await execCmd('adb start-server');
+      Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {}
     // Log.e('end');
@@ -179,9 +178,9 @@ class DevicesController extends GetxController {
           tmpDevices.add(devicesEntity);
         }
       }
-      otgDevices.forEach((value) {
-        tmpDevices.add(value);
-      });
+      for (final DevicesEntity entity in otgDevices) {
+        tmpDevices.add(entity);
+      }
       updateWithAnima(tmpDevices);
     }
   }
@@ -192,7 +191,7 @@ class DevicesController extends GetxController {
     for (final DevicesEntity devicesEntity in current) {
       if (!devicesEntitys.contains(devicesEntity)) {
         // 如果当前列表不包含controller列表的item
-        print('devicesEntity ->$devicesEntity');
+        Log.v('devicesEntity ->$devicesEntity');
         _addItem(devicesEntity);
       } else {
         final int index = devicesEntitys.indexOf(devicesEntity);
@@ -211,7 +210,7 @@ class DevicesController extends GetxController {
 
       if (!current.contains(devicesEntity)) {
         removeLock = Completer<bool>();
-        print('需要删除devicesEntity ->$devicesEntity');
+        Log.v('需要删除devicesEntity ->$devicesEntity');
         final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
         Future.delayed(const Duration(milliseconds: 300), () {
           update();

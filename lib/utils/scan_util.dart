@@ -29,10 +29,10 @@ class ScanUtil {
     if (cameraScanResult == null) {
       return;
     }
-    print('cameraScanResult -> $cameraScanResult');
+    Log.v('cameraScanResult -> $cameraScanResult');
     final List<String> connectAddress = cameraScanResult.split('\n');
     final List<String> localAddress = await PlatformUtil.localAddress();
-    print(localAddress);
+    Log.v(localAddress);
     // 这里应该优先排序，将同网关的地址放在最前面
     //
     Get.dialog(ParseQrcodePage(

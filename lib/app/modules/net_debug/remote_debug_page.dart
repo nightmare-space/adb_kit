@@ -4,10 +4,11 @@ import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:global_repository/global_repository.dart';
 
 class RemoteDebugPage extends StatefulWidget {
+  const RemoteDebugPage({Key key}) : super(key: key);
+
   @override
   _RemoteDebugPageState createState() => _RemoteDebugPageState();
 }
@@ -27,10 +28,10 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     );
     for (String ip in ipRoute.split('\n')) {
       ip = ip.trim().replaceAll(RegExp('.* '), '');
-      print(ip);
+      Log.v(ip);
       address.add(ip);
     }
-    print('address->$address');
+    Log.v('address->$address');
     setState(() {});
     final String result =
         await YanProcess().exec('getprop service.adb.tcp.port');

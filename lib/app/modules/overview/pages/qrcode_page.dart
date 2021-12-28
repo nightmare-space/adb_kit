@@ -1,12 +1,13 @@
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrScanPage extends StatefulWidget {
+  const QrScanPage({Key key}) : super(key: key);
+
   @override
   _QrScanPageState createState() => _QrScanPageState();
 }

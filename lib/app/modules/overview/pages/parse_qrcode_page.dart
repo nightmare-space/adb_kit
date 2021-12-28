@@ -32,9 +32,9 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
   @override
   void initState() {
     super.initState();
-    widget.addressList.forEach((element) {
+    for (var element in widget.addressList) {
       entitys.add(ConnectEntity(element));
-    });
+    }
     execPostMsg();
   }
 
@@ -54,7 +54,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
       } on DioError catch (e) {
         entitys[i].state = ConnectState.failed;
         setState(() {});
-        print('e->$e');
+        Log.e('e->$e');
       }
     }
   }
@@ -62,7 +62,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> children = [];
-    entitys.forEach((element) {
+    for (var element in entitys) {
       children.add(
         SizedBox(
           height: Dimens.gap_dp48,
@@ -122,7 +122,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
           ),
         ),
       );
-    });
+    }
     return Center(
       child: Material(
         color: Colors.white,

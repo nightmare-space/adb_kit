@@ -3,7 +3,7 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   static const prefix = '/adb';
-  static const HOME = prefix;
+  static const home = prefix;
   static const overview = '$prefix/overview';
   static const installToSystem = '$prefix/install';
   static const searchIp = '$prefix/search';
@@ -13,5 +13,5 @@ abstract class Routes {
   static const about = '$prefix/about';
   static const setting = '$prefix/setting';
   static const log = '$prefix/log';
-  static const TES = '/tes';
+  static const test = '/tes';
 }

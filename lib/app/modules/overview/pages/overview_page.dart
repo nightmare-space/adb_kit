@@ -1,5 +1,4 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
-import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
@@ -16,6 +15,8 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class OverviewPage extends StatefulWidget {
+  const OverviewPage({Key key}) : super(key: key);
+
   @override
   _OverviewPageState createState() => _OverviewPageState();
 }
@@ -102,7 +103,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         ),
                       ],
                     ),
-                    DevicesList(),
+                    const DevicesList(),
                   ],
                 ),
               ),
@@ -134,7 +135,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     SizedBox(
                       height: Dimens.gap_dp8,
                     ),
-                    OnlineView(),
+                    const OnlineView(),
                     SizedBox(
                       height: Dimens.gap_dp8,
                     ),
@@ -206,7 +207,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     child: TextField(
                       controller: editingController,
                       decoration: InputDecoration(
-                        hintText: '格式为\"IP地址:端口号 配对码\"',
+                        hintText: '格式为"IP地址:端口号 配对码"',
                         hintStyle: TextStyle(
                           fontSize: 14.w,
                         ),
@@ -278,7 +279,7 @@ class _OverviewPageState extends State<OverviewPage> {
             ],
           ),
           SizedBox(height: 8.w),
-          QrScanPage(),
+          const QrScanPage(),
           SizedBox(height: 8.w),
           Container(
             width: MediaQuery.of(context).size.width,

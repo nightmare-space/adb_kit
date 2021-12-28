@@ -16,11 +16,11 @@ part 'app_routes.dart';
 
 class AdbPages {
   AdbPages._();
-  static const INITIAL = Routes.HOME;
+  static const initial = Routes.home;
 
   static final routes = [
     GetPage(
-      name: Routes.HOME,
+      name: Routes.home,
       page: () => AdbTool(),
       binding: HomeBinding(),
     ),
@@ -33,25 +33,25 @@ Widget getWidget(String route) {
       return const AboutPage();
       break;
     case Routes.overview:
-      return OverviewPage();
+      return const OverviewPage();
       break;
     case Routes.installToSystem:
-      return AdbInstallToSystemPage();
+      return const AdbInstallToSystemPage();
       break;
     case Routes.terminal:
-      return ExecCmdPage();
+      return const ExecCmdPage();
       break;
     case Routes.history:
-      return HistoryPage();
+      return const HistoryPage();
       break;
     case Routes.searchIp:
-      return SearchIpPage();
+      return const SearchIpPage();
       break;
     case Routes.netDebug:
-      return RemoteDebugPage();
+      return const RemoteDebugPage();
       break;
     case Routes.log:
-      return LogPage();
+      return const LogPage();
       break;
     case Routes.setting:
       return const SettingsPage();

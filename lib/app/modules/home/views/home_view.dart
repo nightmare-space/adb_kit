@@ -3,7 +3,6 @@ import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/utils.dart';
@@ -34,7 +33,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('Last notification: $state\n');
+    Log.v('Last notification: $state\n');
   }
 
   @override

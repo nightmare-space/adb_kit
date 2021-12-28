@@ -6,7 +6,6 @@ import 'package:app_manager/controller/app_manager_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:signale/signale.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({
@@ -87,7 +86,7 @@ class _DevicesItemState extends State<DevicesItem>
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () {},
-      child: Container(
+      child: SizedBox(
         height: 54.w,
         child: Stack(
           alignment: Alignment.center,

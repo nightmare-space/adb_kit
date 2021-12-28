@@ -8,6 +8,8 @@ import 'package:global_repository/global_repository.dart';
 
 // 安装 adb 工具到系统
 class AdbInstallToSystemPage extends StatefulWidget {
+  const AdbInstallToSystemPage({Key key}) : super(key: key);
+
   @override
   _AdbInstallToSystemPageState createState() => _AdbInstallToSystemPageState();
 }

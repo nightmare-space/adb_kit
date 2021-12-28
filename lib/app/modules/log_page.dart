@@ -1,14 +1,14 @@
-import 'dart:ui';
 
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:termare_view/termare_view.dart';
 
 class LogPage extends StatefulWidget {
+  const LogPage({Key key}) : super(key: key);
+
   @override
   _LogPageState createState() => _LogPageState();
 }

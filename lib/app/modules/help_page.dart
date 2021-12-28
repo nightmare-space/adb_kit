@@ -4,6 +4,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpPage extends StatefulWidget {
+  const HelpPage({Key key}) : super(key: key);
+
   @override
   _HelpPageState createState() => _HelpPageState();
 }
