@@ -1,5 +1,8 @@
+import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
+import 'package:global_repository/global_repository.dart';
 
 class DeviceEntity {
   DeviceEntity(this.unique, this.address);
@@ -46,8 +49,16 @@ class OnlineController extends GetxController {
   @override
   void onClose() {}
 
-  void updateDevices(DeviceEntity devices) {
-    // Log.w('list -> $list');
+  Future<void> updateDevices(DeviceEntity devices) async {
+    AdbResult result;
+    try {
+      result = await AdbUtil.connectDevices(
+        devices.address,
+      );
+      showToast('自动连接${devices.unique}成功');
+    } on AdbException catch (e) {
+      // Log.v(e.message);
+    }
     if (!list.contains(devices)) {
       list.add(devices);
     } else {

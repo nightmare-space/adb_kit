@@ -107,56 +107,56 @@ class _OverviewPageState extends State<OverviewPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 8.w),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.w),
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.2),
-                    width: 1.w,
-                  ),
-                ),
-                padding: EdgeInsets.all(8.w),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const ItemHeader(color: CandyColors.candyPurpleAccent),
-                        Text(
-                          '运行ADB TOOL的设备',
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp16,
-                            fontWeight: FontWeight.bold,
-                            height: 1.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: Dimens.gap_dp8,
-                    ),
-                    const OnlineView(),
-                    SizedBox(
-                      height: Dimens.gap_dp8,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        '这儿发现了其他设备运行了本软件，也能快速连接~',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 12.w,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(height: 8.w),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(12.w),
+              //     border: Border.all(
+              //       color: Colors.grey.withOpacity(0.2),
+              //       width: 1.w,
+              //     ),
+              //   ),
+              //   padding: EdgeInsets.all(8.w),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         children: [
+              //           const ItemHeader(color: CandyColors.candyPurpleAccent),
+              //           Text(
+              //             '运行ADB TOOL的设备',
+              //             style: TextStyle(
+              //               fontSize: Dimens.font_sp16,
+              //               fontWeight: FontWeight.bold,
+              //               height: 1.0,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       SizedBox(
+              //         height: Dimens.gap_dp8,
+              //       ),
+              //       const OnlineView(),
+              //       SizedBox(
+              //         height: Dimens.gap_dp8,
+              //       ),
+              //       Container(
+              //         width: MediaQuery.of(context).size.width,
+              //         padding: EdgeInsets.all(8.w),
+              //         decoration: BoxDecoration(
+              //           color: Colors.green.withOpacity(0.1),
+              //           borderRadius: BorderRadius.circular(10.w),
+              //         ),
+              //         child: Text(
+              //           '这儿发现了其他设备运行了本软件，也能快速连接~',
+              //           style: TextStyle(
+              //             color: Colors.green,
+              //             fontSize: 12.w,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 8.w),
               connectCard(context),
               SizedBox(
