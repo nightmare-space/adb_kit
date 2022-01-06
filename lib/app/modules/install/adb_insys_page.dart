@@ -23,6 +23,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   void initState() {
     super.initState();
     choosePath = xbinPath;
+    Global().initTerminal();
   }
 
   @override

@@ -97,7 +97,7 @@ class _DevicesListState extends State<DevicesList> {
                   if (!controller.adbIsStarting &&
                       controller.devicesEntitys.isEmpty) {
                     return const Text(
-                      '未发现设备',
+                      '未连接任何设备',
                       style: TextStyle(color: Colors.grey),
                     );
                   }

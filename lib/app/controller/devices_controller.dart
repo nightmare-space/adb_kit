@@ -117,8 +117,19 @@ class DevicesController extends GetxController {
       String out = await execCmd('adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
-    } catch (e) {}
+    } catch (e) {}     
     // Log.e('end');
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      letADBStarted();
+    });
+  }
+
+  void letADBStarted() {
+    if (adbIsStarting) {
+      adbIsStarting = false;
+      Log.w('adbIsStarting = false');
+      update();
+    }
   }
 
   // 这是model的缓存
@@ -128,11 +139,7 @@ class DevicesController extends GetxController {
     // if (count < 2) {
     //   count++;
     // }
-    if (adbIsStarting) {
-      adbIsStarting = false;
-      Log.w('adbIsStarting = false');
-      update();
-    }
+    letADBStarted();
     // if (kReleaseMode) {
     // Log.d('adb devices out -> $out');
     // }

@@ -23,9 +23,14 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {
     Global.instance.pseudoTerminal.write(editingController.text + '\n');
-
     editingController.clear();
     focusNode.requestFocus();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Global().initTerminal();
   }
 
   @override

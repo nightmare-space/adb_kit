@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
@@ -15,11 +14,13 @@ import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_view/termare_view.dart';
+import 'dart:core' as core;
+import 'dart:core';
 
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
-    defaultLogger.logDelegate = const Print();
+    defaultLogger.printer = const Print();
     HomeBinding().dependencies();
   }
 
@@ -48,9 +49,11 @@ class Global {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  PseudoTerminal pseudoTerminal =
-      GetPlatform.isWindows ? null : TerminalUtil.getShellTerminal()
-        ..write('clear\r');
+  // todo initial
+  PseudoTerminal pseudoTerminal;
+  void initTerminal() {
+    pseudoTerminal ??= TerminalUtil.getShellTerminal();
+  }
 
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
@@ -212,15 +215,15 @@ class Global {
   }
 }
 
-class Print implements Logable {
+class Print implements Printable {
   const Print();
   @override
-  void log(DateTime time, Object object) {
+  void print(DateTime time, Object object) {
     final String data =
         '[${_twoDigits(time.hour)}:${_twoDigits(time.minute)}:${_twoDigits(time.second)}] $object';
     Global().logTerminalCTL.write(data + '\r\n');
     // ignore: avoid_print
-    print(data);
+    core.print(data);
   }
 }
 

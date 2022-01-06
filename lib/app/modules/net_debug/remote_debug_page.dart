@@ -2,6 +2,7 @@ import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
@@ -23,9 +24,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   }
 
   Future<void> init() async {
-    final String ipRoute = await YanProcess().exec(
-      'ip route',
-    );
+    final String ipRoute = await execCmd('ip route');
     for (String ip in ipRoute.split('\n')) {
       ip = ip.trim().replaceAll(RegExp('.* '), '');
       Log.v(ip);
@@ -33,8 +32,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     }
     Log.v('address->$address');
     setState(() {});
-    final String result =
-        await YanProcess().exec('getprop service.adb.tcp.port');
+    final String result = await execCmd('getprop service.adb.tcp.port');
     if (result == '5555') {
       adbDebugOpen = true;
       setState(() {});
@@ -45,17 +43,11 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     adbDebugOpen = !adbDebugOpen;
     setState(() {});
     final int value = adbDebugOpen ? 5555 : -1;
-
-    final StringBuffer buffer = StringBuffer();
-    buffer.writeln('su -c "');
-    buffer.writeln(
-      'setprop service.adb.tcp.port $value',
-    );
-    buffer.writeln(
-      'stop adbd',
-    );
-    buffer.writeln('start adbd"\n');
-    Global.instance.pseudoTerminal.write(buffer.toString());
+    await execCmd2([
+      'su',
+      '-c',
+      'setprop service.adb.tcp.port $value&&stop adbd&&start adbd'
+    ]);
   }
 
   @override
