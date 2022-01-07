@@ -22,6 +22,9 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 
 **编译不过请联系 github 上的邮箱或者qq**
 
+## 下载
+- [个人服务器地址](http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A)
+
 ## 截图
 <img src="screenshot/adb_dashboard.png"/> 
 
