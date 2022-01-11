@@ -61,7 +61,7 @@ class DexServer {
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,
                 rangeStart: 6000,
-                rangeEnd: 6010,
+                rangeEnd: 6040,
                 targetArg: 'tcp:$remotePort',
               );
               Log.d('localPort -> $localPort');
