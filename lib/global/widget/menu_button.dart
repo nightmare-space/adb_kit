@@ -7,16 +7,14 @@ class Menubutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: NiIconButton(
-        child: Icon(
-          Icons.menu,
-          size: 24.w,
-        ),
-        onTap: () {
-          Scaffold.of(scaffoldContext).openDrawer();
-        },
+    return NiIconButton(
+      child: Icon(
+        Icons.menu,
+        size: 24.w,
       ),
+      onTap: () {
+        Scaffold.of(scaffoldContext).openDrawer();
+      },
     );
   }
 }

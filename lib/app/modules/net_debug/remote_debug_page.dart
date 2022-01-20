@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
@@ -57,11 +58,10 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
       appBar = AppBar(
         title: const Text('网络ADB调试'),
         systemOverlayStyle: OverlayStyle.dark,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
+        titleSpacing: 0,
+        leadingWidth: 48.w,
+        leading: Menubutton(
+          scaffoldContext: context,
         ),
       );
     }
@@ -71,28 +71,32 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
         child: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.w,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      '打开网络ADB调试',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '打开网络ADB调试',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.w,
+                        ),
                       ),
-                    ),
-                    Switch(
-                      value: adbDebugOpen,
-                      onChanged: (_) async {
-                        changeState();
-                      },
-                    ),
-                  ],
+                      Switch(
+                        value: adbDebugOpen,
+                        onChanged: (_) async {
+                          changeState();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 CardItem(
                   child: Column(
@@ -101,7 +105,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Row(
                         children: [
                           const ItemHeader(
-                              color: CandyColors.candyPurpleAccent),
+                            color: CandyColors.candyPurpleAccent,
+                          ),
                           Text(
                             '本机IP',
                             style: TextStyle(

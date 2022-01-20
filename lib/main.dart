@@ -3,9 +3,11 @@ library adb_tool;
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:app_manager/app_manager.dart';
+import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -70,6 +72,8 @@ class AppEntryPoint extends StatefulWidget {
 
 class _AppEntryPointState extends State<AppEntryPoint>
     with WidgetsBindingObserver {
+  ConfigController configController = Get.put(ConfigController());
+
   @override
   void initState() {
     super.initState();
@@ -117,60 +121,80 @@ class _AppEntryPointState extends State<AppEntryPoint>
     return OrientationBuilder(
       builder: (_, Orientation orientation) {
         return ToastApp(
-          child: GetMaterialApp(
-            enableLog: false,
-            debugShowCheckedModeBanner: false,
-            title: 'ADB工具箱',
-            navigatorKey: Global.instance.navigatorKey,
-            themeMode: ThemeMode.light,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            defaultTransition: Transition.fadeIn,
-            initialRoute: AdbPages.initial,
-            getPages: AdbPages.routes + AppPages.routes,
-            builder: (BuildContext context, Widget navigator) {
-              if (orientation == Orientation.landscape) {
-                context.init(896);
-              } else {
-                context.init(414);
-              }
-              // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-              // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-              final bool isDark =
-                  Theme.of(context).brightness == Brightness.dark;
-              final ThemeData theme =
-                  isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
-
-              /// NativeShell
-              if (widget.isNativeShell) {
-                return WindowLayoutProbe(
-                  child: SizedBox(
-                    width: 800,
-                    height: 600,
-                    child: Responsive(
-                      builder: (_, __) {
-                        return Theme(
-                          data: theme,
-                          child: navigator,
+          child: GetBuilder<ConfigController>(
+            builder: (context) {
+              return GetMaterialApp(
+                showPerformanceOverlay: configController.showPerformanceOverlay,
+                showSemanticsDebugger: configController.showSemanticsDebugger,
+                debugShowMaterialGrid: configController.debugShowMaterialGrid,
+                checkerboardRasterCacheImages:
+                    configController.checkerboardRasterCacheImages,
+                enableLog: false,
+                debugShowCheckedModeBanner: false,
+                title: 'ADB工具箱',
+                navigatorKey: Global.instance.navigatorKey,
+                themeMode: ThemeMode.light,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                defaultTransition: Transition.fadeIn,
+                initialRoute: AdbPages.initial,
+                getPages: AdbPages.routes + AppPages.routes,
+                builder: (BuildContext context, Widget navigator) {
+                  if (orientation == Orientation.landscape) {
+                    context.init(896);
+                  } else {
+                    context.init(414);
+                  }
+                  // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                  // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                  final bool isDark =
+                      Theme.of(context).brightness == Brightness.dark;
+                  final ThemeData theme = isDark
+                      ? DefaultThemeData.dark()
+                      : DefaultThemeData.light(
+                          primary: configController.primaryColor,
                         );
-                      },
-                    ),
-                  ),
-                );
-              }
 
-              ///
-              ///
-              ///
-              /// Default Mode
-              ///
-              return Responsive(
-                builder: (_, __) {
-                  return Theme(
-                    data: theme,
-                    child: navigator,
+                  /// NativeShell
+                  if (widget.isNativeShell) {
+                    return WindowLayoutProbe(
+                      child: SizedBox(
+                        width: 800,
+                        height: 600,
+                        child: Responsive(
+                          builder: (_, __) {
+                            return GetBuilder<ConfigController>(
+                                builder: (context) {
+                              return Theme(
+                                data: theme,
+                                child: navigator,
+                              );
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  }
+
+                  ///
+                  ///
+                  ///
+                  /// Default Mode
+                  ///
+                  return Responsive(
+                    builder: (_, __) {
+                      return GetBuilder<ConfigController>(
+                        global: true,
+                        builder: (context) {
+                          return Theme(
+                            data: theme,
+                            child: navigator,
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               );

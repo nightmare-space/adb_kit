@@ -17,7 +17,7 @@ class ItemHeader extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.w)
         ),
         width: Dimens.gap_dp4,
-        height: Dimens.gap_dp16,
+        height: Dimens.gap_dp12,
       ),
     );
   }

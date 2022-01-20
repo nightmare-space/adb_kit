@@ -73,7 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Padding buildBody(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: SingleChildScrollView(
         // padding: EdgeInsets.only(bottom: 100.w),
         physics: const BouncingScrollPhysics(),
@@ -91,14 +91,14 @@ class _OverviewPageState extends State<OverviewPage> {
                 child: Column(
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const ItemHeader(color: CandyColors.candyPink),
                         Text(
                           '已成功连接的设备',
                           style: TextStyle(
-                            fontSize: Dimens.font_sp16,
+                            fontSize: 16.w,
                             fontWeight: FontWeight.bold,
-                            height: 1.0,
                           ),
                         ),
                       ],
@@ -107,61 +107,9 @@ class _OverviewPageState extends State<OverviewPage> {
                   ],
                 ),
               ),
-              // SizedBox(height: 8.w),
-              // Container(
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(12.w),
-              //     border: Border.all(
-              //       color: Colors.grey.withOpacity(0.2),
-              //       width: 1.w,
-              //     ),
-              //   ),
-              //   padding: EdgeInsets.all(8.w),
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         children: [
-              //           const ItemHeader(color: CandyColors.candyPurpleAccent),
-              //           Text(
-              //             '运行ADB TOOL的设备',
-              //             style: TextStyle(
-              //               fontSize: Dimens.font_sp16,
-              //               fontWeight: FontWeight.bold,
-              //               height: 1.0,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       SizedBox(
-              //         height: Dimens.gap_dp8,
-              //       ),
-              //       const OnlineView(),
-              //       SizedBox(
-              //         height: Dimens.gap_dp8,
-              //       ),
-              //       Container(
-              //         width: MediaQuery.of(context).size.width,
-              //         padding: EdgeInsets.all(8.w),
-              //         decoration: BoxDecoration(
-              //           color: Colors.green.withOpacity(0.1),
-              //           borderRadius: BorderRadius.circular(10.w),
-              //         ),
-              //         child: Text(
-              //           '这儿发现了其他设备运行了本软件，也能快速连接~',
-              //           style: TextStyle(
-              //             color: Colors.green,
-              //             fontSize: 12.w,
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: 8.w),
               connectCard(context),
-              SizedBox(
-                height: 8.w,
-              ),
+              SizedBox(height: 8.w),
             ],
           ),
         ),
@@ -169,136 +117,141 @@ class _OverviewPageState extends State<OverviewPage> {
     );
   }
 
-  Container connectCard(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(12.w),
-        border: Border.all(
-          color: Colors.grey.withOpacity(0.2),
-          width: 1.w,
-        ),
-      ),
-      padding: EdgeInsets.all(8.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget connectCard(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CardItem(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ItemHeader(color: CandyColors.candyBlue),
-              Text(
-                '输入对方设备IP连接',
-                style: TextStyle(
-                  fontSize: Dimens.font_sp16,
-                  fontWeight: FontWeight.bold,
-                  height: 1.0,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: Dimens.gap_dp4),
-          SizedBox(
-            width: 414.w,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.w),
-              child: Row(
+              Row(
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: editingController,
-                      decoration: InputDecoration(
-                        hintText: '格式为"IP地址:端口号 配对码"',
-                        hintStyle: TextStyle(
-                          fontSize: 14.w,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 4.w,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Center(
-                        child: NiIconButton(
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black.withOpacity(0.6),
-                          ),
-                          onTap: () async {
-                            if (editingController.text.isEmpty) {
-                              showToast('IP不可为空');
-                              return;
-                            }
-                            Log.d('adb 连接开始');
-                            AdbResult result;
-                            try {
-                              result = await AdbUtil.connectDevices(
-                                editingController.text,
-                              );
-                              showToast(result.message);
-                              final List<String> tmp =
-                                  editingController.text.split(':');
-                              final String address = tmp[0];
-                              String port = '5555';
-                              if (tmp.length >= 2) {
-                                port = tmp[1];
-                              }
-                              HistoryController.updateHistory(
-                                address: address,
-                                port: port,
-                                name: address,
-                              );
-                            } on AdbException catch (e) {
-                              showToast(e.message);
-                            }
-                            Log.d('adb 连接结束 ${result.message}');
-                          },
-                        ),
-                      ),
+                  const ItemHeader(color: CandyColors.candyBlue),
+                  Text(
+                    '输入对方设备IP连接',
+                    style: TextStyle(
+                      fontSize: Dimens.font_sp16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const ItemHeader(color: CandyColors.purple),
-              Text(
-                '扫码连接',
-                style: TextStyle(
-                  fontSize: Dimens.font_sp16,
-                  fontWeight: FontWeight.bold,
-                  height: 1.0,
+              SizedBox(height: Dimens.gap_dp4),
+              SizedBox(
+                width: 414.w,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.w),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: editingController,
+                          style: TextStyle(height: 1.0),
+                          decoration: InputDecoration(
+                            hintText: '格式为"IP地址:端口号 配对码"',
+                            hintStyle: TextStyle(
+                              fontSize: 14.w,
+                            ),
+                            fillColor: AppColors.contentBorder,
+                            isDense: true,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 4.w,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: NiIconButton(
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.black.withOpacity(0.6),
+                              ),
+                              onTap: () async {
+                                if (editingController.text.isEmpty) {
+                                  showToast('IP不可为空');
+                                  return;
+                                }
+                                Log.d('adb 连接开始');
+                                AdbResult result;
+                                try {
+                                  result = await AdbUtil.connectDevices(
+                                    editingController.text,
+                                  );
+                                  showToast(result.message);
+                                  final List<String> tmp =
+                                      editingController.text.split(':');
+                                  final String address = tmp[0];
+                                  String port = '5555';
+                                  if (tmp.length >= 2) {
+                                    port = tmp[1];
+                                  }
+                                  HistoryController.updateHistory(
+                                    address: address,
+                                    port: port,
+                                    name: address,
+                                  );
+                                } on AdbException catch (e) {
+                                  showToast(e.message);
+                                }
+                                Log.d('adb 连接结束 ${result.message}');
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 8.w),
-          const QrScanPage(),
-          SizedBox(height: 8.w),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(8.w),
-            decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10.w),
-            ),
-            child: Text(
-              '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接',
-              style: TextStyle(
-                color: Colors.green,
-                fontSize: 12.w,
+        ),
+        SizedBox(height: 8.w),
+        CardItem(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ItemHeader(color: CandyColors.purple),
+                  Text(
+                    '扫码连接',
+                    style: TextStyle(
+                      fontSize: Dimens.font_sp16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-            ),
+              SizedBox(height: 8.w),
+              const QrScanPage(),
+              SizedBox(height: 8.w),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10.w),
+                ),
+                child: Text(
+                  '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接',
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 12.w,
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.w),
+            ],
           ),
-          SizedBox(height: 8.w),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -348,16 +301,17 @@ class CardItem extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.w),
-        border: Border.all(
-          color: Colors.grey.withOpacity(0.2),
-          width: 1.w,
-        ),
+    return Material(
+      borderRadius: BorderRadius.circular(12.w),
+      // border: Border.all(
+      //   color: Colors.grey.withOpacity(0.2),
+      //   width: 1.w,
+      // ),
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.all(12.w),
+        child: child,
       ),
-      padding: EdgeInsets.all(8.w),
-      child: child,
     );
   }
 }

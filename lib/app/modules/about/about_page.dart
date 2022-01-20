@@ -3,6 +3,7 @@ import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);
@@ -54,7 +55,48 @@ class AboutPage extends StatelessWidget {
                   style: const TextStyle(
                     letterSpacing: 1,
                   ),
-                )
+                ),
+                SizedBox(height: 8.w),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'ADB TOOL其他版本下载',
+                        style: TextStyle(
+                          fontSize: 14.w,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 1.w,
+                      height: 12.w,
+                      color: Colors.grey,
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        const String url = 'http://nightmare.fun';
+                        if (await canLaunch(url)) {
+                          await launch(
+                            url,
+                            forceSafariVC: false,
+                            forceWebView: false,
+                            // headers: <String, String>{'my_header_key': 'my_header_value'},
+                          );
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: Text(
+                        '梦魇兽作品下载主页',
+                        style: TextStyle(
+                          fontSize: 14.w,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

@@ -56,76 +56,69 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      children: <Widget>[
-                        const ItemHeader(
-                          color: CandyColors.candyCyan,
-                        ),
-                        Text(
-                          '选择安装路径',
-                          style: TextStyle(
-                            fontSize: 16.w,
-                            fontWeight: FontWeight.bold,
+                    CardItem(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              const ItemHeader(
+                                color: CandyColors.candyCyan,
+                              ),
+                              Text(
+                                '选择安装路径',
+                                style: TextStyle(
+                                  fontSize: 16.w,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(12.w),
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.1),
-                          width: 1.w,
-                        ),
-                      ),
-                      margin: EdgeInsets.symmetric(vertical: 8.w),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  xbinPath,
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    xbinPath,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Radio(
-                                  value: xbinPath,
-                                  groupValue: choosePath,
-                                  onChanged: (String value) {
-                                    choosePath = value;
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  binPath,
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                                  Radio(
+                                    value: xbinPath,
+                                    groupValue: choosePath,
+                                    onChanged: (String value) {
+                                      choosePath = value;
+                                      setState(() {});
+                                    },
                                   ),
-                                ),
-                                Radio<String>(
-                                  value: binPath,
-                                  groupValue: choosePath,
-                                  onChanged: (String value) {
-                                    choosePath = value;
-                                    setState(() {});
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    binPath,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Radio<String>(
+                                    value: binPath,
+                                    groupValue: choosePath,
+                                    onChanged: (String value) {
+                                      choosePath = value;
+                                      setState(() {});
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
+                    SizedBox(height: 8.w),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(8.w),
@@ -178,25 +171,31 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                     SizedBox(
                       height: Dimens.gap_dp16,
                     ),
-                    Row(
-                      children: [
-                        const ItemHeader(color: CandyColors.candyPink),
-                        Text(
-                          '终端',
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(
                       height: Dimens.gap_dp16,
                     ),
-                    const CardItem(
+                    CardItem(
                       child: SizedBox(
                         height: 200,
-                        child: TerminalPage(),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const ItemHeader(color: CandyColors.candyPink),
+                                Text(
+                                  '终端',
+                                  style: TextStyle(
+                                    fontSize: Dimens.font_sp16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Expanded(
+                              child: TerminalPage(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(

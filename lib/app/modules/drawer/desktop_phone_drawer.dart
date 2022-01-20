@@ -1,7 +1,8 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,6 +22,8 @@ class DesktopPhoneDrawer extends StatefulWidget {
 }
 
 class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
+  ConfigController configController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     final double width = widget.width;
@@ -28,12 +31,14 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       builder: (context, orientation) {
         return Material(
           color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(Dimens.gap_dp20),
-              bottomRight: Radius.circular(Dimens.gap_dp20),
-            ),
-          ),
+          shape: Responsive.of(context).screenType != ScreenType.desktop
+              ? RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Dimens.gap_dp20),
+                    bottomRight: Radius.circular(Dimens.gap_dp20),
+                  ),
+                )
+              : null,
           child: SafeArea(
             child: SizedBox(
               width: width,
@@ -69,7 +74,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Dimens.gap_dp12,
+                  horizontal: 24.w,
                   vertical: Dimens.gap_dp8,
                 ),
                 child: Text(
@@ -77,7 +82,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
                   style: TextStyle(
                     fontSize: 26.w,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.accent,
+                    color: configController.primaryColor,
                   ),
                 ),
               ),
@@ -125,15 +130,6 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
                       Log.e(index);
                       widget.onChanged?.call(index);
                     },
-                  ),
-                  _DrawerItem(
-                    value: Routes.searchIp,
-                    groupValue: widget.groupValue,
-                    title: '查看局域网ip',
-                    onTap: (index) {
-                      widget.onChanged?.call(index);
-                    },
-                    iconData: Icons.wifi_tethering,
                   ),
                 ],
               ),
@@ -186,34 +182,12 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             ),
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _DrawerItem(
-              groupValue: widget.groupValue,
-              title: '其他平台下载',
-              onTap: (index) async {
-                const String url = 'http://nightmare.fun/adb';
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                    forceSafariVC: false,
-                    forceWebView: false,
-                    // headers: <String, String>{'my_header_key': 'my_header_value'},
-                  );
-                } else {
-                  throw 'Could not launch $url';
-                }
-                // http://nightmare.fun/adbtool
-                // widget.onChange?.call(index);
-              },
-            ),
-          ],
-        ),
       ],
     );
   }
 }
+
+final ConfigController configController = Get.find();
 
 class _DrawerItem extends StatelessWidget {
   const _DrawerItem({
@@ -229,7 +203,6 @@ class _DrawerItem extends StatelessWidget {
   final String value;
   final String groupValue;
   final IconData iconData;
-
   @override
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
@@ -250,7 +223,7 @@ class _DrawerItem extends StatelessWidget {
               height: 48.w,
               decoration: isChecked
                   ? BoxDecoration(
-                      color: AppColors.accent.withOpacity(0.1),
+                      color: configController.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8.w),
                     )
                   : null,
@@ -267,8 +240,9 @@ class _DrawerItem extends StatelessWidget {
                       Icon(
                         iconData ?? Icons.open_in_new,
                         size: 18.w,
-                        color:
-                            isChecked ? AppColors.accent : AppColors.fontTitle,
+                        color: isChecked
+                            ? configController.primaryColor
+                            : AppColors.fontTitle,
                       ),
                       SizedBox(
                         width: Dimens.gap_dp8,
@@ -277,7 +251,7 @@ class _DrawerItem extends StatelessWidget {
                         title,
                         style: TextStyle(
                           color: isChecked
-                              ? AppColors.accent
+                              ? configController.primaryColor
                               : AppColors.fontTitle,
                           fontSize: 14.w,
                           fontWeight: FontWeight.bold,

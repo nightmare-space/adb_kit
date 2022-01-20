@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:termare_view/termare_view.dart';
 
+import 'overview/pages/overview_page.dart';
+
 class LogPage extends StatefulWidget {
   const LogPage({Key key}) : super(key: key);
 
@@ -36,15 +38,7 @@ class _LogPageState extends State<LogPage> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.w),
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.background,
-              borderRadius: BorderRadius.circular(12.w),
-              border: Border.all(
-                color: Colors.black.withOpacity(0.1),
-                width: 1.w,
-              ),
-            ),
+          child: CardItem(
             child: Padding(
               padding: EdgeInsets.all(8.w),
               child: TermareView(

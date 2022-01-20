@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/utils/adbd_find_util.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
@@ -117,11 +118,17 @@ class DevicesController extends GetxController {
       String out = await execCmd('adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
-    } catch (e) {}     
+    } catch (e) {}
     // Log.e('end');
     Future.delayed(const Duration(milliseconds: 1000), () {
       letADBStarted();
     });
+    final List<String> devices = await ADBFind.getLANDevices();
+    for (String ip in devices) {
+      try {
+        AdbResult result=await AdbUtil.connectDevices(ip);
+      }on AdbException catch (e) {}
+    }
   }
 
   void letADBStarted() {
@@ -170,7 +177,7 @@ class DevicesController extends GetxController {
             }
             modelCache[listTmp.first] = model;
           } catch (e) {
-            Log.w(e);
+            Log.e(e);
           }
         }
         devicesEntity.productModel = model;

@@ -164,10 +164,12 @@ class DefaultThemeData {
     );
   }
 
-  static ThemeData light() {
+  static ThemeData light({
+    Color primary,
+  }) {
     final lightThemeData = ThemeData.light();
     final colorSchema = lightThemeData.colorScheme.copyWith(
-      primary: _primary,
+      primary: primary ?? _primary,
       primaryVariant: _primary_variant,
       secondary: _secondary,
       secondaryVariant: _secondary_variant,
@@ -197,12 +199,12 @@ class DefaultThemeData {
       inputDecorationTheme: InputDecorationTheme(
         fillColor: AppColors.inputBorderColor,
         isDense: true,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 12,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12.w,
+          vertical: 12.w,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.w),
           gapPadding: 0,
           borderSide: const BorderSide(
             width: 0,
@@ -210,7 +212,7 @@ class DefaultThemeData {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8.w),
           gapPadding: 0,
           borderSide: const BorderSide(
             width: 0,
@@ -259,7 +261,7 @@ class DefaultThemeData {
         ),
       ),
       unselectedWidgetColor: const Color(0xFFBFBFBF),
-      toggleableActiveColor: _primary,
+      toggleableActiveColor: colorSchema.primary,
       dividerColor: _divider_line,
       dividerTheme: DividerThemeData(
         color: _divider_line,

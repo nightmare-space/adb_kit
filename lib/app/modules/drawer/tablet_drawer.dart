@@ -175,41 +175,6 @@ class _TabletDrawerState extends State<TabletDrawer> {
             ),
           ],
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _DrawerItem(
-              groupValue: widget.groupValue,
-              title: '其他平台下载',
-              onTap: (index) async {
-                const String url = 'http://nightmare.fun/adb';
-                if (await canLaunch(url)) {
-                  await launch(
-                    url,
-                    forceSafariVC: false,
-                    forceWebView: false,
-                    // headers: <String, String>{'my_header_key': 'my_header_value'},
-                  );
-                } else {
-                  throw 'Could not launch $url';
-                }
-                // http://nightmare.fun/adbtool
-                // widget.onChange?.call(index);
-              },
-            ),
-
-            // Padding(
-            //   padding: EdgeInsets.all(Dimens.gap_dp16),
-            //   child: Text(
-            //     '版本：${Config.version}',
-            //     style: const TextStyle(
-            //       // fontWeight: FontWeight.bold,
-            //       color: Colors.grey,
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
       ],
     );
   }
