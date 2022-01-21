@@ -1,4 +1,4 @@
-
+import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -23,11 +23,21 @@ class _LogPageState extends State<LogPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (configController.isDarkTheme) {
+      Global().logTerminalCTL.theme = TermareStyles.vsCode.copyWith(
+        backgroundColor: Theme.of(context).cardColor,
+        fontSize: 11.w,
+      );
+    } else {
+      Global().logTerminalCTL.theme = TermareStyles.macos.copyWith(
+        backgroundColor: Theme.of(context).cardColor,
+        fontSize: 11.w,
+      );
+    }
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('日志'),
-        systemOverlayStyle:OverlayStyle.dark,
         leading: Menubutton(
           scaffoldContext: context,
         ),
@@ -39,11 +49,8 @@ class _LogPageState extends State<LogPage> {
         child: Padding(
           padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 8.w),
           child: CardItem(
-            child: Padding(
-              padding: EdgeInsets.all(8.w),
-              child: TermareView(
-                controller: Global().logTerminalCTL,
-              ),
+            child: TermareView(
+              controller: Global().logTerminalCTL,
             ),
           ),
         ),

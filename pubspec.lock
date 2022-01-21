@@ -36,20 +36,16 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: fb8c168a30ff16fc0df884f609efc0ab382d81a8
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
+      relative: false
+    source: path
     version: "1.0.0+1"
-  apputils:
+  applib_util:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ba2a5fed682b6c9a2dcf0c6e824010b62dc07745
-      url: "https://github.com/nightmare-space/apputils"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/applib/applib_util"
+      relative: false
+    source: path
     version: "0.0.1"
   archive:
     dependency: transitive
@@ -58,13 +54,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.9"
-  args:
-    dependency: transitive
-    description:
-      name: args
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.3.0"
   async:
     dependency: transitive
     description:
@@ -260,13 +249,11 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
-  flutter_markdown:
+  flutter_localizations:
     dependency: "direct main"
-    description:
-      name: flutter_markdown
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.6.9"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -308,11 +295,9 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "8ae0e1b004241124cad124a1a343fa07a4acf279"
-      url: "https://github.com/nightmare-space/global_repository"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/global_repository"
+      relative: false
+    source: path
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -342,6 +327,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.1"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -356,13 +348,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
-  markdown:
-    dependency: transitive
-    description:
-      name: markdown
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "4.0.1"
   matcher:
     dependency: transitive
     description:

@@ -1,9 +1,11 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DefaultThemeData {
@@ -167,6 +169,7 @@ class DefaultThemeData {
   static ThemeData light({
     Color primary,
   }) {
+    ConfigController controller = Get.find();
     final lightThemeData = ThemeData.light();
     final colorSchema = lightThemeData.colorScheme.copyWith(
       primary: primary ?? _primary,
@@ -174,7 +177,7 @@ class DefaultThemeData {
       secondary: _secondary,
       secondaryVariant: _secondary_variant,
       surface: _surface,
-      background: AppColors.background,
+      background: controller.theme.background,
       error: _error,
       onPrimary: _on_primary,
       onSecondary: _on_secondary,
@@ -197,7 +200,7 @@ class DefaultThemeData {
         color: colorSchema.onSurface,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        fillColor: AppColors.inputBorderColor,
+        fillColor: controller.theme.inputColor,
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12.w,
@@ -222,7 +225,8 @@ class DefaultThemeData {
         filled: true,
       ),
       appBarTheme: lightThemeData.appBarTheme.copyWith(
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle:
+            controller.isDarkTheme ? OverlayStyle.light : OverlayStyle.dark,
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -235,7 +239,7 @@ class DefaultThemeData {
         titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
           fontSize: Dimens.font_sp20,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
+          color: controller.theme.fontColor,
         ),
         toolbarTextStyle: lightThemeData.textTheme.headline6.copyWith(
           fontSize: Dimens.font_sp20,
@@ -260,6 +264,7 @@ class DefaultThemeData {
           fontSize: Dimens.font_sp16,
         ),
       ),
+      backgroundColor: colorSchema.background,
       unselectedWidgetColor: const Color(0xFFBFBFBF),
       toggleableActiveColor: colorSchema.primary,
       dividerColor: _divider_line,
@@ -267,39 +272,15 @@ class DefaultThemeData {
         color: _divider_line,
         space: Dimens.gap_dp1,
       ),
+      cardColor: controller.theme.cardColor,
       popupMenuTheme: PopupMenuThemeData(
         color: colorSchema.surface,
       ),
       textTheme: lightThemeData.textTheme.copyWith(
-        headline5: lightThemeData.textTheme.headline5.copyWith(
-          fontSize: Dimens.font_sp24,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF262626),
-        ),
-        headline6: lightThemeData.textTheme.headline6.copyWith(
-          fontSize: Dimens.font_sp20,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF595959),
-        ),
-        subtitle1: lightThemeData.textTheme.subtitle1.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF262626),
-        ),
-        subtitle2: lightThemeData.textTheme.subtitle2.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF262626),
-        ),
-        bodyText1: lightThemeData.textTheme.bodyText1.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF262626),
-        ),
         bodyText2: lightThemeData.textTheme.bodyText2.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w500,
-          color: AppColors.fontColor,
+          color: controller.theme.fontColor,
         ),
         button: lightThemeData.textTheme.button.copyWith(
           fontSize: Dimens.font_sp16,

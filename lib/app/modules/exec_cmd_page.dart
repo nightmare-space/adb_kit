@@ -39,7 +39,6 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('终端模拟器'),
-        systemOverlayStyle: OverlayStyle.dark,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
@@ -144,14 +143,13 @@ class ItemButton extends StatelessWidget {
       blurRadius: 0,
       spreadRadius: 0,
       onTap: onTap,
-      color: AppColors.background,
       margin: EdgeInsets.all(4.w),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(10.w),
           border: Border.all(
-            color: AppColors.accent,
+            color: Theme.of(context).primaryColor,
             width: 1.w,
           ),
         ),

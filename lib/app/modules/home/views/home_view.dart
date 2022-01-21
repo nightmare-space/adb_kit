@@ -3,6 +3,7 @@ import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class AdbTool extends StatefulWidget {
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   String route = Routes.overview;
   bool dialogIsShow = false;
-
+  ConfigController configController = Get.find();
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Log.v('Last notification: $state\n');
@@ -71,68 +72,69 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: OverlayStyle.dark,
-      child: GetBuilder<ConfigController>(builder: (_) {
-        return Responsive(
-          builder: (_, ScreenType screenType) {
-            switch (screenType) {
-              case ScreenType.desktop:
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      DesktopPhoneDrawer(
-                        width: Dimens.setWidth(200),
-                        groupValue: route,
-                        onChanged: (value) {
-                          route = value;
-                          setState(() {});
-                        },
-                      ),
-                      Expanded(child: getWidget(route)),
-                    ],
-                  ),
-                );
-                break;
-              case ScreenType.tablet:
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      TabletDrawer(
-                        groupValue: route,
-                        onChanged: (index) {
-                          route = index;
-                          setState(() {});
-                        },
-                      ),
-                      Expanded(child: getWidget(route)),
-                    ],
-                  ),
-                );
-                break;
-              case ScreenType.phone:
-                return Scaffold(
-                  drawer: DesktopPhoneDrawer(
-                    width: MediaQuery.of(context).size.width * 2 / 3,
-                    groupValue: route,
-                    onChanged: (value) {
-                      route = value;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                  body: Row(
-                    children: [
-                      Expanded(child: getWidget(route)),
-                    ],
-                  ),
-                );
-                break;
-              default:
-                return const Text('ERROR');
-            }
-          },
-        );
-      }),
+      value: configController.theme is DarkTheme
+          ? OverlayStyle.light
+          : OverlayStyle.dark,
+      child: Responsive(
+        builder: (_, ScreenType screenType) {
+          ScreenType type = configController.screenType;
+          switch (type ?? screenType) {
+            case ScreenType.desktop:
+              return Scaffold(
+                body: Row(
+                  children: [
+                    DesktopPhoneDrawer(
+                      width: Dimens.setWidth(200),
+                      groupValue: route,
+                      onChanged: (value) {
+                        route = value;
+                        setState(() {});
+                      },
+                    ),
+                    Expanded(child: getWidget(route)),
+                  ],
+                ),
+              );
+              break;
+            case ScreenType.tablet:
+              return Scaffold(
+                body: Row(
+                  children: [
+                    TabletDrawer(
+                      groupValue: route,
+                      onChanged: (index) {
+                        route = index;
+                        setState(() {});
+                      },
+                    ),
+                    Expanded(child: getWidget(route)),
+                  ],
+                ),
+              );
+              break;
+            case ScreenType.phone:
+              return Scaffold(
+                drawer: DesktopPhoneDrawer(
+                  width: MediaQuery.of(context).size.width * 2 / 3,
+                  groupValue: route,
+                  onChanged: (value) {
+                    route = value;
+                    setState(() {});
+                    Navigator.pop(context);
+                  },
+                ),
+                body: Row(
+                  children: [
+                    Expanded(child: getWidget(route)),
+                  ],
+                ),
+              );
+              break;
+            default:
+              return const Text('ERROR');
+          }
+        },
+      ),
     );
   }
 }

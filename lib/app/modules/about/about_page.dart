@@ -45,7 +45,6 @@ class AboutPage extends StatelessWidget {
                   'ADB TOOL',
                   style: TextStyle(
                     fontSize: 24.w,
-                    color: AppColors.fontColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -61,7 +60,15 @@ class AboutPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        const String url =
+                            'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                       child: Text(
                         'ADB TOOL其他版本下载',
                         style: TextStyle(
@@ -82,7 +89,6 @@ class AboutPage extends StatelessWidget {
                             url,
                             forceSafariVC: false,
                             forceWebView: false,
-                            // headers: <String, String>{'my_header_key': 'my_header_value'},
                           );
                         } else {
                           throw 'Could not launch $url';

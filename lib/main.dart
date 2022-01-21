@@ -2,7 +2,7 @@ library adb_tool;
 
 import 'dart:io';
 import 'dart:ui';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/config/settings.dart';
@@ -15,9 +15,9 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:settings/settings.dart';
-
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
+import 'generated/l10n.dart';
 import 'global/instance/global.dart';
 import 'themes/app_colors.dart';
 import 'themes/theme.dart';
@@ -123,6 +123,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
         return ToastApp(
           child: GetBuilder<ConfigController>(
             builder: (context) {
+              Log.w('GetMaterialApp refresh');
               return GetMaterialApp(
                 showPerformanceOverlay: configController.showPerformanceOverlay,
                 showSemanticsDebugger: configController.showSemanticsDebugger,
@@ -134,6 +135,14 @@ class _AppEntryPointState extends State<AppEntryPoint>
                 title: 'ADB工具箱',
                 navigatorKey: Global.instance.navigatorKey,
                 themeMode: ThemeMode.light,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                locale: configController.locale,
+                supportedLocales: S.delegate.supportedLocales,
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -142,20 +151,19 @@ class _AppEntryPointState extends State<AppEntryPoint>
                 initialRoute: AdbPages.initial,
                 getPages: AdbPages.routes + AppPages.routes,
                 builder: (BuildContext context, Widget navigator) {
-                  if (orientation == Orientation.landscape) {
+                  Size size = MediaQuery.of(context).size;
+
+                  if (size.width > size.height) {
                     context.init(896);
                   } else {
                     context.init(414);
                   }
                   // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
                   // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                  final bool isDark =
-                      Theme.of(context).brightness == Brightness.dark;
-                  final ThemeData theme = isDark
-                      ? DefaultThemeData.dark()
-                      : DefaultThemeData.light(
-                          primary: configController.primaryColor,
-                        );
+                  final bool isDark = configController.theme is DarkTheme;
+                  final ThemeData theme = DefaultThemeData.light(
+                    primary: configController.primaryColor,
+                  );
 
                   /// NativeShell
                   if (widget.isNativeShell) {
@@ -163,16 +171,9 @@ class _AppEntryPointState extends State<AppEntryPoint>
                       child: SizedBox(
                         width: 800,
                         height: 600,
-                        child: Responsive(
-                          builder: (_, __) {
-                            return GetBuilder<ConfigController>(
-                                builder: (context) {
-                              return Theme(
-                                data: theme,
-                                child: navigator,
-                              );
-                            });
-                          },
+                        child: Theme(
+                          data: theme,
+                          child: navigator,
                         ),
                       ),
                     );
@@ -183,18 +184,10 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   ///
                   /// Default Mode
                   ///
-                  return Responsive(
-                    builder: (_, __) {
-                      return GetBuilder<ConfigController>(
-                        global: true,
-                        builder: (context) {
-                          return Theme(
-                            data: theme,
-                            child: navigator,
-                          );
-                        },
-                      );
-                    },
+
+                  return Theme(
+                    data: theme,
+                    child: navigator,
                   );
                 },
               );

@@ -126,8 +126,8 @@ class DevicesController extends GetxController {
     final List<String> devices = await ADBFind.getLANDevices();
     for (String ip in devices) {
       try {
-        AdbResult result=await AdbUtil.connectDevices(ip);
-      }on AdbException catch (e) {}
+        AdbResult result = await AdbUtil.connectDevices(ip);
+      } on AdbException catch (e) {}
     }
   }
 
@@ -162,34 +162,36 @@ class DevicesController extends GetxController {
           listTmp.last,
         );
         // Log.w('获取${listTmp.first}信息...');
-        String model;
-        if (modelCache.containsKey(listTmp.first)) {
-          model = modelCache[listTmp.first];
-        } else {
-          try {
-            model = await execCmd(
-              'adb -s ${listTmp.first} shell getprop ro.product.marketname',
-            );
-            if (model.trim().isEmpty) {
+        if (devicesEntity.isConnect) {
+          String model;
+          if (modelCache.containsKey(listTmp.first)) {
+            model = modelCache[listTmp.first];
+          } else {
+            try {
               model = await execCmd(
-                'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+                'adb -s ${listTmp.first} shell getprop ro.product.marketname',
               );
+              if (model.trim().isEmpty) {
+                model = await execCmd(
+                  'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+                );
+              }
+              modelCache[listTmp.first] = model;
+            } catch (e) {
+              Log.e('get model error : $e');
             }
-            modelCache[listTmp.first] = model;
-          } catch (e) {
-            Log.e(e);
           }
-        }
-        devicesEntity.productModel = model;
-        if (!devicesEntity.serial.contains('emulator') && model != null) {
-          // 更新这个设备的历史记录的设备名
-          final List<String> tmp = devicesEntity.serial.split(':');
-          final String address = tmp[0];
-          HistoryController.updateHistory(
-            name: model,
-            address: address,
-          );
-          tmpDevices.add(devicesEntity);
+          devicesEntity.productModel = model;
+          if (!devicesEntity.serial.contains('emulator') && model != null) {
+            // 更新这个设备的历史记录的设备名
+            final List<String> tmp = devicesEntity.serial.split(':');
+            final String address = tmp[0];
+            HistoryController.updateHistory(
+              name: model,
+              address: address,
+            );
+            tmpDevices.add(devicesEntity);
+          }
         }
       }
       for (final DevicesEntity entity in otgDevices) {

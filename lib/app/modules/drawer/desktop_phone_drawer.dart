@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -30,7 +31,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           shape: Responsive.of(context).screenType != ScreenType.desktop
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -88,7 +89,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               ),
             ),
             _DrawerItem(
-              title: '主页',
+              title: S.of(context).home,
               value: Routes.overview,
               groupValue: widget.groupValue,
               onTap: (index) {
@@ -99,7 +100,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             _DrawerItem(
               value: Routes.history,
               groupValue: widget.groupValue,
-              title: '历史连接',
+              title: S.of(context).historyConnect,
               iconData: Icons.history,
               onTap: (index) async {
                 widget.onChanged?.call(index);
@@ -125,9 +126,8 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
                     value: Routes.netDebug,
                     groupValue: widget.groupValue,
                     iconData: Icons.signal_wifi_4_bar,
-                    title: '远程调试',
+                    title: S.of(context).networkDebug,
                     onTap: (index) {
-                      Log.e(index);
                       widget.onChanged?.call(index);
                     },
                   ),
@@ -137,7 +137,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               _DrawerItem(
                 value: Routes.installToSystem,
                 groupValue: widget.groupValue,
-                title: '安装到系统',
+                title: S.of(context).installToSystem,
                 iconData: Icons.file_download,
                 onTap: (index) {
                   widget.onChanged?.call(index);
@@ -146,7 +146,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             _DrawerItem(
               value: Routes.terminal,
               groupValue: widget.groupValue,
-              title: '终端模拟器',
+              title: S.of(context).terminal,
               iconData: Icons.code,
               onTap: (index) {
                 widget.onChanged?.call(index);
@@ -156,7 +156,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             _DrawerItem(
               value: Routes.log,
               groupValue: widget.groupValue,
-              title: '日志',
+              title: S.of(context).log,
               iconData: Icons.pending_outlined,
               onTap: (index) async {
                 widget.onChanged?.call(index);
@@ -165,7 +165,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             _DrawerItem(
               value: Routes.setting,
               groupValue: widget.groupValue,
-              title: '设置',
+              title: S.of(context).setting,
               iconData: Icons.settings,
               onTap: (index) async {
                 widget.onChanged?.call(index);
@@ -174,7 +174,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             _DrawerItem(
               value: Routes.about,
               groupValue: widget.groupValue,
-              title: '关于软件',
+              title: S.of(context).about,
               iconData: Icons.info_outline,
               onTap: (index) async {
                 widget.onChanged?.call(index);
@@ -242,7 +242,7 @@ class _DrawerItem extends StatelessWidget {
                         size: 18.w,
                         color: isChecked
                             ? configController.primaryColor
-                            : AppColors.fontTitle,
+                            : configController.theme.fontColor,
                       ),
                       SizedBox(
                         width: Dimens.gap_dp8,
@@ -252,7 +252,7 @@ class _DrawerItem extends StatelessWidget {
                         style: TextStyle(
                           color: isChecked
                               ? configController.primaryColor
-                              : AppColors.fontTitle,
+                              : configController.theme.fontColor,
                           fontSize: 14.w,
                           fontWeight: FontWeight.bold,
                         ),

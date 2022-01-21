@@ -1,9 +1,13 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/settings.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
+import 'package:adb_tool/global/widget/xliv-switch.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,7 +24,8 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage>
+    with WidgetsBindingObserver {
   SettingController controller = Get.put(SettingController());
   ConfigController configController = Get.find();
 
@@ -28,6 +33,19 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    Get.forceAppUpdate();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -50,7 +68,10 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (appBar != null) appBar,
-            SizedBox(height: 24.w),
+            if (configController.screenType != ScreenType.phone)
+              SizedBox(
+                height: 16.w,
+              ),
             CardItem(
               child: Column(
                 children: [
@@ -59,133 +80,127 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        '界面',
+                        S.of(context).view,
                         style: TextStyle(
-                          fontSize: 16.w,
+                          fontSize: 14.w,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 12.w),
                   SettingItem(
-                    title: '布局风格',
-                    suffix: Material(
-                      borderRadius: BorderRadius.circular(12.w),
-                      clipBehavior: Clip.antiAlias,
-                      child: Row(
+                    title: S.of(context).layout,
+                    suffix: Builder(builder: (context) {
+                      if (Responsive.of(context).screenType ==
+                          ScreenType.phone) {
+                        return Column(
+                          children: [
+                            SelectTab(
+                              value: configController.screenType == null
+                                  ? 3
+                                  : configController.screenType.index,
+                              children: [
+                                Text(S.of(context).desktop),
+                                Text(S.of(context).pad),
+                              ],
+                              onChanged: (value) {
+                                configController
+                                    .changeScreenType(ScreenType.values[value]);
+                              },
+                            ),
+                            SizedBox(height: 4.w),
+                            SelectTab(
+                              value: configController.screenType == null
+                                  ? 1
+                                  : configController.screenType.index - 2,
+                              children: [
+                                Text(S.of(context).phone),
+                                Text(S.of(context).autoFit),
+                              ],
+                              onChanged: (value) {
+                                if (value == 1) {
+                                  configController.changeScreenType(null);
+                                  return;
+                                }
+                                configController.changeScreenType(
+                                  ScreenType.values[value + 2],
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                      return SelectTab(
+                        value: configController.screenType == null
+                            ? 3
+                            : configController.screenType.index,
                         children: [
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.background,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '桌面',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: Color(0xffe6e6e6),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '平板',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.background,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '桌面',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.background,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '自适应',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
+                          Text(S.of(context).desktop),
+                          Text(S.of(context).pad),
+                          Text(S.of(context).phone),
+                          Text(S.of(context).autoFit),
                         ],
-                      ),
+                        onChanged: (value) {
+                          if (value == 3) {
+                            configController.changeScreenType(null);
+                            return;
+                          }
+                          configController
+                              .changeScreenType(ScreenType.values[value]);
+                        },
+                      );
+                    }),
+                  ),
+                  SettingItem(
+                    title: S.of(context).theme,
+                    suffix: SelectTab(
+                      value: configController.theme is LightTheme ? 1 : 0,
+                      children: [
+                        Text(
+                          S.of(context).dark,
+                        ),
+                        Text(S.of(context).light),
+                      ],
+                      onChanged: (value) {
+                        if (value == 0) {
+                          configController.changeTheme(DarkTheme());
+                        } else {
+                          configController.changeTheme(LightTheme());
+                        }
+                      },
                     ),
                   ),
                   SettingItem(
-                    title: '主题',
-                    suffix: Material(
-                      borderRadius: BorderRadius.circular(12.w),
-                      clipBehavior: Clip.antiAlias,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.background,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '暗黑模式',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 100.w,
-                            height: 40.w,
-                            decoration: BoxDecoration(
-                              color: Color(0xffe6e6e6),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '浅色模式',
-                                style: TextStyle(
-                                  color: AppColors.fontColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    title: S.of(context).language,
+                    suffix: SelectTab(
+                      value: configController.locale == ConfigController.english
+                          ? 1
+                          : 0,
+                      children: [
+                        const Text('中文'),
+                        const Text('English'),
+                      ],
+                      onChanged: (value) {
+                        if (value == 0) {
+                          configController.changeLocal(
+                            ConfigController.chinese,
+                          );
+                        } else {
+                          configController.changeLocal(
+                            ConfigController.english,
+                          );
+                        }
+                      },
                     ),
                   ),
                   SettingItem(
-                    title: '主题色',
+                    title: S.of(context).primaryColor,
                     suffix: Container(
                       child: ColorButton(
-                        key: Key('c1'),
+                        key: const Key('c1'),
                         color: configController.primaryColor,
-                        config: ColorPickerConfig(enableEyePicker: true),
+                        config: const ColorPickerConfig(enableEyePicker: true),
                         size: 40.w,
                         elevation: 1,
                         boxShape: BoxShape.rectangle, // default : circle
@@ -194,6 +209,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           configController.primaryColor = value;
                           configController.update();
                           setState(() {});
+                          Get.forceAppUpdate();
                         },
                       ),
                     ),
@@ -210,29 +226,32 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       const ItemHeader(color: CandyColors.candyBlue),
                       Text(
-                        '其他',
+                        S.of(context).other,
                         style: TextStyle(
-                          fontSize: 16.w,
+                          fontSize: 14.w,
                           fontWeight: FontWeight.bold,
+                          textBaseline: TextBaseline.alphabetic,
+                          // height: 1.4,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 12.w),
                   Builder(builder: (context) {
                     return SettingItem(
                       onTap: () async {
                         await controller.changeServerPath(context);
                         // setState(() {});
                       },
-                      title: 'Server Path（服务端路径）',
-                      subTitle: '适配部分设备\n没有/data/local/tmp权限的问题',
+                      title: 'Server Path',
+                      subTitle:
+                          S.of(context).fixDeviceWithoutDataLocalPermission,
                       suffix: ValueListenableBuilder(
                         valueListenable: Settings.serverPath.ob,
                         builder: (c, v, child) {
                           return Text(
                             Settings.serverPath.get,
                             style: TextStyle(
-                              color: AppColors.fontColor,
                               fontSize: 18.w,
                             ),
                           );
@@ -240,13 +259,16 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     );
                   }),
-                  SettingItem(
-                    title: '自动发现并连接设备',
-                    suffix: Switch(
-                      value: true,
-                      onChanged: (_) {},
-                    ),
-                  ),
+                  GetBuilder<ConfigController>(builder: (_) {
+                    return SettingItem(
+                      title: S.of(context).autoConnectDevice,
+                      suffix: AquaSwitch(
+                        activeColor: configController.primaryColor,
+                        value: configController.autoConnect,
+                        onChanged: configController.changeAutoConnectState,
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -259,26 +281,27 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       const ItemHeader(color: CandyColors.candyGreen),
                       Text(
-                        '开发者设置',
+                        S.of(context).developerSettings,
                         style: TextStyle(
-                          fontSize: 16.w,
+                          fontSize: 14.w,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 12.w),
                   SettingItem(
                     onTap: () async {},
-                    title: '打开性能监控',
-                    suffix: Switch.adaptive(
+                    title: S.of(context).showPerformanceOverlay,
+                    suffix: AquaSwitch(
                       value: configController.showPerformanceOverlay,
                       onChanged: configController.showPerformanceOverlayChange,
                     ),
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '显示刷新区域',
-                    suffix: Switch(
+                    title: S.of(context).debugRepaintRainbowEnabled,
+                    suffix: AquaSwitch(
                       value: debugRepaintRainbowEnabled,
                       onChanged: (value) {
                         // debugPaintSizeEnabled = true; // 显示文字基准线
@@ -293,7 +316,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingItem(
                     onTap: () async {},
                     title: '突出点击对象',
-                    suffix: Switch(
+                    suffix: AquaSwitch(
                       value: debugPaintPointersEnabled,
                       onChanged: (value) {
                         // debugPaintSizeEnabled = true; // 显示文字基准线
@@ -308,7 +331,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingItem(
                     onTap: () async {},
                     title: '显示文字基准线',
-                    suffix: Switch(
+                    suffix: AquaSwitch(
                       value: debugPaintSizeEnabled,
                       onChanged: (value) {
                         // debugPaintSizeEnabled = true; // 显示文字基准线
@@ -323,7 +346,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingItem(
                     onTap: () async {},
                     title: '显示层级边界',
-                    suffix: Switch(
+                    suffix: AquaSwitch(
                       value: debugPaintLayerBordersEnabled,
                       onChanged: (value) {
                         debugPaintLayerBordersEnabled = value; // 显示重绘
@@ -335,7 +358,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingItem(
                     onTap: () async {},
                     title: '显示组件语义',
-                    suffix: Switch(
+                    suffix: AquaSwitch(
                       value: configController.showSemanticsDebugger,
                       onChanged: (value) {
                         configController.showSemanticsDebugger = value;
@@ -347,7 +370,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingItem(
                     onTap: () async {},
                     title: '显示绘制网格',
-                    suffix: Switch(
+                    suffix: AquaSwitch(
                       value: configController.debugShowMaterialGrid,
                       onChanged: (value) {
                         configController.debugShowMaterialGrid = value;
@@ -393,6 +416,7 @@ class _SettingItemState extends State<SettingItem> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           vertical: 4.w,
+          horizontal: 8.w,
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 56.w),
@@ -423,7 +447,8 @@ class _SettingItemState extends State<SettingItem> {
                         return Text(
                           content,
                           style: TextStyle(
-                            color: Colors.black54,
+                            color: configController.theme.fontColor
+                                .withOpacity(0.6),
                             fontWeight: FontWeight.w400,
                             // height: 1.0,
                             fontSize: 14.w,
@@ -437,6 +462,100 @@ class _SettingItemState extends State<SettingItem> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AquaSwitch extends StatelessWidget {
+  final bool value;
+
+  final ValueChanged<bool> onChanged;
+
+  final Color activeColor;
+
+  final Color unActiveColor;
+
+  final Color thumbColor;
+
+  const AquaSwitch({
+    Key key,
+    @required this.value,
+    @required this.onChanged,
+    this.activeColor,
+    this.unActiveColor,
+    this.thumbColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: 0.78,
+      child: XlivSwitch(
+        unActiveColor: unActiveColor ?? configController.theme.grey.shade300,
+        activeColor: Theme.of(context).primaryColor ?? activeColor,
+        thumbColor: thumbColor,
+        value: value,
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
+
+class SelectTab extends StatefulWidget {
+  const SelectTab({
+    Key key,
+    this.children = const [],
+    @required this.value,
+    this.onChanged,
+  }) : super(key: key);
+  final List<Widget> children;
+  final int value;
+  final void Function(int value) onChanged;
+
+  @override
+  _SelectTabState createState() => _SelectTabState();
+}
+
+class _SelectTabState extends State<SelectTab> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      borderRadius: BorderRadius.circular(12.w),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      color: Colors.transparent,
+      child: Row(
+        children: [
+          for (int i = 0; i < widget.children.length; i++)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    widget.onChanged?.call(i);
+                    Feedback.wrapForLongPress(() {}, context);
+                  },
+                  child: Container(
+                    width: 100.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(
+                      color: i == widget.value
+                          ? configController.theme.grey.shade300
+                          : configController.theme.grey.shade200,
+                    ),
+                    child: Center(child: widget.children[i]),
+                  ),
+                ),
+                if (i != widget.children.length - 1)
+                  Container(
+                    width: 2.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(
+                      color: configController.theme.grey.shade400,
+                    ),
+                  ),
+              ],
+            ),
+        ],
       ),
     );
   }

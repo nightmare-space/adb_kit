@@ -1,11 +1,12 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class RemoteDebugPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class RemoteDebugPage extends StatefulWidget {
 }
 
 class _RemoteDebugPageState extends State<RemoteDebugPage> {
+  ConfigController configController = Get.find();
   bool adbDebugOpen = false;
   List<String> address = [];
   @override
@@ -57,7 +59,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('网络ADB调试'),
-        systemOverlayStyle: OverlayStyle.dark,
         titleSpacing: 0,
         leadingWidth: 48.w,
         leading: Menubutton(
@@ -112,7 +113,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.fontTitle,
                             ),
                           ),
                         ],
@@ -207,16 +207,17 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: Dimens.gap_dp8,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.contentBorder,
+                          color: configController.theme.grey.shade100,
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             children: [
                               TextSpan(
                                 text: 'adb connect \$IP',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: configController.theme.fontColor
+                                      .withOpacity(0.6),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -248,16 +249,17 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: 8.0,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.contentBorder,
+                          color: configController.theme.grey.shade100,
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             children: [
                               TextSpan(
                                 text: 'adb devices',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: configController.theme.fontColor
+                                      .withOpacity(0.6),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

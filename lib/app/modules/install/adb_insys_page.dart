@@ -32,7 +32,6 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('安装ADB到系统'),
-        systemOverlayStyle: OverlayStyle.dark,
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {

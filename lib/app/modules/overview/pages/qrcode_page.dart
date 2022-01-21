@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class QrScanPage extends StatefulWidget {
 }
 
 class _QrScanPageState extends State<QrScanPage> {
+  ConfigController controller = Get.find();
   List<String> localAddresList = [];
   Future<void> getQrCode() async {
     localAddresList = await PlatformUtil.localAddress();
@@ -52,7 +54,7 @@ class _QrScanPageState extends State<QrScanPage> {
             shadowColor: Colors.transparent,
             blurRadius: 0,
             spreadRadius: 0,
-            color: AppColors.contentBorder,
+            color: controller.theme.grey.shade100,
             onTap: () {
               Get.to(
                 Theme(

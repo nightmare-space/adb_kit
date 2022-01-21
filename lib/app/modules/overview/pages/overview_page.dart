@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
@@ -42,7 +43,6 @@ class _OverviewPageState extends State<OverviewPage> {
     AppBar appBar;
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        systemOverlayStyle: OverlayStyle.dark,
         centerTitle: true,
         elevation: 0.0,
         leading: Menubutton(scaffoldContext: context),
@@ -62,12 +62,9 @@ class _OverviewPageState extends State<OverviewPage> {
         ],
       );
     }
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: OverlayStyle.dark,
-      child: Scaffold(
-        appBar: appBar,
-        body: buildBody(context),
-      ),
+    return Scaffold(
+      appBar: appBar,
+      body: buildBody(context),
     );
   }
 
@@ -84,9 +81,7 @@ class _OverviewPageState extends State<OverviewPage> {
               // MacosContextMenuItem(
               //   content: Text('data'),
               // ),
-              SizedBox(
-                height: 8.w,
-              ),
+
               CardItem(
                 child: Column(
                   children: [
@@ -152,8 +147,9 @@ class _OverviewPageState extends State<OverviewPage> {
                             hintText: '格式为"IP地址:端口号 配对码"',
                             hintStyle: TextStyle(
                               fontSize: 14.w,
+                              color: configController.theme.fontColor
+                                  .withOpacity(0.8),
                             ),
-                            fillColor: AppColors.contentBorder,
                             isDense: true,
                           ),
                         ),
@@ -307,7 +303,7 @@ class CardItem extends StatelessWidget {
       //   color: Colors.grey.withOpacity(0.2),
       //   width: 1.w,
       // ),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: Padding(
         padding: EdgeInsets.all(12.w),
         child: child,
