@@ -6,11 +6,14 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
   animations: ^2.0.2
   app_manager:
     git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
-  desktop_drop: 
+  desktop_drop:
     git:
       url: https://github.com/mengyanshou/flutter-plugins
       path: packages/desktop_drop
@@ -23,7 +26,6 @@ dependencies:
   flutter:
     sdk: flutter
   cyclop: ^0.5.2
-  flutter_markdown: ^0.6.1
   flutter_screenutil: ^2.3.0
   flutter_spinkit: "^4.1.2"
   pseudo_terminal_utils:
@@ -57,8 +59,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  
+
 flutter:
+  generate: true
   uses-material-design: true
   fonts:
     - family: MenloforPowerline
@@ -71,17 +74,17 @@ flutter:
 dependency_overrides:
   # apputils:
   #   path: /Users/nightmare/Desktop/nightmare-space/apputils
-# 下面代码注释掉，
+  # 下面代码注释掉，
   # termare_view:
   #   path: /Users/nightmare/Desktop/termare-space/termare_view
   # termare_pty:
   #   path: /Users/nightmare/Desktop/termare-space/termare_pty
   # dart_pty:
   #   path: /Users/nightmare/Desktop/termare-space/dart_pty
-  # global_repository:
-  #   path: /Users/nightmare/Desktop/nightmare-space/global_repository
-  # app_manager:
-  #   path: /Users/nightmare/Desktop/nightmare-space/app_manager
+  global_repository:
+    path: /Users/nightmare/Desktop/nightmare-space/global_repository
+  app_manager:
+    path: /Users/nightmare/Desktop/nightmare-space/app_manager
   # adbutil:
   #   path: /Users/nightmare/Desktop/nightmare-space/adbutil
   #   # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
@@ -91,3 +94,7 @@ dependency_overrides:
   #   path: /Users/nightmare/Desktop/nightmare-space/app_launcher
   # file_selector_nightmare:
   #   path: /Users/nightmare/Desktop/nightmare-space/file_selector
+flutter_intl:
+  enabled: true
+  localizely:
+    project_id: 483edf0e-5f6c-489d-8b86-731bba09be1b
