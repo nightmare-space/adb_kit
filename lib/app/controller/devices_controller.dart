@@ -113,13 +113,11 @@ class DevicesController extends GetxController {
     // if (getRoot) {
     //   await Global().process.exec('su -p HOME');
     // }
-    // Log.e('start');
     try {
       String out = await execCmd('adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {}
-    // Log.e('end');
     Future.delayed(const Duration(milliseconds: 1000), () {
       letADBStarted();
     });

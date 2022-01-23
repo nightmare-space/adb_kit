@@ -123,7 +123,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
         return ToastApp(
           child: GetBuilder<ConfigController>(
             builder: (context) {
-              Log.w('GetMaterialApp refresh');
               return GetMaterialApp(
                 showPerformanceOverlay: configController.showPerformanceOverlay,
                 showSemanticsDebugger: configController.showSemanticsDebugger,

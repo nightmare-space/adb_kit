@@ -90,11 +90,51 @@ class S {
     );
   }
 
+  /// `Debug Paint Layer Borders Enabled`
+  String get debugPaintLayerBordersEnabled {
+    return Intl.message(
+      'Debug Paint Layer Borders Enabled',
+      name: 'debugPaintLayerBordersEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debug Paint Pointers Enabled`
+  String get debugPaintPointersEnabled {
+    return Intl.message(
+      'Debug Paint Pointers Enabled',
+      name: 'debugPaintPointersEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debug Paint Size Enabled`
+  String get debugPaintSizeEnabled {
+    return Intl.message(
+      'Debug Paint Size Enabled',
+      name: 'debugPaintSizeEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Show Repaint Rainbow`
   String get debugRepaintRainbowEnabled {
     return Intl.message(
       'Show Repaint Rainbow',
       name: 'debugRepaintRainbowEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debug Show Material Grid`
+  String get debugShowMaterialGrid {
+    return Intl.message(
+      'Debug Show Material Grid',
+      name: 'debugShowMaterialGrid',
       desc: '',
       args: [],
     );
@@ -270,11 +310,31 @@ class S {
     );
   }
 
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Show Performance Overlay`
   String get showPerformanceOverlay {
     return Intl.message(
       'Show Performance Overlay',
       name: 'showPerformanceOverlay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Semantics Debugger`
+  String get showSemanticsDebugger {
+    return Intl.message(
+      'Show Semantics Debugger',
+      name: 'showSemanticsDebugger',
       desc: '',
       args: [],
     );

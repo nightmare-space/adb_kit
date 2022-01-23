@@ -71,24 +71,27 @@ class _DevicesListState extends State<DevicesList> {
                 ),
                 Builder(builder: (_) {
                   if (controller.adbIsStarting) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SpinKitDualRing(
-                          color: AppColors.accent,
-                          size: 20.w,
-                          lineWidth: 2.w,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        const Text(
-                          'ADB启动中',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                    return SizedBox(
+                      height: 20.w,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SpinKitDualRing(
+                            color: AppColors.accent,
+                            size: 20.w,
+                            lineWidth: 2.w,
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          const Text(
+                            'ADB启动中',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }
                   return const SizedBox();
@@ -96,9 +99,14 @@ class _DevicesListState extends State<DevicesList> {
                 Builder(builder: (_) {
                   if (!controller.adbIsStarting &&
                       controller.devicesEntitys.isEmpty) {
-                    return const Text(
-                      '未连接任何设备',
-                      style: TextStyle(color: Colors.grey),
+                    return SizedBox(
+                      height: 20.w,
+                      child: const Center(
+                        child: Text(
+                          '未连接任何设备',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
                     );
                   }
                   return const SizedBox();

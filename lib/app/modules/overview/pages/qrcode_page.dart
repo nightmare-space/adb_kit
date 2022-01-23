@@ -54,7 +54,7 @@ class _QrScanPageState extends State<QrScanPage> {
             shadowColor: Colors.transparent,
             blurRadius: 0,
             spreadRadius: 0,
-            color: controller.theme.grey.shade100,
+            color: controller.theme.inputColor,
             onTap: () {
               Get.to(
                 Theme(
@@ -97,8 +97,15 @@ class _QrScanPageState extends State<QrScanPage> {
                     data: addr,
                     version: QrVersions.auto,
                     size: 140.w,
+                    // foregroundColor: controller.theme.fontColor,
                   ),
-                  Text(addr),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Text(
+                      addr,
+                      style: TextStyle(fontSize: 12.w),
+                    ),
+                  ),
                   SizedBox(height: 4.w),
                 ],
               ),

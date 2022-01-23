@@ -53,39 +53,50 @@ class _SettingsPageState extends State<SettingsPage>
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('设置'),
+        title: Text(S.of(context).settings),
         // systemOverlayStyle: OverlayStyle.dark,
-        leading: Menubutton(
-          scaffoldContext: context,
+        leading: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Menubutton(
+            scaffoldContext: context,
+          ),
         ),
+        // leadingWidth: 48.w,
       );
     }
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 48.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (appBar != null) appBar,
-            if (configController.screenType != ScreenType.phone)
-              SizedBox(
-                height: 16.w,
+            // if (configController.screenType != ScreenType.phone)
+            //   SizedBox(
+            //     height: 16.w,
+            //   ),
+            SizedBox(height: 8.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Text(
+                S.of(context).view,
+                style: TextStyle(
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.bold,
+                  color: configController.theme.fontColor.withOpacity(0.6),
+                ),
               ),
+            ),
+            SizedBox(height: 4.w),
             CardItem(
               child: Column(
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const ItemHeader(color: CandyColors.candyPink),
-                      Text(
-                        S.of(context).view,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // const ItemHeader(color: CandyColors.candyPink),
                     ],
                   ),
                   SizedBox(height: 12.w),
@@ -177,9 +188,9 @@ class _SettingsPageState extends State<SettingsPage>
                       value: configController.locale == ConfigController.english
                           ? 1
                           : 0,
-                      children: [
-                        const Text('中文'),
-                        const Text('English'),
+                      children: const [
+                        Text('中文'),
+                        Text('English'),
                       ],
                       onChanged: (value) {
                         if (value == 0) {
@@ -196,46 +207,58 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     title: S.of(context).primaryColor,
-                    suffix: Container(
-                      child: ColorButton(
-                        key: const Key('c1'),
-                        color: configController.primaryColor,
-                        config: const ColorPickerConfig(enableEyePicker: true),
-                        size: 40.w,
-                        elevation: 1,
-                        boxShape: BoxShape.rectangle, // default : circle
-                        swatches: swatches,
-                        onColorChanged: (value) {
-                          configController.primaryColor = value;
-                          configController.update();
-                          setState(() {});
-                          Get.forceAppUpdate();
-                        },
-                      ),
+                    suffix: ColorButton(
+                      key: const Key('c1'),
+                      color: configController.primaryColor,
+                      config: const ColorPickerConfig(enableEyePicker: true),
+                      size: 40.w,
+                      elevation: 1,
+                      boxShape: BoxShape.rectangle, // default : circle
+                      swatches: swatches,
+                      onColorChanged: (value) {
+                        configController.primaryColor = value;
+                        configController.update();
+                        setState(() {});
+                        Get.forceAppUpdate();
+                      },
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 16.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Text(
+                S.of(context).other,
+                style: TextStyle(
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.bold,
+                  color: configController.theme.fontColor.withOpacity(0.6),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4.w,
+            ),
             CardItem(
               child: Column(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const ItemHeader(color: CandyColors.candyBlue),
-                      Text(
-                        S.of(context).other,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: FontWeight.bold,
-                          textBaseline: TextBaseline.alphabetic,
-                          // height: 1.4,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     const ItemHeader(color: CandyColors.candyBlue),
+                  //     Text(
+                  //       S.of(context).other,
+                  //       style: TextStyle(
+                  //         fontSize: 14.w,
+                  //         fontWeight: FontWeight.bold,
+                  //         textBaseline: TextBaseline.alphabetic,
+                  //         // height: 1.4,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 12.w),
                   Builder(builder: (context) {
                     return SettingItem(
@@ -273,22 +296,34 @@ class _SettingsPageState extends State<SettingsPage>
               ),
             ),
             SizedBox(height: 16.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Text(
+                S.of(context).developerSettings,
+                style: TextStyle(
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.bold,
+                  color: configController.theme.fontColor.withOpacity(0.6),
+                ),
+              ),
+            ),
+            SizedBox(height: 4.w),
             CardItem(
               child: Column(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const ItemHeader(color: CandyColors.candyGreen),
-                      Text(
-                        S.of(context).developerSettings,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     const ItemHeader(color: CandyColors.candyGreen),
+                  //     Text(
+                  //       S.of(context).developerSettings,
+                  //       style: TextStyle(
+                  //         fontSize: 14.w,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 12.w),
                   SettingItem(
                     onTap: () async {},
@@ -315,7 +350,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '突出点击对象',
+                    title: S.of(context).debugPaintPointersEnabled,
                     suffix: AquaSwitch(
                       value: debugPaintPointersEnabled,
                       onChanged: (value) {
@@ -330,7 +365,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '显示文字基准线',
+                    title: S.of(context).debugPaintSizeEnabled,
                     suffix: AquaSwitch(
                       value: debugPaintSizeEnabled,
                       onChanged: (value) {
@@ -345,7 +380,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '显示层级边界',
+                    title: S.of(context).debugPaintLayerBordersEnabled,
                     suffix: AquaSwitch(
                       value: debugPaintLayerBordersEnabled,
                       onChanged: (value) {
@@ -357,7 +392,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '显示组件语义',
+                    title: S.of(context).showSemanticsDebugger,
                     suffix: AquaSwitch(
                       value: configController.showSemanticsDebugger,
                       onChanged: (value) {
@@ -369,7 +404,7 @@ class _SettingsPageState extends State<SettingsPage>
                   ),
                   SettingItem(
                     onTap: () async {},
-                    title: '显示绘制网格',
+                    title: S.of(context).debugShowMaterialGrid,
                     suffix: AquaSwitch(
                       value: configController.debugShowMaterialGrid,
                       onChanged: (value) {

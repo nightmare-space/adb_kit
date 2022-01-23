@@ -26,8 +26,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "autoConnectDevice": MessageLookupByLibrary.simpleMessage("自动发现并连接设备"),
         "autoFit": MessageLookupByLibrary.simpleMessage("自适应"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
+        "debugPaintLayerBordersEnabled":
+            MessageLookupByLibrary.simpleMessage("显示层级边界"),
+        "debugPaintPointersEnabled":
+            MessageLookupByLibrary.simpleMessage("突出点击对象"),
+        "debugPaintSizeEnabled":
+            MessageLookupByLibrary.simpleMessage("显示文字基准线"),
         "debugRepaintRainbowEnabled":
             MessageLookupByLibrary.simpleMessage("显示刷新区域"),
+        "debugShowMaterialGrid": MessageLookupByLibrary.simpleMessage("显示绘制网格"),
         "desktop": MessageLookupByLibrary.simpleMessage("桌面"),
         "developerSettings": MessageLookupByLibrary.simpleMessage("开发者设置"),
         "fixDeviceWithoutDataLocalPermission":
@@ -47,8 +54,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
         "serverPath": MessageLookupByLibrary.simpleMessage("服务端路径"),
         "setting": MessageLookupByLibrary.simpleMessage("设置"),
+        "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("打开性能监控"),
+        "showSemanticsDebugger": MessageLookupByLibrary.simpleMessage("显示组件语义"),
         "terminal": MessageLookupByLibrary.simpleMessage("终端模拟器"),
         "theme": MessageLookupByLibrary.simpleMessage("主题"),
         "view": MessageLookupByLibrary.simpleMessage("界面")

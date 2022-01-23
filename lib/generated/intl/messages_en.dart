@@ -27,8 +27,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Auto connect device in LAN"),
         "autoFit": MessageLookupByLibrary.simpleMessage("Responsive"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+        "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
+            "Debug Paint Layer Borders Enabled"),
+        "debugPaintPointersEnabled": MessageLookupByLibrary.simpleMessage(
+            "Debug Paint Pointers Enabled"),
+        "debugPaintSizeEnabled":
+            MessageLookupByLibrary.simpleMessage("Debug Paint Size Enabled"),
         "debugRepaintRainbowEnabled":
             MessageLookupByLibrary.simpleMessage("Show Repaint Rainbow"),
+        "debugShowMaterialGrid":
+            MessageLookupByLibrary.simpleMessage("Debug Show Material Grid"),
         "desktop": MessageLookupByLibrary.simpleMessage("Desktop"),
         "developerSettings":
             MessageLookupByLibrary.simpleMessage("Developer Settings"),
@@ -51,8 +59,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("Show Performance Overlay"),
+        "showSemanticsDebugger":
+            MessageLookupByLibrary.simpleMessage("Show Semantics Debugger"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "view": MessageLookupByLibrary.simpleMessage("View")

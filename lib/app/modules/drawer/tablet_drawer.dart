@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,12 +22,14 @@ class TabletDrawer extends StatefulWidget {
 }
 
 class _TabletDrawerState extends State<TabletDrawer> {
+  final ConfigController config = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: const Color(0xfffbfbfb),
+          color: config.theme.cardColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.gap_dp20),
@@ -197,6 +201,7 @@ class _DrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ConfigController config = Get.find();
     final bool isChecked = value == groupValue;
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -230,14 +235,15 @@ class _DrawerItem extends StatelessWidget {
                     Icon(
                       iconData ?? Icons.open_in_new,
                       size: 20.w,
-                      color: isChecked ? AppColors.accent : AppColors.fontTitle,
+                      color:
+                          isChecked ? AppColors.accent : config.theme.fontColor,
                     ),
                     SizedBox(height: 4.w),
                     Text(
                       title.substring(0, 2),
                       style: TextStyle(
                         height: 1.0,
-                        color: AppColors.fontColor,
+                        color: config.theme.fontColor,
                         fontSize: 12.w,
                         fontWeight: FontWeight.bold,
                       ),
