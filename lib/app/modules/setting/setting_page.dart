@@ -79,27 +79,28 @@ class _SettingsPageState extends State<SettingsPage>
             //   ),
             SizedBox(height: 8.w),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                S.of(context).view,
-                style: TextStyle(
-                  fontSize: 14.w,
-                  fontWeight: FontWeight.bold,
-                  color: configController.theme.fontColor.withOpacity(0.6),
-                ),
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ItemHeader(color: CandyColors.candyPink),
+                  Text(
+                    S.of(context).view,
+                    style: TextStyle(
+                      fontSize: 14.w,
+                      fontWeight: FontWeight.bold,
+                      color: configController.theme.fontColor.withOpacity(0.6),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 4.w),
             CardItem(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // const ItemHeader(color: CandyColors.candyPink),
-                    ],
-                  ),
-                  SizedBox(height: 12.w),
+                  SizedBox(height: 0.w),
                   SettingItem(
                     title: S.of(context).layout,
                     suffix: Builder(builder: (context) {
@@ -212,8 +213,8 @@ class _SettingsPageState extends State<SettingsPage>
                       color: configController.primaryColor,
                       config: const ColorPickerConfig(enableEyePicker: true),
                       size: 40.w,
-                      elevation: 1,
-                      boxShape: BoxShape.rectangle, // default : circle
+                      elevation: 0,
+                      boxShape: BoxShape.circle, // default : circle
                       swatches: swatches,
                       onColorChanged: (value) {
                         configController.primaryColor = value;
@@ -228,45 +229,33 @@ class _SettingsPageState extends State<SettingsPage>
             ),
             SizedBox(height: 16.w),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                S.of(context).other,
-                style: TextStyle(
-                  fontSize: 14.w,
-                  fontWeight: FontWeight.bold,
-                  color: configController.theme.fontColor.withOpacity(0.6),
-                ),
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ItemHeader(color: CandyColors.candyCyan),
+                  Text(
+                    S.of(context).other,
+                    style: TextStyle(
+                      fontSize: 14.w,
+                      fontWeight: FontWeight.bold,
+                      color: configController.theme.fontColor.withOpacity(0.6),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 4.w,
-            ),
+            SizedBox(height: 4.w),
             CardItem(
               child: Column(
                 children: [
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
-                  //     const ItemHeader(color: CandyColors.candyBlue),
-                  //     Text(
-                  //       S.of(context).other,
-                  //       style: TextStyle(
-                  //         fontSize: 14.w,
-                  //         fontWeight: FontWeight.bold,
-                  //         textBaseline: TextBaseline.alphabetic,
-                  //         // height: 1.4,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  SizedBox(height: 12.w),
                   Builder(builder: (context) {
                     return SettingItem(
                       onTap: () async {
                         await controller.changeServerPath(context);
                         // setState(() {});
                       },
-                      title: 'Server Path',
+                      title: S.of(context).serverPath,
                       subTitle:
                           S.of(context).fixDeviceWithoutDataLocalPermission,
                       suffix: ValueListenableBuilder(
@@ -297,34 +286,26 @@ class _SettingsPageState extends State<SettingsPage>
             ),
             SizedBox(height: 16.w),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                S.of(context).developerSettings,
-                style: TextStyle(
-                  fontSize: 14.w,
-                  fontWeight: FontWeight.bold,
-                  color: configController.theme.fontColor.withOpacity(0.6),
-                ),
+              padding: EdgeInsets.symmetric(horizontal: 18.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ItemHeader(color: CandyColors.candyPink),
+                  Text(
+                    S.of(context).developerSettings,
+                    style: TextStyle(
+                      fontSize: 14.w,
+                      fontWeight: FontWeight.bold,
+                      color: configController.theme.fontColor.withOpacity(0.6),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 4.w),
             CardItem(
               child: Column(
                 children: [
-                  // Row(
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  //   children: [
-                  //     const ItemHeader(color: CandyColors.candyGreen),
-                  //     Text(
-                  //       S.of(context).developerSettings,
-                  //       style: TextStyle(
-                  //         fontSize: 14.w,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  SizedBox(height: 12.w),
                   SettingItem(
                     onTap: () async {},
                     title: S.of(context).showPerformanceOverlay,
@@ -460,37 +441,39 @@ class _SettingItemState extends State<SettingItem> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: TextStyle(
-                        // color: Theme.of(context).colorScheme.primaryVariant,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18.w,
-                        // height: 1.0,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        widget.title,
+                        style: TextStyle(
+                          // color: Theme.of(context).colorScheme.primaryVariant,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18.w,
+                          // height: 1.0,
+                        ),
                       ),
-                    ),
-                    if (widget.subTitle.isNotEmpty)
-                      Builder(builder: (_) {
-                        final String content = widget.subTitle;
-                        if (content == null) {
-                          return const SizedBox();
-                        }
-                        return Text(
-                          content,
-                          style: TextStyle(
-                            color: configController.theme.fontColor
-                                .withOpacity(0.6),
-                            fontWeight: FontWeight.w400,
-                            // height: 1.0,
-                            fontSize: 14.w,
-                          ),
-                        );
-                      }),
-                  ],
+                      if (widget.subTitle.isNotEmpty)
+                        Builder(builder: (_) {
+                          final String content = widget.subTitle;
+                          if (content == null) {
+                            return const SizedBox();
+                          }
+                          return Text(
+                            content,
+                            style: TextStyle(
+                              color: configController.theme.fontColor
+                                  .withOpacity(0.6),
+                              fontWeight: FontWeight.w400,
+                              // height: 1.0,
+                              fontSize: 14.w,
+                            ),
+                          );
+                        }),
+                    ],
+                  ),
                 ),
                 widget.suffix,
               ],
@@ -580,14 +563,23 @@ class _SelectTabState extends State<SelectTab> {
                     child: Center(child: widget.children[i]),
                   ),
                 ),
-                if (i != widget.children.length - 1)
-                  Container(
-                    width: 2.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                      color: configController.theme.grey.shade400,
-                    ),
-                  ),
+                // if (i != widget.children.length - 1)
+                //   Container(
+                //     width: 2.w,
+                //     height: 40.w,
+                //     decoration: BoxDecoration(
+                //       color: configController.theme.grey.shade200,
+                //     ),
+                //     child: Center(
+                //       child: Container(
+                //         height: 10.w,
+                //         width: 2.w,
+                //         decoration: BoxDecoration(
+                //           color: configController.theme.grey.shade300,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
               ],
             ),
         ],

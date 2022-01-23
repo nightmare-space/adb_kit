@@ -237,14 +237,9 @@ class DefaultThemeData {
           color: colorSchema.primary,
         ),
         titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
-          fontSize: Dimens.font_sp20,
+          fontSize: 18.w,
           fontWeight: FontWeight.bold,
           color: controller.theme.fontColor,
-        ),
-        toolbarTextStyle: lightThemeData.textTheme.headline6.copyWith(
-          fontSize: Dimens.font_sp20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
         ),
       ),
       tabBarTheme: lightThemeData.tabBarTheme.copyWith(
