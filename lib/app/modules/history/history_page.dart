@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
@@ -14,13 +15,16 @@ class HistoryPage extends GetView<HistoryController> {
 
   @override
   Widget build(BuildContext context) {
+    final ConfigController configController = Get.find();
     AppBar appBar;
     if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('历史连接'),
-        leading: Menubutton(
-          scaffoldContext: context,
-        ),
+        leading: configController.needShowMenuButton
+            ? Menubutton(
+                scaffoldContext: context,
+              )
+            : null,
       );
     }
     return Scaffold(

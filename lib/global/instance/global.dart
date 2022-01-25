@@ -104,13 +104,6 @@ class Global {
     );
   }
 
-  Future<void> _initNfcModule() async {
-    Log.v('启动_initNfcModule');
-    if (!kIsWeb && !Platform.isAndroid) {
-      return;
-    }
-  }
-
   Future<void> _socketServer() async {
     // 等待扫描二维码的连接
     HttpServerUtil.bindServer(
@@ -186,7 +179,7 @@ class Global {
   }
 
   Future<void> initGlobal() async {
-    Log.i('initGlobal');
+    Log.i('Global instance init');
     if (isInit) {
       return;
     }
@@ -201,7 +194,6 @@ class Global {
     // );
     _receiveBoardCast();
     _sendBoardCast();
-    _initNfcModule();
     _socketServer();
     await installAdbToEnvir();
   }

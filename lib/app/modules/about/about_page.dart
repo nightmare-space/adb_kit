@@ -10,16 +10,18 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final ConfigController controller = Get.find();
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('关于'),
-        leading: Menubutton(
-          scaffoldContext: context,
-        ),
+        leading: controller.needShowMenuButton
+            ? Menubutton(
+                scaffoldContext: context,
+              )
+            : null,
       );
     }
     return Column(
@@ -58,6 +60,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   SizedBox(height: 24.w),
                   CardItem(
+                    padding: EdgeInsets.zero,
                     child: Column(
                       children: [
                         SettingItem(
@@ -107,6 +110,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   SizedBox(height: 16.w),
                   CardItem(
+                    padding: EdgeInsets.zero,
                     child: Column(
                       children: [
                         SettingItem(
@@ -140,15 +144,19 @@ class AboutPage extends StatelessWidget {
                   ),
                   SizedBox(height: 16.w),
                   CardItem(
+                    padding: EdgeInsets.zero,
                     child: Column(
                       children: [
                         SettingItem(
                           title: 'github.com/mengyanshou',
                           subTitle: '关注开发者Github',
-                          prefix: ClipOval(
-                            child: Image.network(
-                              'http://nightmare.fun/YanTool/image/hong.jpg',
-                              width: 44.w,
+                          prefix: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.w),
+                            child: ClipOval(
+                              child: Image.network(
+                                'http://nightmare.fun/YanTool/image/hong.jpg',
+                                width: 44.w,
+                              ),
                             ),
                           ),
                           suffix: Icon(
@@ -168,10 +176,13 @@ class AboutPage extends StatelessWidget {
                         SettingItem(
                           title: '梦魇兽',
                           subTitle: '关注开发者酷安',
-                          prefix: ClipOval(
-                            child: Image.network(
-                              'http://nightmare.fun/YanTool/image/hong.jpg',
-                              width: 44.w,
+                          prefix: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.w),
+                            child: ClipOval(
+                              child: Image.network(
+                                'http://nightmare.fun/YanTool/image/hong.jpg',
+                                width: 44.w,
+                              ),
                             ),
                           ),
                           suffix: Icon(
@@ -192,10 +203,13 @@ class AboutPage extends StatelessWidget {
                         SettingItem(
                           title: '其他相关软件下载',
                           subTitle: '“无界”、“魇·工具箱”、“速享”、“Code FA”等相关作品下载',
-                          prefix: ClipOval(
-                            child: Image.network(
-                              'http://nightmare.fun/YanTool/image/hong.jpg',
-                              width: 44.w,
+                          prefix: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.w),
+                            child: ClipOval(
+                              child: Image.network(
+                                'http://nightmare.fun/YanTool/image/hong.jpg',
+                                width: 44.w,
+                              ),
                             ),
                           ),
                           suffix: Icon(
@@ -216,12 +230,12 @@ class AboutPage extends StatelessWidget {
                   ),
                   SizedBox(height: 16.w),
                   CardItem(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(10.w),
-                          child: Text(
-                            '''BSD 3-Clause License
+                    child: Container(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.all(10.w),
+                        child: Text(
+                          '''BSD 3-Clause License
 
 Copyright (c) 2021,  Nightmare
 All rights reserved.
@@ -239,16 +253,15 @@ modification, are permitted provided that the following conditions are met:
 3. Neither the name of the copyright holder nor the names of its
    contributors may be used to endorse or promote products derived from
    this software without specific prior written permission.''',
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  .color
-                                  .withOpacity(0.6),
-                            ),
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                .color
+                                .withOpacity(0.6),
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -289,8 +302,8 @@ class _SettingItemState extends State<SettingItem> {
       splashColor: Colors.transparent,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 0.w,
-          horizontal: 10.w,
+          vertical: 4.w,
+          horizontal: 16.w,
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 48.w),

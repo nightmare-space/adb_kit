@@ -30,6 +30,8 @@ class _SettingsPageState extends State<SettingsPage>
   ConfigController configController = Get.find();
 
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
+
+
   @override
   void initState() {
     super.initState();
@@ -55,12 +57,14 @@ class _SettingsPageState extends State<SettingsPage>
       appBar = AppBar(
         title: Text(S.of(context).settings),
         // systemOverlayStyle: OverlayStyle.dark,
-        leading: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Menubutton(
-            scaffoldContext: context,
-          ),
-        ),
+        leading: configController.needShowMenuButton
+            ? Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Menubutton(
+                  scaffoldContext: context,
+                ),
+              )
+            : null,
         // leadingWidth: 48.w,
       );
     }

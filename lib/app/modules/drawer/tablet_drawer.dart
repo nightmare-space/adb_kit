@@ -126,7 +126,6 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 title: '安装到系统',
                 iconData: Icons.file_download,
                 onTap: (value) {
-                  Log.e(value);
                   widget.onChanged.call(value);
                 },
               ),

@@ -190,6 +190,12 @@ class _DevicesItemState extends State<DevicesItem>
                             showToast('设备未正常连接');
                             return;
                           }
+
+                          // Future(() {
+                          //   throw "asynchronous error";
+                          // });
+                          // // execCmd('asd');
+                          // return;
                           AdbUtil.stopPoolingListDevices();
                           Get.put(AppManagerController());
                           await Get.to(DeveloperTool(

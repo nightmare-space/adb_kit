@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
@@ -20,6 +21,7 @@ class ExecCmdPage extends StatefulWidget {
 
 class _ExecCmdPageState extends State<ExecCmdPage> {
   TextEditingController editingController = TextEditingController();
+  final ConfigController controller = Get.find();
   FocusNode focusNode = FocusNode();
   Future<void> execCmd() async {
     Global.instance.pseudoTerminal.write(editingController.text + '\n');
@@ -39,12 +41,14 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('终端模拟器'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        leading: controller.needShowMenuButton
+            ? IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              )
+            : null,
       );
     }
     return Scaffold(

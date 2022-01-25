@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
@@ -33,14 +34,17 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   String route = Routes.overview;
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
+  DevicesController controller = Get.find();
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    Log.v('Last notification: $state\n');
+    Log.v('didChangeAppLifecycleState : $state\n');
   }
 
   @override
   void initState() {
     super.initState();
+    controller.init();
+  
     WidgetsBinding.instance.addObserver(this);
     PluginUtil.addHandler((call) {
       if (call.method == 'ShowOTGDialog') {

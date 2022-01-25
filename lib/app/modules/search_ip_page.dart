@@ -1,8 +1,10 @@
 // 这是 android 端才有的页面
 // 只有当 android 端作为热点的时候才行。
 
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class SearchIpPage extends StatefulWidget {
@@ -13,6 +15,7 @@ class SearchIpPage extends StatefulWidget {
 }
 
 class _SearchIpPageState extends State<SearchIpPage> {
+  final ConfigController controller = Get.find();
   List<String> addressList = [];
   @override
   void initState() {
@@ -52,12 +55,14 @@ class _SearchIpPageState extends State<SearchIpPage> {
       appBar = AppBar(
         title: const Text('IP查看'),
         systemOverlayStyle: OverlayStyle.dark,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        leading: controller.needShowMenuButton
+            ? IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              )
+            : null,
       );
     }
     return Scaffold(
@@ -97,21 +102,22 @@ class _SearchIpPageState extends State<SearchIpPage> {
                       ),
                     ),
                   ),
-               if(addressList.isNotEmpty) Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(8.w),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10.w),
-                  ),
-                  child: Text(
-                    '该页面列表的是能与本机互通的IP，末尾为.1结尾的通常代表路由器的IP地址，其余的代表连接到本机的IP地址',
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 12.w,
+                if (addressList.isNotEmpty)
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(8.w),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10.w),
+                    ),
+                    child: Text(
+                      '该页面列表的是能与本机互通的IP，末尾为.1结尾的通常代表路由器的IP地址，其余的代表连接到本机的IP地址',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 12.w,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

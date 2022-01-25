@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/app/modules/setting/setting_page.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -61,9 +62,11 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
         title: const Text('网络ADB调试'),
         titleSpacing: 0,
         leadingWidth: 48.w,
-        leading: Menubutton(
-          scaffoldContext: context,
-        ),
+        leading: configController.needShowMenuButton
+            ? Menubutton(
+                scaffoldContext: context,
+              )
+            : null,
       );
     }
     return Scaffold(
@@ -79,7 +82,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -90,7 +93,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           fontSize: 16.w,
                         ),
                       ),
-                      Switch(
+                      AquaSwitch(
                         value: adbDebugOpen,
                         onChanged: (_) async {
                           changeState();

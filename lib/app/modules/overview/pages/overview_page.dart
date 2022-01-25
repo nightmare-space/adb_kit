@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
@@ -24,20 +25,12 @@ class OverviewPage extends StatefulWidget {
 
 class _OverviewPageState extends State<OverviewPage> {
   TextEditingController editingController = TextEditingController();
-  List<String> addreses = [];
   @override
   void initState() {
     super.initState();
-    getAddress();
   }
 
-  Future<void> getAddress() async {
-    if (!GetPlatform.isWeb) {
-      addreses = await PlatformUtil.localAddress();
-      setState(() {});
-    }
-  }
-
+  final ConfigController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
@@ -45,7 +38,9 @@ class _OverviewPageState extends State<OverviewPage> {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,
-        leading: Menubutton(scaffoldContext: context),
+        leading: controller.needShowMenuButton
+            ? Menubutton(scaffoldContext: context)
+            : null,
         title: const Text('面板'),
         actions: [
           if (GetPlatform.isAndroid)
@@ -293,19 +288,21 @@ class _OverviewPageState extends State<OverviewPage> {
 }
 
 class CardItem extends StatelessWidget {
-  const CardItem({Key key, this.child}) : super(key: key);
+  const CardItem({Key key, this.child, this.padding}) : super(key: key);
   final Widget child;
+  final EdgeInsetsGeometry padding;
   @override
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(12.w),
+      clipBehavior: Clip.hardEdge,
       // border: Border.all(
       //   color: Colors.grey.withOpacity(0.2),
       //   width: 1.w,
       // ),
       color: Theme.of(context).cardColor,
       child: Padding(
-        padding: EdgeInsets.all(8.w),
+        padding: padding ?? EdgeInsets.all(8.w),
         child: child,
       ),
     );

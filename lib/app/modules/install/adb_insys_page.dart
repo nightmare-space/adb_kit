@@ -1,9 +1,11 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 // 安装 adb 工具到系统
@@ -19,6 +21,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   String xbinPath = '/system/xbin';
   String choosePath;
 
+  final ConfigController controller = Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -32,12 +36,14 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('安装ADB到系统'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
+        leading: controller.needShowMenuButton
+            ? IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              )
+            : null,
       );
     }
     return Scaffold(
@@ -117,58 +123,63 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 8.w),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        '建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 12.w,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8.w),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        '该功能暂未适配动态分区',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 12.w,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8.w,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        '该功能需要ROOT权限',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 12.w,
-                        ),
-                      ),
-                    ),
                     SizedBox(
                       height: Dimens.gap_dp16,
+                    ),
+                    CardItem(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.all(8.w),
+                            decoration: BoxDecoration(
+                              color: Colors.green.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10.w),
+                            ),
+                            child: Text(
+                              '建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 12.w,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.w),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.all(8.w),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10.w),
+                            ),
+                            child: Text(
+                              '该功能暂未适配动态分区',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12.w,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.w,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.all(8.w),
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10.w),
+                            ),
+                            child: Text(
+                              '该功能需要ROOT权限',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12.w,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: Dimens.gap_dp16,

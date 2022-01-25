@@ -47,7 +47,7 @@ class DevicesEntity {
 
   @override
   String toString() {
-    return 'serial:$serial  stat:$stat';
+    return 'serial:$serial stat:$stat';
   }
 
   @override
@@ -56,9 +56,7 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {
-    init();
-  }
+  DevicesController() {}
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -132,7 +130,6 @@ class DevicesController extends GetxController {
   void letADBStarted() {
     if (adbIsStarting) {
       adbIsStarting = false;
-      Log.w('adbIsStarting = false');
       update();
     }
   }
@@ -205,7 +202,7 @@ class DevicesController extends GetxController {
     for (final DevicesEntity devicesEntity in current) {
       if (!devicesEntitys.contains(devicesEntity)) {
         // 如果当前列表不包含controller列表的item
-        Log.v('devicesEntity ->$devicesEntity');
+        Log.i('Add Devices -> $devicesEntity');
         _addItem(devicesEntity);
       } else {
         final int index = devicesEntitys.indexOf(devicesEntity);

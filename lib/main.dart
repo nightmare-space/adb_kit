@@ -1,5 +1,6 @@
 library adb_tool;
 
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,18 +26,32 @@ import 'themes/theme.dart';
 // 这个值由shell去替换
 bool useNativeShell = false;
 
-void main() {
+Future<void> main() async {
   // 初始化运行时环境
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
-  WidgetsFlutterBinding.ensureInitialized();
-  if (useNativeShell) {
-    runApp(const NativeShellWrapper());
-  } else {
-    runApp(const AppEntryPoint());
-  }
-  initSetting();
+  runZonedGuarded<Future<void>>(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      FlutterError.onError = (FlutterErrorDetails details) {
+        print('未捕捉到的异常 : ${details.exception}');
+      };
+      await initSetting();
+      if (useNativeShell) {
+        runApp(const NativeShellWrapper());
+      } else {
+        runApp(const AppEntryPoint());
+      }
+    },
+    (error, stackTrace) {
+      print('未捕捉到的异常 : $error');
+    },
+  );
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    print('页面构建异常 : ${details.exception}');
+  };
   Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -184,10 +199,12 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   /// Default Mode
                   ///
 
-                  return Theme(
-                    data: theme,
-                    child: navigator,
-                  );
+                  return Responsive(builder: (context, _) {
+                    return Theme(
+                      data: theme,
+                      child: navigator,
+                    );
+                  });
                 },
               );
             },

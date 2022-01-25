@@ -1,8 +1,9 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:termare_view/termare_view.dart';
 
@@ -16,6 +17,8 @@ class LogPage extends StatefulWidget {
 }
 
 class _LogPageState extends State<LogPage> {
+  final ConfigController controller = Get.find();
+
   @override
   void initState() {
     super.initState();
@@ -38,9 +41,11 @@ class _LogPageState extends State<LogPage> {
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('日志'),
-        leading: Menubutton(
-          scaffoldContext: context,
-        ),
+        leading: controller.needShowMenuButton
+            ? Menubutton(
+                scaffoldContext: context,
+              )
+            : null,
       );
     }
     return Scaffold(

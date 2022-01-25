@@ -6,9 +6,7 @@ class ADBFind {
 
   static Future<List<String>> getLANDevices() async {
     List<String> address = await localAddress();
-    print(address);
     List<String> list = address.first.split('.');
-    print(list);
     List<String> devices = [];
     Completer lock = Completer();
     for (int i = 1; i < 255; i++) {
