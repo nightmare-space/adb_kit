@@ -99,15 +99,6 @@ class _TabletDrawerState extends State<TabletDrawer> {
                       widget.onChanged.call(value);
                     },
                   ),
-                  _DrawerItem(
-                    value: Routes.searchIp,
-                    groupValue: widget.groupValue,
-                    title: '查看局域网ip',
-                    onTap: (value) {
-                      widget.onChanged.call(value);
-                    },
-                    iconData: Icons.wifi_tethering,
-                  ),
                 ],
               ),
             // _DrawerItem(

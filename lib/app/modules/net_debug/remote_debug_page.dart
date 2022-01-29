@@ -210,7 +210,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: Dimens.gap_dp8,
                         ),
                         decoration: BoxDecoration(
-                          color: configController.theme.grey.shade100,
+                          color: configController.theme.grey.shade200,
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
@@ -252,7 +252,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: 8.0,
                         ),
                         decoration: BoxDecoration(
-                          color: configController.theme.grey.shade100,
+                          color: configController.theme.grey.shade200,
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(

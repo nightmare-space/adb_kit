@@ -31,7 +31,6 @@ class _SettingsPageState extends State<SettingsPage>
 
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
-
   @override
   void initState() {
     super.initState();

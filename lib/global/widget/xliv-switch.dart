@@ -49,14 +49,32 @@ class XlivSwitch extends StatefulWidget {
 }
 
 class _XlivSwitchState extends State<XlivSwitch> with TickerProviderStateMixin {
+  Color unActiveColor;
+  @override
+  void initState() {
+    super.initState();
+    unActiveColor = widget.unActiveColor;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (unActiveColor != widget.unActiveColor) {
+      return _XlivSwitchRenderObjectWidget(
+        value: widget.value,
+        activeColor: widget.activeColor ?? Theme.of(context).primaryColor,
+        onChanged: widget.onChanged,
+        thumbColor: widget.thumbColor ?? CupertinoColors.white,
+        unActiveColor: widget.unActiveColor ?? CupertinoColors.destructiveRed,
+        vsync: this,
+        key: const Key('key'),
+      );
+    }
     return _XlivSwitchRenderObjectWidget(
       value: widget.value,
       activeColor: widget.activeColor ?? Theme.of(context).primaryColor,
       onChanged: widget.onChanged,
       thumbColor: widget.thumbColor ?? CupertinoColors.white,
-      unActiveColor: widget.unActiveColor ?? CupertinoColors.destructiveRed,
+      unActiveColor: unActiveColor ?? CupertinoColors.destructiveRed,
       vsync: this,
     );
   }

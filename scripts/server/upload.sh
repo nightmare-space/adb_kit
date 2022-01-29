@@ -5,6 +5,9 @@ source $LOCAL_DIR/../properties.sh
 if [ -f $PROJECT_DIR/$APP_NAME'.tar' ]; then
     rsync -v $PROJECT_DIR/$APP_NAME'.tar' $TARGET_PATH'/'$APP_NAME'_'$VERSION'_macOS'.tar
 fi
+if [ -f $PROJECT_DIR/$APP_NAME'.dmg' ]; then
+    rsync -v $PROJECT_DIR/$APP_NAME'.dmg' $TARGET_PATH'/'$APP_NAME'_'$VERSION'_macOS'.dmg
+fi
 if [ -f $PROJECT_DIR/$APP_NAME'_Windows.zip' ]; then
     target_name=$APP_NAME'_'$VERSION'_Windows.zip'
     echo "upload $target_name"

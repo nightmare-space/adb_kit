@@ -1,0 +1,21 @@
+output: dist/
+releases:
+  - name: dev
+    jobs:
+      # 构建 apk 包并将其发布到 pgyer
+      - name: release-dev-android
+        package:
+          platform: android
+          target: apk
+          build_args:
+            target-platform: android-arm64
+      - name: release-dev-android
+        package:
+          platform: android
+          target: apk
+          build_args:
+            target-platform: android-arm64
+      - name: release-dev-macos
+        package:
+          platform: macos
+          target: dmg
