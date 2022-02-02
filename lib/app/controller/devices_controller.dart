@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adbd_find_util.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
@@ -75,7 +76,6 @@ class DevicesController extends GetxController {
         otgTerm.write(call.arguments.toString());
       }
     });
-
     await startAdb();
     AdbUtil.addListener(handleResult);
     AdbUtil.startPoolingListDevices();

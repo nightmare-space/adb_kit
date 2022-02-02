@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:settings/settings.dart';
+import 'app/controller/devices_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'generated/l10n.dart';
@@ -89,10 +90,13 @@ class _AppEntryPointState extends State<AppEntryPoint>
     with WidgetsBindingObserver {
   ConfigController configController = Get.put(ConfigController());
 
+  DevicesController controller = Get.find();
   @override
   void initState() {
     super.initState();
     _lastSize = WidgetsBinding.instance.window.physicalSize;
+
+    controller.init();
     WidgetsBinding.instance.addObserver(this);
   }
 

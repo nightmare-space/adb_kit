@@ -17,6 +17,7 @@ class AdbTool extends StatefulWidget {
   AdbTool({
     Key key,
     this.packageName,
+    this.initRoute = Routes.overview,
   }) : super(key: key) {
     if (RuntimeEnvir.packageName != Config.packageName &&
         !GetPlatform.isDesktop) {
@@ -26,15 +27,15 @@ class AdbTool extends StatefulWidget {
   }
 
   final String packageName;
+  final String initRoute;
   @override
   _AdbToolState createState() => _AdbToolState();
 }
 
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
-  String route = Routes.overview;
+  String route;
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
-  DevicesController controller = Get.find();
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Log.v('didChangeAppLifecycleState : $state\n');
@@ -43,8 +44,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    controller.init();
-  
+    route = widget.initRoute;
     WidgetsBinding.instance.addObserver(this);
     PluginUtil.addHandler((call) {
       if (call.method == 'ShowOTGDialog') {

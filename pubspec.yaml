@@ -95,6 +95,6 @@ dependency_overrides:
   # file_selector_nightmare:
   #   path: /Users/nightmare/Desktop/nightmare-space/file_selector
 flutter_intl:
-  # enabled: true
+  enabled: true
   localizely:
     project_id: 483edf0e-5f6c-489d-8b86-731bba09be1b

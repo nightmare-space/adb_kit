@@ -225,6 +225,7 @@ class DefaultThemeData {
         filled: true,
       ),
       appBarTheme: lightThemeData.appBarTheme.copyWith(
+        
         systemOverlayStyle:
             controller.isDarkTheme ? OverlayStyle.light : OverlayStyle.dark,
         centerTitle: true,

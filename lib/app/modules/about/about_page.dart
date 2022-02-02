@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class AboutPage extends StatelessWidget {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('关于'),
+        title: Text(S.of(context).about),
+        automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? Menubutton(
                 scaffoldContext: context,
@@ -64,7 +66,7 @@ class AboutPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SettingItem(
-                          title: '当前版本',
+                          title: S.of(context).currentVersion,
                           suffix: Text(
                             '${Config.versionName}(${Config.versionCode})',
                             style: TextStyle(
@@ -77,7 +79,7 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                         SettingItem(
-                          title: '版本分支',
+                          title: S.of(context).branch,
                           suffix: Text(
                             'Master',
                             style: TextStyle(
@@ -90,7 +92,7 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                         SettingItem(
-                          title: '其他版本下载',
+                          title: S.of(context).otherVersionDownload,
                           suffix: Icon(
                             Icons.arrow_forward_ios,
                             size: 16.w,
@@ -114,21 +116,21 @@ class AboutPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SettingItem(
-                          title: '服务条款',
+                          title: S.of(context).terms,
                           suffix: Icon(
                             Icons.arrow_forward_ios,
                             size: 16.w,
                           ),
                         ),
                         SettingItem(
-                          title: '用户协议',
+                          title: S.of(context).agreement,
                           suffix: Icon(
                             Icons.arrow_forward_ios,
                             size: 16.w,
                           ),
                         ),
                         SettingItem(
-                          title: '开源许可',
+                          title: S.of(context).openSourceLicense,
                           suffix: Icon(
                             Icons.arrow_forward_ios,
                             size: 16.w,

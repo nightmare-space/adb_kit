@@ -34,7 +34,9 @@ class ConfigController extends GetxController {
   ScreenType screenType;
   bool get needShowMenuButton => screenType == ScreenType.phone;
   void initConfig() {
-    screenType = ScreenType.values.byName('$ScreenType'.get);
+    if ('$ScreenType'.get.isNotEmpty) {
+      screenType = ScreenType.values.byName('$ScreenType'.get);
+    }
     if (themeMap.containsKey('$Theme'.get)) {
       theme = themeMap['$Theme'.get];
     }
@@ -45,7 +47,9 @@ class ConfigController extends GetxController {
 
   void changeScreenType(ScreenType screenType) {
     this.screenType = screenType;
-    '$ScreenType'.set = screenType.name;
+    if (screenType != null) {
+      '$ScreenType'.set = screenType.name;
+    }
     Get.forceAppUpdate();
   }
 

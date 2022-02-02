@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _LogPageState extends State<LogPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('日志'),
+        title:  Text(S.of(context).log),
+        automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? Menubutton(
                 scaffoldContext: context,

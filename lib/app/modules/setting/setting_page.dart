@@ -55,6 +55,7 @@ class _SettingsPageState extends State<SettingsPage>
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).settings),
+        automaticallyImplyLeading: false,
         // systemOverlayStyle: OverlayStyle.dark,
         leading: configController.needShowMenuButton
             ? Padding(

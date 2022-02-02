@@ -23,9 +23,13 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
+        "agreement": MessageLookupByLibrary.simpleMessage("Agreement"),
         "autoConnectDevice":
             MessageLookupByLibrary.simpleMessage("Auto connect device in LAN"),
         "autoFit": MessageLookupByLibrary.simpleMessage("Responsive"),
+        "branch": MessageLookupByLibrary.simpleMessage("Branch"),
+        "currentVersion":
+            MessageLookupByLibrary.simpleMessage("Current Version"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
             "Debug Paint Layer Borders Enabled"),
@@ -53,7 +57,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "log": MessageLookupByLibrary.simpleMessage("Log"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
+        "openSourceLicense":
+            MessageLookupByLibrary.simpleMessage("Open Source License"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
+        "otherVersionDownload":
+            MessageLookupByLibrary.simpleMessage("Download Other Version"),
         "pad": MessageLookupByLibrary.simpleMessage("Pad"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
@@ -65,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showSemanticsDebugger":
             MessageLookupByLibrary.simpleMessage("Show Semantics Debugger"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
+        "terms": MessageLookupByLibrary.simpleMessage("Terms"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "view": MessageLookupByLibrary.simpleMessage("View")
       };

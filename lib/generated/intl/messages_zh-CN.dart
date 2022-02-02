@@ -23,8 +23,11 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("关于软件"),
+        "agreement": MessageLookupByLibrary.simpleMessage("用户协议"),
         "autoConnectDevice": MessageLookupByLibrary.simpleMessage("自动发现并连接设备"),
         "autoFit": MessageLookupByLibrary.simpleMessage("自适应"),
+        "branch": MessageLookupByLibrary.simpleMessage("版本分支"),
+        "currentVersion": MessageLookupByLibrary.simpleMessage("当前版本"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
         "debugPaintLayerBordersEnabled":
             MessageLookupByLibrary.simpleMessage("显示层级边界"),
@@ -48,7 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "light": MessageLookupByLibrary.simpleMessage("浅色模式"),
         "log": MessageLookupByLibrary.simpleMessage("日志"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("网络调试"),
+        "openSourceLicense": MessageLookupByLibrary.simpleMessage("开源许可"),
         "other": MessageLookupByLibrary.simpleMessage("其他"),
+        "otherVersionDownload": MessageLookupByLibrary.simpleMessage("其他版本下载"),
         "pad": MessageLookupByLibrary.simpleMessage("平板"),
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
@@ -59,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("打开性能监控"),
         "showSemanticsDebugger": MessageLookupByLibrary.simpleMessage("显示组件语义"),
         "terminal": MessageLookupByLibrary.simpleMessage("终端模拟器"),
+        "terms": MessageLookupByLibrary.simpleMessage("服务条款"),
         "theme": MessageLookupByLibrary.simpleMessage("主题"),
         "view": MessageLookupByLibrary.simpleMessage("界面")
       };

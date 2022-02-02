@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/setting/setting_page.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -59,7 +60,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('网络ADB调试'),
+        title: Text(S.of(context).networkDebug),
+        automaticallyImplyLeading: false,
         titleSpacing: 0,
         leadingWidth: 48.w,
         leading: configController.needShowMenuButton

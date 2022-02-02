@@ -4,6 +4,7 @@ import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/online_devices/views/online_view.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -38,16 +39,17 @@ class _OverviewPageState extends State<OverviewPage> {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,
+        automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? Menubutton(scaffoldContext: context)
             : null,
-        title: const Text('面板'),
+        title: Text(S.of(context).home),
         actions: [
           if (GetPlatform.isAndroid)
             NiIconButton(
               child: SvgPicture.asset(
                 GlobalAssets.qrCode,
-                color: Colors.black,
+                color: controller.theme.fontColor,
               ),
               onTap: () async {
                 ScanUtil.parseScan();

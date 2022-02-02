@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
@@ -35,7 +36,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('安装ADB到系统'),
+        title:  Text(S.of(context).installToSystem),
+        automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
                 icon: const Icon(Icons.menu),
@@ -123,9 +125,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: Dimens.gap_dp16,
-                    ),
+                    SizedBox(height: 8.w),
                     CardItem(
                       child: Column(
                         children: [
@@ -181,9 +181,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: Dimens.gap_dp16,
-                    ),
+                    SizedBox(height: 8.w),
                     CardItem(
                       child: SizedBox(
                         height: 200,

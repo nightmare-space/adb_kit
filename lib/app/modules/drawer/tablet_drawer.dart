@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
+import 'package:adb_tool/app/routes/ripple_router.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,7 +74,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               height: Dimens.gap_dp16,
             ),
             _DrawerItem(
-              title: '面板',
+              title: S.of(context).home,
               value: Routes.overview,
               groupValue: widget.groupValue,
               onTap: (value) {
@@ -88,18 +92,14 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
             ),
             if (!kIsWeb && Platform.isAndroid)
-              Column(
-                children: [
-                  _DrawerItem(
-                    value: Routes.netDebug,
-                    groupValue: widget.groupValue,
-                    iconData: Icons.signal_wifi_4_bar,
-                    title: '远程调试',
-                    onTap: (value) {
-                      widget.onChanged.call(value);
-                    },
-                  ),
-                ],
+              _DrawerItem(
+                value: Routes.netDebug,
+                groupValue: widget.groupValue,
+                iconData: Icons.signal_wifi_4_bar,
+                title: S.of(context).networkDebug,
+                onTap: (value) {
+                  widget.onChanged.call(value);
+                },
               ),
             // _DrawerItem(
             //   title: '连接设备',
@@ -136,23 +136,16 @@ class _TabletDrawerState extends State<TabletDrawer> {
             _DrawerItem(
               value: Routes.log,
               groupValue: widget.groupValue,
-              title: '日志',
+              title: S.of(context).log,
               iconData: Icons.pending_outlined,
               onTap: (value) async {
-                // final window =
-                //     await Window.create(OtherWindowState.toInitData());
-                // // you can use the window object to communicate with newly created
-                // // window or register handlers for window events
-                // window.closeEvent.addListener(() {
-                //   print('Window closed');
-                // });
                 widget.onChanged.call(value);
               },
             ),
             _DrawerItem(
               value: Routes.setting,
               groupValue: widget.groupValue,
-              title: '设置',
+              title: S.of(context).settings,
               iconData: Icons.settings,
               onTap: (index) async {
                 widget.onChanged?.call(index);
@@ -161,11 +154,41 @@ class _TabletDrawerState extends State<TabletDrawer> {
             _DrawerItem(
               value: Routes.about,
               groupValue: widget.groupValue,
-              title: '关于软件',
+              title: S.of(context).about,
               iconData: Icons.info_outline,
               onTap: (index) async {
                 widget.onChanged?.call(index);
               },
+            ),
+            Builder(
+              builder: (context) {
+                return _DrawerItem(
+                  groupValue: widget.groupValue,
+                  title: '安装到系统',
+                  iconData:config.isDarkTheme?Icons.light_mode: Icons.dark_mode,
+                  onTap: (value) {
+                    if (config.isDarkTheme) {
+                      config.theme = LightTheme();
+                    } else {
+                      config.theme = DarkTheme();
+                    }
+                    final bool isDark = config.theme is DarkTheme;
+                    final ThemeData theme = DefaultThemeData.light(
+                      primary: config.primaryColor,
+                    );
+                    Navigator.of(context).pushReplacement(
+                      RippleRoute(
+                          Theme(
+                            data: theme,
+                            child: AdbTool(
+                              initRoute: widget.groupValue,
+                            ),
+                          ),
+                          RouteConfig.fromContext(context)),
+                    );
+                  },
+                );
+              }
             ),
           ],
         ),
@@ -224,20 +247,20 @@ class _DrawerItem extends StatelessWidget {
                   children: [
                     Icon(
                       iconData ?? Icons.open_in_new,
-                      size: 20.w,
+                      size: 24.w,
                       color:
                           isChecked ? AppColors.accent : config.theme.fontColor,
                     ),
                     SizedBox(height: 4.w),
-                    Text(
-                      title.substring(0, 2),
-                      style: TextStyle(
-                        height: 1.0,
-                        color: config.theme.fontColor,
-                        fontSize: 12.w,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // Text(
+                    //   title.substring(0, 2),
+                    //   style: TextStyle(
+                    //     height: 1.0,
+                    //     color: config.theme.fontColor,
+                    //     fontSize: 12.w,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

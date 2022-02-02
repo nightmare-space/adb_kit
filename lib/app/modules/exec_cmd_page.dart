@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -40,7 +41,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     AppBar appBar;
     if (Responsive.of(context).screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: const Text('终端模拟器'),
+        title:  Text(S.of(context).terminal),
+        automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
                 icon: const Icon(Icons.menu),

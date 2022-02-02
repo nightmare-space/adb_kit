@@ -60,6 +60,16 @@ class S {
     );
   }
 
+  /// `Agreement`
+  String get agreement {
+    return Intl.message(
+      'Agreement',
+      name: 'agreement',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Auto connect device in LAN`
   String get autoConnectDevice {
     return Intl.message(
@@ -75,6 +85,26 @@ class S {
     return Intl.message(
       'Responsive',
       name: 'autoFit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch`
+  String get branch {
+    return Intl.message(
+      'Branch',
+      name: 'branch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Version`
+  String get currentVersion {
+    return Intl.message(
+      'Current Version',
+      name: 'currentVersion',
       desc: '',
       args: [],
     );
@@ -250,11 +280,31 @@ class S {
     );
   }
 
+  /// `Open Source License`
+  String get openSourceLicense {
+    return Intl.message(
+      'Open Source License',
+      name: 'openSourceLicense',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Other`
   String get other {
     return Intl.message(
       'Other',
       name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download Other Version`
+  String get otherVersionDownload {
+    return Intl.message(
+      'Download Other Version',
+      name: 'otherVersionDownload',
       desc: '',
       args: [],
     );
@@ -345,6 +395,16 @@ class S {
     return Intl.message(
       'Terminal',
       name: 'terminal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms`
+  String get terms {
+    return Intl.message(
+      'Terms',
+      name: 'terms',
       desc: '',
       args: [],
     );
