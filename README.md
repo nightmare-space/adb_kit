@@ -28,7 +28,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 ## 截图
 <img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/connect.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/debug.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/dashboard.jpg" width="30%" height="30%" />
 <img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/app_manager.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/history.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/intl.jpg" width="30%" height="30%" />
-
+<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/launcher.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/root.jpg" width="30%" height="30%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/theme.jpg" width="30%" height="30%" />
 <img src="screenshot/adb_dashboard.png"/> 
 
 <img src="screenshot/adb_desktop.png" width="100%" height="100%" /> <img src="screenshot/adb_pad.png" width="100%" height="100%" />
