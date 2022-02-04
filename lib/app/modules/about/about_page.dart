@@ -2,6 +2,7 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/generated/l10n.dart';
+import 'package:adb_tool/global/pages/change_log.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,16 @@ class AboutPage extends StatelessWidget {
                                   .color
                                   .withOpacity(0.6),
                             ),
+                          ),
+                        ),
+                        SettingItem(
+                          title: '更新日志',
+                          onTap: () {
+                            Get.to(ChangeLog());
+                          },
+                          suffix: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16.w,
                           ),
                         ),
                         SettingItem(

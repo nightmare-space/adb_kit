@@ -29,12 +29,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   }
 
   Future<void> init() async {
-    final String ipRoute = await execCmd('ip route');
-    for (String ip in ipRoute.split('\n')) {
-      ip = ip.trim().replaceAll(RegExp('.* '), '');
-      Log.v(ip);
-      address.add(ip);
-    }
+    address = await PlatformUtil.localAddress();
     Log.v('address->$address');
     setState(() {});
     final String result = await execCmd('getprop service.adb.tcp.port');
@@ -84,7 +79,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

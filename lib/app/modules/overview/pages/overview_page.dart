@@ -139,7 +139,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       Expanded(
                         child: TextField(
                           controller: editingController,
-                          style: TextStyle(height: 1.0),
+                          style: const TextStyle(height: 1.0),
                           decoration: InputDecoration(
                             hintText: '格式为"IP地址:端口号 配对码"',
                             hintStyle: TextStyle(

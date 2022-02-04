@@ -94,7 +94,16 @@ class HistoryController extends GetxController {
     final String data = await Config.historySaveFile.readAsString();
     adbHistorys =
         ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
+    sort();
     update();
+  }
+
+  void sort() {
+    adbHistorys.data.sort((a, b) {
+      return DateTime.parse(b.connectTime).compareTo(
+        DateTime.parse(a.connectTime),
+      );
+    });
   }
 
   void _updateHistory(Data data) {
@@ -109,7 +118,6 @@ class HistoryController extends GetxController {
     } catch (e) {
       adbHistorys.data.add(data);
     }
-
     saveToLocal();
   }
 }
