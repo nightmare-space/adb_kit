@@ -500,13 +500,11 @@ packages:
     source: hosted
     version: "0.0.1"
   signale:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "88178082851b2ee28363eae69a94ef424f763c60"
-      url: "https://github.com/nightmare-space/signale"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/signale"
+      relative: false
+    source: path
     version: "0.0.6"
   sky_engine:
     dependency: transitive

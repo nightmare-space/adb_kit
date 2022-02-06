@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:ui';
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
@@ -20,7 +22,7 @@ import 'dart:core';
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
-    defaultLogger.printer = const Print();
+    Log.defaultLogger.printer = const Print();
     HomeBinding().dependencies();
   }
 
@@ -154,7 +156,8 @@ class Global {
       await Directory(RuntimeEnvir.binPath).create(recursive: true);
       for (final String fileName in androidFiles) {
         final filePath = RuntimeEnvir.binPath + '/$fileName';
-        await AssetsUtils.copyAssetToPath('${Config.flutterPackage}assets/android/$fileName', filePath);
+        await AssetsUtils.copyAssetToPath(
+            '${Config.flutterPackage}assets/android/$fileName', filePath);
         final ProcessResult result = await Process.run(
           'chmod',
           ['+x', filePath],
@@ -167,7 +170,8 @@ class Global {
     for (final String fileName in globalFiles) {
       await Directory(RuntimeEnvir.binPath).create(recursive: true);
       final filePath = RuntimeEnvir.binPath + '/$fileName';
-      await AssetsUtils.copyAssetToPath('${Config.flutterPackage}assets/$fileName', filePath);
+      await AssetsUtils.copyAssetToPath(
+          '${Config.flutterPackage}assets/$fileName', filePath);
       final ProcessResult result = await Process.run(
         'chmod',
         ['+x', filePath],
@@ -183,6 +187,12 @@ class Global {
     if (isInit) {
       return;
     }
+    ConfigController controller = Get.find();
+    Log.i('当前系统语言 ${window.locales}');
+    Log.i('当前系统主题 ${window.platformBrightness}');
+    Log.i('当前布局风格 ${controller.screenType}');
+    Log.i('当前App内部主题 ${controller.theme}');
+    Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     isInit = true;
     // 等待 MaterialApp 加载完成，正确获取到屏幕大小
     // 不然logTerminalCTL不能正常的换行
@@ -212,14 +222,14 @@ class Print implements Printable {
   @override
   void print(DateTime time, Object object) {
     final String data =
-        '[${_twoDigits(time.hour)}:${_twoDigits(time.minute)}:${_twoDigits(time.second)}] $object';
+        '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
     Global().logTerminalCTL.write(data + '\r\n');
     // ignore: avoid_print
     core.print(data);
   }
 }
 
-String _twoDigits(int n) {
+String twoDigits(int n) {
   if (n >= 10) return "$n";
   return "0$n";
 }

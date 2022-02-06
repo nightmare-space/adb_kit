@@ -17,10 +17,10 @@ class DarkTheme implements YanTheme {
   Color background = Colors.black;
 
   @override
-  Color cardColor = Color(0xff1e1e1e);
+  Color cardColor = Color(0xFF1a1a1a);
 
   @override
-  Color inputColor = Color(0xFF2c2c2c);
+  Color inputColor = Color(0xFF212121);
 
   @override
   Color primaryColor = AppColors.accent;
@@ -51,8 +51,8 @@ class DarkTheme implements YanTheme {
     0xff999999,
     <int, Color>{
       50: Color(0xFF0a0a0a),
-      100: Color(0xff1e1e1e),
-      200: Color(0xFF2c2c2c),
+      100: Color(0xff1a1a1a),
+      200: Color(0xFF212121),
       300: Color(0xFF3d3d3d),
       400: Color(0xFF3a3a3a),
       900: Color(0x00000000),

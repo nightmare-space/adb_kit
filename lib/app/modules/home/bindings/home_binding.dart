@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';

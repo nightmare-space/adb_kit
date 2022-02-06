@@ -35,10 +35,9 @@ Future<void> main() async {
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      FlutterError.onError = (FlutterErrorDetails details) {
-        print('未捕捉到的异常 : ${details.exception}');
-      };
       await initSetting();
+      Get.put(ConfigController());
+      Global.instance.initGlobal();
       if (useNativeShell) {
         runApp(const NativeShellWrapper());
       } else {
@@ -46,14 +45,13 @@ Future<void> main() async {
       }
     },
     (error, stackTrace) {
-      print('未捕捉到的异常 : $error');
+      Log.e('未捕捉到的异常 : $error');
     },
   );
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
-    print('页面构建异常 : ${details.exception}');
+    Log.e('页面构建异常 : ${details.exception}');
   };
-  Global.instance.initGlobal();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

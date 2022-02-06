@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/android/
     - assets/
+    - CHANGELOG.md
 
 dependency_overrides:
   # apputils:
@@ -85,11 +86,11 @@ dependency_overrides:
     path: /Users/nightmare/Desktop/nightmare-space/global_repository
   app_manager:
     path: /Users/nightmare/Desktop/nightmare-space/app_manager
-  # adbutil:
-  #   path: /Users/nightmare/Desktop/nightmare-space/adbutil
+  adbutil:
+    path: /Users/nightmare/Desktop/nightmare-space/adbutil
   #   # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
-  # signale:
-  #   path: /Users/nightmare/Desktop/nightmare-space/signale
+  signale:
+    path: /Users/nightmare/Desktop/nightmare-space/signale
   # app_launcher:
   #   path: /Users/nightmare/Desktop/nightmare-space/app_launcher
   # file_selector_nightmare:
