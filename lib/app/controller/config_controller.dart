@@ -32,7 +32,8 @@ class ConfigController extends GetxController {
   bool get isDarkTheme => theme is DarkTheme;
   Locale locale = chinese;
   ScreenType screenType;
-  bool get needShowMenuButton => screenType == ScreenType.phone;
+  bool get needShowMenuButton =>
+      screenType == ScreenType.phone || (screenType == null&&GetPlatform.isAndroid);
   void initConfig() {
     if ('$ScreenType'.get.isNotEmpty) {
       screenType = ScreenType.values.byName('$ScreenType'.get);

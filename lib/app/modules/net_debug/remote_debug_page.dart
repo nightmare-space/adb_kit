@@ -58,7 +58,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
         title: Text(S.of(context).networkDebug),
         automaticallyImplyLeading: false,
         titleSpacing: 0,
-        leadingWidth: 48.w,
         leading: configController.needShowMenuButton
             ? Menubutton(
                 scaffoldContext: context,
@@ -162,24 +161,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Row(
                           children: [
-                            // Container(
-                            //   width: 24.w,
-                            //   height: 24.w,
-                            //   decoration: BoxDecoration(
-                            //     color: AppColors.accent.withOpacity(0.1),
-                            //     borderRadius: BorderRadius.circular(12.w),
-                            //   ),
-                            //   child: Center(
-                            //     child: Text(
-                            //       '1',
-                            //       style: TextStyle(
-                            //         fontSize: 12.w,
-                            //         fontWeight: FontWeight.w500,
-                            //         height: 1.0,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             Text(
                               '1.设备与PC处于于一个局域网',
                               style: TextStyle(
@@ -272,6 +253,25 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                 ),
                 SizedBox(
                   height: Dimens.gap_dp8,
+                ),
+                Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '该功能需要ROOT！！！并且是给本机打开的！！！给对方设备打开无线调试在主页点击已经连接的设备后面的箭头进到的二级页',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.w,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
