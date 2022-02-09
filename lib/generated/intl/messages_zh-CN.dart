@@ -24,9 +24,22 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("关于软件"),
         "agreement": MessageLookupByLibrary.simpleMessage("用户协议"),
+        "alreadyConnectDevice":
+            MessageLookupByLibrary.simpleMessage("已成功连接的设备"),
         "autoConnectDevice": MessageLookupByLibrary.simpleMessage("自动发现并连接设备"),
         "autoFit": MessageLookupByLibrary.simpleMessage("自适应"),
         "branch": MessageLookupByLibrary.simpleMessage("版本分支"),
+        "changeLog": MessageLookupByLibrary.simpleMessage("更新日志"),
+        "chooseInstallPath": MessageLookupByLibrary.simpleMessage("选择安装路径"),
+        "connectMethod": MessageLookupByLibrary.simpleMessage("连接方法"),
+        "connectMethodDes1":
+            MessageLookupByLibrary.simpleMessage("1.设备与PC处于于一个局域网"),
+        "connectMethodDes2":
+            MessageLookupByLibrary.simpleMessage("2.打开PC的终端模拟器，执行连接"),
+        "connectMethodDes3":
+            MessageLookupByLibrary.simpleMessage("3.执行adb devices查看设备列表是有新增"),
+        "connectMethodTip": MessageLookupByLibrary.simpleMessage(
+            "该功能需要ROOT！！！并且是给本机打开的！！！给对方设备打开无线调试在主页点击已经连接的设备后面的箭头进到的二级页"),
         "currentVersion": MessageLookupByLibrary.simpleMessage("当前版本"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
         "debugPaintLayerBordersEnabled":
@@ -45,24 +58,36 @@ class MessageLookup extends MessageLookupByLibrary {
                 "适配部分设备没有 \n/data/local/tmp 的权限问题"),
         "historyConnect": MessageLookupByLibrary.simpleMessage("历史连接"),
         "home": MessageLookupByLibrary.simpleMessage("主页"),
+        "inputDeviceAddress":
+            MessageLookupByLibrary.simpleMessage("输入对方设备IP连接"),
+        "installDes1": MessageLookupByLibrary.simpleMessage(
+            "建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。"),
+        "installDes2": MessageLookupByLibrary.simpleMessage("该功能暂未适配动态分区"),
+        "installDes3": MessageLookupByLibrary.simpleMessage("该功能需要ROOT权限"),
         "installToSystem": MessageLookupByLibrary.simpleMessage("安装到系统"),
         "language": MessageLookupByLibrary.simpleMessage("语言"),
         "layout": MessageLookupByLibrary.simpleMessage("布局风格"),
         "light": MessageLookupByLibrary.simpleMessage("浅色模式"),
+        "localAddress": MessageLookupByLibrary.simpleMessage("本机IP"),
         "log": MessageLookupByLibrary.simpleMessage("日志"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("网络调试"),
+        "openLocalNetDebug": MessageLookupByLibrary.simpleMessage("打开网络ADB调试"),
         "openSourceLicense": MessageLookupByLibrary.simpleMessage("开源许可"),
         "other": MessageLookupByLibrary.simpleMessage("其他"),
         "otherVersionDownload": MessageLookupByLibrary.simpleMessage("其他版本下载"),
         "pad": MessageLookupByLibrary.simpleMessage("平板"),
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
+        "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
+            "点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\\n也支持浏览器直接打开二维码对应IP进行连接"),
+        "scanToConnect": MessageLookupByLibrary.simpleMessage("扫码连接"),
         "serverPath": MessageLookupByLibrary.simpleMessage("服务端路径"),
         "setting": MessageLookupByLibrary.simpleMessage("设置"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("打开性能监控"),
         "showSemanticsDebugger": MessageLookupByLibrary.simpleMessage("显示组件语义"),
+        "showStatusBar": MessageLookupByLibrary.simpleMessage("显示状态栏"),
         "terminal": MessageLookupByLibrary.simpleMessage("终端模拟器"),
         "terms": MessageLookupByLibrary.simpleMessage("服务条款"),
         "theme": MessageLookupByLibrary.simpleMessage("主题"),

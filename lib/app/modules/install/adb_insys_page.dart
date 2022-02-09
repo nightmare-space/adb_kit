@@ -72,7 +72,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 color: CandyColors.candyCyan,
                               ),
                               Text(
-                                '选择安装路径',
+                                S.of(context).chooseInstallPath,
                                 style: TextStyle(
                                   fontSize: 16.w,
                                   fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              '建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。',
+                              S.of(context).installDes1,
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 12.w,
@@ -153,7 +153,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              '该功能暂未适配动态分区',
+                              S.of(context).installDes2,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -171,7 +171,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              '该功能需要ROOT权限',
+                              S.of(context).installDes3,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -191,7 +191,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               children: [
                                 const ItemHeader(color: CandyColors.candyPink),
                                 Text(
-                                  '终端',
+                                  S.of(context).terminal,
                                   style: TextStyle(
                                     fontSize: Dimens.font_sp16,
                                     fontWeight: FontWeight.bold,

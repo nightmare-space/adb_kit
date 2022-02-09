@@ -24,10 +24,24 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "agreement": MessageLookupByLibrary.simpleMessage("Agreement"),
+        "alreadyConnectDevice":
+            MessageLookupByLibrary.simpleMessage("Already Connect Devices"),
         "autoConnectDevice":
             MessageLookupByLibrary.simpleMessage("Auto connect device in LAN"),
         "autoFit": MessageLookupByLibrary.simpleMessage("Responsive"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
+        "changeLog": MessageLookupByLibrary.simpleMessage("Change Log"),
+        "chooseInstallPath":
+            MessageLookupByLibrary.simpleMessage("Choose install path"),
+        "connectMethod": MessageLookupByLibrary.simpleMessage("Connect Method"),
+        "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
+            "1.Device and computer on the same LAN"),
+        "connectMethodDes2": MessageLookupByLibrary.simpleMessage(
+            "2.open terminal on computer,exec connect"),
+        "connectMethodDes3": MessageLookupByLibrary.simpleMessage(
+            "3.exec \'adb devices\' to check if any devices connected"),
+        "connectMethodTip": MessageLookupByLibrary.simpleMessage(
+            "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
         "currentVersion":
             MessageLookupByLibrary.simpleMessage("Current Version"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
@@ -50,13 +64,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "historyConnect":
             MessageLookupByLibrary.simpleMessage("History Connect"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "inputDeviceAddress": MessageLookupByLibrary.simpleMessage(
+            "Input Device Address To Connect"),
+        "installDes1": MessageLookupByLibrary.simpleMessage(
+            "you can choose \'/system/xbin\',because most of binary in \'/system/bin\'"),
+        "installDes2": MessageLookupByLibrary.simpleMessage(
+            "This function can not support dynamic partition"),
+        "installDes3":
+            MessageLookupByLibrary.simpleMessage("this function need ROOT"),
         "installToSystem":
             MessageLookupByLibrary.simpleMessage("Install to System"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "layout": MessageLookupByLibrary.simpleMessage("Layout Style"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
+        "localAddress": MessageLookupByLibrary.simpleMessage("Local Address"),
         "log": MessageLookupByLibrary.simpleMessage("Log"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
+        "openLocalNetDebug": MessageLookupByLibrary.simpleMessage(
+            "Enable Local Network ADB Debug Mode"),
         "openSourceLicense":
             MessageLookupByLibrary.simpleMessage("Open Source License"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
@@ -65,6 +90,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pad": MessageLookupByLibrary.simpleMessage("Pad"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
+        "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
+            "Tap to scale QR code,only in the same LAN can scan\\nQR code support scan with broswer/ADBTool\\nalso can open url by broswer"),
+        "scanToConnect":
+            MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -72,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Show Performance Overlay"),
         "showSemanticsDebugger":
             MessageLookupByLibrary.simpleMessage("Show Semantics Debugger"),
+        "showStatusBar": MessageLookupByLibrary.simpleMessage("Show Statusbar"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "terms": MessageLookupByLibrary.simpleMessage("Terms"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),

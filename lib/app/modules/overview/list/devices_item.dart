@@ -85,7 +85,19 @@ class _DevicesItemState extends State<DevicesItem>
     _title = widget.devicesEntity.productModel ?? widget.devicesEntity.serial;
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
-      onTap: () {},
+      onTap: () async {
+        if (!widget.devicesEntity.isConnect) {
+          showToast('设备未正常连接');
+          return;
+        }
+        AdbUtil.stopPoolingListDevices();
+        Get.put(AppManagerController());
+        await Get.to(DeveloperTool(
+          entity: widget.devicesEntity,
+        ));
+        Get.delete<AppManagerController>();
+        AdbUtil.startPoolingListDevices();
+      },
       child: SizedBox(
         height: 54.w,
         child: Stack(
@@ -190,12 +202,6 @@ class _DevicesItemState extends State<DevicesItem>
                             showToast('设备未正常连接');
                             return;
                           }
-
-                          // Future(() {
-                          //   throw "asynchronous error";
-                          // });
-                          // // execCmd('asd');
-                          // return;
                           AdbUtil.stopPoolingListDevices();
                           Get.put(AppManagerController());
                           await Get.to(DeveloperTool(

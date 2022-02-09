@@ -22,6 +22,7 @@ import 'package:termare_view/termare_view.dart';
 
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
+import 'screenshot_page.dart';
 import 'tab_indicator.dart';
 
 class DeveloperTool extends StatefulWidget {
@@ -138,6 +139,7 @@ class _DeveloperToolState extends State<DeveloperTool>
         children: [
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.only(bottom: 64.w),
             child: Column(
               children: [
                 Wrap(
@@ -147,9 +149,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                     buildTerminal(),
                   ],
                 ),
-                SizedBox(
-                  height: 8.w,
-                ),
+                SizedBox(height: 8.w),
                 Wrap(
                   runSpacing: 8.w,
                   children: [
@@ -157,6 +157,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                     uploadFileBox(),
                   ],
                 ),
+                SizedBox(height: 8.w),
+                screenshotBox(),
                 // InkWell(
                 //   onTap: () {
                 //     adbChannel.execCmmand(
@@ -193,6 +195,53 @@ class _DeveloperToolState extends State<DeveloperTool>
             devicesEntity: widget.entity,
           ),
         ],
+      ),
+    );
+  }
+
+  ConstrainedBox screenshotBox() {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: getCardWidth(),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
+        child: NiCardButton(
+          margin: EdgeInsets.zero,
+          child: SizedBox(
+            child: Padding(
+              padding: padding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const ItemHeader(color: CandyColors.candyCyan),
+                      Text(
+                        '屏幕截图',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          height: 1.0,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  SizedBox(
+                    height: 200.w,
+                    child: ScreenshotPage(
+                      devicesEntity: widget.entity,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

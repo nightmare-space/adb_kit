@@ -164,7 +164,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               builder: (context) {
                 return _DrawerItem(
                   groupValue: widget.groupValue,
-                  title: '安装到系统',
+                  title: '切换主题',
                   iconData:config.isDarkTheme?Icons.light_mode: Icons.dark_mode,
                   onTap: (value) {
                     if (config.isDarkTheme) {

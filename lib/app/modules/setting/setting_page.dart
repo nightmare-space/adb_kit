@@ -228,6 +228,16 @@ class _SettingsPageState extends State<SettingsPage>
                       },
                     ),
                   ),
+                  GetBuilder<ConfigController>(builder: (_) {
+                    return SettingItem(
+                      title: S.of(context).showStatusBar,
+                      suffix: AquaSwitch(
+                        activeColor: configController.primaryColor,
+                        value: configController.showStatusBar,
+                        onChanged: configController.changeStatusBarState,
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),

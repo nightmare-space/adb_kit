@@ -5,6 +5,7 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/src/setting_extension.dart';
@@ -15,6 +16,7 @@ class ConfigController extends GetxController {
   }
   Color primaryColor = AppColors.accent;
   bool autoConnect = true;
+  bool showStatusBar = true;
 
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
@@ -33,7 +35,8 @@ class ConfigController extends GetxController {
   Locale locale = chinese;
   ScreenType screenType;
   bool get needShowMenuButton =>
-      screenType == ScreenType.phone || (screenType == null&&GetPlatform.isAndroid);
+      screenType == ScreenType.phone ||
+      (screenType == null && GetPlatform.isAndroid);
   void initConfig() {
     if ('$ScreenType'.get.isNotEmpty) {
       screenType = ScreenType.values.byName('$ScreenType'.get);
@@ -73,6 +76,14 @@ class ConfigController extends GetxController {
       'Theme'.set = 'light';
     }
     Get.forceAppUpdate();
+  }
+
+  void changeStatusBarState(bool value) {
+    showStatusBar = value;
+    if (!value) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    }
+    update();
   }
 
   void changeAutoConnectState(bool value) {

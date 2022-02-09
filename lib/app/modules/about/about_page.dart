@@ -93,7 +93,7 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                         SettingItem(
-                          title: '更新日志',
+                          title: S.of(context).changeLog,
                           onTap: () {
                             Get.to(ChangeLog());
                           },

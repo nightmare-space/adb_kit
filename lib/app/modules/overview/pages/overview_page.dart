@@ -87,7 +87,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       children: [
                         const ItemHeader(color: CandyColors.candyPink),
                         Text(
-                          '已成功连接的设备',
+                          S.of(context).alreadyConnectDevice,
                           style: TextStyle(
                             fontSize: 16.w,
                             fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.candyBlue),
                   Text(
-                    '输入对方设备IP连接',
+                    S.of(context).inputDeviceAddress,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
@@ -214,7 +214,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.purple),
                   Text(
-                    '扫码连接',
+                    S.of(context).scanToConnect,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: FontWeight.bold,
@@ -233,7 +233,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   borderRadius: BorderRadius.circular(10.w),
                 ),
                 child: Text(
-                  '点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接',
+                  S.of(context).scanQRCodeDes,
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 12.w,

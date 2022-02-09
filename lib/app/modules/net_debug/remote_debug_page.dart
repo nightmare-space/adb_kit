@@ -83,7 +83,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '打开网络ADB调试',
+                        S.of(context).openLocalNetDebug,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.w,
@@ -108,7 +108,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                             color: CandyColors.candyPurpleAccent,
                           ),
                           Text(
-                            '本机IP',
+                            S.of(context).localAddress,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
                               fontWeight: FontWeight.bold,
@@ -149,7 +149,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         children: [
                           const ItemHeader(color: CandyColors.candyBlue),
                           Text(
-                            '连接方法',
+                            S.of(context).connectMethod,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
                               fontWeight: FontWeight.bold,
@@ -162,7 +162,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         child: Row(
                           children: [
                             Text(
-                              '1.设备与PC处于于一个局域网',
+                              S.of(context).connectMethodDes1,
                               style: TextStyle(
                                 fontSize: Dimens.font_sp14,
                                 fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                         child: Text(
-                          '2.打开PC的终端模拟器，执行连接',
+                          S.of(context).connectMethodDes2,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
                             fontWeight: FontWeight.bold,
@@ -216,7 +216,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                         child: Text(
-                          '3.执行adb devices查看设备列表是有新增',
+                          S.of(context).connectMethodDes3,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
                             fontWeight: FontWeight.bold,

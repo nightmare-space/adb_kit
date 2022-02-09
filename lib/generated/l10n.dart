@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `Already Connect Devices`
+  String get alreadyConnectDevice {
+    return Intl.message(
+      'Already Connect Devices',
+      name: 'alreadyConnectDevice',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Auto connect device in LAN`
   String get autoConnectDevice {
     return Intl.message(
@@ -95,6 +105,76 @@ class S {
     return Intl.message(
       'Branch',
       name: 'branch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Log`
+  String get changeLog {
+    return Intl.message(
+      'Change Log',
+      name: 'changeLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose install path`
+  String get chooseInstallPath {
+    return Intl.message(
+      'Choose install path',
+      name: 'chooseInstallPath',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect Method`
+  String get connectMethod {
+    return Intl.message(
+      'Connect Method',
+      name: 'connectMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1.Device and computer on the same LAN`
+  String get connectMethodDes1 {
+    return Intl.message(
+      '1.Device and computer on the same LAN',
+      name: 'connectMethodDes1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2.open terminal on computer,exec connect`
+  String get connectMethodDes2 {
+    return Intl.message(
+      '2.open terminal on computer,exec connect',
+      name: 'connectMethodDes2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3.exec 'adb devices' to check if any devices connected`
+  String get connectMethodDes3 {
+    return Intl.message(
+      '3.exec \'adb devices\' to check if any devices connected',
+      name: 'connectMethodDes3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable`
+  String get connectMethodTip {
+    return Intl.message(
+      'This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable',
+      name: 'connectMethodTip',
       desc: '',
       args: [],
     );
@@ -220,6 +300,46 @@ class S {
     );
   }
 
+  /// `Input Device Address To Connect`
+  String get inputDeviceAddress {
+    return Intl.message(
+      'Input Device Address To Connect',
+      name: 'inputDeviceAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you can choose '/system/xbin',because most of binary in '/system/bin'`
+  String get installDes1 {
+    return Intl.message(
+      'you can choose \'/system/xbin\',because most of binary in \'/system/bin\'',
+      name: 'installDes1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This function can not support dynamic partition`
+  String get installDes2 {
+    return Intl.message(
+      'This function can not support dynamic partition',
+      name: 'installDes2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this function need ROOT`
+  String get installDes3 {
+    return Intl.message(
+      'this function need ROOT',
+      name: 'installDes3',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Install to System`
   String get installToSystem {
     return Intl.message(
@@ -260,6 +380,16 @@ class S {
     );
   }
 
+  /// `Local Address`
+  String get localAddress {
+    return Intl.message(
+      'Local Address',
+      name: 'localAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log`
   String get log {
     return Intl.message(
@@ -275,6 +405,16 @@ class S {
     return Intl.message(
       'LAN debug',
       name: 'networkDebug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Local Network ADB Debug Mode`
+  String get openLocalNetDebug {
+    return Intl.message(
+      'Enable Local Network ADB Debug Mode',
+      name: 'openLocalNetDebug',
       desc: '',
       args: [],
     );
@@ -340,6 +480,26 @@ class S {
     );
   }
 
+  /// `Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer`
+  String get scanQRCodeDes {
+    return Intl.message(
+      'Tap to scale QR code,only in the same LAN can scan\\nQR code support scan with broswer/ADBTool\\nalso can open url by broswer',
+      name: 'scanQRCodeDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scan QR Code To Connect`
+  String get scanToConnect {
+    return Intl.message(
+      'Scan QR Code To Connect',
+      name: 'scanToConnect',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Server Path`
   String get serverPath {
     return Intl.message(
@@ -385,6 +545,16 @@ class S {
     return Intl.message(
       'Show Semantics Debugger',
       name: 'showSemanticsDebugger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Statusbar`
+  String get showStatusBar {
+    return Intl.message(
+      'Show Statusbar',
+      name: 'showStatusBar',
       desc: '',
       args: [],
     );
