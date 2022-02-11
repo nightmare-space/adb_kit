@@ -263,7 +263,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         borderRadius: BorderRadius.circular(10.w),
                       ),
                       child: Text(
-                        '该功能需要ROOT！！！并且是给本机打开的！！！给对方设备打开无线调试在主页点击已经连接的设备后面的箭头进到的二级页',
+                        S.of(context).connectMethodTip,
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 12.w,

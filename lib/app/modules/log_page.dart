@@ -32,24 +32,24 @@ class _LogPageState extends State<LogPage> {
   }
 
   void onChange() {
-    Global().logTerminalCTL.clear();
+    Global.logTerminalCTL.clear();
     for (var v in Log.buffer) {
       final String data =
           '[${twoDigits(v.time.hour)}:${twoDigits(v.time.minute)}:${twoDigits(v.time.second)}] ${v.data}';
       if (v.level == LogLevel.verbose && verbose) {
-        Global().logTerminalCTL.write(data + "\r\n");
+        Global.logTerminalCTL.write(data + "\r\n");
       }
       if (v.level == LogLevel.debug && debug) {
-        Global().logTerminalCTL.write(data + "\r\n");
+        Global.logTerminalCTL.write(data + "\r\n");
       }
       if (v.level == LogLevel.info && info) {
-        Global().logTerminalCTL.write(data + "\r\n");
+        Global.logTerminalCTL.write(data + "\r\n");
       }
       if (v.level == LogLevel.warning && warning) {
-        Global().logTerminalCTL.write(data + "\r\n");
+        Global.logTerminalCTL.write(data + "\r\n");
       }
       if (v.level == LogLevel.error && error) {
-        Global().logTerminalCTL.write(data + "\r\n");
+        Global.logTerminalCTL.write(data + "\r\n");
       }
     }
   }
@@ -57,12 +57,12 @@ class _LogPageState extends State<LogPage> {
   @override
   Widget build(BuildContext context) {
     if (configController.isDarkTheme) {
-      Global().logTerminalCTL.theme = TermareStyles.vsCode.copyWith(
+      Global.logTerminalCTL.theme = TermareStyles.vsCode.copyWith(
         backgroundColor: Theme.of(context).cardColor,
         fontSize: 11.w,
       );
     } else {
-      Global().logTerminalCTL.theme = TermareStyles.macos.copyWith(
+      Global.logTerminalCTL.theme = TermareStyles.macos.copyWith(
         backgroundColor: Theme.of(context).cardColor,
         fontSize: 11.w,
       );
@@ -139,7 +139,7 @@ class _LogPageState extends State<LogPage> {
               Expanded(
                 child: CardItem(
                   child: TermareView(
-                    controller: Global().logTerminalCTL,
+                    controller: Global.logTerminalCTL,
                   ),
                 ),
               ),

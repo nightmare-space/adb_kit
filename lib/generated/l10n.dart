@@ -150,20 +150,20 @@ class S {
     );
   }
 
-  /// `2.open terminal on computer,exec connect`
+  /// `2.Open terminal on computer,exec connect`
   String get connectMethodDes2 {
     return Intl.message(
-      '2.open terminal on computer,exec connect',
+      '2.Open terminal on computer,exec connect',
       name: 'connectMethodDes2',
       desc: '',
       args: [],
     );
   }
 
-  /// `3.exec 'adb devices' to check if any devices connected`
+  /// `3.Exec 'adb devices' to check if any devices connected`
   String get connectMethodDes3 {
     return Intl.message(
-      '3.exec \'adb devices\' to check if any devices connected',
+      '3.Exec \'adb devices\' to check if any devices connected',
       name: 'connectMethodDes3',
       desc: '',
       args: [],
@@ -310,10 +310,20 @@ class S {
     );
   }
 
-  /// `you can choose '/system/xbin',because most of binary in '/system/bin'`
+  /// `Input format is "IP:PORT CODE"`
+  String get inputFormat {
+    return Intl.message(
+      'Input format is "IP:PORT CODE"',
+      name: 'inputFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can choose '/system/xbin',because most of binary in '/system/bin'`
   String get installDes1 {
     return Intl.message(
-      'you can choose \'/system/xbin\',because most of binary in \'/system/bin\'',
+      'You can choose \'/system/xbin\',because most of binary in \'/system/bin\'',
       name: 'installDes1',
       desc: '',
       args: [],
@@ -330,10 +340,10 @@ class S {
     );
   }
 
-  /// `this function need ROOT`
+  /// `This function need ROOT`
   String get installDes3 {
     return Intl.message(
-      'this function need ROOT',
+      'This function need ROOT',
       name: 'installDes3',
       desc: '',
       args: [],
@@ -410,10 +420,10 @@ class S {
     );
   }
 
-  /// `Enable Local Network ADB Debug Mode`
+  /// `Enable Network ADB Debug Mode`
   String get openLocalNetDebug {
     return Intl.message(
-      'Enable Local Network ADB Debug Mode',
+      'Enable Network ADB Debug Mode',
       name: 'openLocalNetDebug',
       desc: '',
       args: [],
@@ -483,7 +493,7 @@ class S {
   /// `Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer`
   String get scanQRCodeDes {
     return Intl.message(
-      'Tap to scale QR code,only in the same LAN can scan\\nQR code support scan with broswer/ADBTool\\nalso can open url by broswer',
+      'Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer',
       name: 'scanQRCodeDes',
       desc: '',
       args: [],

@@ -37,9 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
             "1.Device and computer on the same LAN"),
         "connectMethodDes2": MessageLookupByLibrary.simpleMessage(
-            "2.open terminal on computer,exec connect"),
+            "2.Open terminal on computer,exec connect"),
         "connectMethodDes3": MessageLookupByLibrary.simpleMessage(
-            "3.exec \'adb devices\' to check if any devices connected"),
+            "3.Exec \'adb devices\' to check if any devices connected"),
         "connectMethodTip": MessageLookupByLibrary.simpleMessage(
             "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
         "currentVersion":
@@ -66,12 +66,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "inputDeviceAddress": MessageLookupByLibrary.simpleMessage(
             "Input Device Address To Connect"),
+        "inputFormat": MessageLookupByLibrary.simpleMessage(
+            "Input format is \"IP:PORT CODE\""),
         "installDes1": MessageLookupByLibrary.simpleMessage(
-            "you can choose \'/system/xbin\',because most of binary in \'/system/bin\'"),
+            "You can choose \'/system/xbin\',because most of binary in \'/system/bin\'"),
         "installDes2": MessageLookupByLibrary.simpleMessage(
             "This function can not support dynamic partition"),
         "installDes3":
-            MessageLookupByLibrary.simpleMessage("this function need ROOT"),
+            MessageLookupByLibrary.simpleMessage("This function need ROOT"),
         "installToSystem":
             MessageLookupByLibrary.simpleMessage("Install to System"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -81,7 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "log": MessageLookupByLibrary.simpleMessage("Log"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
         "openLocalNetDebug": MessageLookupByLibrary.simpleMessage(
-            "Enable Local Network ADB Debug Mode"),
+            "Enable Network ADB Debug Mode"),
         "openSourceLicense":
             MessageLookupByLibrary.simpleMessage("Open Source License"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
@@ -91,7 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
-            "Tap to scale QR code,only in the same LAN can scan\\nQR code support scan with broswer/ADBTool\\nalso can open url by broswer"),
+            "Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer"),
         "scanToConnect":
             MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),

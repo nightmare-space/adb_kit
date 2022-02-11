@@ -63,8 +63,8 @@ class Global {
     ),
     enableLog: false,
   )..hideCursor();
-
-  final TermareController logTerminalCTL = TermareController(
+  bool logTerminalIsInit = false;
+  static TermareController logTerminalCTL = TermareController(
     enableLog: false,
     theme: TermareStyles.macos.copyWith(
       cursorColor: Colors.transparent,
@@ -146,6 +146,7 @@ class Global {
     'libzstd.so.1',
     'libbrotlicommon.so',
   ];
+
   List<String> globalFiles = [
     'app_server',
   ];
@@ -160,7 +161,9 @@ class Global {
       for (final String fileName in androidFiles) {
         final filePath = RuntimeEnvir.binPath + '/$fileName';
         await AssetsUtils.copyAssetToPath(
-            '${Config.flutterPackage}assets/android/$fileName', filePath);
+          '${Config.flutterPackage}assets/android/$fileName',
+          filePath,
+        );
         final ProcessResult result = await Process.run(
           'chmod',
           ['+x', filePath],
@@ -174,7 +177,9 @@ class Global {
       await Directory(RuntimeEnvir.binPath).create(recursive: true);
       final filePath = RuntimeEnvir.binPath + '/$fileName';
       await AssetsUtils.copyAssetToPath(
-          '${Config.flutterPackage}assets/$fileName', filePath);
+        '${Config.flutterPackage}assets/$fileName',
+        filePath,
+      );
       final ProcessResult result = await Process.run(
         'chmod',
         ['+x', filePath],
@@ -215,8 +220,9 @@ class Global {
     if (size == Size.zero) {
       return;
     }
+    logTerminalIsInit = true;
     // 32 是日志界面的边距
-    logTerminalCTL.setWindowSize(Size(size.width - 32.w, size.height));
+    logTerminalCTL.setWindowSize(Size(size.width - 48.w, size.height));
   }
 }
 
@@ -226,7 +232,9 @@ class Print implements Printable {
   void print(DateTime time, Object object) {
     final String data =
         '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
-    Global().logTerminalCTL.write(data + '\r\n');
+
+    Global.logTerminalCTL.write(data + '\r\n');
+
     // ignore: avoid_print
     core.print(data);
   }

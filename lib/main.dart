@@ -60,8 +60,6 @@ Future<void> main() async {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
-  // ValueListenableBuilder
-  // DateTime();
 }
 
 Future<void> initSetting() async {

@@ -140,7 +140,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           controller: editingController,
                           style: const TextStyle(height: 1.0),
                           decoration: InputDecoration(
-                            hintText: '格式为"IP地址:端口号 配对码"',
+                            hintText: S.of(context).inputFormat,
                             hintStyle: TextStyle(
                               fontSize: 14.w,
                               color: configController.theme.fontColor

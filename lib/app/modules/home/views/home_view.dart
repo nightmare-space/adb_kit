@@ -37,7 +37,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   ConfigController configController = Get.find();
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    Log.v('didChangeAppLifecycleState : $state\n');
+    Log.v('didChangeAppLifecycleState : $state');
   }
 
   @override

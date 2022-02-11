@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("主页"),
         "inputDeviceAddress":
             MessageLookupByLibrary.simpleMessage("输入对方设备IP连接"),
+        "inputFormat":
+            MessageLookupByLibrary.simpleMessage("输入格式为“IP地址:端口号 配对码”"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
             "建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。"),
         "installDes2": MessageLookupByLibrary.simpleMessage("该功能暂未适配动态分区"),
@@ -79,7 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
-            "点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\\n也支持浏览器直接打开二维码对应IP进行连接"),
+            "点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接"),
         "scanToConnect": MessageLookupByLibrary.simpleMessage("扫码连接"),
         "serverPath": MessageLookupByLibrary.simpleMessage("服务端路径"),
         "setting": MessageLookupByLibrary.simpleMessage("设置"),
