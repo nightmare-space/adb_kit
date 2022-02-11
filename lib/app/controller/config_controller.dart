@@ -1,14 +1,11 @@
-import 'dart:convert';
 
-import 'package:adb_tool/app/model/adb_historys.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-import 'package:settings/src/setting_extension.dart';
+import 'package:settings/settings.dart';
 
 class ConfigController extends GetxController {
   ConfigController() {
@@ -82,6 +79,11 @@ class ConfigController extends GetxController {
     showStatusBar = value;
     if (!value) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top],
+      );
     }
     update();
   }

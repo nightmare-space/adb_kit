@@ -10,7 +10,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
@@ -160,36 +159,34 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 widget.onChanged?.call(index);
               },
             ),
-            Builder(
-              builder: (context) {
-                return _DrawerItem(
-                  groupValue: widget.groupValue,
-                  title: '切换主题',
-                  iconData:config.isDarkTheme?Icons.light_mode: Icons.dark_mode,
-                  onTap: (value) {
-                    if (config.isDarkTheme) {
-                      config.theme = LightTheme();
-                    } else {
-                      config.theme = DarkTheme();
-                    }
-                    final bool isDark = config.theme is DarkTheme;
-                    final ThemeData theme = DefaultThemeData.light(
-                      primary: config.primaryColor,
-                    );
-                    Navigator.of(context).pushReplacement(
-                      RippleRoute(
-                          Theme(
-                            data: theme,
-                            child: AdbTool(
-                              initRoute: widget.groupValue,
-                            ),
+            Builder(builder: (context) {
+              return _DrawerItem(
+                groupValue: widget.groupValue,
+                title: '切换主题',
+                iconData:
+                    config.isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+                onTap: (value) {
+                  if (config.isDarkTheme) {
+                    config.theme = LightTheme();
+                  } else {
+                    config.theme = DarkTheme();
+                  }
+                  final ThemeData theme = DefaultThemeData.light(
+                    primary: config.primaryColor,
+                  );
+                  Navigator.of(context).pushReplacement(
+                    RippleRoute(
+                        Theme(
+                          data: theme,
+                          child: AdbTool(
+                            initRoute: widget.groupValue,
                           ),
-                          RouteConfig.fromContext(context)),
-                    );
-                  },
-                );
-              }
-            ),
+                        ),
+                        RouteConfig.fromContext(context)),
+                  );
+                },
+              );
+            }),
           ],
         ),
       ],

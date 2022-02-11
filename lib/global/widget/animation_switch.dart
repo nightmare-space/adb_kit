@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures
+
 part of xlive_switch;
 
 class _XlivSwitchRenderObjectWidget extends LeafRenderObjectWidget {
@@ -328,7 +330,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
     }
 
     final trackColor = _color.value;
-    final double borderThickness = 1.5 + (_kTrackRadius - 1.5) * 1.0;
+    const double borderThickness = 1.5 + (_kTrackRadius - 1.5) * 1.0;
 
     final Paint paint = Paint()..color = trackColor;
 

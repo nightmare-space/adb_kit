@@ -6,7 +6,6 @@ import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/global/widget/xliv-switch.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';

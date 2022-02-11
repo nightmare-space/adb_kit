@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/adbd_find_util.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
@@ -57,7 +56,9 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {}
+  DevicesController(){
+    Log.i('设备管理控制器 init');
+  }
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -122,8 +123,10 @@ class DevicesController extends GetxController {
     final List<String> devices = await ADBFind.getLANDevices();
     for (String ip in devices) {
       try {
-        AdbResult result = await AdbUtil.connectDevices(ip);
-      } on AdbException catch (e) {}
+        await AdbUtil.connectDevices(ip);
+      } on AdbException catch (e) {
+        Log.w('自动连接设备异常 : $e');
+      }
     }
   }
 
@@ -137,10 +140,6 @@ class DevicesController extends GetxController {
   // 这是model的缓存
   Map<String, String> modelCache = {};
   Future<void> handleResult(String data) async {
-    // Log.d('data -> $data');
-    // if (count < 2) {
-    //   count++;
-    // }
     letADBStarted();
     // if (kReleaseMode) {
     // Log.d('adb devices out -> $out');

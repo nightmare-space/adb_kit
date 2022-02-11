@@ -33,7 +33,7 @@ class _LogPageState extends State<LogPage> {
 
   void onChange() {
     Global().logTerminalCTL.clear();
-    Log.buffer.forEach((v) {
+    for (var v in Log.buffer) {
       final String data =
           '[${twoDigits(v.time.hour)}:${twoDigits(v.time.minute)}:${twoDigits(v.time.second)}] ${v.data}';
       if (v.level == LogLevel.verbose && verbose) {
@@ -51,7 +51,7 @@ class _LogPageState extends State<LogPage> {
       if (v.level == LogLevel.error && error) {
         Global().logTerminalCTL.write(data + "\r\n");
       }
-    });
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
@@ -43,12 +44,12 @@ class _ChangeLogState extends State<ChangeLog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('更新日志'),
+        title: Text(S.of(context).changeLog),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: changes.length,
           itemBuilder: (c, i) {
             return Padding(

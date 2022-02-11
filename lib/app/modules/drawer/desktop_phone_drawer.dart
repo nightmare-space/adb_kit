@@ -1,11 +1,9 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/generated/l10n.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DesktopPhoneDrawer extends StatefulWidget {
   const DesktopPhoneDrawer({
@@ -76,7 +74,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 24.w,
-                  vertical: Dimens.gap_dp8,
+                  vertical: 16.w,
                 ),
                 child: Text(
                   'ADB TOOL',

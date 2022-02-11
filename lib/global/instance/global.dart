@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
-import 'package:adb_tool/app/modules/online_devices/controllers/online_controller.dart';
 import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:dart_pty/dart_pty.dart';
@@ -84,10 +83,14 @@ class Global {
           try {
             // try不能省
             // MaterialApp 可能还没加载
-            final onlineController = Get.find<OnlineController>();
-            onlineController.updateDevices(
-              DeviceEntity(unique, address),
-            );
+            final devicesCTL = Get.find<DevicesController>();
+            if (devicesCTL.getDevicesByIp(address) == null) {
+              try {
+                AdbUtil.connectDevices(address);
+              } catch (e) {
+                Log.e('通过UDP发现自动连接设备失败 : $e');
+              }
+            }
           } catch (e) {
             Log.e('receiveBoardCast error : $e');
           }

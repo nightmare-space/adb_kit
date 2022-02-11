@@ -6,7 +6,6 @@ import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/modules/setting/setting_page.dart';
 import 'package:adb_tool/app/modules/wrappers/app_launcher_wrapper.dart';
 import 'package:adb_tool/app/modules/wrappers/app_manager_wrapper.dart';
 import 'package:adb_tool/app/modules/developer_tool/drag_drop.dart';
@@ -158,7 +159,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                   ],
                 ),
                 SizedBox(height: 8.w),
-                screenshotBox(),
+                // screenshotBox(),
                 // InkWell(
                 //   onTap: () {
                 //     adbChannel.execCmmand(
@@ -735,7 +736,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 ),
               ],
             ),
-            Switch(
+            AquaSwitch(
               value: isCheck,
               onChanged: (_) async {
                 isCheck = !isCheck;
@@ -796,7 +797,7 @@ class _SwitchItemState extends State<SwitchItem> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Switch(
+            AquaSwitch(
               value: isCheck,
               onChanged: (_) {
                 if (isCheck) {
@@ -865,7 +866,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Switch(
+            AquaSwitch(
               value: isCheck,
               onChanged: (_) {
                 isCheck = !isCheck;

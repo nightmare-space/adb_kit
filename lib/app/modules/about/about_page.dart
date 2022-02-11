@@ -95,7 +95,7 @@ class AboutPage extends StatelessWidget {
                         SettingItem(
                           title: S.of(context).changeLog,
                           onTap: () {
-                            Get.to(ChangeLog());
+                            Get.to(const ChangeLog());
                           },
                           suffix: Icon(
                             Icons.arrow_forward_ios,
@@ -147,7 +147,7 @@ class AboutPage extends StatelessWidget {
                             size: 16.w,
                           ),
                           onTap: () {
-                            Get.to(LicensePage(
+                            Get.to(const LicensePage(
                               applicationName: 'ADB工具箱',
                             ));
                           },
@@ -243,7 +243,7 @@ class AboutPage extends StatelessWidget {
                   ),
                   SizedBox(height: 16.w),
                   CardItem(
-                    child: Container(
+                    child: SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: EdgeInsets.all(10.w),

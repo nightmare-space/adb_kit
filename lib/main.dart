@@ -8,7 +8,6 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:app_manager/app_manager.dart';
-import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

@@ -9,7 +9,6 @@ import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
-import 'package:get/get_state_manager/get_state_manager.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class HistoryPage extends GetView<HistoryController> {
@@ -127,7 +126,7 @@ class HistoryPage extends GetView<HistoryController> {
                                           vertical: 2.w,
                                         ),
                                         child: Text(
-                                          '${DateTime.parse(adbEntity.connectTime).getTimeString()}',
+                                          DateTime.parse(adbEntity.connectTime).getTimeString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             color:
