@@ -1,4 +1,4 @@
-
+import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -35,21 +35,22 @@ class ConfigController extends GetxController {
       screenType == ScreenType.phone ||
       (screenType == null && GetPlatform.isAndroid);
   void initConfig() {
-    if ('$ScreenType'.get.isNotEmpty) {
-      screenType = ScreenType.values.byName('$ScreenType'.get);
+    if (Settings.screenType.get != null && Settings.screenType.get.isNotEmpty) {
+      screenType = ScreenType.values.byName(Settings.screenType.get);
     }
-    if (themeMap.containsKey('$Theme'.get)) {
-      theme = themeMap['$Theme'.get];
+    if (themeMap.containsKey(Settings.theme.get)) {
+      theme = themeMap[Settings.theme.get];
     }
-    if (languageMap.containsKey('Language'.get)) {
-      locale = languageMap['Language'.get];
+    if (languageMap.containsKey(Settings.language.get)) {
+      locale = languageMap[Settings.language.get];
     }
+    autoConnect = Settings.autoConnectDevice.get ?? autoConnect;
   }
 
   void changeScreenType(ScreenType screenType) {
     this.screenType = screenType;
     if (screenType != null) {
-      '$ScreenType'.set = screenType.name;
+      Settings.screenType.set = screenType.name;
     }
     Get.forceAppUpdate();
   }
@@ -57,9 +58,9 @@ class ConfigController extends GetxController {
   void changeLocal(Locale locale) {
     this.locale = locale;
     if (locale == chinese) {
-      'Language'.set = 'chinese';
+      Settings.language.set = 'chinese';
     } else {
-      'Language'.set = 'english';
+      Settings.language.set = 'english';
     }
     update();
     Get.updateLocale(locale);
@@ -68,9 +69,9 @@ class ConfigController extends GetxController {
   void changeTheme(YanTheme theme) {
     this.theme = theme;
     if (isDarkTheme) {
-      'Theme'.set = 'dark';
+      Settings.theme.set = 'dark';
     } else {
-      'Theme'.set = 'light';
+      Settings.theme.set = 'light';
     }
     Get.forceAppUpdate();
   }
@@ -90,6 +91,7 @@ class ConfigController extends GetxController {
 
   void changeAutoConnectState(bool value) {
     autoConnect = value;
+    Settings.autoConnectDevice.set = value;
     update();
   }
 

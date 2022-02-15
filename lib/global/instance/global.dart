@@ -201,6 +201,7 @@ class Global {
     Log.i('当前布局风格 ${controller.screenType}');
     Log.i('当前App内部主题 ${controller.theme}');
     Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
+    Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
     // 等待 MaterialApp 加载完成，正确获取到屏幕大小
     // 不然logTerminalCTL不能正常的换行
@@ -210,7 +211,9 @@ class Global {
     // logTerminalCTL.setWindowSize(
     //   Size(screenWidth, screenHeight),
     // );
-    _receiveBoardCast();
+    if (controller.autoConnect) {
+      _receiveBoardCast();
+    }
     _sendBoardCast();
     _socketServer();
     await installAdbToEnvir();

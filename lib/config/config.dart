@@ -7,8 +7,8 @@ class Config {
   static String packageName = 'com.nightmare.adbtools';
   static Directory localDir = Directory(RuntimeEnvir.dataPath + '/AdbTool');
   static File historySaveFile = File(localDir.path + '/.history');
-  static int versionCode = 27;
-  static String versionName = '1.3.1';
+  static int versionCode = 28;
+  static String versionName = '1.3.2';
   static String adbLocalPath = '/data/local/tmp';
   static String sdcard = '/sdcard';
 

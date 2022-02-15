@@ -65,7 +65,7 @@ Future<void> main() async {
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.filesPath);
-  if (Settings.serverPath.get.isEmpty) {
+  if (Settings.serverPath.get == null) {
     Settings.serverPath.set = Config.adbLocalPath;
   }
 }
