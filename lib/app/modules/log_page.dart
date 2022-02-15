@@ -86,6 +86,15 @@ class _LogPageState extends State<LogPage> {
           padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 8.w),
           child: Column(
             children: [
+              SizedBox(height: 8.w),
+              Expanded(
+                child: CardItem(
+                  child: TermareView(
+                    controller: Global.logTerminalCTL,
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.w),
               WrapContainerList(
                 children: [
                   CheckContainer(
@@ -134,14 +143,6 @@ class _LogPageState extends State<LogPage> {
                     },
                   ),
                 ],
-              ),
-              SizedBox(height: 8.w),
-              Expanded(
-                child: CardItem(
-                  child: TermareView(
-                    controller: Global.logTerminalCTL,
-                  ),
-                ),
               ),
             ],
           ),
