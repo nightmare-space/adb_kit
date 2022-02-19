@@ -36,7 +36,9 @@ Future<void> main() async {
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      await Window.initialize();
+      if (GetPlatform.isDesktop) {
+        await Window.initialize();
+      }
       await initSetting();
       Get.put(ConfigController());
       Global.instance.initGlobal();
@@ -142,7 +144,8 @@ class _AppEntryPointState extends State<AppEntryPoint>
             builder: (context) {
               return TitlebarSafeArea(
                 child: GetMaterialApp(
-                  showPerformanceOverlay: configController.showPerformanceOverlay,
+                  showPerformanceOverlay:
+                      configController.showPerformanceOverlay,
                   showSemanticsDebugger: configController.showSemanticsDebugger,
                   debugShowMaterialGrid: configController.debugShowMaterialGrid,
                   checkerboardRasterCacheImages:
