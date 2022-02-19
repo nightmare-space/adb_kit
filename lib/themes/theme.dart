@@ -65,7 +65,7 @@ class LightTheme implements YanTheme {
   Color background = const Color(0xfff5f5f7);
 
   @override
-  Color cardColor = Colors.white;
+  Color cardColor = Colors.white.withOpacity(0.4);
 
   @override
   Color inputColor = const Color(0xFFF5F5F5);

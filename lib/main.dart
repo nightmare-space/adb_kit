@@ -3,6 +3,7 @@ library adb_tool;
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/log_page.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell/nativeshell.dart' as nativeshell;
 import 'package:settings/settings.dart';
 import 'app/controller/devices_controller.dart';
 import 'app/routes/app_pages.dart';
@@ -35,6 +36,7 @@ Future<void> main() async {
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      await Window.initialize();
       await initSetting();
       Get.put(ConfigController());
       Global.instance.initGlobal();
@@ -138,74 +140,77 @@ class _AppEntryPointState extends State<AppEntryPoint>
         return ToastApp(
           child: GetBuilder<ConfigController>(
             builder: (context) {
-              return GetMaterialApp(
-                showPerformanceOverlay: configController.showPerformanceOverlay,
-                showSemanticsDebugger: configController.showSemanticsDebugger,
-                debugShowMaterialGrid: configController.debugShowMaterialGrid,
-                checkerboardRasterCacheImages:
-                    configController.checkerboardRasterCacheImages,
-                enableLog: false,
-                debugShowCheckedModeBanner: false,
-                title: 'ADB工具箱',
-                navigatorKey: Global.instance.navigatorKey,
-                themeMode: ThemeMode.light,
-                localizationsDelegates: const [
-                  S.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                locale: configController.locale,
-                supportedLocales: S.delegate.supportedLocales,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                ),
-                defaultTransition: Transition.fadeIn,
-                initialRoute: AdbPages.initial,
-                getPages: AdbPages.routes + AppPages.routes,
-                builder: (BuildContext context, Widget navigator) {
-                  Size size = MediaQuery.of(context).size;
+              return TitlebarSafeArea(
+                child: GetMaterialApp(
+                  showPerformanceOverlay: configController.showPerformanceOverlay,
+                  showSemanticsDebugger: configController.showSemanticsDebugger,
+                  debugShowMaterialGrid: configController.debugShowMaterialGrid,
+                  checkerboardRasterCacheImages:
+                      configController.checkerboardRasterCacheImages,
+                  enableLog: false,
+                  color: Colors.teal,
+                  debugShowCheckedModeBanner: false,
+                  title: 'ADB工具箱',
+                  navigatorKey: Global.instance.navigatorKey,
+                  themeMode: ThemeMode.light,
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  locale: configController.locale,
+                  supportedLocales: S.delegate.supportedLocales,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  defaultTransition: Transition.fadeIn,
+                  initialRoute: AdbPages.initial,
+                  getPages: AdbPages.routes + AppPages.routes,
+                  builder: (BuildContext context, Widget navigator) {
+                    Size size = MediaQuery.of(context).size;
 
-                  if (size.width > size.height) {
-                    context.init(896);
-                  } else {
-                    context.init(414);
-                  }
-                  // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                  // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                  final bool isDark = configController.theme is DarkTheme;
-                  final ThemeData theme = DefaultThemeData.light(
-                    primary: configController.primaryColor,
-                  );
+                    if (size.width > size.height) {
+                      context.init(896);
+                    } else {
+                      context.init(414);
+                    }
+                    // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                    // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                    final bool isDark = configController.theme is DarkTheme;
+                    final ThemeData theme = DefaultThemeData.light(
+                      primary: configController.primaryColor,
+                    );
 
-                  /// NativeShell
-                  if (widget.isNativeShell) {
-                    return WindowLayoutProbe(
-                      child: SizedBox(
-                        width: 800,
-                        height: 600,
-                        child: Theme(
-                          data: theme,
-                          child: navigator,
+                    /// NativeShell
+                    if (widget.isNativeShell) {
+                      return nativeshell.WindowLayoutProbe(
+                        child: SizedBox(
+                          width: 800,
+                          height: 600,
+                          child: Theme(
+                            data: theme,
+                            child: navigator,
+                          ),
                         ),
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  ///
-                  ///
-                  ///
-                  /// Default Mode
-                  ///
+                    ///
+                    ///
+                    ///
+                    /// Default Mode
+                    ///
 
-                  return Responsive(builder: (context, _) {
-                    return Theme(
-                      data: theme,
-                      child: navigator,
-                    );
-                  });
-                },
+                    return Responsive(builder: (context, _) {
+                      return Theme(
+                        data: theme,
+                        child: navigator,
+                      );
+                    });
+                  },
+                ),
               );
             },
           ),
@@ -222,9 +227,9 @@ class NativeShellWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      child: WindowWidget(
+      child: nativeshell.WindowWidget(
         onCreateState: (initData) {
-          WindowState state;
+          nativeshell.WindowState state;
 
           state ??= OtherWindowState.fromInitData(initData);
           // possibly no init data, this is main window
@@ -236,10 +241,10 @@ class NativeShellWrapper extends StatelessWidget {
   }
 }
 
-class MainWindowState extends WindowState {
+class MainWindowState extends nativeshell.WindowState {
   @override
-  WindowSizingMode get windowSizingMode =>
-      WindowSizingMode.atLeastIntrinsicSize;
+  nativeshell.WindowSizingMode get windowSizingMode =>
+      nativeshell.WindowSizingMode.atLeastIntrinsicSize;
 
   @override
   Future<void> windowCloseRequested() async {
@@ -254,7 +259,7 @@ class MainWindowState extends WindowState {
   }
 }
 
-class OtherWindowState extends WindowState {
+class OtherWindowState extends nativeshell.WindowState {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -279,6 +284,6 @@ class OtherWindowState extends WindowState {
   }
 
   @override
-  WindowSizingMode get windowSizingMode =>
-      WindowSizingMode.atLeastIntrinsicSize;
+  nativeshell.WindowSizingMode get windowSizingMode =>
+      nativeshell.WindowSizingMode.atLeastIntrinsicSize;
 }

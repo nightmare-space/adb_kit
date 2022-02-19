@@ -10,6 +10,7 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   animations: ^2.0.2
+  flutter_acrylic: ^1.0.0
   app_manager:
     git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
@@ -73,28 +74,16 @@ flutter:
     - CHANGELOG.md
 
 dependency_overrides:
-  # apputils:
-  #   path: /Users/nightmare/Desktop/nightmare-space/apputils
-  # 下面代码注释掉，
-  # termare_view:
-  #   path: /Users/nightmare/Desktop/termare-space/termare_view
-  # termare_pty:
-  #   path: /Users/nightmare/Desktop/termare-space/termare_pty
-  # dart_pty:
-  #   path: /Users/nightmare/Desktop/termare-space/dart_pty
   global_repository:
     path: /Users/nightmare/Desktop/nightmare-space/global_repository
   app_manager:
     path: /Users/nightmare/Desktop/nightmare-space/app_manager
   adbutil:
     path: /Users/nightmare/Desktop/nightmare-space/adbutil
-  #   # path: C:\Users\Nightmare\Documents\termare-space\dart_pty
   signale:
     path: /Users/nightmare/Desktop/nightmare-space/signale
-  # app_launcher:
-  #   path: /Users/nightmare/Desktop/nightmare-space/app_launcher
-  # file_selector_nightmare:
-  #   path: /Users/nightmare/Desktop/nightmare-space/file_selector
+  settings:
+    path: /Users/nightmare/Desktop/nightmare-space/settings
 flutter_intl:
   enabled: true
   localizely:

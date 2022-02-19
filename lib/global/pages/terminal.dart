@@ -13,11 +13,11 @@ class TerminalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (configController.isDarkTheme) {
       Global().termareController.theme = TermareStyles.vsCode.copyWith(
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Colors.transparent,
       );
     } else {
       Global().termareController.theme = TermareStyles.macos.copyWith(
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Colors.transparent,
       );
     }
     return TermarePty(

@@ -240,6 +240,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_acrylic:
+    dependency: "direct main"
+    description:
+      name: flutter_acrylic
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0+1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -486,11 +493,9 @@ packages:
   settings:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "9e7867808cf8526c2af2701d40ecba1c48a63d36"
-      url: "https://github.com/nightmare-space/settings"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/settings"
+      relative: false
+    source: path
     version: "0.0.1"
   shortcut:
     dependency: transitive

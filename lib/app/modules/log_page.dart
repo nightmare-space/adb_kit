@@ -58,13 +58,13 @@ class _LogPageState extends State<LogPage> {
   Widget build(BuildContext context) {
     if (configController.isDarkTheme) {
       Global.logTerminalCTL.theme = TermareStyles.vsCode.copyWith(
-        backgroundColor: Theme.of(context).cardColor,
         fontSize: 11.w,
+        backgroundColor: Colors.transparent,
       );
     } else {
       Global.logTerminalCTL.theme = TermareStyles.macos.copyWith(
-        backgroundColor: Theme.of(context).cardColor,
         fontSize: 11.w,
+        backgroundColor: Colors.transparent,
       );
     }
     AppBar appBar;

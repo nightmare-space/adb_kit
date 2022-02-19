@@ -187,7 +187,7 @@ class DefaultThemeData {
     return lightThemeData.copyWith(
       primaryColor: colorSchema.primary,
       colorScheme: colorSchema,
-      scaffoldBackgroundColor: colorSchema.background,
+      scaffoldBackgroundColor: Colors.transparent,
       primaryColorBrightness: Brightness.light,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
@@ -224,7 +224,6 @@ class DefaultThemeData {
         filled: true,
       ),
       appBarTheme: lightThemeData.appBarTheme.copyWith(
-        
         systemOverlayStyle:
             controller.isDarkTheme ? OverlayStyle.light : OverlayStyle.dark,
         centerTitle: true,

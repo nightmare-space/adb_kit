@@ -59,7 +59,7 @@ class Global {
   TermareController termareController = TermareController(
     fontFamily: '${Config.flutterPackage}MenloforPowerline',
     theme: TermareStyles.macos.copyWith(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
     ),
     enableLog: false,
   )..hideCursor();
@@ -68,7 +68,7 @@ class Global {
     enableLog: false,
     theme: TermareStyles.macos.copyWith(
       cursorColor: Colors.transparent,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       fontSize: 10,
     ),
   )..hideCursor();

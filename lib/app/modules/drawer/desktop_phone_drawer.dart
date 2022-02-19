@@ -29,7 +29,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).cardColor.withOpacity(0),
           shape: Responsive.of(context).screenType != ScreenType.desktop
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(

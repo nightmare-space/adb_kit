@@ -7,6 +7,7 @@ import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
@@ -44,6 +45,13 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     route = widget.initRoute;
+    Window.makeTitlebarTransparent();
+    Window.enableFullSizeContentView();
+    Window.setEffect(
+      effect: WindowEffect.acrylic,
+      color: Colors.red,
+      dark: true,
+    );
     WidgetsBinding.instance.addObserver(this);
     PluginUtil.addHandler((call) {
       if (call.method == 'ShowOTGDialog') {
@@ -74,6 +82,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    TitlebarSafeArea();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: configController.theme is DarkTheme
           ? OverlayStyle.light
@@ -84,6 +93,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
           switch (type ?? screenType) {
             case ScreenType.desktop:
               return Scaffold(
+                backgroundColor: Colors.transparent,
                 body: Row(
                   children: [
                     DesktopPhoneDrawer(
@@ -101,6 +111,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               break;
             case ScreenType.tablet:
               return Scaffold(
+                backgroundColor: Colors.transparent,
                 body: Row(
                   children: [
                     TabletDrawer(
@@ -117,6 +128,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               break;
             case ScreenType.phone:
               return Scaffold(
+                backgroundColor: Colors.transparent,
                 drawer: DesktopPhoneDrawer(
                   width: MediaQuery.of(context).size.width * 2 / 3,
                   groupValue: route,

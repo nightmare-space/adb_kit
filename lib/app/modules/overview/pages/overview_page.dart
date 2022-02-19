@@ -59,6 +59,7 @@ class _OverviewPageState extends State<OverviewPage> {
       );
     }
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: appBar,
       body: buildBody(context),
     );
