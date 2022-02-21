@@ -2,6 +2,7 @@ export 'color_schema_extension.dart';
 export 'default_theme_data.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 abstract class YanTheme {
   Color primaryColor;
@@ -61,11 +62,16 @@ class DarkTheme implements YanTheme {
 }
 
 class LightTheme implements YanTheme {
+  LightTheme() {
+    if (GetPlatform.isDesktop) {
+      cardColor = cardColor.withOpacity(0.4);
+    }
+  }
   @override
   Color background = const Color(0xfff5f5f7);
 
   @override
-  Color cardColor = Colors.white.withOpacity(0.4);
+  Color cardColor = Colors.white;
 
   @override
   Color inputColor = const Color(0xFFF5F5F5);
