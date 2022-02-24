@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:logger_view/logger_view.dart';
 import 'package:multicast/multicast.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_view/termare_view.dart';
@@ -64,14 +65,6 @@ class Global {
     enableLog: false,
   )..hideCursor();
   bool logTerminalIsInit = false;
-  static TermareController logTerminalCTL = TermareController(
-    enableLog: false,
-    theme: TermareStyles.macos.copyWith(
-      cursorColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
-      fontSize: 10,
-    ),
-  )..hideCursor();
 
   Future<void> _receiveBoardCast() async {
     multicast.addListener((message, address) async {
@@ -236,7 +229,7 @@ class Print implements Printable {
     final String data =
         '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
 
-    Global.logTerminalCTL.write(data + '\r\n');
+    logTerminalCTL.write(data + '\r\n');
 
     // ignore: avoid_print
     core.print(data);
