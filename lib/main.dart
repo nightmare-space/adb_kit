@@ -88,7 +88,7 @@ class AppEntryPoint extends StatefulWidget {
 
 class _AppEntryPointState extends State<AppEntryPoint>
     with WidgetsBindingObserver {
-  ConfigController configController = Get.put(ConfigController());
+  ConfigController config = Get.put(ConfigController());
 
   DevicesController controller = Get.find();
   @override
@@ -144,12 +144,11 @@ class _AppEntryPointState extends State<AppEntryPoint>
             builder: (context) {
               return TitlebarSafeArea(
                 child: GetMaterialApp(
-                  showPerformanceOverlay:
-                      configController.showPerformanceOverlay,
-                  showSemanticsDebugger: configController.showSemanticsDebugger,
-                  debugShowMaterialGrid: configController.debugShowMaterialGrid,
+                  showPerformanceOverlay: config.showPerformanceOverlay,
+                  showSemanticsDebugger: config.showSemanticsDebugger,
+                  debugShowMaterialGrid: config.debugShowMaterialGrid,
                   checkerboardRasterCacheImages:
-                      configController.checkerboardRasterCacheImages,
+                      config.checkerboardRasterCacheImages,
                   enableLog: false,
                   color: Colors.teal,
                   debugShowCheckedModeBanner: false,
@@ -162,7 +161,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
                     GlobalWidgetsLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,
                   ],
-                  locale: configController.locale,
+                  locale: config.locale,
                   supportedLocales: S.delegate.supportedLocales,
                   theme: ThemeData(
                     primarySwatch: Colors.blue,
@@ -181,9 +180,9 @@ class _AppEntryPointState extends State<AppEntryPoint>
                     }
                     // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
                     // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                    final bool isDark = configController.theme is DarkTheme;
+                    final bool isDark = config.theme is DarkTheme;
                     final ThemeData theme = DefaultThemeData.light(
-                      primary: configController.primaryColor,
+                      primary: config.primaryColor,
                     );
 
                     /// NativeShell

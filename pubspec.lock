@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/adbutil"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: aa470e1a25984c834c8ce2d3c53574d54ab191c0
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -41,9 +43,11 @@ packages:
   applib_util:
     dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/applib/applib_util"
-      relative: false
-    source: path
+      path: applib_util
+      ref: HEAD
+      resolved-ref: "5ac99df4a46526a3ffd57491af63611750d8ffa7"
+      url: "https://github.com/nightmare-space/applib"
+    source: git
     version: "0.0.1"
   archive:
     dependency: transitive
@@ -300,9 +304,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/global_repository"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "87eabd7afa27a9cc0246258edd44e55f19103913"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -353,6 +359,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  logger_view:
+    dependency: "direct main"
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/logger_view"
+      relative: false
+    source: path
+    version: "0.0.1"
   matcher:
     dependency: transitive
     description:
@@ -493,9 +506,11 @@ packages:
   settings:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/settings"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1ef47b7e45a959e97e3352844c56049564cc5117"
+      url: "https://github.com/nightmare-space/settings"
+    source: git
     version: "0.0.1"
   shortcut:
     dependency: transitive
@@ -505,11 +520,13 @@ packages:
     source: hosted
     version: "0.0.1"
   signale:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/signale"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ea01227498ba905c78d37430d71c7175ee45790e
+      url: "https://github.com/nightmare-space/signale"
+    source: git
     version: "0.0.6"
   sky_engine:
     dependency: transitive
@@ -668,5 +685,5 @@ packages:
     source: hosted
     version: "5.3.1"
 sdks:
-  dart: ">=2.15.0 <3.0.0"
+  dart: ">=2.15.1 <3.0.0"
   flutter: ">=2.5.0"

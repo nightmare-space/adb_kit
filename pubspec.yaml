@@ -45,6 +45,8 @@ dependencies:
   termare_pty:
     git: https://github.com/Termare/termare_pty
   url_launcher: ^6.0.18
+  logger_view:
+    path: /Users/nightmare/Desktop/nightmare-space/logger_view
   adbutil:
     git: https://github.com/nightmare-space/adbutil
   termare_view:
@@ -74,16 +76,16 @@ flutter:
     - CHANGELOG.md
 
 dependency_overrides:
-  global_repository:
-    path: /Users/nightmare/Desktop/nightmare-space/global_repository
+#   global_repository:
+#     path: /Users/nightmare/Desktop/nightmare-space/global_repository
   app_manager:
     path: /Users/nightmare/Desktop/nightmare-space/app_manager
-  adbutil:
-    path: /Users/nightmare/Desktop/nightmare-space/adbutil
-  signale:
-    path: /Users/nightmare/Desktop/nightmare-space/signale
-  settings:
-    path: /Users/nightmare/Desktop/nightmare-space/settings
+#   adbutil:
+#     path: /Users/nightmare/Desktop/nightmare-space/adbutil
+#   signale:
+#     path: /Users/nightmare/Desktop/nightmare-space/signale
+#   settings:
+#     path: /Users/nightmare/Desktop/nightmare-space/settings
 flutter_intl:
   enabled: true
   localizely:

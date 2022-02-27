@@ -12,14 +12,21 @@ import 'package:settings/settings.dart';
 ///
 /// 无界投屏也会直接依赖这个
 ///
+   
 class DexServer {
   DexServer._();
   static List<String> serverStartList = [];
+  static Completer lock;
   static Future<void> startServer(String devicesId) async {
     await initSetting();
+    if (lock != null && !lock.isCompleted) {
+      Log.d('等待startServer lock');
+      await lock.future;
+    }
     if (serverStartList.contains(devicesId)) {
       return;
     }
+    lock = Completer();
     // 当锁用
     final Completer<void> completer = Completer();
     String serverPath = Settings.serverPath.get;
@@ -34,7 +41,7 @@ class DexServer {
       targetPath,
     );
     final List<String> processArg =
-        '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppChannel'
+        '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'
             .split(' ');
 
     const String startTag = 'success start:';
@@ -51,6 +58,7 @@ class DexServer {
         Log.w(event, tag: 'dex server');
         if (event.contains(startTag)) {
           serverStartList.add(devicesId);
+          Log.w('serverStartList -> $serverStartList');
           for (final String line in event.split('\n')) {
             if (line.contains(startTag)) {
               Log.e('time:${stopwatch.elapsed}');
@@ -60,8 +68,8 @@ class DexServer {
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,
-                rangeStart: 6000,
-                rangeEnd: 6040,
+                rangeStart: 6040,
+                rangeEnd: 6080,
                 targetArg: 'tcp:$remotePort',
               );
               Log.d('localPort -> $localPort');
@@ -72,6 +80,7 @@ class DexServer {
               AppManager.globalInstance.appChannel = channel;
               AppManager.globalInstance.process = YanProcess()
                 ..exec('adb -s $devicesId shell');
+              lock.complete();
               completer.complete();
             }
           }
@@ -81,43 +90,6 @@ class DexServer {
         Log.e('error : $event');
       });
     });
-    // CLASSPATH=/data/local/tmp/test app_process /data/local/tmp/ com.nightmare.applib.AppChannel
-    // final PseudoTerminal pty = TerminalUtil.getShellTerminal(
-    //   exec: 'adb',
-    //   arguments: processArg,
-    //   useIsolate: true,
-    // );
-    // pty.startPolling();
-    // pty.out.listen((event) async {
-    //   Log.w(event, tag: 'dex server');
-    //   if (event.contains(startTag)) {
-    //     Log.e('time:${stopwatch.elapsed}');
-    //     serverStartList.add(devicesId);
-    //     for (final String line in event.split('\n')) {
-    //       if (line.contains(startTag)) {
-    //         // 这个端口是对方设备成功绑定的端口
-    //         final int remotePort = int.tryParse(line.replaceAll(startTag, ''));
-    //         // 这个端口是本机成功绑定的端口
-    //         final int localPort = await AdbUtil.getForwardPort(
-    //           devicesId,
-    //           rangeStart: 6000,
-    //           rangeEnd: 6010,
-    //           targetArg: 'tcp:$remotePort',
-    //         );
-    //         Log.d('localPort -> $localPort');
-    //         // 这样才能保证列表正常
-    //         final RemoteAppChannel channel = RemoteAppChannel();
-    //         channel.port = localPort;
-    //         channel.serial = devicesId;
-    //         AppManager.globalInstance.appChannel = channel;
-    //         AppManager.globalInstance.process = YanProcess()
-    //           ..exec('adb -s $devicesId shell');
-    //         completer.complete();
-    //       }
-    //     }
-    //   }
-    //   pty.schedulingRead();
-    // });
     return completer.future;
   }
 }

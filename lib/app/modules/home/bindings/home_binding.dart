@@ -1,3 +1,4 @@
+import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/config/config.dart';
@@ -11,5 +12,6 @@ class HomeBinding extends Bindings {
       Get.put(DevicesController());
     }
     Get.put(HistoryController());
+    Get.put(ConfigController());
   }
 }

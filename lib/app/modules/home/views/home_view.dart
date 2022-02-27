@@ -95,7 +95,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
           switch (type ?? screenType) {
             case ScreenType.desktop:
               return Scaffold(
-                backgroundColor: Colors.transparent,
                 body: Row(
                   children: [
                     DesktopPhoneDrawer(
@@ -113,7 +112,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               break;
             case ScreenType.tablet:
               return Scaffold(
-                backgroundColor: Colors.transparent,
+                // backgroundColor: Colors.transparent,
                 body: Row(
                   children: [
                     TabletDrawer(
@@ -130,7 +129,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               break;
             case ScreenType.phone:
               return Scaffold(
-                backgroundColor: Colors.transparent,
+                backgroundColor: configController.theme.background,
                 drawer: DesktopPhoneDrawer(
                   width: MediaQuery.of(context).size.width * 2 / 3,
                   groupValue: route,

@@ -26,38 +26,41 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   @override
   Widget build(BuildContext context) {
     final double width = widget.width;
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        return Material(
-          color: Theme.of(context).cardColor.withOpacity(0),
-          shape: Responsive.of(context).screenType != ScreenType.desktop
-              ? RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(Dimens.gap_dp20),
-                    bottomRight: Radius.circular(Dimens.gap_dp20),
-                  ),
-                )
-              : null,
-          child: SafeArea(
-            child: SizedBox(
-              width: width,
-              height: MediaQuery.of(context).size.height,
-              child: Builder(
-                builder: (_) {
-                  if (orientation == Orientation.portrait) {
-                    return buildBody(context);
-                  }
-                  return SingleChildScrollView(
-                    child: SizedBox(
-                      child: buildBody(context),
+    return Material(
+      color: configController.theme.background,
+      child: OrientationBuilder(
+        builder: (context, orientation) {
+          return Material(
+            color: Theme.of(context).cardColor.withOpacity(0),
+            shape: Responsive.of(context).screenType != ScreenType.desktop
+                ? RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(Dimens.gap_dp20),
+                      bottomRight: Radius.circular(Dimens.gap_dp20),
                     ),
-                  );
-                },
+                  )
+                : null,
+            child: SafeArea(
+              child: SizedBox(
+                width: width,
+                height: MediaQuery.of(context).size.height,
+                child: Builder(
+                  builder: (_) {
+                    if (orientation == Orientation.portrait) {
+                      return buildBody(context);
+                    }
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        child: buildBody(context),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
