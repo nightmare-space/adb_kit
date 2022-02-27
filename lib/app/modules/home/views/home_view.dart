@@ -127,7 +127,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               break;
             case ScreenType.phone:
               return Scaffold(
-                // backgroundColor: Colors.transparent,
+                backgroundColor: configController.theme.background,
                 drawer: DesktopPhoneDrawer(
                   width: MediaQuery.of(context).size.width * 2 / 3,
                   groupValue: route,

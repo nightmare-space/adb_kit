@@ -75,11 +75,11 @@ flutter:
     - assets/
     - CHANGELOG.md
 
-# dependency_overrides:
+dependency_overrides:
 #   global_repository:
 #     path: /Users/nightmare/Desktop/nightmare-space/global_repository
-#   app_manager:
-#     path: /Users/nightmare/Desktop/nightmare-space/app_manager
+  app_manager:
+    path: /Users/nightmare/Desktop/nightmare-space/app_manager
 #   adbutil:
 #     path: /Users/nightmare/Desktop/nightmare-space/adbutil
 #   signale:

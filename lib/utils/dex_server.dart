@@ -41,7 +41,7 @@ class DexServer {
       targetPath,
     );
     final List<String> processArg =
-        '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppChannel'
+        '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'
             .split(' ');
 
     const String startTag = 'success start:';
@@ -68,8 +68,8 @@ class DexServer {
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,
-                rangeStart: 6000,
-                rangeEnd: 6040,
+                rangeStart: 6040,
+                rangeEnd: 6080,
                 targetArg: 'tcp:$remotePort',
               );
               Log.d('localPort -> $localPort');
