@@ -45,12 +45,14 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     route = widget.initRoute;
-    Window.makeTitlebarTransparent();
-    Window.enableFullSizeContentView();
+    if (GetPlatform.isMacOS) {
+      Window.makeTitlebarTransparent();
+      Window.enableFullSizeContentView();
+    }
     Window.setEffect(
-      effect: WindowEffect.acrylic,
-      color: Colors.red,
-      dark: true,
+      effect: WindowEffect.aero,
+      color: Colors.transparent,
+      dark: false,
     );
     WidgetsBinding.instance.addObserver(this);
     PluginUtil.addHandler((call) {
