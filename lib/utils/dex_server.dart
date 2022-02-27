@@ -52,6 +52,7 @@ class DexServer {
       processArg,
       includeParentEnvironment: true,
       environment: RuntimeEnvir.envir(),
+      runInShell: true,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
       value.stdout.transform(utf8.decoder).listen((event) async {
