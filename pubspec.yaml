@@ -83,8 +83,8 @@ dependency_overrides:
 #   adbutil:
 #   app_manager:
 #     path: /Users/nightmare/Desktop/nightmare-space/app_manager
-  adbutil:
-    path: C:\Users\90626\Desktop\nightmare-space\adbutil
+  # adbutil:
+  #   path: C:\Users\90626\Desktop\nightmare-space\adbutil
 #     path: /Users/nightmare/Desktop/nightmare-space/adbutil
 #   signale:
 #     path: /Users/nightmare/Desktop/nightmare-space/signale
