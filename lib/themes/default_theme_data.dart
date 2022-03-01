@@ -188,8 +188,7 @@ class DefaultThemeData {
       primaryColor: colorSchema.primary,
       colorScheme: colorSchema,
       // Desktop有高斯模糊背景
-      scaffoldBackgroundColor:
-          GetPlatform.isMobile ? colorSchema.background : Colors.transparent,
+      scaffoldBackgroundColor: colorSchema.background,
       primaryColorBrightness: Brightness.light,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,

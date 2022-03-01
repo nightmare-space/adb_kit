@@ -27,7 +27,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   Widget build(BuildContext context) {
     final double width = widget.width;
     return Material(
-      color: configController.theme.background,
+      color: configController.theme.background.withOpacity(1.0),
       child: OrientationBuilder(
         builder: (context, orientation) {
           return Material(

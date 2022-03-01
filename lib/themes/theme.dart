@@ -66,6 +66,8 @@ class LightTheme implements YanTheme {
     if (GetPlatform.isDesktop) {
       cardColor = cardColor.withOpacity(0.4);
     }
+    cardColor = cardColor.withOpacity(0.4);
+    background = Colors.white.withOpacity(0.4);
   }
   @override
   Color background = const Color(0xfff5f5f7);
