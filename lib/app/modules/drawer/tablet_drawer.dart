@@ -48,6 +48,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                     return buildBody(context);
                   }
                   return SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
                     child: SizedBox(
                       child: buildBody(context),
                     ),
@@ -119,19 +120,16 @@ class _TabletDrawerState extends State<TabletDrawer> {
                   widget.onChanged.call(value);
                 },
               ),
-            // _DrawerItem(
-            //   title: '当前设备ip',
-            //   onTap: () {},
-            // ),
-            _DrawerItem(
-              value: Routes.terminal,
-              groupValue: widget.groupValue,
-              title: '终端模拟器',
-              iconData: Icons.code,
-              onTap: (value) {
-                widget.onChanged.call(value);
-              },
-            ),
+            if (!Platform.isWindows)
+              _DrawerItem(
+                value: Routes.terminal,
+                groupValue: widget.groupValue,
+                title: '终端模拟器',
+                iconData: Icons.code,
+                onTap: (value) {
+                  widget.onChanged.call(value);
+                },
+              ),
             _DrawerItem(
               value: Routes.log,
               groupValue: widget.groupValue,

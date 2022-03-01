@@ -92,10 +92,10 @@ BEGIN
             VALUE "CompanyName", "com.nightmare.adbtools" "\0"
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "adb_tool" "\0"
+            VALUE "InternalName", "ADB TOOL" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2021 com.nightmare.adbtools. All rights reserved." "\0"
-            VALUE "OriginalFilename", "adb_tool.exe" "\0"
-            VALUE "ProductName", "adb_tool" "\0"
+            VALUE "OriginalFilename", "ADB TOOL.exe" "\0"
+            VALUE "ProductName", "ADB TOOL" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
