@@ -43,7 +43,6 @@ class Global {
           },
   );
 
-  bool lockAdb = false;
   bool isInit = false;
   Multicast multicast = Multicast(
     port: adbToolUdpPort,
@@ -129,6 +128,7 @@ class Global {
   List<String> androidFiles = [
     'adb',
     'adb_binary',
+    'adb.bin-armeabi',
     'libbrotlidec.so',
     'libbrotlienc.so',
     'libc++_shared.so',

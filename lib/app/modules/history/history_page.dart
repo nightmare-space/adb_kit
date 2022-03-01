@@ -44,7 +44,7 @@ class HistoryPage extends GetView<HistoryController> {
             );
           }
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
             child: CardItem(
               padding: EdgeInsets.zero,
               child: ListView.builder(
@@ -126,7 +126,8 @@ class HistoryPage extends GetView<HistoryController> {
                                           vertical: 2.w,
                                         ),
                                         child: Text(
-                                          DateTime.parse(adbEntity.connectTime).getTimeString(),
+                                          DateTime.parse(adbEntity.connectTime)
+                                              .getTimeString(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             color:
