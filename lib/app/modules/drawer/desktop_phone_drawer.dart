@@ -27,35 +27,26 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   Widget build(BuildContext context) {
     final double width = widget.width;
     return Material(
-      color: configController.theme.background.withOpacity(1.0),
+      color: Responsive.of(context).screenType == ScreenType.desktop
+          ? configController.theme.background.withOpacity(0.2)
+          : configController.theme.background,
       child: OrientationBuilder(
         builder: (context, orientation) {
-          return Material(
-            color: Theme.of(context).cardColor.withOpacity(0),
-            shape: Responsive.of(context).screenType != ScreenType.desktop
-                ? RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(Dimens.gap_dp20),
-                      bottomRight: Radius.circular(Dimens.gap_dp20),
+          return SafeArea(
+            child: SizedBox(
+              width: width,
+              height: MediaQuery.of(context).size.height,
+              child: Builder(
+                builder: (_) {
+                  if (orientation == Orientation.portrait) {
+                    return buildBody(context);
+                  }
+                  return SingleChildScrollView(
+                    child: SizedBox(
+                      child: buildBody(context),
                     ),
-                  )
-                : null,
-            child: SafeArea(
-              child: SizedBox(
-                width: width,
-                height: MediaQuery.of(context).size.height,
-                child: Builder(
-                  builder: (_) {
-                    if (orientation == Orientation.portrait) {
-                      return buildBody(context);
-                    }
-                    return SingleChildScrollView(
-                      child: SizedBox(
-                        child: buildBody(context),
-                      ),
-                    );
-                  },
-                ),
+                  );
+                },
               ),
             ),
           );

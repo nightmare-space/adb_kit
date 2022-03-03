@@ -140,81 +140,99 @@ class _AppEntryPointState extends State<AppEntryPoint>
     return OrientationBuilder(
       builder: (_, Orientation orientation) {
         return ToastApp(
-          child: GetBuilder<ConfigController>(
-            builder: (context) {
-              return TitlebarSafeArea(
-                child: GetMaterialApp(
-                  showPerformanceOverlay: config.showPerformanceOverlay,
-                  showSemanticsDebugger: config.showSemanticsDebugger,
-                  debugShowMaterialGrid: config.debugShowMaterialGrid,
-                  checkerboardRasterCacheImages:
-                      config.checkerboardRasterCacheImages,
-                  enableLog: false,
-                  color: Colors.teal,
-                  debugShowCheckedModeBanner: false,
-                  title: 'ADB工具箱',
-                  navigatorKey: Global.instance.navigatorKey,
-                  themeMode: ThemeMode.light,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  locale: config.locale,
-                  supportedLocales: S.delegate.supportedLocales,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
+          child: Stack(
+            children: [
+              if (GetPlatform.isAndroid)
+                SizedBox(
+                  height: double.infinity,
+                  child: Image.asset(
+                    'assets/background1.jpg',
+                    fit: BoxFit.cover,
                   ),
-                  defaultTransition: Transition.fadeIn,
-                  initialRoute: AdbPages.initial,
-                  getPages: AdbPages.routes + AppPages.routes,
-                  builder: (BuildContext context, Widget navigator) {
-                    Size size = MediaQuery.of(context).size;
-
-                    if (size.width > size.height) {
-                      context.init(896);
-                    } else {
-                      context.init(414);
-                    }
-                    // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                    // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                    final bool isDark = config.theme is DarkTheme;
-                    final ThemeData theme = DefaultThemeData.light(
-                      primary: config.primaryColor,
-                    );
-
-                    /// NativeShell
-                    if (widget.isNativeShell) {
-                      return nativeshell.WindowLayoutProbe(
-                        child: SizedBox(
-                          width: 800,
-                          height: 600,
-                          child: Theme(
-                            data: theme,
-                            child: navigator,
-                          ),
+                ),
+              BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 10.0,
+                  sigmaY: 10.0,
+                ),
+                child: GetBuilder<ConfigController>(
+                  builder: (context) {
+                    return TitlebarSafeArea(
+                      child: GetMaterialApp(
+                        showPerformanceOverlay: config.showPerformanceOverlay,
+                        showSemanticsDebugger: config.showSemanticsDebugger,
+                        debugShowMaterialGrid: config.debugShowMaterialGrid,
+                        checkerboardRasterCacheImages:
+                            config.checkerboardRasterCacheImages,
+                        enableLog: false,
+                        color: Colors.teal,
+                        debugShowCheckedModeBanner: false,
+                        title: 'ADB工具箱',
+                        navigatorKey: Global.instance.navigatorKey,
+                        themeMode: ThemeMode.light,
+                        localizationsDelegates: const [
+                          S.delegate,
+                          GlobalMaterialLocalizations.delegate,
+                          GlobalWidgetsLocalizations.delegate,
+                          GlobalCupertinoLocalizations.delegate,
+                        ],
+                        locale: config.locale,
+                        supportedLocales: S.delegate.supportedLocales,
+                        theme: ThemeData(
+                          primarySwatch: Colors.blue,
+                          visualDensity: VisualDensity.adaptivePlatformDensity,
                         ),
-                      );
-                    }
+                        defaultTransition: Transition.fadeIn,
+                        initialRoute: AdbPages.initial,
+                        getPages: AdbPages.routes + AppPages.routes,
+                        builder: (BuildContext context, Widget navigator) {
+                          Size size = MediaQuery.of(context).size;
 
-                    ///
-                    ///
-                    ///
-                    /// Default Mode
-                    ///
+                          if (size.width > size.height) {
+                            context.init(896);
+                          } else {
+                            context.init(414);
+                          }
+                          // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                          // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                          final bool isDark = config.theme is DarkTheme;
+                          final ThemeData theme = DefaultThemeData.light(
+                            primary: config.primaryColor,
+                          );
 
-                    return Responsive(builder: (context, _) {
-                      return Theme(
-                        data: theme,
-                        child: navigator,
-                      );
-                    });
+                          /// NativeShell
+                          if (widget.isNativeShell) {
+                            return nativeshell.WindowLayoutProbe(
+                              child: SizedBox(
+                                width: 800,
+                                height: 600,
+                                child: Theme(
+                                  data: theme,
+                                  child: navigator,
+                                ),
+                              ),
+                            );
+                          }
+
+                          ///
+                          ///
+                          ///
+                          /// Default Mode
+                          ///
+
+                          return Responsive(builder: (context, _) {
+                            return Theme(
+                              data: theme,
+                              child: navigator,
+                            );
+                          });
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            },
+              ),
+            ],
           ),
         );
       },

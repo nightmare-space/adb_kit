@@ -6,29 +6,24 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/main.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
 
 ///
 /// 无界投屏也会直接依赖这个
 ///
-   
+
 class DexServer {
   DexServer._();
-  static List<String> serverStartList = [];
-  static Completer lock;
-  static Future<void> startServer(String devicesId) async {
+  static Map<String, AppChannel> serverStartList = {};
+  static int rangeStart = 6040;
+  static Future<AppChannel> startServer(String devicesId) async {
     await initSetting();
-    if (lock != null && !lock.isCompleted) {
-      Log.d('等待startServer lock');
-      await lock.future;
+    if (serverStartList.keys.contains(devicesId)) {
+      return serverStartList[devicesId];
     }
-    if (serverStartList.contains(devicesId)) {
-      return;
-    }
-    lock = Completer();
-    // 当锁用
-    final Completer<void> completer = Completer();
+    final Completer<AppChannel> completer = Completer();
     String serverPath = Settings.serverPath.get;
     if (serverPath.isEmpty) {
       serverPath = Config.adbLocalPath;
@@ -52,13 +47,12 @@ class DexServer {
       processArg,
       includeParentEnvironment: true,
       environment: RuntimeEnvir.envir(),
-      runInShell: true,
+      runInShell: false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
       value.stdout.transform(utf8.decoder).listen((event) async {
-        Log.w(event, tag: 'dex server');
+        Log.w(event.trim(), tag: 'dex server');
         if (event.contains(startTag)) {
-          serverStartList.add(devicesId);
           Log.w('serverStartList -> $serverStartList');
           for (final String line in event.split('\n')) {
             if (line.contains(startTag)) {
@@ -69,20 +63,18 @@ class DexServer {
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,
-                rangeStart: 6040,
-                rangeEnd: 6080,
+                rangeStart: rangeStart,
+                rangeEnd: rangeStart + 10,
                 targetArg: 'tcp:$remotePort',
               );
+              rangeStart += 10;
               Log.d('localPort -> $localPort');
               // 这样才能保证列表正常
               final RemoteAppChannel channel = RemoteAppChannel();
               channel.port = localPort;
               channel.serial = devicesId;
-              AppManager.globalInstance.appChannel = channel;
-              AppManager.globalInstance.process = YanProcess()
-                ..exec('adb -s $devicesId shell');
-              lock.complete();
-              completer.complete();
+              serverStartList[devicesId] = channel;
+              completer.complete(channel);
             }
           }
         }

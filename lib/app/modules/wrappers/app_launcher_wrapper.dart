@@ -38,7 +38,7 @@ class _AppLauncherWrapperState extends State<AppLauncherWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (!DexServer.serverStartList.contains(widget.devicesEntity.serial)) {
+    if (!DexServer.serverStartList.keys.contains(widget.devicesEntity.serial)) {
       return SpinKitDualRing(
         color: AppColors.accent,
         size: 20.w,
