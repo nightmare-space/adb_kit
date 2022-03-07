@@ -42,8 +42,12 @@ class DexServer {
     const String startTag = 'success start:';
     Stopwatch stopwatch = Stopwatch();
     stopwatch.start();
+    String execuable = 'adb';
+    if (Platform.isWindows) {
+      execuable = RuntimeEnvir.binPath + Platform.pathSeparator + execuable;
+    }
     Process.start(
-      'adb',
+      execuable,
       processArg,
       includeParentEnvironment: true,
       environment: RuntimeEnvir.envir(),
