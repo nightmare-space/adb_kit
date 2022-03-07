@@ -30,6 +30,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       color: Responsive.of(context).screenType == ScreenType.desktop
           ? configController.theme.background.withOpacity(0.2)
           : configController.theme.background,
+      borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
           return SafeArea(
@@ -60,119 +61,117 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.w,
-                  vertical: 16.w,
-                ),
-                child: Text(
-                  'ADB TOOL',
-                  style: TextStyle(
-                    fontSize: 26.w,
-                    fontWeight: FontWeight.bold,
-                    color: configController.primaryColor,
-                  ),
-                ),
+        SizedBox(
+          height: 12.w,
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.w,
+              vertical: 16.w,
+            ),
+            child: Text(
+              'ADB TOOL',
+              style: TextStyle(
+                fontSize: 26.w,
+                fontWeight: FontWeight.bold,
+                color: configController.primaryColor,
               ),
             ),
-            _DrawerItem(
-              title: S.of(context).home,
-              value: Routes.overview,
-              groupValue: widget.groupValue,
-              onTap: (index) {
-                widget.onChanged?.call(index);
-              },
-              iconData: Icons.home,
-            ),
-            _DrawerItem(
-              value: Routes.history,
-              groupValue: widget.groupValue,
-              title: S.of(context).historyConnect,
-              iconData: Icons.history,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-            // _DrawerItem(
-            //   title: '连接设备',
-            //   value: 1,
-            //   groupValue: widget.groupValue,
-            //   onTap: (index) {
-            //     widget.onChanged?.call(index);
-            //   },
-            //   iconData: Icons.data_saver_off,
-            // ),
-            // _DrawerItem(
-            //   title: '当前设备ip',
-            //   onTap: () {},
-            // ),
-            if (GetPlatform.isAndroid)
-              Column(
-                children: [
-                  _DrawerItem(
-                    value: Routes.netDebug,
-                    groupValue: widget.groupValue,
-                    iconData: Icons.signal_wifi_4_bar,
-                    title: S.of(context).networkDebug,
-                    onTap: (index) {
-                      widget.onChanged?.call(index);
-                    },
-                  ),
-                ],
-              ),
-            if (GetPlatform.isAndroid)
+          ),
+        ),
+        _DrawerItem(
+          title: S.of(context).home,
+          value: Routes.overview,
+          groupValue: widget.groupValue,
+          onTap: (index) {
+            widget.onChanged?.call(index);
+          },
+          iconData: Icons.home,
+        ),
+        _DrawerItem(
+          value: Routes.history,
+          groupValue: widget.groupValue,
+          title: S.of(context).historyConnect,
+          iconData: Icons.history,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
+        ),
+        // _DrawerItem(
+        //   title: '连接设备',
+        //   value: 1,
+        //   groupValue: widget.groupValue,
+        //   onTap: (index) {
+        //     widget.onChanged?.call(index);
+        //   },
+        //   iconData: Icons.data_saver_off,
+        // ),
+        // _DrawerItem(
+        //   title: '当前设备ip',
+        //   onTap: () {},
+        // ),
+        if (GetPlatform.isAndroid)
+          Column(
+            children: [
               _DrawerItem(
-                value: Routes.installToSystem,
+                value: Routes.netDebug,
                 groupValue: widget.groupValue,
-                title: S.of(context).installToSystem,
-                iconData: Icons.file_download,
+                iconData: Icons.signal_wifi_4_bar,
+                title: S.of(context).networkDebug,
                 onTap: (index) {
                   widget.onChanged?.call(index);
                 },
               ),
-            _DrawerItem(
-              value: Routes.terminal,
-              groupValue: widget.groupValue,
-              title: S.of(context).terminal,
-              iconData: Icons.code,
-              onTap: (index) {
-                widget.onChanged?.call(index);
-              },
-            ),
+            ],
+          ),
+        if (GetPlatform.isAndroid)
+          _DrawerItem(
+            value: Routes.installToSystem,
+            groupValue: widget.groupValue,
+            title: S.of(context).installToSystem,
+            iconData: Icons.file_download,
+            onTap: (index) {
+              widget.onChanged?.call(index);
+            },
+          ),
+        _DrawerItem(
+          value: Routes.terminal,
+          groupValue: widget.groupValue,
+          title: S.of(context).terminal,
+          iconData: Icons.code,
+          onTap: (index) {
+            widget.onChanged?.call(index);
+          },
+        ),
 
-            _DrawerItem(
-              value: Routes.log,
-              groupValue: widget.groupValue,
-              title: S.of(context).log,
-              iconData: Icons.pending_outlined,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-            _DrawerItem(
-              value: Routes.setting,
-              groupValue: widget.groupValue,
-              title: S.of(context).setting,
-              iconData: Icons.settings,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-            _DrawerItem(
-              value: Routes.about,
-              groupValue: widget.groupValue,
-              title: S.of(context).about,
-              iconData: Icons.info_outline,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-          ],
+        _DrawerItem(
+          value: Routes.log,
+          groupValue: widget.groupValue,
+          title: S.of(context).log,
+          iconData: Icons.pending_outlined,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
+        ),
+        _DrawerItem(
+          value: Routes.setting,
+          groupValue: widget.groupValue,
+          title: S.of(context).setting,
+          iconData: Icons.settings,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
+        ),
+        _DrawerItem(
+          value: Routes.about,
+          groupValue: widget.groupValue,
+          title: S.of(context).about,
+          iconData: Icons.info_outline,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
         ),
       ],
     );

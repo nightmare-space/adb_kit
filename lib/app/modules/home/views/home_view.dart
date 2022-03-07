@@ -109,7 +109,11 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             setState(() {});
                           },
                         ),
-                        Expanded(child: getWidget(route)),
+                        Expanded(
+                          child: TitlebarSafeArea(
+                            child: getWidget(route),
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -126,7 +130,11 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             setState(() {});
                           },
                         ),
-                        Expanded(child: getWidget(route)),
+                        Expanded(
+                          child: TitlebarSafeArea(
+                            child: getWidget(route),
+                          ),
+                        ),
                       ],
                     ),
                   );

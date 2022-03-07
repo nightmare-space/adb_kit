@@ -71,6 +71,9 @@ class _TabletDrawerState extends State<TabletDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
+              height: 12.w,
+            ),
+            SizedBox(
               height: Dimens.gap_dp16,
             ),
             _DrawerItem(
