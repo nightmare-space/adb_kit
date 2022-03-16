@@ -29,7 +29,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
     return Material(
       color: Responsive.of(context).screenType == ScreenType.desktop
           ? configController.theme.background.withOpacity(0.2)
-          : configController.theme.background,
+          : Theme.of(context).colorScheme.background,
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
@@ -58,7 +58,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
 
   Column buildBody(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
@@ -76,7 +76,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
               style: TextStyle(
                 fontSize: 26.w,
                 fontWeight: FontWeight.bold,
-                color: configController.primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -214,7 +214,7 @@ class _DrawerItem extends StatelessWidget {
               height: 48.w,
               decoration: isChecked
                   ? BoxDecoration(
-                      color: configController.primaryColor.withOpacity(0.1),
+                      color: Theme.of(context).primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8.w),
                     )
                   : null,
@@ -232,8 +232,8 @@ class _DrawerItem extends StatelessWidget {
                         iconData ?? Icons.open_in_new,
                         size: 18.w,
                         color: isChecked
-                            ? configController.primaryColor
-                            : configController.theme.fontColor,
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).colorScheme.onBackground,
                       ),
                       SizedBox(
                         width: Dimens.gap_dp8,
@@ -242,8 +242,8 @@ class _DrawerItem extends StatelessWidget {
                         title,
                         style: TextStyle(
                           color: isChecked
-                              ? configController.primaryColor
-                              : configController.theme.fontColor,
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).colorScheme.onBackground,
                           fontSize: 14.w,
                           fontWeight: FontWeight.bold,
                         ),

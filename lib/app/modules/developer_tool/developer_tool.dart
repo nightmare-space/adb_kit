@@ -11,10 +11,12 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
@@ -25,6 +27,7 @@ import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
 import 'screenshot_page.dart';
 import 'tab_indicator.dart';
+import 'task_manager.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({Key key, this.entity, this.providerContext})
@@ -41,12 +44,8 @@ class _DeveloperToolState extends State<DeveloperTool>
   ADBChannel adbChannel;
   TabController controller;
   PseudoTerminal adbShell;
-  TermareController adbShellController = TermareController(
-    fontFamily: '${Config.flutterPackage}MenloforPowerline',
-    theme: TermareStyles.macos.copyWith(
-      backgroundColor: AppColors.background,
-    ),
-  );
+
+  TermareController adbShellController;
 
   double getCardWidth() {
     final ScreenType screenType = Responsive.of(context).screenType;
@@ -76,7 +75,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
     if (!GetPlatform.isWindows) {
       adbShell = TerminalUtil.getShellTerminal(
         exec: 'adb',
@@ -92,110 +91,118 @@ class _DeveloperToolState extends State<DeveloperTool>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(48.w),
-        child: SafeArea(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 8.w,
-              ),
-              const PopButton(),
-              Expanded(
-                child: TabBar(
-                  labelStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  unselectedLabelColor: AppColors.fontColor,
-                  indicator: RoundedUnderlineTabIndicator(
-                    insets: EdgeInsets.only(bottom: 6.w),
-                    radius: 12.w,
-                    // width: 50.w,
-                    borderSide: BorderSide(
-                      width: 4.w,
-                      color: Theme.of(context).colorScheme.primary,
+    return TitlebarSafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(48.w),
+          child: SafeArea(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 8.w,
+                ),
+                const PopButton(),
+                Expanded(
+                  child: TabBar(
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    // color: Color(0xff6002ee),
-                    // borderRadius: BorderRadius.only(
-                    //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                    unselectedLabelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    unselectedLabelColor: AppColors.fontColor,
+                    indicator: RoundedUnderlineTabIndicator(
+                      insets: EdgeInsets.only(bottom: 6.w),
+                      radius: 12.w,
+                      // width: 50.w,
+                      borderSide: BorderSide(
+                        width: 4.w,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      // color: Color(0xff6002ee),
+                      // borderRadius: BorderRadius.only(
+                      //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                    ),
+                    controller: controller,
+                    tabs: const <Widget>[
+                      Tab(text: '控制面板'),
+                      Tab(text: '应用管理'),
+                      Tab(text: '桌面启动'),
+                      Tab(text: '任务管理'),
+                    ],
                   ),
-                  controller: controller,
-                  tabs: const <Widget>[
-                    Tab(text: '控制面板'),
-                    Tab(text: '应用管理器'),
-                    Tab(text: '桌面启动器'),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: TitlebarSafeArea(
+          child: TabBarView(
+            controller: controller,
+            children: [
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.only(bottom: 64.w),
+                child: Column(
+                  children: [
+                    Wrap(
+                      runSpacing: 8.w,
+                      children: [
+                        buildOptions(),
+                        buildTerminal(),
+                      ],
+                    ),
+                    SizedBox(height: 8.w),
+                    Wrap(
+                      runSpacing: 8.w,
+                      children: [
+                        installApkBox(),
+                        uploadFileBox(),
+                      ],
+                    ),
+                    SizedBox(height: 8.w),
+                    // screenshotBox(),
+                    // InkWell(
+                    //   onTap: () {
+                    //     adbChannel.execCmmand(
+                    //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
+                    //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
+                    //       'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
+                    //     );
+                    //   },
+                    //   child: SizedBox(
+                    //     height: Dimens.gap_dp48,
+                    //     child: Padding(
+                    //       padding: EdgeInsets.symmetric(
+                    //         horizontal: Dimens.gap_dp12,
+                    //       ),
+                    //       child: const Align(
+                    //         alignment: Alignment.centerLeft,
+                    //         child: Text(
+                    //           '开启单手模式',
+                    //           style: TextStyle(
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
+              ),
+              AppManagerWrapper(
+                devicesEntity: widget.entity,
+              ),
+              AppLauncherWrapper(
+                devicesEntity: widget.entity,
+              ),
+              TaskManager(
+                entity: widget.entity,
               ),
             ],
           ),
         ),
-      ),
-      body: TabBarView(
-        controller: controller,
-        children: [
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: 64.w),
-            child: Column(
-              children: [
-                Wrap(
-                  runSpacing: 8.w,
-                  children: [
-                    buildOptions(),
-                    buildTerminal(),
-                  ],
-                ),
-                SizedBox(height: 8.w),
-                Wrap(
-                  runSpacing: 8.w,
-                  children: [
-                    installApkBox(),
-                    uploadFileBox(),
-                  ],
-                ),
-                SizedBox(height: 8.w),
-                // screenshotBox(),
-                // InkWell(
-                //   onTap: () {
-                //     adbChannel.execCmmand(
-                //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_state 1\n'
-                //       'adb -s ${widget.entity.serial} shell settings put system handy_mode_size 5.5\n'
-                //       'adb -s ${widget.entity.serial} shell am broadcast -a miui.action.handymode.changemode --ei mode 2\n',
-                //     );
-                //   },
-                //   child: SizedBox(
-                //     height: Dimens.gap_dp48,
-                //     child: Padding(
-                //       padding: EdgeInsets.symmetric(
-                //         horizontal: Dimens.gap_dp12,
-                //       ),
-                //       child: const Align(
-                //         alignment: Alignment.centerLeft,
-                //         child: Text(
-                //           '开启单手模式',
-                //           style: TextStyle(
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-          AppManagerWrapper(
-            devicesEntity: widget.entity,
-          ),
-          AppLauncherWrapper(
-            devicesEntity: widget.entity,
-          ),
-        ],
       ),
     );
   }
@@ -254,10 +261,11 @@ class _DeveloperToolState extends State<DeveloperTool>
       ),
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
-          child: SizedBox(
-            height: 230.w,
+        child: SizedBox(
+          height: 230.w,
+          child: Material(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(12.w),
             child: Padding(
               padding: padding,
               child: Column(
@@ -358,8 +366,9 @@ class _DeveloperToolState extends State<DeveloperTool>
       ),
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
+        child: Material(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
               padding: padding,
@@ -463,8 +472,9 @@ class _DeveloperToolState extends State<DeveloperTool>
       ),
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
+        child: Material(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
               padding: padding,
@@ -536,14 +546,21 @@ class _DeveloperToolState extends State<DeveloperTool>
   }
 
   ConstrainedBox buildTerminal() {
+    adbShellController ??= TermareController(
+      fontFamily: '${Config.flutterPackage}MenloforPowerline',
+      theme: TermareStyles.macos.copyWith(
+        backgroundColor: Colors.transparent,
+      ),
+    );
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: getCardWidth(),
       ),
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
+        child: Material(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             height: 230.w,
             child: OpenContainer<String>(
@@ -627,8 +644,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(4.w),
                               child: Container(
-                                decoration: const BoxDecoration(
-                                  color: AppColors.background,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface2,
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),

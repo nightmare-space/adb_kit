@@ -14,10 +14,7 @@ dependencies:
   app_manager:
     git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
-  desktop_drop:
-    git:
-      url: https://github.com/mengyanshou/flutter-plugins
-      path: packages/desktop_drop
+  desktop_drop: ^0.3.3
   file_selector: ^0.8.2+1
   file_selector_linux: 0.0.2+1
   file_selector_macos: ^0.0.4+1

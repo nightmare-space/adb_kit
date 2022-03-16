@@ -8,6 +8,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -48,8 +49,8 @@ class _TabletDrawerState extends State<TabletDrawer> {
                     return buildBody(context);
                   }
                   return SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
-                    child: SizedBox(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: TitlebarSafeArea(
                       child: buildBody(context),
                     ),
                   );
@@ -64,132 +65,122 @@ class _TabletDrawerState extends State<TabletDrawer> {
 
   Column buildBody(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 12.w,
-            ),
-            SizedBox(
-              height: Dimens.gap_dp16,
-            ),
-            _DrawerItem(
-              title: S.of(context).home,
-              value: Routes.overview,
-              groupValue: widget.groupValue,
-              onTap: (value) {
-                widget.onChanged.call(value);
-              },
-              iconData: Icons.home,
-            ),
-            _DrawerItem(
-              value: Routes.history,
-              groupValue: widget.groupValue,
-              title: '历史连接',
-              iconData: Icons.history,
-              onTap: (value) {
-                widget.onChanged.call(value);
-              },
-            ),
-            if (!kIsWeb && Platform.isAndroid)
-              _DrawerItem(
-                value: Routes.netDebug,
-                groupValue: widget.groupValue,
-                iconData: Icons.signal_wifi_4_bar,
-                title: S.of(context).networkDebug,
-                onTap: (value) {
-                  widget.onChanged.call(value);
-                },
-              ),
-            // _DrawerItem(
-            //   title: '连接设备',
-            //   value: 1,
-            //   groupValue: widget.groupValue,
-            //   onTap: (index) {
-            //     widget.onChanged?.call(index);
-            //   },
-            //   iconData: Icons.data_saver_off,
-            // ),
-            if (!kIsWeb && Platform.isAndroid)
-              _DrawerItem(
-                value: Routes.installToSystem,
-                groupValue: widget.groupValue,
-                title: '安装到系统',
-                iconData: Icons.file_download,
-                onTap: (value) {
-                  widget.onChanged.call(value);
-                },
-              ),
-            if (!Platform.isWindows)
-              _DrawerItem(
-                value: Routes.terminal,
-                groupValue: widget.groupValue,
-                title: '终端模拟器',
-                iconData: Icons.code,
-                onTap: (value) {
-                  widget.onChanged.call(value);
-                },
-              ),
-            _DrawerItem(
-              value: Routes.log,
-              groupValue: widget.groupValue,
-              title: S.of(context).log,
-              iconData: Icons.pending_outlined,
-              onTap: (value) async {
-                widget.onChanged.call(value);
-              },
-            ),
-            _DrawerItem(
-              value: Routes.setting,
-              groupValue: widget.groupValue,
-              title: S.of(context).settings,
-              iconData: Icons.settings,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-            _DrawerItem(
-              value: Routes.about,
-              groupValue: widget.groupValue,
-              title: S.of(context).about,
-              iconData: Icons.info_outline,
-              onTap: (index) async {
-                widget.onChanged?.call(index);
-              },
-            ),
-            Builder(builder: (context) {
-              return _DrawerItem(
-                groupValue: widget.groupValue,
-                title: '切换主题',
-                iconData:
-                    config.isDarkTheme ? Icons.light_mode : Icons.dark_mode,
-                onTap: (value) {
-                  if (config.isDarkTheme) {
-                    config.theme = LightTheme();
-                  } else {
-                    config.theme = DarkTheme();
-                  }
-                  final ThemeData theme = DefaultThemeData.light(
-                    primary: config.primaryColor,
-                  );
-                  Navigator.of(context).pushReplacement(
-                    RippleRoute(
-                        Theme(
-                          data: theme,
-                          child: AdbTool(
-                            initRoute: widget.groupValue,
-                          ),
-                        ),
-                        RouteConfig.fromContext(context)),
-                  );
-                },
-              );
-            }),
-          ],
+        SizedBox(
+          height: 8.w,
         ),
+        _DrawerItem(
+          title: S.of(context).home,
+          value: Routes.overview,
+          groupValue: widget.groupValue,
+          onTap: (value) {
+            widget.onChanged.call(value);
+          },
+          iconData: Icons.home,
+        ),
+        _DrawerItem(
+          value: Routes.history,
+          groupValue: widget.groupValue,
+          title: '历史连接',
+          iconData: Icons.history,
+          onTap: (value) {
+            widget.onChanged.call(value);
+          },
+        ),
+        if (!kIsWeb && Platform.isAndroid)
+          _DrawerItem(
+            value: Routes.netDebug,
+            groupValue: widget.groupValue,
+            iconData: Icons.signal_wifi_4_bar,
+            title: S.of(context).networkDebug,
+            onTap: (value) {
+              widget.onChanged.call(value);
+            },
+          ),
+        // _DrawerItem(
+        //   title: '连接设备',
+        //   value: 1,
+        //   groupValue: widget.groupValue,
+        //   onTap: (index) {
+        //     widget.onChanged?.call(index);
+        //   },
+        //   iconData: Icons.data_saver_off,
+        // ),
+        if (!kIsWeb && Platform.isAndroid)
+          _DrawerItem(
+            value: Routes.installToSystem,
+            groupValue: widget.groupValue,
+            title: '安装到系统',
+            iconData: Icons.file_download,
+            onTap: (value) {
+              widget.onChanged.call(value);
+            },
+          ),
+        if (!Platform.isWindows)
+          _DrawerItem(
+            value: Routes.terminal,
+            groupValue: widget.groupValue,
+            title: '终端模拟器',
+            iconData: Icons.code,
+            onTap: (value) {
+              widget.onChanged.call(value);
+            },
+          ),
+        _DrawerItem(
+          value: Routes.log,
+          groupValue: widget.groupValue,
+          title: S.of(context).log,
+          iconData: Icons.pending_outlined,
+          onTap: (value) async {
+            widget.onChanged.call(value);
+          },
+        ),
+        _DrawerItem(
+          value: Routes.setting,
+          groupValue: widget.groupValue,
+          title: S.of(context).settings,
+          iconData: Icons.settings,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
+        ),
+        _DrawerItem(
+          value: Routes.about,
+          groupValue: widget.groupValue,
+          title: S.of(context).about,
+          iconData: Icons.info_outline,
+          onTap: (index) async {
+            widget.onChanged?.call(index);
+          },
+        ),
+        Builder(builder: (context) {
+          return _DrawerItem(
+            groupValue: widget.groupValue,
+            title: '切换主题',
+            iconData: config.isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+            onTap: (value) {
+              if (config.isDarkTheme) {
+                config.theme = LightTheme();
+              } else {
+                config.theme = DarkTheme();
+              }
+              final ThemeData theme = DefaultThemeData.light(
+                primary: Theme.of(context).primaryColor,
+              );
+              Navigator.of(context).pushReplacement(
+                RippleRoute(
+                    Theme(
+                      data: theme,
+                      child: AdbTool(
+                        initRoute: widget.groupValue,
+                      ),
+                    ),
+                    RouteConfig.fromContext(context)),
+              );
+            },
+          );
+        }),
       ],
     );
   }

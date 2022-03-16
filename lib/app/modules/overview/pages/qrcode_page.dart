@@ -49,12 +49,7 @@ class _QrScanPageState extends State<QrScanPage> {
       final List<Widget> children = [];
       for (final String addr in localAddresList) {
         children.add(
-          NiCardButton(
-            margin: EdgeInsets.zero,
-            shadowColor: Colors.transparent,
-            blurRadius: 0,
-            spreadRadius: 0,
-            color: controller.theme.inputColor,
+          GestureWithScale(
             onTap: () {
               Get.to(
                 Theme(
@@ -90,7 +85,8 @@ class _QrScanPageState extends State<QrScanPage> {
               // AdbUtil.connectDevices('172.24.85.34:5555');
             },
             child: Material(
-              color: Colors.transparent,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(12.w),
               child: Column(
                 children: [
                   QrImage(

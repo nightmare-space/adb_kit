@@ -120,14 +120,14 @@ class DevicesController extends GetxController {
     Future.delayed(const Duration(milliseconds: 1000), () {
       letADBStarted();
     });
-    final List<String> devices = await ADBFind.getLANDevices();
-    for (String ip in devices) {
-      try {
-        await AdbUtil.connectDevices(ip);
-      } on AdbException catch (e) {
-        Log.w('自动连接设备异常 : $e');
-      }
-    }
+    // final List<String> devices = await ADBFind.getLANDevices();
+    // for (String ip in devices) {
+    //   try {
+    //     await AdbUtil.connectDevices(ip);
+    //   } on AdbException catch (e) {
+    //     Log.w('自动连接设备异常 : $e');
+    //   }
+    // }
   }
 
   void letADBStarted() {

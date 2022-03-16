@@ -213,14 +213,13 @@ class _SettingsPageState extends State<SettingsPage>
                     title: S.of(context).primaryColor,
                     suffix: ColorButton(
                       key: const Key('c1'),
-                      color: configController.primaryColor,
+                      color: Theme.of(context).primaryColor,
                       config: const ColorPickerConfig(enableEyePicker: true),
                       size: 40.w,
                       elevation: 0,
                       boxShape: BoxShape.circle, // default : circle
                       swatches: swatches,
                       onColorChanged: (value) {
-                        configController.primaryColor = value;
                         configController.update();
                         setState(() {});
                         Get.forceAppUpdate();
@@ -231,12 +230,36 @@ class _SettingsPageState extends State<SettingsPage>
                     return SettingItem(
                       title: S.of(context).showStatusBar,
                       suffix: AquaSwitch(
-                        activeColor: configController.primaryColor,
+                        activeColor: Theme.of(context).primaryColor,
                         value: configController.showStatusBar,
                         onChanged: configController.changeStatusBarState,
                       ),
                     );
                   }),
+                  SettingItem(
+                    title: '背景风格',
+                    suffix: SelectTab(
+                      value: configController.backgroundStyle ==
+                              BackgroundStyle.normal
+                          ? 0
+                          : 1,
+                      children: const [
+                        Text('默认'),
+                        Text('背景模糊'),
+                        Text('全透明'),
+                      ],
+                      onChanged: (value) {
+                        if (value == 0) {
+                          configController.backgroundStyle =
+                              BackgroundStyle.normal;
+                        } else {
+                          configController.backgroundStyle =
+                              BackgroundStyle.image;
+                        }
+                        Get.forceAppUpdate();
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -288,7 +311,7 @@ class _SettingsPageState extends State<SettingsPage>
                     return SettingItem(
                       title: S.of(context).autoConnectDevice,
                       suffix: AquaSwitch(
-                        activeColor: configController.primaryColor,
+                        activeColor: Theme.of(context).primaryColor,
                         value: configController.autoConnect,
                         onChanged: configController.changeAutoConnectState,
                       ),
@@ -523,7 +546,8 @@ class AquaSwitch extends StatelessWidget {
     return Transform.scale(
       scale: 0.78,
       child: XlivSwitch(
-        unActiveColor: unActiveColor ?? configController.theme.grey.shade300,
+        unActiveColor:
+            unActiveColor ?? Theme.of(context).primaryColor.withOpacity(0.08),
         activeColor: Theme.of(context).primaryColor ?? activeColor,
         thumbColor: thumbColor,
         value: value,
@@ -570,8 +594,14 @@ class _SelectTabState extends State<SelectTab> {
                     height: 40.w,
                     decoration: BoxDecoration(
                       color: i == widget.value
-                          ? configController.theme.grey.shade300
-                          : configController.theme.grey.shade200,
+                          ? Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.11)
+                          : Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.08),
                     ),
                     child: Center(child: widget.children[i]),
                   ),

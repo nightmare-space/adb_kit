@@ -7,11 +7,18 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
 
+enum BackgroundStyle {
+  image,
+  tranparent,
+  normal,
+}
+
 class ConfigController extends GetxController {
   ConfigController() {
     initConfig();
   }
-  Color primaryColor = AppColors.accent;
+  BackgroundStyle backgroundStyle = BackgroundStyle.normal;
+
   bool autoConnect = true;
   bool showStatusBar = true;
 

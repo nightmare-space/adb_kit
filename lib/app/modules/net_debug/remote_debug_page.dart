@@ -187,7 +187,10 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: Dimens.gap_dp8,
                         ),
                         decoration: BoxDecoration(
-                          color: configController.theme.grey.shade100,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.08),
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
@@ -196,8 +199,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                               TextSpan(
                                 text: 'adb connect \$IP',
                                 style: TextStyle(
-                                  color: configController.theme.fontColor
-                                      .withOpacity(0.6),
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -229,7 +232,10 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: 8.0,
                         ),
                         decoration: BoxDecoration(
-                          color: configController.theme.grey.shade100,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.08),
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(

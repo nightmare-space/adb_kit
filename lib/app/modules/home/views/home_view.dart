@@ -52,7 +52,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       Window.enableFullSizeContentView();
     }
     Window.setEffect(
-      effect: WindowEffect.aero,
+      effect: WindowEffect.acrylic,
       color: Colors.transparent,
       dark: false,
     );

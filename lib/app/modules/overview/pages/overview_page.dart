@@ -302,7 +302,7 @@ class CardItem extends StatelessWidget {
       //   color: Colors.grey.withOpacity(0.2),
       //   width: 1.w,
       // ),
-      color: Theme.of(context).cardColor,
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,

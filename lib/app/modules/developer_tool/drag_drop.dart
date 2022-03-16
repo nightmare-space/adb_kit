@@ -1,4 +1,5 @@
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,9 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
       },
       child: AnimatedContainer(
         decoration: BoxDecoration(
-          color: dropping ? AppColors.inputBorderColor : AppColors.background,
+          color: dropping
+              ? AppColors.inputBorderColor
+              : Theme.of(context).colorScheme.surface2,
           borderRadius: BorderRadius.circular(8.w),
         ),
         duration: const Duration(milliseconds: 200),
@@ -85,7 +88,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Material(
-                          color: AppColors.inputBorderColor,
+                          color: Theme.of(context).colorScheme.surface3,
                           borderRadius: BorderRadius.circular(28.w),
                           child: SizedBox(
                             width: 54.w,
