@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "../adbutil"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: adcf6d6c0bb94554646fcc3f3fb7670c3e7bdadd
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -302,9 +304,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "../global_repository"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "00037586a6a3436722d2a22f04145cd4bcc8dfc4"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -388,9 +392,11 @@ packages:
   multicast:
     dependency: "direct main"
     description:
-      path: "../multicast"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ec9746560b28a29ad1d7af71409693b66e3ce358
+      url: "https://github.com/nightmare-space/multicast"
+    source: git
     version: "0.0.1"
   multicast_dns:
     dependency: "direct main"
