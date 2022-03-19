@@ -94,7 +94,7 @@ class Global {
 
   Future<void> _sendBoardCast() async {
     multicast.startSendBoardcast(
-      'find ${await UniqueUtil.getDevicesId()}',
+      ['find ${await UniqueUtil.getDevicesId()}'],
       duration: const Duration(
         milliseconds: 300,
       ),

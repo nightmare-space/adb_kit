@@ -388,11 +388,9 @@ packages:
   multicast:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: f9dc0d1e1b0e7167efbb6e5314971832e3100157
-      url: "https://github.com/nightmare-space/multicast"
-    source: git
+      path: "../multicast"
+      relative: true
+    source: path
     version: "0.0.1"
   multicast_dns:
     dependency: "direct main"

@@ -75,6 +75,8 @@ flutter:
 dependency_overrides:
   global_repository:
     path: ../global_repository
+  multicast:
+    path: ../multicast
   # app_manager:
   #   path: /Users/nightmare/Desktop/nightmare-space/app_manager
 #   adbutil:
