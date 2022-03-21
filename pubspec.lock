@@ -38,7 +38,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d602610f9f83deece40bb0ca93855a0324d66a58
+      resolved-ref: "2546b13bf4037b2953b5a6bb8365da54bdd26070"
       url: "https://github.com/nightmare-space/app_manager"
     source: git
     version: "1.0.0+1"
@@ -57,7 +57,7 @@ packages:
       name: archive
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.2.1"
+    version: "3.2.2"
   async:
     dependency: transitive
     description:
@@ -250,7 +250,7 @@ packages:
       name: flutter_acrylic
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0+1"
+    version: "1.0.0+2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -306,7 +306,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "00037586a6a3436722d2a22f04145cd4bcc8dfc4"
+      resolved-ref: "3bb7ee59040fdf88e3e43554cdde2171353510ff"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -316,7 +316,7 @@ packages:
       name: hive
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.6"
+    version: "2.1.0"
   http:
     dependency: transitive
     description:
@@ -364,7 +364,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: bd842f02320d919cac5e50d29bf8d73738c0d866
+      resolved-ref: "6d88858a49b20211a33c9bcc1b64773d96a0a3bd"
       url: "https://github.com/nightmare-space/logger_view"
     source: git
     version: "0.0.1"
@@ -685,7 +685,7 @@ packages:
       name: win32
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   xml:
     dependency: transitive
     description:
