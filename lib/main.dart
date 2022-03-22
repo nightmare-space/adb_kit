@@ -136,7 +136,9 @@ class _AppEntryPointState extends State<AppEntryPoint>
         Size(screenWidth, screenHeight),
       );
     }
-    ThemeData theme = DefaultThemeData.light();
+    final bool isDark = config.theme is DarkTheme;
+    final ThemeData theme =
+        isDark ? DefaultThemeData.light() : DefaultThemeData.dark();
     return ToastApp(
       child: Stack(
         children: [
@@ -199,9 +201,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
                     }
                     // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
                     // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                    final bool isDark = config.theme is DarkTheme;
-                    final ThemeData theme = DefaultThemeData.light();
-
                     /// NativeShell
                     if (widget.isNativeShell) {
                       return nativeshell.WindowLayoutProbe(
