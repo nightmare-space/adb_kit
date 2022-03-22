@@ -139,7 +139,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       Expanded(
                         child: TextField(
                           controller: editingController,
-                          style: const TextStyle(height: 1.0),
+                          style: const TextStyle(height: 1.2),
                           decoration: InputDecoration(
                             hintText: S.of(context).inputFormat,
                             hintStyle: TextStyle(

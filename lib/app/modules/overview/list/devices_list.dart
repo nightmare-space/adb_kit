@@ -32,7 +32,7 @@ class _DevicesListState extends State<DevicesList> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DevicesController>(
-      builder: (context) {
+      builder: (ctl) {
         return Column(
           children: [
             Stack(
@@ -85,10 +85,11 @@ class _DevicesListState extends State<DevicesList> {
                           SizedBox(
                             width: 8.w,
                           ),
-                          const Text(
+                          Text(
                             'ADB启动中',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ],
@@ -107,7 +108,7 @@ class _DevicesListState extends State<DevicesList> {
                         child: Text(
                           '未连接任何设备',
                           style: TextStyle(
-                            color: configController.theme.fontColor,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),

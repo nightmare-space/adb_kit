@@ -56,7 +56,9 @@ class _TaskManagerState extends State<TaskManager> {
       }
       this.tasks = tasks;
       // tasks = await TaskUtil.getTasks(widget.entity.serial);
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -69,92 +71,106 @@ class _TaskManagerState extends State<TaskManager> {
       itemBuilder: (c, i) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: SizedBox(
-            width: 300.w,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(tasks[i].taskName ?? ''),
-                SizedBox(height: 12.w),
-                Stack(
-                  // alignment: Alignment.center,
-                  // fit: StackFit.passthrough,
-                  children: [
-                    Container(
-                      width: 300.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.w),
-                        color: Theme.of(context).colorScheme.surface1,
-                        boxShadow: [
-                          // BoxShadow(
-                          //   color: Theme.of(context)
-                          //       .colorScheme
-                          //       .shadow
-                          //       .withOpacity(0.1),
-                          //   offset: Offset(0, 0),
-                          //   blurRadius: 10.w,
-                          //   spreadRadius: 2.w,
-                          // ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12.w),
-                        child: Builder(builder: (context) {
-                          if (i == 0) {
-                            return LayoutBuilder(
-                              builder: (context,c) {
-                                return SizedBox(
-                                  width: 64.w,
-                                  height: 64.w,
-                                  child: AppIconHeader(
-                                    channel: channel,
-                                    padding: EdgeInsets.zero,
-                                    packageName: tasks[i].package,
+          child: LayoutBuilder(builder: (context, c) {
+            return SizedBox(
+              width: 300.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(tasks[i].taskName ?? ''),
+                  SizedBox(height: 12.w),
+                  Expanded(
+                    child: IntrinsicHeight(
+                      child: Stack(
+                        // alignment: Alignment.center,
+                        // fit: StackFit.passthrough,
+                        children: [
+                          Container(
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.w),
+                              color: Theme.of(context).colorScheme.surface1,
+                              boxShadow: [
+                                // BoxShadow(
+                                //   color: Theme.of(context)
+                                //       .colorScheme
+                                //       .shadow
+                                //       .withOpacity(0.1),
+                                //   offset: Offset(0, 0),
+                                //   blurRadius: 10.w,
+                                //   spreadRadius: 2.w,
+                                // ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12.w),
+                              child: Builder(builder: (context) {
+                                if (i == 0) {
+                                  return LayoutBuilder(builder: (context, c) {
+                                    return SizedBox(
+                                      // height: 64.w,
+                                      height: c.maxHeight,
+                                      child: Center(
+                                        child: SizedBox(
+                                          width: 54.w,
+                                          child: AppIconHeader(
+                                            channel: channel,
+                                            padding: EdgeInsets.zero,
+                                            packageName: tasks[i].package,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
+                                return LayoutBuilder(builder: (context, c) {
+                                  return Image.network(
+                                    'http://127.0.0.1:${channel.port}/taskthumbnail?id=${tasks[i].taskId}',
+                                    gaplessPlayback: true,
+                                    height: c.maxHeight,
+                                    errorBuilder: (_, __, ___) {
+                                      return Container(
+                                        height: 400.w,
+                                        width: 300.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12.w),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                });
+                              }),
+                            ),
+                          ),
+                          Material(
+                            color: Colors.transparent,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.clear,
+                                    size: 24.w,
                                   ),
-                                );
-                              }
-                            );
-                          }
-                          return Image.network(
-                            'http://127.0.0.1:${channel.port}/taskthumbnail?id=${tasks[i].taskId}',
-                            gaplessPlayback: true,
-                            errorBuilder: (_, __, ___) {
-                              return Container(
-                                height: 400.w,
-                                width: 300.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.w),
+                                  onPressed: () {
+                                    execCmd(
+                                        'adb -s ${widget.entity.serial} shell am force-stop ${tasks[i].package}');
+                                  },
                                 ),
-                              );
-                            },
-                          );
-                        }),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              size: 24.w,
-                            ),
-                            onPressed: () {
-                              execCmd(
-                                  'adb -s ${widget.entity.serial} shell am force-stop ${tasks[i].package}');
-                            },
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  ),
+                  SizedBox(height: 12.w),
+                ],
+              ),
+            );
+          }),
         );
       },
     );

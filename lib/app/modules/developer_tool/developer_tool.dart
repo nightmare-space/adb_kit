@@ -264,7 +264,7 @@ class _DeveloperToolState extends State<DeveloperTool>
         child: SizedBox(
           height: 230.w,
           child: Material(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.surface1,
             borderRadius: BorderRadius.circular(12.w),
             child: Padding(
               padding: padding,
@@ -367,7 +367,7 @@ class _DeveloperToolState extends State<DeveloperTool>
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -473,7 +473,7 @@ class _DeveloperToolState extends State<DeveloperTool>
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -559,7 +559,7 @@ class _DeveloperToolState extends State<DeveloperTool>
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             height: 230.w,
