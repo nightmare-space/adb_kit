@@ -28,7 +28,7 @@ class _LogPageState extends State<LogPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (configController.isDarkTheme) {
+    if (Theme.of(context).brightness == Brightness.dark) {
       logTerminalCTL.theme = TermareStyles.vsCode.copyWith(
         fontSize: 11.w,
         backgroundColor: Colors.transparent,

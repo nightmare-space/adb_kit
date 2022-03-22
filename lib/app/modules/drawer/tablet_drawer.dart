@@ -3,6 +3,7 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/app/routes/ripple_router.dart';
+import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:settings/settings.dart';
 
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
@@ -158,25 +160,32 @@ class _TabletDrawerState extends State<TabletDrawer> {
           return _DrawerItem(
             groupValue: widget.groupValue,
             title: '切换主题',
-            iconData: config.isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+            iconData: Theme.of(context).brightness == Brightness.dark
+                ? Icons.light_mode
+                : Icons.dark_mode,
             onTap: (value) {
-              if (config.isDarkTheme) {
-                config.theme = LightTheme();
-              } else {
-                config.theme = DarkTheme();
-              }
-              final ThemeData theme = DefaultThemeData.light(
+              ThemeData theme = DefaultThemeData.light(
                 primary: Theme.of(context).primaryColor,
               );
+              if (Theme.of(context).brightness == Brightness.light) {
+                theme = DefaultThemeData.dark();
+              }
+              if (theme.brightness == Brightness.dark) {
+                Settings.theme.set = 'dark';
+              } else {
+                Settings.theme.set = 'light';
+              }
+              ConfigController controller = Get.find();
+              controller.theme = theme;
               Navigator.of(context).pushReplacement(
-                RippleRoute(
-                    Theme(
-                      data: theme,
-                      child: AdbTool(
-                        initRoute: widget.groupValue,
-                      ),
+                RippleRoute(GetBuilder<ConfigController>(builder: (context) {
+                  return Theme(
+                    data: context.theme,
+                    child: AdbTool(
+                      initRoute: widget.groupValue,
                     ),
-                    RouteConfig.fromContext(context)),
+                  );
+                }), RouteConfig.fromContext(context)),
               );
             },
           );
@@ -237,8 +246,9 @@ class _DrawerItem extends StatelessWidget {
                     Icon(
                       iconData ?? Icons.open_in_new,
                       size: 24.w,
-                      color:
-                          isChecked ? AppColors.accent : config.theme.fontColor,
+                      color: isChecked
+                          ? AppColors.accent
+                          : Theme.of(context).colorScheme.onBackground,
                     ),
                     SizedBox(height: 4.w),
                     // Text(

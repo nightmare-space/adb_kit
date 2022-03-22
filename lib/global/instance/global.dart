@@ -188,7 +188,7 @@ class Global {
     if (isInit) {
       return;
     }
-    ConfigController controller = Get.find();
+    ConfigController controller = Get.put(ConfigController());
     Log.i('当前系统语言 ${window.locales}');
     Log.i('当前系统主题 ${window.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');

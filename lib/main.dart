@@ -136,13 +136,11 @@ class _AppEntryPointState extends State<AppEntryPoint>
         Size(screenWidth, screenHeight),
       );
     }
-    final bool isDark = config.theme is DarkTheme;
-    final ThemeData theme =
-        isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
+    final ThemeData theme = config.theme;
     return ToastApp(
       child: Stack(
         children: [
-          Builder(builder: (_) {
+          GetBuilder<ConfigController>(builder: (_) {
             if (config.backgroundStyle == BackgroundStyle.normal) {
               return Container(
                 color: theme.colorScheme.background,
@@ -171,7 +169,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   checkerboardRasterCacheImages:
                       config.checkerboardRasterCacheImages,
                   enableLog: false,
-                  color: Colors.teal,
                   debugShowCheckedModeBanner: false,
                   title: 'ADB工具箱',
                   navigatorKey: Global.instance.navigatorKey,
@@ -193,7 +190,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   getPages: AdbPages.routes + AppPages.routes,
                   builder: (BuildContext context, Widget navigator) {
                     Size size = MediaQuery.of(context).size;
-
                     if (size.width > size.height) {
                       context.init(896);
                     } else {

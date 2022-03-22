@@ -90,7 +90,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     return Stack(
       children: [
         AnnotatedRegion<SystemUiOverlayStyle>(
-          value: configController.theme is DarkTheme
+          value: Theme.of(context).brightness == Brightness.dark
               ? OverlayStyle.light
               : OverlayStyle.dark,
           child: Responsive(
@@ -120,7 +120,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                   break;
                 case ScreenType.tablet:
                   return Scaffold(
-                    // backgroundColor: Colors.transparent,
                     body: Row(
                       children: [
                         TabletDrawer(
@@ -141,7 +140,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                   break;
                 case ScreenType.phone:
                   return Scaffold(
-                    backgroundColor: configController.theme.background,
                     drawer: DesktopPhoneDrawer(
                       width: MediaQuery.of(context).size.width * 2 / 3,
                       groupValue: route,

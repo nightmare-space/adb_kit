@@ -24,18 +24,18 @@ class ConfigController extends GetxController {
 
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
-  YanTheme theme = LightTheme();
+  ThemeData theme = DefaultThemeData.light();
 
-  Map<String, YanTheme> themeMap = {
-    'light': LightTheme(),
-    'dark': DarkTheme(),
+  Map<String, ThemeData> themeMap = {
+    'light': DefaultThemeData.light(),
+    'dark': DefaultThemeData.dark(),
   };
   Map<String, Locale> languageMap = {
     'chinese': chinese,
     'english': english,
   };
 
-  bool get isDarkTheme => theme is DarkTheme;
+  // bool get isDarkTheme => theme is DarkTheme;
   Locale locale = chinese;
   ScreenType screenType;
   bool get needShowMenuButton =>
@@ -73,9 +73,9 @@ class ConfigController extends GetxController {
     Get.updateLocale(locale);
   }
 
-  void changeTheme(YanTheme theme) {
+  void changeTheme(ThemeData theme) {
     this.theme = theme;
-    if (isDarkTheme) {
+    if (theme.brightness == Brightness.dark) {
       Settings.theme.set = 'dark';
     } else {
       Settings.theme.set = 'light';

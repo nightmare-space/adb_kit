@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/color_extension.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -122,14 +122,13 @@ class DefaultThemeData {
   static ThemeData light({
     Color primary,
   }) {
-    ConfigController controller = Get.find();
     final lightThemeData = ThemeData.light();
     ColorScheme colorScheme = lightColorScheme;
     return lightThemeData.copyWith(
       primaryColor: colorScheme.primary,
       colorScheme: colorScheme,
       // Desktop有高斯模糊背景
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: colorScheme.background,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
       ),
@@ -165,8 +164,7 @@ class DefaultThemeData {
         filled: true,
       ),
       appBarTheme: lightThemeData.appBarTheme.copyWith(
-        systemOverlayStyle:
-            controller.isDarkTheme ? OverlayStyle.light : OverlayStyle.dark,
+        systemOverlayStyle: OverlayStyle.dark,
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -179,7 +177,7 @@ class DefaultThemeData {
         titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
           fontSize: 18.w,
           fontWeight: FontWeight.bold,
-          color: controller.theme.fontColor,
+          color: colorScheme.onBackground,
         ),
       ),
       tabBarTheme: lightThemeData.tabBarTheme.copyWith(
@@ -207,7 +205,7 @@ class DefaultThemeData {
         color: colorScheme.outline,
         space: Dimens.gap_dp1,
       ),
-      cardColor: controller.theme.cardColor,
+      cardColor: colorScheme.surface1,
       popupMenuTheme: PopupMenuThemeData(
         color: colorScheme.surface,
       ),
@@ -215,7 +213,7 @@ class DefaultThemeData {
         bodyText2: lightThemeData.textTheme.bodyText2.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w500,
-          color: controller.theme.fontColor,
+          color: colorScheme.onBackground,
         ),
       ),
     );

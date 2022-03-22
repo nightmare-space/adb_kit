@@ -48,7 +48,7 @@ class _OverviewPageState extends State<OverviewPage> {
             NiIconButton(
               child: SvgPicture.asset(
                 GlobalAssets.qrCode,
-                color: controller.theme.fontColor,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
               onTap: () async {
                 ScanUtil.parseScan();
@@ -144,7 +144,9 @@ class _OverviewPageState extends State<OverviewPage> {
                             hintText: S.of(context).inputFormat,
                             hintStyle: TextStyle(
                               fontSize: 14.w,
-                              color: configController.theme.fontColor
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onBackground
                                   .withOpacity(0.8),
                             ),
                             isDense: true,

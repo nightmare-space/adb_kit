@@ -11,7 +11,7 @@ class TerminalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (configController.isDarkTheme) {
+    if (Theme.of(context).brightness == Brightness.dark) {
       Global().termareController.theme = TermareStyles.vsCode.copyWith(
         backgroundColor: Colors.transparent,
       );
