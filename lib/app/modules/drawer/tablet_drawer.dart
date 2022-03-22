@@ -33,7 +33,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Material(
-          color: config.theme.cardColor,
+          color: Theme.of(context).colorScheme.background,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Dimens.gap_dp20),

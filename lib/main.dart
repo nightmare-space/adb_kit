@@ -138,7 +138,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
     }
     final bool isDark = config.theme is DarkTheme;
     final ThemeData theme =
-        isDark ? DefaultThemeData.light() : DefaultThemeData.dark();
+        isDark ? DefaultThemeData.dark() : DefaultThemeData.light();
     return ToastApp(
       child: Stack(
         children: [
