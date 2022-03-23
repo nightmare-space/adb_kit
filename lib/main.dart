@@ -32,6 +32,7 @@ Future<void> main() async {
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
+  Log.d(StackTrace.current);
   Get.config(enableLog: false);
   runZonedGuarded<Future<void>>(
     () async {

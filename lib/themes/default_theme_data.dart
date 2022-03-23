@@ -74,46 +74,36 @@ class DefaultThemeData {
       popupMenuTheme: PopupMenuThemeData(
         color: darkColorScheme.surface,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: darkColorScheme.primary.withOpacity(0.08),
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 12.w,
+          vertical: 12.w,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.w),
+          gapPadding: 0,
+          borderSide: const BorderSide(
+            width: 0,
+            color: Colors.transparent,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.w),
+          gapPadding: 0,
+          borderSide: const BorderSide(
+            width: 0,
+            color: Colors.transparent,
+          ),
+        ),
+        filled: true,
+      ),
       textTheme: darkThemeData.textTheme.copyWith(
-        headline5: darkThemeData.textTheme.headline5.copyWith(
-          fontSize: Dimens.font_sp24,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFFE7E7E7),
-        ),
-        headline6: darkThemeData.textTheme.headline6.copyWith(
-          fontSize: Dimens.font_sp20,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFFE7E7E7),
-        ),
-        subtitle1: darkThemeData.textTheme.subtitle1.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFFE7E7E7),
-        ),
-        subtitle2: darkThemeData.textTheme.subtitle2.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFFE7E7E7),
-        ),
-        bodyText1: darkThemeData.textTheme.bodyText1.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFFE7E7E7),
-        ),
         bodyText2: darkThemeData.textTheme.bodyText1.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w400,
           color: const Color(0xFFE7E7E7),
-        ),
-        button: darkThemeData.textTheme.button.copyWith(
-          fontSize: Dimens.font_sp16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFFFFFFFF),
-        ),
-        caption: darkThemeData.textTheme.caption.copyWith(
-          fontSize: Dimens.font_sp12,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF8C8C8C),
         ),
       ),
     );
