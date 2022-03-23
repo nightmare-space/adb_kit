@@ -124,8 +124,8 @@ class _SettingsPageState extends State<SettingsPage>
                                   Text(S.of(context).pad),
                                 ],
                                 onChanged: (value) {
-                                  configController
-                                      .changeScreenType(ScreenType.values[value]);
+                                  configController.changeScreenType(
+                                      ScreenType.values[value]);
                                 },
                               ),
                               SizedBox(height: 4.w),
@@ -185,9 +185,11 @@ class _SettingsPageState extends State<SettingsPage>
                         ],
                         onChanged: (value) {
                           if (value == 0) {
-                            configController.changeTheme(DefaultThemeData.dark());
+                            configController
+                                .changeTheme(DefaultThemeData.dark());
                           } else {
-                            configController.changeTheme(DefaultThemeData.light());
+                            configController
+                                .changeTheme(DefaultThemeData.light());
                           }
                         },
                       ),
@@ -195,9 +197,10 @@ class _SettingsPageState extends State<SettingsPage>
                     SettingItem(
                       title: S.of(context).language,
                       suffix: SelectTab(
-                        value: configController.locale == ConfigController.english
-                            ? 1
-                            : 0,
+                        value:
+                            configController.locale == ConfigController.english
+                                ? 1
+                                : 0,
                         children: const [
                           Text('中文'),
                           Text('English'),
@@ -359,7 +362,8 @@ class _SettingsPageState extends State<SettingsPage>
                       title: S.of(context).showPerformanceOverlay,
                       suffix: AquaSwitch(
                         value: configController.showPerformanceOverlay,
-                        onChanged: configController.showPerformanceOverlayChange,
+                        onChanged:
+                            configController.showPerformanceOverlayChange,
                       ),
                     ),
                     SettingItem(
@@ -561,8 +565,7 @@ class AquaSwitch extends StatelessWidget {
     return Transform.scale(
       scale: 0.78,
       child: XlivSwitch(
-        unActiveColor:
-            unActiveColor ?? Theme.of(context).primaryColor.withOpacity(0.08),
+        unActiveColor: unActiveColor ?? Theme.of(context).colorScheme.surface1,
         activeColor: Theme.of(context).primaryColor ?? activeColor,
         thumbColor: thumbColor,
         value: value,

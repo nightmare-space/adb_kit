@@ -1,8 +1,10 @@
 library adb_tool;
 
 import 'dart:async';
+import 'dart:collection';
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
@@ -16,6 +18,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 import 'package:settings/settings.dart';
+import 'package:statsfl/statsfl.dart';
 import 'app/controller/devices_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
@@ -66,6 +69,57 @@ Future<void> main() async {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
+  start();
+}
+
+const maxframes = 100; // 100 帧足够了，对于 60 fps 来说
+final lastFrames = ListQueue<FrameTiming>(maxframes);
+
+// 需监听fps时注册
+void start() {
+  SchedulerBinding.instance.addTimingsCallback(onReportTimings);
+}
+
+// 不需监听时移除
+void stop() {
+  SchedulerBinding.instance.removeTimingsCallback(onReportTimings);
+}
+
+void onReportTimings(List<FrameTiming> timings) {
+  for (FrameTiming timing in timings) {
+    lastFrames.addFirst(timing);
+  }
+
+  while (lastFrames.length >= maxframes) {
+    lastFrames.removeLast();
+  }
+  print("fps : $fps");
+}
+
+const frameInterval =
+    const Duration(microseconds: Duration.microsecondsPerSecond ~/ 90);
+
+double get fps {
+  var lastFramesSet = <FrameTiming>[];
+  for (FrameTiming timing in lastFrames) {
+    if (lastFramesSet.isEmpty) {
+      lastFramesSet.add(timing);
+    } else {
+      var lastStart =
+          lastFramesSet.last.timestampInMicroseconds(FramePhase.buildStart);
+      if (lastStart - timing.timestampInMicroseconds(FramePhase.rasterFinish) >
+          (frameInterval.inMicroseconds * 2)) {
+        // in different set
+        break;
+      }
+      lastFramesSet.add(timing);
+    }
+  }
+  var frameCount = lastFramesSet.length;
+  var costCount = lastFramesSet.map((t) {
+    return (t.totalSpan.inMicroseconds ~/ frameInterval.inMicroseconds) + 1;
+  }).fold(0, (a, b) => a + b);
+  return frameCount * 90 / costCount;
 }
 
 Future<void> initSetting() async {
