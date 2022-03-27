@@ -32,7 +32,7 @@ class HistoryPage extends GetView<HistoryController> {
     return Scaffold(
       appBar: appBar,
       body: GetBuilder<HistoryController>(
-        builder: (_) {
+        builder: (ctl) {
           if (controller.adbHistorys.data.isEmpty) {
             return Center(
               child: Text(
@@ -43,116 +43,149 @@ class HistoryPage extends GetView<HistoryController> {
               ),
             );
           }
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-            child: CardItem(
-              padding: EdgeInsets.zero,
-              child: ListView.builder(
-                itemCount: controller.adbHistorys.data.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (c, i) {
-                  final Data adbEntity = controller.adbHistorys.data[i];
-                  return InkWell(
-                    onTap: () async {
-                      AdbResult result;
-                      try {
-                        String suffix = '';
-                        if (adbEntity.port != null) {
-                          suffix = ':${adbEntity.port}';
-                        }
-                        result = await AdbUtil.connectDevices(
-                          adbEntity.address + suffix,
-                        );
-                        showToast(result.message);
-                      } on AdbException catch (e) {
-                        showToast(e.message);
-                      }
-                    },
-                    child: SizedBox(
-                      height: 64.w,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Dimens.gap_dp16,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    adbEntity.name ?? '',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+              child: Stack(
+                children: [
+                  CardItem(
+                    padding: EdgeInsets.zero,
+                    child: ListView.builder(
+                      itemCount: controller.adbHistorys.data.length,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (c, i) {
+                        final Data adbEntity = controller.adbHistorys.data[i];
+                        return Dismissible(
+                          key: Key(i.toString()),
+                          onDismissed: (direction) {
+                            ctl.removeHis(i);
+                          },
+                          child: InkWell(
+                            onTap: () async {
+                              AdbResult result;
+                              try {
+                                String suffix = '';
+                                if (adbEntity.port != null) {
+                                  suffix = ':${adbEntity.port}';
+                                }
+                                result = await AdbUtil.connectDevices(
+                                  adbEntity.address + suffix,
+                                );
+                                showToast(result.message);
+                              } on AdbException catch (e) {
+                                showToast(e.message);
+                              }
+                            },
+                            child: SizedBox(
+                              height: 64.w,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: Dimens.gap_dp16,
                                   ),
-                                  Row(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: CandyColors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(4.w),
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 4.w,
-                                          vertical: 2.w,
-                                        ),
-                                        child: Text(
-                                          adbEntity.port ?? '5555',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Colors.white.withOpacity(0.8),
-                                            fontSize: 10.w,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            adbEntity.name ?? '',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 4.w,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: CandyColors.orange,
-                                          borderRadius:
-                                              BorderRadius.circular(4.w),
-                                        ),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 4.w,
-                                          vertical: 2.w,
-                                        ),
-                                        child: Text(
-                                          DateTime.parse(adbEntity.connectTime)
-                                              .getTimeString(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Colors.white.withOpacity(0.8),
-                                            fontSize: 10.w,
+                                          Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: CandyColors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4.w),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.w,
+                                                  vertical: 2.w,
+                                                ),
+                                                child: Text(
+                                                  adbEntity.port ?? '5555',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white
+                                                        .withOpacity(0.8),
+                                                    fontSize: 10.w,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 4.w,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: CandyColors.orange,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4.w),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 4.w,
+                                                  vertical: 2.w,
+                                                ),
+                                                child: Text(
+                                                  DateTime.parse(
+                                                          adbEntity.connectTime)
+                                                      .getTimeString(),
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white
+                                                        .withOpacity(0.8),
+                                                    fontSize: 10.w,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                        ],
+                                      ),
+                                      Text(
+                                        adbEntity.address,
+                                        style: const TextStyle(
+                                          color: AppColors.grey,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              Text(
-                                adbEntity.address,
-                                style: const TextStyle(
-                                  color: AppColors.grey,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
+                        );
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(8.w),
+                      margin: EdgeInsets.all(8.w),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        '左右滑动对应的历史可以删除',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 12.w,
                         ),
                       ),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
           );

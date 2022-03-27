@@ -106,6 +106,11 @@ class HistoryController extends GetxController {
     });
   }
 
+  void removeHis(int index) {
+    adbHistorys.data.removeAt(index);
+    saveToLocal();
+  }
+
   void _updateHistory(Data data) {
     try {
       final Data preData = adbHistorys.data.firstWhere(

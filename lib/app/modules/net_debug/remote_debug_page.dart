@@ -29,7 +29,6 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
 
   Future<void> init() async {
     address = await PlatformUtil.localAddress();
-    Log.v('address->$address');
     setState(() {});
     final String result = await execCmd('getprop service.adb.tcp.port');
     if (result == '5555') {

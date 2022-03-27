@@ -4,11 +4,9 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: adcf6d6c0bb94554646fcc3f3fb7670c3e7bdadd
-      url: "https://github.com/nightmare-space/adbutil"
-    source: git
+      path: "../adbutil"
+      relative: true
+    source: path
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -27,20 +25,16 @@ packages:
   app_launcher:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "325eecc5f34c914f40b6d892ba861013e947c8a4"
-      url: "https://github.com/nightmare-space/app_launcher"
-    source: git
+      path: "../app_launcher"
+      relative: true
+    source: path
     version: "1.0.0+1"
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "2546b13bf4037b2953b5a6bb8365da54bdd26070"
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
+      relative: false
+    source: path
     version: "1.0.0+1"
   applib_util:
     dependency: transitive
@@ -212,11 +206,9 @@ packages:
   file_selector_nightmare:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a5cc81d4e7cba24f5cc6f7ce089d0d59eb19dd4f
-      url: "https://github.com/nightmare-space/file_selector_meng"
-    source: git
+      path: "../file_selector_meng"
+      relative: true
+    source: path
     version: "1.0.0+1"
   file_selector_platform_interface:
     dependency: transitive
@@ -304,11 +296,9 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a7b27b44c41be567fbee6abff051abd120455354
-      url: "https://github.com/nightmare-space/global_repository"
-    source: git
+      path: "../global_repository"
+      relative: true
+    source: path
     version: "0.0.1"
   hive:
     dependency: transitive

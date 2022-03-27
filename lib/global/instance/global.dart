@@ -78,8 +78,8 @@ class Global {
             final devicesCTL = Get.find<DevicesController>();
             if (devicesCTL.getDevicesByIp(address) == null) {
               try {
-                AdbUtil.connectDevices(address);
-              } catch (e) {
+                AdbResult result = await AdbUtil.connectDevices(address);
+              } on AdbException catch (e) {
                 Log.e('通过UDP发现自动连接设备失败 : $e');
               }
             }

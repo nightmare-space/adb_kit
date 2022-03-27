@@ -10,7 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/log_page.dart';
 import 'package:adb_tool/config/settings.dart';
-import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/app_manager.dart' as am;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -48,6 +48,7 @@ Future<void> main() async {
       await initSetting();
       Get.put(ConfigController());
       Global.instance.initGlobal();
+      am.AppManager.globalInstance;
       if (useNativeShell) {
         runApp(const NativeShellWrapper());
       } else {
@@ -221,7 +222,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
       ),
       defaultTransition: Transition.fadeIn,
       initialRoute: AdbPages.initial,
-      getPages: AdbPages.routes + AppPages.routes,
+      getPages: AdbPages.routes + am.AppPages.routes,
       builder: (BuildContext context, Widget navigator) {
         Size size = MediaQuery.of(context).size;
         if (size.width > size.height) {
@@ -317,7 +318,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
                       ),
                       defaultTransition: Transition.fadeIn,
                       initialRoute: AdbPages.initial,
-                      getPages: AdbPages.routes + AppPages.routes,
+                      getPages: AdbPages.routes + am.AppPages.routes,
                       builder: (BuildContext context, Widget navigator) {
                         Size size = MediaQuery.of(context).size;
                         if (size.width > size.height) {
