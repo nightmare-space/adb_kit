@@ -73,7 +73,6 @@ class _TaskManagerState extends State<TaskManager> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: LayoutBuilder(builder: (context, c) {
             return SizedBox(
-              width: 300.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -86,7 +85,6 @@ class _TaskManagerState extends State<TaskManager> {
                         // fit: StackFit.passthrough,
                         children: [
                           Container(
-                            width: 300.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.w),
                               color: Theme.of(context).colorScheme.surface1,
