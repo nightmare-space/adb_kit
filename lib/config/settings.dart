@@ -6,4 +6,5 @@ class Settings {
   static const primaryColor = 'PrimaryColor';
   static const autoConnectDevice = 'AutoConnectDevice';
   static const screenType = 'ScreenType';
+  static const backgroundStyle = 'BackgroundStyle';
 }

@@ -245,27 +245,36 @@ class _SettingsPageState extends State<SettingsPage>
                         ),
                       );
                     }),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                      ),
+                      child: Text(
+                        '背景风格',
+                        style: TextStyle(
+                          // color: Theme.of(context).colorScheme.primaryVariant,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18.w,
+                          // height: 1.0,
+                        ),
+                      ),
+                    ),
                     SettingItem(
-                      title: '背景风格',
+                      title: '',
                       suffix: SelectTab(
-                        value: configController.backgroundStyle ==
-                                BackgroundStyle.normal
-                            ? 0
-                            : 1,
+                        value: configController.backgroundStyle.index,
                         children: const [
                           Text('默认'),
                           Text('背景模糊'),
                           Text('全透明'),
                         ],
                         onChanged: (value) {
-                          if (value == 0) {
-                            configController.backgroundStyle =
-                                BackgroundStyle.normal;
-                          } else {
-                            configController.backgroundStyle =
-                                BackgroundStyle.image;
-                          }
-                          Get.forceAppUpdate();
+                          configController.changeBackgroundStyle(
+                            BackgroundStyle.values[value],
+                          );
                         },
                       ),
                     ),
@@ -608,7 +617,7 @@ class _SelectTabState extends State<SelectTab> {
                     Feedback.wrapForLongPress(() {}, context);
                   },
                   child: Container(
-                    width: 100.w,
+                    width: 96.w,
                     height: 40.w,
                     decoration: BoxDecoration(
                       color: i == widget.value

@@ -118,7 +118,8 @@ class DefaultThemeData {
       primaryColor: colorScheme.primary,
       colorScheme: colorScheme,
       // Desktop有高斯模糊背景
-      scaffoldBackgroundColor: colorScheme.background,
+      scaffoldBackgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
       ),
@@ -187,7 +188,6 @@ class DefaultThemeData {
           fontSize: Dimens.font_sp16,
         ),
       ),
-      backgroundColor: colorScheme.background,
       unselectedWidgetColor: const Color(0xFFBFBFBF),
       toggleableActiveColor: colorScheme.primary,
       dividerColor: colorScheme.outline,

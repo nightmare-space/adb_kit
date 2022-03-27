@@ -8,9 +8,9 @@ import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
 
 enum BackgroundStyle {
+  normal,
   image,
   tranparent,
-  normal,
 }
 
 class ConfigController extends GetxController {
@@ -35,15 +35,34 @@ class ConfigController extends GetxController {
     'english': english,
   };
 
+  void changeBackgroundStyle(BackgroundStyle style) {
+    backgroundStyle = style;
+    if (backgroundStyle != null) {
+      Settings.backgroundStyle.set = backgroundStyle.name;
+    }
+    Get.forceAppUpdate();
+  }
+
   // bool get isDarkTheme => theme is DarkTheme;
   Locale locale = chinese;
   ScreenType screenType;
   bool get needShowMenuButton =>
       screenType == ScreenType.phone ||
       (screenType == null && GetPlatform.isAndroid);
+
+  bool isInit = false;
   void initConfig() {
+    if (isInit) {
+      return;
+    }
+    isInit = true;
     if (Settings.screenType.get != null && Settings.screenType.get.isNotEmpty) {
       screenType = ScreenType.values.byName(Settings.screenType.get);
+    }
+    if (Settings.backgroundStyle.get != null) {
+      backgroundStyle = BackgroundStyle.values.byName(
+        Settings.backgroundStyle.get,
+      );
     }
     if (themeMap.containsKey(Settings.theme.get)) {
       theme = themeMap[Settings.theme.get];
@@ -51,6 +70,7 @@ class ConfigController extends GetxController {
     if (languageMap.containsKey(Settings.language.get)) {
       locale = languageMap[Settings.language.get];
     }
+
     autoConnect = Settings.autoConnectDevice.get ?? autoConnect;
   }
 

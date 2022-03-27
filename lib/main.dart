@@ -26,6 +26,8 @@ import 'generated/l10n.dart';
 import 'global/instance/global.dart';
 import 'themes/app_colors.dart';
 import 'themes/theme.dart';
+import 'utils/fps.dart';
+import 'package:fps_monitor/fps_monitor.dart';
 
 // 这个值由shell去替换
 bool useNativeShell = false;
@@ -35,7 +37,7 @@ Future<void> main() async {
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
-  Log.d(StackTrace.current);
+  // Log.d(StackTrace.current);
   Get.config(enableLog: false);
   runZonedGuarded<Future<void>>(
     () async {
@@ -69,10 +71,13 @@ Future<void> main() async {
       systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
-  start();
+  // Fps.instance.registerCallBack((fps, dropCount) {
+  //   Log.i(fps);
+  // });
+  // start();
 }
 
-const maxframes = 100; // 100 帧足够了，对于 60 fps 来说
+const maxframes = 120; // 100 帧足够了，对于 60 fps 来说
 final lastFrames = ListQueue<FrameTiming>(maxframes);
 
 // 需监听fps时注册
@@ -119,7 +124,7 @@ double get fps {
   var costCount = lastFramesSet.map((t) {
     return (t.totalSpan.inMicroseconds ~/ frameInterval.inMicroseconds) + 1;
   }).fold(0, (a, b) => a + b);
-  return frameCount * 90 / costCount;
+  return frameCount * maxframes / costCount;
 }
 
 Future<void> initSetting() async {
@@ -192,6 +197,70 @@ class _AppEntryPointState extends State<AppEntryPoint>
       );
     }
     final ThemeData theme = config.theme;
+    Widget materialApp = GetMaterialApp(
+      showPerformanceOverlay: config.showPerformanceOverlay,
+      showSemanticsDebugger: config.showSemanticsDebugger,
+      debugShowMaterialGrid: config.debugShowMaterialGrid,
+      checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
+      enableLog: false,
+      debugShowCheckedModeBanner: false,
+      title: 'ADB工具箱',
+      navigatorKey: Global.instance.navigatorKey,
+      themeMode: ThemeMode.light,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: config.locale,
+      supportedLocales: S.delegate.supportedLocales,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      defaultTransition: Transition.fadeIn,
+      initialRoute: AdbPages.initial,
+      getPages: AdbPages.routes + AppPages.routes,
+      builder: (BuildContext context, Widget navigator) {
+        Size size = MediaQuery.of(context).size;
+        if (size.width > size.height) {
+          context.init(896);
+        } else {
+          context.init(414);
+        }
+        // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+        // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+        /// NativeShell
+        if (widget.isNativeShell) {
+          return nativeshell.WindowLayoutProbe(
+            child: SizedBox(
+              width: 800,
+              height: 600,
+              child: Theme(
+                data: theme,
+                child: navigator,
+              ),
+            ),
+          );
+        }
+
+        ///
+        ///
+        ///
+        /// Default Mode
+        ///
+
+        return Responsive(builder: (context, _) {
+          return Theme(
+            data: theme,
+            child: navigator,
+          );
+        });
+      },
+    );
+    Widget toastApp = ToastApp(child: materialApp);
+    Widget fpsWrapper = FPSPage(child: materialApp);
     return ToastApp(
       child: Stack(
         children: [
@@ -200,7 +269,8 @@ class _AppEntryPointState extends State<AppEntryPoint>
               return Container(
                 color: theme.colorScheme.background,
               );
-            } else {
+            }
+            if (config.backgroundStyle == BackgroundStyle.image) {
               return SizedBox(
                 height: double.infinity,
                 child: Image.asset(
@@ -208,79 +278,98 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   fit: BoxFit.cover,
                 ),
               );
+            } else {
+              return const SizedBox();
             }
           }),
           BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: 10.0,
-              sigmaY: 10.0,
+              sigmaX: 24.0,
+              sigmaY: 24.0,
             ),
-            child: GetBuilder<ConfigController>(
-              builder: (context) {
-                return GetMaterialApp(
-                  showPerformanceOverlay: config.showPerformanceOverlay,
-                  showSemanticsDebugger: config.showSemanticsDebugger,
-                  debugShowMaterialGrid: config.debugShowMaterialGrid,
-                  checkerboardRasterCacheImages:
-                      config.checkerboardRasterCacheImages,
-                  enableLog: false,
-                  debugShowCheckedModeBanner: false,
-                  title: 'ADB工具箱',
-                  navigatorKey: Global.instance.navigatorKey,
-                  themeMode: ThemeMode.light,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  locale: config.locale,
-                  supportedLocales: S.delegate.supportedLocales,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  defaultTransition: Transition.fadeIn,
-                  initialRoute: AdbPages.initial,
-                  getPages: AdbPages.routes + AppPages.routes,
-                  builder: (BuildContext context, Widget navigator) {
-                    Size size = MediaQuery.of(context).size;
-                    if (size.width > size.height) {
-                      context.init(896);
-                    } else {
-                      context.init(414);
-                    }
-                    // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                    // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                    /// NativeShell
-                    if (widget.isNativeShell) {
-                      return nativeshell.WindowLayoutProbe(
-                        child: SizedBox(
-                          width: 800,
-                          height: 600,
-                          child: Theme(
+            child: Container(
+              color: theme.colorScheme.background.withOpacity(0.6),
+              child: GetBuilder<ConfigController>(
+                builder: (context) {
+                  return FPSPage(
+                    child: GetMaterialApp(
+                      showPerformanceOverlay: config.showPerformanceOverlay,
+                      showSemanticsDebugger: config.showSemanticsDebugger,
+                      debugShowMaterialGrid: config.debugShowMaterialGrid,
+                      checkerboardRasterCacheImages:
+                          config.checkerboardRasterCacheImages,
+                      enableLog: false,
+                      debugShowCheckedModeBanner: false,
+                      title: 'ADB工具箱',
+                      navigatorKey: Global.instance.navigatorKey,
+                      themeMode: ThemeMode.light,
+                      localizationsDelegates: const [
+                        S.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      locale: config.locale,
+                      supportedLocales: S.delegate.supportedLocales,
+                      theme: ThemeData(
+                        primarySwatch: Colors.blue,
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                      ),
+                      defaultTransition: Transition.fadeIn,
+                      initialRoute: AdbPages.initial,
+                      getPages: AdbPages.routes + AppPages.routes,
+                      builder: (BuildContext context, Widget navigator) {
+                        Size size = MediaQuery.of(context).size;
+                        if (size.width > size.height) {
+                          context.init(896);
+                        } else {
+                          context.init(414);
+                        }
+                        // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                        // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                        /// NativeShell
+                        if (widget.isNativeShell) {
+                          return nativeshell.WindowLayoutProbe(
+                            child: SizedBox(
+                              width: 800,
+                              height: 600,
+                              child: Theme(
+                                data: theme,
+                                child: navigator,
+                              ),
+                            ),
+                          );
+                        }
+
+                        ///
+                        ///
+                        ///
+                        /// Default Mode
+                        ///
+
+                        return Responsive(builder: (context, _) {
+                          return Theme(
                             data: theme,
                             child: navigator,
-                          ),
-                        ),
-                      );
-                    }
-
-                    ///
-                    ///
-                    ///
-                    /// Default Mode
-                    ///
-
-                    return Responsive(builder: (context, _) {
-                      return Theme(
-                        data: theme,
-                        child: navigator,
-                      );
-                    });
-                  },
-                );
-              },
+                          );
+                        });
+                      },
+                    ),
+                  );
+                  return StatsFl(
+                    isEnabled: true, //Toggle on/off
+                    width: 600, //Set size
+                    height: 40, //
+                    maxFps: 120, // Support custom FPS target (default is 60)
+                    showText: true, // Hide text label
+                    sampleTime:
+                        .5, //Interval between fps calculations, in seconds.
+                    totalTime: 15, //Total length of timeline, in seconds.
+                    align: Alignment.topCenter, //Alignment of statsbox
+                    child: materialApp,
+                  );
+                },
+              ),
             ),
           ),
         ],

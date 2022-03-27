@@ -86,7 +86,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    TitlebarSafeArea();
     return Stack(
       children: [
         AnnotatedRegion<SystemUiOverlayStyle>(
@@ -120,6 +119,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                   break;
                 case ScreenType.tablet:
                   return Scaffold(
+                    
                     body: Row(
                       children: [
                         TabletDrawer(
