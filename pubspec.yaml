@@ -71,19 +71,21 @@ flutter:
     - CHANGELOG.md
 
 dependency_overrides:
-  # global_repository:
-  #   path: ../global_repository
+  global_repository:
+    path: ../global_repository
+  app_launcher:
+    path: ../app_launcher
   # multicast:
   #   path: ../multicast
   # app_manager:
   #   path: /Users/nightmare/Desktop/nightmare-space/app_manager
 #   adbutil:
-#   app_manager:
-#     path: /Users/nightmare/Desktop/nightmare-space/app_manager
-  # adbutil:
-  #   path: ../adbutil
-  #   path: C:\Users\90626\Desktop\nightmare-space\adbutil
-#     path: /Users/nightmare/Desktop/nightmare-space/adbutil
+  app_manager:
+    path: /Users/nightmare/Desktop/nightmare-space/app_manager
+  adbutil:
+    path: ../adbutil
+  file_selector_nightmare:
+    path: ../file_selector_meng
 #   signale:
 #     path: /Users/nightmare/Desktop/nightmare-space/signale
 #   settings:

@@ -3,6 +3,8 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/dex_server.dart';
 import 'package:app_launcher/app_launcher.dart';
 import 'package:app_manager/app_manager.dart';
+import 'package:app_manager/controller/app_manager_controller.dart';
+import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -20,6 +22,7 @@ class AppLauncherWrapper extends StatefulWidget {
 }
 
 class _AppLauncherWrapperState extends State<AppLauncherWrapper> {
+  AppManagerController controller = Get.find();
   @override
   void initState() {
     super.initState();
@@ -28,9 +31,10 @@ class _AppLauncherWrapperState extends State<AppLauncherWrapper> {
   }
 
   Future<void> startServer() async {
-    await DexServer.startServer(
+    AppChannel appChannel = await DexServer.startServer(
       widget.devicesEntity.serial,
     );
+    controller.setAppChannel(appChannel);
     if (mounted) {
       setState(() {});
     }

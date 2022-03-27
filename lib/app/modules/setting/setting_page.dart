@@ -335,7 +335,7 @@ class _SettingsPageState extends State<SettingsPage>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const ItemHeader(color: CandyColors.candyPink),
+                    const ItemHeader(color: CandyColors.candyGreen),
                     Text(
                       S.of(context).developerSettings,
                       style: TextStyle(
