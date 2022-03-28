@@ -145,6 +145,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.3"
+  device_info:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "7221359158a0789d10ee92b4c45240f3d9fc9fe5"
+      url: "https://github.com/nightmare-space/device_info.git"
+    source: git
+    version: "1.0.0+1"
   dio:
     dependency: "direct main"
     description:
@@ -152,6 +161,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.4"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.3"
   event_bus:
     dependency: transitive
     description:
@@ -231,6 +247,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.2+1"
+  fl_chart:
+    dependency: transitive
+    description:
+      name: fl_chart
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.50.0"
   flutter:
     dependency: "direct main"
     description: flutter

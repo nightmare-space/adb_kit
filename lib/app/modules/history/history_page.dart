@@ -60,108 +60,7 @@ class HistoryPage extends GetView<HistoryController> {
                           onDismissed: (direction) {
                             ctl.removeHis(i);
                           },
-                          child: InkWell(
-                            onTap: () async {
-                              AdbResult result;
-                              try {
-                                String suffix = '';
-                                if (adbEntity.port != null) {
-                                  suffix = ':${adbEntity.port}';
-                                }
-                                result = await AdbUtil.connectDevices(
-                                  adbEntity.address + suffix,
-                                );
-                                showToast(result.message);
-                              } on AdbException catch (e) {
-                                showToast(e.message);
-                              }
-                            },
-                            child: SizedBox(
-                              height: 64.w,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: Dimens.gap_dp16,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            adbEntity.name ?? '',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: CandyColors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4.w),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 4.w,
-                                                  vertical: 2.w,
-                                                ),
-                                                child: Text(
-                                                  adbEntity.port ?? '5555',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.white
-                                                        .withOpacity(0.8),
-                                                    fontSize: 10.w,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 4.w,
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: CandyColors.orange,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4.w),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 4.w,
-                                                  vertical: 2.w,
-                                                ),
-                                                child: Text(
-                                                  DateTime.parse(
-                                                          adbEntity.connectTime)
-                                                      .getTimeString(),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Colors.white
-                                                        .withOpacity(0.8),
-                                                    fontSize: 10.w,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        adbEntity.address,
-                                        style: const TextStyle(
-                                          color: AppColors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          child: buildItem(adbEntity),
                         );
                       },
                     ),
@@ -190,6 +89,107 @@ class HistoryPage extends GetView<HistoryController> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  InkWell buildItem(Data adbEntity) {
+    return InkWell(
+      onTap: () async {
+        AdbResult result;
+        try {
+          String suffix = '';
+          if (adbEntity.port != null) {
+            suffix = ':${adbEntity.port}';
+          }
+          result = await AdbUtil.connectDevices(
+            adbEntity.address + suffix,
+          );
+          showToast(result.message);
+        } on AdbException catch (e) {
+          showToast(e.message);
+        }
+      },
+      child: SizedBox(
+        height: 64.w,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Dimens.gap_dp16,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      adbEntity.name ?? '',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: CandyColors.green,
+                            borderRadius: BorderRadius.circular(4.w),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 2.w,
+                          ),
+                          child: Text(
+                            adbEntity.port ?? '5555',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 10.w,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: CandyColors.orange,
+                            borderRadius: BorderRadius.circular(4.w),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 2.w,
+                          ),
+                          child: Text(
+                            DateTime.parse(adbEntity.connectTime)
+                                .getTimeString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 10.w,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Text(
+                  adbEntity.address,
+                  style: TextStyle(
+                    color: Theme.of(Get.context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

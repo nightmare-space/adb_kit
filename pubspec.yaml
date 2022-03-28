@@ -53,6 +53,9 @@ dependencies:
     git: https://github.com/nightmare-space/app_launcher
   settings:
     git: https://github.com/nightmare-space/settings
+  device_info:
+    git: https://github.com/nightmare-space/device_info.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

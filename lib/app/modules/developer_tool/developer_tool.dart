@@ -7,12 +7,14 @@ import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/binadb_channel.dart';
 import 'package:adb_tool/app/modules/developer_tool/implement/otgadb_channel.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
+import 'package:adb_tool/app/modules/wrappers/device_info_wrapper.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:animations/animations.dart';
+import 'package:device_info/device_info.dart' hide RoundedUnderlineTabIndicator;
 import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +77,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 5, vsync: this);
     if (!GetPlatform.isWindows) {
       adbShell = TerminalUtil.getShellTerminal(
         exec: 'adb',
@@ -129,6 +131,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                       Tab(text: '应用管理'),
                       Tab(text: '桌面启动'),
                       Tab(text: '任务管理'),
+                      Tab(text: '设备概况'),
                     ],
                   ),
                 ),
@@ -199,6 +202,9 @@ class _DeveloperToolState extends State<DeveloperTool>
               ),
               TaskManager(
                 entity: widget.entity,
+              ),
+              DeviceInfoWrapper(
+                device: widget.entity.serial,
               ),
             ],
           ),
