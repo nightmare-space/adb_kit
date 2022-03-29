@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/app/modules/developer_tool/model/screen_size.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/dex_server.dart';
@@ -25,6 +26,7 @@ class TaskManager extends StatefulWidget {
 class _TaskManagerState extends State<TaskManager> {
   AppChannel channel;
   List<Task> tasks = [];
+  ScreenSize screenSize;
   @override
   void initState() {
     super.initState();
@@ -34,7 +36,10 @@ class _TaskManagerState extends State<TaskManager> {
 
   initTask() async {
     channel = await DexServer.startServer(widget.entity.serial);
-    Timer.periodic(Duration(seconds: 1), (timer) async {
+    screenSize = ScreenSize.fromWM(
+      await execCmd('adb -s ${widget.entity.serial} shell wm size'),
+    );
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (!mounted) {
         timer.cancel();
       }
@@ -103,11 +108,13 @@ class _TaskManagerState extends State<TaskManager> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12.w),
                               child: Builder(builder: (context) {
+                                double height = c.maxHeight - 48;
                                 if (i == 0) {
                                   return LayoutBuilder(builder: (context, c) {
                                     return SizedBox(
                                       // height: 64.w,
-                                      height: c.maxHeight,
+                                      height: height,
+                                      width: height * screenSize.radio,
                                       child: Center(
                                         child: SizedBox(
                                           width: 54.w,
@@ -125,11 +132,12 @@ class _TaskManagerState extends State<TaskManager> {
                                   return Image.network(
                                     'http://127.0.0.1:${channel.port}/taskthumbnail?id=${tasks[i].taskId}',
                                     gaplessPlayback: true,
-                                    height: c.maxHeight,
+                                    height: height,
+                                    width: height * screenSize.radio,
                                     errorBuilder: (_, __, ___) {
                                       return Container(
-                                        height: 400.w,
-                                        width: 300.w,
+                                        height: height,
+                                        width: height * screenSize.radio,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(12.w),

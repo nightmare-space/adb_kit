@@ -14,8 +14,6 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
 
-import 'setting_ctl.dart';
-
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key key}) : super(key: key);
 
@@ -25,7 +23,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage>
     with WidgetsBindingObserver {
-  SettingController controller = Get.put(SettingController());
+  ConfigController controller = Get.put(ConfigController());
   ConfigController configController = Get.find();
 
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();

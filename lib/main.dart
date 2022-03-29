@@ -101,7 +101,7 @@ void onReportTimings(List<FrameTiming> timings) {
 }
 
 const frameInterval =
-    const Duration(microseconds: Duration.microsecondsPerSecond ~/ 90);
+    const Duration(microseconds: Duration.microsecondsPerSecond ~/ maxframes);
 
 double get fps {
   var lastFramesSet = <FrameTiming>[];
@@ -288,73 +288,71 @@ class _AppEntryPointState extends State<AppEntryPoint>
             ),
             child: Container(
               color: theme.colorScheme.background.withOpacity(0.6),
-              child: GetBuilder<ConfigController>(
-                builder: (context) {
-                  return GetMaterialApp(
-                    showPerformanceOverlay: config.showPerformanceOverlay,
-                    showSemanticsDebugger: config.showSemanticsDebugger,
-                    debugShowMaterialGrid: config.debugShowMaterialGrid,
-                    checkerboardRasterCacheImages:
-                        config.checkerboardRasterCacheImages,
-                    enableLog: false,
-                    debugShowCheckedModeBanner: false,
-                    title: 'ADB工具箱',
-                    navigatorKey: Global.instance.navigatorKey,
-                    themeMode: ThemeMode.light,
-                    localizationsDelegates: const [
-                      S.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    locale: config.locale,
-                    supportedLocales: S.delegate.supportedLocales,
-                    theme: ThemeData(
-                      primarySwatch: Colors.blue,
-                      visualDensity: VisualDensity.adaptivePlatformDensity,
-                    ),
-                    defaultTransition: Transition.fadeIn,
-                    initialRoute: AdbPages.initial,
-                    getPages: AdbPages.routes + am.AppPages.routes,
-                    builder: (BuildContext context, Widget navigator) {
-                      Size size = MediaQuery.of(context).size;
-                      if (size.width > size.height) {
-                        context.init(896);
-                      } else {
-                        context.init(414);
-                      }
-                      // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                      // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                      /// NativeShell
-                      if (widget.isNativeShell) {
-                        return nativeshell.WindowLayoutProbe(
-                          child: SizedBox(
-                            width: 800,
-                            height: 600,
-                            child: Theme(
-                              data: theme,
-                              child: navigator,
-                            ),
+              child: GetBuilder<ConfigController>(builder: (context) {
+                return GetMaterialApp(
+                  showPerformanceOverlay: config.showPerformanceOverlay,
+                  showSemanticsDebugger: config.showSemanticsDebugger,
+                  debugShowMaterialGrid: config.debugShowMaterialGrid,
+                  checkerboardRasterCacheImages:
+                      config.checkerboardRasterCacheImages,
+                  enableLog: false,
+                  debugShowCheckedModeBanner: false,
+                  title: 'ADB工具箱',
+                  navigatorKey: Global.instance.navigatorKey,
+                  themeMode: ThemeMode.light,
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  locale: config.locale,
+                  supportedLocales: S.delegate.supportedLocales,
+                  theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    visualDensity: VisualDensity.adaptivePlatformDensity,
+                  ),
+                  defaultTransition: Transition.fadeIn,
+                  initialRoute: AdbPages.initial,
+                  getPages: AdbPages.routes + am.AppPages.routes,
+                  builder: (BuildContext context, Widget navigator) {
+                    Size size = MediaQuery.of(context).size;
+                    if (size.width > size.height) {
+                      context.init(896);
+                    } else {
+                      context.init(414);
+                    }
+                    // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                    // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                    /// NativeShell
+                    if (widget.isNativeShell) {
+                      return nativeshell.WindowLayoutProbe(
+                        child: SizedBox(
+                          width: 800,
+                          height: 600,
+                          child: Theme(
+                            data: theme,
+                            child: navigator,
                           ),
-                        );
-                      }
+                        ),
+                      );
+                    }
 
-                      ///
-                      ///
-                      ///
-                      /// Default Mode
-                      ///
+                    ///
+                    ///
+                    ///
+                    /// Default Mode
+                    ///
 
-                      return Responsive(builder: (context, _) {
-                        return Theme(
-                          data: theme,
-                          child: navigator,
-                        );
-                      });
-                    },
-                  );
-                },
-              ),
+                    return Responsive(builder: (context, _) {
+                      return Theme(
+                        data: theme,
+                        child: navigator,
+                      );
+                    });
+                  },
+                );
+              }),
             ),
           ),
         ],
