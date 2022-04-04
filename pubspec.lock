@@ -34,8 +34,8 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
-      relative: false
+      path: "../app_manager"
+      relative: true
     source: path
     version: "1.0.0+1"
   applib_util:

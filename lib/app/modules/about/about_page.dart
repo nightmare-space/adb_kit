@@ -35,6 +35,7 @@ class AboutPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
+              controller: ScrollController(),
               padding: EdgeInsets.only(bottom: 48.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

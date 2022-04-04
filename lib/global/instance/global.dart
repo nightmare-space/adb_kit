@@ -101,10 +101,12 @@ class Global {
     );
   }
 
+  int successBindPort = 0;
   Future<void> _socketServer() async {
+    successBindPort = await getSafePort(adbToolQrPort, adbToolQrPort + 10);
     // 等待扫描二维码的连接
     HttpServerUtil.bindServer(
-      adbToolQrPort,
+      successBindPort,
       (address) async {
         // 弹窗
         AdbResult result;
@@ -193,7 +195,7 @@ class Global {
     Log.i('当前系统主题 ${window.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');
     Log.i('当前App内部主题 ${controller.theme}');
-    Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
+    // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
     // 等待 MaterialApp 加载完成，正确获取到屏幕大小

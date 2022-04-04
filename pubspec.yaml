@@ -86,7 +86,7 @@ dependency_overrides:
   device_info:
     path: ../device_info
   app_manager:
-    path: /Users/nightmare/Desktop/nightmare-space/app_manager
+    path: ../app_manager
   adbutil:
     path: ../adbutil
   # file_selector_nightmare:
