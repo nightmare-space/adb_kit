@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
@@ -151,38 +149,12 @@ class Global {
     if (kIsWeb) {
       return true;
     }
-    if (Platform.isAndroid) {
-      await Directory(RuntimeEnvir.binPath).create(recursive: true);
-      for (final String fileName in androidFiles) {
-        final filePath = RuntimeEnvir.binPath + '/$fileName';
-        await AssetsUtils.copyAssetToPath(
-          '${Config.flutterPackage}assets/android/$fileName',
-          filePath,
-        );
-        final ProcessResult result = await Process.run(
-          'chmod',
-          ['+x', filePath],
-        );
-        Log.d(
-          '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
-        );
-      }
-    }
-    for (final String fileName in globalFiles) {
-      await Directory(RuntimeEnvir.binPath).create(recursive: true);
-      final filePath = RuntimeEnvir.binPath + '/$fileName';
-      await AssetsUtils.copyAssetToPath(
-        '${Config.flutterPackage}assets/$fileName',
-        filePath,
-      );
-      final ProcessResult result = await Process.run(
-        'chmod',
-        ['+x', filePath],
-      );
-      Log.d(
-        '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
-      );
-    }
+    AssetsManager.copyFiles(
+      localPath: RuntimeEnvir.binPath + '/',
+      android: androidFiles,
+      macOS: [],
+      global: globalFiles,
+    );
   }
 
   Future<void> initGlobal() async {

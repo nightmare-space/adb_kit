@@ -57,7 +57,7 @@ class DevicesEntity {
 // ro.product.model
 class DevicesController extends GetxController {
   DevicesController(){
-    Log.i('设备管理控制器 init');
+    Log.i('设备管理控制器 Create');
   }
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
