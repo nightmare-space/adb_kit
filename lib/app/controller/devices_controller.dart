@@ -106,7 +106,7 @@ class DevicesController extends GetxController {
   Future<void> startAdb() async {
     adbIsStarting = true;
     // 显示一会动画
-    await Future.delayed(const Duration(milliseconds: 300));
+    // await Future.delayed(const Duration(milliseconds: 300));
     update();
     // getRoot = await Global().process.isRoot();
     // if (getRoot) {
