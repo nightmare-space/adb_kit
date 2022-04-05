@@ -57,7 +57,7 @@ class DevicesEntity {
 // ro.product.model
 class DevicesController extends GetxController {
   DevicesController(){
-    Log.i('设备管理控制器 init');
+    Log.i('设备管理控制器 Create');
   }
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
@@ -106,7 +106,7 @@ class DevicesController extends GetxController {
   Future<void> startAdb() async {
     adbIsStarting = true;
     // 显示一会动画
-    await Future.delayed(const Duration(milliseconds: 300));
+    // await Future.delayed(const Duration(milliseconds: 300));
     update();
     // getRoot = await Global().process.isRoot();
     // if (getRoot) {

@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/controller/history_controller.dart';
+import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
@@ -101,10 +99,12 @@ class Global {
     );
   }
 
+  int successBindPort = 0;
   Future<void> _socketServer() async {
+    successBindPort = await getSafePort(adbToolQrPort, adbToolQrPort + 10);
     // 等待扫描二维码的连接
     HttpServerUtil.bindServer(
-      adbToolQrPort,
+      successBindPort,
       (address) async {
         // 弹窗
         AdbResult result;
@@ -149,38 +149,12 @@ class Global {
     if (kIsWeb) {
       return true;
     }
-    if (Platform.isAndroid) {
-      await Directory(RuntimeEnvir.binPath).create(recursive: true);
-      for (final String fileName in androidFiles) {
-        final filePath = RuntimeEnvir.binPath + '/$fileName';
-        await AssetsUtils.copyAssetToPath(
-          '${Config.flutterPackage}assets/android/$fileName',
-          filePath,
-        );
-        final ProcessResult result = await Process.run(
-          'chmod',
-          ['+x', filePath],
-        );
-        Log.d(
-          '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
-        );
-      }
-    }
-    for (final String fileName in globalFiles) {
-      await Directory(RuntimeEnvir.binPath).create(recursive: true);
-      final filePath = RuntimeEnvir.binPath + '/$fileName';
-      await AssetsUtils.copyAssetToPath(
-        '${Config.flutterPackage}assets/$fileName',
-        filePath,
-      );
-      final ProcessResult result = await Process.run(
-        'chmod',
-        ['+x', filePath],
-      );
-      Log.d(
-        '更改 $fileName 权限为0755 stdout:${result.stdout} stderr；${result.stderr}',
-      );
-    }
+    AssetsManager.copyFiles(
+      localPath: RuntimeEnvir.binPath + '/',
+      android: androidFiles,
+      macOS: [],
+      global: globalFiles,
+    );
   }
 
   Future<void> initGlobal() async {
@@ -193,7 +167,7 @@ class Global {
     Log.i('当前系统主题 ${window.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');
     Log.i('当前App内部主题 ${controller.theme}');
-    Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
+    // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
     // 等待 MaterialApp 加载完成，正确获取到屏幕大小

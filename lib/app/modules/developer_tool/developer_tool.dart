@@ -114,7 +114,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                     ),
                     unselectedLabelColor: AppColors.fontColor,
                     indicator: RoundedUnderlineTabIndicator(
-                      insets: EdgeInsets.only(bottom: 6.w),
+                      insets: EdgeInsets.only(bottom: 12.w),
                       radius: 12.w,
                       // width: 50.w,
                       borderSide: BorderSide(

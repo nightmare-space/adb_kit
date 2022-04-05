@@ -69,6 +69,7 @@ class _SettingsPageState extends State<SettingsPage>
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: SingleChildScrollView(
+          controller: ScrollController(),
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(bottom: 48.w),
           child: Column(

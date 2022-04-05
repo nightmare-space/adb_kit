@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 project(adb_tool LANGUAGES CXX)
 
 set(BINARY_NAME "adb_tool")

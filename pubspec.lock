@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "../adbutil"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "77a0e1b7150422a3a472fe88c3beb5bca6a71612"
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -34,9 +36,11 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/app_manager"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "399e242660568bb10b471d01bcb11d2f227f942c"
+      url: "https://github.com/nightmare-space/app_manager"
+    source: git
     version: "1.0.0+1"
   applib_util:
     dependency: transitive
@@ -150,9 +154,11 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "../device_info"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: a707c361b02b96b2849a290489899aa01a925108
+      url: "https://github.com/nightmare-space/device_info.git"
+    source: git
     version: "1.0.0+1"
   dio:
     dependency: "direct main"
@@ -160,7 +166,7 @@ packages:
       name: dio
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.6"
   equatable:
     dependency: transitive
     description:
@@ -255,7 +261,7 @@ packages:
       name: fl_chart
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.50.0"
+    version: "0.50.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -321,9 +327,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "../global_repository"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1d6ab06349c355813779d978b21a512fbf462d51"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -548,10 +556,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ea01227498ba905c78d37430d71c7175ee45790e
+      resolved-ref: "330855a5d6859066006f2ec415bc4f3cbb3828e5"
       url: "https://github.com/nightmare-space/signale"
     source: git
-    version: "0.0.6"
+    version: "0.0.7"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -700,7 +708,7 @@ packages:
       name: win32
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   xml:
     dependency: transitive
     description:

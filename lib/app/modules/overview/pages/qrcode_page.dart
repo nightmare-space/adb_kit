@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _QrScanPageState extends State<QrScanPage> {
   Future<void> getQrCode() async {
     localAddresList = await PlatformUtil.localAddress();
     for (int i = 0; i < localAddresList.length; i++) {
-      localAddresList[i] += ':$adbToolQrPort';
+      localAddresList[i] += ':${Global().successBindPort}';
     }
     setState(() {});
   }

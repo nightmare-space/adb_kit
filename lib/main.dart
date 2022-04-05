@@ -36,7 +36,11 @@ Future<void> main() async {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
   // Log.d(StackTrace.current);
-  Get.config(enableLog: false);
+  Get.config(
+    logWriterCallback: (text, {isError}) {
+      Log.d(text, tag: 'GetX');
+    },
+  );
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
@@ -201,7 +205,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
       showSemanticsDebugger: config.showSemanticsDebugger,
       debugShowMaterialGrid: config.debugShowMaterialGrid,
       checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
-      enableLog: false,
       debugShowCheckedModeBanner: false,
       title: 'ADB工具箱',
       navigatorKey: Global.instance.navigatorKey,
@@ -295,7 +298,6 @@ class _AppEntryPointState extends State<AppEntryPoint>
                   debugShowMaterialGrid: config.debugShowMaterialGrid,
                   checkerboardRasterCacheImages:
                       config.checkerboardRasterCacheImages,
-                  enableLog: false,
                   debugShowCheckedModeBanner: false,
                   title: 'ADB工具箱',
                   navigatorKey: Global.instance.navigatorKey,
