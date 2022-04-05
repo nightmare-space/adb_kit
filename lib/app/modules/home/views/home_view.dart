@@ -21,11 +21,12 @@ class AdbTool extends StatefulWidget {
     this.packageName,
     this.initRoute = Routes.overview,
   }) : super(key: key) {
-    if (RuntimeEnvir.packageName != Config.packageName &&
-        !GetPlatform.isDesktop) {
-      // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
-      Config.flutterPackage = 'packages/adb_tool/';
-    }
+    // ! 换位置
+    // if (RuntimeEnvir.packageName != Config.packageName &&
+    //     !GetPlatform.isDesktop) {
+    //   // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
+    //   Config.flutterPackage = 'packages/adb_tool/';
+    // }
   }
 
   final String packageName;
@@ -51,11 +52,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       Window.makeTitlebarTransparent();
       Window.enableFullSizeContentView();
     }
-    Window.setEffect(
-      effect: WindowEffect.acrylic,
-      color: Colors.transparent,
-      dark: false,
-    );
+    configController.syncBackgroundStyle();
     WidgetsBinding.instance.addObserver(this);
     PluginUtil.addHandler((call) {
       if (call.method == 'ShowOTGDialog') {

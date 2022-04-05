@@ -4,6 +4,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
@@ -36,12 +37,36 @@ class ConfigController extends GetxController {
     'english': english,
   };
 
+  void syncBackgroundStyle() {
+    if (backgroundStyle == BackgroundStyle.normal) {
+      Window.setEffect(
+        effect: WindowEffect.disabled,
+        color: theme.colorScheme.background.withOpacity(0.2),
+        dark: false,
+      );
+    }
+    if (backgroundStyle == BackgroundStyle.image) {
+      Window.setEffect(
+        effect: WindowEffect.disabled,
+        color: theme.colorScheme.background.withOpacity(0.2),
+        dark: false,
+      );
+    } else {
+      Window.setEffect(
+        effect: WindowEffect.acrylic,
+        color: theme.colorScheme.background.withOpacity(0.2),
+        dark: false,
+      );
+    }
+  }
+
   void changeBackgroundStyle(BackgroundStyle style) {
     backgroundStyle = style;
     if (backgroundStyle != null) {
       Settings.backgroundStyle.set = backgroundStyle.name;
     }
     Get.forceAppUpdate();
+    syncBackgroundStyle();
   }
 
   // bool get isDarkTheme => theme is DarkTheme;

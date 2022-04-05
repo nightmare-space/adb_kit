@@ -335,25 +335,25 @@ class _AppEntryPointState extends State<AppEntryPoint>
                             child: navigator,
                           ),
                         ),
-                      );
-                    }
+                      ),
+                    );
+                  }
 
-                    ///
-                    ///
-                    ///
-                    /// Default Mode
-                    ///
+                  ///
+                  ///
+                  ///
+                  /// Default Mode
+                  ///
 
-                    return Responsive(builder: (context, _) {
-                      return Theme(
-                        data: theme,
-                        child: navigator,
-                      );
-                    });
-                  },
-                );
-              }),
-            ),
+                  return Responsive(builder: (context, _) {
+                    return Theme(
+                      data: theme,
+                      child: navigator,
+                    );
+                  });
+                },
+              );
+            }),
           ),
         ],
       ),
