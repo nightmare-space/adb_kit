@@ -36,11 +36,9 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "399e242660568bb10b471d01bcb11d2f227f942c"
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "../app_manager"
+      relative: true
+    source: path
     version: "1.0.0+1"
   applib_util:
     dependency: transitive
@@ -154,11 +152,9 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a707c361b02b96b2849a290489899aa01a925108
-      url: "https://github.com/nightmare-space/device_info.git"
-    source: git
+      path: "../device_info"
+      relative: true
+    source: path
     version: "1.0.0+1"
   dio:
     dependency: "direct main"

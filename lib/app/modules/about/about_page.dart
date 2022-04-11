@@ -83,7 +83,7 @@ class AboutPage extends StatelessWidget {
                         SettingItem(
                           title: S.of(context).branch,
                           suffix: Text(
-                            'Master',
+                            'dev',
                             style: TextStyle(
                               color: Theme.of(context)
                                   .textTheme
