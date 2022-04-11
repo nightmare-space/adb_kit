@@ -36,7 +36,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 <img src="screenshot/adb_app.png" width="100%" height="100%" /> <img src="screenshot/adb_launcher.png" width="100%" height="100%" /> 
 
 ## 功能列表
-
+- 可扩展
 - 快捷管理多设备调试
 - 扫码、局域网发现等快速连接设备
 - 快捷上传，安装应用

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:adb_tool/app_entrypoint.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/settings.dart';
-import 'package:adb_tool/main.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/core/interface/app_channel.dart';
