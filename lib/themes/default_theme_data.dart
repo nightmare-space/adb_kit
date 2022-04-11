@@ -129,6 +129,7 @@ class DefaultThemeData {
       iconTheme: lightThemeData.iconTheme.copyWith(
         color: colorScheme.onSurface,
       ),
+      // cardTheme: CardTheme(),
       inputDecorationTheme: InputDecorationTheme(
         fillColor: colorScheme.primary.withOpacity(0.08),
         isDense: true,
@@ -195,7 +196,7 @@ class DefaultThemeData {
         color: colorScheme.outline,
         space: Dimens.gap_dp1,
       ),
-      cardColor: colorScheme.surface1,
+      cardColor: Colors.white,
       popupMenuTheme: PopupMenuThemeData(
         color: colorScheme.surface,
       ),

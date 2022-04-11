@@ -25,6 +25,7 @@ import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
 
+import 'app_starter.dart';
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
 import 'screenshot_page.dart';
@@ -77,7 +78,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 5, vsync: this);
+    controller = TabController(length: 6, vsync: this);
     if (!GetPlatform.isWindows) {
       adbShell = TerminalUtil.getShellTerminal(
         exec: 'adb',
@@ -125,10 +126,13 @@ class _DeveloperToolState extends State<DeveloperTool>
                       // borderRadius: BorderRadius.only(
                       //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
                     ),
+                    labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                    isScrollable: true,
                     controller: controller,
                     tabs: const <Widget>[
                       Tab(text: '控制面板'),
                       Tab(text: '应用管理'),
+                      Tab(text: '一键启动'),
                       Tab(text: '桌面启动'),
                       Tab(text: '任务管理'),
                       Tab(text: '设备概况'),
@@ -196,6 +200,9 @@ class _DeveloperToolState extends State<DeveloperTool>
               ),
               AppManagerWrapper(
                 devicesEntity: widget.entity,
+              ),
+              AppStarter(
+                entity: widget.entity,
               ),
               AppLauncherWrapper(
                 devicesEntity: widget.entity,
