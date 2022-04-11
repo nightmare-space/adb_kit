@@ -125,19 +125,20 @@ class Global {
     );
   }
 
+  static String androidPrefix = 'android';
   List<String> androidFiles = [
-    'adb',
-    'adb_binary',
-    'adb.bin-armeabi',
-    'libbrotlidec.so',
-    'libbrotlienc.so',
-    'libc++_shared.so',
-    'liblz4.so.1',
-    'libprotobuf.so',
-    'libusb-1.0.so',
-    'libz.so.1',
-    'libzstd.so.1',
-    'libbrotlicommon.so',
+    '$androidPrefix/adb',
+    '$androidPrefix/adb_binary',
+    '$androidPrefix/adb.bin-armeabi',
+    '$androidPrefix/libbrotlidec.so',
+    '$androidPrefix/libbrotlienc.so',
+    '$androidPrefix/libc++_shared.so',
+    '$androidPrefix/liblz4.so.1',
+    '$androidPrefix/libprotobuf.so',
+    '$androidPrefix/libusb-1.0.so',
+    '$androidPrefix/libz.so.1',
+    '$androidPrefix/libzstd.so.1',
+    '$androidPrefix/libbrotlicommon.so',
   ];
 
   List<String> globalFiles = [
