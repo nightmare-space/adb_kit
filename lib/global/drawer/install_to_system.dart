@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 
 class InstallToSystem extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).installToSystem,
       value: Routes.installToSystem,
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
-      onTap: (index) {
-        // widget.onChanged?.call(index);
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
       },
     );
   }

@@ -2,7 +2,9 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
+import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
@@ -13,7 +15,7 @@ class DesktopPhoneDrawer extends StatefulWidget {
     this.groupValue,
     this.width,
   }) : super(key: key);
-  final void Function(String index) onChanged;
+  final void Function(Widget page) onChanged;
   final String groupValue;
   final double width;
 
@@ -57,37 +59,38 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
     );
   }
 
-  Column buildBody(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 12.w,
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24.w,
-              vertical: 16.w,
-            ),
-            child: Text(
-              'ADB TOOL',
-              style: TextStyle(
-                fontSize: 26.w,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+  Widget buildBody(BuildContext context) {
+    return TitlebarSafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 8.w,
           ),
-        ),
-        for(ADBPage page in )
-
-        
-        
-        
-      ],
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(
+          //       horizontal: 24.w,
+          //       vertical: 16.w,
+          //     ),
+          //     child: Text(
+          //       'ADB TOOL',
+          //       style: TextStyle(
+          //         fontSize: 26.w,
+          //         fontWeight: FontWeight.bold,
+          //         color: Theme.of(context).primaryColor,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          for (ADBPage page in PageManager.instance.pages)
+            page.buildDrawer(context, () {
+              widget.onChanged(page.buildPage(context));
+            }),
+        ],
+      ),
     );
   }
 }

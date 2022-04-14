@@ -1,22 +1,22 @@
-
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 
-class Home extends ADBPage {
+class History extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).historyConnect,
       value: Routes.history,
       groupValue: Global().drawerRoute,
-      onTap: (index) {
-        // widget.onChanged?.call(index);
+      iconData: Icons.history,
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
       },
-      iconData: Icons.home,
     );
   }
 
@@ -25,8 +25,7 @@ class Home extends ADBPage {
 
   @override
   Widget buildPage(BuildContext context) {
-    // TODO: implement buildPage
-    throw UnimplementedError();
+    return HistoryPage();
   }
 
   @override

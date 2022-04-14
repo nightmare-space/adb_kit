@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 
 class Home extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).home,
       value: Routes.overview,
       groupValue: Global().drawerRoute,
-      onTap: (index) {
-        // widget.onChanged?.call(index);
-      },
       iconData: Icons.home,
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
+      },
     );
   }
 

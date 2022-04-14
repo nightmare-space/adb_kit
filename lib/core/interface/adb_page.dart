@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-abstract class ADBPage{
-  Widget buildDrawer(BuildContext context);
-  Widget buildPage(BuildContext context);
+abstract class ADBPage {
+  Widget buildDrawer(BuildContext context, void Function() onTap);
+  Widget buildPage(BuildContext contex);
   bool get isActive;
-  void  onTap();
+  void onTap();
 }

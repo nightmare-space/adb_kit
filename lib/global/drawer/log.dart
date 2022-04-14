@@ -5,16 +5,16 @@ import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 
-class Terminal extends ADBPage {
+class Log extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       value: Routes.log,
       groupValue: Global().drawerRoute,
       title: S.of(context).log,
       iconData: Icons.pending_outlined,
-      onTap: (index) async {
-        // widget.onChanged?.call(index);
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
       },
     );
   }

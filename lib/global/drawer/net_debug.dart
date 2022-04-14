@@ -8,20 +8,20 @@ import 'package:get/get.dart';
 
 class NetDebug extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).networkDebug,
       value: Routes.netDebug,
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
-      onTap: (index) {
-        // widget.onChanged?.call(index);
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
       },
     );
   }
 
   @override
-  bool get isActive=>GetPlatform.isAndroid;
+  bool get isActive => GetPlatform.isAndroid;
 
   @override
   Widget buildPage(BuildContext context) {

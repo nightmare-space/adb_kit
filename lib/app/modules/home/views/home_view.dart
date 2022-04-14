@@ -39,6 +39,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   String route;
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
+  Widget page;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Log.v('didChangeAppLifecycleState : $state');
@@ -101,13 +102,13 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                           width: Dimens.setWidth(200),
                           groupValue: route,
                           onChanged: (value) {
-                            route = value;
+                            page = value;
                             setState(() {});
                           },
                         ),
                         Expanded(
                           child: TitlebarSafeArea(
-                            child: getWidget(route),
+                            child: page ?? getWidget(route),
                           ),
                         ),
                       ],
@@ -116,7 +117,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                   break;
                 case ScreenType.tablet:
                   return Scaffold(
-                    
                     body: Row(
                       children: [
                         TabletDrawer(
@@ -135,24 +135,24 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                     ),
                   );
                   break;
-                case ScreenType.phone:
-                  return Scaffold(
-                    drawer: DesktopPhoneDrawer(
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      groupValue: route,
-                      onChanged: (value) {
-                        route = value;
-                        setState(() {});
-                        Navigator.pop(context);
-                      },
-                    ),
-                    body: Row(
-                      children: [
-                        Expanded(child: getWidget(route)),
-                      ],
-                    ),
-                  );
-                  break;
+                // case ScreenType.phone:
+                //   return Scaffold(
+                //     drawer: DesktopPhoneDrawer(
+                //       width: MediaQuery.of(context).size.width * 2 / 3,
+                //       groupValue: route,
+                //       onChanged: (value) {
+                //         route = value;
+                //         setState(() {});
+                //         Navigator.pop(context);
+                //       },
+                //     ),
+                //     body: Row(
+                //       children: [
+                //         Expanded(child: getWidget(route)),
+                //       ],
+                //     ),
+                //   );
+                //   break;
                 default:
                   return const Text('ERROR');
               }

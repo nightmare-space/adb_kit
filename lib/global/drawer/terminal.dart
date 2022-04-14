@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 
 class Terminal extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context) {
+  Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       value: Routes.terminal,
       groupValue: Global().drawerRoute,
       title: S.of(context).terminal,
       iconData: Icons.code,
-      onTap: (index) {
-        // widget.onChanged?.call(index);
+      onTap: (value) async {
+        Global().changeDrawerRoute(value);
       },
     );
   }

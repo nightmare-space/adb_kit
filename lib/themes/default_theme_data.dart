@@ -18,7 +18,7 @@ class DefaultThemeData {
     // ThemeData
     return darkThemeData.copyWith(
       colorScheme: darkColorScheme,
-      primaryColor: darkColorScheme.onPrimary,
+      primaryColor: darkColorScheme.primary,
       scaffoldBackgroundColor: darkColorScheme.background,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.dark,
