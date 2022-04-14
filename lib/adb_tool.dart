@@ -3,3 +3,4 @@ export 'app/modules/history/history_page.dart';
 export 'app/modules/log_page.dart';
 export 'app/routes/app_pages.dart';
 export 'global/instance/global.dart';
+export 'main.dart';

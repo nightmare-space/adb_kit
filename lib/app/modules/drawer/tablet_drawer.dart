@@ -72,7 +72,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
         SizedBox(
           height: 8.w,
         ),
-        _DrawerItem(
+        TabletDrawerItem(
           title: S.of(context).home,
           value: Routes.overview,
           groupValue: widget.groupValue,
@@ -81,7 +81,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           },
           iconData: Icons.home,
         ),
-        _DrawerItem(
+        TabletDrawerItem(
           value: Routes.history,
           groupValue: widget.groupValue,
           title: '历史连接',
@@ -91,7 +91,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           },
         ),
         if (!kIsWeb && Platform.isAndroid)
-          _DrawerItem(
+          TabletDrawerItem(
             value: Routes.netDebug,
             groupValue: widget.groupValue,
             iconData: Icons.signal_wifi_4_bar,
@@ -110,7 +110,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
         //   iconData: Icons.data_saver_off,
         // ),
         if (!kIsWeb && Platform.isAndroid)
-          _DrawerItem(
+          TabletDrawerItem(
             value: Routes.installToSystem,
             groupValue: widget.groupValue,
             title: '安装到系统',
@@ -120,7 +120,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             },
           ),
         if (!Platform.isWindows)
-          _DrawerItem(
+          TabletDrawerItem(
             value: Routes.terminal,
             groupValue: widget.groupValue,
             title: '终端模拟器',
@@ -129,7 +129,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               widget.onChanged.call(value);
             },
           ),
-        _DrawerItem(
+        TabletDrawerItem(
           value: Routes.log,
           groupValue: widget.groupValue,
           title: S.of(context).log,
@@ -138,7 +138,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             widget.onChanged.call(value);
           },
         ),
-        _DrawerItem(
+        TabletDrawerItem(
           value: Routes.setting,
           groupValue: widget.groupValue,
           title: S.of(context).settings,
@@ -147,7 +147,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
             widget.onChanged?.call(index);
           },
         ),
-        _DrawerItem(
+        TabletDrawerItem(
           value: Routes.about,
           groupValue: widget.groupValue,
           title: S.of(context).about,
@@ -157,7 +157,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           },
         ),
         Builder(builder: (context) {
-          return _DrawerItem(
+          return TabletDrawerItem(
             groupValue: widget.groupValue,
             title: '切换主题',
             iconData: Theme.of(context).brightness == Brightness.dark
@@ -195,8 +195,8 @@ class _TabletDrawerState extends State<TabletDrawer> {
   }
 }
 
-class _DrawerItem extends StatelessWidget {
-  const _DrawerItem({
+class TabletDrawerItem extends StatelessWidget {
+  const TabletDrawerItem({
     Key key,
     this.title,
     this.onTap,

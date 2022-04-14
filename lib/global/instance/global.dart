@@ -32,6 +32,11 @@ class Global {
     return _instance;
   }
 
+  String drawerRoute = '';
+  void changeDrawerRoute(core.String route) {
+    drawerRoute = route;
+  }
+
   YanProcess process = YanProcess(
     envir: GetPlatform.isIOS
         ? {}

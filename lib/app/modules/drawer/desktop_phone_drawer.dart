@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
+import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -81,98 +82,11 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             ),
           ),
         ),
-        _DrawerItem(
-          title: S.of(context).home,
-          value: Routes.overview,
-          groupValue: widget.groupValue,
-          onTap: (index) {
-            widget.onChanged?.call(index);
-          },
-          iconData: Icons.home,
-        ),
-        _DrawerItem(
-          value: Routes.history,
-          groupValue: widget.groupValue,
-          title: S.of(context).historyConnect,
-          iconData: Icons.history,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
-        // _DrawerItem(
-        //   title: '连接设备',
-        //   value: 1,
-        //   groupValue: widget.groupValue,
-        //   onTap: (index) {
-        //     widget.onChanged?.call(index);
-        //   },
-        //   iconData: Icons.data_saver_off,
-        // ),
-        // _DrawerItem(
-        //   title: '当前设备ip',
-        //   onTap: () {},
-        // ),
-        if (GetPlatform.isAndroid)
-          Column(
-            children: [
-              _DrawerItem(
-                value: Routes.netDebug,
-                groupValue: widget.groupValue,
-                iconData: Icons.signal_wifi_4_bar,
-                title: S.of(context).networkDebug,
-                onTap: (index) {
-                  widget.onChanged?.call(index);
-                },
-              ),
-            ],
-          ),
-        if (GetPlatform.isAndroid)
-          _DrawerItem(
-            value: Routes.installToSystem,
-            groupValue: widget.groupValue,
-            title: S.of(context).installToSystem,
-            iconData: Icons.file_download,
-            onTap: (index) {
-              widget.onChanged?.call(index);
-            },
-          ),
-        _DrawerItem(
-          value: Routes.terminal,
-          groupValue: widget.groupValue,
-          title: S.of(context).terminal,
-          iconData: Icons.code,
-          onTap: (index) {
-            widget.onChanged?.call(index);
-          },
-        ),
+        for(ADBPage page in )
 
-        _DrawerItem(
-          value: Routes.log,
-          groupValue: widget.groupValue,
-          title: S.of(context).log,
-          iconData: Icons.pending_outlined,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
-        _DrawerItem(
-          value: Routes.setting,
-          groupValue: widget.groupValue,
-          title: S.of(context).setting,
-          iconData: Icons.settings,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
-        _DrawerItem(
-          value: Routes.about,
-          groupValue: widget.groupValue,
-          title: S.of(context).about,
-          iconData: Icons.info_outline,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
+        
+        
+        
       ],
     );
   }
@@ -180,8 +94,8 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
 
 final ConfigController configController = Get.find();
 
-class _DrawerItem extends StatelessWidget {
-  const _DrawerItem({
+class DrawerItem extends StatelessWidget {
+  const DrawerItem({
     Key key,
     this.title,
     this.onTap,

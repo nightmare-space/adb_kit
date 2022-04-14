@@ -5,7 +5,7 @@ class PluginManager {
 
   Map<String, Pluggable> get pluginsMap => _pluginsMap;
 
-  Map<String, Pluggable> _pluginsMap = {};
+  final Map<String, Pluggable> _pluginsMap = {};
 
   Pluggable _activatedPluggable;
   String get activatedPluggableName => _activatedPluggable?.name;
