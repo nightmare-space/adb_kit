@@ -12,7 +12,7 @@ class Home extends ADBPage {
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).home,
-      value: Routes.overview,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
       onTap: (value) async {
@@ -25,7 +25,7 @@ class Home extends ADBPage {
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
       title: S.of(context).home,
-      value: Routes.overview,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
       onTap: (value) async {

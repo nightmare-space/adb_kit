@@ -13,7 +13,7 @@ class NetDebug extends ADBPage {
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).networkDebug,
-      value: Routes.netDebug,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
       onTap: (value) async {
@@ -26,7 +26,7 @@ class NetDebug extends ADBPage {
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
       title: S.of(context).networkDebug,
-      value: Routes.netDebug,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
       onTap: (value) async {

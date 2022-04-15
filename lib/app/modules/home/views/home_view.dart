@@ -129,24 +129,20 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                     ),
                   );
                   break;
-                // case ScreenType.phone:
-                //   return Scaffold(
-                //     drawer: DesktopPhoneDrawer(
-                //       width: MediaQuery.of(context).size.width * 2 / 3,
-                //       groupValue: route,
-                //       onChanged: (value) {
-                //         route = value;
-                //         setState(() {});
-                //         Navigator.pop(context);
-                //       },
-                //     ),
-                //     body: Row(
-                //       children: [
-                //         Expanded(child: getWidget(route)),
-                //       ],
-                //     ),
-                //   );
-                //   break;
+                case ScreenType.phone:
+                  return Scaffold(
+                    drawer: DesktopPhoneDrawer(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      groupValue: Global().drawerRoute,
+                      onChanged: (value) {
+                        page = value;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                    body: page,
+                  );
+                  break;
                 default:
                   return const Text('ERROR');
               }

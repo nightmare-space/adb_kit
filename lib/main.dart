@@ -30,9 +30,9 @@ Future<void> main() async {
     ..register(DeviceInfoPlugin())
     ..register(TaskManagerPlugin());
   runADBClient();
-  PageManager.instance.clear();
-  PageManager.instance.register(Home());
-  PageManager.instance.register(History());
+  // PageManager.instance.clear();
+  // PageManager.instance.register(Home());
+  // PageManager.instance.register(History());
 }
 
 void runADBClient() {

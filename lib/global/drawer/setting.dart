@@ -11,7 +11,7 @@ class Setting extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
-      value: Routes.setting,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).setting,
       iconData: Icons.settings,
@@ -24,7 +24,7 @@ class Setting extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
-      value: Routes.setting,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).setting,
       iconData: Icons.settings,

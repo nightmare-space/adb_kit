@@ -11,7 +11,7 @@ class About extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
-      value: Routes.about,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).about,
       iconData: Icons.info_outline,
@@ -24,7 +24,7 @@ class About extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
-      value: Routes.about,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).about,
       iconData: Icons.info_outline,
@@ -43,6 +43,5 @@ class About extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }

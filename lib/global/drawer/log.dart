@@ -11,7 +11,7 @@ class Log extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
-      value: Routes.log,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).log,
       iconData: Icons.pending_outlined,
@@ -24,7 +24,7 @@ class Log extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
-      value: Routes.log,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).log,
       iconData: Icons.pending_outlined,

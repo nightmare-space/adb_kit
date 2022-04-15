@@ -11,7 +11,7 @@ class Terminal extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
-      value: Routes.terminal,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).terminal,
       iconData: Icons.code,
@@ -24,7 +24,7 @@ class Terminal extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
-      value: Routes.terminal,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).terminal,
       iconData: Icons.code,

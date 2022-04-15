@@ -17,7 +17,8 @@ class DefaultThemeData {
     return darkThemeData.copyWith(
       colorScheme: darkColorScheme,
       primaryColor: darkColorScheme.primary,
-      scaffoldBackgroundColor: darkColorScheme.background,
+      scaffoldBackgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.dark,
       ),
@@ -29,7 +30,7 @@ class DefaultThemeData {
       ),
       appBarTheme: darkThemeData.appBarTheme.copyWith(
         centerTitle: true,
-        color: darkColorScheme.surface,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: darkThemeData.iconTheme.copyWith(
           color: const Color(0xFFA8A8A8),

@@ -12,7 +12,7 @@ class History extends ADBPage {
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).historyConnect,
-      value: Routes.history,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.history,
       onTap: (value) async {
@@ -24,7 +24,7 @@ class History extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
-      value: Routes.history,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).historyConnect,
       iconData: Icons.history,

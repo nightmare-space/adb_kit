@@ -13,7 +13,7 @@ class InstallToSystem extends ADBPage {
   Widget buildDrawer(BuildContext context, void Function() onTap) {
     return DrawerItem(
       title: S.of(context).installToSystem,
-      value: Routes.installToSystem,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
       onTap: (value) async {
@@ -26,7 +26,7 @@ class InstallToSystem extends ADBPage {
   Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
     return TabletDrawerItem(
       title: S.of(context).installToSystem,
-      value: Routes.installToSystem,
+      value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
       onTap: (value) async {

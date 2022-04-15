@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adb_tool/adb_tool.dart';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
@@ -32,7 +33,7 @@ class Global {
     return _instance;
   }
 
-  String drawerRoute = Routes.overview;
+  String drawerRoute = PageManager.instance.pages.first.runtimeType.toString();
   void changeDrawerRoute(core.String route) {
     drawerRoute = route;
   }

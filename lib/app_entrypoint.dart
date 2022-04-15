@@ -165,7 +165,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
               return SizedBox(
                 height: double.infinity,
                 child: Image.asset(
-                  'assets/background1.jpg',
+                  'assets/b.png',
                   fit: BoxFit.cover,
                 ),
               );
@@ -179,7 +179,7 @@ class _AppEntryPointState extends State<AppEntryPoint>
               sigmaY: 24.0,
             ),
             child: Container(
-              color: theme.colorScheme.background.withOpacity(0.6),
+              // color: theme.colorScheme.background.withOpacity(0.6),
               child: GetBuilder<ConfigController>(builder: (context) {
                 return GetMaterialApp(
                   showPerformanceOverlay: config.showPerformanceOverlay,
