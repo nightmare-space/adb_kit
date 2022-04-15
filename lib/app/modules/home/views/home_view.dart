@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
@@ -18,11 +19,7 @@ class AdbTool extends StatefulWidget {
     this.packageName,
   }) : super(key: key) {
     // ! 换位置
-    // if (RuntimeEnvir.packageName != Config.packageName &&
-    //     !GetPlatform.isDesktop) {
-    //   // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
-    //   Config.flutterPackage = 'packages/adb_tool/';
-    // }
+
   }
 
   final String packageName;

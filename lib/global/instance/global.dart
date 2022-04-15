@@ -148,7 +148,7 @@ class Global {
   ];
 
   List<String> globalFiles = [
-    'app_server',
+    '${Config.flutterPackage}app_server',
   ];
 
   /// 复制一堆执行文件
@@ -165,9 +165,14 @@ class Global {
   }
 
   Future<void> initGlobal() async {
-    Log.i('Global instance init');
     if (isInit) {
       return;
+    }
+    Log.i('Global instance init');
+    if (RuntimeEnvir.packageName != Config.packageName &&
+        !GetPlatform.isDesktop) {
+      // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
+      Config.flutterPackage = 'packages/adb_tool/';
     }
     ConfigController controller = Get.put(ConfigController());
     Log.i('当前系统语言 ${window.locales}');
