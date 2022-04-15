@@ -4,3 +4,7 @@ export 'app/modules/log_page.dart';
 export 'app/routes/app_pages.dart';
 export 'global/instance/global.dart';
 export 'main.dart';
+export 'global/instance/page_manager.dart';
+export 'global/instance/plugin_manager.dart';
+export 'global/drawer/drawer.dart';
+export 'core/impl/plugin.dart';
