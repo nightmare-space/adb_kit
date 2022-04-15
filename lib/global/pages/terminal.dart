@@ -1,4 +1,3 @@
-import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:termare_pty/termare_pty.dart';

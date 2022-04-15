@@ -1,13 +1,11 @@
-import 'dart:io';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/home/views/home_view.dart';
-import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/app/routes/ripple_router.dart';
 import 'package:adb_tool/config/settings.dart';
-import 'package:adb_tool/generated/l10n.dart';
+import 'package:adb_tool/core/interface/adb_page.dart';
+import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
@@ -20,7 +18,7 @@ class TabletDrawer extends StatefulWidget {
     this.onChanged,
     this.groupValue,
   }) : super(key: key);
-  final void Function(String index) onChanged;
+  final void Function(Widget page) onChanged;
   final String groupValue;
 
   @override
@@ -72,90 +70,10 @@ class _TabletDrawerState extends State<TabletDrawer> {
         SizedBox(
           height: 8.w,
         ),
-        TabletDrawerItem(
-          title: S.of(context).home,
-          value: Routes.overview,
-          groupValue: widget.groupValue,
-          onTap: (value) {
-            widget.onChanged.call(value);
-          },
-          iconData: Icons.home,
-        ),
-        TabletDrawerItem(
-          value: Routes.history,
-          groupValue: widget.groupValue,
-          title: '历史连接',
-          iconData: Icons.history,
-          onTap: (value) {
-            widget.onChanged.call(value);
-          },
-        ),
-        if (!kIsWeb && Platform.isAndroid)
-          TabletDrawerItem(
-            value: Routes.netDebug,
-            groupValue: widget.groupValue,
-            iconData: Icons.signal_wifi_4_bar,
-            title: S.of(context).networkDebug,
-            onTap: (value) {
-              widget.onChanged.call(value);
-            },
-          ),
-        // _DrawerItem(
-        //   title: '连接设备',
-        //   value: 1,
-        //   groupValue: widget.groupValue,
-        //   onTap: (index) {
-        //     widget.onChanged?.call(index);
-        //   },
-        //   iconData: Icons.data_saver_off,
-        // ),
-        if (!kIsWeb && Platform.isAndroid)
-          TabletDrawerItem(
-            value: Routes.installToSystem,
-            groupValue: widget.groupValue,
-            title: '安装到系统',
-            iconData: Icons.file_download,
-            onTap: (value) {
-              widget.onChanged.call(value);
-            },
-          ),
-        if (!Platform.isWindows)
-          TabletDrawerItem(
-            value: Routes.terminal,
-            groupValue: widget.groupValue,
-            title: '终端模拟器',
-            iconData: Icons.code,
-            onTap: (value) {
-              widget.onChanged.call(value);
-            },
-          ),
-        TabletDrawerItem(
-          value: Routes.log,
-          groupValue: widget.groupValue,
-          title: S.of(context).log,
-          iconData: Icons.pending_outlined,
-          onTap: (value) async {
-            widget.onChanged.call(value);
-          },
-        ),
-        TabletDrawerItem(
-          value: Routes.setting,
-          groupValue: widget.groupValue,
-          title: S.of(context).settings,
-          iconData: Icons.settings,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
-        TabletDrawerItem(
-          value: Routes.about,
-          groupValue: widget.groupValue,
-          title: S.of(context).about,
-          iconData: Icons.info_outline,
-          onTap: (index) async {
-            widget.onChanged?.call(index);
-          },
-        ),
+        for (ADBPage page in PageManager.instance.pages)
+          page.buildTabletDrawer(context, () {
+            widget.onChanged(page.buildPage(context));
+          }),
         Builder(builder: (context) {
           return TabletDrawerItem(
             groupValue: widget.groupValue,
@@ -181,9 +99,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 RippleRoute(GetBuilder<ConfigController>(builder: (context) {
                   return Theme(
                     data: context.theme,
-                    child: AdbTool(
-                      initRoute: widget.groupValue,
-                    ),
+                    child: AdbTool(),
                   );
                 }), RouteConfig.fromContext(context)),
               );
@@ -212,7 +128,6 @@ class TabletDrawerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ConfigController config = Get.find();
     final bool isChecked = value == groupValue;
     return Padding(
       padding: EdgeInsets.symmetric(

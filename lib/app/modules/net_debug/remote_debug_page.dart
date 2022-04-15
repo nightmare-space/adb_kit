@@ -203,7 +203,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text: '    \$IP代表的是本机IP',
                                 style: TextStyle(
                                   color: Colors.grey,

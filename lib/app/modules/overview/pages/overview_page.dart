@@ -1,6 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
-import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
 import 'package:adb_tool/generated/l10n.dart';

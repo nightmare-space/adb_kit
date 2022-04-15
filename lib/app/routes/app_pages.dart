@@ -1,14 +1,6 @@
-import 'package:adb_tool/app/modules/about/about_page.dart';
-import 'package:adb_tool/app/modules/exec_cmd_page.dart';
-import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/home/views/home_view.dart';
-import 'package:adb_tool/app/modules/install/adb_insys_page.dart';
-import 'package:adb_tool/app/modules/log_page.dart';
-import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
-import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
-import 'package:adb_tool/app/modules/setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,32 +21,8 @@ class AdbPages {
 
 Widget getWidget(String route) {
   switch (route) {
-    case Routes.about:
-      return const AboutPage();
-      break;
-    case Routes.overview:
-      return const OverviewPage();
-      break;
-    case Routes.installToSystem:
-      return const AdbInstallToSystemPage();
-      break;
-    case Routes.terminal:
-      return const ExecCmdPage();
-      break;
-    case Routes.history:
-      return const HistoryPage();
-      break;
     case Routes.searchIp:
       return const SearchIpPage();
-      break;
-    case Routes.netDebug:
-      return const RemoteDebugPage();
-      break;
-    case Routes.log:
-      return const LogPage();
-      break;
-    case Routes.setting:
-      return const SettingsPage();
       break;
     default:
     return const SizedBox();

@@ -1,9 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/generated/l10n.dart';
-import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
@@ -59,7 +56,7 @@ class _LogPageState extends State<LogPage> {
           child: Column(
             children: [
               SizedBox(height: 8.w),
-              Expanded(
+              const Expanded(
                 child: CardItem(
                   child: LoggerView(),
                 ),

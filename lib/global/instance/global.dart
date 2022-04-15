@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';

@@ -1,7 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
-import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -86,9 +84,11 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
           //   ),
           // ),
           for (ADBPage page in PageManager.instance.pages)
-            page.buildDrawer(context, () {
-              widget.onChanged(page.buildPage(context));
-            }),
+            if (page.isActive)
+              page.buildDrawer(context, () {
+                // Global().changeDrawerRoute(route)
+                widget.onChanged(page.buildPage(context));
+              }),
         ],
       ),
     );

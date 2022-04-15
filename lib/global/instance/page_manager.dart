@@ -39,4 +39,8 @@ class PageManager {
   void register(ADBPage page) {
     _pages.add(page);
   }
+
+  void clear() {
+    _pages.clear();
+  }
 }

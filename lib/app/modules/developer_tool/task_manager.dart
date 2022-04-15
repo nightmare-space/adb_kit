@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/developer_tool/model/screen_size.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/dex_server.dart';
 import 'package:adb_tool/utils/http/http.dart';

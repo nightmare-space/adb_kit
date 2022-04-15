@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/modules/history/history_page.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
@@ -15,22 +16,33 @@ class History extends ADBPage {
       groupValue: Global().drawerRoute,
       iconData: Icons.history,
       onTap: (value) async {
-        Global().changeDrawerRoute(value);
+        onTap();
       },
     );
   }
 
   @override
-  bool isActive;
+  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+    return TabletDrawerItem(
+      value: Routes.history,
+      groupValue: Global().drawerRoute,
+      title: S.of(context).historyConnect,
+      iconData: Icons.history,
+      onTap: (value) {
+        onTap();
+      },
+    );
+  }
+
+  @override
+  bool get isActive => true;
 
   @override
   Widget buildPage(BuildContext context) {
-    return HistoryPage();
+    return const HistoryPage();
   }
 
   @override
   void onTap() {
-    // TODO: implement onTap
-    throw UnimplementedError();
   }
 }

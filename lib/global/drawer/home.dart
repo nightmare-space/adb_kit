@@ -1,4 +1,6 @@
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
@@ -14,23 +16,33 @@ class Home extends ADBPage {
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
       onTap: (value) async {
-        Global().changeDrawerRoute(value);
+        onTap();
       },
     );
   }
 
   @override
-  bool isActive;
+  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+    return TabletDrawerItem(
+      title: S.of(context).home,
+      value: Routes.overview,
+      groupValue: Global().drawerRoute,
+      iconData: Icons.home,
+      onTap: (value) async {
+        onTap();
+      },
+    );
+  }
+
+  @override
+  bool get isActive => true;
 
   @override
   Widget buildPage(BuildContext context) {
-    // TODO: implement buildPage
-    throw UnimplementedError();
+    return const OverviewPage();
   }
 
   @override
   void onTap() {
-    // TODO: implement onTap
-    throw UnimplementedError();
   }
 }

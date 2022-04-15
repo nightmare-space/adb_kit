@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/modules/about/about_page.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
@@ -21,16 +22,27 @@ class About extends ADBPage {
   }
 
   @override
-  bool isActive;
+  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+    return TabletDrawerItem(
+      value: Routes.about,
+      groupValue: Global().drawerRoute,
+      title: S.of(context).about,
+      iconData: Icons.info_outline,
+      onTap: (value) async {
+        onTap();
+      },
+    );
+  }
+
+  @override
+  bool get isActive => true;
 
   @override
   Widget buildPage(BuildContext context) {
-    return AboutPage();
+    return const AboutPage();
   }
 
   @override
   void onTap() {
-    // TODO: implement onTap
-    throw UnimplementedError();
   }
 }

@@ -1,5 +1,4 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/generated/l10n.dart';
@@ -244,11 +243,11 @@ class _SettingsPageState extends State<SettingsPage>
                         ),
                       );
                     }),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 8.0,
                       ),
                       child: Text(

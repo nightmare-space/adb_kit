@@ -1,4 +1,3 @@
-import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +98,6 @@ class _DevicesListState extends State<DevicesList> {
                   return const SizedBox();
                 }),
                 Builder(builder: (_) {
-                  ConfigController configController = Get.find();
                   if (!controller.adbIsStarting &&
                       controller.devicesEntitys.isEmpty) {
                     return SizedBox(

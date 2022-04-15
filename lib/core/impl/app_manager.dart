@@ -1,8 +1,7 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/wrappers/app_manager_wrapper.dart';
 import 'package:adb_tool/core/interface/pluggable.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/painting/image_provider.dart';
+import 'package:flutter/material.dart';
 
 class AppManagerPlugin extends Pluggable {
   @override

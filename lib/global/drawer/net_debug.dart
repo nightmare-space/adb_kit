@@ -1,4 +1,6 @@
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_tool/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/generated/l10n.dart';
@@ -15,7 +17,20 @@ class NetDebug extends ADBPage {
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
       onTap: (value) async {
-        Global().changeDrawerRoute(value);
+        onTap();
+      },
+    );
+  }
+
+  @override
+  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+    return TabletDrawerItem(
+      title: S.of(context).networkDebug,
+      value: Routes.netDebug,
+      groupValue: Global().drawerRoute,
+      iconData: Icons.signal_wifi_4_bar,
+      onTap: (value) async {
+        onTap();
       },
     );
   }
@@ -25,13 +40,10 @@ class NetDebug extends ADBPage {
 
   @override
   Widget buildPage(BuildContext context) {
-    // TODO: implement buildPage
-    throw UnimplementedError();
+    return const RemoteDebugPage();
   }
 
   @override
   void onTap() {
-    // TODO: implement onTap
-    throw UnimplementedError();
   }
 }

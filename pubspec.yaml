@@ -76,14 +76,14 @@ flutter:
 dependency_overrides:
   # global_repository:
   #   path: ../global_repository
-  # app_launcher:
-  #   path: ../app_launcher
-  # multicast:
-  #   path: ../multicast
-  device_info:
-    path: ../device_info
-  app_manager:
-    path: ../app_manager
+  # # app_launcher:
+  # #   path: ../app_launcher
+  # # multicast:
+  # #   path: ../multicast
+  # device_info:
+  #   path: ../device_info
+  # app_manager:
+  #   path: ../app_manager
   # adbutil:
   #   path: ../adbutil
   # file_selector_nightmare:

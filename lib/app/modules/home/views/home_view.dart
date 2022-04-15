@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
-import 'package:adb_tool/app/routes/app_pages.dart';
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/themes/theme.dart';
+import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +16,6 @@ class AdbTool extends StatefulWidget {
   AdbTool({
     Key key,
     this.packageName,
-    this.initRoute = Routes.overview,
   }) : super(key: key) {
     // ! 换位置
     // if (RuntimeEnvir.packageName != Config.packageName &&
@@ -30,13 +26,11 @@ class AdbTool extends StatefulWidget {
   }
 
   final String packageName;
-  final String initRoute;
   @override
   _AdbToolState createState() => _AdbToolState();
 }
 
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
-  String route;
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
   Widget page;
@@ -48,7 +42,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    route = widget.initRoute;
     if (GetPlatform.isMacOS) {
       Window.makeTitlebarTransparent();
       Window.enableFullSizeContentView();
@@ -84,6 +77,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    page ??= PageManager.instance.pages.first.buildPage(context);
     return Stack(
       children: [
         AnnotatedRegion<SystemUiOverlayStyle>(
@@ -100,7 +94,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                       children: [
                         DesktopPhoneDrawer(
                           width: Dimens.setWidth(200),
-                          groupValue: route,
+                          groupValue: Global().drawerRoute,
                           onChanged: (value) {
                             page = value;
                             setState(() {});
@@ -108,7 +102,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                         ),
                         Expanded(
                           child: TitlebarSafeArea(
-                            child: page ?? getWidget(route),
+                            child: page,
                           ),
                         ),
                       ],
@@ -120,15 +114,15 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                     body: Row(
                       children: [
                         TabletDrawer(
-                          groupValue: route,
-                          onChanged: (index) {
-                            route = index;
+                          groupValue: Global().drawerRoute,
+                          onChanged: (value) {
+                            page = value;
                             setState(() {});
                           },
                         ),
                         Expanded(
                           child: TitlebarSafeArea(
-                            child: getWidget(route),
+                            child: page,
                           ),
                         ),
                       ],

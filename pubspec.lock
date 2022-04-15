@@ -36,16 +36,18 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "../app_manager"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "93c9b805ef8581cca2c75f114d3c732aa63c2e97"
+      url: "https://github.com/nightmare-space/app_manager"
+    source: git
     version: "1.0.0+1"
   applib_util:
     dependency: transitive
     description:
       path: applib_util
       ref: HEAD
-      resolved-ref: "35d64a2fb081a17dca6d01af06a2a5ac1507dd5c"
+      resolved-ref: b2a0e42e465d80c68353a927902ab2b0105a8216
       url: "https://github.com/nightmare-space/applib"
     source: git
     version: "0.0.1"
@@ -152,9 +154,11 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "../device_info"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: b315f27997b783e7900671e39cfa2166dcbab4dc
+      url: "https://github.com/nightmare-space/device_info.git"
+    source: git
     version: "1.0.0+1"
   dio:
     dependency: "direct main"
@@ -325,7 +329,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1d6ab06349c355813779d978b21a512fbf462d51"
+      resolved-ref: "08be49ecb384e021d3e61917aa4e50815ff201e0"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
