@@ -2,6 +2,7 @@ library adb_tool;
 
 import 'dart:async';
 import 'dart:io';
+import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/drawer/home.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -55,6 +56,7 @@ void runADBClient() {
       }
       await initSetting();
       Get.put(ConfigController());
+      Get.put(DevicesController());
       Global.instance.initGlobal();
       am.AppManager.globalInstance;
       if (useNativeShell) {
