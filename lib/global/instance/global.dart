@@ -148,13 +148,16 @@ class Global {
   ];
 
   List<String> globalFiles = [
-    '${Config.flutterPackage}app_server',
+    'app_server',
   ];
 
   /// 复制一堆执行文件
   Future<void> installAdbToEnvir() async {
     if (kIsWeb) {
       return true;
+    }
+    for (int i = 0; i < globalFiles.length; i++) {
+      globalFiles[i] = Config.flutterPackage + globalFiles[i];
     }
     AssetsManager.copyFiles(
       localPath: RuntimeEnvir.binPath + '/',
