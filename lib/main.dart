@@ -21,7 +21,10 @@ bool useNativeShell = false;
 
 Future<void> main() async {
   // Log.d(StackTrace.current);
-
+  // 初始化运行时环境
+  if (!GetPlatform.isIOS) {
+    RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
+  }
   PluginManager.instance
     ..register(DashboardPlugin())
     ..register(AppStarterPlugin())
@@ -41,10 +44,7 @@ void runADBClient() {
       Log.d(text, tag: 'GetX');
     },
   );
-  // 初始化运行时环境
-  if (!GetPlatform.isIOS) {
-    RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
-  }
+
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
