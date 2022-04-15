@@ -1,6 +1,7 @@
 library adb_tool;
 
 import 'dart:async';
+import 'dart:io';
 import 'package:adb_tool/global/drawer/home.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -22,6 +23,7 @@ bool useNativeShell = false;
 Future<void> main() async {
   // Log.d(StackTrace.current);
   // 初始化运行时环境
+  Platform.packageConfig;
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
