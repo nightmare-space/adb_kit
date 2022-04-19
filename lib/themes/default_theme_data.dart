@@ -9,7 +9,7 @@ import 'lib_color_schemes.g.dart';
 
 class DefaultThemeData {
   DefaultThemeData._();
-  static const Color _primary = AppColors.accent;
+  static final Color _primary = AppColors.accent;
 
   static ThemeData dark() {
     final darkThemeData = ThemeData.dark();
@@ -112,7 +112,7 @@ class DefaultThemeData {
     Color primary,
   }) {
     final lightThemeData = ThemeData.light();
-    ColorScheme colorScheme = lightColorScheme;
+    ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: seed);
     return lightThemeData.copyWith(
       primaryColor: colorScheme.primary,
       colorScheme: colorScheme,

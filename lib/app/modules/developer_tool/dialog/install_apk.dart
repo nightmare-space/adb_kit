@@ -94,8 +94,8 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
                         ),
                         TextSpan(
                           text: '$fileIndex',
-                          style: const TextStyle(
-                            color: AppColors.accent,
+                          style:  TextStyle(
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -156,14 +156,12 @@ class Global {
     if (kIsWeb) {
       return true;
     }
-    for (int i = 0; i < globalFiles.length; i++) {
-      globalFiles[i] = Config.flutterPackage + globalFiles[i];
-    }
     AssetsManager.copyFiles(
       localPath: RuntimeEnvir.binPath + '/',
       android: androidFiles,
       macOS: [],
       global: globalFiles,
+      package: Config.flutterPackage,
     );
   }
 
@@ -172,8 +170,7 @@ class Global {
       return;
     }
     Log.i('Global instance init');
-    if (RuntimeEnvir.packageName != Config.packageName &&
-        !GetPlatform.isDesktop) {
+    if (RuntimeEnvir.packageName != Config.packageName) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
       Config.flutterPackage = 'packages/adb_tool/';
     }

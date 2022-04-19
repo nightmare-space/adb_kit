@@ -86,10 +86,13 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
           // ),
           for (ADBPage page in PageManager.instance.pages)
             if (page.isActive)
-              page.buildDrawer(context, () {
-                Global().changeDrawerRoute(page.runtimeType.toString());
-                widget.onChanged(page.buildPage(context));
-              }),
+              page.buildDrawer(
+                context,
+                () {
+                  Global().changeDrawerRoute(page.runtimeType.toString());
+                  widget.onChanged(page.buildPage(context));
+                },
+              ),
         ],
       ),
     );

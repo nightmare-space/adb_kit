@@ -74,10 +74,10 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                         fontSize: 14.w,
                         color: AppColors.fontColor,
                       ),
-                      child: const Text(
+                      child: Text(
                         '释放执行操作',
                         style: TextStyle(
-                          color: AppColors.accent,
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -3,6 +3,7 @@ import 'package:adb_tool/app/modules/home/views/home_view.dart';
 import 'package:adb_tool/app/routes/ripple_router.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
@@ -72,6 +73,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
         ),
         for (ADBPage page in PageManager.instance.pages)
           page.buildTabletDrawer(context, () {
+            Global().changeDrawerRoute(page.runtimeType.toString());
             widget.onChanged(page.buildPage(context));
           }),
         Builder(builder: (context) {
@@ -96,12 +98,17 @@ class _TabletDrawerState extends State<TabletDrawer> {
               ConfigController controller = Get.find();
               controller.theme = theme;
               Navigator.of(context).pushReplacement(
-                RippleRoute(GetBuilder<ConfigController>(builder: (context) {
-                  return Theme(
-                    data: context.theme,
-                    child: AdbTool(),
-                  );
-                }), RouteConfig.fromContext(context)),
+                RippleRoute(
+                  GetBuilder<ConfigController>(
+                    builder: (context) {
+                      return Theme(
+                        data: context.theme,
+                        child: AdbTool(),
+                      );
+                    },
+                  ),
+                  RouteConfig.fromContext(context),
+                ),
               );
             },
           );

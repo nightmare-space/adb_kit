@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/drawer/home.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
+import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'core/impl/plugin.dart';
 import 'global/drawer/history.dart';
 import 'global/instance/global.dart';
 import 'global/instance/page_manager.dart';
+import 'themes/lib_color_schemes.g.dart';
 
 // 这个值由shell去替换
 bool useNativeShell = false;
@@ -41,13 +43,15 @@ Future<void> main() async {
   // PageManager.instance.register(History());
 }
 
-void runADBClient() {
+void runADBClient({Color primary}) {
   Get.config(
     logWriterCallback: (text, {isError}) {
       Log.d(text, tag: 'GetX');
     },
   );
-
+  if (primary != null) {
+    seed = primary;
+  }
   runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();

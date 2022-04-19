@@ -10,7 +10,7 @@ class AppColors {
   static Color fontDetail = const Color(0xff707076);
   static const Color background = Color(0xfff5f5f7);
   // static Color accent = const Color(0xff3573e0);
-  static const Color accent = CandyColors.indigo;
+  static Color accent = CandyColors.indigo;
   static Color contentBorder = const Color(0xffebebed);
   static Color terminalBack = const Color(0xffebebed);
 

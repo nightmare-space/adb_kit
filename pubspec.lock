@@ -140,7 +140,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "780ac18a3da379a6166787739e73fa4d86c39b22"
+      resolved-ref: a437347d882e8e9110564cef9495f8dafc6c8b89
       url: "https://github.com/Termare/dart_pty"
     source: git
     version: "0.0.3"
@@ -200,7 +200,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5e3b566c7b3640a09359a1534b7eee9e22d08965"
+      resolved-ref: ddff84af94f1efc1c3b46832ddd13cccdfb00671
       url: "https://github.com/nightmare-space/file_manager_view.git"
     source: git
     version: "1.0.0+1"
@@ -329,7 +329,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "08be49ecb384e021d3e61917aa4e50815ff201e0"
+      resolved-ref: "5a1f3d90c0d1abff1065b593154de2f15dafaa64"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -554,11 +554,9 @@ packages:
   signale:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "330855a5d6859066006f2ec415bc4f3cbb3828e5"
-      url: "https://github.com/nightmare-space/signale"
-    source: git
+      name: signale
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.0.7"
   sky_engine:
     dependency: transitive

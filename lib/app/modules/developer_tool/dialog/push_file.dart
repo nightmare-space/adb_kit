@@ -91,8 +91,8 @@ class _PushFileDialogState extends State<PushFileDialog> {
                         ),
                         TextSpan(
                           text: '$fileIndex',
-                          style: const TextStyle(
-                            color: AppColors.accent,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
