@@ -5,3 +5,5 @@ export 'home.dart';
 export 'install_to_system.dart';
 export 'setting.dart';
 export 'terminal.dart';
+export 'log.dart';
+export 'log.dart';

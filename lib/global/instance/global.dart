@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:adb_tool/adb_tool.dart';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/routes/app_pages.dart';
@@ -17,6 +16,8 @@ import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:termare_view/termare_view.dart';
 import 'dart:core' as core;
 import 'dart:core';
+
+import 'page_manager.dart';
 
 class Global {
   factory Global() => _getInstance();

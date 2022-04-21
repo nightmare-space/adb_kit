@@ -14,12 +14,10 @@ import 'package:global_repository/global_repository.dart';
 import 'dialog/otg_dialog.dart';
 
 class AdbTool extends StatefulWidget {
-  AdbTool({
+  const AdbTool({
     Key key,
     this.packageName,
-  }) : super(key: key) {
-    // ! 换位置
-  }
+  }) : super(key: key);
 
   final String packageName;
   @override
@@ -38,10 +36,12 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    if (GetPlatform.isMacOS) {
-      calculateTitlebarHeight();
+    if (GetPlatform.isMacOS && RuntimeEnvir.packageName == Config.packageName) {
+      // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
+      Config.flutterPackage = 'packages/adb_tool/';
       Window.makeTitlebarTransparent();
       Window.enableFullSizeContentView();
+      calculateTitlebarHeight();
     }
     configController.syncBackgroundStyle();
     WidgetsBinding.instance.addObserver(this);
@@ -68,7 +68,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   double titlebarHeight = 0;
   Future<void> calculateTitlebarHeight() async {
     titlebarHeight = await Window.getTitlebarHeight();
-
     setState(() {});
   }
 
@@ -86,67 +85,70 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
           : OverlayStyle.dark,
-      child: Padding(
-        padding: EdgeInsets.only(top: titlebarHeight),
-        child: Responsive(
-          builder: (_, ScreenType screenType) {
-            ScreenType type = configController.screenType;
-            switch (type ?? screenType) {
-              case ScreenType.desktop:
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      DesktopPhoneDrawer(
-                        width: Dimens.setWidth(200),
-                        groupValue: Global().drawerRoute,
-                        onChanged: (value) {
-                          page = value;
-                          setState(() {});
-                        },
-                      ),
-                      Expanded(
-                        child: page,
-                      ),
-                    ],
-                  ),
-                );
-                break;
-              case ScreenType.tablet:
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      TabletDrawer(
-                        groupValue: Global().drawerRoute,
-                        onChanged: (value) {
-                          page = value;
-                          setState(() {});
-                        },
-                      ),
-                      Expanded(
-                        child: page,
-                      ),
-                    ],
-                  ),
-                );
-                break;
-              case ScreenType.phone:
-                return Scaffold(
-                  drawer: DesktopPhoneDrawer(
-                    width: MediaQuery.of(context).size.width * 2 / 3,
-                    groupValue: Global().drawerRoute,
-                    onChanged: (value) {
-                      page = value;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                  body: page,
-                );
-                break;
-              default:
-                return const Text('ERROR');
-            }
-          },
+      child: Material(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Padding(
+          padding: EdgeInsets.only(top: titlebarHeight),
+          child: Responsive(
+            builder: (_, ScreenType screenType) {
+              ScreenType type = configController.screenType;
+              switch (type ?? screenType) {
+                case ScreenType.desktop:
+                  return Scaffold(
+                    body: Row(
+                      children: [
+                        DesktopPhoneDrawer(
+                          width: Dimens.setWidth(200),
+                          groupValue: Global().drawerRoute,
+                          onChanged: (value) {
+                            page = value;
+                            setState(() {});
+                          },
+                        ),
+                        Expanded(
+                          child: page,
+                        ),
+                      ],
+                    ),
+                  );
+                  break;
+                case ScreenType.tablet:
+                  return Scaffold(
+                    body: Row(
+                      children: [
+                        TabletDrawer(
+                          groupValue: Global().drawerRoute,
+                          onChanged: (value) {
+                            page = value;
+                            setState(() {});
+                          },
+                        ),
+                        Expanded(
+                          child: page,
+                        ),
+                      ],
+                    ),
+                  );
+                  break;
+                case ScreenType.phone:
+                  return Scaffold(
+                    drawer: DesktopPhoneDrawer(
+                      width: MediaQuery.of(context).size.width * 2 / 3,
+                      groupValue: Global().drawerRoute,
+                      onChanged: (value) {
+                        page = value;
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                    ),
+                    body: page,
+                  );
+                  break;
+                default:
+                  return const Text('ERROR');
+              }
+            },
+          ),
         ),
       ),
     );

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:app_manager/app_manager.dart' as am;
+import 'app/modules/home/views/home_view.dart';
 import 'app_entrypoint.dart';
 import 'config/config.dart';
 import 'core/impl/plugin.dart';
@@ -26,7 +27,6 @@ bool useNativeShell = false;
 Future<void> main() async {
   // Log.d(StackTrace.current);
   // 初始化运行时环境
-  Platform.packageConfig;
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
@@ -52,22 +52,9 @@ void runADBClient({Color primary}) {
   if (primary != null) {
     seed = primary;
   }
-  runZonedGuarded<Future<void>>(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
-      if (GetPlatform.isDesktop) {
-        await Window.initialize();
-      }
-      await initSetting();
-      Get.put(ConfigController());
-      Get.put(DevicesController());
-      Global.instance.initGlobal();
-      am.AppManager.globalInstance;
-      if (useNativeShell) {
-        runApp(const NativeShellWrapper());
-      } else {
-        runApp(const AppEntryPoint());
-      }
+  runZonedGuarded<void>(
+    () {
+      runApp(const ADBToolEntryPoint());
     },
     (error, stackTrace) {
       Log.e('未捕捉到的异常 : $error');
@@ -78,4 +65,56 @@ void runADBClient({Color primary}) {
     Log.e('页面构建异常 : ${details.exception}');
   };
   StatusBarUtil.transparent();
+}
+
+class ADBToolEntryPoint extends StatefulWidget {
+  const ADBToolEntryPoint({Key key, this.primary}) : super(key: key);
+  final Color primary;
+
+  @override
+  State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
+}
+
+class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
+  Future<void> init() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    if (widget.primary != null) {
+      seed = widget.primary;
+    }
+    if (GetPlatform.isDesktop) {
+      await Window.initialize();
+    }
+    await initSetting();
+    Get.put(ConfigController());
+    Get.put(ConfigController());
+    Get.put(DevicesController());
+    Global.instance.initGlobal();
+    am.AppManager.globalInstance;
+    DevicesController controller = Get.find();
+    controller.init();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: init(),
+      builder: (_, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return const Text('Input a URL to start');
+          case ConnectionState.waiting:
+            return const Center(child: CircularProgressIndicator());
+          case ConnectionState.active:
+            return const Text('');
+          case ConnectionState.done:
+            ConfigController config = Get.find();
+            return Theme(
+              data: config.theme,
+              child: AdbTool(),
+            );
+        }
+        return const SizedBox();
+      },
+    );
+  }
 }
