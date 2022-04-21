@@ -29,68 +29,66 @@ class _DeveloperToolState extends State<DeveloperTool>
       vsync: this,
     );
   }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return TitlebarSafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(48.w),
-          child: SafeArea(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 8.w,
-                ),
-                const PopButton(),
-                Expanded(
-                  child: TabBar(
-                    labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    unselectedLabelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    unselectedLabelColor: AppColors.fontColor,
-                    indicator: RoundedUnderlineTabIndicator(
-                      insets: EdgeInsets.only(bottom: 12.w),
-                      radius: 12.w,
-                      // width: 50.w,
-                      borderSide: BorderSide(
-                        width: 4.w,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      // color: Color(0xff6002ee),
-                      // borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-                    ),
-                    labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
-                    isScrollable: true,
-                    controller: controller,
-                    tabs: <Widget>[
-                      for (var item in PluginManager.instance.pluginsMap.keys)
-                        Tab(text: PluginManager.instance.pluginsMap[item].name),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        body: TitlebarSafeArea(
-          child: TabBarView(
-            controller: controller,
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(48.w),
+        child: SafeArea(
+          child: Row(
             children: [
-              for (var item in PluginManager.instance.pluginsMap.keys)
-                PluginManager.instance.pluginsMap[item]
-                    .buildWidget(context, widget.entity),
+              SizedBox(
+                width: 8.w,
+              ),
+              const PopButton(),
+              Expanded(
+                child: TabBar(
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelColor: AppColors.fontColor,
+                  indicator: RoundedUnderlineTabIndicator(
+                    insets: EdgeInsets.only(bottom: 12.w),
+                    radius: 12.w,
+                    // width: 50.w,
+                    borderSide: BorderSide(
+                      width: 4.w,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    // color: Color(0xff6002ee),
+                    // borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                  ),
+                  labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                  isScrollable: true,
+                  controller: controller,
+                  tabs: <Widget>[
+                    for (var item in PluginManager.instance.pluginsMap.keys)
+                      Tab(text: PluginManager.instance.pluginsMap[item].name),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+      ),
+      body: TabBarView(
+        controller: controller,
+        children: [
+          for (var item in PluginManager.instance.pluginsMap.keys)
+            PluginManager.instance.pluginsMap[item]
+                .buildWidget(context, widget.entity),
+        ],
       ),
     );
   }

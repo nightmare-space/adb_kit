@@ -51,9 +51,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                   }
                   return SingleChildScrollView(
                     physics: const NeverScrollableScrollPhysics(),
-                    child: TitlebarSafeArea(
-                      child: buildBody(context),
-                    ),
+                    child: buildBody(context),
                   );
                 },
               ),
@@ -72,10 +70,11 @@ class _TabletDrawerState extends State<TabletDrawer> {
           height: 8.w,
         ),
         for (ADBPage page in PageManager.instance.pages)
-          page.buildTabletDrawer(context, () {
-            Global().changeDrawerRoute(page.runtimeType.toString());
-            widget.onChanged(page.buildPage(context));
-          }),
+          if (page.isActive)
+            page.buildTabletDrawer(context, () {
+              Global().changeDrawerRoute(page.runtimeType.toString());
+              widget.onChanged(page.buildPage(context));
+            }),
         Builder(builder: (context) {
           return TabletDrawerItem(
             groupValue: widget.groupValue,

@@ -21,7 +21,7 @@ import 'dart:core';
 class Global {
   factory Global() => _getInstance();
   Global._internal() {
-    Log.defaultLogger.printer = const Print();
+    // Log.defaultLogger.printer = const Print();
     HomeBinding().dependencies();
   }
 
@@ -193,7 +193,9 @@ class Global {
     if (controller.autoConnect) {
       _receiveBoardCast();
     }
-    _sendBoardCast();
+    if (GetPlatform.isAndroid) {
+      _sendBoardCast();
+    }
     _socketServer();
     await installAdbToEnvir();
   }
@@ -218,7 +220,7 @@ class Print implements Printable {
     logTerminalCTL.write(data + '\r\n');
 
     // ignore: avoid_print
-    core.print(data);
+    // core.print(data);
   }
 }
 

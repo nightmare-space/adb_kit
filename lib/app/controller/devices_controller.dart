@@ -55,7 +55,7 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController(){
+  DevicesController() {
     Log.i('设备管理控制器 Create');
   }
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
@@ -78,7 +78,7 @@ class DevicesController extends GetxController {
     });
     await startAdb();
     AdbUtil.addListener(handleResult);
-    AdbUtil.startPoolingListDevices();
+    AdbUtil.startPoolingListDevices(duration: const Duration(seconds: 1));
   }
 
   List<DevicesEntity> otgDevices = [];

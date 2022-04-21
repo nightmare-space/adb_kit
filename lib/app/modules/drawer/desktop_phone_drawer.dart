@@ -59,42 +59,40 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   }
 
   Widget buildBody(BuildContext context) {
-    return TitlebarSafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 8.w,
-          ),
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child: Padding(
-          //     padding: EdgeInsets.symmetric(
-          //       horizontal: 24.w,
-          //       vertical: 16.w,
-          //     ),
-          //     child: Text(
-          //       'ADB TOOL',
-          //       style: TextStyle(
-          //         fontSize: 26.w,
-          //         fontWeight: FontWeight.bold,
-          //         color: Theme.of(context).primaryColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          for (ADBPage page in PageManager.instance.pages)
-            if (page.isActive)
-              page.buildDrawer(
-                context,
-                () {
-                  Global().changeDrawerRoute(page.runtimeType.toString());
-                  widget.onChanged(page.buildPage(context));
-                },
-              ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 8.w,
+        ),
+        // Align(
+        //   alignment: Alignment.centerLeft,
+        //   child: Padding(
+        //     padding: EdgeInsets.symmetric(
+        //       horizontal: 24.w,
+        //       vertical: 16.w,
+        //     ),
+        //     child: Text(
+        //       'ADB TOOL',
+        //       style: TextStyle(
+        //         fontSize: 26.w,
+        //         fontWeight: FontWeight.bold,
+        //         color: Theme.of(context).primaryColor,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        for (ADBPage page in PageManager.instance.pages)
+          if (page.isActive)
+            page.buildDrawer(
+              context,
+              () {
+                Global().changeDrawerRoute(page.runtimeType.toString());
+                widget.onChanged(page.buildPage(context));
+              },
+            ),
+      ],
     );
   }
 }
