@@ -26,19 +26,19 @@ Future<void> initSetting() async {
   }
 }
 
-// App 的顶级widget
-class AppEntryPoint extends StatefulWidget {
-  const AppEntryPoint({
+
+class MaterialAppWrapper extends StatefulWidget {
+  const MaterialAppWrapper({
     Key key,
     this.isNativeShell = false,
   }) : super(key: key);
   final bool isNativeShell;
 
   @override
-  _AppEntryPointState createState() => _AppEntryPointState();
+  _MaterialAppWrapperState createState() => _MaterialAppWrapperState();
 }
 
-class _AppEntryPointState extends State<AppEntryPoint>
+class _MaterialAppWrapperState extends State<MaterialAppWrapper>
     with WidgetsBindingObserver {
   ConfigController config = Get.put(ConfigController());
 
@@ -285,7 +285,7 @@ class MainWindowState extends nativeshell.WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return const AppEntryPoint(
+    return const MaterialAppWrapper(
       isNativeShell: true,
     );
   }

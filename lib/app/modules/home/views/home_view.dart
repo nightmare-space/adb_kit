@@ -4,7 +4,9 @@ import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
+import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -27,7 +29,6 @@ class AdbTool extends StatefulWidget {
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
-  Widget page;
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Log.v('didChangeAppLifecycleState : $state');
@@ -41,7 +42,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       Config.flutterPackage = 'packages/adb_tool/';
       Window.makeTitlebarTransparent();
       Window.enableFullSizeContentView();
-      calculateTitlebarHeight();
     }
     configController.syncBackgroundStyle();
     WidgetsBinding.instance.addObserver(this);
@@ -65,12 +65,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     // TODO detach 也需要
   }
 
-  double titlebarHeight = 0;
-  Future<void> calculateTitlebarHeight() async {
-    titlebarHeight = await Window.getTitlebarHeight();
-    setState(() {});
-  }
-
   @override
   void dispose() {
     Log.w('ADB TOOL dispose');
@@ -80,75 +74,141 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    page ??= PageManager.instance.pages.first.buildPage(context);
+    Global().page ??= PageManager.instance.pages.first.buildPage(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
           : OverlayStyle.dark,
       child: Material(
         color: Theme.of(context).scaffoldBackgroundColor,
-        child: Padding(
-          padding: EdgeInsets.only(top: titlebarHeight),
-          child: Responsive(
-            builder: (_, ScreenType screenType) {
-              ScreenType type = configController.screenType;
-              switch (type ?? screenType) {
-                case ScreenType.desktop:
-                  return Scaffold(
-                    body: Row(
-                      children: [
-                        DesktopPhoneDrawer(
-                          width: Dimens.setWidth(200),
-                          groupValue: Global().drawerRoute,
-                          onChanged: (value) {
-                            page = value;
-                            setState(() {});
+        child: Responsive(
+          builder: (_, ScreenType screenType) {
+            ScreenType type = configController.screenType;
+            switch (type ?? screenType) {
+              case ScreenType.desktop:
+                return Scaffold(
+                  body: Row(
+                    children: [
+                      DesktopPhoneDrawer(
+                        width: Dimens.setWidth(200),
+                        groupValue: Global().drawerRoute,
+                        onChanged: (value) {
+                          Global().page = value;
+                          setState(() {});
+                        },
+                      ),
+                      Expanded(
+                        child: PageTransitionSwitcher(
+                          transitionBuilder: (
+                            Widget child,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                          ) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              fillColor: Colors.transparent,
+                              child: child,
+                            );
                           },
-                        ),
-                        Expanded(
-                          child: page,
-                        ),
-                      ],
-                    ),
-                  );
-                  break;
-                case ScreenType.tablet:
-                  return Scaffold(
-                    body: Row(
-                      children: [
-                        TabletDrawer(
-                          groupValue: Global().drawerRoute,
-                          onChanged: (value) {
-                            page = value;
-                            setState(() {});
+                          layoutBuilder: (widgets) {
+                            return Material(
+                              color: Colors.transparent,
+                              child: Stack(
+                                children: widgets,
+                              ),
+                            );
                           },
+                          duration: const Duration(milliseconds: 600),
+                          child: MacSafeArea(child: Global().page),
                         ),
-                        Expanded(
-                          child: page,
+                      ),
+                    ],
+                  ),
+                );
+                break;
+              case ScreenType.tablet:
+                return Scaffold(
+                  body: Row(
+                    children: [
+                      TabletDrawer(
+                        groupValue: Global().drawerRoute,
+                        onChanged: (value) {
+                          Global().page = value;
+                          setState(() {});
+                        },
+                      ),
+                      Expanded(
+                        child: PageTransitionSwitcher(
+                          transitionBuilder: (
+                            Widget child,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                          ) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              fillColor: Colors.transparent,
+                              child: child,
+                            );
+                          },
+                          layoutBuilder: (widgets) {
+                            return Material(
+                              color: Colors.transparent,
+                              child: Stack(
+                                children: widgets,
+                              ),
+                            );
+                          },
+                          duration: const Duration(milliseconds: 600),
+                          child: MacSafeArea(child: Global().page),
                         ),
-                      ],
-                    ),
-                  );
-                  break;
-                case ScreenType.phone:
-                  return Scaffold(
-                    drawer: DesktopPhoneDrawer(
-                      width: MediaQuery.of(context).size.width * 2 / 3,
-                      groupValue: Global().drawerRoute,
-                      onChanged: (value) {
-                        page = value;
-                        setState(() {});
-                        Navigator.pop(context);
-                      },
-                    ),
-                    body: page,
-                  );
-                  break;
-                default:
-                  return const Text('ERROR');
-              }
-            },
-          ),
+                      ),
+                    ],
+                  ),
+                );
+                break;
+              case ScreenType.phone:
+                return Scaffold(
+                  drawer: DesktopPhoneDrawer(
+                    width: MediaQuery.of(context).size.width * 2 / 3,
+                    groupValue: Global().drawerRoute,
+                    onChanged: (value) {
+                      Global().page = value;
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                  ),
+                  body: PageTransitionSwitcher(
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        fillColor: Colors.transparent,
+                        child: child,
+                      );
+                    },
+                    layoutBuilder: (widgets) {
+                      return Material(
+                        color: Colors.transparent,
+                        child: Stack(
+                          children: widgets,
+                        ),
+                      );
+                    },
+                    duration: const Duration(milliseconds: 600),
+                    child: MacSafeArea(child: Global().page),
+                  ),
+                );
+                break;
+              default:
+                return const Text('ERROR');
+            }
+          },
         ),
       ),
     );

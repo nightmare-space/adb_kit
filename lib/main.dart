@@ -54,7 +54,9 @@ void runADBClient({Color primary}) {
   }
   runZonedGuarded<void>(
     () {
-      runApp(const ADBToolEntryPoint());
+      runApp(const ADBToolEntryPoint(
+        child: MaterialAppWrapper(),
+      ));
     },
     (error, stackTrace) {
       Log.e('未捕捉到的异常 : $error');
@@ -67,9 +69,15 @@ void runADBClient({Color primary}) {
   StatusBarUtil.transparent();
 }
 
+// 把init从main函数移动到这儿是有原因的
 class ADBToolEntryPoint extends StatefulWidget {
-  const ADBToolEntryPoint({Key key, this.primary}) : super(key: key);
+  const ADBToolEntryPoint({
+    Key key,
+    this.primary,
+    this.child,
+  }) : super(key: key);
   final Color primary;
+  final Widget child;
 
   @override
   State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
@@ -110,7 +118,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
             ConfigController config = Get.find();
             return Theme(
               data: config.theme,
-              child: AdbTool(),
+              child: widget.child ?? const AdbTool(),
             );
         }
         return const SizedBox();

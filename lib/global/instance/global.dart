@@ -35,6 +35,7 @@ class Global {
   }
 
   String drawerRoute = PageManager.instance.pages.first.runtimeType.toString();
+  Widget page;
   void changeDrawerRoute(core.String route) {
     drawerRoute = route;
   }

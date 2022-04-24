@@ -5,6 +5,7 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
+import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +42,21 @@ class _TabletDrawerState extends State<TabletDrawer> {
               bottomRight: Radius.circular(Dimens.gap_dp20),
             ),
           ),
-          child: SafeArea(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Builder(
-                builder: (_) {
-                  if (orientation == Orientation.portrait) {
-                    return buildBody(context);
-                  }
-                  return SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: buildBody(context),
-                  );
-                },
+          child: MacSafeArea(
+            child: SafeArea(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Builder(
+                  builder: (_) {
+                    if (orientation == Orientation.portrait) {
+                      return buildBody(context);
+                    }
+                    return SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: buildBody(context),
+                    );
+                  },
+                ),
               ),
             ),
           ),

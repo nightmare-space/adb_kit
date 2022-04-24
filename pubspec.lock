@@ -38,7 +38,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "93c9b805ef8581cca2c75f114d3c732aa63c2e97"
+      resolved-ref: b5af0899a4142c162450550daef9855248cc526a
       url: "https://github.com/nightmare-space/app_manager"
     source: git
     version: "1.0.0+1"
@@ -200,7 +200,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ddff84af94f1efc1c3b46832ddd13cccdfb00671
+      resolved-ref: f6d3f7e717df0c205755b13dd5c9aa885a3e10ae
       url: "https://github.com/nightmare-space/file_manager_view.git"
     source: git
     version: "1.0.0+1"
@@ -230,7 +230,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e402a3831c4b87f27113b9837bc876b6144a8af7
+      resolved-ref: e9271b8b199cc484a078f1dfdd0b89e3dc03cdcf
       url: "https://github.com/nightmare-space/file_selector_meng"
     source: git
     version: "1.0.0+1"

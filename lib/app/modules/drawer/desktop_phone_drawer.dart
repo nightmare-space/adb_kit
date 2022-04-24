@@ -2,6 +2,7 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
+import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -35,21 +36,23 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
-          return SafeArea(
-            child: SizedBox(
-              width: width,
-              height: MediaQuery.of(context).size.height,
-              child: Builder(
-                builder: (_) {
-                  if (orientation == Orientation.portrait) {
-                    return buildBody(context);
-                  }
-                  return SingleChildScrollView(
-                    child: SizedBox(
-                      child: buildBody(context),
-                    ),
-                  );
-                },
+          return MacSafeArea(
+            child: SafeArea(
+              child: SizedBox(
+                width: width,
+                height: MediaQuery.of(context).size.height,
+                child: Builder(
+                  builder: (_) {
+                    if (orientation == Orientation.portrait) {
+                      return buildBody(context);
+                    }
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        child: buildBody(context),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           );
