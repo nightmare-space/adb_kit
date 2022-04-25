@@ -171,14 +171,6 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                         ResponsiveBreakpoint.resize(800, name: DESKTOP),
                       ],
                     );
-                    return Responsive(
-                      builder: (context, _) {
-                        return Theme(
-                          data: config.theme,
-                          child: navigator,
-                        );
-                      },
-                    );
                   },
                 );
               },

@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:app_manager/app_manager.dart' as am;
+import 'package:responsive_framework/responsive_framework.dart';
 import 'app/modules/home/views/adaptive_view.dart';
 import 'app_entrypoint.dart';
 import 'config/config.dart';
@@ -75,9 +76,11 @@ class ADBToolEntryPoint extends StatefulWidget {
     Key key,
     this.primary,
     this.child,
+    this.hasSafeArea = true,
   }) : super(key: key);
   final Color primary;
   final Widget child;
+  final bool hasSafeArea;
 
   @override
   State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
@@ -97,6 +100,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
     Get.put(ConfigController());
     Get.put(DevicesController());
     Global.instance.initGlobal();
+    Global.instance.hasSafeArea = widget.hasSafeArea;
     am.AppManager.globalInstance;
     DevicesController controller = Get.find();
     controller.init();
@@ -116,9 +120,32 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
             return const Text('');
           case ConnectionState.done:
             ConfigController config = Get.find();
-            return Theme(
-              data: config.theme,
-              child: widget.child ?? const AdbTool(),
+            return ResponsiveWrapper.builder(
+              Builder(builder: (context) {
+                if (ResponsiveWrapper.of(context).isDesktop) {
+                  ScreenAdapter.init(896);
+                } else {
+                  ScreenAdapter.init(414);
+                }
+                return Theme(
+                  data: config.theme,
+                  child: widget.child ?? const AdbTool(),
+                );
+              }),
+              // maxWidth: 1200,
+              minWidth: 10,
+              defaultScale: false,
+              defaultName: PHONE,
+              breakpoints: const [
+                // ResponsiveBreakpoint.resize(10, name: PHONE),
+                ResponsiveBreakpoint.resize(400, name: PHONE, scaleFactor: 1),
+                ResponsiveBreakpoint.resize(600, name: TABLET, scaleFactor: 1),
+                ResponsiveBreakpoint.resize(
+                  800,
+                  name: DESKTOP,
+                  scaleFactor: 1.2,
+                ),
+              ],
             );
         }
         return const SizedBox();

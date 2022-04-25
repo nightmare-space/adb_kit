@@ -1,3 +1,4 @@
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/utils.dart';
@@ -17,7 +18,7 @@ class MacSafeArea extends StatefulWidget {
 
 class _MacSafeAreaState extends State<MacSafeArea> {
   Future<void> calculateTitlebarHeight() async {
-    if (!GetPlatform.isMacOS) {
+    if (!GetPlatform.isMacOS || !Global().hasSafeArea) {
       return;
     }
     titlebarHeight = await Window.getTitlebarHeight();

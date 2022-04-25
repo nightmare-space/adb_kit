@@ -167,6 +167,7 @@ class Global {
     );
   }
 
+  bool hasSafeArea = true;
   Future<void> initGlobal() async {
     if (isInit) {
       return;
