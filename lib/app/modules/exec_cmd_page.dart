@@ -38,7 +38,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title:  Text(S.of(context).terminal),
         automaticallyImplyLeading: false,

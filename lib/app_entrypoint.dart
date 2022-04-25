@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:ui';
 
@@ -7,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
 import 'app/controller/controller.dart';
@@ -25,7 +25,6 @@ Future<void> initSetting() async {
     Settings.serverPath.set = Config.adbLocalPath;
   }
 }
-
 
 class MaterialAppWrapper extends StatefulWidget {
   const MaterialAppWrapper({
@@ -68,97 +67,13 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
 
   @override
   Widget build(BuildContext context) {
-    // Log.w('_lastSize -> $_lastSize');
-    if (Platform.isAndroid && _lastSize == null) {
-      return Material(
-        child: Center(
-          child: SpinKitDualRing(
-            color: AppColors.accent,
-            size: 20.w,
-            lineWidth: 2.w,
-          ),
-        ),
-      );
-    }
-    // desktop初始会是 2,2
-    if (_lastSize != null && _lastSize.width > 100) {
-      final double screenWidth = _lastSize.width / window.devicePixelRatio;
-      final double screenHeight = _lastSize.height / window.devicePixelRatio;
-      Global().initTerminalSize(
-        Size(screenWidth, screenHeight),
-      );
-    }
-    final ThemeData theme = config.theme;
-    Widget materialApp = GetMaterialApp(
-      showPerformanceOverlay: config.showPerformanceOverlay,
-      showSemanticsDebugger: config.showSemanticsDebugger,
-      debugShowMaterialGrid: config.debugShowMaterialGrid,
-      checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
-      debugShowCheckedModeBanner: false,
-      title: 'ADB工具箱',
-      navigatorKey: Global.instance.navigatorKey,
-      themeMode: ThemeMode.light,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: config.locale,
-      supportedLocales: S.delegate.supportedLocales,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      defaultTransition: Transition.fadeIn,
-      initialRoute: AdbPages.initial,
-      getPages: AdbPages.routes + am.AppPages.routes,
-      builder: (BuildContext context, Widget navigator) {
-        Size size = MediaQuery.of(context).size;
-        if (size.width > size.height) {
-          context.init(896);
-        } else {
-          context.init(414);
-        }
-        // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-        // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-        /// NativeShell
-        if (widget.isNativeShell) {
-          return nativeshell.WindowLayoutProbe(
-            child: SizedBox(
-              width: 800,
-              height: 600,
-              child: Theme(
-                data: theme,
-                child: navigator,
-              ),
-            ),
-          );
-        }
-
-        ///
-        ///
-        ///
-        /// Default Mode
-        ///
-
-        return Responsive(builder: (context, _) {
-          return Theme(
-            data: theme,
-            child: navigator,
-          );
-        });
-      },
-    );
-    Widget toastApp = ToastApp(child: materialApp);
-    // Widget fpsWrapper = FPSPage(child: materialApp);
     return ToastApp(
       child: Stack(
         children: [
-          GetBuilder<ConfigController>(builder: (_) {
+          GetBuilder<ConfigController>(builder: (config) {
             if (config.backgroundStyle == BackgroundStyle.normal) {
               return Container(
-                color: theme.colorScheme.background,
+                color: config.theme.colorScheme.background,
               );
             }
             if (config.backgroundStyle == BackgroundStyle.image) {
@@ -178,9 +93,8 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
               sigmaX: 24.0,
               sigmaY: 24.0,
             ),
-            child: Container(
-              // color: theme.colorScheme.background.withOpacity(0.6),
-              child: GetBuilder<ConfigController>(builder: (context) {
+            child: GetBuilder<ConfigController>(
+              builder: (config) {
                 return GetMaterialApp(
                   showPerformanceOverlay: config.showPerformanceOverlay,
                   showSemanticsDebugger: config.showSemanticsDebugger,
@@ -222,7 +136,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                           width: 800,
                           height: 600,
                           child: Theme(
-                            data: theme,
+                            data: config.theme,
                             child: navigator,
                           ),
                         ),
@@ -234,16 +148,40 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                     ///
                     /// Default Mode
                     ///
-
-                    return Responsive(builder: (context, _) {
-                      return Theme(
-                        data: theme,
-                        child: navigator,
-                      );
-                    });
+                    return ResponsiveWrapper.builder(
+                      Builder(builder: (context) {
+                        if (ResponsiveWrapper.of(context).isDesktop) {
+                          ScreenAdapter.init(896);
+                        } else {
+                          ScreenAdapter.init(414);
+                        }
+                        return Theme(
+                          data: config.theme,
+                          child: navigator,
+                        );
+                      }),
+                      // maxWidth: 1200,
+                      minWidth: 10,
+                      defaultScale: false,
+                      defaultName: PHONE,
+                      breakpoints: const [
+                        // ResponsiveBreakpoint.resize(10, name: PHONE),
+                        ResponsiveBreakpoint.resize(400, name: PHONE),
+                        ResponsiveBreakpoint.resize(600, name: TABLET),
+                        ResponsiveBreakpoint.resize(800, name: DESKTOP),
+                      ],
+                    );
+                    return Responsive(
+                      builder: (context, _) {
+                        return Theme(
+                          data: config.theme,
+                          child: navigator,
+                        );
+                      },
+                    );
                   },
                 );
-              }),
+              },
             ),
           ),
         ],

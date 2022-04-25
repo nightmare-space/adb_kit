@@ -1,5 +1,5 @@
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
-import 'package:adb_tool/app/modules/home/views/home_view.dart';
+import 'package:adb_tool/app/modules/home/views/adaptive_view.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ class AdbPages {
   static final routes = [
     GetPage(
       name: Routes.home,
-      page: () => AdbTool(),
+      page: () => const AdbTool(),
       binding: HomeBinding(),
     ),
   ];

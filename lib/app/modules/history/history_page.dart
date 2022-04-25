@@ -18,7 +18,7 @@ class HistoryPage extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     final ConfigController configController = Get.find();
     AppBar appBar;
-    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
+    if (configController.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).historyConnect),
         automaticallyImplyLeading: false,

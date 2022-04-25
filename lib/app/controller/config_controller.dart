@@ -64,7 +64,7 @@ class ConfigController extends GetxController {
     if (backgroundStyle != null) {
       Settings.backgroundStyle.set = backgroundStyle.name;
     }
-    Get.forceAppUpdate();
+    update();
     syncBackgroundStyle();
   }
 
@@ -125,7 +125,7 @@ class ConfigController extends GetxController {
     } else {
       Settings.theme.set = 'light';
     }
-    Get.forceAppUpdate();
+    update();
   }
 
   void changeStatusBarState(bool value) {

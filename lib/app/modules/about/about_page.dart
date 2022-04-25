@@ -16,7 +16,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ConfigController controller = Get.find();
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).about),
         automaticallyImplyLeading: false,

@@ -18,6 +18,7 @@ class _QrScanPageState extends State<QrScanPage> {
   ConfigController controller = Get.find();
   List<String> localAddresList = [];
   Future<void> getQrCode() async {
+    await Future.delayed(const Duration(milliseconds: 100));
     localAddresList = await PlatformUtil.localAddress();
     for (int i = 0; i < localAddresList.length; i++) {
       localAddresList[i] += ':${Global().successBindPort}';

@@ -33,7 +33,7 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (kIsWeb || Responsive.of(context).screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,

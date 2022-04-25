@@ -22,7 +22,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage>
     with WidgetsBindingObserver {
-  ConfigController controller = Get.put(ConfigController());
   ConfigController configController = Get.find();
 
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
@@ -30,25 +29,17 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    Get.forceAppUpdate();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (configController.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).settings),
         automaticallyImplyLeading: false,
@@ -109,8 +100,7 @@ class _SettingsPageState extends State<SettingsPage>
                     SettingItem(
                       title: S.of(context).layout,
                       suffix: Builder(builder: (context) {
-                        if (Responsive.of(context).screenType ==
-                            ScreenType.phone) {
+                        if (configController.screenType == ScreenType.phone) {
                           return Column(
                             children: [
                               SelectTab(
@@ -307,7 +297,7 @@ class _SettingsPageState extends State<SettingsPage>
                     Builder(builder: (context) {
                       return SettingItem(
                         onTap: () async {
-                          await controller.changeServerPath(context);
+                          await configController.changeServerPath(context);
                           // setState(() {});
                         },
                         title: S.of(context).serverPath,

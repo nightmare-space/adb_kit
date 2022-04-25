@@ -37,7 +37,7 @@ class _LogPageState extends State<LogPage> {
       );
     }
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).log),
         automaticallyImplyLeading: false,
@@ -56,9 +56,13 @@ class _LogPageState extends State<LogPage> {
           child: Column(
             children: [
               SizedBox(height: 8.w),
-              const Expanded(
+              Expanded(
                 child: CardItem(
-                  child: LoggerView(),
+                  child: Responsive(
+                    builder: (__, _) {
+                      return LoggerView();
+                    },
+                  ),
                 ),
               ),
               SizedBox(height: 8.w),

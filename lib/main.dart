@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:app_manager/app_manager.dart' as am;
-import 'app/modules/home/views/home_view.dart';
+import 'app/modules/home/views/adaptive_view.dart';
 import 'app_entrypoint.dart';
 import 'config/config.dart';
 import 'core/impl/plugin.dart';

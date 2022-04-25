@@ -1,5 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/modules/home/views/home_view.dart';
+import 'package:adb_tool/app/modules/home/views/adaptive_view.dart';
 import 'package:adb_tool/app/routes/ripple_router.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
@@ -105,7 +105,31 @@ class _TabletDrawerState extends State<TabletDrawer> {
                     builder: (context) {
                       return Theme(
                         data: context.theme,
-                        child: AdbTool(),
+                        child: Stack(
+                          children: [
+                            GetBuilder<ConfigController>(builder: (_) {
+                              if (config.backgroundStyle ==
+                                  BackgroundStyle.normal) {
+                                return Container(
+                                  color: theme.colorScheme.background,
+                                );
+                              }
+                              if (config.backgroundStyle ==
+                                  BackgroundStyle.image) {
+                                return SizedBox(
+                                  height: double.infinity,
+                                  child: Image.asset(
+                                    'assets/b.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            }),
+                            const AdbTool(),
+                          ],
+                        ),
                       );
                     },
                   ),
