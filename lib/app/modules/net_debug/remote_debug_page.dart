@@ -51,7 +51,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (configController.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).networkDebug),
         automaticallyImplyLeading: false,

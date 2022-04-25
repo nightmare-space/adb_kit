@@ -120,33 +120,36 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
             return const Text('');
           case ConnectionState.done:
             ConfigController config = Get.find();
-            return ResponsiveWrapper.builder(
-              Builder(builder: (context) {
-                if (ResponsiveWrapper.of(context).isDesktop) {
-                  ScreenAdapter.init(896);
-                } else {
-                  ScreenAdapter.init(414);
-                }
-                return Theme(
-                  data: config.theme,
-                  child: widget.child ?? const AdbTool(),
+            return widget.child ??
+                ResponsiveWrapper.builder(
+                  Builder(builder: (context) {
+                    if (ResponsiveWrapper.of(context).isDesktop) {
+                      ScreenAdapter.init(896);
+                    } else {
+                      ScreenAdapter.init(414);
+                    }
+                    return Theme(
+                      data: config.theme,
+                      child: const AdbTool(),
+                    );
+                  }),
+                  // maxWidth: 1200,
+                  minWidth: 10,
+                  defaultScale: false,
+                  defaultName: PHONE,
+                  breakpoints: const [
+                    // ResponsiveBreakpoint.resize(10, name: PHONE),
+                    ResponsiveBreakpoint.resize(400,
+                        name: PHONE, scaleFactor: 1),
+                    ResponsiveBreakpoint.resize(600,
+                        name: TABLET, scaleFactor: 1),
+                    ResponsiveBreakpoint.resize(
+                      800,
+                      name: DESKTOP,
+                      scaleFactor: 1.2,
+                    ),
+                  ],
                 );
-              }),
-              // maxWidth: 1200,
-              minWidth: 10,
-              defaultScale: false,
-              defaultName: PHONE,
-              breakpoints: const [
-                // ResponsiveBreakpoint.resize(10, name: PHONE),
-                ResponsiveBreakpoint.resize(400, name: PHONE, scaleFactor: 1),
-                ResponsiveBreakpoint.resize(600, name: TABLET, scaleFactor: 1),
-                ResponsiveBreakpoint.resize(
-                  800,
-                  name: DESKTOP,
-                  scaleFactor: 1.2,
-                ),
-              ],
-            );
         }
         return const SizedBox();
       },

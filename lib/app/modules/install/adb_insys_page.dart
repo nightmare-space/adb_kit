@@ -34,9 +34,9 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title:  Text(S.of(context).installToSystem),
+        title: Text(S.of(context).installToSystem),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(

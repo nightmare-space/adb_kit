@@ -104,7 +104,7 @@ class ConfigController extends GetxController {
     if (screenType != null) {
       Settings.screenType.set = screenType.name;
     }
-    Get.forceAppUpdate();
+    update();
   }
 
   void changeLocal(Locale locale) {
@@ -115,7 +115,6 @@ class ConfigController extends GetxController {
       Settings.language.set = 'english';
     }
     update();
-    Get.updateLocale(locale);
   }
 
   void changeTheme(ThemeData theme) {

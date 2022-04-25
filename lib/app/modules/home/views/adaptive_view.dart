@@ -117,15 +117,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                           child: child,
                         );
                       },
-                      layoutBuilder: (widgets) {
-                        return Material(
-                          color: Colors.transparent,
-                          child: Stack(
-                            children: widgets,
-                          ),
-                        );
-                      },
-                      duration: const Duration(milliseconds: 600),
+                      duration: const Duration(milliseconds: 300),
                       child: Global().page,
                     ),
                   ),
@@ -169,15 +161,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                           child: child,
                         );
                       },
-                      layoutBuilder: (widgets) {
-                        return Material(
-                          color: Colors.transparent,
-                          child: Stack(
-                            children: widgets,
-                          ),
-                        );
-                      },
-                      duration: const Duration(milliseconds: 600),
+                      duration: const Duration(milliseconds: 300),
                       child: Global().page,
                     ),
                   ),
@@ -211,15 +195,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                     child: child,
                   );
                 },
-                layoutBuilder: (widgets) {
-                  return Material(
-                    color: Colors.transparent,
-                    child: Stack(
-                      children: widgets,
-                    ),
-                  );
-                },
-                duration: const Duration(milliseconds: 600),
+                duration: const Duration(milliseconds: 300),
                 child: Global().page,
               ),
             ),
