@@ -38,9 +38,12 @@ class ConfigController extends GetxController {
 
   void syncBackgroundStyle() {
     if (backgroundStyle == BackgroundStyle.normal) {
+      if (GetPlatform.isWindows) {
+        return;
+      }
       Window.setEffect(
         effect: WindowEffect.disabled,
-        color: theme.colorScheme.background.withOpacity(0.2),
+        color: theme.colorScheme.background,
         dark: false,
       );
     }
