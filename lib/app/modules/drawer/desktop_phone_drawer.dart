@@ -1,10 +1,10 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
 import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -81,7 +81,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
         //       'ADB TOOL',
         //       style: TextStyle(
         //         fontSize: 26.w,
-        //         fontWeight: FontWeight.bold,
+        //         fontWeight: bold,
         //         color: Theme.of(context).primaryColor,
         //       ),
         //     ),
@@ -168,7 +168,7 @@ class DrawerItem extends StatelessWidget {
                               ? Theme.of(context).primaryColor
                               : Theme.of(context).colorScheme.onBackground,
                           fontSize: 14.w,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                         ),
                       ),
                     ],

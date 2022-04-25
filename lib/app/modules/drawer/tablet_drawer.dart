@@ -205,7 +205,7 @@ class TabletDrawerItem extends StatelessWidget {
                     //     height: 1.0,
                     //     color: config.theme.fontColor,
                     //     fontSize: 12.w,
-                    //     fontWeight: FontWeight.bold,
+                    //     fontWeight: bold,
                     //   ),
                     // ),
                   ],

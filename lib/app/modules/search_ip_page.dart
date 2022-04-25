@@ -2,6 +2,7 @@
 // 只有当 android 端作为热点的时候才行。
 
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -94,7 +95,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
                           Text(
                             ip,
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                               fontSize: Dimens.font_sp16,
                             ),
                           ),

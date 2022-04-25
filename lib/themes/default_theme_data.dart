@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
@@ -167,7 +168,7 @@ class DefaultThemeData {
         ),
         titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
           fontSize: 18.w,
-          fontWeight: FontWeight.bold,
+          fontWeight: bold,
           color: colorScheme.onBackground,
         ),
       ),

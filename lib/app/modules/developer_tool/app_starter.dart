@@ -1,7 +1,7 @@
 import 'package:adb_tool/adb_tool.dart';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/generated/l10n.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/theme.dart';
@@ -176,7 +176,7 @@ class _AppStarterState extends State<AppStarter> {
                         S.of(context).terminal,
                         style: TextStyle(
                           fontSize: Dimens.font_sp16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                         ),
                       ),
                     ],

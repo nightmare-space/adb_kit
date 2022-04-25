@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
@@ -83,7 +84,7 @@ class _SettingsPageState extends State<SettingsPage>
                           S.of(context).view,
                           style: TextStyle(
                             fontSize: 14.w,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onBackground
@@ -286,7 +287,7 @@ class _SettingsPageState extends State<SettingsPage>
                           S.of(context).other,
                           style: TextStyle(
                             fontSize: 14.w,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onBackground
@@ -346,7 +347,7 @@ class _SettingsPageState extends State<SettingsPage>
                           S.of(context).developerSettings,
                           style: TextStyle(
                             fontSize: 14.w,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                             color: Theme.of(context)
                                 .colorScheme
                                 .onBackground

@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -16,7 +15,6 @@ import 'config/config.dart';
 import 'config/settings.dart';
 import 'generated/l10n.dart';
 import 'global/instance/global.dart';
-import 'themes/app_colors.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
 Future<void> initSetting() async {

@@ -2,6 +2,7 @@ import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/app/modules/setting/setting_page.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:animations/animations.dart';
@@ -116,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
           //         child: Text(
           //           '开启单手模式',
           //           style: TextStyle(
-          //             fontWeight: FontWeight.bold,
+          //             fontWeight: bold,
           //           ),
           //         ),
           //       ),
@@ -150,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
                       Text(
                         '屏幕截图',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                           height: 1.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -199,7 +200,7 @@ class _DashboardState extends State<Dashboard> {
                       Text(
                         '常用开关',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                           height: 1.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -303,7 +304,7 @@ class _DashboardState extends State<Dashboard> {
                       Text(
                         '安装APK',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                           height: 1.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -409,7 +410,7 @@ class _DashboardState extends State<Dashboard> {
                       Text(
                         '上传文件',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                           height: 1.0,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -542,7 +543,7 @@ class _DashboardState extends State<Dashboard> {
                                 'SHELL',
                                 style: TextStyle(
                                   height: 1.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: bold,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -650,16 +651,16 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
               children: [
                 Row(
                   children: [
-                    const Text(
+                     Text(
                       '远程调试',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: bold,
                       ),
                     ),
                     Text(
                       isAddress(widget.serial) ? '(当前方式:远程)' : '(当前方式:usb)',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                      style:  TextStyle(
+                        fontWeight: bold,
                         color: Colors.grey,
                       ),
                     ),
@@ -731,8 +732,8 @@ class _SwitchItemState extends State<SwitchItem> {
           children: [
             Text(
               widget.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+              style:  TextStyle(
+                fontWeight: bold,
               ),
             ),
             AquaSwitch(
@@ -800,8 +801,8 @@ class __DeveloperItemState extends State<_DeveloperItem> {
           children: [
             Text(
               widget.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+              style:  TextStyle(
+                fontWeight: bold,
               ),
             ),
             AquaSwitch(

@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -87,7 +88,7 @@ class _DevicesListState extends State<DevicesList> {
                           Text(
                             'ADB启动中',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),

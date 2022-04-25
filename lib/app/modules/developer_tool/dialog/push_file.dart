@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
@@ -75,32 +76,32 @@ class _PushFileDialogState extends State<PushFileDialog> {
                       '上传 $currentFile 中...',
                       style: TextStyle(
                         color: AppColors.fontColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: bold,
                         fontSize: 14.w,
                       ),
                     ),
                     RichText(
                         text: TextSpan(
                       children: [
-                        const TextSpan(
+                         TextSpan(
                           text: '(',
                           style: TextStyle(
                             color: AppColors.fontColor,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                         TextSpan(
                           text: '$fileIndex',
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                         TextSpan(
                           text: '/$fileNum)',
-                          style: const TextStyle(
+                          style:  TextStyle(
                             color: AppColors.fontColor,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                       ],

@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
@@ -127,9 +128,9 @@ class _DevicesItemState extends State<DevicesItem>
                         children: [
                           Text(
                             _title ?? '',
-                            style: const TextStyle(
+                            style: TextStyle(
                               height: 1.2,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                             ),
                           ),
                           SizedBox(

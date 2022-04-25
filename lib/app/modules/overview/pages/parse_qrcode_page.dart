@@ -1,3 +1,4 @@
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/utils/http/http.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +77,8 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
                 children: [
                   Text(
                     element.address,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style:  TextStyle(
+                      fontWeight: bold,
                     ),
                   ),
                   SizedBox(

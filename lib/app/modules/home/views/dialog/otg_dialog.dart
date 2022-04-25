@@ -1,3 +1,4 @@
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
@@ -22,7 +23,7 @@ class OTGDialog extends StatelessWidget {
                   '第一次连接该OTG设备，请在OTG设备上同意ADB调试...',
                   style: TextStyle(
                     color: AppColors.fontColor,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: bold,
                     fontSize: 16.w,
                   ),
                 ),

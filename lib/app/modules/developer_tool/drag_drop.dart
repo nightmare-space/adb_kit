@@ -1,3 +1,4 @@
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:desktop_drop/desktop_drop.dart';
@@ -78,7 +79,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                         '释放执行操作',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                         ),
                       ),
                     ),

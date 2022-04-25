@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
@@ -167,8 +168,8 @@ class ItemButton extends StatelessWidget {
             SizedBox(
               child: Text(
                 title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+                style:  TextStyle(
+                  fontWeight: bold,
                 ),
               ),
             ),

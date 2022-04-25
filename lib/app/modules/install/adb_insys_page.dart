@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
@@ -75,7 +76,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 S.of(context).chooseInstallPath,
                                 style: TextStyle(
                                   fontSize: 16.w,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: bold,
                                 ),
                               ),
                             ],
@@ -86,9 +87,9 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 children: [
                                   Text(
                                     xbinPath,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: bold,
                                     ),
                                   ),
                                   Radio(
@@ -105,9 +106,9 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 children: [
                                   Text(
                                     binPath,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: bold,
                                     ),
                                   ),
                                   Radio<String>(
@@ -194,7 +195,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                   S.of(context).terminal,
                                   style: TextStyle(
                                     fontSize: Dimens.font_sp16,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: bold,
                                   ),
                                 ),
                               ],
@@ -230,12 +231,12 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                       child: SizedBox(
                         width: 414.w,
                         height: 48.w,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '安装',
                             style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                             ),
                           ),
                         ),

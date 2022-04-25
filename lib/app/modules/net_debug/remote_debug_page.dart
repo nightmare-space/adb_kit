@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/app/modules/setting/setting_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
@@ -83,7 +84,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Text(
                         S.of(context).openLocalNetDebug,
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: bold,
                           fontSize: 16.w,
                         ),
                       ),
@@ -109,7 +110,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                             S.of(context).localAddress,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                             ),
                           ),
                         ],
@@ -150,7 +151,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                             S.of(context).connectMethod,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: bold,
                             ),
                           ),
                         ],
@@ -163,7 +164,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                               S.of(context).connectMethodDes1,
                               style: TextStyle(
                                 fontSize: Dimens.font_sp14,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: bold,
                               ),
                             ),
                           ],
@@ -175,7 +176,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           S.of(context).connectMethodDes2,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                       ),
@@ -220,7 +221,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           S.of(context).connectMethodDes3,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                       ),

@@ -3,6 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  desktop_drop
+  file_selector_linux
+  flutter_acrylic
+  url_launcher_linux
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

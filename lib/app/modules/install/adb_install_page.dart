@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:adb_tool/config/font.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +39,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
           style: TextStyle(
             height: 1.0,
             color: Theme.of(context).textTheme.bodyText2.color,
-            fontWeight: FontWeight.bold,
+            fontWeight: bold,
             fontSize: 16,
           ),
         ),
@@ -150,15 +151,15 @@ class _DownloadFileState extends State<_DownloadFile> {
                 '下载 $downloadName 中',
                 style: TextStyle(
                   fontSize: 18.w,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: bold,
                 ),
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '进度',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: bold,
                   ),
                 ),
               ),

@@ -38,7 +38,7 @@ class ConfigController extends GetxController {
 
   void syncBackgroundStyle() {
     if (backgroundStyle == BackgroundStyle.normal) {
-      if (GetPlatform.isWindows) {
+      if (GetPlatform.isWindows || GetPlatform.isLinux) {
         return;
       }
       Window.setEffect(

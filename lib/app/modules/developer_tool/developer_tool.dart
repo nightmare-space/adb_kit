@@ -1,10 +1,10 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:global_repository/global_repository.dart';
 
 import 'tab_indicator.dart';
@@ -54,11 +54,11 @@ class _DeveloperToolState extends State<DeveloperTool>
                   const PopButton(),
                   Expanded(
                     child: TabBar(
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                      labelStyle:  TextStyle(
+                        fontWeight: bold,
                       ),
-                      unselectedLabelStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                      unselectedLabelStyle:  TextStyle(
+                        fontWeight: bold,
                       ),
                       unselectedLabelColor: AppColors.fontColor,
                       indicator: RoundedUnderlineTabIndicator(

@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/config.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/pages/change_log.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
@@ -59,7 +60,7 @@ class AboutPage extends StatelessWidget {
                     'ADB TOOL',
                     style: TextStyle(
                       fontSize: 20.w,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: bold,
                     ),
                   ),
                   SizedBox(height: 24.w),

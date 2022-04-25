@@ -1,5 +1,6 @@
 // 有动画
 
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,7 +45,7 @@ class _DownloadFileState extends State<DownloadFile>
           style: TextStyle(
             height: 1.0,
             color: Theme.of(context).textTheme.bodyText2.color,
-            fontWeight: FontWeight.bold,
+            fontWeight: bold,
           ),
         ),
         leading: const PopButton(),
@@ -67,10 +68,10 @@ class _DownloadFileState extends State<DownloadFile>
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const Text(
+                         Text(
                           '设备文件路径',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                         Row(
@@ -78,8 +79,8 @@ class _DownloadFileState extends State<DownloadFile>
                             Expanded(
                               child: TextField(
                                 controller: devicesFilePathCTL,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                style:  TextStyle(
+                                  fontWeight: bold,
                                 ),
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),
@@ -102,10 +103,10 @@ class _DownloadFileState extends State<DownloadFile>
                             )
                           ],
                         ),
-                        const Text(
+                         Text(
                           '下载到的路径',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                         Row(
@@ -113,8 +114,8 @@ class _DownloadFileState extends State<DownloadFile>
                             Expanded(
                               child: TextField(
                                 controller: localFilePathCTL,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                style:  TextStyle(
+                                  fontWeight: bold,
                                 ),
                                 decoration: InputDecoration(
                                   border: const OutlineInputBorder(),

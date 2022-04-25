@@ -19,3 +19,4 @@ export 'generated/l10n.dart';
 Future<double> getMacTitlebarWidth() async {
   return await Window.getTitlebarHeight();
 }
+

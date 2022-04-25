@@ -2,13 +2,13 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -89,7 +89,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           S.of(context).alreadyConnectDevice,
                           style: TextStyle(
                             fontSize: 16.w,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: bold,
                           ),
                         ),
                       ],
@@ -123,7 +123,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     S.of(context).inputDeviceAddress,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: bold,
                     ),
                   ),
                 ],
@@ -218,7 +218,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     S.of(context).scanToConnect,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: bold,
                     ),
                   ),
                 ],

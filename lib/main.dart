@@ -87,7 +87,11 @@ class ADBToolEntryPoint extends StatefulWidget {
 }
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
+  bool isInit = false;
   Future<void> init() async {
+    if (isInit) {
+      return;
+    }
     WidgetsFlutterBinding.ensureInitialized();
     if (widget.primary != null) {
       seed = widget.primary;
@@ -104,6 +108,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
     am.AppManager.globalInstance;
     DevicesController controller = Get.find();
     controller.init();
+    isInit = true;
   }
 
   @override

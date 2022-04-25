@@ -2,11 +2,11 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/controller/history_controller.dart';
 import 'package:adb_tool/app/model/adb_historys.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
@@ -127,8 +127,8 @@ class HistoryPage extends GetView<HistoryController> {
                   children: [
                     Text(
                       adbEntity.name ?? '',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                      style:  TextStyle(
+                        fontWeight: bold,
                       ),
                     ),
                     Row(
