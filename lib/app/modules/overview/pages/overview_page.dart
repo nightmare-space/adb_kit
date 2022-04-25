@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class OverviewPage extends StatefulWidget {
   const OverviewPage({Key key}) : super(key: key);
@@ -33,14 +34,13 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (controller.screenType == ScreenType.phone) {
+    if (controller.screenType == ScreenType.phone ||
+        ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        leading: controller.needShowMenuButton
-            ? Menubutton(scaffoldContext: context)
-            : null,
+        leading: Menubutton(scaffoldContext: context),
         title: Text(S.of(context).home),
         actions: [
           if (GetPlatform.isAndroid)

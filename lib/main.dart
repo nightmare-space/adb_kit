@@ -138,16 +138,13 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
                   defaultScale: false,
                   defaultName: PHONE,
                   breakpoints: const [
-                    // ResponsiveBreakpoint.resize(10, name: PHONE),
-                    ResponsiveBreakpoint.resize(400,
-                        name: PHONE, scaleFactor: 1),
-                    ResponsiveBreakpoint.resize(600,
+                    ResponsiveBreakpoint.resize(500,
                         name: TABLET, scaleFactor: 1),
-                    ResponsiveBreakpoint.resize(
-                      800,
-                      name: DESKTOP,
-                      scaleFactor: 1.2,
-                    ),
+                    // ResponsiveBreakpoint.resize(
+                    //   500,
+                    //   name: DESKTOP,
+                    //   scaleFactor: 1.2,
+                    // ),
                   ],
                 );
         }

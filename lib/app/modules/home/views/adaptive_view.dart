@@ -139,12 +139,12 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                 ),
                 Container(
                   height: double.infinity,
-                  width: 0.5,
+                  width: 1,
                   margin: EdgeInsets.symmetric(vertical: 40.w),
                   color: Theme.of(context)
                       .colorScheme
                       .onBackground
-                      .withOpacity(0.4),
+                      .withOpacity(0.1),
                 ),
                 Expanded(
                   child: MacSafeArea(

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
 
@@ -38,25 +39,19 @@ class _DashboardState extends State<Dashboard> {
   TermareController adbShellController;
 
   double getCardWidth() {
-    final ScreenType screenType = Responsive.of(context).screenType;
-    switch (screenType) {
-      case ScreenType.phone:
-        return context.mediaQuerySize.width;
-        break;
-      case ScreenType.tablet:
-        return context.mediaQuerySize.width / 2;
-        break;
-      case ScreenType.desktop:
-        return context.mediaQuerySize.width / 2;
-        break;
-      default:
-        return context.mediaQuerySize.width;
+    ResponsiveWrapperData data = ResponsiveWrapper.of(context);
+    if (data.isPhone) {
+      return context.mediaQuerySize.width;
+    } else if (data.isTablet) {
+      return context.mediaQuerySize.width / 2;
+    } else {
+      return context.mediaQuerySize.width / 2;
     }
   }
 
   double getMiddlePadding() {
-    final ScreenType screenType = Responsive.of(context).screenType;
-    if (screenType == ScreenType.phone) {
+    ResponsiveWrapperData data = ResponsiveWrapper.of(context);
+    if (data.isPhone) {
       return 8.w;
     }
     return 4.w;

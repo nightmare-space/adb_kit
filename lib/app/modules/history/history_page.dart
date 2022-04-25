@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class HistoryPage extends GetView<HistoryController> {
   const HistoryPage({Key key}) : super(key: key);
@@ -18,15 +19,14 @@ class HistoryPage extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     final ConfigController configController = Get.find();
     AppBar appBar;
-    if (configController.screenType == ScreenType.phone) {
+    if (configController.screenType == ScreenType.phone ||
+        ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).historyConnect),
         automaticallyImplyLeading: false,
-        leading: configController.needShowMenuButton
-            ? Menubutton(
-                scaffoldContext: context,
-              )
-            : null,
+        leading: Menubutton(
+          scaffoldContext: context,
+        ),
       );
     }
     return Scaffold(

@@ -165,10 +165,9 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                       defaultScale: false,
                       defaultName: PHONE,
                       breakpoints: const [
-                        // ResponsiveBreakpoint.resize(10, name: PHONE),
-                        ResponsiveBreakpoint.resize(400, name: PHONE),
+                        // ResponsiveBreakpoint.resize(400, name: PHONE),
                         ResponsiveBreakpoint.resize(600, name: TABLET),
-                        ResponsiveBreakpoint.resize(800, name: DESKTOP),
+                        ResponsiveBreakpoint.resize(1000, name: DESKTOP),
                       ],
                     );
                   },
