@@ -10,28 +10,22 @@ import 'package:get/get.dart';
 
 class NetDebug extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       title: S.of(context).networkDebug,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       title: S.of(context).networkDebug,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
@@ -44,6 +38,5 @@ class NetDebug extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }

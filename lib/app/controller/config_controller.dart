@@ -15,9 +15,7 @@ enum BackgroundStyle {
 }
 
 class ConfigController extends GetxController {
-  ConfigController() {
-    initConfig();
-  }
+  ConfigController() {}
   BackgroundStyle backgroundStyle = BackgroundStyle.normal;
 
   bool autoConnect = true;

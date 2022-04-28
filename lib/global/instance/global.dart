@@ -88,6 +88,7 @@ class Global {
               } on AdbException catch (e) {
                 Log.e('通过UDP发现自动连接设备失败 : $e');
               }
+              showToast('已自动连接$address');
             }
           } catch (e) {
             Log.e('receiveBoardCast error : $e');

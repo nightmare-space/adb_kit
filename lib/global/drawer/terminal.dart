@@ -9,28 +9,22 @@ import 'package:flutter/material.dart';
 
 class Terminal extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).terminal,
       iconData: Icons.code,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).terminal,
       iconData: Icons.code,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
@@ -43,6 +37,5 @@ class Terminal extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }

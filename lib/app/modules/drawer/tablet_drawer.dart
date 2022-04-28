@@ -74,10 +74,17 @@ class _TabletDrawerState extends State<TabletDrawer> {
         ),
         for (ADBPage page in PageManager.instance.pages)
           if (page.isActive)
-            page.buildTabletDrawer(context, () {
-              Global().changeDrawerRoute(page.runtimeType.toString());
-              widget.onChanged(page.buildPage(context));
-            }),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(8.w),
+                onTap: () {
+                  Global().changeDrawerRoute(page.runtimeType.toString());
+                  widget.onChanged(page.buildPage(context));
+                },
+                child: page.buildTabletDrawer(context),
+              ),
+            ),
         Builder(builder: (context) {
           return TabletDrawerItem(
             groupValue: widget.groupValue,
@@ -162,58 +169,44 @@ class TabletDrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: Dimens.gap_dp8,
-      ),
-      child: Tooltip(
-        message: title,
-        child: InkWell(
-          onTapDown: (_) {
-            Feedback.forLongPress(context);
-          },
-          canRequestFocus: false,
-          onTap: () => onTap(value),
-          splashColor: Colors.transparent,
-          borderRadius: BorderRadius.circular(Dimens.gap_dp12),
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              Container(
-                height: 54.w,
-                width: 54.w,
-                decoration: isChecked
-                    ? BoxDecoration(
-                        color: AppColors.accent.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(12.w),
-                      )
-                    : null,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      iconData ?? Icons.open_in_new,
-                      size: 24.w,
-                      color: isChecked
-                          ? AppColors.accent
-                          : Theme.of(context).colorScheme.onBackground,
-                    ),
-                    SizedBox(height: 4.w),
-                    // Text(
-                    //   title.substring(0, 2),
-                    //   style: TextStyle(
-                    //     height: 1.0,
-                    //     color: config.theme.fontColor,
-                    //     fontSize: 12.w,
-                    //     fontWeight: bold,
-                    //   ),
-                    // ),
-                  ],
+    return Tooltip(
+      message: title,
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Container(
+            height: 54.w,
+            width: 54.w,
+            decoration: isChecked
+                ? BoxDecoration(
+                    color: AppColors.accent.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(12.w),
+                  )
+                : null,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconData ?? Icons.open_in_new,
+                  size: 24.w,
+                  color: isChecked
+                      ? AppColors.accent
+                      : Theme.of(context).colorScheme.onBackground,
                 ),
-              ),
-            ],
+                SizedBox(height: 4.w),
+                // Text(
+                //   title.substring(0, 2),
+                //   style: TextStyle(
+                //     height: 1.0,
+                //     color: config.theme.fontColor,
+                //     fontSize: 12.w,
+                //     fontWeight: bold,
+                //   ),
+                // ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

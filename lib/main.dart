@@ -88,6 +88,8 @@ class ADBToolEntryPoint extends StatefulWidget {
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
   bool isInit = false;
+  ConfigController configController = Get.put(ConfigController());
+  DevicesController devicesController = Get.put(DevicesController());
   Future<void> init() async {
     if (isInit) {
       return;
@@ -100,9 +102,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
       await Window.initialize();
     }
     await initSetting();
-    Get.put(ConfigController());
-    Get.put(ConfigController());
-    Get.put(DevicesController());
+    configController.initConfig();
     Global.instance.initGlobal();
     Global.instance.hasSafeArea = widget.hasSafeArea;
     am.AppManager.globalInstance;

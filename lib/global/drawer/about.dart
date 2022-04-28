@@ -9,28 +9,22 @@ import 'package:flutter/material.dart';
 
 class About extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).about,
       iconData: Icons.info_outline,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).about,
       iconData: Icons.info_outline,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 

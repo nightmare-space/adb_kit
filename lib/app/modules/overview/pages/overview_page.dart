@@ -170,13 +170,13 @@ class _OverviewPageState extends State<OverviewPage> {
                                   showToast('IP不可为空');
                                   return;
                                 }
-                                Log.d('adb 连接开始');
+                                Log.d('adb 连接开始 ${editingController.text}');
                                 AdbResult result;
                                 try {
                                   result = await AdbUtil.connectDevices(
                                     editingController.text,
                                   );
-                                  showToast(result.message);
+                                  // showToast(result.message);
                                   final List<String> tmp =
                                       editingController.text.split(':');
                                   final String address = tmp[0];
@@ -190,9 +190,10 @@ class _OverviewPageState extends State<OverviewPage> {
                                     name: address,
                                   );
                                 } on AdbException catch (e) {
+                                  Log.e(e);
                                   showToast(e.message);
                                 }
-                                Log.d('adb 连接结束 ${result.message}');
+                                Log.d('adb 连接结束 ${result}');
                               },
                             ),
                           ),

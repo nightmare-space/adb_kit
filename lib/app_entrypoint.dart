@@ -39,13 +39,10 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
     with WidgetsBindingObserver {
   ConfigController config = Get.put(ConfigController());
 
-  DevicesController controller = Get.find();
   @override
   void initState() {
     super.initState();
     _lastSize = WidgetsBinding.instance.window.physicalSize;
-
-    controller.init();
     WidgetsBinding.instance.addObserver(this);
   }
 

@@ -10,28 +10,22 @@ import 'package:get/utils.dart';
 
 class InstallToSystem extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       title: S.of(context).installToSystem,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       title: S.of(context).installToSystem,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
@@ -44,6 +38,5 @@ class InstallToSystem extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }

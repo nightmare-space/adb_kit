@@ -141,7 +141,7 @@ class DevicesController extends GetxController {
   Future<void> handleResult(String data) async {
     letADBStarted();
     // if (kReleaseMode) {
-    // Log.d('adb devices out -> $out');
+    Log.d('adb handleResult -> $data');
     // }
     if (data.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');

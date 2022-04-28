@@ -70,31 +70,18 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
         SizedBox(
           height: 8.w,
         ),
-        // Align(
-        //   alignment: Alignment.centerLeft,
-        //   child: Padding(
-        //     padding: EdgeInsets.symmetric(
-        //       horizontal: 24.w,
-        //       vertical: 16.w,
-        //     ),
-        //     child: Text(
-        //       'ADB TOOL',
-        //       style: TextStyle(
-        //         fontSize: 26.w,
-        //         fontWeight: bold,
-        //         color: Theme.of(context).primaryColor,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         for (ADBPage page in PageManager.instance.pages)
           if (page.isActive)
-            page.buildDrawer(
-              context,
-              () {
-                Global().changeDrawerRoute(page.runtimeType.toString());
-                widget.onChanged(page.buildPage(context));
-              },
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: InkWell(
+                onTap: () {
+                  Global().changeDrawerRoute(page.runtimeType.toString());
+                  widget.onChanged(page.buildPage(context));
+                },
+                borderRadius: BorderRadius.circular(8.w),
+                child: page.buildDrawer(context),
+              ),
             ),
       ],
     );
@@ -120,65 +107,53 @@ class DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
-      child: InkWell(
-        onTap: () => onTap(value),
-        canRequestFocus: false,
-        onTapDown: (_) {
-          Feedback.forLongPress(context);
-        },
-        splashColor: Colors.transparent,
-        borderRadius: BorderRadius.circular(8.w),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              height: 48.w,
-              decoration: isChecked
-                  ? BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8.w),
-                    )
-                  : null,
-            ),
-            SizedBox(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 16.w,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          height: 48.w,
+          decoration: isChecked
+              ? BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8.w),
+                )
+              : null,
+        ),
+        SizedBox(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 16.w,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    iconData ?? Icons.open_in_new,
+                    size: 18.w,
+                    color: isChecked
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).colorScheme.onBackground,
                   ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        iconData ?? Icons.open_in_new,
-                        size: 18.w,
-                        color: isChecked
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).colorScheme.onBackground,
-                      ),
-                      SizedBox(
-                        width: Dimens.gap_dp8,
-                      ),
-                      Text(
-                        title,
-                        style: TextStyle(
-                          color: isChecked
-                              ? Theme.of(context).primaryColor
-                              : Theme.of(context).colorScheme.onBackground,
-                          fontSize: 14.w,
-                          fontWeight: bold,
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: Dimens.gap_dp8,
                   ),
-                ),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: isChecked
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).colorScheme.onBackground,
+                      fontSize: 14.w,
+                      fontWeight: bold,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -9,28 +9,22 @@ import 'package:flutter/material.dart';
 
 class Home extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       title: S.of(context).home,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       title: S.of(context).home,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
@@ -43,6 +37,5 @@ class Home extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }

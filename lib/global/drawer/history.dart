@@ -9,28 +9,22 @@ import 'package:flutter/material.dart';
 
 class History extends ADBPage {
   @override
-  Widget buildDrawer(BuildContext context, void Function() onTap) {
+  Widget buildDrawer(BuildContext context) {
     return DrawerItem(
       title: S.of(context).historyConnect,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.history,
-      onTap: (value) async {
-        onTap();
-      },
     );
   }
 
   @override
-  Widget buildTabletDrawer(BuildContext context, void Function() onTap) {
+  Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       title: S.of(context).historyConnect,
       iconData: Icons.history,
-      onTap: (value) {
-        onTap();
-      },
     );
   }
 
@@ -43,6 +37,5 @@ class History extends ADBPage {
   }
 
   @override
-  void onTap() {
-  }
+  void onTap() {}
 }
