@@ -86,64 +86,70 @@ class _TabletDrawerState extends State<TabletDrawer> {
               ),
             ),
         Builder(builder: (context) {
-          return TabletDrawerItem(
-            groupValue: widget.groupValue,
-            title: '切换主题',
-            iconData: Theme.of(context).brightness == Brightness.dark
-                ? Icons.light_mode
-                : Icons.dark_mode,
-            onTap: (value) {
-              ThemeData theme = DefaultThemeData.light(
-                primary: Theme.of(context).primaryColor,
-              );
-              if (Theme.of(context).brightness == Brightness.light) {
-                theme = DefaultThemeData.dark();
-              }
-              if (theme.brightness == Brightness.dark) {
-                Settings.theme.set = 'dark';
-              } else {
-                Settings.theme.set = 'light';
-              }
-              ConfigController controller = Get.find();
-              controller.theme = theme;
-              Navigator.of(context).pushReplacement(
-                RippleRoute(
-                  GetBuilder<ConfigController>(
-                    builder: (context) {
-                      return Theme(
-                        data: context.theme,
-                        child: Stack(
-                          children: [
-                            GetBuilder<ConfigController>(builder: (_) {
-                              if (config.backgroundStyle ==
-                                  BackgroundStyle.normal) {
-                                return Container(
-                                  color: theme.colorScheme.background,
-                                );
-                              }
-                              if (config.backgroundStyle ==
-                                  BackgroundStyle.image) {
-                                return SizedBox(
-                                  height: double.infinity,
-                                  child: Image.asset(
-                                    'assets/b.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            }),
-                            const AdbTool(),
-                          ],
-                        ),
-                      );
-                    },
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(8.w),
+              onTap: () {
+                ThemeData theme = DefaultThemeData.light(
+                  primary: Theme.of(context).primaryColor,
+                );
+                if (Theme.of(context).brightness == Brightness.light) {
+                  theme = DefaultThemeData.dark();
+                }
+                if (theme.brightness == Brightness.dark) {
+                  Settings.theme.set = 'dark';
+                } else {
+                  Settings.theme.set = 'light';
+                }
+                ConfigController controller = Get.find();
+                controller.theme = theme;
+                Navigator.of(context).pushReplacement(
+                  RippleRoute(
+                    GetBuilder<ConfigController>(
+                      builder: (context) {
+                        return Theme(
+                          data: context.theme,
+                          child: Stack(
+                            children: [
+                              GetBuilder<ConfigController>(builder: (_) {
+                                if (config.backgroundStyle ==
+                                    BackgroundStyle.normal) {
+                                  return Container(
+                                    color: theme.colorScheme.background,
+                                  );
+                                }
+                                if (config.backgroundStyle ==
+                                    BackgroundStyle.image) {
+                                  return SizedBox(
+                                    height: double.infinity,
+                                    child: Image.asset(
+                                      'assets/b.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }),
+                              const AdbTool(),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    RouteConfig.fromContext(context),
                   ),
-                  RouteConfig.fromContext(context),
-                ),
-              );
-            },
+                );
+              },
+              child: TabletDrawerItem(
+                groupValue: widget.groupValue,
+                title: '切换主题',
+                iconData: Theme.of(context).brightness == Brightness.dark
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+              ),
+            ),
           );
         }),
       ],
