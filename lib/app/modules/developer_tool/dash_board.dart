@@ -651,7 +651,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
               children: [
                 Row(
                   children: [
-                     Text(
+                    Text(
                       '远程调试',
                       style: TextStyle(
                         fontWeight: bold,
@@ -659,9 +659,12 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                     ),
                     Text(
                       isAddress(widget.serial) ? '(当前方式:远程)' : '(当前方式:usb)',
-                      style:  TextStyle(
+                      style: TextStyle(
                         fontWeight: bold,
-                        color: Colors.grey,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.6),
                       ),
                     ),
                   ],
@@ -669,7 +672,10 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 Text(
                   '无需root可让设备打开远程调试',
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.6),
                     fontSize: 12.w,
                   ),
                 ),
@@ -732,7 +738,7 @@ class _SwitchItemState extends State<SwitchItem> {
           children: [
             Text(
               widget.title,
-              style:  TextStyle(
+              style: TextStyle(
                 fontWeight: bold,
               ),
             ),
@@ -801,7 +807,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
           children: [
             Text(
               widget.title,
-              style:  TextStyle(
+              style: TextStyle(
                 fontWeight: bold,
               ),
             ),

@@ -240,25 +240,22 @@ class _SettingsPageState extends State<SettingsPage>
                             ),
                           );
                         }),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                          ),
-                          child: Text(
-                            '背景风格',
-                            style: TextStyle(
-                              // color: Theme.of(context).colorScheme.primaryVariant,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18.w,
-                              // height: 1.0,
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(
+                        //     horizontal: 8.0,
+                        //   ),
+                        //   child: Text(
+                        //     '背景风格',
+                        //     style: TextStyle(
+                        //       // color: Theme.of(context).colorScheme.primaryVariant,
+                        //       fontWeight: FontWeight.w400,
+                        //       fontSize: 18.w,
+                        //       // height: 1.0,
+                        //     ),
+                        //   ),
+                        // ),
                         SettingItem(
-                          title: '',
+                          title: '背景风格',
                           suffix: SelectTab(
                             value: configController.backgroundStyle.index,
                             children: const [

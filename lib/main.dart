@@ -31,9 +31,11 @@ Future<void> main() async {
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
+  PluginManager.instance..register(DashboardPlugin());
+  if (!GetPlatform.isWindows) {
+    PluginManager.instance.register(AppStarterPlugin());
+  }
   PluginManager.instance
-    ..register(DashboardPlugin())
-    ..register(AppStarterPlugin())
     ..register(AppManagerPlugin())
     ..register(AppLauncherPlugin())
     ..register(DeviceInfoPlugin())
