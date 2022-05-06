@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class RemoteDebugPage extends StatefulWidget {
   const RemoteDebugPage({Key key}) : super(key: key);
@@ -52,7 +53,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (configController.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone ||
+        configController.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).networkDebug),
         automaticallyImplyLeading: false,

@@ -167,8 +167,10 @@ class Global {
       package: Config.flutterPackage,
     );
   }
-
+  // 
   bool hasSafeArea = true;
+  // 是否展示二维码
+  bool showQRCode = true;
   Future<void> initGlobal() async {
     if (isInit) {
       return;

@@ -9,6 +9,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 // 安装 adb 工具到系统
 class AdbInstallToSystemPage extends StatefulWidget {
@@ -35,7 +36,8 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (controller.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone ||
+        controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).installToSystem),
         automaticallyImplyLeading: false,

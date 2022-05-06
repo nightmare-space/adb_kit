@@ -9,6 +9,7 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
@@ -17,7 +18,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ConfigController controller = Get.find();
     AppBar appBar;
-    if (controller.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).about),
         automaticallyImplyLeading: false,

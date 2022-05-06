@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ExecCmdPage extends StatefulWidget {
   const ExecCmdPage({Key key}) : super(key: key);
@@ -39,9 +40,10 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (controller.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone ||
+        controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title:  Text(S.of(context).terminal),
+        title: Text(S.of(context).terminal),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
@@ -168,7 +170,7 @@ class ItemButton extends StatelessWidget {
             SizedBox(
               child: Text(
                 title,
-                style:  TextStyle(
+                style: TextStyle(
                   fontWeight: bold,
                 ),
               ),

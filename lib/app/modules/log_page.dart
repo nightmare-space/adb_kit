@@ -4,6 +4,7 @@ import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:termare_view/termare_view.dart';
 import 'package:logger_view/logger_view.dart';
 import 'overview/pages/overview_page.dart';
@@ -37,7 +38,7 @@ class _LogPageState extends State<LogPage> {
       );
     }
     AppBar appBar;
-    if (controller.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).log),
         automaticallyImplyLeading: false,

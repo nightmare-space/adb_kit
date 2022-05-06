@@ -31,7 +31,7 @@ Future<void> main() async {
   if (!GetPlatform.isIOS) {
     RuntimeEnvir.initEnvirWithPackageName(Config.packageName);
   }
-  PluginManager.instance..register(DashboardPlugin());
+  PluginManager.instance.register(DashboardPlugin());
   if (!GetPlatform.isWindows) {
     PluginManager.instance.register(AppStarterPlugin());
   }
@@ -58,6 +58,7 @@ void runADBClient({Color primary}) {
   runZonedGuarded<void>(
     () {
       runApp(const ADBToolEntryPoint(
+        showQRCode: false,
         child: MaterialAppWrapper(),
       ));
     },
@@ -79,10 +80,13 @@ class ADBToolEntryPoint extends StatefulWidget {
     this.primary,
     this.child,
     this.hasSafeArea = true,
+    this.showQRCode = true,
   }) : super(key: key);
+  // 产品色
   final Color primary;
   final Widget child;
   final bool hasSafeArea;
+  final bool showQRCode;
 
   @override
   State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
@@ -107,6 +111,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
     configController.initConfig();
     Global.instance.initGlobal();
     Global.instance.hasSafeArea = widget.hasSafeArea;
+    Global.instance.showQRCode = widget.showQRCode;
     am.AppManager.globalInstance;
     DevicesController controller = Get.find();
     controller.init();
@@ -126,32 +131,55 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
           case ConnectionState.active:
             return const Text('');
           case ConnectionState.done:
-            ConfigController config = Get.find();
             return widget.child ??
-                ResponsiveWrapper.builder(
-                  Builder(builder: (context) {
-                    if (ResponsiveWrapper.of(context).isDesktop) {
-                      ScreenAdapter.init(896);
-                    } else {
-                      ScreenAdapter.init(414);
-                    }
-                    return Theme(
-                      data: config.theme,
-                      child: const AdbTool(),
-                    );
-                  }),
-                  // maxWidth: 1200,
-                  minWidth: 10,
-                  defaultScale: false,
-                  defaultName: PHONE,
-                  breakpoints: const [
-                    ResponsiveBreakpoint.resize(500,
-                        name: TABLET, scaleFactor: 1),
-                    // ResponsiveBreakpoint.resize(
-                    //   500,
-                    //   name: DESKTOP,
-                    //   scaleFactor: 1.2,
-                    // ),
+                Stack(
+                  children: [
+                    GetBuilder<ConfigController>(builder: (config) {
+                      if (config.backgroundStyle == BackgroundStyle.normal) {
+                        return Container(
+                          color: config.theme.colorScheme.background,
+                        );
+                      }
+                      if (config.backgroundStyle == BackgroundStyle.image) {
+                        return SizedBox(
+                          height: double.infinity,
+                          child: Image.asset(
+                            'assets/b.png',
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
+                    GetBuilder<ConfigController>(builder: (config) {
+                      return ResponsiveWrapper.builder(
+                        Builder(builder: (context) {
+                          if (ResponsiveWrapper.of(context).isDesktop) {
+                            ScreenAdapter.init(896);
+                          } else {
+                            ScreenAdapter.init(414);
+                          }
+                          return Theme(
+                            data: config.theme,
+                            child: const AdbTool(),
+                          );
+                        }),
+                        // maxWidth: 1200,
+                        minWidth: 10,
+                        defaultScale: false,
+                        defaultName: PHONE,
+                        breakpoints: const [
+                          ResponsiveBreakpoint.resize(500,
+                              name: TABLET, scaleFactor: 1),
+                          // ResponsiveBreakpoint.resize(
+                          //   500,
+                          //   name: DESKTOP,
+                          //   scaleFactor: 1.2,
+                          // ),
+                        ],
+                      );
+                    }),
                   ],
                 );
         }

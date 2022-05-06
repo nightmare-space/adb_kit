@@ -4,6 +4,7 @@ import 'package:adb_tool/app/modules/overview/list/devices_list.dart';
 import 'package:adb_tool/app/modules/overview/pages/qrcode_page.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
+import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
@@ -207,7 +208,7 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
         SizedBox(height: 8.w),
-        CardItem(
+        if(Global().showQRCode)CardItem(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -242,7 +243,6 @@ class _OverviewPageState extends State<OverviewPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 8.w),
             ],
           ),
         ),
