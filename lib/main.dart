@@ -94,12 +94,12 @@ class ADBToolEntryPoint extends StatefulWidget {
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
   bool isInit = false;
-  ConfigController configController = Get.put(ConfigController());
-  DevicesController devicesController = Get.put(DevicesController());
   Future<void> init() async {
     if (isInit) {
       return;
     }
+    ConfigController configController = Get.put(ConfigController());
+    Get.put(DevicesController());
     WidgetsFlutterBinding.ensureInitialized();
     if (widget.primary != null) {
       seed = widget.primary;
@@ -167,16 +167,11 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
                         }),
                         // maxWidth: 1200,
                         minWidth: 10,
-                        defaultScale: false,
+                        defaultScale: true,
                         defaultName: PHONE,
                         breakpoints: const [
-                          ResponsiveBreakpoint.resize(500,
-                              name: TABLET, scaleFactor: 1),
-                          // ResponsiveBreakpoint.resize(
-                          //   500,
-                          //   name: DESKTOP,
-                          //   scaleFactor: 1.2,
-                          // ),
+                          ResponsiveBreakpoint.resize(600, name: TABLET),
+                          ResponsiveBreakpoint.resize(1000, name: DESKTOP),
                         ],
                       );
                     }),
