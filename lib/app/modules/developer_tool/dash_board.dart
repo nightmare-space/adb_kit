@@ -75,6 +75,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
+  void dispose() {
+    adbShell.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
