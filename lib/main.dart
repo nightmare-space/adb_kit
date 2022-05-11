@@ -57,10 +57,7 @@ void runADBClient({Color primary}) {
   }
   runZonedGuarded<void>(
     () {
-      runApp(const ADBToolEntryPoint(
-        showQRCode: false,
-        child: MaterialAppWrapper(),
-      ));
+      runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {
       Log.e('未捕捉到的异常 : $error');
