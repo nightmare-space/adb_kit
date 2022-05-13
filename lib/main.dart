@@ -95,12 +95,13 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
     if (isInit) {
       return;
     }
-    ConfigController configController = Get.put(ConfigController());
-    Get.put(DevicesController());
-    WidgetsFlutterBinding.ensureInitialized();
     if (widget.primary != null) {
       seed = widget.primary;
     }
+    ConfigController configController = Get.put(ConfigController());
+    Get.put(DevicesController());
+    WidgetsFlutterBinding.ensureInitialized();
+
     if (GetPlatform.isDesktop) {
       await Window.initialize();
     }
