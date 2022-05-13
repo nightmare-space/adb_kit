@@ -15,7 +15,6 @@ import 'config/config.dart';
 import 'config/settings.dart';
 import 'generated/l10n.dart';
 import 'global/instance/global.dart';
-import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.configPath);
@@ -125,18 +124,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                     // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
                     // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
                     /// NativeShell
-                    if (widget.isNativeShell) {
-                      return nativeshell.WindowLayoutProbe(
-                        child: SizedBox(
-                          width: 800,
-                          height: 600,
-                          child: Theme(
-                            data: config.theme,
-                            child: navigator,
-                          ),
-                        ),
-                      );
-                    }
+                    if (widget.isNativeShell) {}
 
                     ///
                     ///
@@ -174,72 +162,4 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
       ),
     );
   }
-}
-
-class NativeShellWrapper extends StatelessWidget {
-  const NativeShellWrapper({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: nativeshell.WindowWidget(
-        onCreateState: (initData) {
-          nativeshell.WindowState state;
-
-          state ??= OtherWindowState.fromInitData(initData);
-          // possibly no init data, this is main window
-          state ??= MainWindowState();
-          return state;
-        },
-      ),
-    );
-  }
-}
-
-class MainWindowState extends nativeshell.WindowState {
-  @override
-  nativeshell.WindowSizingMode get windowSizingMode =>
-      nativeshell.WindowSizingMode.atLeastIntrinsicSize;
-
-  @override
-  Future<void> windowCloseRequested() async {
-    exit(0);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialAppWrapper(
-      isNativeShell: true,
-    );
-  }
-}
-
-class OtherWindowState extends nativeshell.WindowState {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Responsive(
-        builder: (_, __) {
-          return const LogPage();
-        },
-      ),
-    );
-  }
-
-  // This can be anything that fromInitData recognizes
-  static dynamic toInitData() => {
-        'class': 'OtherWindow',
-      };
-
-  static OtherWindowState fromInitData(dynamic initData) {
-    if (initData is Map && initData['class'] == 'OtherWindow') {
-      return OtherWindowState();
-    }
-    return null;
-  }
-
-  @override
-  nativeshell.WindowSizingMode get windowSizingMode =>
-      nativeshell.WindowSizingMode.atLeastIntrinsicSize;
 }

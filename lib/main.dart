@@ -57,6 +57,7 @@ void runADBClient({Color primary}) {
   }
   runZonedGuarded<void>(
     () {
+      WidgetsFlutterBinding.ensureInitialized();
       runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {
@@ -75,13 +76,11 @@ class ADBToolEntryPoint extends StatefulWidget {
   const ADBToolEntryPoint({
     Key key,
     this.primary,
-    this.child,
     this.hasSafeArea = true,
     this.showQRCode = true,
   }) : super(key: key);
   // 产品色
   final Color primary;
-  final Widget child;
   final bool hasSafeArea;
   final bool showQRCode;
 
@@ -128,52 +127,55 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
           case ConnectionState.active:
             return const Text('');
           case ConnectionState.done:
-            return widget.child ??
-                Stack(
-                  children: [
-                    GetBuilder<ConfigController>(builder: (config) {
-                      if (config.backgroundStyle == BackgroundStyle.normal) {
-                        return Container(
-                          color: config.theme.colorScheme.background,
-                        );
-                      }
-                      if (config.backgroundStyle == BackgroundStyle.image) {
-                        return SizedBox(
-                          height: double.infinity,
-                          child: Image.asset(
-                            'assets/b.png',
-                            fit: BoxFit.cover,
-                          ),
-                        );
+            return Stack(
+              children: [
+                GetBuilder<ConfigController>(builder: (config) {
+                  if (config.backgroundStyle == BackgroundStyle.normal) {
+                    return Container(
+                      color: config.theme.colorScheme.background,
+                    );
+                  }
+                  if (config.backgroundStyle == BackgroundStyle.image) {
+                    return SizedBox(
+                      height: double.infinity,
+                      child: Image.asset(
+                        'assets/b.png',
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                }),
+                GetBuilder<ConfigController>(builder: (config) {
+                  return Theme(
+                    data: config.theme,
+                    child: const AdbTool(),
+                  );
+                  return ResponsiveWrapper.builder(
+                    Builder(builder: (context) {
+                      if (ResponsiveWrapper.of(context).isDesktop) {
+                        ScreenAdapter.init(896);
                       } else {
-                        return const SizedBox();
+                        ScreenAdapter.init(414);
                       }
-                    }),
-                    GetBuilder<ConfigController>(builder: (config) {
-                      return ResponsiveWrapper.builder(
-                        Builder(builder: (context) {
-                          if (ResponsiveWrapper.of(context).isDesktop) {
-                            ScreenAdapter.init(896);
-                          } else {
-                            ScreenAdapter.init(414);
-                          }
-                          return Theme(
-                            data: config.theme,
-                            child: const AdbTool(),
-                          );
-                        }),
-                        // maxWidth: 1200,
-                        minWidth: 10,
-                        defaultScale: true,
-                        defaultName: PHONE,
-                        breakpoints: const [
-                          ResponsiveBreakpoint.resize(600, name: TABLET),
-                          ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-                        ],
+                      return Theme(
+                        data: config.theme,
+                        child: const AdbTool(),
                       );
                     }),
-                  ],
-                );
+                    // maxWidth: 1200,
+                    minWidth: 10,
+                    defaultScale: true,
+                    defaultName: PHONE,
+                    breakpoints: const [
+                      ResponsiveBreakpoint.resize(600, name: TABLET),
+                      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                    ],
+                  );
+                }),
+              ],
+            );
         }
         return const SizedBox();
       },

@@ -20,8 +20,6 @@ dependencies:
   file_selector_macos: ^0.0.4+1
   file_selector_windows: ^0.0.2+1
   responsive_framework: ^0.1.7
-  nativeshell:
-    version: ^0.1.10
   flutter:
     sdk: flutter
   cyclop: ^0.5.2
@@ -81,12 +79,21 @@ dependency_overrides:
   # #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
+  get: 
+    hosted: 
+      name: get
+      url: https://pub.dev
+    version: ^4.6.3
   device_info:
     path: ../device_info
   app_manager:
     path: ../app_manager
   adbutil:
     path: ../adbutil
+  qr_code_scanner:
+    git:
+      url: https://github.com/xeinebiu/qr_code_scanner.git
+      ref: fix_break_changes_platform
   # file_selector_nightmare:
   #   path: ../file_selector_meng
 flutter_intl:
