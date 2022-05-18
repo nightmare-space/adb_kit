@@ -8,7 +8,7 @@
 PRODUCT_NAME = adb_tool
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.adbTool
+PRODUCT_BUNDLE_IDENTIFIER = com.nightmare.adbTool
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2020 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 com.nightmare. All rights reserved.
