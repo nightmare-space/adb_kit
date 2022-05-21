@@ -15,6 +15,7 @@ import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:termare_pty/termare_pty.dart';
 import 'package:termare_view/termare_view.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
@@ -32,7 +33,7 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard> with WindowListener {
   PseudoTerminal adbShell;
 
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
@@ -78,6 +79,17 @@ class _DashboardState extends State<Dashboard> {
   void dispose() {
     adbShell.close();
     super.dispose();
+  }
+
+  @override
+  void onWindowEvent(String eventName) {
+    print('[WindowManager] onWindowEvent: $eventName');
+  }
+
+  @override
+  void onWindowClose() {
+    adbShell.close();
+    // do something
   }
 
   @override

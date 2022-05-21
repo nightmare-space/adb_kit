@@ -188,13 +188,6 @@ class Global {
     // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
-    // 等待 MaterialApp 加载完成，正确获取到屏幕大小
-    // 不然logTerminalCTL不能正常的换行
-    // final double screenWidth = size.width / window.devicePixelRatio;
-    // final double screenHeight = size.height / window.devicePixelRatio;
-    // logTerminalCTL.setWindowSize(
-    //   Size(screenWidth, screenHeight),
-    // );
     if (controller.autoConnect) {
       _receiveBoardCast();
     }

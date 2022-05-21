@@ -54,6 +54,7 @@ dependencies:
     git: https://github.com/nightmare-space/settings
   device_info:
     git: https://github.com/nightmare-space/device_info.git
+  window_manager: ^0.2.3
     
 dev_dependencies:
   flutter_test:
