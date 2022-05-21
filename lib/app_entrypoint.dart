@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -9,7 +7,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
 import 'app/controller/controller.dart';
-import 'app/modules/log_page.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
 import 'config/settings.dart';
@@ -31,7 +28,7 @@ class MaterialAppWrapper extends StatefulWidget {
   final bool isNativeShell;
 
   @override
-  _MaterialAppWrapperState createState() => _MaterialAppWrapperState();
+  State createState() => _MaterialAppWrapperState();
 }
 
 class _MaterialAppWrapperState extends State<MaterialAppWrapper>
