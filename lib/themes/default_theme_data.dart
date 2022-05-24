@@ -16,6 +16,7 @@ class DefaultThemeData {
     final darkThemeData = ThemeData.dark();
     // ThemeData
     return darkThemeData.copyWith(
+      useMaterial3: true,
       colorScheme: darkColorScheme,
       primaryColor: darkColorScheme.primary,
       scaffoldBackgroundColor: Colors.transparent,
@@ -115,6 +116,7 @@ class DefaultThemeData {
     final lightThemeData = ThemeData.light();
     ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: seed);
     return lightThemeData.copyWith(
+      useMaterial3: true,
       primaryColor: colorScheme.primary,
       colorScheme: colorScheme,
       // Desktop有高斯模糊背景

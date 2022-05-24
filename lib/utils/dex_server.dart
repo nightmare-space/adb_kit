@@ -18,6 +18,7 @@ class DexServer {
   DexServer._();
   static Map<String, AppChannel> serverStartList = {};
   static int rangeStart = 6040;
+  // TODO(nightmare):这个最终应该改成isolate，
   static Future<AppChannel> startServer(String devicesId) async {
     await initSetting();
     if (serverStartList.keys.contains(devicesId)) {

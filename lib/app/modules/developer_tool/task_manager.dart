@@ -72,6 +72,7 @@ class _TaskManagerState extends State<TaskManager> {
       itemCount: tasks.length,
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.symmetric(horizontal: 48.w),
+      cacheExtent: 9999,
       itemBuilder: (c, i) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),

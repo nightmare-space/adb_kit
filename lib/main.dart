@@ -56,7 +56,7 @@ void runADBClient({Color primary}) {
       runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {
-      Log.e('未捕捉到的异常 : $error');
+      Log.e('未捕捉到的异常 : $error \n$stackTrace');
     },
   );
   FlutterError.onError = (FlutterErrorDetails details) {

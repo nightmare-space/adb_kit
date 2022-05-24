@@ -6,6 +6,7 @@ import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class AppStarter extends StatefulWidget {
@@ -46,6 +47,7 @@ class _AppStarterState extends State<AppStarter> {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /data/data/me.piebridge.brevent/brevent.sh\r';
                   Global.instance.pseudoTerminal.write(cmd);
+                  HapticFeedback.vibrate();
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -54,7 +56,7 @@ class _AppStarterState extends State<AppStarter> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 12.w,
+                    vertical: 8.w,
                   ),
                   child: Text(
                     '启动黑域',
@@ -78,7 +80,7 @@ class _AppStarterState extends State<AppStarter> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 12.w,
+                    vertical: 8.w,
                   ),
                   child: Text(
                     '启动scene',
@@ -102,7 +104,7 @@ class _AppStarterState extends State<AppStarter> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 12.w,
+                    vertical: 8.w,
                   ),
                   child: Text(
                     '启动shizuku',
@@ -126,7 +128,7 @@ class _AppStarterState extends State<AppStarter> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 12.w,
+                    vertical: 8.w,
                   ),
                   child: Text(
                     '启动小黑屋',
@@ -150,7 +152,7 @@ class _AppStarterState extends State<AppStarter> {
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 12.w,
+                    vertical: 8.w,
                   ),
                   child: Text(
                     '启动冰箱',
