@@ -19,6 +19,7 @@ dependencies:
   file_selector_linux: 0.0.2+1
   file_selector_macos: ^0.0.4+1
   file_selector_windows: ^0.0.2+1
+  path_provider: ^2.0.10
   responsive_framework: ^0.1.7
   flutter:
     sdk: flutter
