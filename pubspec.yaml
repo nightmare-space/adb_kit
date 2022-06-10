@@ -53,6 +53,8 @@ dependencies:
   device_info:
     git: https://github.com/nightmare-space/device_info.git
   window_manager: ^0.2.3
+  adb_kit_extension:
+    path: ../adb_kit_extension
     
 dev_dependencies:
   flutter_test:
@@ -78,17 +80,12 @@ dependency_overrides:
   # #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
-  get: 
-    hosted: 
-      name: get
-      url: https://pub.dev
-    version: ^4.6.3
-  device_info:
-    path: ../device_info
-  app_manager:
-    path: ../app_manager
-  adbutil:
-    path: ../adbutil
+  # device_info:
+  #   path: ../device_info
+  # app_manager:
+  #   path: ../app_manager
+  # adbutil:
+  #   path: ../adbutil
   qr_code_scanner:
     git:
       url: https://github.com/xeinebiu/qr_code_scanner.git

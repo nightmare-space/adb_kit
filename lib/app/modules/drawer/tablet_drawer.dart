@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/home/views/adaptive_view.dart';
 import 'package:adb_tool/app/routes/ripple_router.dart';
+import 'package:adb_tool/config/custom.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
@@ -68,9 +69,8 @@ class _TabletDrawerState extends State<TabletDrawer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 8.w,
-        ),
+        SizedBox(height: 8.w),
+        if (Custom.drawerHeader != null) Custom.drawerHeader,
         for (ADBPage page in PageManager.instance.pages)
           if (page.isActive)
             Padding(

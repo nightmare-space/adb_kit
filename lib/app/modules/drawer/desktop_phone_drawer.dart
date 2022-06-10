@@ -1,4 +1,5 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
+import 'package:adb_tool/config/custom.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
@@ -67,9 +68,8 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 8.w,
-        ),
+        SizedBox(height: 8.w),
+        if (Custom.drawerHeader != null) Custom.drawerHeader,
         for (ADBPage page in PageManager.instance.pages)
           if (page.isActive)
             Padding(
