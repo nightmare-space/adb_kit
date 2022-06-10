@@ -10,3 +10,6 @@ extension ColorSchemeExt on ColorScheme {
   Color get surface3 => primary.withOpacity(0.11);
   Color get surface4 => primary.withOpacity(0.12);
 }
+extension ThemeDataExt on ThemeData {
+  
+}
