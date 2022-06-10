@@ -1,7 +1,6 @@
 library adb_tool;
 
 import 'dart:async';
-import 'package:adb_kit_extension/adb_kit_extension.dart';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -70,7 +69,6 @@ void runADBClient({Color primary}) {
     Log.e('页面构建异常 : ${details.exception}');
   };
   StatusBarUtil.transparent();
-  initExtension();
 }
 
 // 把init从main函数移动到这儿是有原因的
