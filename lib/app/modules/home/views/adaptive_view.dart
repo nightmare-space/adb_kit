@@ -24,7 +24,7 @@ class AdbTool extends StatefulWidget {
 
   final String packageName;
   @override
-  _AdbToolState createState() => _AdbToolState();
+  State createState() => _AdbToolState();
 }
 
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {

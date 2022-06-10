@@ -21,7 +21,7 @@ class DesktopPhoneDrawer extends StatefulWidget {
   final double width;
 
   @override
-  _DesktopPhoneDrawerState createState() => _DesktopPhoneDrawerState();
+  State createState() => _DesktopPhoneDrawerState();
 }
 
 class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {

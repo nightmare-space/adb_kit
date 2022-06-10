@@ -18,7 +18,7 @@ class PushFileDialog extends StatefulWidget {
   final ADBChannel adbChannel;
 
   @override
-  _PushFileDialogState createState() => _PushFileDialogState();
+  State createState() => _PushFileDialogState();
 }
 
 class _PushFileDialogState extends State<PushFileDialog> {

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:global_repository/global_repository.dart';
+
 class ADBFind {
   ADBFind._();
 
@@ -60,5 +62,5 @@ bool isAddress(String content) {
 }
 
 Future<void> main() async {
-  print('ADBFind.getLANDevices() : ${await ADBFind.getLANDevices()}');
+  Log.i('ADBFind.getLANDevices() : ${await ADBFind.getLANDevices()}');
 }

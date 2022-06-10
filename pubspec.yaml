@@ -15,16 +15,13 @@ dependencies:
     git: https://github.com/nightmare-space/app_manager
   dio: ^4.0.0
   desktop_drop: ^0.3.3
-  file_selector: ^0.8.2+1
-  file_selector_linux: 0.0.2+1
-  file_selector_macos: ^0.0.4+1
-  file_selector_windows: ^0.0.2+1
+  file_selector: ^0.8.4+2
   path_provider: ^2.0.10
-  responsive_framework: ^0.1.7
+  responsive_framework: ^0.2.0
   flutter:
     sdk: flutter
   cyclop: ^0.5.2
-  flutter_screenutil: ^2.3.0
+  flutter_screenutil: ^5.5.3+2
   flutter_spinkit: "^4.1.2"
   pseudo_terminal_utils:
     git: https://github.com/Termare/pseudo_terminal_utils
@@ -35,7 +32,7 @@ dependencies:
   multicast:
     git: https://github.com/nightmare-space/multicast
   multicast_dns: ^0.3.0
-  qr_flutter: ^3.1.0
+  qr_flutter: ^4.0.0
   qr_code_scanner: ^0.5.1
   path: ^1.8.0
   termare_pty:

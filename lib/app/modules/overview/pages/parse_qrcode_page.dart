@@ -44,7 +44,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
       entitys[i].state = ConnectState.connecting;
       setState(() {});
       try {
-        await httpInstance.post('http://' + entitys[i].address);
+        await httpInstance.post('http://${entitys[i].address}');
         entitys[i].state = ConnectState.success;
         setState(() {});
         Future.delayed(const Duration(milliseconds: 600), () {

@@ -11,7 +11,7 @@ class DownloadFile extends StatefulWidget {
   final String serial;
 
   @override
-  _DownloadFileState createState() => _DownloadFileState();
+  State createState() => _DownloadFileState();
 }
 
 class _DownloadFileState extends State<DownloadFile>

@@ -18,7 +18,7 @@ class InstallApkDialog extends StatefulWidget {
   final ADBChannel adbChannel;
 
   @override
-  _InstallApkDialogState createState() => _InstallApkDialogState();
+  State createState() => _InstallApkDialogState();
 }
 
 class _InstallApkDialogState extends State<InstallApkDialog> {

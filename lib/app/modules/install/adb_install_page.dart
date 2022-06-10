@@ -11,7 +11,7 @@ class AdbInstallPage extends StatefulWidget {
   const AdbInstallPage({Key key}) : super(key: key);
 
   @override
-  _AdbInstallPageState createState() => _AdbInstallPageState();
+  State createState() => _AdbInstallPageState();
 }
 
 class _AdbInstallPageState extends State<AdbInstallPage> {

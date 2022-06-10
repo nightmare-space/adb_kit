@@ -10,7 +10,7 @@ class ScreenshotPage extends StatefulWidget {
   final DevicesEntity devicesEntity;
 
   @override
-  _ScreenshotPageState createState() => _ScreenshotPageState();
+  State createState() => _ScreenshotPageState();
 }
 
 class _ScreenshotPageState extends State<ScreenshotPage> {

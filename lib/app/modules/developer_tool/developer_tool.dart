@@ -15,7 +15,7 @@ class DeveloperTool extends StatefulWidget {
   final DevicesEntity entity;
   final BuildContext providerContext;
   @override
-  _DeveloperToolState createState() => _DeveloperToolState();
+  State createState() => _DeveloperToolState();
 }
 
 class _DeveloperToolState extends State<DeveloperTool>

@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
-import 'package:adb_tool/app/routes/app_pages.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
@@ -160,7 +159,7 @@ class Global {
       return true;
     }
     AssetsManager.copyFiles(
-      localPath: RuntimeEnvir.binPath + '/',
+      localPath: '${RuntimeEnvir.binPath}/',
       android: androidFiles,
       macOS: [],
       global: globalFiles,
@@ -215,7 +214,7 @@ class Print implements Printable {
     final String data =
         '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
 
-    logTerminalCTL.write(data + '\r\n');
+    logTerminalCTL.write('$data\r\n');
 
     // ignore: avoid_print
     // core.print(data);

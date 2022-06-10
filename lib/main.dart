@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:app_manager/app_manager.dart' as am;
 import 'package:path_provider/path_provider.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'app/modules/home/views/adaptive_view.dart';
 import 'app_entrypoint.dart';
 import 'config/config.dart';
@@ -153,27 +152,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
                   return Theme(
                     data: config.theme,
                     child: const AdbTool(),
-                  );
-                  return ResponsiveWrapper.builder(
-                    Builder(builder: (context) {
-                      if (ResponsiveWrapper.of(context).isDesktop) {
-                        ScreenAdapter.init(896);
-                      } else {
-                        ScreenAdapter.init(414);
-                      }
-                      return Theme(
-                        data: config.theme,
-                        child: const AdbTool(),
-                      );
-                    }),
-                    // maxWidth: 1200,
-                    minWidth: 10,
-                    defaultScale: true,
-                    defaultName: PHONE,
-                    breakpoints: const [
-                      ResponsiveBreakpoint.resize(600, name: TABLET),
-                      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-                    ],
                   );
                 }),
               ],

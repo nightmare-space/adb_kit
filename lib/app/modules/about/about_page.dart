@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key key}) : super(key: key);
@@ -114,8 +114,8 @@ class AboutPage extends StatelessWidget {
                           onTap: () async {
                             const String url =
                                 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (await canLaunchUrlString(url)) {
+                              await launchUrlString(url);
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -181,8 +181,8 @@ class AboutPage extends StatelessWidget {
                           ),
                           onTap: () async {
                             const String url = 'https://github.com/mengyanshou';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (await canLaunchUrlString(url)) {
+                              await launchUrlString(url);
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -208,8 +208,8 @@ class AboutPage extends StatelessWidget {
                           onTap: () async {
                             const String url =
                                 'http://www.coolapk.com/u/1345256';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (await canLaunchUrlString(url)) {
+                              await launchUrlString(url);
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -234,8 +234,8 @@ class AboutPage extends StatelessWidget {
                           ),
                           onTap: () async {
                             const String url = 'http://nightmare.fun';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (await canLaunchUrlString(url)) {
+                              await launchUrlString(url);
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -306,7 +306,7 @@ class SettingItem extends StatefulWidget {
   final Widget suffix;
   final Widget prefix;
   @override
-  _SettingItemState createState() => _SettingItemState();
+  State createState() => _SettingItemState();
 }
 
 class _SettingItemState extends State<SettingItem> {

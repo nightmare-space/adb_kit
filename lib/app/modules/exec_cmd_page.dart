@@ -18,7 +18,7 @@ class ExecCmdPage extends StatefulWidget {
   const ExecCmdPage({Key key}) : super(key: key);
 
   @override
-  _ExecCmdPageState createState() => _ExecCmdPageState();
+  State createState() => _ExecCmdPageState();
 }
 
 class _ExecCmdPageState extends State<ExecCmdPage> {

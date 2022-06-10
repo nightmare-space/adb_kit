@@ -8,7 +8,7 @@ class OTGTerminal extends StatefulWidget {
   const OTGTerminal({Key key}) : super(key: key);
 
   @override
-  _OTGTerminalState createState() => _OTGTerminalState();
+  State createState() => _OTGTerminalState();
 }
 
 class _OTGTerminalState extends State<OTGTerminal> {

@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   @override
   void onWindowEvent(String eventName) {
-    print('[WindowManager] onWindowEvent: $eventName');
+    Log.i('[WindowManager] onWindowEvent: $eventName');
   }
 
   @override
@@ -335,8 +335,8 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
-                          '点击按钮选择Apk进行安装',
+                      title:
+                          '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择Apk进行安装',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -441,8 +441,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: (GetPlatform.isDesktop ? '拖放到此或' : '') +
-                          '点击按钮选择文件进行上传',
+                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -734,7 +733,7 @@ class SwitchItem extends StatefulWidget {
   final bool Function() onOpen;
   final bool Function() onClose;
   @override
-  _SwitchItemState createState() => _SwitchItemState();
+  State createState() => _SwitchItemState();
 }
 
 class _SwitchItemState extends State<SwitchItem> {
@@ -857,7 +856,7 @@ class GestureWithScale extends StatefulWidget {
   final Widget child;
 
   @override
-  _GestureWithScaleState createState() => _GestureWithScaleState();
+  State createState() => _GestureWithScaleState();
 }
 
 class _GestureWithScaleState extends State<GestureWithScale>

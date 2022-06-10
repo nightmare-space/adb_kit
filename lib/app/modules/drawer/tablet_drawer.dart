@@ -9,7 +9,6 @@ import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
@@ -24,7 +23,7 @@ class TabletDrawer extends StatefulWidget {
   final String groupValue;
 
   @override
-  _TabletDrawerState createState() => _TabletDrawerState();
+  State createState() => _TabletDrawerState();
 }
 
 class _TabletDrawerState extends State<TabletDrawer> {

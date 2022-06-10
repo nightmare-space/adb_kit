@@ -10,7 +10,7 @@ class LogoPage extends StatefulWidget {
   const LogoPage({Key key}) : super(key: key);
 
   @override
-  _LogoPageState createState() => _LogoPageState();
+  State createState() => _LogoPageState();
 }
 
 class _LogoPageState extends State<LogoPage> {
@@ -33,7 +33,7 @@ class _LogoPageState extends State<LogoPage> {
           final ByteData byteData =
               await img.toByteData(format: ImageByteFormat.png) as ByteData;
           final Uint8List pngBytes = byteData.buffer.asUint8List();
-          File(RuntimeEnvir.dataPath + '/ic_launcher.png')
+          File('${RuntimeEnvir.dataPath}/ic_launcher.png')
               .writeAsBytes(pngBytes);
         },
       ),
