@@ -47,7 +47,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 
 ## BSD
 
-```sh
+```
 BSD 3-Clause License
 
 Copyright (c) 2021,  Nightmare
