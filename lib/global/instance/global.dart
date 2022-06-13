@@ -1,22 +1,29 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:dart_pty/dart_pty.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:logger_view/logger_view.dart';
 import 'package:multicast/multicast.dart';
-import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
-import 'package:termare_view/termare_view.dart';
+import 'package:xterm/next/terminal.dart';
 import 'dart:core' as core;
 import 'dart:core';
 
 import 'page_manager.dart';
+
+extension PTYExt on Pty {
+  void writeString(String data) {
+    write(utf8.encode(data));
+  }
+}
 
 class Global {
   factory Global() => _getInstance();
@@ -56,18 +63,28 @@ class Global {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   // todo initial
-  PseudoTerminal pseudoTerminal;
+  Pty pty;
+  Terminal terminal = Terminal();
   void initTerminal() {
-    pseudoTerminal ??= TerminalUtil.getShellTerminal();
+    Map<String, String> envir;
+    envir = Map.from(Platform.environment);
+    envir['HOME'] = RuntimeEnvir.homePath;
+    // envir['TERM'] = 'xterm-256color';
+    envir['PATH'] = RuntimeEnvir.path;
+    pty ??= Pty.start(
+      'sh',
+      arguments: ['-l'],
+      environment: envir,
+      workingDirectory: '/',
+    );
+
+    pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+      (event) {
+        terminal.write(event);
+      },
+    );
   }
 
-  TermareController termareController = TermareController(
-    fontFamily: '${Config.flutterPackage}MenloforPowerline',
-    theme: TermareStyles.macos.copyWith(
-      backgroundColor: Colors.transparent,
-    ),
-    enableLog: false,
-  )..hideCursor();
   bool logTerminalIsInit = false;
 
   Future<void> _receiveBoardCast() async {
@@ -166,7 +183,8 @@ class Global {
       package: Config.flutterPackage,
     );
   }
-  // 
+
+  //
   bool hasSafeArea = true;
   // 是否展示二维码
   bool showQRCode = true;
@@ -174,6 +192,7 @@ class Global {
     if (isInit) {
       return;
     }
+    initTerminal();
     Log.i('Global instance init');
     if (RuntimeEnvir.packageName != Config.packageName) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
@@ -203,7 +222,6 @@ class Global {
     }
     logTerminalIsInit = true;
     // 32 是日志界面的边距
-    logTerminalCTL.setWindowSize(Size(size.width - 48.w, size.height));
   }
 }
 
@@ -213,8 +231,6 @@ class Print implements Printable {
   void print(DateTime time, Object object) {
     final String data =
         '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
-
-    logTerminalCTL.write('$data\r\n');
 
     // ignore: avoid_print
     // core.print(data);

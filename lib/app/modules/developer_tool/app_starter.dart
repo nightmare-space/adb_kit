@@ -24,7 +24,6 @@ class _AppStarterState extends State<AppStarter> {
   @override
   void initState() {
     super.initState();
-    Global().initTerminal();
   }
 
   @override
@@ -46,12 +45,12 @@ class _AppStarterState extends State<AppStarter> {
                 onTap: () {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /data/data/me.piebridge.brevent/brevent.sh\r';
-                  Global.instance.pseudoTerminal.write(cmd);
+                  Global().pty.writeString(cmd);
                   HapticFeedback.vibrate();
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface3,
+                    color: Theme.of(context).surface3,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -71,11 +70,11 @@ class _AppStarterState extends State<AppStarter> {
                 onTap: () {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /data/user/0/com.omarea.vtools/files/up.sh\r';
-                  Global.instance.pseudoTerminal.write(cmd);
+                  Global().pty.writeString(cmd);
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface3,
+                    color: Theme.of(context).surface3,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -95,11 +94,11 @@ class _AppStarterState extends State<AppStarter> {
                 onTap: () {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh\r';
-                  Global.instance.pseudoTerminal.write(cmd);
+                  Global().pty.writeString(cmd);
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface3,
+                    color: Theme.of(context).surface3,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -119,11 +118,11 @@ class _AppStarterState extends State<AppStarter> {
                 onTap: () {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/web1n.stopapp/files/starter.sh\r';
-                  Global.instance.pseudoTerminal.write(cmd);
+                  Global().pty.writeString(cmd);
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface3,
+                    color: Theme.of(context).surface3,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -143,11 +142,11 @@ class _AppStarterState extends State<AppStarter> {
                 onTap: () {
                   String cmd =
                       'adb -s ${widget.entity.serial} shell sh /sdcard/Android/data/com.catchingnow.icebox/files/start.sh\r';
-                  Global.instance.pseudoTerminal.write(cmd);
+                  Global().pty.writeString(cmd);
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface3,
+                    color: Theme.of(context).surface3,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(

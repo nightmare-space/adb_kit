@@ -34,7 +34,9 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
       widget.devicesEntity.serial,
     );
     controller.setAppChannel(appChannel);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

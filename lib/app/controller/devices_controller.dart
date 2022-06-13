@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:termare_view/termare_view.dart';
 
 import 'history_controller.dart';
 
@@ -73,7 +70,8 @@ class DevicesController extends GetxController {
         Log.e('DeviceDetach');
         otgDevices.clear();
       } else if (call.method == 'output') {
-        otgTerm.write(call.arguments.toString());
+        // TODO
+        // otgTerm.write(call.arguments.toString());
       }
     });
     await startAdb();
@@ -86,15 +84,6 @@ class DevicesController extends GetxController {
   bool getRoot = false;
   // adb是否在启动中
   bool adbIsStarting = true;
-  final TermareController otgTerm = TermareController(
-    fontFamily: '${Config.flutterPackage}MenloforPowerline',
-    theme: TermareStyles.macos.copyWith(
-      backgroundColor: AppColors.background,
-    ),
-  );
-  // 这个count
-  //
-  // int count = 0;
   List<DevicesEntity> devicesEntitys = [];
 
   void clearDevices() {

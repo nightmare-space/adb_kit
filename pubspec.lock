@@ -163,15 +163,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.5.2"
-  dart_pty:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a437347d882e8e9110564cef9495f8dafc6c8b89
-      url: "https://github.com/Termare/dart_pty"
-    source: git
-    version: "0.0.3"
   desktop_drop:
     dependency: "direct main"
     description:
@@ -202,13 +193,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.3"
-  event_bus:
-    dependency: transitive
-    description:
-      name: event_bus
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.1"
   fake_async:
     dependency: transitive
     description:
@@ -314,6 +298,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_pty:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: cbac41844c0e83e856119b20a56f5b66f01fde5e
+      url: "https://github.com/TerminalStudio/flutter_pty"
+    source: git
+    version: "0.3.0"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -371,7 +364,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "0536dd84855369280672ed33caf2547b331c1ead"
+      resolved-ref: "5c3a8bda531ce429968179cb489ecd8e6141d479"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -381,7 +374,7 @@ packages:
       name: hive
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.2.1"
+    version: "2.2.2"
   html:
     dependency: transitive
     description:
@@ -455,11 +448,9 @@ packages:
   logger_view:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "6d88858a49b20211a33c9bcc1b64773d96a0a3bd"
-      url: "https://github.com/nightmare-space/logger_view"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/logger_view"
+      relative: false
+    source: path
     version: "0.0.1"
   matcher:
     dependency: transitive
@@ -610,6 +601,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.0"
+  platform_info:
+    dependency: transitive
+    description:
+      name: platform_info
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.2.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -624,15 +622,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.4"
-  pseudo_terminal_utils:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "90d635ced306dc4237171da20ce497fd12134902"
-      url: "https://github.com/Termare/pseudo_terminal_utils"
-    source: git
-    version: "0.0.1"
   qr:
     dependency: transitive
     description:
@@ -712,7 +701,7 @@ packages:
     description:
       path: "pkgs/shelf_static"
       ref: HEAD
-      resolved-ref: a1596aa06b7cb111ce8fecd584b57c75e0240773
+      resolved-ref: "9fff4b678217c0cd1311e69f19e0abac05216615"
       url: "https://github.com/nightmare-space/shelf"
     source: git
     version: "1.1.1-dev"
@@ -777,24 +766,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
-  termare_pty:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: b58c7178619a7a97388a4c7004871e6ec373d25a
-      url: "https://github.com/Termare/termare_pty"
-    source: git
-    version: "1.0.0+1"
-  termare_view:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "1d2e49d18f042e1c4ea55fedcda1d096622d1ad0"
-      url: "https://github.com/Termare/termare_view"
-    source: git
-    version: "0.0.7"
   test_api:
     dependency: transitive
     description:
@@ -951,6 +922,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.4.1"
+  xterm:
+    dependency: "direct main"
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/xterm"
+      relative: false
+    source: path
+    version: "3.0.6-alpha"
 sdks:
   dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"

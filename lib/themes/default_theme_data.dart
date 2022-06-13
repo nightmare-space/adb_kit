@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
+import 'color_extension.dart';
 import 'lib_color_schemes.g.dart';
 
 class DefaultThemeData {
@@ -113,10 +114,14 @@ class DefaultThemeData {
   static ThemeData light({
     Color primary,
   }) {
-    final lightThemeData = ThemeData.light();
-    ColorScheme colorScheme = ColorScheme.fromSeed(seedColor: seed);
+    final lightThemeData = ThemeData.light().copyWith(
+      useMaterial3: false,
+    );
+    ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: seed,
+      background: grey1,
+    );
     return lightThemeData.copyWith(
-      useMaterial3: true,
       primaryColor: colorScheme.primary,
       colorScheme: colorScheme,
       // Desktop有高斯模糊背景
@@ -133,7 +138,7 @@ class DefaultThemeData {
       ),
       // cardTheme: CardTheme(),
       inputDecorationTheme: InputDecorationTheme(
-        fillColor: colorScheme.primary.withOpacity(0.08),
+        fillColor: lightThemeData.surface2,
         isDense: true,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 12.w,
@@ -176,8 +181,10 @@ class DefaultThemeData {
       ),
       tabBarTheme: lightThemeData.tabBarTheme.copyWith(
         indicator: UnderlineTabIndicator(
-          borderSide:
-              BorderSide(width: Dimens.gap_dp2, color: colorScheme.primary),
+          borderSide: BorderSide(
+            width: Dimens.gap_dp2,
+            color: colorScheme.primary,
+          ),
         ),
         indicatorSize: TabBarIndicatorSize.label,
         labelColor: colorScheme.primary,

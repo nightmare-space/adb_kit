@@ -2,6 +2,7 @@ import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/default_theme_data.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
@@ -87,7 +88,7 @@ class _QrScanPageState extends State<QrScanPage> {
               // AdbUtil.connectDevices('172.24.85.34:5555');
             },
             child: Material(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+              color: Theme.of(context).surface2,
               borderRadius: BorderRadius.circular(12.w),
               child: Column(
                 children: [

@@ -83,94 +83,77 @@ class _TaskManagerState extends State<TaskManager> {
                 children: [
                   Text(tasks[i].taskName ?? ''),
                   SizedBox(height: 12.w),
-                  Expanded(
-                    child: IntrinsicHeight(
-                      child: Stack(
-                        // alignment: Alignment.center,
-                        // fit: StackFit.passthrough,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.w),
-                              color: Theme.of(context).colorScheme.surface1,
-                              boxShadow: [
-                                // BoxShadow(
-                                //   color: Theme.of(context)
-                                //       .colorScheme
-                                //       .shadow
-                                //       .withOpacity(0.1),
-                                //   offset: Offset(0, 0),
-                                //   blurRadius: 10.w,
-                                //   spreadRadius: 2.w,
-                                // ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12.w),
-                              child: Builder(builder: (context) {
-                                double height = c.maxHeight - 48;
-                                if (i == 0) {
-                                  return LayoutBuilder(builder: (context, c) {
-                                    return SizedBox(
-                                      // height: 64.w,
-                                      height: height,
-                                      width: height * screenSize.radio,
-                                      child: Center(
-                                        child: SizedBox(
-                                          width: 54.w,
-                                          child: AppIconHeader(
-                                            channel: channel,
-                                            padding: EdgeInsets.zero,
-                                            packageName: tasks[i].package,
-                                          ),
-                                        ),
+                  Stack(
+                    alignment: Alignment.topRight,
+                    // fit: StackFit.passthrough,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.w),
+                          color: Theme.of(context).surface1,
+                          boxShadow: [],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12.w),
+                          child: Builder(builder: (context) {
+                            double height = c.maxHeight - 200;
+                            if (i == 0) {
+                              return LayoutBuilder(builder: (context, c) {
+                                return SizedBox(
+                                  // height: 64.w,
+                                  height: height,
+                                  width: height * screenSize.radio,
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: 54.w,
+                                      child: AppIconHeader(
+                                        channel: channel,
+                                        padding: EdgeInsets.zero,
+                                        packageName: tasks[i].package,
                                       ),
-                                    );
-                                  });
-                                }
-                                return LayoutBuilder(builder: (context, c) {
-                                  return Image.network(
-                                    'http://127.0.0.1:${channel.port}/taskthumbnail?id=${tasks[i].taskId}',
-                                    gaplessPlayback: true,
+                                    ),
+                                  ),
+                                );
+                              });
+                            }
+                            return LayoutBuilder(builder: (context, c) {
+                              return Image.network(
+                                'http://127.0.0.1:${channel.port}/taskthumbnail?id=${tasks[i].taskId}',
+                                gaplessPlayback: true,
+                                height: height,
+                                width: height * screenSize.radio,
+                                errorBuilder: (_, __, ___) {
+                                  return Container(
                                     height: height,
                                     width: height * screenSize.radio,
-                                    errorBuilder: (_, __, ___) {
-                                      return Container(
-                                        height: height,
-                                        width: height * screenSize.radio,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12.w),
-                                        ),
-                                      );
-                                    },
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.w),
+                                    ),
                                   );
-                                });
-                              }),
-                            ),
-                          ),
-                          Material(
-                            color: Colors.transparent,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.clear,
-                                    size: 24.w,
-                                  ),
-                                  onPressed: () {
-                                    execCmd(
-                                        'adb -s ${widget.entity.serial} shell am force-stop ${tasks[i].package}');
-                                  },
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                },
+                              );
+                            });
+                          }),
+                        ),
                       ),
-                    ),
+                      Material(
+                        color: Colors.transparent,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              size: 24.w,
+                            ),
+                            onPressed: () {
+                              execCmd(
+                                'adb -s ${widget.entity.serial} shell am force-stop ${tasks[i].package}',
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 12.w),
                 ],

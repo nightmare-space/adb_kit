@@ -1,21 +1,23 @@
+import 'dart:convert';
+
 import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/otg_terminal.dart';
 import 'package:adb_tool/app/modules/setting/setting_page.dart';
-import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_tool/global/widget/xterm_wrapper.dart';
 import 'package:adb_tool/themes/theme.dart';
+import 'package:adb_tool/utils/terminal_utill.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-import 'package:pseudo_terminal_utils/pseudo_terminal_utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:termare_pty/termare_pty.dart';
-import 'package:termare_view/termare_view.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:xterm/next/terminal.dart';
 
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
@@ -34,11 +36,11 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> with WindowListener {
-  PseudoTerminal adbShell;
+  Pty adbShell;
 
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
   ADBChannel adbChannel;
-  TermareController adbShellController;
+  Terminal terminal = Terminal();
 
   double getCardWidth() {
     ResponsiveWrapperData data = ResponsiveWrapper.of(context);
@@ -63,9 +65,16 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   void initState() {
     super.initState();
     if (!GetPlatform.isWindows) {
-      adbShell = TerminalUtil.getShellTerminal(
-        exec: 'adb',
+      adbShell = Pty.start(
+        'adb',
         arguments: ['-s', widget.entity.serial, 'shell'],
+        environment: envir(),
+        workingDirectory: RuntimeEnvir.homePath,
+      );
+      adbShell.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+        (event) {
+          terminal.write(event);
+        },
       );
     }
     if (widget.entity.isOTG) {
@@ -77,7 +86,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   @override
   void dispose() {
-    adbShell.close();
+    adbShell.kill();
     super.dispose();
   }
 
@@ -88,7 +97,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   @override
   void onWindowClose() {
-    adbShell.close();
+    adbShell.kill();
     // do something
   }
 
@@ -204,7 +213,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         child: SizedBox(
           height: 230.w,
           child: Material(
-            color: Theme.of(context).colorScheme.surface1,
+            color: Theme.of(context).surface1,
             borderRadius: BorderRadius.circular(12.w),
             child: Padding(
               padding: padding,
@@ -307,7 +316,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.surface1,
+          color: Theme.of(context).surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -413,7 +422,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.surface1,
+          color: Theme.of(context).surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -441,7 +450,8 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
+                      title:
+                          '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -485,12 +495,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   }
 
   ConstrainedBox buildTerminal() {
-    adbShellController ??= TermareController(
-      fontFamily: '${Config.flutterPackage}MenloforPowerline',
-      theme: TermareStyles.macos.copyWith(
-        backgroundColor: Colors.transparent,
-      ),
-    );
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: getCardWidth(),
@@ -498,7 +502,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).colorScheme.surface1,
+          color: Theme.of(context).surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             height: 230.w,
@@ -509,12 +513,9 @@ class _DashboardState extends State<Dashboard> with WindowListener {
               openBuilder: (BuildContext context, _) {
                 return Stack(
                   children: [
-                    TermarePty(
-                      pseudoTerminal: TerminalUtil.getShellTerminal(
-                        exec: 'adb',
-                        arguments: ['-s', widget.entity.serial, 'shell'],
-                      ),
-                      controller: adbShellController,
+                    XTermWrapper(
+                      terminal: terminal,
+                      pseudoTerminal: adbShell,
                     ),
                     Align(
                       alignment: Alignment.topRight,
@@ -584,23 +585,24 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                               borderRadius: BorderRadius.circular(4.w),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface2,
+                                  color: Theme.of(context).surface2,
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),
-                                  child: Builder(builder: (context) {
-                                    if (GetPlatform.isWindows) {
-                                      return const SizedBox();
-                                    }
-                                    if (widget.entity.isOTG) {
-                                      return const OTGTerminal();
-                                    }
-                                    return TermarePty(
-                                      key: const Key('TermarePty'),
-                                      pseudoTerminal: adbShell,
-                                      controller: adbShellController,
-                                    );
-                                  }),
+                                  child: Builder(
+                                    builder: (context) {
+                                      if (GetPlatform.isWindows) {
+                                        return const SizedBox();
+                                      }
+                                      if (widget.entity.isOTG) {
+                                        return const OTGTerminal();
+                                      }
+                                      return XTermWrapper(
+                                        terminal: terminal,
+                                        pseudoTerminal: adbShell,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             );

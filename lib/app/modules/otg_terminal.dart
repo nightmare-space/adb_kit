@@ -2,7 +2,6 @@ import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:termare_view/termare_view.dart';
 
 class OTGTerminal extends StatefulWidget {
   const OTGTerminal({Key key}) : super(key: key);
@@ -21,12 +20,12 @@ class _OTGTerminalState extends State<OTGTerminal> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: TermareView(
-        keyboardInput: (String data) {
-          PluginUtil.writeToOTG(data);
-        },
-        controller: controller.otgTerm,
-      ),
+      // child: TermareView(
+      //   keyboardInput: (String data) {
+      //     PluginUtil.writeToOTG(data);
+      //   },
+      //   controller: controller.otgTerm,
+      // ),
     );
   }
 }

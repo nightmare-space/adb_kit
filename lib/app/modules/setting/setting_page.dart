@@ -19,7 +19,7 @@ class SettingsPage extends StatefulWidget {
   const SettingsPage({Key key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage>
@@ -477,7 +477,7 @@ class SettingItem extends StatefulWidget {
   final void Function() onTap;
   final Widget suffix;
   @override
-  _SettingItemState createState() => _SettingItemState();
+  State createState() => _SettingItemState();
 }
 
 class _SettingItemState extends State<SettingItem> {
@@ -570,7 +570,7 @@ class AquaSwitch extends StatelessWidget {
     return Transform.scale(
       scale: 0.78,
       child: XlivSwitch(
-        unActiveColor: unActiveColor ?? Theme.of(context).colorScheme.surface1,
+        unActiveColor: unActiveColor ?? Theme.of(context).surface3,
         activeColor: Theme.of(context).primaryColor ?? activeColor,
         thumbColor: thumbColor,
         value: value,
@@ -617,14 +617,8 @@ class _SelectTabState extends State<SelectTab> {
                     height: 40.w,
                     decoration: BoxDecoration(
                       color: i == widget.value
-                          ? Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.11)
-                          : Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.08),
+                          ? Theme.of(context).surface4
+                          : Theme.of(context).surface3,
                     ),
                     child: Center(child: widget.children[i]),
                   ),
