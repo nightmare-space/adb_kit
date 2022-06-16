@@ -8,6 +8,7 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/scan_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class OverviewPage extends StatefulWidget {
   const OverviewPage({Key key}) : super(key: key);
 
   @override
-  _OverviewPageState createState() => _OverviewPageState();
+  State createState() => _OverviewPageState();
 }
 
 class _OverviewPageState extends State<OverviewPage> {
@@ -304,7 +305,7 @@ class CardItem extends StatelessWidget {
       //   color: Colors.grey.withOpacity(0.2),
       //   width: 1.w,
       // ),
-      color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+      color: Theme.of(context).surface1,
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,

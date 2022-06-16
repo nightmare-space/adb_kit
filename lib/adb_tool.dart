@@ -14,6 +14,7 @@ export 'global/drawer/drawer.dart';
 export 'core/impl/plugin.dart';
 export 'package:global_repository/global_repository.dart' show RuntimeEnvir;
 export 'generated/l10n.dart';
+export 'themes/theme.dart';
 
 
 Future<double> getMacTitlebarWidth() async {

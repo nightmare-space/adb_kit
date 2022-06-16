@@ -1,7 +1,7 @@
 import 'package:adb_tool/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart';
-import 'package:signale/signale.dart';
 
 // 使用安卓串口通信实现的adb通道
 class OTGADBChannel extends ADBChannel {

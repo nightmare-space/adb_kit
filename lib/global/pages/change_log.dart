@@ -61,13 +61,14 @@ class _ChangeLogState extends State<ChangeLog> {
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
                     child: Text(changes[i].title),
                   ),
-                  CardItem(
-                    padding: EdgeInsets.all(10.w),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(changes[i].summary),
+                  if (changes[i].summary.isNotEmpty)
+                    CardItem(
+                      padding: EdgeInsets.all(10.w),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(changes[i].summary),
+                      ),
                     ),
-                  ),
                 ],
               ),
             );

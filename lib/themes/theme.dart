@@ -4,105 +4,105 @@ import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 export 'color_extension.dart';
 
-abstract class YanTheme {
-  Color primaryColor;
-  Color background;
-  Color inputColor;
-  Color cardColor;
-  Color fontColor;
-  MaterialColor grey;
-}
+// abstract class YanTheme {
+//   Color primaryColor;
+//   Color background;
+//   Color inputColor;
+//   Color cardColor;
+//   Color fontColor;
+//   MaterialColor grey;
+// }
 
-class DarkTheme implements YanTheme {
-  @override
-  Color background = Colors.black;
+// class DarkTheme implements YanTheme {
+//   @override
+//   Color background = Colors.black;
 
-  @override
-  Color cardColor = const Color(0xFF1a1a1a);
+//   @override
+//   Color cardColor = const Color(0xFF1a1a1a);
 
-  @override
-  Color inputColor = const Color(0xFF212121);
+//   @override
+//   Color inputColor = const Color(0xFF212121);
 
-  @override
-  Color primaryColor = AppColors.accent;
+//   @override
+//   Color primaryColor = AppColors.accent;
 
-  @override
-  Color fontColor = Colors.white;
+//   @override
+//   Color fontColor = Colors.white;
 
-  ///    rather than hard-coding colors in your build methods.
-  // static const MaterialColor grey = MaterialColor(
-  //   _greyPrimaryValue,
-  //   <int, Color>{
-  //      50: Color(0xFFFAFAFA),
-  //     100: Color(0xFFF5F5F5),
-  //     200: Color(0xFFEEEEEE),
-  //     300: Color(0xFFE0E0E0),
-  //     350: Color(0xFFD6D6D6), // only for raised button while pressed in light theme
-  //     400: Color(0xFFBDBDBD),
-  //     500: Color(_greyPrimaryValue),
-  //     600: Color(0xFF757575),
-  //     700: Color(0xFF616161),
-  //     800: Color(0xFF424242),
-  //     850: Color(0xFF303030), // only for background color in dark theme
-  //     900: Color(0xFF212121),
-  //   },
-  // );
-  @override
-  MaterialColor grey = const MaterialColor(
-    0xff999999,
-    <int, Color>{
-      50: Color(0xFF0a0a0a),
-      100: Color(0xff1a1a1a),
-      200: Color(0xFF212121),
-      300: Color(0xFF3d3d3d),
-      400: Color(0xFF3a3a3a),
-      900: Color(0x00000000),
-    },
-  );
-}
+//   ///    rather than hard-coding colors in your build methods.
+//   // static const MaterialColor grey = MaterialColor(
+//   //   _greyPrimaryValue,
+//   //   <int, Color>{
+//   //      50: Color(0xFFFAFAFA),
+//   //     100: Color(0xFFF5F5F5),
+//   //     200: Color(0xFFEEEEEE),
+//   //     300: Color(0xFFE0E0E0),
+//   //     350: Color(0xFFD6D6D6), // only for raised button while pressed in light theme
+//   //     400: Color(0xFFBDBDBD),
+//   //     500: Color(_greyPrimaryValue),
+//   //     600: Color(0xFF757575),
+//   //     700: Color(0xFF616161),
+//   //     800: Color(0xFF424242),
+//   //     850: Color(0xFF303030), // only for background color in dark theme
+//   //     900: Color(0xFF212121),
+//   //   },
+//   // );
+//   @override
+//   MaterialColor grey = const MaterialColor(
+//     0xff999999,
+//     <int, Color>{
+//       50: Color(0xFF0a0a0a),
+//       100: Color(0xff1a1a1a),
+//       200: Color(0xFF212121),
+//       300: Color(0xFF3d3d3d),
+//       400: Color(0xFF3a3a3a),
+//       900: Color(0x00000000),
+//     },
+//   );
+// }
 
-class LightTheme implements YanTheme {
-  LightTheme() {
-    if (GetPlatform.isDesktop) {
-      cardColor = cardColor.withOpacity(0.2);
-      background = Colors.white.withOpacity(0);
-    } else {
-      background = Colors.white.withOpacity(0);
-    }
-    cardColor = cardColor.withOpacity(0.2);
-  }
-  @override
-  Color background = const Color(0xfff5f5f7);
+// class LightTheme implements YanTheme {
+//   LightTheme() {
+//     if (GetPlatform.isDesktop) {
+//       cardColor = cardColor.withOpacity(0.2);
+//       background = Colors.white.withOpacity(0);
+//     } else {
+//       background = Colors.white.withOpacity(0);
+//     }
+//     cardColor = cardColor.withOpacity(0.2);
+//   }
+//   @override
+//   Color background = const Color(0xfff5f5f7);
 
-  @override
-  Color cardColor = Colors.white;
+//   @override
+//   Color cardColor = Colors.white;
 
-  @override
-  Color inputColor = const Color(0xFFF5F5F5);
+//   @override
+//   Color inputColor = const Color(0xFFF5F5F5);
 
-  @override
-  Color primaryColor = AppColors.accent;
+//   @override
+//   Color primaryColor = AppColors.accent;
 
-  @override
-  Color fontColor = AppColors.fontColor;
+//   @override
+//   Color fontColor = AppColors.fontColor;
 
-  @override
-  MaterialColor grey = const MaterialColor(
-    0xff999999,
-    <int, Color>{
-      50: Color(0xFFFAFAFA),
-      100: Color(0xFFF5F5F5),
-      200: Color(0xFFEEEEEE),
-      300: Color(0xFFE0E0E0),
-      350: Color(0xFFD6D6D6),
-      400: Color(0xFFBDBDBD),
-      500: Color(0xff999999),
-      600: Color(0xFF757575),
-      700: Color(0xFF616161),
-      800: Color(0xFF424242),
-      850: Color(0xFF303030), // only for background color in dark theme
-      900: Color(0xFF212121),
-      //   },
-    },
-  );
-}
+//   @override
+//   MaterialColor grey = const MaterialColor(
+//     0xff999999,
+//     <int, Color>{
+//       50: Color(0xFFFAFAFA),
+//       100: Color(0xFFF5F5F5),
+//       200: Color(0xFFEEEEEE),
+//       300: Color(0xFFE0E0E0),
+//       350: Color(0xFFD6D6D6),
+//       400: Color(0xFFBDBDBD),
+//       500: Color(0xff999999),
+//       600: Color(0xFF757575),
+//       700: Color(0xFF616161),
+//       800: Color(0xFF424242),
+//       850: Color(0xFF303030), // only for background color in dark theme
+//       900: Color(0xFF212121),
+//       //   },
+//     },
+//   );
+// }

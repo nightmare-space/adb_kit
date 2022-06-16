@@ -12,7 +12,7 @@ class SearchIpPage extends StatefulWidget {
   const SearchIpPage({Key key}) : super(key: key);
 
   @override
-  _SearchIpPageState createState() => _SearchIpPageState();
+  State createState() => _SearchIpPageState();
 }
 
 class _SearchIpPageState extends State<SearchIpPage> {

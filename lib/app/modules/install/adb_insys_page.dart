@@ -16,7 +16,7 @@ class AdbInstallToSystemPage extends StatefulWidget {
   const AdbInstallToSystemPage({Key key}) : super(key: key);
 
   @override
-  _AdbInstallToSystemPageState createState() => _AdbInstallToSystemPageState();
+  State createState() => _AdbInstallToSystemPageState();
 }
 
 class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
@@ -30,7 +30,6 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   void initState() {
     super.initState();
     choosePath = xbinPath;
-    Global().initTerminal();
   }
 
   @override
@@ -228,7 +227,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                         );
                         buffer.writeln('chmod 0777 $choosePath/adb');
                         buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
-                        Global.instance.pseudoTerminal.write(buffer.toString());
+                        Global().pty.writeString(buffer.toString());
                       },
                       child: SizedBox(
                         width: 414.w,

@@ -92,9 +92,13 @@ class HistoryController extends GetxController {
       return;
     }
     final String data = await Config.historySaveFile.readAsString();
-    adbHistorys =
-        ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
-    sort();
+    try {
+      adbHistorys =
+          ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
+      sort();
+    } catch (e) {
+      Config.historySaveFile.delete();
+    }
     update();
   }
 

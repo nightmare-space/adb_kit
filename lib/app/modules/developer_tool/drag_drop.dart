@@ -58,7 +58,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
         decoration: BoxDecoration(
           color: dropping
               ? AppColors.inputBorderColor
-              : Theme.of(context).colorScheme.surface2,
+              : Theme.of(context).surface2,
           borderRadius: BorderRadius.circular(8.w),
         ),
         duration: const Duration(milliseconds: 200),
@@ -89,7 +89,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Material(
-                          color: Theme.of(context).colorScheme.surface3,
+                          color: Theme.of(context).surface3,
                           borderRadius: BorderRadius.circular(28.w),
                           child: SizedBox(
                             width: 54.w,

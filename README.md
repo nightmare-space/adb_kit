@@ -26,14 +26,8 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 - [个人服务器地址](http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A)
 
 ## 截图
-<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/connect.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/debug.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/dashboard.jpg" width="33%" height="33%" />
-<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/app_manager.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/history.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/intl.jpg" width="33%" height="33%" />
-<img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/launcher.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/root.jpg" width="33%" height="33%" /><img src="https://raw.githubusercontent.com/nightmare-space/adb_tool/main/screenshot/theme.jpg" width="33%" height="33%" />
-<img src="screenshot/adb_dashboard.png"/> 
 
-<img src="screenshot/adb_desktop.png" width="100%" height="100%" /> <img src="screenshot/adb_pad.png" width="100%" height="100%" />
-
-<img src="screenshot/adb_app.png" width="100%" height="100%" /> <img src="screenshot/adb_launcher.png" width="100%" height="100%" /> 
+<img src="screenshot/screen.png" width="100%" height="100%" />
 
 ## 功能列表
 - 可扩展
@@ -53,7 +47,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 
 ## BSD
 
-```sh
+```
 BSD 3-Clause License
 
 Copyright (c) 2021,  Nightmare

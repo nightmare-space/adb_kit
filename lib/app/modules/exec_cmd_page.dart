@@ -7,6 +7,7 @@ import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
+import 'package:adb_tool/global/widget/xterm_wrapper.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,19 +23,11 @@ class ExecCmdPage extends StatefulWidget {
 }
 
 class _ExecCmdPageState extends State<ExecCmdPage> {
-  TextEditingController editingController = TextEditingController();
   final ConfigController controller = Get.find();
-  FocusNode focusNode = FocusNode();
-  Future<void> execCmd() async {
-    Global.instance.pseudoTerminal.write(editingController.text + '\n');
-    editingController.clear();
-    focusNode.requestFocus();
-  }
 
   @override
   void initState() {
     super.initState();
-    Global().initTerminal();
   }
 
   @override
@@ -60,15 +53,16 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: Dimens.gap_dp8,
-            horizontal: Dimens.gap_dp8,
+            vertical: 8.w,
+            horizontal: 8.w,
           ),
           child: CardItem(
             child: Column(
               children: [
-                const Expanded(
-                  child: TerminalPage(
-                    enableInput: true,
+                Expanded(
+                  child: XTermWrapper(
+                    pseudoTerminal: Global().pty,
+                    terminal: Global().terminal,
                   ),
                 ),
                 SingleChildScrollView(
@@ -80,7 +74,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         title: '开启服务',
                         onTap: () async {
                           const String cmd = 'adb start-server\r';
-                          Global.instance.pseudoTerminal.write(cmd);
+                          Global().pty.writeString(cmd);
                           AdbUtil.startPoolingListDevices();
                         },
                       ),
@@ -88,7 +82,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         title: '停止服务',
                         onTap: () async {
                           const String cmd = 'adb kill-server\r';
-                          Global.instance.pseudoTerminal.write(cmd);
+                          Global().pty.writeString(cmd);
                           AdbUtil.stopPoolingListDevices();
                           final DevicesController controller = Get.find();
                           controller.clearDevices();
@@ -99,7 +93,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         onTap: () async {
                           const String cmd =
                               'adb kill-server && adb start-server\r';
-                          Global.instance.pseudoTerminal.write(cmd);
+                          Global().pty.writeString(cmd);
                         },
                       ),
                       ItemButton(
