@@ -53,8 +53,6 @@ dependencies:
   device_info:
     git: https://github.com/nightmare-space/device_info.git
   window_manager: ^0.2.3
-  adb_kit_extension:
-    path: ../adb_kit_extension
     
 dev_dependencies:
   flutter_test:
