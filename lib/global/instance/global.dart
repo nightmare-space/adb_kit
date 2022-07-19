@@ -68,7 +68,9 @@ class Global {
   void initTerminal() {
     Map<String, String> envir;
     envir = Map.from(Platform.environment);
-    envir['HOME'] = RuntimeEnvir.homePath;
+    if (GetPlatform.isMobile) {
+      envir['HOME'] = RuntimeEnvir.homePath;
+    }
     // envir['TERM'] = 'xterm-256color';
     envir['PATH'] = RuntimeEnvir.path;
     pty ??= Pty.start(
