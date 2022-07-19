@@ -300,13 +300,6 @@ packages:
       url: "https://github.com/TerminalStudio/flutter_pty"
     source: git
     version: "0.3.0"
-  flutter_screenutil:
-    dependency: "direct main"
-    description:
-      name: flutter_screenutil
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.5.3+2"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -427,9 +420,11 @@ packages:
   logger_view:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/logger_view"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "78c4252275569bc7d8064399a85298a8522b674b"
+      url: "https://github.com/nightmare-space/logger_view"
+    source: git
     version: "0.0.1"
   matcher:
     dependency: transitive
@@ -584,7 +579,7 @@ packages:
     dependency: transitive
     description:
       name: platform_info
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
   plugin_platform_interface:
@@ -611,12 +606,10 @@ packages:
   qr_code_scanner:
     dependency: "direct main"
     description:
-      path: "."
-      ref: fix_break_changes_platform
-      resolved-ref: "0feca6f15042c279ff575c559a3430df917b623d"
-      url: "https://github.com/xeinebiu/qr_code_scanner.git"
-    source: git
-    version: "0.7.0"
+      name: qr_code_scanner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   qr_flutter:
     dependency: "direct main"
     description:
@@ -671,12 +664,10 @@ packages:
   shelf_static:
     dependency: transitive
     description:
-      path: "pkgs/shelf_static"
-      ref: HEAD
-      resolved-ref: "9fff4b678217c0cd1311e69f19e0abac05216615"
-      url: "https://github.com/nightmare-space/shelf"
-    source: git
-    version: "1.1.1-dev"
+      name: shelf_static
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   shortcut:
     dependency: transitive
     description:
@@ -816,12 +807,12 @@ packages:
     source: hosted
     version: "2.1.2"
   visibility_detector:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: visibility_detector
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.3.3"
   wakelock:
     dependency: transitive
     description:
@@ -888,9 +879,11 @@ packages:
   xterm:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/xterm"
-      relative: false
-    source: path
+      path: "."
+      ref: v3
+      resolved-ref: dc16176a04d0f2782d21aba257760bb8c8d5a9de
+      url: "https://github.com/mengyanshou/xterm.dart"
+    source: git
     version: "3.0.6-alpha"
 sdks:
   dart: ">=2.17.0 <3.0.0"

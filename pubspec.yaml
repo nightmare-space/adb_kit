@@ -112,8 +112,8 @@ dependency_overrides:
   #   path: ../app_manager
   # adbutil:
   #   path: ../adbutil
-  xterm:
-    path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
+  # xterm:
+  #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   qr_code_scanner: ^1.0.0
   # file_selector_nightmare:
   #   path: ../file_selector_meng
