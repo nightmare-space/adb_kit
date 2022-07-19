@@ -3,7 +3,18 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
+    "configurations": [{
+            "name": "Chrome",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "args": ["--web-renderer", "html"]
+        }, {
+            "name": "Linux",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "linux"
+        },
         {
             "name": "Mac Desktop",
             "request": "launch",
@@ -17,49 +28,22 @@
             "deviceId": "windows"
         },
         {
-            "name": "Linux",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "linux"
-        },
-        {
-            "name": "小米10",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "Mi 10"
-        },
-        {
-            "name": "小米10s",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "M2102J2SC"
-        },
-        {
             "name": "平板",
             "request": "launch",
             "type": "dart",
             "deviceId": "M2105K81AC"
         },
         {
-            "name": "红米K30",
+            "name": "小米12s",
             "request": "launch",
             "type": "dart",
-            "deviceId": "Redmi K30"
+            "deviceId": "2206123SC"
         },
         {
-            "name": "Flutter: Attach to Process",
+            "name": "小米10s",
+            "request": "launch",
             "type": "dart",
-            "request": "attach",
-            "deviceId": "macos",
-            "osx": {
-                "serviceInfoFile": "${env:TMPDIR}vmservice.app_template",
-            },
-            "windows": {
-                "serviceInfoFile": "${env:TEMP}/vmservice.app_template"
-            },
-            "linux": {
-                "serviceInfoFile": "${env:XDG_RUNTIME_DIR}/vmservice.app_template"
-            }
+            "deviceId": "M2102J2SC"
         },
     ]
 }

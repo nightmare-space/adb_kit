@@ -29,7 +29,7 @@ class Terminal extends ADBPage {
   }
 
   @override
-  bool get isActive => !GetPlatform.isWindows;
+  bool get isActive => true;
 
   @override
   Widget buildPage(BuildContext context) {

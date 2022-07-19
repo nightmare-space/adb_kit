@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:logger_view/logger_view.dart';
 import 'package:multicast/multicast.dart';
 import 'package:xterm/next/terminal.dart';
 import 'dart:core' as core;
@@ -66,17 +65,22 @@ class Global {
   Pty pty;
   Terminal terminal = Terminal();
   void initTerminal() {
-    Map<String, String> envir;
-    envir = Map.from(Platform.environment);
+    Map<String, String> envir = RuntimeEnvir.envir();
     if (GetPlatform.isMobile) {
-      envir['HOME'] = RuntimeEnvir.homePath;
+      envir['HOME'] = RuntimeEnvir.binPath;
     }
     // 设置HOME变量到应用内路径会引发异常
     // envir['HOME'] = RuntimeEnvir.homePath;
-    // envir['TERM'] = 'xterm-256color';
-    envir['PATH'] = RuntimeEnvir.path;
+
+    envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
+    envir['TMPDIR'] = RuntimeEnvir.binPath;
+    envir['TERM'] = 'xterm-256color';
+    String shell = 'sh';
+    if (GetPlatform.isWindows) {
+      shell = 'cmd';
+    }
     pty ??= Pty.start(
-      'sh',
+      shell,
       arguments: ['-l'],
       environment: envir,
       workingDirectory: '/',
@@ -157,7 +161,6 @@ class Global {
   static String androidPrefix = 'android';
   List<String> androidFiles = [
     '$androidPrefix/adb',
-    '$androidPrefix/adb_binary',
     '$androidPrefix/adb.bin-armeabi',
     '$androidPrefix/libbrotlidec.so',
     '$androidPrefix/libbrotlienc.so',
