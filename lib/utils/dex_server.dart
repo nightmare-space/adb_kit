@@ -7,6 +7,7 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/core/interface/app_channel.dart';
+import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
 
@@ -44,15 +45,16 @@ class DexServer {
     Stopwatch stopwatch = Stopwatch();
     stopwatch.start();
     String execuable = 'adb';
-    if (Platform.isWindows) {
-      execuable = RuntimeEnvir.binPath + Platform.pathSeparator + execuable;
-    }
+    // TODO 测试是否影响其他平台
+    // if (Platform.isWindows) {
+    //   execuable = RuntimeEnvir.binPath + Platform.pathSeparator + execuable;
+    // }
     Process.start(
       execuable,
       processArg,
       includeParentEnvironment: true,
       environment: RuntimeEnvir.envir(),
-      runInShell: false,
+      runInShell: GetPlatform.isWindows ? true : false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
       value.stdout.transform(utf8.decoder).listen((event) async {
