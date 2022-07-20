@@ -62,6 +62,7 @@ class _QrScanState extends State<QrScan> {
     setState(() {
       this.controller = controller;
     });
+    this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (!poped) {
         Get.back(result: scanData.code);
@@ -69,6 +70,9 @@ class _QrScanState extends State<QrScan> {
       }
       Log.e(scanData.code);
     });
+
+    controller.pauseCamera();
+    controller.resumeCamera();
   }
 
   @override
