@@ -1,6 +1,7 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_tool/app/modules/privacy_page.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:settings/settings.dart';
 
 import 'dialog/otg_dialog.dart';
 
@@ -64,6 +66,11 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       }
     });
     // TODO detach 也需要
+    Future.delayed(Duration.zero, () async {
+      if ('privacy'.get == null) {
+        await Get.to(const PrivacyAgreePage());
+      }
+    });
   }
 
   @override

@@ -15,7 +15,7 @@ class ChangeLog extends StatefulWidget {
   const ChangeLog({Key key}) : super(key: key);
 
   @override
-  _ChangeLogState createState() => _ChangeLogState();
+  State createState() => _ChangeLogState();
 }
 
 class _ChangeLogState extends State<ChangeLog> {
@@ -28,7 +28,7 @@ class _ChangeLogState extends State<ChangeLog> {
 
   Future<void> newMethod() async {
     String data = await rootBundle.loadString('CHANGELOG.md');
-    Log.i(data);
+    // Log.i(data);
     RegExp regExp = RegExp('##');
     Log.w(data.split(regExp));
     for (String line in data.split(regExp)) {

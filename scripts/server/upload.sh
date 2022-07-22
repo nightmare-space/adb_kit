@@ -13,12 +13,13 @@ mac_app="$PROJECT_DIR/dist/${APP_NAME}.dmg"
 if [ -f $mac_app ]; then
     rsync -v $mac_app ${TARGET_PATH}/${APP_NAME}_${VERSION}_macOS.dmg
 fi
-if [ -f $PROJECT_DIR/$APP_NAME'_Windows.zip' ]; then
+win_app="$PROJECT_DIR/dist/${APP_NAME}_Windows.zip"
+if [ -f $win_app ]; then
     target_name=$APP_NAME'_'$VERSION'_Windows.zip'
     echo "upload $target_name"
-    rsync -v $PROJECT_DIR/$APP_NAME'_Windows.zip' $TARGET_PATH/$target_name
+    rsync -v $win_app $TARGET_PATH/$target_name
 fi
 
-rsync -v $PROJECT_DIR/dist/app-arm64-v8a-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_arm64.apk"
-rsync -v $PROJECT_DIR/dist/app-armeabi-v7a-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_arm_v7a.apk"
-rsync -v $PROJECT_DIR/dist/app-x86_64-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_x86_64.apk"
+# rsync -v $PROJECT_DIR/dist/app-arm64-v8a-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_arm64.apk"
+# rsync -v $PROJECT_DIR/dist/app-armeabi-v7a-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_arm_v7a.apk"
+# rsync -v $PROJECT_DIR/dist/app-x86_64-release.apk "${TARGET_PATH}/${APP_NAME}_${VERSION}_Android_x86_64.apk"

@@ -355,7 +355,10 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         List<String> paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
-                          final typeGroup = XTypeGroup(label: 'images');
+                          final typeGroup = XTypeGroup(
+                            label: 'apk',
+                            extensions: ['apk'],
+                          );
                           final files =
                               await openFiles(acceptedTypeGroups: [typeGroup]);
                           if (files.isEmpty) {
@@ -461,7 +464,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         List<String> paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
-                          final typeGroup = XTypeGroup(label: 'images');
+                          final typeGroup = XTypeGroup(label: '*');
                           final files =
                               await openFiles(acceptedTypeGroups: [typeGroup]);
                           if (files.isEmpty) {

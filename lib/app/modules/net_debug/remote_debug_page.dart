@@ -246,10 +246,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                               TextSpan(
                                 text: 'adb devices',
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onBackground
-                                      .withOpacity(0.6),
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

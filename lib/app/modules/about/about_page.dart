@@ -115,7 +115,10 @@ class AboutPage extends StatelessWidget {
                             const String url =
                                 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A';
                             if (await canLaunchUrlString(url)) {
-                              await launchUrlString(url);
+                              await launchUrlString(
+                                url,
+                                mode: LaunchMode.externalNonBrowserApplication,
+                              );
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -182,7 +185,10 @@ class AboutPage extends StatelessWidget {
                           onTap: () async {
                             const String url = 'https://github.com/mengyanshou';
                             if (await canLaunchUrlString(url)) {
-                              await launchUrlString(url);
+                              await launchUrlString(
+                                url,
+                                mode: LaunchMode.externalNonBrowserApplication,
+                              );
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -209,7 +215,10 @@ class AboutPage extends StatelessWidget {
                             const String url =
                                 'http://www.coolapk.com/u/1345256';
                             if (await canLaunchUrlString(url)) {
-                              await launchUrlString(url);
+                              await launchUrlString(
+                                url,
+                                mode: LaunchMode.externalNonBrowserApplication,
+                              );
                             } else {
                               throw 'Could not launch $url';
                             }
@@ -235,7 +244,10 @@ class AboutPage extends StatelessWidget {
                           onTap: () async {
                             const String url = 'http://nightmare.fun';
                             if (await canLaunchUrlString(url)) {
-                              await launchUrlString(url);
+                              await launchUrlString(
+                                url,
+                                mode: LaunchMode.externalNonBrowserApplication,
+                              );
                             } else {
                               throw 'Could not launch $url';
                             }
