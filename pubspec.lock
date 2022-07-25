@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "../adbutil"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: d79a41703650606d22078bc26f4fb3a59006825e
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -240,7 +242,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: f905531207362c661f13bc3d805474a4d492a8d5
+      resolved-ref: b25a901fe6a6d8c07bfc3492852e45e0faf1c07a
       url: "https://github.com/nightmare-space/file_selector_meng"
     source: git
     version: "1.0.0+1"
@@ -434,7 +436,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "9242b13f5a7f3e3624921bf567b020aece264741"
+      resolved-ref: fc0adc66e06ec2e8598620fac5d91404369020b9
       url: "https://github.com/nightmare-space/logger_view"
     source: git
     version: "0.0.1"
