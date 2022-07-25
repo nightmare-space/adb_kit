@@ -683,10 +683,12 @@ packages:
   shelf_static:
     dependency: transitive
     description:
-      name: shelf_static
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.1"
+      path: "pkgs/shelf_static"
+      ref: HEAD
+      resolved-ref: "9fff4b678217c0cd1311e69f19e0abac05216615"
+      url: "https://github.com/nightmare-space/shelf"
+    source: git
+    version: "1.1.1-dev"
   shortcut:
     dependency: transitive
     description:
