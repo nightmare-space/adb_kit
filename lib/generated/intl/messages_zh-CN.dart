@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "about" : MessageLookupByLibrary.simpleMessage("关于软件"),
-    "agreement" : MessageLookupByLibrary.simpleMessage("用户协议"),
+    "agreement" : MessageLookupByLibrary.simpleMessage("隐私政策"),
     "alreadyConnectDevice" : MessageLookupByLibrary.simpleMessage("已成功连接的设备"),
     "autoConnectDevice" : MessageLookupByLibrary.simpleMessage("自动发现并连接设备"),
     "autoFit" : MessageLookupByLibrary.simpleMessage("自适应"),

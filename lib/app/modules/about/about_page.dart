@@ -1,5 +1,6 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_tool/app/modules/privacy_page.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
@@ -145,6 +146,9 @@ class AboutPage extends StatelessWidget {
                             Icons.arrow_forward_ios,
                             size: 16.w,
                           ),
+                          onTap: () {
+                            Get.to(PrivacyPage());
+                          },
                         ),
                         SettingItem(
                           title: S.of(context).openSourceLicense,
