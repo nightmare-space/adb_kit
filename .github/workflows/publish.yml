@@ -1,4 +1,4 @@
-name: ADBTool Publish Actions
+name: ADBKIT Publish Actions
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
 
 env:
   # APP名称
-  APP_NAME: ADBTool
+  APP_NAME: ADBKIT
 
 jobs:
   # build-linux:
