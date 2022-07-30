@@ -45,7 +45,7 @@ jobs:
     steps:
     
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -73,7 +73,7 @@ jobs:
     steps:
 
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
