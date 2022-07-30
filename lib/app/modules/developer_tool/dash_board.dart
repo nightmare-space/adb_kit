@@ -64,19 +64,27 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   @override
   void initState() {
     super.initState();
-    if (!GetPlatform.isWindows) {
+    if (GetPlatform.isWindows) {
+      adbShell = Pty.start(
+        'cmd',
+        arguments: ['/C', 'adb', '-s', widget.entity.serial, 'shell'],
+        environment: envir(),
+        workingDirectory: '/',
+      );
+    } else {
       adbShell = Pty.start(
         'adb',
         arguments: ['-s', widget.entity.serial, 'shell'],
         environment: envir(),
-        workingDirectory: RuntimeEnvir.homePath,
-      );
-      adbShell.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
-        (event) {
-          terminal.write(event);
-        },
+        workingDirectory: '/',
       );
     }
+    adbShell.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+      (event) {
+        terminal.write(event);
+      },
+    );
+
     if (widget.entity.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
@@ -594,9 +602,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(
                                     builder: (context) {
-                                      if (GetPlatform.isWindows) {
-                                        return const SizedBox();
-                                      }
                                       if (widget.entity.isOTG) {
                                         return const OTGTerminal();
                                       }
