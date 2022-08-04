@@ -8,5 +8,8 @@ Map<String, String> envir() {
   }
   envir['TERMUX_PREFIX'] = RuntimeEnvir.usrPath;
   envir['TERM'] = 'xterm-256color';
+  envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
+  envir['TMPDIR'] = RuntimeEnvir.binPath;
+  envir['PATH'] = RuntimeEnvir.path;
   return envir;
 }
