@@ -80,6 +80,7 @@ dependencies:
   window_manager: ^0.2.3
   
   flutter_markdown: ^0.6.10+2
+  screenshot: ^1.2.3
     
 dev_dependencies:
   flutter_test:

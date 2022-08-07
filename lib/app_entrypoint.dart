@@ -141,7 +141,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                         );
                       }),
                       // maxWidth: 1200,
-                      minWidth: 10,
+                      minWidth: 300,
                       defaultScale: false,
                       defaultName: PHONE,
                       breakpoints: const [
