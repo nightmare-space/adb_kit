@@ -1,6 +1,6 @@
+import 'package:adb_tool/adbkit_entrypoint.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/app/modules/search_ip_page.dart';
-import 'package:adb_tool/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +25,6 @@ Widget getWidget(String route) {
       return const SearchIpPage();
       break;
     default:
-    return const SizedBox();
+      return const SizedBox();
   }
 }
