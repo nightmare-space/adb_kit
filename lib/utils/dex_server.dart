@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:adb_tool/app_entrypoint.dart';
+import 'package:adb_tool/material_entrypoint.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adbutil/adbutil.dart';
