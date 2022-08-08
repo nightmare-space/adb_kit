@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
 import 'app/controller/controller.dart';
@@ -56,6 +58,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
     setState(() {});
   }
 
+  ScreenshotController screenshotController = ScreenshotController();
   @override
   Widget build(BuildContext context) {
     return ToastApp(
@@ -86,71 +89,84 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
             ),
             child: GetBuilder<ConfigController>(
               builder: (config) {
-                return GetMaterialApp(
-                  showPerformanceOverlay: config.showPerformanceOverlay,
-                  showSemanticsDebugger: config.showSemanticsDebugger,
-                  debugShowMaterialGrid: config.debugShowMaterialGrid,
-                  checkerboardRasterCacheImages:
-                      config.checkerboardRasterCacheImages,
-                  debugShowCheckedModeBanner: false,
-                  title: 'ADB工具箱',
-                  navigatorKey: Global.instance.navigatorKey,
-                  themeMode: ThemeMode.light,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  locale: config.locale,
-                  supportedLocales: S.delegate.supportedLocales,
-                  theme: ThemeData(
-                    primarySwatch: Colors.blue,
-                    visualDensity: VisualDensity.adaptivePlatformDensity,
-                  ),
-                  defaultTransition: Transition.fadeIn,
-                  initialRoute: AdbPages.initial,
-                  getPages: AdbPages.routes + am.AppPages.routes,
-                  builder: (BuildContext context, Widget navigator) {
-                    Size size = MediaQuery.of(context).size;
-                    if (size.width > size.height) {
-                      context.init(896);
-                    } else {
-                      context.init(414);
-                    }
-                    // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                    // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                    /// NativeShell
-                    if (widget.isNativeShell) {}
-
-                    ///
-                    ///
-                    ///
-                    /// Default Mode
-                    ///
-                    return ResponsiveWrapper.builder(
-                      Builder(builder: (context) {
-                        if (ResponsiveWrapper.of(context).isDesktop) {
-                          ScreenAdapter.init(896);
-                        } else {
-                          ScreenAdapter.init(414);
-                        }
-                        return Theme(
-                          data: config.theme,
-                          child: navigator,
-                        );
-                      }),
-                      // maxWidth: 1200,
-                      minWidth: 300,
-                      defaultScale: false,
-                      defaultName: PHONE,
-                      breakpoints: const [
-                        // ResponsiveBreakpoint.resize(400, name: PHONE),
-                        ResponsiveBreakpoint.resize(600, name: TABLET),
-                        ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                return Screenshot(
+                  controller: screenshotController,
+                  child: RawKeyboardListener(
+                    autofocus: true,
+                    focusNode: FocusNode(),
+                    onKey: ((value) {
+                      Log.w(value);
+                      if (value is RawKeyDownEvent) {
+                        screenshotController.captureAndSave('./screenshot');
+                      }
+                    }),
+                    child: GetMaterialApp(
+                      showPerformanceOverlay: config.showPerformanceOverlay,
+                      showSemanticsDebugger: config.showSemanticsDebugger,
+                      debugShowMaterialGrid: config.debugShowMaterialGrid,
+                      checkerboardRasterCacheImages:
+                          config.checkerboardRasterCacheImages,
+                      debugShowCheckedModeBanner: false,
+                      title: 'ADB工具箱',
+                      navigatorKey: Global.instance.navigatorKey,
+                      themeMode: ThemeMode.light,
+                      localizationsDelegates: const [
+                        S.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
                       ],
-                    );
-                  },
+                      locale: config.locale,
+                      supportedLocales: S.delegate.supportedLocales,
+                      theme: ThemeData(
+                        primarySwatch: Colors.blue,
+                        visualDensity: VisualDensity.adaptivePlatformDensity,
+                      ),
+                      defaultTransition: Transition.fadeIn,
+                      initialRoute: AdbPages.initial,
+                      getPages: AdbPages.routes + am.AppPages.routes,
+                      builder: (BuildContext context, Widget navigator) {
+                        Size size = MediaQuery.of(context).size;
+                        if (size.width > size.height) {
+                          context.init(896);
+                        } else {
+                          context.init(414);
+                        }
+                        // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
+                        // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
+                        /// NativeShell
+                        if (widget.isNativeShell) {}
+
+                        ///
+                        ///
+                        ///
+                        /// Default Mode
+                        ///
+                        return ResponsiveWrapper.builder(
+                          Builder(builder: (context) {
+                            if (ResponsiveWrapper.of(context).isDesktop) {
+                              ScreenAdapter.init(896);
+                            } else {
+                              ScreenAdapter.init(414);
+                            }
+                            return Theme(
+                              data: config.theme,
+                              child: navigator,
+                            );
+                          }),
+                          // maxWidth: 1200,
+                          minWidth: 300,
+                          defaultScale: false,
+                          defaultName: PHONE,
+                          breakpoints: const [
+                            // ResponsiveBreakpoint.resize(400, name: PHONE),
+                            ResponsiveBreakpoint.resize(600, name: TABLET),
+                            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                 );
               },
             ),

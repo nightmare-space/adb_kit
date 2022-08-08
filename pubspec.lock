@@ -434,11 +434,9 @@ packages:
   logger_view:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: fc0adc66e06ec2e8598620fac5d91404369020b9
-      url: "https://github.com/nightmare-space/logger_view"
-    source: git
+      path: "../logger_view"
+      relative: true
+    source: path
     version: "0.0.1"
   markdown:
     dependency: transitive

@@ -130,11 +130,11 @@ class RippleRoute extends PageRouteBuilder<void> {
                               ),
                             ),
                           ),
-                          if (!animation.isCompleted)
-                            Container(
-                              color: Colors.grey
-                                  .withOpacity(0.4 * (1 - curve.value)),
-                            )
+                          // if (!animation.isCompleted)
+                          //   Container(
+                          //     color: Colors.grey
+                          //         .withOpacity(0.4 * (1 - curve.value)),
+                          //   )
                         ],
                       ),
                     ),

@@ -84,102 +84,57 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint>
   Uint8List _imageFile;
 
   //Create an instance of ScreenshotController
-  ScreenshotController screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-      controller: screenshotController,
-      child: RawKeyboardListener(
-        autofocus: true,
-        focusNode: FocusNode(),
-        onKey: ((value) {
-          Log.w(value);
-          if (value is RawKeyDownEvent) {
-            screenshotController.captureAndSave('./home.png');
-          }
-        }),
-        child: Column(
-          children: [
-            Center(
-              child: Container(
-                color: configController.theme.colorScheme.background,
-                width: double.infinity,
-                height: 24,
-                child: DragToMoveArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+    return Column(
+      children: [
+        Expanded(
+          child: FutureBuilder(
+            future: init(),
+            builder: (_, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  return const Text('Input a URL to start');
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                case ConnectionState.active:
+                  return const Text('');
+                case ConnectionState.done:
+                  return Stack(
                     children: [
-                      WindowCaptionButton.minimize(
-                        onPressed: () {
-                          windowManager.minimize();
-                        },
-                      ),
-                      WindowCaptionButton.maximize(
-                        onPressed: () {
-                          windowManager.maximize();
-                        },
-                      ),
-                      WindowCaptionButton.close(
-                        onPressed: () {
-                          windowManager.close();
-                        },
-                      ),
+                      GetBuilder<ConfigController>(builder: (config) {
+                        if (config.backgroundStyle == BackgroundStyle.normal) {
+                          return Container(
+                            color: config.theme.colorScheme.background,
+                          );
+                        }
+                        if (config.backgroundStyle == BackgroundStyle.image) {
+                          return SizedBox(
+                            height: double.infinity,
+                            child: Image.asset(
+                              'assets/b.png',
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
+                      GetBuilder<ConfigController>(builder: (config) {
+                        return Theme(
+                          data: config.theme,
+                          child: const AdbTool(),
+                        );
+                      }),
                     ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: FutureBuilder(
-                future: init(),
-                builder: (_, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return const Text('Input a URL to start');
-                    case ConnectionState.waiting:
-                      return const Center(child: CircularProgressIndicator());
-                    case ConnectionState.active:
-                      return const Text('');
-                    case ConnectionState.done:
-                      return Stack(
-                        children: [
-                          GetBuilder<ConfigController>(builder: (config) {
-                            if (config.backgroundStyle ==
-                                BackgroundStyle.normal) {
-                              return Container(
-                                color: config.theme.colorScheme.background,
-                              );
-                            }
-                            if (config.backgroundStyle ==
-                                BackgroundStyle.image) {
-                              return SizedBox(
-                                height: double.infinity,
-                                child: Image.asset(
-                                  'assets/b.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          }),
-                          GetBuilder<ConfigController>(builder: (config) {
-                            return Theme(
-                              data: config.theme,
-                              child: const AdbTool(),
-                            );
-                          }),
-                        ],
-                      );
-                  }
-                  return const SizedBox();
-                },
-              ),
-            ),
-          ],
+                  );
+              }
+              return const SizedBox();
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 }
