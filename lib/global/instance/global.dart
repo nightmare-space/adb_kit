@@ -66,12 +66,11 @@ class Global {
   Terminal terminal = Terminal();
   void initTerminal() {
     Map<String, String> envir = RuntimeEnvir.envir();
+    // 设置HOME变量到应用内路径会引发异常
+    // 例如 neofetch命令
     if (GetPlatform.isMobile) {
       envir['HOME'] = RuntimeEnvir.binPath;
     }
-    // 设置HOME变量到应用内路径会引发异常
-    // envir['HOME'] = RuntimeEnvir.homePath;
-
     envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
     envir['TMPDIR'] = RuntimeEnvir.binPath;
     envir['TERM'] = 'xterm-256color';

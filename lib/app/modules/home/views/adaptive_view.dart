@@ -14,7 +14,9 @@ import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'dialog/otg_dialog.dart';
 
@@ -32,6 +34,7 @@ class AdbTool extends StatefulWidget {
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Log.v('didChangeAppLifecycleState : $state');
@@ -87,129 +90,164 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
           : OverlayStyle.dark,
-      child: Builder(builder: (context) {
-        if (ResponsiveWrapper.of(context).isDesktop) {
-          return Scaffold(
-            body: Row(
-              children: [
-                DesktopPhoneDrawer(
-                  width: Dimens.setWidth(200),
-                  groupValue: Global().drawerRoute,
-                  onChanged: (value) {
-                    Global().page = value;
-                    setState(() {});
-                  },
-                ),
-                Container(
-                  height: double.infinity,
-                  width: 0.5,
-                  margin: EdgeInsets.symmetric(vertical: 40.w),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.4),
-                ),
-                Expanded(
-                  child: MacSafeArea(
-                    child: PageTransitionSwitcher(
-                      transitionBuilder: (
-                        Widget child,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation,
-                      ) {
-                        return FadeThroughTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          fillColor: Colors.transparent,
-                          child: child,
-                        );
+      child: Column(
+        children: [
+          Center(
+            child: Container(
+              color: configController.theme.colorScheme.background,
+              width: double.infinity,
+              height: 24,
+              child: DragToMoveArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    WindowCaptionButton.minimize(
+                      onPressed: () {
+                        windowManager.minimize();
                       },
-                      duration: const Duration(milliseconds: 300),
-                      child: Global().page,
                     ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        if (ResponsiveWrapper.of(context).isTablet) {
-          return Scaffold(
-            body: Row(
-              children: [
-                TabletDrawer(
-                  groupValue: Global().drawerRoute,
-                  onChanged: (value) {
-                    Global().page = value;
-                    setState(() {});
-                  },
-                ),
-                Container(
-                  height: double.infinity,
-                  width: 1,
-                  margin: EdgeInsets.symmetric(vertical: 40.w),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.1),
-                ),
-                Expanded(
-                  child: MacSafeArea(
-                    child: PageTransitionSwitcher(
-                      transitionBuilder: (
-                        Widget child,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation,
-                      ) {
-                        return FadeThroughTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          fillColor: Colors.transparent,
-                          child: child,
-                        );
+                    WindowCaptionButton.maximize(
+                      onPressed: () {
+                        windowManager.maximize();
                       },
-                      duration: const Duration(milliseconds: 300),
-                      child: Global().page,
                     ),
-                  ),
+                    WindowCaptionButton.close(
+                      onPressed: () {
+                        windowManager.close();
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        }
-        if (ResponsiveWrapper.of(context).isPhone) {
-          return Scaffold(
-            drawer: DesktopPhoneDrawer(
-              width: MediaQuery.of(context).size.width * 2 / 3,
-              groupValue: Global().drawerRoute,
-              onChanged: (value) {
-                Global().page = value;
-                setState(() {});
-                Navigator.pop(context);
-              },
-            ),
-            body: MacSafeArea(
-              child: PageTransitionSwitcher(
-                transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                ) {
-                  return FadeThroughTransition(
-                    animation: animation,
-                    secondaryAnimation: secondaryAnimation,
-                    fillColor: Colors.transparent,
-                    child: child,
-                  );
-                },
-                duration: const Duration(milliseconds: 300),
-                child: Global().page,
               ),
             ),
-          );
-        }
-        return const SizedBox();
-      }),
+          ),
+          Expanded(
+            child: Builder(builder: (context) {
+              if (ResponsiveWrapper.of(context).isDesktop) {
+                return Scaffold(
+                  body: Row(
+                    children: [
+                      DesktopPhoneDrawer(
+                        width: Dimens.setWidth(200),
+                        groupValue: Global().drawerRoute,
+                        onChanged: (value) {
+                          Global().page = value;
+                          setState(() {});
+                        },
+                      ),
+                      Container(
+                        height: double.infinity,
+                        width: 0.5,
+                        margin: EdgeInsets.symmetric(vertical: 40.w),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.4),
+                      ),
+                      Expanded(
+                        child: MacSafeArea(
+                          child: PageTransitionSwitcher(
+                            transitionBuilder: (
+                              Widget child,
+                              Animation<double> animation,
+                              Animation<double> secondaryAnimation,
+                            ) {
+                              return FadeThroughTransition(
+                                animation: animation,
+                                secondaryAnimation: secondaryAnimation,
+                                fillColor: Colors.transparent,
+                                child: child,
+                              );
+                            },
+                            duration: const Duration(milliseconds: 300),
+                            child: Global().page,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              if (ResponsiveWrapper.of(context).isTablet) {
+                return Scaffold(
+                  body: Row(
+                    children: [
+                      TabletDrawer(
+                        groupValue: Global().drawerRoute,
+                        onChanged: (value) {
+                          Global().page = value;
+                          setState(() {});
+                        },
+                      ),
+                      Container(
+                        height: double.infinity,
+                        width: 1,
+                        margin: EdgeInsets.symmetric(vertical: 40.w),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.1),
+                      ),
+                      Expanded(
+                        child: MacSafeArea(
+                          child: PageTransitionSwitcher(
+                            transitionBuilder: (
+                              Widget child,
+                              Animation<double> animation,
+                              Animation<double> secondaryAnimation,
+                            ) {
+                              return FadeThroughTransition(
+                                animation: animation,
+                                secondaryAnimation: secondaryAnimation,
+                                fillColor: Colors.transparent,
+                                child: child,
+                              );
+                            },
+                            duration: const Duration(milliseconds: 300),
+                            child: Global().page,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              if (ResponsiveWrapper.of(context).isPhone) {
+                return Scaffold(
+                  drawer: DesktopPhoneDrawer(
+                    width: MediaQuery.of(context).size.width * 2 / 3,
+                    groupValue: Global().drawerRoute,
+                    onChanged: (value) {
+                      Global().page = value;
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                  ),
+                  body: MacSafeArea(
+                    child: PageTransitionSwitcher(
+                      transitionBuilder: (
+                        Widget child,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                      ) {
+                        return FadeThroughTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          fillColor: Colors.transparent,
+                          child: child,
+                        );
+                      },
+                      duration: const Duration(milliseconds: 300),
+                      child: Global().page,
+                    ),
+                  ),
+                );
+              }
+              return const SizedBox();
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

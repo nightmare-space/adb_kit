@@ -1,8 +1,11 @@
 library adb_tool;
 
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
+import 'package:adb_tool/global/widget/mac_safearea.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +13,10 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:app_manager/app_manager.dart' as am;
 import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:window_manager/window_manager.dart';
 import 'app/modules/home/views/adaptive_view.dart';
-import 'app_entrypoint.dart';
+import 'material_entrypoint.dart';
 import 'config/config.dart';
 import 'core/impl/plugin.dart';
 import 'global/instance/global.dart';
@@ -69,96 +74,4 @@ void runADBClient({Color primary}) {
     Log.e('页面构建异常 : ${details.exception}');
   };
   StatusBarUtil.transparent();
-}
-
-// 把init从main函数移动到这儿是有原因的
-class ADBToolEntryPoint extends StatefulWidget {
-  const ADBToolEntryPoint({
-    Key key,
-    this.primary,
-    this.hasSafeArea = true,
-    this.showQRCode = true,
-  }) : super(key: key);
-  // 产品色
-  final Color primary;
-  final bool hasSafeArea;
-  final bool showQRCode;
-
-  @override
-  State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
-}
-
-class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
-  bool isInit = false;
-  Future<void> init() async {
-    if (isInit) {
-      return;
-    }
-    if (widget.primary != null) {
-      seed = widget.primary;
-    }
-    ConfigController configController = Get.put(ConfigController());
-    Get.put(DevicesController());
-    WidgetsFlutterBinding.ensureInitialized();
-
-    if (GetPlatform.isDesktop) {
-      await Window.initialize();
-    }
-    await initSetting();
-    configController.initConfig();
-    Global.instance.initGlobal();
-    Global.instance.hasSafeArea = widget.hasSafeArea;
-    Global.instance.showQRCode = widget.showQRCode;
-    am.AppManager.globalInstance;
-    DevicesController controller = Get.find();
-    controller.init();
-    isInit = true;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: init(),
-      builder: (_, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-            return const Text('Input a URL to start');
-          case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
-          case ConnectionState.active:
-            return const Text('');
-          case ConnectionState.done:
-            return Stack(
-              children: [
-                GetBuilder<ConfigController>(builder: (config) {
-                  if (config.backgroundStyle == BackgroundStyle.normal) {
-                    return Container(
-                      color: config.theme.colorScheme.background,
-                    );
-                  }
-                  if (config.backgroundStyle == BackgroundStyle.image) {
-                    return SizedBox(
-                      height: double.infinity,
-                      child: Image.asset(
-                        'assets/b.png',
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                }),
-                GetBuilder<ConfigController>(builder: (config) {
-                  return Theme(
-                    data: config.theme,
-                    child: const AdbTool(),
-                  );
-                }),
-              ],
-            );
-        }
-        return const SizedBox();
-      },
-    );
-  }
 }

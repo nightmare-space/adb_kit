@@ -1,7 +1,7 @@
 name: adb_tool
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.3.5+32
+version: 1.3.6+33
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
@@ -80,6 +80,7 @@ dependencies:
   window_manager: ^0.2.3
   
   flutter_markdown: ^0.6.10+2
+  screenshot: ^1.2.3
     
 dev_dependencies:
   flutter_test:
@@ -101,7 +102,7 @@ flutter:
 dependency_overrides:
   visibility_detector: ^0.3.3
   # logger_view:
-  #   path: /Users/nightmare/Desktop/nightmare-space/logger_view
+  #   path: ../logger_view
   # global_repository:
   #   path: ../global_repository
   # # app_launcher:
