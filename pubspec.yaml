@@ -101,8 +101,8 @@ flutter:
 
 dependency_overrides:
   visibility_detector: ^0.3.3
-  logger_view:
-    path: ../logger_view
+  # logger_view:
+  #   path: ../logger_view
   # global_repository:
   #   path: ../global_repository
   # # app_launcher:
