@@ -92,8 +92,6 @@ class Global {
     );
   }
 
-  bool logTerminalIsInit = false;
-
   Future<void> _receiveBoardCast() async {
     multicast.addListener((message, address) async {
       if (message.startsWith('find')) {
@@ -226,8 +224,6 @@ class Global {
     if (size == Size.zero) {
       return;
     }
-    logTerminalIsInit = true;
-    // 32 是日志界面的边距
   }
 }
 
