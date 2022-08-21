@@ -223,10 +223,18 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Expanded(
+                  child: DragToMoveArea(
+                    child: Container(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ),
                 WindowCaptionButton.minimize(
                   onPressed: () {
                     windowManager.minimize();
                   },
+                  brightness: Theme.of(context).brightness,
                 ),
                 isFull
                     ? WindowCaptionButton.unmaximize(
@@ -235,6 +243,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                           setState(() {});
                           windowManager.unmaximize();
                         },
+                        brightness: Theme.of(context).brightness,
                       )
                     : WindowCaptionButton.maximize(
                         onPressed: () {
@@ -242,11 +251,13 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                           setState(() {});
                           windowManager.maximize();
                         },
+                        brightness: Theme.of(context).brightness,
                       ),
                 WindowCaptionButton.close(
                   onPressed: () {
                     windowManager.close();
                   },
+                  brightness: Theme.of(context).brightness,
                 ),
               ],
             ),

@@ -2,8 +2,9 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/utils.dart';
+import 'package:window_manager/window_manager.dart';
 
-double titlebarHeight = 0;
+int titlebarHeight = 0;
 
 class MacSafeArea extends StatefulWidget {
   const MacSafeArea({
@@ -18,10 +19,11 @@ class MacSafeArea extends StatefulWidget {
 
 class _MacSafeAreaState extends State<MacSafeArea> {
   Future<void> calculateTitlebarHeight() async {
-    if (!GetPlatform.isMacOS || !Global().hasSafeArea) {
+    if (!Global().hasSafeArea) {
       return;
     }
-    titlebarHeight = await Window.getTitlebarHeight();
+
+    titlebarHeight = 24;
     setState(() {});
   }
 
@@ -34,7 +36,7 @@ class _MacSafeAreaState extends State<MacSafeArea> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: titlebarHeight),
+      padding: EdgeInsets.only(top: titlebarHeight.toDouble()),
       child: widget.child,
     );
   }
