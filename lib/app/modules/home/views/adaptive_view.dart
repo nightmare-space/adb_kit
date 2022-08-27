@@ -34,7 +34,6 @@ class AdbTool extends StatefulWidget {
 class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
-  bool isFull = false;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -215,52 +214,6 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               }
               return const SizedBox();
             },
-          ),
-          Container(
-            color: configController.theme.colorScheme.background,
-            width: double.infinity,
-            height: 24,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: DragToMoveArea(
-                    child: Container(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ),
-                WindowCaptionButton.minimize(
-                  onPressed: () {
-                    windowManager.minimize();
-                  },
-                  brightness: Theme.of(context).brightness,
-                ),
-                isFull
-                    ? WindowCaptionButton.unmaximize(
-                        onPressed: () {
-                          isFull = false;
-                          setState(() {});
-                          windowManager.unmaximize();
-                        },
-                        brightness: Theme.of(context).brightness,
-                      )
-                    : WindowCaptionButton.maximize(
-                        onPressed: () {
-                          isFull = true;
-                          setState(() {});
-                          windowManager.maximize();
-                        },
-                        brightness: Theme.of(context).brightness,
-                      ),
-                WindowCaptionButton.close(
-                  onPressed: () {
-                    windowManager.close();
-                  },
-                  brightness: Theme.of(context).brightness,
-                ),
-              ],
-            ),
           ),
         ],
       ),

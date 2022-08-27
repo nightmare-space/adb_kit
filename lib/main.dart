@@ -63,6 +63,7 @@ void runADBClient({Color primary}) {
           appSupportDirectory: dir,
         );
       }
+      await Window.initialize();
       runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {

@@ -40,7 +40,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: MacSafeArea(
         child: Scaffold(
           appBar: PreferredSize(
@@ -54,10 +54,10 @@ class _DeveloperToolState extends State<DeveloperTool>
                   const PopButton(),
                   Expanded(
                     child: TabBar(
-                      labelStyle:  TextStyle(
+                      labelStyle: TextStyle(
                         fontWeight: bold,
                       ),
-                      unselectedLabelStyle:  TextStyle(
+                      unselectedLabelStyle: TextStyle(
                         fontWeight: bold,
                       ),
                       unselectedLabelColor: AppColors.fontColor,
@@ -78,7 +78,9 @@ class _DeveloperToolState extends State<DeveloperTool>
                       controller: controller,
                       tabs: <Widget>[
                         for (var item in PluginManager.instance.pluginsMap.keys)
-                          Tab(text: PluginManager.instance.pluginsMap[item].name),
+                          Tab(
+                              text:
+                                  PluginManager.instance.pluginsMap[item].name),
                       ],
                     ),
                   ),

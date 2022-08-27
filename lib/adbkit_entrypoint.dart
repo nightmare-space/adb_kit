@@ -54,7 +54,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint>
     WidgetsFlutterBinding.ensureInitialized();
 
     if (GetPlatform.isDesktop) {
-      await Window.initialize();
       // Must add this line.
       await windowManager.ensureInitialized();
       WindowOptions windowOptions = const WindowOptions(

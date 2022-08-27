@@ -173,11 +173,9 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "60ba9fa1d5c0e793b0a9744f1ba9ccfbbf525b2c"
-      url: "https://github.com/nightmare-space/device_info.git"
-    source: git
+      path: "../device_info"
+      relative: true
+    source: path
     version: "1.0.0+1"
   dio:
     dependency: "direct main"

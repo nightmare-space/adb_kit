@@ -109,8 +109,8 @@ dependency_overrides:
   # #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
-  # device_info:
-  #   path: ../device_info
+  device_info:
+    path: ../device_info
   # app_manager:
   #   path: ../app_manager
   # adbutil:
