@@ -44,7 +44,8 @@ Future<void> main() async {
   // PageManager.instance.register(History());
 }
 
-void runADBClient({Color primary}) {
+Future<void> runADBClient({Color primary}) async {
+  // hook getx log
   Get.config(
     logWriterCallback: (text, {isError}) {
       Log.d(text, tag: 'GetX');
@@ -63,7 +64,9 @@ void runADBClient({Color primary}) {
           appSupportDirectory: dir,
         );
       }
-      await Window.initialize();
+      if (GetPlatform.isDesktop) {
+        await Window.initialize();
+      }
       runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {

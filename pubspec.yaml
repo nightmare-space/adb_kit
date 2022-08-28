@@ -95,7 +95,6 @@ flutter:
       fonts:
         - asset: assets/fonts/MenloforPowerline.ttf
   assets:
-    - assets/android/
     - assets/
     - CHANGELOG.md
 

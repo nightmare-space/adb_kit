@@ -8,6 +8,7 @@ import 'package:adb_tool/utils/unique_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -155,19 +156,18 @@ class Global {
     );
   }
 
-  static String androidPrefix = 'android';
   List<String> androidFiles = [
-    '$androidPrefix/adb',
-    '$androidPrefix/adb.bin-armeabi',
-    '$androidPrefix/libbrotlidec.so',
-    '$androidPrefix/libbrotlienc.so',
-    '$androidPrefix/libc++_shared.so',
-    '$androidPrefix/liblz4.so.1',
-    '$androidPrefix/libprotobuf.so',
-    '$androidPrefix/libusb-1.0.so',
-    '$androidPrefix/libz.so.1',
-    '$androidPrefix/libzstd.so.1',
-    '$androidPrefix/libbrotlicommon.so',
+    'adb',
+    'adb.bin-armeabi',
+    'libbrotlidec.so',
+    'libbrotlienc.so',
+    'libc++_shared.so',
+    'liblz4.so.1',
+    'libprotobuf.so',
+    'libusb-1.0',
+    'libz.so.1',
+    'libzstd.so.1',
+    'libbrotlicommon.so',
   ];
 
   List<String> globalFiles = [
@@ -179,9 +179,27 @@ class Global {
     if (kIsWeb) {
       return true;
     }
+    for (final String fileName in androidFiles) {
+      String libPath = await const MethodChannel('adb').invokeMethod(
+        'get_lib_path',
+      );
+      final filePath = '$libPath/$fileName.so';
+      String targetPath = '${RuntimeEnvir.binPath}/$fileName';
+      Log.e(targetPath);
+      if (File(filePath).existsSync()) {
+        await File(filePath).copy(targetPath);
+      }
+      final ProcessResult result = await Process.run(
+        'chmod',
+        <String>['+x', targetPath],
+      );
+      Log.d(
+        '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+      );
+    }
     AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
-      android: androidFiles,
+      android: [],
       macOS: [],
       global: globalFiles,
       package: Config.flutterPackage,

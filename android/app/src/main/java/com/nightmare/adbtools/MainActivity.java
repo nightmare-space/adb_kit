@@ -61,6 +61,11 @@ public class MainActivity extends FlutterActivity {
         channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), channelName);
         channel.setMethodCallHandler((call, result) -> {
             switch (call.method) {
+                case "get_lib_path":
+                    runOnUiThread(() -> {
+                        result.success(getApplicationInfo().nativeLibraryDir);
+                    });
+                    break;
                 case "write":
                     String data = (String) call.arguments;
                     putCommand(data);
