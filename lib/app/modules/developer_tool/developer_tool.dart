@@ -41,7 +41,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).colorScheme.background,
-      child: MacSafeArea(
+      child: DesktopSafeArea(
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(48.w),

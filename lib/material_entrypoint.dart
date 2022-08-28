@@ -144,52 +144,53 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                           ResponsiveBreakpoint.resize(1000, name: DESKTOP),
                         ],
                       ),
-                      Container(
-                        color: config.theme.colorScheme.background,
-                        width: double.infinity,
-                        height: 24,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: DragToMoveArea(
-                                child: Container(
-                                  color: Colors.transparent,
+                      if (GetPlatform.isDesktop)
+                        Container(
+                          color: config.theme.colorScheme.background,
+                          width: double.infinity,
+                          height: 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: DragToMoveArea(
+                                  child: Container(
+                                    color: Colors.transparent,
+                                  ),
                                 ),
                               ),
-                            ),
-                            WindowCaptionButton.minimize(
-                              onPressed: () {
-                                windowManager.minimize();
-                              },
-                              brightness: Theme.of(context).brightness,
-                            ),
-                            isFull
-                                ? WindowCaptionButton.unmaximize(
-                                    onPressed: () {
-                                      isFull = false;
-                                      setState(() {});
-                                      windowManager.unmaximize();
-                                    },
-                                    brightness: Theme.of(context).brightness,
-                                  )
-                                : WindowCaptionButton.maximize(
-                                    onPressed: () {
-                                      isFull = true;
-                                      setState(() {});
-                                      windowManager.maximize();
-                                    },
-                                    brightness: Theme.of(context).brightness,
-                                  ),
-                            WindowCaptionButton.close(
-                              onPressed: () {
-                                windowManager.close();
-                              },
-                              brightness: Theme.of(context).brightness,
-                            ),
-                          ],
+                              WindowCaptionButton.minimize(
+                                onPressed: () {
+                                  windowManager.minimize();
+                                },
+                                brightness: Theme.of(context).brightness,
+                              ),
+                              isFull
+                                  ? WindowCaptionButton.unmaximize(
+                                      onPressed: () {
+                                        isFull = false;
+                                        setState(() {});
+                                        windowManager.unmaximize();
+                                      },
+                                      brightness: Theme.of(context).brightness,
+                                    )
+                                  : WindowCaptionButton.maximize(
+                                      onPressed: () {
+                                        isFull = true;
+                                        setState(() {});
+                                        windowManager.maximize();
+                                      },
+                                      brightness: Theme.of(context).brightness,
+                                    ),
+                              WindowCaptionButton.close(
+                                onPressed: () {
+                                  windowManager.close();
+                                },
+                                brightness: Theme.of(context).brightness,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   );
                 },

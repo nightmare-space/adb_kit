@@ -6,23 +6,22 @@ import 'package:window_manager/window_manager.dart';
 
 int titlebarHeight = 0;
 
-class MacSafeArea extends StatefulWidget {
-  const MacSafeArea({
+class DesktopSafeArea extends StatefulWidget {
+  const DesktopSafeArea({
     Key key,
     this.child,
   }) : super(key: key);
   final Widget child;
 
   @override
-  State<MacSafeArea> createState() => _MacSafeAreaState();
+  State<DesktopSafeArea> createState() => _DesktopSafeAreaState();
 }
 
-class _MacSafeAreaState extends State<MacSafeArea> {
+class _DesktopSafeAreaState extends State<DesktopSafeArea> {
   Future<void> calculateTitlebarHeight() async {
-    if (!Global().hasSafeArea) {
+    if (!Global().hasSafeArea || GetPlatform.isMobile) {
       return;
     }
-
     titlebarHeight = 24;
     setState(() {});
   }

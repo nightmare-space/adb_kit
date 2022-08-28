@@ -38,7 +38,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
-          return MacSafeArea(
+          return DesktopSafeArea(
             child: SafeArea(
               child: SizedBox(
                 width: width,

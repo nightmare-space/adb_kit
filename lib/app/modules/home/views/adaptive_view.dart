@@ -158,7 +158,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             .withOpacity(0.1),
                       ),
                       Expanded(
-                        child: MacSafeArea(
+                        child: DesktopSafeArea(
                           child: PageTransitionSwitcher(
                             transitionBuilder: (
                               Widget child,
@@ -192,7 +192,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                       Navigator.pop(context);
                     },
                   ),
-                  body: MacSafeArea(
+                  body: DesktopSafeArea(
                     child: PageTransitionSwitcher(
                       transitionBuilder: (
                         Widget child,

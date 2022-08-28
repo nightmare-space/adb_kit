@@ -42,7 +42,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               bottomRight: Radius.circular(Dimens.gap_dp20),
             ),
           ),
-          child: MacSafeArea(
+          child: DesktopSafeArea(
             child: SafeArea(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
