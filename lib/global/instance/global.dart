@@ -164,7 +164,7 @@ class Global {
     'libc++_shared.so',
     'liblz4.so.1',
     'libprotobuf.so',
-    'libusb-1.0',
+    'libusb-1.0.so',
     'libz.so.1',
     'libzstd.so.1',
     'libbrotlicommon.so',
