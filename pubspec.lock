@@ -4,11 +4,9 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "77f5d8af7900e50a7113a7c57fe8fc2a4a93d686"
-      url: "https://github.com/nightmare-space/adbutil"
-    source: git
+      path: "../adbutil"
+      relative: true
+    source: path
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -213,7 +211,7 @@ packages:
     source: hosted
     version: "6.1.2"
   file_manager_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD

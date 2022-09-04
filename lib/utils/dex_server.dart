@@ -44,7 +44,7 @@ class DexServer {
     const String startTag = 'success start:';
     Stopwatch stopwatch = Stopwatch();
     stopwatch.start();
-    String execuable = 'adb';
+    String execuable = '$adb';
     // TODO 测试是否影响其他平台
     // if (Platform.isWindows) {
     //   execuable = RuntimeEnvir.binPath + Platform.pathSeparator + execuable;

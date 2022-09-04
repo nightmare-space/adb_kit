@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:adb_tool/global/widget/mac_safearea.dart';
+import 'package:file_manager_view/file_manager_view.dart' hide Config;
 import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:adb_tool/app/controller/config_controller.dart';
@@ -54,6 +55,7 @@ Future<void> runADBClient({Color primary}) async {
   if (primary != null) {
     seed = primary;
   }
+  Server.start();
   runZonedGuarded<void>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();

@@ -49,6 +49,9 @@ dependencies:
   # multicast on LAN
   multicast:
     git: https://github.com/nightmare-space/multicast
+  
+  file_manager_view:
+    git: https://github.com/nightmare-space/file_manager_view.git
   # can receive mdns message
   multicast_dns: ^0.3.0
   # generate QR widget
@@ -112,8 +115,8 @@ dependency_overrides:
     path: ../device_info
   # app_manager:
   #   path: ../app_manager
-  # adbutil:
-  #   path: ../adbutil
+  adbutil:
+    path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   qr_code_scanner: ^1.0.0

@@ -65,7 +65,7 @@ class Global {
   // todo initial
   Pty pty;
   Terminal terminal = Terminal();
-  void initTerminal() {
+  core.Future<void> initTerminal() async {
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
@@ -75,6 +75,12 @@ class Global {
     envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
     envir['TMPDIR'] = RuntimeEnvir.binPath;
     envir['TERM'] = 'xterm-256color';
+
+    String libPath = await const MethodChannel('adb').invokeMethod(
+      'get_lib_path',
+    );
+
+    RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
@@ -179,24 +185,33 @@ class Global {
     if (kIsWeb) {
       return true;
     }
-    for (final String fileName in androidFiles) {
-      String libPath = await const MethodChannel('adb').invokeMethod(
-        'get_lib_path',
-      );
-      final filePath = '$libPath/$fileName.so';
-      String targetPath = '${RuntimeEnvir.binPath}/$fileName';
-      Log.e(targetPath);
-      if (File(filePath).existsSync()) {
-        await File(filePath).copy(targetPath);
-      }
-      final ProcessResult result = await Process.run(
-        'chmod',
-        <String>['+x', targetPath],
-      );
-      Log.d(
-        '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-      );
-    }
+    String libPath = await const MethodChannel('adb').invokeMethod(
+      'get_lib_path',
+    );
+    File("${RuntimeEnvir.binPath}/adb")
+        .writeAsStringSync('$libPath/adb.so \$@');
+    // RuntimeEnvir.put(key, value)
+    // Platform.
+    // Future.delayed(Duration(seconds: 3), () {
+    //   pty.writeString('cd "$libPath"\n');
+    // });
+
+    // Log.i('libPath:$libPath');
+    // for (final String fileName in androidFiles) {
+    //   final filePath = '$libPath/$fileName.so';
+    //   String targetPath = '${RuntimeEnvir.binPath}/$fileName';
+    //   Log.e(targetPath);
+    //   if (File(filePath).existsSync()) {
+    //     await File(filePath).copy(targetPath);
+    //   }
+    //   final ProcessResult result = await Process.run(
+    //     'chmod',
+    //     <String>['+x', targetPath],
+    //   );
+    //   Log.d(
+    //     '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+    //   );
+    // }
     AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
       android: [],

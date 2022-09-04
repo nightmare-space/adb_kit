@@ -4,10 +4,12 @@ import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 import 'history_controller.dart';
+import 'package:adbutil/adbutil.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
@@ -76,7 +78,13 @@ class DevicesController extends GetxController {
     });
     await startAdb();
     AdbUtil.addListener(handleResult);
-    AdbUtil.startPoolingListDevices(duration: const Duration(seconds: 1));
+    String libPath = await const MethodChannel('adb').invokeMethod(
+      'get_lib_path',
+    );
+    AdbUtil.startPoolingListDevices(
+      duration: const Duration(seconds: 1),
+      libPath: libPath,
+    );
   }
 
   List<DevicesEntity> otgDevices = [];
@@ -101,7 +109,7 @@ class DevicesController extends GetxController {
     //   await Global().process.exec('su -p HOME');
     // }
     try {
-      String out = await execCmd('adb start-server');
+      String out = await execCmd('$adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {}
@@ -151,15 +159,16 @@ class DevicesController extends GetxController {
           } else {
             try {
               model = await execCmd(
-                'adb -s ${listTmp.first} shell getprop ro.product.marketname',
+                '$adb -s ${listTmp.first} shell getprop ro.product.marketname',
               );
               if (model.trim().isEmpty) {
                 model = await execCmd(
-                  'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+                  '$adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
                 );
               }
               modelCache[listTmp.first] = model;
             } catch (e) {
+              Log.w(RuntimeEnvir.path);
               Log.e('get model error : $e');
             }
           }
