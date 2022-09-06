@@ -29,6 +29,7 @@ class Global {
   factory Global() => _getInstance();
   Global._internal() {
     // Log.defaultLogger.printer = const Print();
+    Directory(RuntimeEnvir.binPath).createSync(recursive: true);
     HomeBinding().dependencies();
   }
 
@@ -46,15 +47,6 @@ class Global {
     drawerRoute = route;
   }
 
-  YanProcess process = YanProcess(
-    envir: GetPlatform.isIOS
-        ? {}
-        : {
-            'TMPDIR': RuntimeEnvir.tmpPath,
-            'HOME': RuntimeEnvir.homePath,
-          },
-  );
-
   bool isInit = false;
   Multicast multicast = Multicast(
     port: adbToolUdpPort,
@@ -66,6 +58,10 @@ class Global {
   Pty pty;
   Terminal terminal = Terminal();
   core.Future<void> initTerminal() async {
+    String libPath = await const MethodChannel('adb').invokeMethod(
+      'get_lib_path',
+    );
+    RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
@@ -76,11 +72,6 @@ class Global {
     envir['TMPDIR'] = RuntimeEnvir.binPath;
     envir['TERM'] = 'xterm-256color';
 
-    String libPath = await const MethodChannel('adb').invokeMethod(
-      'get_lib_path',
-    );
-
-    RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
@@ -163,8 +154,8 @@ class Global {
   }
 
   List<String> androidFiles = [
-    'adb',
-    'adb.bin-armeabi',
+    // 'adb',
+    // 'adb.bin-armeabi',
     'libbrotlidec.so',
     'libbrotlienc.so',
     'libc++_shared.so',
@@ -188,30 +179,35 @@ class Global {
     String libPath = await const MethodChannel('adb').invokeMethod(
       'get_lib_path',
     );
-    File("${RuntimeEnvir.binPath}/adb")
-        .writeAsStringSync('$libPath/adb.so \$@');
+    File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
+      '$libPath/adb.so \$@',
+    );
+    Future.delayed(const Duration(seconds: 3), () {
+      pty.writeString('cd "$libPath"\n');
+    });
     // RuntimeEnvir.put(key, value)
     // Platform.
-    // Future.delayed(Duration(seconds: 3), () {
-    //   pty.writeString('cd "$libPath"\n');
-    // });
-
     // Log.i('libPath:$libPath');
-    // for (final String fileName in androidFiles) {
-    //   final filePath = '$libPath/$fileName.so';
-    //   String targetPath = '${RuntimeEnvir.binPath}/$fileName';
-    //   Log.e(targetPath);
-    //   if (File(filePath).existsSync()) {
-    //     await File(filePath).copy(targetPath);
-    //   }
-    //   final ProcessResult result = await Process.run(
-    //     'chmod',
-    //     <String>['+x', targetPath],
-    //   );
-    //   Log.d(
-    //     '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-    //   );
-    // }
+    for (final String fileName in androidFiles) {
+      final targetPath = '$libPath/$fileName.so';
+      String filePath = '${RuntimeEnvir.binPath}/$fileName';
+      Log.w('filePath -> $filePath');
+      Log.w('targetPath -> $targetPath');
+      Link link = Link(filePath);
+      if (link.existsSync()) {
+        link.deleteSync();
+      }
+      try {
+        link.createSync(targetPath);
+      } catch (e) {
+        Log.e(e);
+      }
+      // Log.d(
+      //   '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+      // );
+    }
+    List<FileSystemEntity> files = Directory(RuntimeEnvir.binPath).listSync();
+    Log.w(files);
     AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
       android: [],
