@@ -1,5 +1,4 @@
 // 把init从main函数移动到这儿是有原因的
-import 'dart:typed_data';
 
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';

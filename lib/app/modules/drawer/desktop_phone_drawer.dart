@@ -40,6 +40,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
         builder: (context, orientation) {
           return DesktopSafeArea(
             child: SafeArea(
+              left: false,
               child: SizedBox(
                 width: width,
                 height: MediaQuery.of(context).size.height,

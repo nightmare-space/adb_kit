@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
+import 'package:adb_tool/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 import 'history_controller.dart';
-import 'package:adbutil/adbutil.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
@@ -54,9 +54,7 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {
-    Log.i('设备管理控制器 Create');
-  }
+  DevicesController() {}
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -78,12 +76,13 @@ class DevicesController extends GetxController {
     });
     await startAdb();
     AdbUtil.addListener(handleResult);
-    String libPath = await const MethodChannel('adb').invokeMethod(
-      'get_lib_path',
-    );
+    String libPath;
+    if (GetPlatform.isAndroid) {
+      libPath = await getLibPath();
+    }
+    AdbUtil.setLibraryPath(libPath);
     AdbUtil.startPoolingListDevices(
       duration: const Duration(seconds: 1),
-      libPath: libPath,
     );
   }
 

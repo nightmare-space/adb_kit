@@ -44,6 +44,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
           ),
           child: DesktopSafeArea(
             child: SafeArea(
+              left: false,
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Builder(
@@ -52,7 +53,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                       return buildBody(context);
                     }
                     return SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
+                      // physics: const NeverScrollableScrollPhysics(),
                       child: buildBody(context),
                     );
                   },

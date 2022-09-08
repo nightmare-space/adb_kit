@@ -91,6 +91,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        left: false,
         child: Markdown(
           controller: ScrollController(),
           selectable: true,

@@ -43,6 +43,7 @@ class _LogPageState extends State<LogPage> {
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
+        left: false,
         child: Padding(
           padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 0.w),
           child: Column(

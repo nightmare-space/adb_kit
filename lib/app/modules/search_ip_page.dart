@@ -69,6 +69,7 @@ class _SearchIpPageState extends State<SearchIpPage> {
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
+        left: false,
         child: Container(
           margin: EdgeInsets.all(8.w),
           decoration: BoxDecoration(

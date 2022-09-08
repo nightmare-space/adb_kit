@@ -5,6 +5,7 @@ import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
+import 'package:adb_tool/utils/utils.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,10 +59,10 @@ class Global {
   Pty pty;
   Terminal terminal = Terminal();
   core.Future<void> initTerminal() async {
-    String libPath = await const MethodChannel('adb').invokeMethod(
-      'get_lib_path',
-    );
-    RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
+    if (Platform.isAndroid) {
+      String libPath = await getLibPath();
+      RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
+    }
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
@@ -176,38 +177,28 @@ class Global {
     if (kIsWeb) {
       return true;
     }
-    String libPath = await const MethodChannel('adb').invokeMethod(
-      'get_lib_path',
-    );
-    File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
-      '$libPath/adb.so \$@',
-    );
-    Future.delayed(const Duration(seconds: 3), () {
-      pty.writeString('cd "$libPath"\n');
-    });
-    // RuntimeEnvir.put(key, value)
-    // Platform.
-    // Log.i('libPath:$libPath');
-    for (final String fileName in androidFiles) {
-      final targetPath = '$libPath/$fileName.so';
-      String filePath = '${RuntimeEnvir.binPath}/$fileName';
-      Log.w('filePath -> $filePath');
-      Log.w('targetPath -> $targetPath');
-      Link link = Link(filePath);
-      if (link.existsSync()) {
-        link.deleteSync();
+    if (GetPlatform.isAndroid) {
+      String libPath = await getLibPath();
+      File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
+        '$libPath/adb.so \$@',
+      );
+      for (final String fileName in androidFiles) {
+        final targetPath = '$libPath/$fileName.so';
+        String filePath = '${RuntimeEnvir.binPath}/$fileName';
+        Link link = Link(filePath);
+        if (link.existsSync()) {
+          link.deleteSync();
+        }
+        try {
+          link.createSync(targetPath);
+        } catch (e) {
+          Log.e(e);
+        }
+        // Log.d(
+        //   '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+        // );
       }
-      try {
-        link.createSync(targetPath);
-      } catch (e) {
-        Log.e(e);
-      }
-      // Log.d(
-      //   '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-      // );
     }
-    List<FileSystemEntity> files = Directory(RuntimeEnvir.binPath).listSync();
-    Log.w(files);
     AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
       android: [],

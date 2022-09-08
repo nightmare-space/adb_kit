@@ -1,7 +1,4 @@
 export 'default_theme_data.dart';
-import 'package:adb_tool/themes/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 export 'color_extension.dart';
 
 // abstract class YanTheme {

@@ -8,6 +8,7 @@ import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/xterm_wrapper.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:adb_tool/utils/terminal_utill.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:file_selector_nightmare/file_selector_nightmare.dart';
@@ -73,7 +74,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       );
     } else {
       adbShell = Pty.start(
-        'adb',
+        adb,
         arguments: ['-s', widget.entity.serial, 'shell'],
         environment: envir(),
         workingDirectory: '/',

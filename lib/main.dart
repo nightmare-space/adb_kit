@@ -1,26 +1,16 @@
 library adb_tool;
 
 import 'dart:async';
-import 'dart:typed_data';
-import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
-import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide Config;
-import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
-import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:app_manager/app_manager.dart' as am;
 import 'package:path_provider/path_provider.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:window_manager/window_manager.dart';
-import 'app/modules/home/views/adaptive_view.dart';
 import 'material_entrypoint.dart';
 import 'config/config.dart';
 import 'core/impl/plugin.dart';
-import 'global/instance/global.dart';
 import 'themes/lib_color_schemes.g.dart';
 
 // 这个值由shell去替换

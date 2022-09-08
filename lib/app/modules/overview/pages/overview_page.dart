@@ -73,6 +73,7 @@ class _OverviewPageState extends State<OverviewPage> {
         // padding: EdgeInsets.only(bottom: 100.w),
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
+        left: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

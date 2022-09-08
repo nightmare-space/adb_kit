@@ -46,6 +46,7 @@ class _DeveloperToolState extends State<DeveloperTool>
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(48.w),
             child: SafeArea(
+              left: false,
               child: Row(
                 children: [
                   SizedBox(

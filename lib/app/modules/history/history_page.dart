@@ -44,6 +44,7 @@ class HistoryPage extends GetView<HistoryController> {
             );
           }
           return SafeArea(
+        left: false,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
               child: Stack(

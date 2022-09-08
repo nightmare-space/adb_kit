@@ -123,9 +123,12 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                       ResponsiveWrapper.builder(
                         Builder(
                           builder: (context) {
-                            if (ResponsiveWrapper.of(context).isDesktop) {
+                            if (ResponsiveWrapper.of(context).isDesktop ||
+                                ResponsiveWrapper.of(context).isTablet) {
+                              Log.i('isDesktop');
                               ScreenAdapter.init(896);
                             } else {
+                              Log.i('is not Desktop');
                               ScreenAdapter.init(414);
                             }
                             return Theme(
@@ -139,9 +142,9 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                         defaultScale: false,
                         defaultName: PHONE,
                         breakpoints: const [
-                          // ResponsiveBreakpoint.resize(400, name: PHONE),
+                          ResponsiveBreakpoint.resize(300, name: PHONE),
                           ResponsiveBreakpoint.resize(600, name: TABLET),
-                          ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                          ResponsiveBreakpoint.resize(800, name: DESKTOP),
                         ],
                       ),
                       if (GetPlatform.isDesktop)

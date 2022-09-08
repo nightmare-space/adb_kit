@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "../adbutil"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: bd3ef3b4796128df7d217f169a4f01c1186b6c09
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -36,7 +38,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5b0fa3a6445bfb50eb49d7323d4af73bfa8d7861"
+      resolved-ref: a95047e919253213fcb6f8ab7a115a77c0bec8be
       url: "https://github.com/nightmare-space/app_manager"
     source: git
     version: "1.0.0+1"
@@ -69,7 +71,7 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.8.2"
+    version: "2.9.0"
   basics:
     dependency: transitive
     description:
@@ -97,7 +99,7 @@ packages:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   charcode:
     dependency: transitive
     description:
@@ -111,7 +113,7 @@ packages:
       name: clock
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   collection:
     dependency: transitive
     description:
@@ -197,7 +199,7 @@ packages:
       name: fake_async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   ffi:
     dependency: transitive
     description:
@@ -349,7 +351,7 @@ packages:
       name: fwfh_text_style
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.22.08"
+    version: "2.22.08+1"
   get:
     dependency: "direct main"
     description:
@@ -362,7 +364,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a5b0378786501a7ebccd0d7e7d0744768f97496c
+      resolved-ref: "4776d3d216f057bc2f8ba76deb910b8c6a6321f4"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -451,21 +453,21 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.11"
+    version: "0.12.12"
   material_color_utilities:
     dependency: transitive
     description:
       name: material_color_utilities
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   mime:
     dependency: transitive
     description:
@@ -502,7 +504,7 @@ packages:
       name: path
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.2"
   path_drawing:
     dependency: transitive
     description:
@@ -656,7 +658,7 @@ packages:
       name: screen_retriever
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.2"
+    version: "0.1.3"
   screenshot:
     dependency: "direct main"
     description:
@@ -721,7 +723,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.2"
+    version: "1.9.0"
   stack_trace:
     dependency: transitive
     description:
@@ -742,7 +744,7 @@ packages:
       name: string_scanner
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   synchronized:
     dependency: transitive
     description:
@@ -756,14 +758,14 @@ packages:
       name: term_glyph
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.9"
+    version: "0.4.12"
   typed_data:
     dependency: transitive
     description:
@@ -784,7 +786,7 @@ packages:
       name: url_launcher_android
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "6.0.17"
+    version: "6.0.18"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -915,4 +917,4 @@ packages:
     version: "3.0.6-alpha"
 sdks:
   dart: ">=2.17.0 <3.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.1.0-0"
