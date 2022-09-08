@@ -17,4 +17,4 @@ Version: 1.3.1-1
 Homepage: https://nightmare.fun/adb/
 Description: adb binary GUI
 ">$PACKAGE_DIR/DEBIAN/control
-dpkg-deb -b $PACKAGE_DIR "ADB KIT.deb"
+dpkg-deb -b $PACKAGE_DIR "ADBKIT.deb"

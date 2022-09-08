@@ -13,4 +13,3 @@ $PROJECT_DIR/scripts/patch_executable.sh
 tar -zcvf ./$APP_NAME.tar -C ./build/macos/Build/Products/ "Release/ADB TOOL.app/" Release/移动到这
 rm -rf "$app_path/移动到这"
 
-rm -r $TMP_DIR
