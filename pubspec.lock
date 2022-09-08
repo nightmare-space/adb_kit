@@ -6,7 +6,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d79a41703650606d22078bc26f4fb3a59006825e
+      resolved-ref: bd3ef3b4796128df7d217f169a4f01c1186b6c09
       url: "https://github.com/nightmare-space/adbutil"
     source: git
     version: "0.0.1"
@@ -38,7 +38,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5b0fa3a6445bfb50eb49d7323d4af73bfa8d7861"
+      resolved-ref: a95047e919253213fcb6f8ab7a115a77c0bec8be
       url: "https://github.com/nightmare-space/app_manager"
     source: git
     version: "1.0.0+1"
@@ -175,7 +175,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "60ba9fa1d5c0e793b0a9744f1ba9ccfbbf525b2c"
+      resolved-ref: a2570fe43c15068855a1115a923dd12869747153
       url: "https://github.com/nightmare-space/device_info.git"
     source: git
     version: "1.0.0+1"
@@ -215,7 +215,7 @@ packages:
     source: hosted
     version: "6.1.4"
   file_manager_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD
@@ -364,7 +364,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a5b0378786501a7ebccd0d7e7d0744768f97496c
+      resolved-ref: "4776d3d216f057bc2f8ba76deb910b8c6a6321f4"
       url: "https://github.com/nightmare-space/global_repository"
     source: git
     version: "0.0.1"
@@ -436,7 +436,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: fc0adc66e06ec2e8598620fac5d91404369020b9
+      resolved-ref: eccdaaa168576eefd1b63a8624e7f90d9882b9a4
       url: "https://github.com/nightmare-space/logger_view"
     source: git
     version: "0.0.1"
