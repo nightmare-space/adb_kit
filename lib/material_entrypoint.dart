@@ -8,6 +8,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
+import 'package:window_manager/window_manager.dart';
 import 'app/controller/controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
@@ -36,6 +37,7 @@ class MaterialAppWrapper extends StatefulWidget {
 class _MaterialAppWrapperState extends State<MaterialAppWrapper>
     with WidgetsBindingObserver {
   ConfigController config = Get.put(ConfigController());
+  bool isFull = false;
 
   @override
   void initState() {
@@ -64,115 +66,163 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
     return ToastApp(
       child: Stack(
         children: [
-          GetBuilder<ConfigController>(builder: (config) {
-            if (config.backgroundStyle == BackgroundStyle.normal) {
-              return Container(
-                color: config.theme.colorScheme.background,
-              );
-            }
-            if (config.backgroundStyle == BackgroundStyle.image) {
-              return SizedBox(
-                height: double.infinity,
-                child: Image.asset(
-                  'assets/b.png',
-                  fit: BoxFit.cover,
-                ),
-              );
-            } else {
-              return const SizedBox();
-            }
-          }),
-          BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 24.0,
-              sigmaY: 24.0,
-            ),
-            child: GetBuilder<ConfigController>(
-              builder: (config) {
-                return Screenshot(
-                  controller: screenshotController,
-                  child: RawKeyboardListener(
-                    autofocus: true,
-                    focusNode: FocusNode(),
-                    onKey: ((value) {
-                      Log.w(value);
-                      if (value is RawKeyDownEvent) {
-                        screenshotController.captureAndSave('./screenshot');
-                      }
-                    }),
-                    child: GetMaterialApp(
-                      showPerformanceOverlay: config.showPerformanceOverlay,
-                      showSemanticsDebugger: config.showSemanticsDebugger,
-                      debugShowMaterialGrid: config.debugShowMaterialGrid,
-                      checkerboardRasterCacheImages:
-                          config.checkerboardRasterCacheImages,
-                      debugShowCheckedModeBanner: false,
-                      title: 'ADB工具箱',
-                      navigatorKey: Global.instance.navigatorKey,
-                      themeMode: ThemeMode.light,
-                      localizationsDelegates: const [
-                        S.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                        GlobalCupertinoLocalizations.delegate,
-                      ],
-                      locale: config.locale,
-                      supportedLocales: S.delegate.supportedLocales,
-                      theme: ThemeData(
-                        primarySwatch: Colors.blue,
-                        visualDensity: VisualDensity.adaptivePlatformDensity,
-                      ),
-                      defaultTransition: Transition.fadeIn,
-                      initialRoute: AdbPages.initial,
-                      getPages: AdbPages.routes + am.AppPages.routes,
-                      builder: (BuildContext context, Widget navigator) {
-                        Size size = MediaQuery.of(context).size;
-                        if (size.width > size.height) {
-                          context.init(896);
-                        } else {
-                          context.init(414);
-                        }
-                        // config中的Dimens获取不到ScreenUtil，因为ScreenUtil中用到的MediaQuery只有在
-                        // WidgetApp或者很长MaterialApp中才能获取到，所以在build方法中处理主题
-                        /// NativeShell
-                        if (widget.isNativeShell) {}
+          background(),
+          app(),
+        ],
+      ),
+    );
+  }
 
-                        ///
-                        ///
-                        ///
-                        /// Default Mode
-                        ///
-                        return ResponsiveWrapper.builder(
-                          Builder(builder: (context) {
-                            if (ResponsiveWrapper.of(context).isDesktop) {
+  BackdropFilter app() {
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: 24.0,
+        sigmaY: 24.0,
+      ),
+      child: GetBuilder<ConfigController>(
+        builder: (config) {
+          return Screenshot(
+            controller: screenshotController,
+            child: RawKeyboardListener(
+              autofocus: true,
+              focusNode: FocusNode(),
+              onKey: ((value) {
+                Log.w(value);
+                if (value is RawKeyDownEvent) {
+                  screenshotController.captureAndSave('./screenshot');
+                }
+              }),
+              child: GetMaterialApp(
+                showPerformanceOverlay: config.showPerformanceOverlay,
+                showSemanticsDebugger: config.showSemanticsDebugger,
+                debugShowMaterialGrid: config.debugShowMaterialGrid,
+                checkerboardRasterCacheImages:
+                    config.checkerboardRasterCacheImages,
+                debugShowCheckedModeBanner: false,
+                title: 'ADB工具箱',
+                navigatorKey: Global.instance.navigatorKey,
+                themeMode: ThemeMode.light,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                locale: config.locale,
+                supportedLocales: S.delegate.supportedLocales,
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                defaultTransition: Transition.fadeIn,
+                initialRoute: AdbPages.initial,
+                getPages: AdbPages.routes + am.AppPages.routes,
+                builder: (BuildContext context, Widget navigator) {
+                  return Stack(
+                    children: [
+                      ResponsiveWrapper.builder(
+                        Builder(
+                          builder: (context) {
+                            if (ResponsiveWrapper.of(context).isDesktop ||
+                                ResponsiveWrapper.of(context).isTablet) {
+                              Log.i('isDesktop');
                               ScreenAdapter.init(896);
                             } else {
+                              Log.i('is not Desktop');
                               ScreenAdapter.init(414);
                             }
                             return Theme(
                               data: config.theme,
                               child: navigator,
                             );
-                          }),
-                          // maxWidth: 1200,
-                          minWidth: 300,
-                          defaultScale: false,
-                          defaultName: PHONE,
-                          breakpoints: const [
-                            // ResponsiveBreakpoint.resize(400, name: PHONE),
-                            ResponsiveBreakpoint.resize(600, name: TABLET),
-                            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
+                          },
+                        ),
+                        // maxWidth: 1200,
+                        minWidth: 300,
+                        defaultScale: false,
+                        defaultName: PHONE,
+                        breakpoints: const [
+                          ResponsiveBreakpoint.resize(300, name: PHONE),
+                          ResponsiveBreakpoint.resize(600, name: TABLET),
+                          ResponsiveBreakpoint.resize(800, name: DESKTOP),
+                        ],
+                      ),
+                      if (GetPlatform.isDesktop)
+                        Container(
+                          color: config.theme.colorScheme.background,
+                          width: double.infinity,
+                          height: 24,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: DragToMoveArea(
+                                  child: Container(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                              WindowCaptionButton.minimize(
+                                onPressed: () {
+                                  windowManager.minimize();
+                                },
+                                brightness: Theme.of(context).brightness,
+                              ),
+                              isFull
+                                  ? WindowCaptionButton.unmaximize(
+                                      onPressed: () {
+                                        isFull = false;
+                                        setState(() {});
+                                        windowManager.unmaximize();
+                                      },
+                                      brightness: Theme.of(context).brightness,
+                                    )
+                                  : WindowCaptionButton.maximize(
+                                      onPressed: () {
+                                        isFull = true;
+                                        setState(() {});
+                                        windowManager.maximize();
+                                      },
+                                      brightness: Theme.of(context).brightness,
+                                    ),
+                              WindowCaptionButton.close(
+                                onPressed: () {
+                                  windowManager.close();
+                                },
+                                brightness: Theme.of(context).brightness,
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
+  }
+
+  GetBuilder<ConfigController> background() {
+    return GetBuilder<ConfigController>(builder: (config) {
+      if (config.backgroundStyle == BackgroundStyle.normal) {
+        return Container(
+          color: config.theme.colorScheme.background,
+        );
+      }
+      if (config.backgroundStyle == BackgroundStyle.image) {
+        return SizedBox(
+          height: double.infinity,
+          child: Image.asset(
+            'assets/b.png',
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        return const SizedBox();
+      }
+    });
   }
 }

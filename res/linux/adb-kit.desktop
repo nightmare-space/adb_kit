@@ -1,0 +1,11 @@
+ [Desktop Entry]
+Name=ADB KIT
+Name[zh_CN]=ADB KIT
+Exec=/opt/adb-kit/adb_kit %U
+Terminal=false
+Type=Application
+Icon=adb-kit
+Categories=Network;
+StartupWMClass=adb-kit
+GenericName=ADB KIT for Linux
+Comment=ADB KIT for Linux

@@ -147,7 +147,7 @@ class AboutPage extends StatelessWidget {
                             size: 16.w,
                           ),
                           onTap: () {
-                            Get.to(PrivacyPage());
+                            Get.to(const PrivacyPage());
                           },
                         ),
                         SettingItem(

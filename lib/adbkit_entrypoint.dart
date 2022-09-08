@@ -1,13 +1,8 @@
 // 把init从main函数移动到这儿是有原因的
-import 'dart:typed_data';
 
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'app/controller/controller.dart';
@@ -54,7 +49,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint>
     WidgetsFlutterBinding.ensureInitialized();
 
     if (GetPlatform.isDesktop) {
-      await Window.initialize();
       // Must add this line.
       await windowManager.ensureInitialized();
       WindowOptions windowOptions = const WindowOptions(
@@ -80,8 +74,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint>
     controller.init();
     isInit = true;
   }
-
-  Uint8List _imageFile;
 
   //Create an instance of ScreenshotController
 

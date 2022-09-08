@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
+import 'package:adb_tool/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -52,9 +54,7 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {
-    Log.i('设备管理控制器 Create');
-  }
+  DevicesController() {}
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -76,7 +76,14 @@ class DevicesController extends GetxController {
     });
     await startAdb();
     AdbUtil.addListener(handleResult);
-    AdbUtil.startPoolingListDevices(duration: const Duration(seconds: 1));
+    String libPath;
+    if (GetPlatform.isAndroid) {
+      libPath = await getLibPath();
+    }
+    AdbUtil.setLibraryPath(libPath);
+    AdbUtil.startPoolingListDevices(
+      duration: const Duration(seconds: 1),
+    );
   }
 
   List<DevicesEntity> otgDevices = [];
@@ -101,7 +108,7 @@ class DevicesController extends GetxController {
     //   await Global().process.exec('su -p HOME');
     // }
     try {
-      String out = await execCmd('adb start-server');
+      String out = await execCmd('$adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {}
@@ -151,15 +158,16 @@ class DevicesController extends GetxController {
           } else {
             try {
               model = await execCmd(
-                'adb -s ${listTmp.first} shell getprop ro.product.marketname',
+                '$adb -s ${listTmp.first} shell getprop ro.product.marketname',
               );
               if (model.trim().isEmpty) {
                 model = await execCmd(
-                  'adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
+                  '$adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
                 );
               }
               modelCache[listTmp.first] = model;
             } catch (e) {
+              Log.w(RuntimeEnvir.path);
               Log.e('get model error : $e');
             }
           }

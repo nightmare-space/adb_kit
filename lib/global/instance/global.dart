@@ -5,9 +5,11 @@ import 'package:adb_tool/app/controller/controller.dart';
 import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/utils/unique_util.dart';
+import 'package:adb_tool/utils/utils.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -28,6 +30,7 @@ class Global {
   factory Global() => _getInstance();
   Global._internal() {
     // Log.defaultLogger.printer = const Print();
+    Directory(RuntimeEnvir.binPath).createSync(recursive: true);
     HomeBinding().dependencies();
   }
 
@@ -45,15 +48,6 @@ class Global {
     drawerRoute = route;
   }
 
-  YanProcess process = YanProcess(
-    envir: GetPlatform.isIOS
-        ? {}
-        : {
-            'TMPDIR': RuntimeEnvir.tmpPath,
-            'HOME': RuntimeEnvir.homePath,
-          },
-  );
-
   bool isInit = false;
   Multicast multicast = Multicast(
     port: adbToolUdpPort,
@@ -64,7 +58,11 @@ class Global {
   // todo initial
   Pty pty;
   Terminal terminal = Terminal();
-  void initTerminal() {
+  core.Future<void> initTerminal() async {
+    if (Platform.isAndroid) {
+      String libPath = await getLibPath();
+      RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
+    }
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
@@ -74,6 +72,7 @@ class Global {
     envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
     envir['TMPDIR'] = RuntimeEnvir.binPath;
     envir['TERM'] = 'xterm-256color';
+
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
@@ -91,8 +90,6 @@ class Global {
       },
     );
   }
-
-  bool logTerminalIsInit = false;
 
   Future<void> _receiveBoardCast() async {
     multicast.addListener((message, address) async {
@@ -157,19 +154,18 @@ class Global {
     );
   }
 
-  static String androidPrefix = 'android';
   List<String> androidFiles = [
-    '$androidPrefix/adb',
-    '$androidPrefix/adb.bin-armeabi',
-    '$androidPrefix/libbrotlidec.so',
-    '$androidPrefix/libbrotlienc.so',
-    '$androidPrefix/libc++_shared.so',
-    '$androidPrefix/liblz4.so.1',
-    '$androidPrefix/libprotobuf.so',
-    '$androidPrefix/libusb-1.0.so',
-    '$androidPrefix/libz.so.1',
-    '$androidPrefix/libzstd.so.1',
-    '$androidPrefix/libbrotlicommon.so',
+    // 'adb',
+    // 'adb.bin-armeabi',
+    'libbrotlidec.so',
+    'libbrotlienc.so',
+    'libc++_shared.so',
+    'liblz4.so.1',
+    'libprotobuf.so',
+    'libusb-1.0.so',
+    'libz.so.1',
+    'libzstd.so.1',
+    'libbrotlicommon.so',
   ];
 
   List<String> globalFiles = [
@@ -181,9 +177,31 @@ class Global {
     if (kIsWeb) {
       return true;
     }
+    if (GetPlatform.isAndroid) {
+      String libPath = await getLibPath();
+      File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
+        '$libPath/adb.so \$@',
+      );
+      for (final String fileName in androidFiles) {
+        final targetPath = '$libPath/$fileName.so';
+        String filePath = '${RuntimeEnvir.binPath}/$fileName';
+        Link link = Link(filePath);
+        if (link.existsSync()) {
+          link.deleteSync();
+        }
+        try {
+          link.createSync(targetPath);
+        } catch (e) {
+          Log.e(e);
+        }
+        // Log.d(
+        //   '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
+        // );
+      }
+    }
     AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
-      android: androidFiles,
+      android: [],
       macOS: [],
       global: globalFiles,
       package: Config.flutterPackage,
@@ -226,8 +244,6 @@ class Global {
     if (size == Size.zero) {
       return;
     }
-    logTerminalIsInit = true;
-    // 32 是日志界面的边距
   }
 }
 

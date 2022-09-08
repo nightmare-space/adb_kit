@@ -69,6 +69,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
+        left: false,
         child: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Padding(

@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/utils.dart';
-import 'package:global_repository/global_repository.dart';
 import 'package:xterm/next.dart';
 import 'package:xterm/next/ui/terminal_theme.dart';
 

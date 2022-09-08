@@ -90,39 +90,10 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
           : OverlayStyle.dark,
-      child: Column(
+      child: Stack(
         children: [
-          Center(
-            child: Container(
-              color: configController.theme.colorScheme.background,
-              width: double.infinity,
-              height: 24,
-              child: DragToMoveArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    WindowCaptionButton.minimize(
-                      onPressed: () {
-                        windowManager.minimize();
-                      },
-                    ),
-                    WindowCaptionButton.maximize(
-                      onPressed: () {
-                        windowManager.maximize();
-                      },
-                    ),
-                    WindowCaptionButton.close(
-                      onPressed: () {
-                        windowManager.close();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Builder(builder: (context) {
+          Builder(
+            builder: (context) {
               if (ResponsiveWrapper.of(context).isDesktop) {
                 return Scaffold(
                   body: Row(
@@ -145,23 +116,21 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             .withOpacity(0.4),
                       ),
                       Expanded(
-                        child: MacSafeArea(
-                          child: PageTransitionSwitcher(
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                              Animation<double> secondaryAnimation,
-                            ) {
-                              return FadeThroughTransition(
-                                animation: animation,
-                                secondaryAnimation: secondaryAnimation,
-                                fillColor: Colors.transparent,
-                                child: child,
-                              );
-                            },
-                            duration: const Duration(milliseconds: 300),
-                            child: Global().page,
-                          ),
+                        child: PageTransitionSwitcher(
+                          transitionBuilder: (
+                            Widget child,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                          ) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              fillColor: Colors.transparent,
+                              child: child,
+                            );
+                          },
+                          duration: const Duration(milliseconds: 300),
+                          child: Global().page,
                         ),
                       ),
                     ],
@@ -189,7 +158,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             .withOpacity(0.1),
                       ),
                       Expanded(
-                        child: MacSafeArea(
+                        child: DesktopSafeArea(
                           child: PageTransitionSwitcher(
                             transitionBuilder: (
                               Widget child,
@@ -223,7 +192,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                       Navigator.pop(context);
                     },
                   ),
-                  body: MacSafeArea(
+                  body: DesktopSafeArea(
                     child: PageTransitionSwitcher(
                       transitionBuilder: (
                         Widget child,
@@ -244,7 +213,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                 );
               }
               return const SizedBox();
-            }),
+            },
           ),
         ],
       ),

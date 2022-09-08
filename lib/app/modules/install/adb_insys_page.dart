@@ -53,6 +53,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
+        left: false,
         child: Stack(
           alignment: Alignment.topCenter,
           children: [

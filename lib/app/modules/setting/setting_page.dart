@@ -58,6 +58,7 @@ class _SettingsPageState extends State<SettingsPage>
       );
     }
     return SafeArea(
+      left: false,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: SingleChildScrollView(

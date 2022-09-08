@@ -51,6 +51,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     return Scaffold(
       appBar: appBar,
       body: SafeArea(
+        left: false,
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 8.w,
