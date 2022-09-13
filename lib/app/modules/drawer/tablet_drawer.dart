@@ -42,22 +42,20 @@ class _TabletDrawerState extends State<TabletDrawer> {
               bottomRight: Radius.circular(Dimens.gap_dp20),
             ),
           ),
-          child: DesktopSafeArea(
-            child: SafeArea(
-              left: false,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Builder(
-                  builder: (_) {
-                    if (orientation == Orientation.portrait) {
-                      return buildBody(context);
-                    }
-                    return SingleChildScrollView(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      child: buildBody(context),
-                    );
-                  },
-                ),
+          child: SafeArea(
+            left: false,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Builder(
+                builder: (_) {
+                  if (orientation == Orientation.portrait) {
+                    return buildBody(context);
+                  }
+                  return SingleChildScrollView(
+                    // physics: const NeverScrollableScrollPhysics(),
+                    child: buildBody(context),
+                  );
+                },
               ),
             ),
           ),

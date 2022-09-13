@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   file_selector_macos: f1b08a781e66103e3ba279fd5d4024a2478b3af6
   flutter_acrylic: c3df24ae52ab6597197837ce59ef2a8542640c17
   flutter_pty: 41b6f848ade294be726a6b94cdd4a67c3bc52f59
-  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
+  FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
   path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   url_launcher_macos: 597e05b8e514239626bcf4a850fcf9ef5c856ec3

@@ -20,15 +20,15 @@ Future<void> main() async {
   // Log.d(StackTrace.current);
   // 初始化运行时环境
 
-  PluginManager.instance.register(DashboardPlugin());
+  PluginManager.instance.registerADBPlugin(DashboardPlugin());
   if (!GetPlatform.isWindows) {
-    PluginManager.instance.register(AppStarterPlugin());
+    PluginManager.instance.registerADBPlugin(AppStarterPlugin());
   }
   PluginManager.instance
-    ..register(AppManagerPlugin())
-    ..register(AppLauncherPlugin())
-    ..register(DeviceInfoPlugin())
-    ..register(TaskManagerPlugin());
+    ..registerADBPlugin(AppManagerPlugin())
+    ..registerADBPlugin(AppLauncherPlugin())
+    ..registerADBPlugin(DeviceInfoPlugin())
+    ..registerADBPlugin(TaskManagerPlugin());
   runADBClient();
   // PageManager.instance.clear();
   // PageManager.instance.register(Home());
@@ -42,14 +42,17 @@ Future<void> runADBClient({Color primary}) async {
       Log.d(text, tag: 'GetX');
     },
   );
+  // set primary color
   if (primary != null) {
     seed = primary;
   }
+  // 启动文件管理器服务，以供 ADB KIT 选择本机文件
   Server.start();
   runZonedGuarded<void>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       if (!GetPlatform.isIOS) {
+        // ios
         final dir = (await getApplicationSupportDirectory()).path;
         RuntimeEnvir.initEnvirWithPackageName(
           Config.packageName,

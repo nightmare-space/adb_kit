@@ -180,7 +180,7 @@ class Global {
     if (GetPlatform.isAndroid) {
       String libPath = await getLibPath();
       File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
-        '$libPath/adb.so \$@',
+        '$libPath/libadb.so \$@',
       );
       for (final String fileName in androidFiles) {
         final targetPath = '$libPath/$fileName.so';

@@ -18,18 +18,26 @@ class PluginManager {
   PluginManager._();
 
   /// Register a single [plugin]
-  void register(Pluggable plugin) {
+  void registerADBPlugin(Pluggable plugin) {
     if (plugin.name.isEmpty) {
       return;
     }
     _pluginsMap[plugin.name] = plugin;
   }
 
+  void registerDrawerPage(Pluggable plugin) {
+    // TODO
+    // if (plugin.name.isEmpty) {
+    //   return;
+    // }
+    // _pluginsMap[plugin.name] = plugin;
+  }
+
   /// Register multiple [plugins]
   void registerAll(List<Pluggable> plugins) {
     for (final plugin in plugins) {
       assert(plugin is Pluggable);
-      register(plugin);
+      registerADBPlugin(plugin);
     }
   }
 

@@ -38,24 +38,22 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
-          return DesktopSafeArea(
-            child: SafeArea(
-              left: false,
-              child: SizedBox(
-                width: width,
-                height: MediaQuery.of(context).size.height,
-                child: Builder(
-                  builder: (_) {
-                    if (orientation == Orientation.portrait) {
-                      return buildBody(context);
-                    }
-                    return SingleChildScrollView(
-                      child: SizedBox(
-                        child: buildBody(context),
-                      ),
-                    );
-                  },
-                ),
+          return SafeArea(
+            left: false,
+            child: SizedBox(
+              width: width,
+              height: MediaQuery.of(context).size.height,
+              child: Builder(
+                builder: (_) {
+                  if (orientation == Orientation.portrait) {
+                    return buildBody(context);
+                  }
+                  return SingleChildScrollView(
+                    child: SizedBox(
+                      child: buildBody(context),
+                    ),
+                  );
+                },
               ),
             ),
           );

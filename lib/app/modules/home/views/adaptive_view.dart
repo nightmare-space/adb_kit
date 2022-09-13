@@ -158,23 +158,21 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                             .withOpacity(0.1),
                       ),
                       Expanded(
-                        child: DesktopSafeArea(
-                          child: PageTransitionSwitcher(
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                              Animation<double> secondaryAnimation,
-                            ) {
-                              return FadeThroughTransition(
-                                animation: animation,
-                                secondaryAnimation: secondaryAnimation,
-                                fillColor: Colors.transparent,
-                                child: child,
-                              );
-                            },
-                            duration: const Duration(milliseconds: 300),
-                            child: Global().page,
-                          ),
+                        child: PageTransitionSwitcher(
+                          transitionBuilder: (
+                            Widget child,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                          ) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              fillColor: Colors.transparent,
+                              child: child,
+                            );
+                          },
+                          duration: const Duration(milliseconds: 300),
+                          child: Global().page,
                         ),
                       ),
                     ],
@@ -192,23 +190,21 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                       Navigator.pop(context);
                     },
                   ),
-                  body: DesktopSafeArea(
-                    child: PageTransitionSwitcher(
-                      transitionBuilder: (
-                        Widget child,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation,
-                      ) {
-                        return FadeThroughTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          fillColor: Colors.transparent,
-                          child: child,
-                        );
-                      },
-                      duration: const Duration(milliseconds: 300),
-                      child: Global().page,
-                    ),
+                  body: PageTransitionSwitcher(
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        fillColor: Colors.transparent,
+                        child: child,
+                      );
+                    },
+                    duration: const Duration(milliseconds: 300),
+                    child: Global().page,
                   ),
                 );
               }
