@@ -14,7 +14,7 @@ import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
-import 'package:xterm/next/terminal.dart';
+import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
 

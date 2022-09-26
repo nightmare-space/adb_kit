@@ -30,8 +30,8 @@ dependencies:
   # terminal widget
   xterm:
     git:
-      url: https://github.com/mengyanshou/xterm.dart
-      ref: v3
+      url: https://github.com/TerminalStudio/xterm.dart
+      ref: master
   # local pty
   flutter_pty:
     git: https://github.com/TerminalStudio/flutter_pty
@@ -119,6 +119,8 @@ dependency_overrides:
   #   path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
+  logger_view:
+    path: ../logger_view
   qr_code_scanner: ^1.0.0
   # file_selector_nightmare:
   #   path: ../file_selector_meng

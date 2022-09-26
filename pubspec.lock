@@ -71,7 +71,7 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.9.0"
+    version: "2.8.2"
   basics:
     dependency: transitive
     description:
@@ -99,7 +99,7 @@ packages:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -113,7 +113,7 @@ packages:
       name: clock
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   collection:
     dependency: transitive
     description:
@@ -199,7 +199,7 @@ packages:
       name: fake_async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.1"
+    version: "1.3.0"
   ffi:
     dependency: transitive
     description:
@@ -351,7 +351,7 @@ packages:
       name: fwfh_text_style
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.22.08+1"
+    version: "2.22.08"
   get:
     dependency: "direct main"
     description:
@@ -434,11 +434,9 @@ packages:
   logger_view:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: eccdaaa168576eefd1b63a8624e7f90d9882b9a4
-      url: "https://github.com/nightmare-space/logger_view"
-    source: git
+      path: "../logger_view"
+      relative: true
+    source: path
     version: "0.0.1"
   markdown:
     dependency: transitive
@@ -453,21 +451,21 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.12"
+    version: "0.12.11"
   material_color_utilities:
     dependency: transitive
     description:
       name: material_color_utilities
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.4"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.0"
+    version: "1.7.0"
   mime:
     dependency: transitive
     description:
@@ -504,7 +502,7 @@ packages:
       name: path
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.2"
+    version: "1.8.1"
   path_drawing:
     dependency: transitive
     description:
@@ -723,7 +721,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.9.0"
+    version: "1.8.2"
   stack_trace:
     dependency: transitive
     description:
@@ -744,7 +742,7 @@ packages:
       name: string_scanner
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.0"
   synchronized:
     dependency: transitive
     description:
@@ -758,14 +756,14 @@ packages:
       name: term_glyph
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.0"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.12"
+    version: "0.4.9"
   typed_data:
     dependency: transitive
     description:
@@ -910,11 +908,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: v3
-      resolved-ref: dc16176a04d0f2782d21aba257760bb8c8d5a9de
-      url: "https://github.com/mengyanshou/xterm.dart"
+      ref: master
+      resolved-ref: baa72b3fc5f6a3edf6df3b0dc77b083d2511c091
+      url: "https://github.com/TerminalStudio/xterm.dart"
     source: git
-    version: "3.0.6-alpha"
+    version: "3.2.7"
 sdks:
   dart: ">=2.17.0 <3.0.0"
-  flutter: ">=3.1.0-0"
+  flutter: ">=3.0.0"

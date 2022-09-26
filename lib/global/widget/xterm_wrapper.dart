@@ -4,8 +4,7 @@ import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/utils.dart';
-import 'package:xterm/next.dart';
-import 'package:xterm/next/ui/terminal_theme.dart';
+import 'package:xterm/xterm.dart';
 
 class XTermWrapper extends StatefulWidget {
   const XTermWrapper({

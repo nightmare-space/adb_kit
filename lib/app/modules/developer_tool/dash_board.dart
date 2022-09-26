@@ -18,7 +18,7 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:xterm/next/terminal.dart';
+import 'package:xterm/xterm.dart';
 
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
