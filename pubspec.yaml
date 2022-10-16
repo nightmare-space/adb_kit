@@ -33,8 +33,7 @@ dependencies:
       url: https://github.com/TerminalStudio/xterm.dart
       ref: master
   # local pty
-  flutter_pty:
-    git: https://github.com/TerminalStudio/flutter_pty
+  flutter_pty: ^0.3.1
   # color select
   cyclop: ^0.5.2
   # some animations
@@ -103,6 +102,9 @@ flutter:
 
 dependency_overrides:
   visibility_detector: ^0.3.3
+  ffi: 1.0.0
+  better_player: 0.0.83
+  flutter_svg: 1.1.5
   # logger_view:
   #   path: ../logger_view
   # global_repository:

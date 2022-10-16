@@ -141,13 +141,13 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Expanded(
-                                        child: DragToMoveArea(
-                                          child: Container(
-                                            color: Colors.transparent,
-                                          ),
-                                        ),
-                                      ),
+                                      // Expanded(
+                                      //   child: DragToMoveArea(
+                                      //     child: Container(
+                                      //       color: Colors.transparent,
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       WindowCaptionButton.minimize(
                                         onPressed: () {
                                           windowManager.minimize();
