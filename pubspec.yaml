@@ -105,8 +105,6 @@ dependency_overrides:
   ffi: 1.0.0
   better_player: 0.0.83
   flutter_svg: 1.1.5
-  # logger_view:
-  #   path: ../logger_view
   # global_repository:
   #   path: ../global_repository
   # # app_launcher:
