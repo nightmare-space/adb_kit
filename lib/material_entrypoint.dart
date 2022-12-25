@@ -34,8 +34,7 @@ class MaterialAppWrapper extends StatefulWidget {
   State createState() => _MaterialAppWrapperState();
 }
 
-class _MaterialAppWrapperState extends State<MaterialAppWrapper>
-    with WidgetsBindingObserver {
+class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBindingObserver {
   ConfigController config = Get.put(ConfigController());
   bool isFull = false;
 
@@ -96,8 +95,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                 showPerformanceOverlay: config.showPerformanceOverlay,
                 showSemanticsDebugger: config.showSemanticsDebugger,
                 debugShowMaterialGrid: config.debugShowMaterialGrid,
-                checkerboardRasterCacheImages:
-                    config.checkerboardRasterCacheImages,
+                checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
                 debugShowCheckedModeBanner: false,
                 title: 'ADB工具箱',
                 navigatorKey: Global.instance.navigatorKey,
@@ -121,8 +119,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                   return ResponsiveWrapper.builder(
                     Builder(
                       builder: (context) {
-                        if (ResponsiveWrapper.of(context).isDesktop ||
-                            ResponsiveWrapper.of(context).isTablet) {
+                        if (ResponsiveWrapper.of(context).isDesktop || ResponsiveWrapper.of(context).isTablet) {
                           Log.i('isDesktop');
                           ScreenAdapter.init(896);
                         } else {
@@ -152,8 +149,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                                         onPressed: () {
                                           windowManager.minimize();
                                         },
-                                        brightness:
-                                            Theme.of(context).brightness,
+                                        brightness: Theme.of(context).brightness,
                                       ),
                                       isFull
                                           ? WindowCaptionButton.unmaximize(
@@ -162,8 +158,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                                                 setState(() {});
                                                 windowManager.unmaximize();
                                               },
-                                              brightness:
-                                                  Theme.of(context).brightness,
+                                              brightness: Theme.of(context).brightness,
                                             )
                                           : WindowCaptionButton.maximize(
                                               onPressed: () {
@@ -171,15 +166,13 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper>
                                                 setState(() {});
                                                 windowManager.maximize();
                                               },
-                                              brightness:
-                                                  Theme.of(context).brightness,
+                                              brightness: Theme.of(context).brightness,
                                             ),
                                       WindowCaptionButton.close(
                                         onPressed: () {
                                           windowManager.close();
                                         },
-                                        brightness:
-                                            Theme.of(context).brightness,
+                                        brightness: Theme.of(context).brightness,
                                       ),
                                     ],
                                   ),

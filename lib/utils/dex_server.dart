@@ -37,9 +37,7 @@ class DexServer {
       '${RuntimeEnvir.binPath}/app_server',
       targetPath,
     );
-    final List<String> processArg =
-        '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'
-            .split(' ');
+    final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
 
     const String startTag = 'success start:';
     Stopwatch stopwatch = Stopwatch();
@@ -65,8 +63,7 @@ class DexServer {
             if (line.contains(startTag)) {
               Log.e('time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
-              final int remotePort =
-                  int.tryParse(line.replaceAll(startTag, ''));
+              final int remotePort = int.tryParse(line.replaceAll(startTag, ''));
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,

@@ -137,18 +137,18 @@ class DevicesController extends GetxController {
   Future<void> handleResult(String data) async {
     letADBStarted();
     // if (kReleaseMode) {
-    Log.d('adb handleResult -> $data');
+    // Log.d('adb handleResult -> $data');
     // }
     if (data.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');
-      print('outList -> $outList');
+      // print('outList -> $outList');
       // 删除 `List of devices attached`
       outList.removeAt(0);
-      print('outList -> $outList');
+      // print('outList -> $outList');
       final List<DevicesEntity> tmpDevices = [];
       for (final String str in outList) {
         final List<String> listTmp = str.trim().split(RegExp('\\s+'));
-        print('listTmp -> $listTmp');
+        // print('listTmp -> $listTmp');
         final DevicesEntity devicesEntity = DevicesEntity(
           listTmp.first,
           listTmp.last,

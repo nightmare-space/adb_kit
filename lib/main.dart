@@ -38,8 +38,9 @@ Future<void> main() async {
 Future<void> runADBClient({Color primary}) async {
   // hook getx log
   Get.config(
+    enableLog: false,
     logWriterCallback: (text, {isError}) {
-      Log.d(text, tag: 'GetX');
+      // Log.d(text, tag: 'GetX');
     },
   );
   // set primary color

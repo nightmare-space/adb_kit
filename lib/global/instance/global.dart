@@ -226,7 +226,7 @@ class Global {
     Log.i('当前系统语言 ${window.locales}');
     Log.i('当前系统主题 ${window.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');
-    Log.i('当前App内部主题 ${controller.theme}');
+    Log.i('当前App内部主题 ${controller.theme.brightness}');
     // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
@@ -251,8 +251,7 @@ class Print implements Printable {
   const Print();
   @override
   void print(DateTime time, Object object) {
-    final String data =
-        '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
+    final String data = '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
 
     // ignore: avoid_print
     // core.print(data);

@@ -353,8 +353,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title:
-                          '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择Apk进行安装',
+                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择Apk进行安装',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -368,8 +367,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             label: 'apk',
                             extensions: ['apk'],
                           );
-                          final files =
-                              await openFiles(acceptedTypeGroups: [typeGroup]);
+                          final files = await openFiles(acceptedTypeGroups: [typeGroup]);
                           if (files.isEmpty) {
                             return;
                           }
@@ -462,8 +460,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title:
-                          '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
+                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -474,8 +471,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         if (GetPlatform.isDesktop) {
                           paths = [];
                           final typeGroup = XTypeGroup(label: '*');
-                          final files =
-                              await openFiles(acceptedTypeGroups: [typeGroup]);
+                          final files = await openFiles(acceptedTypeGroups: [typeGroup]);
                           if (files.isEmpty) {
                             return;
                           }
@@ -652,9 +648,9 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
 
   Future<void> initCheckState() async {
     final String result = await widget.adbChannel.execCmmand(
-      'adb -s ${widget.serial} shell getprop service.adb.tcp.port',
+      '$adb -s ${widget.serial} shell getprop service.adb.tcp.port',
     );
-    Log.w(result);
+    // Log.w(result);
     if (result == '5555') {
       isCheck = true;
       if (mounted) {
@@ -689,10 +685,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                       isAddress(widget.serial) ? '(当前方式:远程)' : '(当前方式:usb)',
                       style: TextStyle(
                         fontWeight: bold,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.6),
+                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
                       ),
                     ),
                   ],
@@ -700,10 +693,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 Text(
                   '无需root可让设备打开远程调试',
                   style: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
                     fontSize: 12.w,
                   ),
                 ),
@@ -814,9 +804,9 @@ class __DeveloperItemState extends State<_DeveloperItem> {
 
   Future<void> initCheckState() async {
     final String result = await widget.adbChannel.execCmmand(
-      'adb -s ${widget.serial} shell settings get system ${widget.putKey}',
+      '$adb -s ${widget.serial} shell settings get system ${widget.putKey}',
     );
-    Log.w('result -> $result');
+    // Log.w('result -> $result');
     if (result == '1') {
       isCheck = true;
       setState(() {});
@@ -870,8 +860,7 @@ class GestureWithScale extends StatefulWidget {
   State createState() => _GestureWithScaleState();
 }
 
-class _GestureWithScaleState extends State<GestureWithScale>
-    with SingleTickerProviderStateMixin {
+class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerProviderStateMixin {
   AnimationController animationController;
 
   @override

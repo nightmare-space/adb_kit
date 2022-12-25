@@ -27,8 +27,7 @@ class ADBToolEntryPoint extends StatefulWidget {
   State<ADBToolEntryPoint> createState() => _ADBToolEntryPointState();
 }
 
-class _ADBToolEntryPointState extends State<ADBToolEntryPoint>
-    with WindowListener {
+class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListener {
   ConfigController configController = Get.put(ConfigController());
   @override
   void onWindowFocus() {

@@ -4,6 +4,7 @@ import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
@@ -42,8 +43,7 @@ class _AppStarterState extends State<AppStarter> {
             children: [
               GestureWithScale(
                 onTap: () {
-                  String cmd =
-                      'adb -s ${widget.entity.serial} shell sh /data/data/me.piebridge.brevent/brevent.sh\r';
+                  String cmd = '$adb -s ${widget.entity.serial} shell sh /data/data/me.piebridge.brevent/brevent.sh\r';
                   Global().pty.writeString(cmd);
                   HapticFeedback.vibrate();
                 },
@@ -67,8 +67,8 @@ class _AppStarterState extends State<AppStarter> {
               ),
               GestureWithScale(
                 onTap: () {
-                  String cmd =
-                      'adb -s ${widget.entity.serial} shell sh /data/user/0/com.omarea.vtools/files/up.sh\r';
+                  // TODO scene激活有问题
+                  String cmd = '$adb -s ${widget.entity.serial} shell sh /data/user/0/com.omarea.vtools/files/up.sh\r';
                   Global().pty.writeString(cmd);
                 },
                 child: Container(
@@ -91,8 +91,8 @@ class _AppStarterState extends State<AppStarter> {
               ),
               GestureWithScale(
                 onTap: () {
-                  String cmd =
-                      'adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh\r';
+                  // adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh
+                  String cmd = '$adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh\n';
                   Global().pty.writeString(cmd);
                 },
                 child: Container(
@@ -115,8 +115,7 @@ class _AppStarterState extends State<AppStarter> {
               ),
               GestureWithScale(
                 onTap: () {
-                  String cmd =
-                      'adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/web1n.stopapp/files/starter.sh\r';
+                  String cmd = '$adb -s ${widget.entity.serial} shell sh /storage/emulated/0/Android/data/web1n.stopapp/files/starter.sh\r';
                   Global().pty.writeString(cmd);
                 },
                 child: Container(
@@ -139,8 +138,7 @@ class _AppStarterState extends State<AppStarter> {
               ),
               GestureWithScale(
                 onTap: () {
-                  String cmd =
-                      'adb -s ${widget.entity.serial} shell sh /sdcard/Android/data/com.catchingnow.icebox/files/start.sh\r';
+                  String cmd = '$adb -s ${widget.entity.serial} shell sh /sdcard/Android/data/com.catchingnow.icebox/files/start.sh\r';
                   Global().pty.writeString(cmd);
                 },
                 child: Container(
