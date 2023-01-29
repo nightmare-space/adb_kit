@@ -39,10 +39,11 @@ class DexServer {
     );
     final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
 
-    const String startTag = 'success start:';
+    /// 注意这个要和applib中的一样哦
+    const String startTag = 'success start port : ';
     Stopwatch stopwatch = Stopwatch();
     stopwatch.start();
-    String execuable = '$adb';
+    String execuable = adb;
     // TODO 测试是否影响其他平台
     // if (Platform.isWindows) {
     //   execuable = RuntimeEnvir.binPath + Platform.pathSeparator + execuable;
@@ -63,7 +64,10 @@ class DexServer {
             if (line.contains(startTag)) {
               Log.e('time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
-              final int remotePort = int.tryParse(line.replaceAll(startTag, ''));
+              Log.d(line);
+              Log.d(line.replaceAll(RegExp('.*>|<.*'), ''));
+              final int remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
+              Log.d('remotePort -> $remotePort');
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,

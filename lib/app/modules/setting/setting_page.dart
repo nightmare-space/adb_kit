@@ -7,7 +7,7 @@ import 'package:adb_tool/global/widget/item_header.dart';
 import 'package:adb_tool/global/widget/menu_button.dart';
 import 'package:adb_tool/global/widget/xliv-switch.dart';
 import 'package:adb_tool/themes/theme.dart';
-import 'package:cyclop/cyclop.dart';
+// import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -216,24 +216,24 @@ class _SettingsPageState extends State<SettingsPage>
                           },
                         ),
                       ),
-                      SettingItem(
-                        title: S.of(context).primaryColor,
-                        suffix: ColorButton(
-                          key: const Key('c1'),
-                          color: Theme.of(context).primaryColor,
-                          config:
-                              const ColorPickerConfig(enableEyePicker: true),
-                          size: 40.w,
-                          elevation: 0,
-                          boxShape: BoxShape.circle, // default : circle
-                          swatches: swatches,
-                          onColorChanged: (value) {
-                            configController.update();
-                            setState(() {});
-                            Get.forceAppUpdate();
-                          },
-                        ),
-                      ),
+                      // SettingItem(
+                      //   title: S.of(context).primaryColor,
+                      //   suffix: ColorButton(
+                      //     key: const Key('c1'),
+                      //     color: Theme.of(context).primaryColor,
+                      //     config:
+                      //         const ColorPickerConfig(enableEyePicker: true),
+                      //     size: 40.w,
+                      //     elevation: 0,
+                      //     boxShape: BoxShape.circle, // default : circle
+                      //     swatches: swatches,
+                      //     onColorChanged: (value) {
+                      //       configController.update();
+                      //       setState(() {});
+                      //       Get.forceAppUpdate();
+                      //     },
+                      //   ),
+                      // ),
                       GetBuilder<ConfigController>(builder: (_) {
                         return SettingItem(
                           title: S.of(context).showStatusBar,

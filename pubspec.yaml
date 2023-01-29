@@ -34,8 +34,8 @@ dependencies:
       ref: master
   # local pty
   flutter_pty: ^0.3.1
-  # color select
-  cyclop: ^0.5.2
+  # # color select
+  # cyclop: ^0.5.2
   # some animations
   flutter_spinkit: "^4.1.2"
   # svg image
@@ -101,6 +101,7 @@ flutter:
     - CHANGELOG.md
 
 dependency_overrides:
+  flutter_spinkit: ^5.1.0
   visibility_detector: ^0.3.3
   ffi: 1.0.0
   flutter_svg: 1.1.5
@@ -108,14 +109,14 @@ dependency_overrides:
   better_player: 0.0.83
   # global_repository:
   #   path: ../global_repository
-  # # app_launcher:
-  # #   path: ../app_launcher
+  app_launcher:
+    path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
   # device_info:
   #   path: ../device_info
-  # app_manager:
-  #   path: ../app_manager
+  app_manager:
+    path: ../app_manager
   # adbutil:
   #   path: ../adbutil
   # xterm:
