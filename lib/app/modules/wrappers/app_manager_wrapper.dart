@@ -3,7 +3,6 @@ import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/utils/dex_server.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
-import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,7 @@ class AppManagerWrapper extends StatefulWidget {
   final DevicesEntity devicesEntity;
 
   @override
-  _AppManagerWrapperState createState() => _AppManagerWrapperState();
+  State createState() => _AppManagerWrapperState();
 }
 
 class _AppManagerWrapperState extends State<AppManagerWrapper> {
@@ -50,8 +49,7 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
     }
     return AppManagerEntryPoint(
       // 直接进到设备的shell
-      process: YanProcess()
-        ..exec('adb -s ${widget.devicesEntity.serial} shell'),
+      process: YanProcess()..exec('adb -s ${widget.devicesEntity.serial} shell'),
     );
   }
 }

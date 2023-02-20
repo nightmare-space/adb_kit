@@ -1,7 +1,7 @@
 name: adb_tool
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.3.8+36
+version: 1.3.9+37
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
@@ -11,8 +11,8 @@ dependencies:
   # localizations
   intl: ^0.17.0
   animations: ^2.0.2
-  # desktop window stype
-  flutter_acrylic: ^1.0.0
+  # # desktop window stype
+  # flutter_acrylic: ^1.1.0
   # adb plugin can manager app
   app_manager:
     git: https://github.com/nightmare-space/app_manager
@@ -109,21 +109,23 @@ dependency_overrides:
   better_player: 0.0.83
   # global_repository:
   #   path: ../global_repository
-  app_launcher:
-    path: ../app_launcher
+  # app_launcher:
+  #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
   # device_info:
   #   path: ../device_info
-  app_manager:
-    path: ../app_manager
+  # app_manager:
+  #   path: ../app_manager
   # adbutil:
   #   path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
-  logger_view:
-    path: ../logger_view
+  # logger_view:
+  #   path: ../logger_view
   qr_code_scanner: ^1.0.0
+  # app_channel:
+  #   path: ../applib/applib_util
   # file_selector_nightmare:
   #   path: ../file_selector_meng
 flutter_intl:

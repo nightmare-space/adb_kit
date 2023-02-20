@@ -111,7 +111,9 @@ class DevicesController extends GetxController {
       String out = await execCmd('$adb start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
-    } catch (e) {}
+    } catch (e) {
+      Log.e(e);
+    }
     Future.delayed(const Duration(milliseconds: 1000), () {
       letADBStarted();
     });

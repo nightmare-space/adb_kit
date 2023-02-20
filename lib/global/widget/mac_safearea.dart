@@ -1,6 +1,6 @@
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
+// import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/utils.dart';
 import 'package:window_manager/window_manager.dart';
 

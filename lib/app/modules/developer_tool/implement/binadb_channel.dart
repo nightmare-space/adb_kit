@@ -19,24 +19,24 @@ class BinADBChannel extends ADBChannel {
 
   @override
   Future<void> install(String file) async {
-    await execCmmand('adb -s $serial install -t $file');
+    await execCmmand('$adb -s $serial install -t $file');
   }
 
   @override
   Future<void> push(String localPath, String remotePath) async {
     final String fileName = basename(localPath);
-    await execCmmand('adb -s $serial push $localPath $remotePath$fileName');
+    await execCmmand('$adb -s $serial push $localPath $remotePath$fileName');
   }
 
   @override
   Future<void> changeNetDebugStatus(int port) async {
     if (port == 5555) {
       await execCmmand(
-        'adb -s $serial tcpip 5555',
+        '$adb -s $serial tcpip 5555',
       );
     } else {
       await execCmmand(
-        'adb -s $serial usb',
+        '$adb -s $serial usb',
       );
     }
   }

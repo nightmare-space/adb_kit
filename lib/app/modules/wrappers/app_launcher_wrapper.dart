@@ -4,7 +4,6 @@ import 'package:adb_tool/utils/dex_server.dart';
 import 'package:app_launcher/app_launcher.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
-import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -18,7 +17,7 @@ class AppLauncherWrapper extends StatefulWidget {
   final DevicesEntity devicesEntity;
 
   @override
-  _AppLauncherWrapperState createState() => _AppLauncherWrapperState();
+  State createState() => _AppLauncherWrapperState();
 }
 
 class _AppLauncherWrapperState extends State<AppLauncherWrapper> {

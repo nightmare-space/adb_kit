@@ -10,7 +10,7 @@ import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
+// import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -46,8 +46,8 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     if (GetPlatform.isMacOS && RuntimeEnvir.packageName == Config.packageName) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
       Config.flutterPackage = 'packages/adb_tool/';
-      Window.makeTitlebarTransparent();
-      Window.enableFullSizeContentView();
+      // Window.makeTitlebarTransparent();
+      // Window.enableFullSizeContentView();
     }
     configController.syncBackgroundStyle();
     WidgetsBinding.instance.addObserver(this);

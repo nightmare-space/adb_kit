@@ -3,7 +3,7 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
+// import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
@@ -35,29 +35,29 @@ class ConfigController extends GetxController {
   };
 
   void syncBackgroundStyle() {
-    if (backgroundStyle == BackgroundStyle.normal) {
-      if (GetPlatform.isWindows || GetPlatform.isLinux) {
-        return;
-      }
-      Window.setEffect(
-        effect: WindowEffect.disabled,
-        color: theme.colorScheme.background,
-        dark: false,
-      );
-    }
-    if (backgroundStyle == BackgroundStyle.image) {
-      Window.setEffect(
-        effect: WindowEffect.disabled,
-        color: theme.colorScheme.background.withOpacity(0.2),
-        dark: false,
-      );
-    } else {
-      Window.setEffect(
-        effect: WindowEffect.acrylic,
-        color: theme.colorScheme.background.withOpacity(0.2),
-        dark: false,
-      );
-    }
+    // if (backgroundStyle == BackgroundStyle.normal) {
+    //   if (GetPlatform.isWindows || GetPlatform.isLinux) {
+    //     return;
+    //   }
+    //   Window.setEffect(
+    //     effect: WindowEffect.disabled,
+    //     color: theme.colorScheme.background,
+    //     dark: false,
+    //   );
+    // }
+    // if (backgroundStyle == BackgroundStyle.image) {
+    //   Window.setEffect(
+    //     effect: WindowEffect.disabled,
+    //     color: theme.colorScheme.background.withOpacity(0.2),
+    //     dark: false,
+    //   );
+    // } else {
+    //   Window.setEffect(
+    //     effect: WindowEffect.acrylic,
+    //     color: theme.colorScheme.background.withOpacity(0.2),
+    //     dark: false,
+    //   );
+    // }
   }
 
   void changeBackgroundStyle(BackgroundStyle style) {

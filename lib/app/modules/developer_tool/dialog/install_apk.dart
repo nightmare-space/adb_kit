@@ -14,7 +14,11 @@ class InstallApkDialog extends StatefulWidget {
     this.paths,
     @required this.adbChannel,
   }) : super(key: key);
+
+  /// 路径列表
   final List<String> paths;
+
+  /// adb channel 实例
   final ADBChannel adbChannel;
 
   @override
@@ -45,6 +49,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
         setState(() {});
       }
     });
+    StringBuffer stringBuffer = StringBuffer();
     for (final String path in widget.paths) {
       final String name = p.basename(path);
       currentFile = name;
@@ -52,11 +57,15 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       try {
         await widget.adbChannel.install(path);
       } catch (e) {
-        showToast('$name 安装失败，输出:$e');
+        stringBuffer.write('$name: ${e.message}\n');
       }
       fileIndex++;
       // showToast('$name 已上传');
     }
+    if (stringBuffer.isNotEmpty) {
+      showToast('安装Apk错误输出\n:${stringBuffer.toString().trim()}', duration: const Duration(milliseconds: 5000));
+    }
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 
@@ -86,7 +95,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
                     RichText(
                         text: TextSpan(
                       children: [
-                         TextSpan(
+                        TextSpan(
                           text: '(',
                           style: TextStyle(
                             color: AppColors.fontColor,
@@ -95,14 +104,14 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
                         ),
                         TextSpan(
                           text: '$fileIndex',
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: bold,
                           ),
                         ),
                         TextSpan(
                           text: '/$fileNum)',
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: AppColors.fontColor,
                             fontWeight: bold,
                           ),

@@ -3,7 +3,7 @@ library adb_tool;
 import 'dart:async';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide Config;
-import 'package:flutter_acrylic/flutter_acrylic.dart';
+// import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -47,7 +47,7 @@ Future<void> runADBClient({Color primary}) async {
   if (primary != null) {
     seed = primary;
   }
-  // 启动文件管理器服务，以供 ADB KIT 选择本机文件
+  // // 启动文件管理器服务，以供 ADB KIT 选择本机文件
   Server.start();
   runZonedGuarded<void>(
     () async {
@@ -60,9 +60,9 @@ Future<void> runADBClient({Color primary}) async {
           appSupportDirectory: dir,
         );
       }
-      if (GetPlatform.isDesktop) {
-        await Window.initialize();
-      }
+      // if (GetPlatform.isDesktop) {
+      //   await Window.initialize();
+      // }
       runApp(const MaterialAppWrapper());
     },
     (error, stackTrace) {

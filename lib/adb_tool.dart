@@ -1,6 +1,6 @@
 library adb_tool;
 
-import 'package:flutter_acrylic/flutter_acrylic.dart';
+// import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 // 这个文件提供其他项目集成adb_tool的时候导包
 export 'app/modules/history/history_page.dart';
@@ -18,6 +18,7 @@ export 'themes/theme.dart';
 
 
 Future<double> getMacTitlebarWidth() async {
-  return await Window.getTitlebarHeight();
+  return 0;
+  // return await Window.getTitlebarHeight();
 }
 

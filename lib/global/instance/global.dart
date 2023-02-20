@@ -50,7 +50,7 @@ class Global {
 
   bool isInit = false;
   Multicast multicast = Multicast(
-    port: adbToolUdpPort,
+    port: adbToolUdpPort ,
   );
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -231,10 +231,14 @@ class Global {
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;
     if (controller.autoConnect) {
-      _receiveBoardCast();
+      try {
+        _receiveBoardCast();
+      } catch (e) {}
     }
     if (GetPlatform.isAndroid) {
-      _sendBoardCast();
+      try {
+        _sendBoardCast();
+      } catch (e) {}
     }
     _socketServer();
     await installAdbToEnvir();

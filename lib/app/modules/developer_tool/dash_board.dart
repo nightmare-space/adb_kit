@@ -43,6 +43,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   ADBChannel adbChannel;
   Terminal terminal = Terminal();
 
+  /// 获取卡片宽度，主要是做响应式适配的
   double getCardWidth() {
     ResponsiveWrapperData data = ResponsiveWrapper.of(context);
     if (data.isPhone) {
@@ -363,7 +364,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         List<String> paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
-                          final typeGroup = XTypeGroup(
+                          const typeGroup = XTypeGroup(
                             label: 'apk',
                             extensions: ['apk'],
                           );
@@ -375,6 +376,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             paths.add(xFile.path);
                           }
                         } else {
+                          // ignore: use_build_context_synchronously
                           paths = await FileSelector.pick(context);
                         }
                         if (paths.isEmpty) {
@@ -410,6 +412,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       },
     );
   }
+
 
   void installApkWithPaths(List<String> paths) {
     showDialog(

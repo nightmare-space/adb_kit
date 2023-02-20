@@ -4,7 +4,9 @@ on:
     branches:
       - main
     # paths-ignore
-
+  repository_dispatch:
+    types:
+      - api
 env:
   # APP名称
   APP_NAME: ADBKIT

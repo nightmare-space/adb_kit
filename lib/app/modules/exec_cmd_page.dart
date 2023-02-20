@@ -33,8 +33,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar;
-    if (ResponsiveWrapper.of(context).isPhone ||
-        controller.screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone || controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).terminal),
         automaticallyImplyLeading: false,
@@ -74,7 +73,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: '开启服务',
                         onTap: () async {
-                          const String cmd = 'adb start-server\r';
+                          String cmd = '$adb start-server\r';
                           Global().pty.writeString(cmd);
                           AdbUtil.startPoolingListDevices();
                         },
@@ -82,7 +81,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: '停止服务',
                         onTap: () async {
-                          const String cmd = 'adb kill-server\r';
+                          String cmd = '$adb kill-server\r';
                           Global().pty.writeString(cmd);
                           AdbUtil.stopPoolingListDevices();
                           final DevicesController controller = Get.find();
@@ -92,8 +91,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: '重启服务',
                         onTap: () async {
-                          const String cmd =
-                              'adb kill-server && adb start-server\r';
+                          String cmd = '$adb kill-server && adb start-server\r';
                           Global().pty.writeString(cmd);
                         },
                       ),

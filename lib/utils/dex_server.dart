@@ -6,7 +6,6 @@ import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/config/settings.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
-import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:settings/settings.dart';
@@ -18,7 +17,7 @@ import 'package:settings/settings.dart';
 class DexServer {
   DexServer._();
   static Map<String, AppChannel> serverStartList = {};
-  static int rangeStart = 6040;
+  static int rangeStart = 14040;
   // TODO(nightmare):这个最终应该改成isolate，
   static Future<AppChannel> startServer(String devicesId) async {
     await initSetting();
@@ -64,8 +63,6 @@ class DexServer {
             if (line.contains(startTag)) {
               Log.e('time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
-              Log.d(line);
-              Log.d(line.replaceAll(RegExp('.*>|<.*'), ''));
               final int remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
               Log.d('remotePort -> $remotePort');
               // 这个端口是本机成功绑定的端口
@@ -78,9 +75,9 @@ class DexServer {
               rangeStart += 10;
               Log.d('localPort -> $localPort');
               // 这样才能保证列表正常
-              final RemoteAppChannel channel = RemoteAppChannel();
-              channel.port = localPort;
-              channel.serial = devicesId;
+              final RemoteAppChannel channel = RemoteAppChannel(port: localPort);
+              // TODO 下面这行之前是放开的注释
+              // channel.serial = devicesId;
               serverStartList[devicesId] = channel;
               completer.complete(channel);
             }

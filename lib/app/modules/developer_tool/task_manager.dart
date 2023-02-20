@@ -8,7 +8,6 @@ import 'package:adb_tool/utils/http/http.dart';
 import 'package:adb_tool/utils/task.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
-import 'package:app_manager/core/interface/app_channel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
@@ -36,14 +35,13 @@ class _TaskManagerState extends State<TaskManager> {
   initTask() async {
     channel = await DexServer.startServer(widget.entity.serial);
     screenSize = ScreenSize.fromWM(
-      await execCmd('adb -s ${widget.entity.serial} shell wm size'),
+      await execCmd('$adb -s ${widget.entity.serial} shell wm size'),
     );
     Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (!mounted) {
         timer.cancel();
       }
-      Response res =
-          await httpInstance.get('http://127.0.0.1:${channel.port}/');
+      Response res = await httpInstance.get('http://127.0.0.1:${channel.port}/');
       List<dynamic> data = res.data;
       Log.i(data);
 
