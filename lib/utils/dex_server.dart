@@ -56,6 +56,9 @@ class DexServer {
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
       value.stdout.transform(utf8.decoder).listen((event) async {
+        if (event.isEmpty) {
+          return;
+        }
         Log.w(event.trim(), tag: 'dex server');
         if (event.contains(startTag)) {
           Log.w('serverStartList -> $serverStartList');
@@ -64,7 +67,7 @@ class DexServer {
               Log.e('time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
               final int remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
-              Log.d('remotePort -> $remotePort');
+              Log.d('Dex Server Start Port -> $remotePort');
               // 这个端口是本机成功绑定的端口
               final int localPort = await AdbUtil.getForwardPort(
                 devicesId,
@@ -73,11 +76,12 @@ class DexServer {
                 targetArg: 'tcp:$remotePort',
               );
               rangeStart += 10;
-              Log.d('localPort -> $localPort');
+              Log.d('ADB Forward LocalPort -> $localPort');
               // 这样才能保证列表正常
               final RemoteAppChannel channel = RemoteAppChannel(port: localPort);
               // TODO 下面这行之前是放开的注释
               // channel.serial = devicesId;
+              Log.i('channel -> ${channel.port}');
               serverStartList[devicesId] = channel;
               completer.complete(channel);
             }

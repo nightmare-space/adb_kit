@@ -120,10 +120,8 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                     Builder(
                       builder: (context) {
                         if (ResponsiveWrapper.of(context).isDesktop || ResponsiveWrapper.of(context).isTablet) {
-                          Log.i('isDesktop');
                           ScreenAdapter.init(896);
                         } else {
-                          Log.i('is not Desktop');
                           ScreenAdapter.init(414);
                         }
                         return Theme(

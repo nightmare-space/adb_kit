@@ -1,6 +1,6 @@
 # 分abi打包脚本
-flutter build apk --obfuscate --split-debug-info -t lib/main.dart --split-per-abi
-# flutter build apk --tree-shake-icons --split-per-abi
+# flutter build apk --obfuscate --split-debug-info -t lib/main.dart --split-per-abi
+flutter build apk --tree-shake-icons --split-per-abi
 LOCAL_DIR=$(
     cd $(dirname $0)
     pwd

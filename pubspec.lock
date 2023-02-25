@@ -27,13 +27,11 @@ packages:
     source: hosted
     version: "2.0.7"
   app_channel:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: applib_util
-      ref: HEAD
-      resolved-ref: f8ccf0eb57cc1d0f5fcae1df3ad4f8a82e6b1658
-      url: "https://github.com/nightmare-space/applib"
-    source: git
+      path: "../applib/applib_util"
+      relative: true
+    source: path
     version: "0.0.1"
   app_launcher:
     dependency: "direct main"
@@ -47,11 +45,9 @@ packages:
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "006d4ac396f8c7122ced0002f94f4944bf3bc450"
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "../app_manager"
+      relative: true
+    source: path
     version: "1.0.0+1"
   archive:
     dependency: transitive
@@ -285,14 +281,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_displaymode:
-    dependency: transitive
-    description:
-      name: flutter_displaymode
-      sha256: "136b0314fdc78fe995b0b75061fe9ff8210dffca84f8f8110f8f71029479db3b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   flutter_lints:
     dependency: "direct dev"
     description:

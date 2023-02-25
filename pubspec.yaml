@@ -115,8 +115,8 @@ dependency_overrides:
   # #   path: ../multicast
   # device_info:
   #   path: ../device_info
-  # app_manager:
-  #   path: ../app_manager
+  app_manager:
+    path: ../app_manager
   # adbutil:
   #   path: ../adbutil
   # xterm:
@@ -124,8 +124,8 @@ dependency_overrides:
   # logger_view:
   #   path: ../logger_view
   qr_code_scanner: ^1.0.0
-  # app_channel:
-  #   path: ../applib/applib_util
+  app_channel:
+    path: ../applib/applib_util
   # file_selector_nightmare:
   #   path: ../file_selector_meng
 flutter_intl:
