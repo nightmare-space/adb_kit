@@ -5,7 +5,7 @@ import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide TabController;
 
 import 'tab_indicator.dart';
 
