@@ -3,7 +3,7 @@ description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
 version: 1.3.9+37
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter_localizations:
@@ -70,14 +70,14 @@ dependencies:
   file_selector_nightmare:
     git: https://github.com/nightmare-space/file_selector_meng
   # adb plugin can launcher app
-  app_launcher:
-    git: https://github.com/nightmare-space/app_launcher
+  # app_launcher:
+  #   git: https://github.com/nightmare-space/app_launcher
   # foundation settings
   settings:
     git: https://github.com/nightmare-space/settings
   # adb plugin can view android device info and cpu/gpu status
-  device_info:
-    git: https://github.com/nightmare-space/device_info.git
+  # device_info:
+  #   git: https://github.com/nightmare-space/device_info.git
   # can manage window on desktop
   window_manager: ^0.2.3
   
@@ -107,8 +107,8 @@ dependency_overrides:
   flutter_svg: 1.1.5
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
-  # global_repository:
-  #   path: ../global_repository
+  global_repository:
+    path: ../global_repository
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:

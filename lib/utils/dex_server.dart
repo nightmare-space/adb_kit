@@ -19,7 +19,7 @@ class DexServer {
   static Map<String, AppChannel> serverStartList = {};
   static int rangeStart = 14040;
   // TODO(nightmare):这个最终应该改成isolate，
-  static Future<AppChannel> startServer(String devicesId) async {
+  static Future<AppChannel?> startServer(String devicesId) async {
     await initSetting();
     if (serverStartList.keys.contains(devicesId)) {
       return serverStartList[devicesId];
@@ -51,7 +51,7 @@ class DexServer {
       execuable,
       processArg,
       includeParentEnvironment: true,
-      environment: adbEnvir(),
+      environment: adbEnvir() as Map<String, String>?,
       runInShell: GetPlatform.isWindows ? true : false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
@@ -66,10 +66,10 @@ class DexServer {
             if (line.contains(startTag)) {
               Log.e('time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
-              final int remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
+              final int? remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
               Log.d('Dex Server Start Port -> $remotePort');
               // 这个端口是本机成功绑定的端口
-              final int localPort = await AdbUtil.getForwardPort(
+              final int? localPort = await AdbUtil.getForwardPort(
                 devicesId,
                 rangeStart: rangeStart,
                 rangeEnd: rangeStart + 10,

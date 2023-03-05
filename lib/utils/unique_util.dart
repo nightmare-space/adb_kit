@@ -15,9 +15,9 @@ class UniqueUtil {
     }
   }
 
-  static String props;
+  static String? props;
   static String getValueFromProps(String key) {
-    final List<String> tmp = props.split('\n');
+    final List<String> tmp = props!.split('\n');
     for (final String line in tmp) {
       if (line.contains(key)) {
         return line.replaceAll(RegExp('.*\\]: |\\[|\\]'), '');

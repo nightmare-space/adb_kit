@@ -21,7 +21,7 @@ class ScanUtil {
   ScanUtil._();
   static Future<void> parseScan() async {
     await PermissionUtil.requestCamera();
-    final String cameraScanResult = await Get.to(
+    final String? cameraScanResult = await Get.to(
       const QrScan(),
       preventDuplicates: false,
       fullscreenDialog: true,

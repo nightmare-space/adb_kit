@@ -8,7 +8,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 
 class AdbInstallPage extends StatefulWidget {
-  const AdbInstallPage({Key key}) : super(key: key);
+  const AdbInstallPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _AdbInstallPageState();
@@ -38,7 +38,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
           '未找到Adb',
           style: TextStyle(
             height: 1.0,
-            color: Theme.of(context).textTheme.bodyText2.color,
+            color: Theme.of(context).textTheme.bodyText2!.color,
             fontWeight: bold,
             fontSize: 16,
           ),
@@ -55,16 +55,16 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
 }
 
 class _DownloadFile extends StatefulWidget {
-  const _DownloadFile({Key key, this.callback}) : super(key: key);
-  final void Function() callback;
+  const _DownloadFile({Key? key, this.callback}) : super(key: key);
+  final void Function()? callback;
   @override
   _DownloadFileState createState() => _DownloadFileState();
 }
 
 class _DownloadFileState extends State<_DownloadFile> {
   final Dio dio = Dio();
-  Response<String> response;
-  final String filesPath = RuntimeEnvir.binPath;
+  Response<String>? response;
+  final String? filesPath = RuntimeEnvir.binPath;
   List<String> androidAdbFiles = [
     'http://nightmare.fun/YanTool/android/adb',
     'http://nightmare.fun/YanTool/android/adb.bin'
@@ -85,7 +85,7 @@ class _DownloadFileState extends State<_DownloadFile> {
     );
     final Uint8List picBytes = byteData.buffer.asUint8List();
     final String savePath =
-        filesPath + Platform.pathSeparator + p.basename(assetKey);
+        filesPath! + Platform.pathSeparator + p.basename(assetKey);
     final File file = File(savePath);
     if (!await file.exists()) {
       await file.writeAsBytes(picBytes);
@@ -112,7 +112,7 @@ class _DownloadFileState extends State<_DownloadFile> {
   }
 
   Future<void> execDownload() async {
-    List<String> needDownloadFile;
+    late List<String> needDownloadFile;
     if (Platform.isWindows) {
       needDownloadFile = winAdbFiles;
     } else if (Platform.isMacOS) {

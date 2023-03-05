@@ -16,7 +16,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class ExecCmdPage extends StatefulWidget {
-  const ExecCmdPage({Key key}) : super(key: key);
+  const ExecCmdPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _ExecCmdPageState();
@@ -32,10 +32,10 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone || controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: Text(S.of(context).terminal),
+        title: Text(S.of(context)!.terminal),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
@@ -74,7 +74,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         title: '开启服务',
                         onTap: () async {
                           String cmd = '$adb start-server\r';
-                          Global().pty.writeString(cmd);
+                          Global().pty!.writeString(cmd);
                           AdbUtil.startPoolingListDevices();
                         },
                       ),
@@ -82,7 +82,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         title: '停止服务',
                         onTap: () async {
                           String cmd = '$adb kill-server\r';
-                          Global().pty.writeString(cmd);
+                          Global().pty!.writeString(cmd);
                           AdbUtil.stopPoolingListDevices();
                           final DevicesController controller = Get.find();
                           controller.clearDevices();
@@ -92,13 +92,13 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                         title: '重启服务',
                         onTap: () async {
                           String cmd = '$adb kill-server && adb start-server\r';
-                          Global().pty.writeString(cmd);
+                          Global().pty!.writeString(cmd);
                         },
                       ),
                       ItemButton(
                         title: '复制ADB KEY',
                         onTap: () async {
-                          String homePath = '';
+                          String? homePath = '';
                           if (Platform.isMacOS) {
                             homePath = Platform.environment['HOME'];
                           } else if (Platform.isAndroid) {
@@ -132,9 +132,9 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
 }
 
 class ItemButton extends StatelessWidget {
-  const ItemButton({Key key, this.title, this.onTap}) : super(key: key);
-  final String title;
-  final void Function() onTap;
+  const ItemButton({Key? key, this.title, this.onTap}) : super(key: key);
+  final String? title;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class ItemButton extends StatelessWidget {
           children: [
             SizedBox(
               child: Text(
-                title,
+                title!,
                 style: TextStyle(
                   fontWeight: bold,
                 ),

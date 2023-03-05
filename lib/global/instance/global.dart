@@ -22,28 +22,28 @@ import 'page_manager.dart';
 
 extension PTYExt on Pty {
   void writeString(String data) {
-    write(utf8.encode(data));
+    write(utf8.encode(data) as Uint8List);
   }
 }
 
 class Global {
-  factory Global() => _getInstance();
+  factory Global() => _getInstance()!;
   Global._internal() {
     // Log.defaultLogger.printer = const Print();
-    Directory(RuntimeEnvir.binPath).createSync(recursive: true);
+    Directory(RuntimeEnvir.binPath!).createSync(recursive: true);
     HomeBinding().dependencies();
   }
 
-  static Global get instance => _getInstance();
-  static Global _instance;
+  static Global? get instance => _getInstance();
+  static Global? _instance;
 
-  static Global _getInstance() {
+  static Global? _getInstance() {
     _instance ??= Global._internal();
     return _instance;
   }
 
-  String drawerRoute = PageManager.instance.pages.first.runtimeType.toString();
-  Widget page;
+  String drawerRoute = PageManager.instance!.pages.first.runtimeType.toString();
+  Widget? page;
   void changeDrawerRoute(core.String route) {
     drawerRoute = route;
   }
@@ -56,21 +56,21 @@ class Global {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   // todo initial
-  Pty pty;
+  Pty? pty;
   Terminal terminal = Terminal();
   core.Future<void> initTerminal() async {
     if (Platform.isAndroid) {
-      String libPath = await getLibPath();
+      String? libPath = await getLibPath();
       RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
     }
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
     if (GetPlatform.isMobile) {
-      envir['HOME'] = RuntimeEnvir.binPath;
+      envir['HOME'] = RuntimeEnvir.binPath!;
     }
-    envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
-    envir['TMPDIR'] = RuntimeEnvir.binPath;
+    envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath!;
+    envir['TMPDIR'] = RuntimeEnvir.binPath!;
     envir['TERM'] = 'xterm-256color';
 
     String shell = 'sh';
@@ -84,7 +84,7 @@ class Global {
       workingDirectory: '/',
     );
 
-    pty.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+    pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
         terminal.write(event);
       },
@@ -128,12 +128,12 @@ class Global {
     );
   }
 
-  int successBindPort = 0;
+  int? successBindPort = 0;
   Future<void> _socketServer() async {
     successBindPort = await getSafePort(adbToolQrPort, adbToolQrPort + 10);
     // 等待扫描二维码的连接
     HttpServerUtil.bindServer(
-      successBindPort,
+      successBindPort!,
       (address) async {
         // 弹窗
         AdbResult result;
@@ -148,7 +148,7 @@ class Global {
             name: address,
           );
         } on AdbException catch (e) {
-          showToast(e.message);
+          showToast(e.message!);
         }
       },
     );
@@ -178,7 +178,7 @@ class Global {
       return true;
     }
     if (GetPlatform.isAndroid) {
-      String libPath = await getLibPath();
+      String? libPath = await getLibPath();
       File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
         '$libPath/libadb.so \$@',
       );
@@ -226,7 +226,7 @@ class Global {
     Log.i('当前系统语言 ${window.locales}');
     Log.i('当前系统主题 ${window.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');
-    Log.i('当前App内部主题 ${controller.theme.brightness}');
+    Log.i('当前App内部主题 ${controller.theme!.brightness}');
     // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     isInit = true;

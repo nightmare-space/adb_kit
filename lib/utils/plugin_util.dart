@@ -37,11 +37,11 @@ class PluginUtil {
     await _channel.invokeMethod('push', [local, remote]);
   }
 
-  static Future<String> execCmd(String cmd) async {
+  static Future<String?> execCmd(String cmd) async {
     return await _channel.invokeMethod('exec_cmd', cmd);
   }
 
-  static Future<String> changeNetDbugStatus(int port) async {
+  static Future<String?> changeNetDbugStatus(int port) async {
     return await _channel.invokeMethod('tcpip', port);
   }
 }

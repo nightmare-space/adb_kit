@@ -9,7 +9,7 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 
 class SearchIpPage extends StatefulWidget {
-  const SearchIpPage({Key key}) : super(key: key);
+  const SearchIpPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _SearchIpPageState();
@@ -51,8 +51,8 @@ class _SearchIpPageState extends State<SearchIpPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
-    if (Responsive.of(context).screenType == ScreenType.phone) {
+    AppBar? appBar;
+    if (Responsive.of(context)!.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: const Text('IP查看'),
         systemOverlayStyle: OverlayStyle.dark,

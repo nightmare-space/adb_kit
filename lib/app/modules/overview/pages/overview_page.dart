@@ -19,7 +19,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class OverviewPage extends StatefulWidget {
-  const OverviewPage({Key key}) : super(key: key);
+  const OverviewPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _OverviewPageState();
@@ -35,7 +35,7 @@ class _OverviewPageState extends State<OverviewPage> {
   final ConfigController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    AppBar? appBar;
     if (controller.screenType == ScreenType.phone ||
         ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
@@ -43,7 +43,7 @@ class _OverviewPageState extends State<OverviewPage> {
         elevation: 0.0,
         automaticallyImplyLeading: false,
         leading: Menubutton(scaffoldContext: context),
-        title: Text(S.of(context).home),
+        title: Text(S.of(context)!.home),
         actions: [
           if (GetPlatform.isAndroid)
             NiIconButton(
@@ -89,7 +89,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       children: [
                         const ItemHeader(color: CandyColors.candyPink),
                         Text(
-                          S.of(context).alreadyConnectDevice,
+                          S.of(context)!.alreadyConnectDevice,
                           style: TextStyle(
                             fontSize: 16.w,
                             fontWeight: bold,
@@ -123,7 +123,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.candyBlue),
                   Text(
-                    S.of(context).inputDeviceAddress,
+                    S.of(context)!.inputDeviceAddress,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: bold,
@@ -143,7 +143,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           controller: editingController,
                           style: const TextStyle(height: 1.2),
                           decoration: InputDecoration(
-                            hintText: S.of(context).inputFormat,
+                            hintText: S.of(context)!.inputFormat,
                             hintStyle: TextStyle(
                               fontSize: 14.w,
                               color: Theme.of(context)
@@ -174,7 +174,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   return;
                                 }
                                 Log.d('adb 连接开始 ${editingController.text}');
-                                AdbResult result;
+                                AdbResult? result;
                                 try {
                                   result = await AdbUtil.connectDevices(
                                     editingController.text,
@@ -194,7 +194,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   );
                                 } on AdbException catch (e) {
                                   Log.e(e);
-                                  showToast(e.message);
+                                  showToast(e.message!);
                                 }
                                 Log.d('adb 连接结束 ${result}');
                               },
@@ -219,7 +219,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.purple),
                   Text(
-                    S.of(context).scanToConnect,
+                    S.of(context)!.scanToConnect,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: bold,
@@ -238,7 +238,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   borderRadius: BorderRadius.circular(10.w),
                 ),
                 child: Text(
-                  S.of(context).scanQRCodeDes,
+                  S.of(context)!.scanQRCodeDes,
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 12.w,
@@ -294,9 +294,9 @@ class _OverviewPageState extends State<OverviewPage> {
 }
 
 class CardItem extends StatelessWidget {
-  const CardItem({Key key, this.child, this.padding}) : super(key: key);
-  final Widget child;
-  final EdgeInsetsGeometry padding;
+  const CardItem({Key? key, this.child, this.padding}) : super(key: key);
+  final Widget? child;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Material(

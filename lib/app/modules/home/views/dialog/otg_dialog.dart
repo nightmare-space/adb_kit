@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 class OTGDialog extends StatelessWidget {
-  const OTGDialog({Key key}) : super(key: key);
+  const OTGDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

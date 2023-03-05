@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color seed = const Color(0xFF3F51B5);
+Color? seed = const Color(0xFF3F51B5);
 
 const redSeed = Color(0xFFA13636);
 

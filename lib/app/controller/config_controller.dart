@@ -23,7 +23,7 @@ class ConfigController extends GetxController {
 
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
-  ThemeData theme = DefaultThemeData.light();
+  ThemeData? theme = DefaultThemeData.light();
 
   Map<String, ThemeData> themeMap = {
     'light': DefaultThemeData.light(),
@@ -70,8 +70,8 @@ class ConfigController extends GetxController {
   }
 
   // bool get isDarkTheme => theme is DarkTheme;
-  Locale locale = chinese;
-  ScreenType screenType;
+  Locale? locale = chinese;
+  ScreenType? screenType;
   bool get needShowMenuButton =>
       screenType == ScreenType.phone ||
       (screenType == null && GetPlatform.isAndroid);
@@ -100,7 +100,7 @@ class ConfigController extends GetxController {
     autoConnect = Settings.autoConnectDevice.get ?? autoConnect;
   }
 
-  void changeScreenType(ScreenType screenType) {
+  void changeScreenType(ScreenType? screenType) {
     this.screenType = screenType;
     if (screenType != null) {
       Settings.screenType.set = screenType.name;
@@ -185,7 +185,7 @@ class ConfigController extends GetxController {
         child: Text(path),
       ));
     }
-    final String newPartition = await showMenu<String>(
+    final String? newPartition = await showMenu<String>(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

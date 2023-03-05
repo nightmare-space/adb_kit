@@ -10,11 +10,11 @@ import 'package:global_repository/global_repository.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({
-    Key key,
+    Key? key,
     this.devicesEntity,
   }) : super(key: key);
   // 可能是ip地址可能是设备编号
-  final DevicesEntity devicesEntity;
+  final DevicesEntity? devicesEntity;
 
   @override
   _DevicesItemState createState() => _DevicesItemState();
@@ -22,9 +22,9 @@ class DevicesItem extends StatefulWidget {
 
 class _DevicesItemState extends State<DevicesItem>
     with TickerProviderStateMixin {
-  String _title;
-  AnimationController animationController;
-  AnimationController progressAnimaCTL;
+  String? _title;
+  late AnimationController animationController;
+  late AnimationController progressAnimaCTL;
   double progressMax = 1;
 
   Future<void> getDeviceInfo() async {
@@ -83,11 +83,11 @@ class _DevicesItemState extends State<DevicesItem>
 
   @override
   Widget build(BuildContext context) {
-    _title = widget.devicesEntity.productModel ?? widget.devicesEntity.serial;
+    _title = widget.devicesEntity!.productModel ?? widget.devicesEntity!.serial;
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () async {
-        if (!widget.devicesEntity.isConnect) {
+        if (!widget.devicesEntity!.isConnect) {
           showToast('设备未正常连接');
           return;
         }
@@ -146,7 +146,7 @@ class _DevicesItemState extends State<DevicesItem>
                               vertical: 2.w,
                             ),
                             child: Text(
-                              widget.devicesEntity.stat,
+                              widget.devicesEntity!.stat,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white.withOpacity(0.8),
@@ -160,7 +160,7 @@ class _DevicesItemState extends State<DevicesItem>
                   ),
                   Row(
                     children: [
-                      if (isAddress(widget.devicesEntity.serial))
+                      if (isAddress(widget.devicesEntity!.serial))
                         IconButton(
                           tooltip: '断开连接',
                           icon: Icon(
@@ -170,7 +170,7 @@ class _DevicesItemState extends State<DevicesItem>
                           onPressed: () async {
                             AdbUtil.stopPoolingListDevices();
                             await AdbUtil.disconnectDevices(
-                              widget.devicesEntity.serial,
+                              widget.devicesEntity!.serial,
                             );
                             AdbUtil.startPoolingListDevices();
                             // Global.instance.pseudoTerminal.write(
@@ -178,7 +178,7 @@ class _DevicesItemState extends State<DevicesItem>
                             // );
                           },
                         ),
-                      if (!widget.devicesEntity.isConnect)
+                      if (!widget.devicesEntity!.isConnect)
                         IconButton(
                           tooltip: '重新连接',
                           icon: Icon(
@@ -186,9 +186,9 @@ class _DevicesItemState extends State<DevicesItem>
                             size: 24.w,
                           ),
                           onPressed: () async {
-                            Log.e(widget.devicesEntity.serial);
+                            Log.e(widget.devicesEntity!.serial);
                             AdbUtil.reconnectDevices(
-                              widget.devicesEntity.serial,
+                              widget.devicesEntity!.serial,
                             );
                           },
                         ),
@@ -199,7 +199,7 @@ class _DevicesItemState extends State<DevicesItem>
                           color: Colors.black87,
                         ),
                         onPressed: () async {
-                          if (!widget.devicesEntity.isConnect) {
+                          if (!widget.devicesEntity!.isConnect) {
                             showToast('设备未正常连接');
                             return;
                           }

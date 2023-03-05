@@ -20,9 +20,9 @@ class ConnectEntity {
 }
 
 class ParseQrcodePage extends StatefulWidget {
-  const ParseQrcodePage({Key key, this.addressList}) : super(key: key);
+  const ParseQrcodePage({Key? key, this.addressList}) : super(key: key);
 
-  final List<String> addressList;
+  final List<String>? addressList;
 
   @override
   _ParseQrcodePageState createState() => _ParseQrcodePageState();
@@ -33,7 +33,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
   @override
   void initState() {
     super.initState();
-    for (var element in widget.addressList) {
+    for (var element in widget.addressList!) {
       entitys.add(ConnectEntity(element));
     }
     execPostMsg();
@@ -44,7 +44,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
       entitys[i].state = ConnectState.connecting;
       setState(() {});
       try {
-        await httpInstance.post('http://${entitys[i].address}');
+        await httpInstance!.post('http://${entitys[i].address}');
         entitys[i].state = ConnectState.success;
         setState(() {});
         Future.delayed(const Duration(milliseconds: 600), () {

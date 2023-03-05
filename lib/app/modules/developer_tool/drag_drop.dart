@@ -10,14 +10,14 @@ typedef PerformCall = void Function(List<String> paths);
 
 class DropTargetContainer extends StatefulWidget {
   const DropTargetContainer({
-    Key key,
+    Key? key,
     this.onPerform,
     this.onTap,
     this.title,
   }) : super(key: key);
-  final void Function() onTap;
-  final PerformCall onPerform;
-  final String title;
+  final void Function()? onTap;
+  final PerformCall? onPerform;
+  final String? title;
   @override
   State<StatefulWidget> createState() {
     return _DropTargetContainerState();
@@ -35,7 +35,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
           paths.add(file.path);
         }
         Log.d('paths -> $paths');
-        widget.onPerform(paths);
+        widget.onPerform!(paths);
       },
       onDragUpdated: (details) {
         setState(() {
@@ -113,7 +113,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                             fontSize: 16.w,
                             color: AppColors.fontColor,
                           ),
-                          child: Text(widget.title),
+                          child: Text(widget.title!),
                         ),
                       ],
                     ),

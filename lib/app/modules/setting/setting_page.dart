@@ -16,7 +16,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key key}) : super(key: key);
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _SettingsPageState();
@@ -40,10 +40,10 @@ class _SettingsPageState extends State<SettingsPage>
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
-        title: Text(S.of(context).settings),
+        title: Text(S.of(context)!.settings),
         automaticallyImplyLeading: false,
         // systemOverlayStyle: OverlayStyle.dark,
         leading: configController.needShowMenuButton
@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage>
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        S.of(context).view,
+                        S.of(context)!.view,
                         style: TextStyle(
                           fontSize: 14.w,
                           fontWeight: bold,
@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage>
                     children: [
                       SizedBox(height: 0.w),
                       SettingItem(
-                        title: S.of(context).layout,
+                        title: S.of(context)!.layout,
                         suffix: Builder(builder: (context) {
                           if (configController.screenType == ScreenType.phone ||
                               ResponsiveWrapper.of(context).isPhone) {
@@ -111,10 +111,10 @@ class _SettingsPageState extends State<SettingsPage>
                                 SelectTab(
                                   value: configController.screenType == null
                                       ? 3
-                                      : configController.screenType.index,
+                                      : configController.screenType!.index,
                                   children: [
-                                    Text(S.of(context).desktop),
-                                    Text(S.of(context).pad),
+                                    Text(S.of(context)!.desktop),
+                                    Text(S.of(context)!.pad),
                                   ],
                                   onChanged: (value) {
                                     configController.changeScreenType(
@@ -125,10 +125,10 @@ class _SettingsPageState extends State<SettingsPage>
                                 SelectTab(
                                   value: configController.screenType == null
                                       ? 1
-                                      : configController.screenType.index - 2,
+                                      : configController.screenType!.index - 2,
                                   children: [
-                                    Text(S.of(context).phone),
-                                    Text(S.of(context).autoFit),
+                                    Text(S.of(context)!.phone),
+                                    Text(S.of(context)!.autoFit),
                                   ],
                                   onChanged: (value) {
                                     if (value == 1) {
@@ -146,12 +146,12 @@ class _SettingsPageState extends State<SettingsPage>
                           return SelectTab(
                             value: configController.screenType == null
                                 ? 3
-                                : configController.screenType.index,
+                                : configController.screenType!.index,
                             children: [
-                              Text(S.of(context).desktop),
-                              Text(S.of(context).pad),
-                              Text(S.of(context).phone),
-                              Text(S.of(context).autoFit),
+                              Text(S.of(context)!.desktop),
+                              Text(S.of(context)!.pad),
+                              Text(S.of(context)!.phone),
+                              Text(S.of(context)!.autoFit),
                             ],
                             onChanged: (value) {
                               if (value == 3) {
@@ -166,7 +166,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       GetBuilder<ConfigController>(builder: (_) {
                         return SettingItem(
-                          title: S.of(context).theme,
+                          title: S.of(context)!.theme,
                           suffix: SelectTab(
                             value:
                                 Theme.of(context).brightness == Brightness.dark
@@ -174,9 +174,9 @@ class _SettingsPageState extends State<SettingsPage>
                                     : 1,
                             children: [
                               Text(
-                                S.of(context).dark,
+                                S.of(context)!.dark,
                               ),
-                              Text(S.of(context).light),
+                              Text(S.of(context)!.light),
                             ],
                             onChanged: (value) {
                               if (value == 0) {
@@ -191,7 +191,7 @@ class _SettingsPageState extends State<SettingsPage>
                         );
                       }),
                       SettingItem(
-                        title: S.of(context).language,
+                        title: S.of(context)!.language,
                         suffix: SelectTab(
                           value: configController.locale ==
                                   ConfigController.english
@@ -236,7 +236,7 @@ class _SettingsPageState extends State<SettingsPage>
                       // ),
                       GetBuilder<ConfigController>(builder: (_) {
                         return SettingItem(
-                          title: S.of(context).showStatusBar,
+                          title: S.of(context)!.showStatusBar,
                           suffix: AquaSwitch(
                             activeColor: Theme.of(context).primaryColor,
                             value: configController.showStatusBar,
@@ -285,7 +285,7 @@ class _SettingsPageState extends State<SettingsPage>
                     children: [
                       const ItemHeader(color: CandyColors.candyCyan),
                       Text(
-                        S.of(context).other,
+                        S.of(context)!.other,
                         style: TextStyle(
                           fontSize: 14.w,
                           fontWeight: bold,
@@ -308,12 +308,12 @@ class _SettingsPageState extends State<SettingsPage>
                             await configController.changeServerPath(context);
                             // setState(() {});
                           },
-                          title: S.of(context).serverPath,
+                          title: S.of(context)!.serverPath,
                           subTitle:
-                              S.of(context).fixDeviceWithoutDataLocalPermission,
+                              S.of(context)!.fixDeviceWithoutDataLocalPermission,
                           suffix: ValueListenableBuilder(
                             valueListenable: Settings.serverPath.ob,
-                            builder: (c, v, child) {
+                            builder: (c, dynamic v, child) {
                               return Text(
                                 Settings.serverPath.get,
                                 style: TextStyle(
@@ -326,7 +326,7 @@ class _SettingsPageState extends State<SettingsPage>
                       }),
                       GetBuilder<ConfigController>(builder: (_) {
                         return SettingItem(
-                          title: S.of(context).autoConnectDevice,
+                          title: S.of(context)!.autoConnectDevice,
                           suffix: AquaSwitch(
                             activeColor: Theme.of(context).primaryColor,
                             value: configController.autoConnect,
@@ -345,7 +345,7 @@ class _SettingsPageState extends State<SettingsPage>
                     children: [
                       const ItemHeader(color: CandyColors.candyGreen),
                       Text(
-                        S.of(context).developerSettings,
+                        S.of(context)!.developerSettings,
                         style: TextStyle(
                           fontSize: 14.w,
                           fontWeight: bold,
@@ -364,7 +364,7 @@ class _SettingsPageState extends State<SettingsPage>
                     children: [
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).showPerformanceOverlay,
+                        title: S.of(context)!.showPerformanceOverlay,
                         suffix: AquaSwitch(
                           value: configController.showPerformanceOverlay,
                           onChanged:
@@ -373,7 +373,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).debugRepaintRainbowEnabled,
+                        title: S.of(context)!.debugRepaintRainbowEnabled,
                         suffix: AquaSwitch(
                           value: debugRepaintRainbowEnabled,
                           onChanged: (value) {
@@ -388,7 +388,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).debugPaintPointersEnabled,
+                        title: S.of(context)!.debugPaintPointersEnabled,
                         suffix: AquaSwitch(
                           value: debugPaintPointersEnabled,
                           onChanged: (value) {
@@ -403,7 +403,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).debugPaintSizeEnabled,
+                        title: S.of(context)!.debugPaintSizeEnabled,
                         suffix: AquaSwitch(
                           value: debugPaintSizeEnabled,
                           onChanged: (value) {
@@ -418,7 +418,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).debugPaintLayerBordersEnabled,
+                        title: S.of(context)!.debugPaintLayerBordersEnabled,
                         suffix: AquaSwitch(
                           value: debugPaintLayerBordersEnabled,
                           onChanged: (value) {
@@ -430,7 +430,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).showSemanticsDebugger,
+                        title: S.of(context)!.showSemanticsDebugger,
                         suffix: AquaSwitch(
                           value: configController.showSemanticsDebugger,
                           onChanged: (value) {
@@ -442,7 +442,7 @@ class _SettingsPageState extends State<SettingsPage>
                       ),
                       SettingItem(
                         onTap: () async {},
-                        title: S.of(context).debugShowMaterialGrid,
+                        title: S.of(context)!.debugShowMaterialGrid,
                         suffix: AquaSwitch(
                           value: configController.debugShowMaterialGrid,
                           onChanged: (value) {
@@ -466,16 +466,16 @@ class _SettingsPageState extends State<SettingsPage>
 
 class SettingItem extends StatefulWidget {
   const SettingItem({
-    Key key,
+    Key? key,
     this.title,
     this.onTap,
     this.subTitle = '',
     this.suffix = const SizedBox(),
   }) : super(key: key);
 
-  final String title;
+  final String? title;
   final String subTitle;
-  final void Function() onTap;
+  final void Function()? onTap;
   final Widget suffix;
   @override
   State createState() => _SettingItemState();
@@ -506,7 +506,7 @@ class _SettingItemState extends State<SettingItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        widget.title,
+                        widget.title!,
                         style: TextStyle(
                           // color: Theme.of(context).colorScheme.primaryVariant,
                           fontWeight: FontWeight.w400,
@@ -551,16 +551,16 @@ class AquaSwitch extends StatelessWidget {
 
   final ValueChanged<bool> onChanged;
 
-  final Color activeColor;
+  final Color? activeColor;
 
-  final Color unActiveColor;
+  final Color? unActiveColor;
 
-  final Color thumbColor;
+  final Color? thumbColor;
 
   const AquaSwitch({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
+    Key? key,
+    required this.value,
+    required this.onChanged,
     this.activeColor,
     this.unActiveColor,
     this.thumbColor,
@@ -583,14 +583,14 @@ class AquaSwitch extends StatelessWidget {
 
 class SelectTab extends StatefulWidget {
   const SelectTab({
-    Key key,
+    Key? key,
     this.children = const [],
-    @required this.value,
+    required this.value,
     this.onChanged,
   }) : super(key: key);
   final List<Widget> children;
   final int value;
-  final void Function(int value) onChanged;
+  final void Function(int value)? onChanged;
 
   @override
   _SelectTabState createState() => _SelectTabState();

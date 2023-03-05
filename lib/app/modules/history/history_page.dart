@@ -13,16 +13,16 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class HistoryPage extends GetView<HistoryController> {
-  const HistoryPage({Key key}) : super(key: key);
+  const HistoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final ConfigController configController = Get.find();
-    AppBar appBar;
+    AppBar? appBar;
     if (configController.screenType == ScreenType.phone ||
         ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
-        title: Text(S.of(context).historyConnect),
+        title: Text(S.of(context)!.historyConnect),
         automaticallyImplyLeading: false,
         leading: Menubutton(
           scaffoldContext: context,
@@ -33,7 +33,7 @@ class HistoryPage extends GetView<HistoryController> {
       appBar: appBar,
       body: GetBuilder<HistoryController>(
         builder: (ctl) {
-          if (controller.adbHistorys.data.isEmpty) {
+          if (controller.adbHistorys.data!.isEmpty) {
             return Center(
               child: Text(
                 '这里就像开发者的钱包一样，什么也没有',
@@ -52,10 +52,10 @@ class HistoryPage extends GetView<HistoryController> {
                   CardItem(
                     padding: EdgeInsets.zero,
                     child: ListView.builder(
-                      itemCount: controller.adbHistorys.data.length,
+                      itemCount: controller.adbHistorys.data!.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (c, i) {
-                        final Data adbEntity = controller.adbHistorys.data[i];
+                        final Data adbEntity = controller.adbHistorys.data![i];
                         return Dismissible(
                           key: Key(i.toString()),
                           onDismissed: (direction) {
@@ -104,11 +104,11 @@ class HistoryPage extends GetView<HistoryController> {
             suffix = ':${adbEntity.port}';
           }
           result = await AdbUtil.connectDevices(
-            adbEntity.address + suffix,
+            adbEntity.address! + suffix,
           );
           showToast(result.message);
         } on AdbException catch (e) {
-          showToast(e.message);
+          showToast(e.message!);
         }
       },
       child: SizedBox(
@@ -165,7 +165,7 @@ class HistoryPage extends GetView<HistoryController> {
                             vertical: 2.w,
                           ),
                           child: Text(
-                            DateTime.parse(adbEntity.connectTime)
+                            DateTime.parse(adbEntity.connectTime!)
                                 .getTimeString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
@@ -179,9 +179,9 @@ class HistoryPage extends GetView<HistoryController> {
                   ],
                 ),
                 Text(
-                  adbEntity.address,
+                  adbEntity.address!,
                   style: TextStyle(
-                    color: Theme.of(Get.context)
+                    color: Theme.of(Get.context!)
                         .colorScheme
                         .onSurface
                         .withOpacity(0.8),

@@ -73,8 +73,8 @@ class RouteConfig {
       }
     }
   }
-  Offset offset;
-  double circleRadius;
+  late Offset offset;
+  late double circleRadius;
 }
 
 // double circleRadius

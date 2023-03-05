@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class AppStarterPlugin extends Pluggable {
   @override
-  Widget buildWidget(BuildContext context, DevicesEntity device) {
+  Widget buildWidget(BuildContext context, DevicesEntity? device) {
     return AppStarter(
       entity: device,
     );

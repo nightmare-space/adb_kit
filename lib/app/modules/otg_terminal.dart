@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OTGTerminal extends StatefulWidget {
-  const OTGTerminal({Key key}) : super(key: key);
+  const OTGTerminal({Key? key}) : super(key: key);
 
   @override
   State createState() => _OTGTerminalState();
@@ -19,13 +19,15 @@ class _OTGTerminalState extends State<OTGTerminal> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      // child: TermareView(
-      //   keyboardInput: (String data) {
-      //     PluginUtil.writeToOTG(data);
-      //   },
-      //   controller: controller.otgTerm,
-      // ),
-    );
+    // TODO
+    return const SizedBox();
+    // return SafeArea(
+    //   child: TermareView(
+    //     keyboardInput: (String data) {
+    //       PluginUtil.writeToOTG(data);
+    //     },
+    //     controller: controller.otgTerm,
+    //   ),
+    // );
   }
 }

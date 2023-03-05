@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class TaskManagerPlugin extends Pluggable {
   @override
-  Widget buildWidget(BuildContext context, DevicesEntity device) {
+  Widget buildWidget(BuildContext context, DevicesEntity? device) {
     return TaskManager(
       entity: device,
     );

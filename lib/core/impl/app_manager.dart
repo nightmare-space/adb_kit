@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class AppManagerPlugin extends Pluggable {
   @override
-  Widget buildWidget(BuildContext context, DevicesEntity device) {
+  Widget buildWidget(BuildContext context, DevicesEntity? device) {
     Get.put(CheckController());
     Get.put(IconController());
     return AppManagerWrapper(

@@ -6,10 +6,10 @@ import 'package:path/path.dart';
 // 使用安卓串口通信实现的adb通道
 class OTGADBChannel extends ADBChannel {
   @override
-  Future<String> execCmmand(String cmd) async {
+  Future<String?> execCmmand(String cmd) async {
     // otg 会去掉 adb -s xxx shell
     final String shell = cmd.replaceAll(RegExp('.*shell '), '');
-    final String data = await PluginUtil.execCmd(shell);
+    final String? data = await PluginUtil.execCmd(shell);
     Log.e('OTGADBChannel execCmmand -> $data');
     return data;
   }
@@ -28,7 +28,7 @@ class OTGADBChannel extends ADBChannel {
 
   @override
   Future<void> changeNetDebugStatus(int port) async {
-    final String data = await PluginUtil.changeNetDbugStatus(port);
+    final String? data = await PluginUtil.changeNetDbugStatus(port);
     Log.w('changeNetDebugStatus ->$data');
   }
 }

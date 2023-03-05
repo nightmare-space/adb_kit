@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DevicesList extends StatefulWidget {
-  const DevicesList({Key key}) : super(key: key);
+  const DevicesList({Key? key}) : super(key: key);
 
   @override
   _DevicesListState createState() => _DevicesListState();

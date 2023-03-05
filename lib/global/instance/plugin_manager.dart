@@ -1,16 +1,16 @@
 import 'package:adb_tool/core/interface/pluggable.dart';
 
 class PluginManager {
-  static PluginManager _instance;
+  static PluginManager? _instance;
 
   Map<String, Pluggable> get pluginsMap => _pluginsMap;
 
   final Map<String, Pluggable> _pluginsMap = {};
 
-  Pluggable _activatedPluggable;
-  String get activatedPluggableName => _activatedPluggable?.name;
+  Pluggable? _activatedPluggable;
+  String? get activatedPluggableName => _activatedPluggable?.name;
 
-  static PluginManager get instance {
+  static PluginManager? get instance {
     _instance ??= PluginManager._();
     return _instance;
   }

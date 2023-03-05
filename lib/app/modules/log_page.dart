@@ -9,7 +9,7 @@ import 'package:logger_view/logger_view.dart';
 import 'overview/pages/overview_page.dart';
 
 class LogPage extends StatefulWidget {
-  const LogPage({Key key}) : super(key: key);
+  const LogPage({Key? key}) : super(key: key);
 
   @override
   _LogPageState createState() => _LogPageState();
@@ -28,10 +28,10 @@ class _LogPageState extends State<LogPage> {
     if (Theme.of(context).brightness == Brightness.dark) {
       //TODO
     } else {}
-    AppBar appBar;
+    AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
-        title: Text(S.of(context).log),
+        title: Text(S.of(context)!.log),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? Menubutton(

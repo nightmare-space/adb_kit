@@ -9,7 +9,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrScanPage extends StatefulWidget {
-  const QrScanPage({Key key}) : super(key: key);
+  const QrScanPage({Key? key}) : super(key: key);
 
   @override
   _QrScanPageState createState() => _QrScanPageState();

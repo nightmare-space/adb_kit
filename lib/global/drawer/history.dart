@@ -10,7 +10,7 @@ class History extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context) {
     return DrawerItem(
-      title: S.of(context).historyConnect,
+      title: S.of(context)!.historyConnect,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.history,
@@ -22,7 +22,7 @@ class History extends ADBPage {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context).historyConnect,
+      title: S.of(context)!.historyConnect,
       iconData: Icons.history,
     );
   }

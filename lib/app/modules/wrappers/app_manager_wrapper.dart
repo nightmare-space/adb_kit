@@ -10,10 +10,10 @@ import 'package:global_repository/global_repository.dart';
 
 class AppManagerWrapper extends StatefulWidget {
   const AppManagerWrapper({
-    Key key,
-    @required this.devicesEntity,
+    Key? key,
+    required this.devicesEntity,
   }) : super(key: key);
-  final DevicesEntity devicesEntity;
+  final DevicesEntity? devicesEntity;
 
   @override
   State createState() => _AppManagerWrapperState();
@@ -29,9 +29,9 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
   }
 
   Future<void> startServer() async {
-    AppChannel appChannel = await DexServer.startServer(
-      widget.devicesEntity.serial,
-    );
+    AppChannel appChannel = (await DexServer.startServer(
+      widget.devicesEntity!.serial,
+    ))!;
     controller.setAppChannel(appChannel);
     if (mounted) {
       setState(() {});
@@ -40,7 +40,7 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (!DexServer.serverStartList.keys.contains(widget.devicesEntity.serial)) {
+    if (!DexServer.serverStartList.keys.contains(widget.devicesEntity!.serial)) {
       return SpinKitDualRing(
         color: AppColors.accent,
         size: 20.w,
@@ -49,7 +49,7 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
     }
     return AppManagerEntryPoint(
       // 直接进到设备的shell
-      process: YanProcess()..exec('adb -s ${widget.devicesEntity.serial} shell'),
+      process: YanProcess()..exec('adb -s ${widget.devicesEntity!.serial} shell'),
     );
   }
 }

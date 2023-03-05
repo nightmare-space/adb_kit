@@ -6,8 +6,8 @@ import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 
 class ScreenshotPage extends StatefulWidget {
-  const ScreenshotPage({Key key, this.devicesEntity}) : super(key: key);
-  final DevicesEntity devicesEntity;
+  const ScreenshotPage({Key? key, this.devicesEntity}) : super(key: key);
+  final DevicesEntity? devicesEntity;
 
   @override
   State createState() => _ScreenshotPageState();
@@ -23,7 +23,7 @@ class _ScreenshotPageState extends State<ScreenshotPage> {
 
   Future<void> getScreen() async {
     await asyncExec(
-      'adb -s ${widget.devicesEntity.serial} shell screencap -p >/sdcard/tmp.png',
+      'adb -s ${widget.devicesEntity!.serial} shell screencap -p >/sdcard/tmp.png',
     );
     byte = await File('/sdcard/tmp.png').readAsBytes();
     setState(() {});

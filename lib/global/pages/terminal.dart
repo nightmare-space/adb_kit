@@ -3,7 +3,7 @@ import 'package:adb_tool/global/widget/xterm_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class TerminalPage extends StatelessWidget {
-  const TerminalPage({Key key, this.enableInput = false}) : super(key: key);
+  const TerminalPage({Key? key, this.enableInput = false}) : super(key: key);
 
   final bool enableInput;
 

@@ -8,30 +8,30 @@ import 'package:xterm/xterm.dart';
 
 class XTermWrapper extends StatefulWidget {
   const XTermWrapper({
-    Key key,
+    Key? key,
     this.terminal,
     this.pseudoTerminal,
   }) : super(key: key);
-  final Terminal terminal;
-  final Pty pseudoTerminal;
+  final Terminal? terminal;
+  final Pty? pseudoTerminal;
 
   @override
   State<XTermWrapper> createState() => _XTermWrapperState();
 }
 
 class _XTermWrapperState extends State<XTermWrapper> {
-  StreamSubscription streamSubscription;
+  StreamSubscription? streamSubscription;
 
   @override
   void initState() {
     super.initState();
-    widget.terminal.onOutput = (data) {
-      widget.pseudoTerminal.writeString(data);
+    widget.terminal!.onOutput = (data) {
+      widget.pseudoTerminal!.writeString(data);
     };
 
-    widget.terminal.onResize = (width, height, pixelWidth, pixelHeight) {
+    widget.terminal!.onResize = (width, height, pixelWidth, pixelHeight) {
       // Log.i('$width $height $pixelWidth $pixelHeight');
-      widget.pseudoTerminal.resize(height, width);
+      widget.pseudoTerminal!.resize(height, width);
     };
     // streamSubscription ??= widget.pseudoTerminal.output
     //     .cast<List<int>>()
@@ -46,7 +46,7 @@ class _XTermWrapperState extends State<XTermWrapper> {
   @override
   Widget build(BuildContext context) {
     return TerminalView(
-      widget.terminal,
+      widget.terminal!,
       backgroundOpacity: 0,
       keyboardType: TextInputType.multiline,
       theme: GetPlatform.isAndroid ? android : theme,

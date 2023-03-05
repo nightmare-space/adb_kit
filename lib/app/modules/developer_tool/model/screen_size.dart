@@ -8,7 +8,7 @@ class ScreenSize {
     size.height = int.tryParse(tmp.split('x')[1]);
     return size;
   }
-  int width;
-  int height;
-  double get radio => width / height;
+  int? width;
+  int? height;
+  double get radio => width! / height!;
 }

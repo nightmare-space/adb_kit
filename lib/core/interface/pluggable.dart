@@ -6,6 +6,6 @@ abstract class Pluggable {
   String get name;
   String get displayName;
   void onTrigger();
-  Widget buildWidget(BuildContext context, DevicesEntity device);
+  Widget buildWidget(BuildContext context, DevicesEntity? device);
   ImageProvider get iconImageProvider;
 }

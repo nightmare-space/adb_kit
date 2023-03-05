@@ -13,13 +13,13 @@ class AdbEntity {
     port = tmp[1];
     dateTime = DateTime.parse(tmp[2]);
   }
-  String ip;
-  String port;
-  DateTime dateTime;
+  String? ip;
+  String? port;
+  DateTime? dateTime;
   @override
   int get hashCode => '$ip$port'.hashCode;
   String getTimeString() {
-    return '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.minute}:${dateTime.second}';
+    return '${dateTime!.year}-${dateTime!.month}-${dateTime!.day} ${dateTime!.hour}:${dateTime!.minute}:${dateTime!.second}';
   }
 
   String getLocalString() {
@@ -34,7 +34,7 @@ class AdbEntity {
     }
     if (other is AdbEntity) {
       final AdbEntity adbEntity = other;
-      return ip + port == adbEntity.ip + adbEntity.port;
+      return ip! + port! == adbEntity.ip! + adbEntity.port!;
     }
     return false;
   }
@@ -54,17 +54,17 @@ class HistoryController extends GetxController {
     }
   }
   static void updateHistory({
-    String address,
-    String port,
-    String name,
+    String? address,
+    String? port,
+    String? name,
   }) {
     final HistoryController historyController = Get.find();
     historyController._updateHistory(
       Data(
-        address: address,
-        port: port,
+        address: address!,
+        port: port!,
         connectTime: DateTime.now().toString(),
-        name: name,
+        name: name!,
       ),
     );
   }
@@ -93,8 +93,7 @@ class HistoryController extends GetxController {
     }
     final String data = await Config.historySaveFile.readAsString();
     try {
-      adbHistorys =
-          ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
+      adbHistorys = ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);
       sort();
     } catch (e) {
       Config.historySaveFile.delete();
@@ -103,21 +102,21 @@ class HistoryController extends GetxController {
   }
 
   void sort() {
-    adbHistorys.data.sort((a, b) {
-      return DateTime.parse(b.connectTime).compareTo(
-        DateTime.parse(a.connectTime),
+    adbHistorys.data!.sort((a, b) {
+      return DateTime.parse(b.connectTime!).compareTo(
+        DateTime.parse(a.connectTime!),
       );
     });
   }
 
   void removeHis(int index) {
-    adbHistorys.data.removeAt(index);
+    adbHistorys.data!.removeAt(index);
     saveToLocal();
   }
 
   void _updateHistory(Data data) {
     try {
-      final Data preData = adbHistorys.data.firstWhere(
+      final Data preData = adbHistorys.data!.firstWhere(
         (element) {
           return element.address == data.address;
         },
@@ -125,7 +124,7 @@ class HistoryController extends GetxController {
       preData.connectTime = data.connectTime;
       preData.name = data.name;
     } catch (e) {
-      adbHistorys.data.add(data);
+      adbHistorys.data!.add(data);
     }
     saveToLocal();
   }

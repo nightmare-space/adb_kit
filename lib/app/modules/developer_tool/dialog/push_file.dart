@@ -10,12 +10,12 @@ import 'package:path/path.dart' as p;
 
 class PushFileDialog extends StatefulWidget {
   const PushFileDialog({
-    Key key,
+    Key? key,
     this.paths,
-    @required this.adbChannel,
+    required this.adbChannel,
   }) : super(key: key);
-  final List<String> paths;
-  final ADBChannel adbChannel;
+  final List<String>? paths;
+  final ADBChannel? adbChannel;
 
   @override
   State createState() => _PushFileDialogState();
@@ -30,7 +30,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
   @override
   void initState() {
     super.initState();
-    fileNum = widget.paths.length;
+    fileNum = widget.paths!.length;
     if (Platform.isAndroid) {
       progress = 0;
     }
@@ -45,11 +45,11 @@ class _PushFileDialogState extends State<PushFileDialog> {
         setState(() {});
       }
     });
-    for (final String path in widget.paths) {
+    for (final String path in widget.paths!) {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
-      await widget.adbChannel.push(path, '/sdcard/');
+      await widget.adbChannel!.push(path, '/sdcard/');
       fileIndex++;
       // showToast('$name 已上传');
     }

@@ -11,15 +11,15 @@ class RoundedUnderlineTabIndicator extends Decoration {
         assert(insets != null);
   final BorderSide borderSide;
   final EdgeInsetsGeometry insets;
-  final double radius;
-  final double width;
+  final double? radius;
+  final double? width;
 
   @override
-  Decoration lerpFrom(Decoration a, double t) {
+  Decoration? lerpFrom(Decoration? a, double t) {
     if (a is RoundedUnderlineTabIndicator) {
       return RoundedUnderlineTabIndicator(
         borderSide: BorderSide.lerp(a.borderSide, borderSide, t),
-        insets: EdgeInsetsGeometry.lerp(a.insets, insets, t),
+        insets: EdgeInsetsGeometry.lerp(a.insets, insets, t)!,
         radius: radius ?? borderSide.width * 5,
         width: width,
       );
@@ -28,11 +28,11 @@ class RoundedUnderlineTabIndicator extends Decoration {
   }
 
   @override
-  Decoration lerpTo(Decoration b, double t) {
+  Decoration? lerpTo(Decoration? b, double t) {
     if (b is RoundedUnderlineTabIndicator) {
       return RoundedUnderlineTabIndicator(
         borderSide: BorderSide.lerp(borderSide, b.borderSide, t),
-        insets: EdgeInsetsGeometry.lerp(insets, b.insets, t),
+        insets: EdgeInsetsGeometry.lerp(insets, b.insets, t)!,
         radius: radius ?? borderSide.width * 5,
         width: width,
       );
@@ -41,7 +41,7 @@ class RoundedUnderlineTabIndicator extends Decoration {
   }
 
   @override
-  _RoundedUnderlinePainter createBoxPainter([VoidCallback onChanged]) {
+  _RoundedUnderlinePainter createBoxPainter([VoidCallback? onChanged]) {
     return _RoundedUnderlinePainter(
       this,
       onChanged,
@@ -54,13 +54,13 @@ class RoundedUnderlineTabIndicator extends Decoration {
 class _RoundedUnderlinePainter extends BoxPainter {
   _RoundedUnderlinePainter(
     this.decoration,
-    VoidCallback onChanged, {
-    @required this.radius,
+    VoidCallback? onChanged, {
+    required this.radius,
     this.width,
   })  : assert(decoration != null),
         super(onChanged);
   final double radius;
-  final double width;
+  final double? width;
 
   final RoundedUnderlineTabIndicator decoration;
 
@@ -84,7 +84,7 @@ class _RoundedUnderlinePainter extends BoxPainter {
                 indicator.left + indicator.width / 2,
                 indicator.bottom - borderSide.width,
               ),
-              width: width,
+              width: width!,
               height: borderSide.width,
             ),
       topLeft: Radius.circular(radius),
@@ -98,8 +98,8 @@ class _RoundedUnderlinePainter extends BoxPainter {
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     assert(configuration != null);
     assert(configuration.size != null);
-    final Rect rect = offset & configuration.size;
-    final TextDirection textDirection = configuration.textDirection;
+    final Rect rect = offset & configuration.size!;
+    final TextDirection textDirection = configuration.textDirection!;
     final RRect indicator =
         _indicatorRectFor(rect, textDirection).deflate(borderSide.width);
     final Paint paint = borderSide.toPaint()

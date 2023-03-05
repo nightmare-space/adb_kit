@@ -13,7 +13,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class RemoteDebugPage extends StatefulWidget {
-  const RemoteDebugPage({Key key}) : super(key: key);
+  const RemoteDebugPage({Key? key}) : super(key: key);
 
   @override
   _RemoteDebugPageState createState() => _RemoteDebugPageState();
@@ -52,11 +52,11 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone ||
         configController.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: Text(S.of(context).networkDebug),
+        title: Text(S.of(context)!.networkDebug),
         automaticallyImplyLeading: false,
         titleSpacing: 0,
         leading: configController.needShowMenuButton
@@ -85,7 +85,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        S.of(context).openLocalNetDebug,
+                        S.of(context)!.openLocalNetDebug,
                         style: TextStyle(
                           fontWeight: bold,
                           fontSize: 16.w,
@@ -110,7 +110,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                             color: CandyColors.candyPurpleAccent,
                           ),
                           Text(
-                            S.of(context).localAddress,
+                            S.of(context)!.localAddress,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
                               fontWeight: bold,
@@ -151,7 +151,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         children: [
                           const ItemHeader(color: CandyColors.candyBlue),
                           Text(
-                            S.of(context).connectMethod,
+                            S.of(context)!.connectMethod,
                             style: TextStyle(
                               fontSize: Dimens.font_sp20,
                               fontWeight: bold,
@@ -164,7 +164,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         child: Row(
                           children: [
                             Text(
-                              S.of(context).connectMethodDes1,
+                              S.of(context)!.connectMethodDes1,
                               style: TextStyle(
                                 fontSize: Dimens.font_sp14,
                                 fontWeight: bold,
@@ -176,7 +176,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                         child: Text(
-                          S.of(context).connectMethodDes2,
+                          S.of(context)!.connectMethodDes2,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
                             fontWeight: bold,
@@ -221,7 +221,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                         child: Text(
-                          S.of(context).connectMethodDes3,
+                          S.of(context)!.connectMethodDes3,
                           style: TextStyle(
                             fontSize: Dimens.font_sp14,
                             fontWeight: bold,
@@ -272,7 +272,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         borderRadius: BorderRadius.circular(10.w),
                       ),
                       child: Text(
-                        S.of(context).connectMethodTip,
+                        S.of(context)!.connectMethodTip,
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 12.w,

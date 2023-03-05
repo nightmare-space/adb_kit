@@ -12,14 +12,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 class DesktopPhoneDrawer extends StatefulWidget {
   const DesktopPhoneDrawer({
-    Key key,
+    Key? key,
     this.onChanged,
     this.groupValue,
     this.width,
   }) : super(key: key);
-  final void Function(Widget page) onChanged;
-  final String groupValue;
-  final double width;
+  final void Function(Widget page)? onChanged;
+  final String? groupValue;
+  final double? width;
 
   @override
   State createState() => _DesktopPhoneDrawerState();
@@ -30,7 +30,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = widget.width;
+    final double? width = widget.width;
     return Material(
       color: ResponsiveWrapper.of(context).isDesktop
           ? Theme.of(context).colorScheme.background.withOpacity(0.2)
@@ -68,15 +68,15 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 8.w),
-        if (Custom.drawerHeader != null) Custom.drawerHeader,
-        for (ADBPage page in PageManager.instance.pages)
+        if (Custom.drawerHeader != null) Custom.drawerHeader!,
+        for (ADBPage page in PageManager.instance!.pages)
           if (page.isActive)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: InkWell(
                 onTap: () {
                   Global().changeDrawerRoute(page.runtimeType.toString());
-                  widget.onChanged(page.buildPage(context));
+                  widget.onChanged!(page.buildPage(context));
                 },
                 borderRadius: BorderRadius.circular(8.w),
                 child: page.buildDrawer(context),
@@ -91,18 +91,18 @@ final ConfigController configController = Get.find();
 
 class DrawerItem extends StatelessWidget {
   const DrawerItem({
-    Key key,
+    Key? key,
     this.title,
     this.onTap,
     this.value,
     this.groupValue,
     this.iconData,
   }) : super(key: key);
-  final String title;
-  final void Function(String value) onTap;
-  final String value;
-  final String groupValue;
-  final IconData iconData;
+  final String? title;
+  final void Function(String value)? onTap;
+  final String? value;
+  final String? groupValue;
+  final IconData? iconData;
   @override
   Widget build(BuildContext context) {
     final bool isChecked = value == groupValue;
@@ -138,7 +138,7 @@ class DrawerItem extends StatelessWidget {
                     width: Dimens.gap_dp8,
                   ),
                   Text(
-                    title,
+                    title!,
                     style: TextStyle(
                       color: isChecked
                           ? Theme.of(context).primaryColor

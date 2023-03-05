@@ -22,11 +22,11 @@ import 'dialog/otg_dialog.dart';
 
 class AdbTool extends StatefulWidget {
   const AdbTool({
-    Key key,
+    Key? key,
     this.packageName,
   }) : super(key: key);
 
-  final String packageName;
+  final String? packageName;
   @override
   State createState() => _AdbToolState();
 }
@@ -71,7 +71,12 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     // TODO detach 也需要
     Future.delayed(Duration.zero, () async {
       if ('privacy'.get == null) {
-        await Get.to(const PrivacyAgreePage());
+        await Get.to(PrivacyAgreePage(
+          onAgreeTap: () {
+            'privacy'.set = true;
+            Navigator.of(context).pop();
+          },
+        ));
       }
     });
   }
@@ -85,11 +90,9 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    Global().page ??= PageManager.instance.pages.first.buildPage(context);
+    Global().page ??= PageManager.instance!.pages.first.buildPage(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: Theme.of(context).brightness == Brightness.dark
-          ? OverlayStyle.light
-          : OverlayStyle.dark,
+      value: Theme.of(context).brightness == Brightness.dark ? OverlayStyle.light : OverlayStyle.dark,
       child: Stack(
         children: [
           Builder(
@@ -110,10 +113,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                         height: double.infinity,
                         width: 0.5,
                         margin: EdgeInsets.symmetric(vertical: 40.w),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.4),
+                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
                       ),
                       Expanded(
                         child: PageTransitionSwitcher(
@@ -152,10 +152,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
                         height: double.infinity,
                         width: 1,
                         margin: EdgeInsets.symmetric(vertical: 40.w),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withOpacity(0.1),
+                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
                       ),
                       Expanded(
                         child: PageTransitionSwitcher(

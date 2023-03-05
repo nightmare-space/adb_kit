@@ -4,13 +4,13 @@ part of xlive_switch;
 
 class _XlivSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   const _XlivSwitchRenderObjectWidget({
-    Key key,
-    @required this.value,
-    @required this.activeColor,
-    @required this.unActiveColor,
-    @required this.thumbColor,
-    @required this.onChanged,
-    @required this.vsync,
+    Key? key,
+    required this.value,
+    required this.activeColor,
+    required this.unActiveColor,
+    required this.thumbColor,
+    required this.onChanged,
+    required this.vsync,
   }) : super(key: key);
 
   final bool value;
@@ -61,13 +61,13 @@ const Duration _kToggleDuration = Duration(milliseconds: 200);
 
 class _RenderXliveSwitch extends RenderConstrainedBox {
   _RenderXliveSwitch({
-    @required bool value,
-    @required Color activeColor,
-    @required Color unActiveColor,
-    @required Color thumbColor,
-    @required ValueChanged<bool> onChanged,
-    @required TextDirection textDirection,
-    @required TickerProvider vsync,
+    required bool value,
+    required Color activeColor,
+    required Color unActiveColor,
+    required Color thumbColor,
+    required ValueChanged<bool> onChanged,
+    required TextDirection textDirection,
+    required TickerProvider vsync,
   })  : assert(value != null),
         assert(activeColor != null),
         assert(vsync != null),
@@ -113,7 +113,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
     ).animate(_positionController);
   }
 
-  Animation<Color> _color;
+  late Animation<Color?> _color;
 
   Color _thumbColor;
 
@@ -125,10 +125,10 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
 
   Color get thumbColor => _thumbColor;
 
-  AnimationController _positionController;
-  CurvedAnimation _position;
+  late AnimationController _positionController;
+  CurvedAnimation? _position;
 
-  AnimationController _reactionController;
+  late AnimationController _reactionController;
 
   bool get value => _value;
   bool _value;
@@ -203,8 +203,8 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
 
   bool get isInteractive => onChanged != null;
 
-  TapGestureRecognizer _tap;
-  HorizontalDragGestureRecognizer _drag;
+  late TapGestureRecognizer _tap;
+  late HorizontalDragGestureRecognizer _drag;
 
   @override
   void attach(PipelineOwner owner) {
@@ -269,7 +269,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
       // _position
       //   ..curve = null
       //   ..reverseCurve = null;
-      final double delta = details.primaryDelta / _kTrackInnerLength;
+      final double delta = details.primaryDelta! / _kTrackInnerLength;
       switch (textDirection) {
         case TextDirection.rtl:
           _positionController.value -= delta;
@@ -282,7 +282,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (_position.value >= 0.5)
+    if (_position!.value >= 0.5)
       _positionController.forward();
     else
       _positionController.reverse();
@@ -317,9 +317,9 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
   void paint(PaintingContext context, Offset offset) {
     final Canvas canvas = context.canvas;
 
-    final double currentValue = _position.value;
+    final double currentValue = _position!.value;
 
-    double visualPosition;
+    late double visualPosition;
     switch (textDirection) {
       case TextDirection.rtl:
         visualPosition = 1.0 - currentValue;
@@ -329,7 +329,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
         break;
     }
 
-    final trackColor = _color.value;
+    final trackColor = _color.value!;
     const double borderThickness = 1.5 + (_kTrackRadius - 1.5) * 1.0;
 
     final Paint paint = Paint()..color = trackColor;
@@ -350,12 +350,12 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
       trackRect.left + _kTrackInnerStart - _XliveThumbPainter.radius,
       trackRect.left + _kTrackInnerEnd - _XliveThumbPainter.radius,
       visualPosition,
-    );
+    )!;
     final double thumbRight = lerpDouble(
       trackRect.left + _kTrackInnerStart + _XliveThumbPainter.radius,
       trackRect.left + _kTrackInnerEnd + _XliveThumbPainter.radius,
       visualPosition,
-    );
+    )!;
     final double thumbCenterY = offset.dy + size.height / 2.0;
 
     _thumbPainter.paint(

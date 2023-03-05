@@ -7,4 +7,4 @@ part 'src/exception.dart';
 part 'src/dio_utils.dart';
 part 'src/interceptors.dart';
 
-Dio httpInstance = DioUtils.getInstance();
+Dio? httpInstance = DioUtils.getInstance();

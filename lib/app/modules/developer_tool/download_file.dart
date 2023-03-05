@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DownloadFile extends StatefulWidget {
-  const DownloadFile({Key key, this.serial}) : super(key: key);
-  final String serial;
+  const DownloadFile({Key? key, this.serial}) : super(key: key);
+  final String? serial;
 
   @override
   State createState() => _DownloadFileState();
@@ -44,7 +44,7 @@ class _DownloadFileState extends State<DownloadFile>
           '下载文件',
           style: TextStyle(
             height: 1.0,
-            color: Theme.of(context).textTheme.bodyText2.color,
+            color: Theme.of(context).textTheme.bodyText2!.color,
             fontWeight: bold,
           ),
         ),
@@ -95,8 +95,8 @@ class _DownloadFileState extends State<DownloadFile>
                             TextButton(
                               onPressed: () async {
                                 final String text =
-                                    (await Clipboard.getData('text/plain'))
-                                        .text;
+                                    (await Clipboard.getData('text/plain'))!
+                                        .text!;
                                 devicesFilePathCTL.text = text;
                               },
                               child: const Text('粘贴'),
@@ -130,8 +130,8 @@ class _DownloadFileState extends State<DownloadFile>
                             TextButton(
                               onPressed: () async {
                                 final String text =
-                                    (await Clipboard.getData('text/plain'))
-                                        .text;
+                                    (await Clipboard.getData('text/plain'))!
+                                        .text!;
                                 localFilePathCTL.text = text;
                               },
                               child: const Text('粘贴'),

@@ -13,7 +13,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 // 安装 adb 工具到系统
 class AdbInstallToSystemPage extends StatefulWidget {
-  const AdbInstallToSystemPage({Key key}) : super(key: key);
+  const AdbInstallToSystemPage({Key? key}) : super(key: key);
 
   @override
   State createState() => _AdbInstallToSystemPageState();
@@ -22,7 +22,7 @@ class AdbInstallToSystemPage extends StatefulWidget {
 class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   String binPath = '/system/bin';
   String xbinPath = '/system/xbin';
-  String choosePath;
+  String? choosePath;
 
   final ConfigController controller = Get.find();
 
@@ -34,11 +34,11 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar;
+    AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone ||
         controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: Text(S.of(context).installToSystem),
+        title: Text(S.of(context)!.installToSystem),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
@@ -75,7 +75,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 color: CandyColors.candyCyan,
                               ),
                               Text(
-                                S.of(context).chooseInstallPath,
+                                S.of(context)!.chooseInstallPath,
                                 style: TextStyle(
                                   fontSize: 16.w,
                                   fontWeight: bold,
@@ -97,7 +97,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                   Radio(
                                     value: xbinPath,
                                     groupValue: choosePath,
-                                    onChanged: (String value) {
+                                    onChanged: (String? value) {
                                       choosePath = value;
                                       setState(() {});
                                     },
@@ -116,7 +116,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                   Radio<String>(
                                     value: binPath,
                                     groupValue: choosePath,
-                                    onChanged: (String value) {
+                                    onChanged: (String? value) {
                                       choosePath = value;
                                       setState(() {});
                                     },
@@ -140,7 +140,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context).installDes1,
+                              S.of(context)!.installDes1,
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 12.w,
@@ -156,7 +156,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context).installDes2,
+                              S.of(context)!.installDes2,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -174,7 +174,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context).installDes3,
+                              S.of(context)!.installDes3,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -194,7 +194,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               children: [
                                 const ItemHeader(color: CandyColors.candyPink),
                                 Text(
-                                  S.of(context).terminal,
+                                  S.of(context)!.terminal,
                                   style: TextStyle(
                                     fontSize: Dimens.font_sp16,
                                     fontWeight: bold,
@@ -228,7 +228,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                         );
                         buffer.writeln('chmod 0777 $choosePath/adb');
                         buffer.writeln('chmod 0777 $choosePath/adb.bin"\n');
-                        Global().pty.writeString(buffer.toString());
+                        Global().pty!.writeString(buffer.toString());
                       },
                       child: SizedBox(
                         width: 414.w,

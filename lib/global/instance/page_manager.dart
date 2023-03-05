@@ -10,7 +10,7 @@ import 'package:adb_tool/global/drawer/setting.dart';
 import 'package:adb_tool/global/drawer/terminal.dart';
 
 class PageManager {
-  static PageManager _instance;
+  static PageManager? _instance;
 
   List<ADBPage> get pages => _pages;
 
@@ -25,10 +25,10 @@ class PageManager {
     About(),
   ];
 
-  Pluggable _activatedPluggable;
-  String get activatedPluggableName => _activatedPluggable?.name;
+  Pluggable? _activatedPluggable;
+  String? get activatedPluggableName => _activatedPluggable?.name;
 
-  static PageManager get instance {
+  static PageManager? get instance {
     _instance ??= PageManager._();
     return _instance;
   }

@@ -13,13 +13,13 @@ import 'themes/lib_color_schemes.g.dart';
 
 class ADBToolEntryPoint extends StatefulWidget {
   const ADBToolEntryPoint({
-    Key key,
+    Key? key,
     this.primary,
     this.hasSafeArea = true,
     this.showQRCode = true,
   }) : super(key: key);
   // 产品色
-  final Color primary;
+  final Color? primary;
   final bool hasSafeArea;
   final bool showQRCode;
 
@@ -65,9 +65,9 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
     }
     await initSetting();
     configController.initConfig();
-    Global.instance.initGlobal();
-    Global.instance.hasSafeArea = widget.hasSafeArea;
-    Global.instance.showQRCode = widget.showQRCode;
+    Global.instance!.initGlobal();
+    Global.instance!.hasSafeArea = widget.hasSafeArea;
+    Global.instance!.showQRCode = widget.showQRCode;
     DevicesController controller = Get.find();
     controller.init();
     AppManager.globalInstance;
@@ -97,7 +97,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
                       GetBuilder<ConfigController>(builder: (config) {
                         if (config.backgroundStyle == BackgroundStyle.normal) {
                           return Container(
-                            color: config.theme.colorScheme.background,
+                            color: config.theme!.colorScheme.background,
                           );
                         }
                         if (config.backgroundStyle == BackgroundStyle.image) {
@@ -114,7 +114,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
                       }),
                       GetBuilder<ConfigController>(builder: (config) {
                         return Theme(
-                          data: config.theme,
+                          data: config.theme!,
                           child: const AdbTool(),
                         );
                       }),

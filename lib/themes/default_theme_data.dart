@@ -41,7 +41,7 @@ class DefaultThemeData {
         actionsIconTheme: darkThemeData.iconTheme.copyWith(
           color: const Color(0xFF8C8C8C),
         ),
-        toolbarTextStyle: darkThemeData.textTheme.headline6.copyWith(
+        toolbarTextStyle: darkThemeData.textTheme.headline6!.copyWith(
           fontSize: Dimens.font_sp20,
           fontWeight: FontWeight.w500,
           color: const Color(0xFFA8A8A8),
@@ -102,7 +102,7 @@ class DefaultThemeData {
         filled: true,
       ),
       textTheme: darkThemeData.textTheme.copyWith(
-        bodyText2: darkThemeData.textTheme.bodyText1.copyWith(
+        bodyText2: darkThemeData.textTheme.bodyText1!.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w400,
           color: const Color(0xFFE7E7E7),
@@ -112,13 +112,13 @@ class DefaultThemeData {
   }
 
   static ThemeData light({
-    Color primary,
+    Color? primary,
   }) {
     final lightThemeData = ThemeData.light().copyWith(
       useMaterial3: false,
     );
     ColorScheme colorScheme = ColorScheme.fromSeed(
-      seedColor: seed,
+      seedColor: seed!,
       background: grey1,
     );
     return lightThemeData.copyWith(
@@ -173,7 +173,7 @@ class DefaultThemeData {
         actionsIconTheme: lightThemeData.iconTheme.copyWith(
           color: colorScheme.primary,
         ),
-        titleTextStyle: lightThemeData.textTheme.headline6.copyWith(
+        titleTextStyle: lightThemeData.textTheme.headline6!.copyWith(
           fontSize: 18.w,
           fontWeight: bold,
           color: colorScheme.onBackground,
@@ -210,7 +210,7 @@ class DefaultThemeData {
         color: colorScheme.surface,
       ),
       textTheme: lightThemeData.textTheme.copyWith(
-        bodyText2: lightThemeData.textTheme.bodyText2.copyWith(
+        bodyText2: lightThemeData.textTheme.bodyText2!.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w500,
           color: colorScheme.onBackground,

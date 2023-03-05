@@ -29,18 +29,18 @@ import 'interface/adb_channel.dart';
 import 'screenshot_page.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key key, this.entity}) : super(key: key);
+  const Dashboard({Key? key, this.entity}) : super(key: key);
 
-  final DevicesEntity entity;
+  final DevicesEntity? entity;
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> with WindowListener {
-  Pty adbShell;
+  Pty? adbShell;
 
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
-  ADBChannel adbChannel;
+  ADBChannel? adbChannel;
   Terminal terminal = Terminal();
 
   /// 获取卡片宽度，主要是做响应式适配的
@@ -69,34 +69,34 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     if (GetPlatform.isWindows) {
       adbShell = Pty.start(
         'cmd',
-        arguments: ['/C', 'adb', '-s', widget.entity.serial, 'shell'],
-        environment: envir(),
+        arguments: ['/C', 'adb', '-s', widget.entity!.serial, 'shell'],
+        environment: envir() as Map<String, String>?,
         workingDirectory: '/',
       );
     } else {
       adbShell = Pty.start(
         adb,
-        arguments: ['-s', widget.entity.serial, 'shell'],
-        environment: envir(),
+        arguments: ['-s', widget.entity!.serial, 'shell'],
+        environment: envir() as Map<String, String>?,
         workingDirectory: '/',
       );
     }
-    adbShell.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+    adbShell!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
         terminal.write(event);
       },
     );
 
-    if (widget.entity.isOTG) {
+    if (widget.entity!.isOTG) {
       adbChannel = OTGADBChannel();
     } else {
-      adbChannel = BinADBChannel(widget.entity.serial);
+      adbChannel = BinADBChannel(widget.entity!.serial);
     }
   }
 
   @override
   void dispose() {
-    adbShell.kill();
+    adbShell!.kill();
     super.dispose();
   }
 
@@ -107,7 +107,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   @override
   void onWindowClose() {
-    adbShell.kill();
+    adbShell!.kill();
     // do something
   }
 
@@ -251,40 +251,40 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       _DeveloperItem(
                         adbChannel: adbChannel,
-                        serial: widget.entity.serial,
+                        serial: widget.entity!.serial,
                         title: '显示点按操作反馈',
                         putKey: 'show_touches',
                       ),
                       _DeveloperItem(
                         adbChannel: adbChannel,
-                        serial: widget.entity.serial,
+                        serial: widget.entity!.serial,
                         title: '显示屏幕指针',
                         putKey: 'pointer_location',
                       ),
                       SwitchItem(
                         title: '打开布局边界',
                         onOpen: () {
-                          adbChannel.execCmmand(
-                            'adb -s ${widget.entity.serial} shell setprop debug.layout true',
+                          adbChannel!.execCmmand(
+                            'adb -s ${widget.entity!.serial} shell setprop debug.layout true',
                           );
-                          adbChannel.execCmmand(
-                            'adb -s ${widget.entity.serial} shell service call activity 1599295570',
+                          adbChannel!.execCmmand(
+                            'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return true;
                         },
                         onClose: () {
-                          adbChannel.execCmmand(
-                            'adb -s ${widget.entity.serial} shell setprop debug.layout false',
+                          adbChannel!.execCmmand(
+                            'adb -s ${widget.entity!.serial} shell setprop debug.layout false',
                           );
-                          adbChannel.execCmmand(
-                            'adb -s ${widget.entity.serial} shell service call activity 1599295570',
+                          adbChannel!.execCmmand(
+                            'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return false;
                         },
                       ),
                       _OpenRemoteDebug(
                         adbChannel: adbChannel,
-                        serial: widget.entity.serial,
+                        serial: widget.entity!.serial,
                       ),
                     ],
                   ),
@@ -361,7 +361,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             return;
                           }
                         }
-                        List<String> paths;
+                        List<String>? paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
                           const typeGroup = XTypeGroup(
@@ -379,7 +379,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           // ignore: use_build_context_synchronously
                           paths = await FileSelector.pick(context);
                         }
-                        if (paths.isEmpty) {
+                        if (paths!.isEmpty) {
                           return;
                         }
                         installApkWithPaths(paths);
@@ -400,7 +400,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     );
   }
 
-  void pushFileWithPaths(List<String> paths) {
+  void pushFileWithPaths(List<String>? paths) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -414,7 +414,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   }
 
 
-  void installApkWithPaths(List<String> paths) {
+  void installApkWithPaths(List<String>? paths) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -470,7 +470,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             return;
                           }
                         }
-                        List<String> paths;
+                        List<String>? paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
                           final typeGroup = XTypeGroup(label: '*');
@@ -484,7 +484,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         } else {
                           paths = await FileSelector.pick(context);
                         }
-                        if (paths.isEmpty) {
+                        if (paths!.isEmpty) {
                           return;
                         }
                         pushFileWithPaths(paths);
@@ -602,7 +602,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(
                                     builder: (context) {
-                                      if (widget.entity.isOTG) {
+                                      if (widget.entity!.isOTG) {
                                         return const OTGTerminal();
                                       }
                                       return XTermWrapper(
@@ -631,12 +631,12 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
 class _OpenRemoteDebug extends StatefulWidget {
   const _OpenRemoteDebug({
-    Key key,
+    Key? key,
     this.serial,
-    @required this.adbChannel,
+    required this.adbChannel,
   }) : super(key: key);
-  final String serial;
-  final ADBChannel adbChannel;
+  final String? serial;
+  final ADBChannel? adbChannel;
   @override
   __OpenRemoteDebugState createState() => __OpenRemoteDebugState();
 }
@@ -650,7 +650,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await widget.adbChannel.execCmmand(
+    final String? result = await widget.adbChannel!.execCmmand(
       '$adb -s ${widget.serial} shell getprop service.adb.tcp.port',
     );
     // Log.w(result);
@@ -685,7 +685,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                       ),
                     ),
                     Text(
-                      isAddress(widget.serial) ? '(当前方式:远程)' : '(当前方式:usb)',
+                      isAddress(widget.serial!) ? '(当前方式:远程)' : '(当前方式:usb)',
                       style: TextStyle(
                         fontWeight: bold,
                         color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
@@ -714,7 +714,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 // );
                 // print(result);
                 // String result;
-                await widget.adbChannel.changeNetDebugStatus(value);
+                await widget.adbChannel!.changeNetDebugStatus(value);
                 // Log.v(result);
                 setState(() {});
               },
@@ -728,14 +728,14 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
 
 class SwitchItem extends StatefulWidget {
   const SwitchItem({
-    Key key,
+    Key? key,
     this.title,
     this.onOpen,
     this.onClose,
   }) : super(key: key);
-  final String title;
-  final bool Function() onOpen;
-  final bool Function() onClose;
+  final String? title;
+  final bool Function()? onOpen;
+  final bool Function()? onClose;
   @override
   State createState() => _SwitchItemState();
 }
@@ -758,7 +758,7 @@ class _SwitchItemState extends State<SwitchItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.title,
+              widget.title!,
               style: TextStyle(
                 fontWeight: bold,
               ),
@@ -767,9 +767,9 @@ class _SwitchItemState extends State<SwitchItem> {
               value: isCheck,
               onChanged: (_) {
                 if (isCheck) {
-                  isCheck = widget.onClose();
+                  isCheck = widget.onClose!();
                 } else {
-                  isCheck = widget.onOpen();
+                  isCheck = widget.onOpen!();
                 }
                 setState(() {});
               },
@@ -783,16 +783,16 @@ class _SwitchItemState extends State<SwitchItem> {
 
 class _DeveloperItem extends StatefulWidget {
   const _DeveloperItem({
-    Key key,
+    Key? key,
     this.title,
     this.serial,
     this.putKey,
-    @required this.adbChannel,
+    required this.adbChannel,
   }) : super(key: key);
-  final String title;
-  final String serial;
-  final String putKey;
-  final ADBChannel adbChannel;
+  final String? title;
+  final String? serial;
+  final String? putKey;
+  final ADBChannel? adbChannel;
   @override
   __DeveloperItemState createState() => __DeveloperItemState();
 }
@@ -806,7 +806,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await widget.adbChannel.execCmmand(
+    final String? result = await widget.adbChannel!.execCmmand(
       '$adb -s ${widget.serial} shell settings get system ${widget.putKey}',
     );
     // Log.w('result -> $result');
@@ -827,7 +827,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.title,
+              widget.title!,
               style: TextStyle(
                 fontWeight: bold,
               ),
@@ -837,7 +837,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
               onChanged: (_) {
                 isCheck = !isCheck;
                 final int value = isCheck ? 1 : 0;
-                widget.adbChannel.execCmmand(
+                widget.adbChannel!.execCmmand(
                   'adb -s ${widget.serial} shell settings put system ${widget.putKey} $value',
                 );
                 setState(() {});
@@ -852,19 +852,19 @@ class __DeveloperItemState extends State<_DeveloperItem> {
 
 class GestureWithScale extends StatefulWidget {
   const GestureWithScale({
-    Key key,
+    Key? key,
     this.onTap,
     this.child,
   }) : super(key: key);
-  final void Function() onTap;
-  final Widget child;
+  final void Function()? onTap;
+  final Widget? child;
 
   @override
   State createState() => _GestureWithScaleState();
 }
 
 class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void initState() {
@@ -873,7 +873,7 @@ class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerPr
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
-    animationController.addListener(() {
+    animationController!.addListener(() {
       setState(() {});
     });
   }
@@ -890,7 +890,7 @@ class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerPr
       alignment: Alignment.center,
       transform: Matrix4.identity()
         ..scale(
-          1.0 - animationController.value * 0.02,
+          1.0 - animationController!.value * 0.02,
         ),
       child: GestureDetector(
         onTap: () {
@@ -900,14 +900,14 @@ class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerPr
           setState(() {});
           Feedback.forLongPress(context);
           Feedback.forTap(context);
-          animationController.reverse();
-          widget.onTap();
+          animationController!.reverse();
+          widget.onTap!();
         },
         onTapDown: (_) {
           if (widget.onTap == null) {
             return;
           }
-          animationController.forward();
+          animationController!.forward();
           Feedback.forLongPress(context);
           setState(() {});
         },
@@ -915,7 +915,7 @@ class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerPr
           if (widget.onTap == null) {
             return;
           }
-          animationController.reverse();
+          animationController!.reverse();
           Feedback.forLongPress(context);
           Feedback.forTap(context);
           setState(() {});

@@ -17,7 +17,7 @@ import 'generated/l10n.dart';
 import 'global/instance/global.dart';
 
 Future<void> initSetting() async {
-  await initSettingStore(RuntimeEnvir.configPath);
+  await initSettingStore(RuntimeEnvir.configPath!);
   if (Settings.serverPath.get == null) {
     Settings.serverPath.set = Config.adbLocalPath;
   }
@@ -25,7 +25,7 @@ Future<void> initSetting() async {
 
 class MaterialAppWrapper extends StatefulWidget {
   const MaterialAppWrapper({
-    Key key,
+    Key? key,
     this.isNativeShell = false,
   }) : super(key: key);
   final bool isNativeShell;
@@ -51,7 +51,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
     super.dispose();
   }
 
-  Size _lastSize;
+  Size? _lastSize;
 
   @override
   void didChangeMetrics() {
@@ -98,7 +98,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
                 debugShowCheckedModeBanner: false,
                 title: 'ADB工具箱',
-                navigatorKey: Global.instance.navigatorKey,
+                navigatorKey: Global.instance!.navigatorKey,
                 themeMode: ThemeMode.light,
                 localizationsDelegates: const [
                   S.delegate,
@@ -115,7 +115,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 defaultTransition: Transition.fadeIn,
                 initialRoute: AdbPages.initial,
                 getPages: AdbPages.routes + am.AppPages.routes,
-                builder: (BuildContext context, Widget navigator) {
+                builder: (BuildContext context, Widget? navigator) {
                   return ResponsiveWrapper.builder(
                     Builder(
                       builder: (context) {
@@ -125,12 +125,12 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                           ScreenAdapter.init(414);
                         }
                         return Theme(
-                          data: config.theme,
+                          data: config.theme!,
                           child: Column(
                             children: [
                               if (GetPlatform.isDesktop)
                                 Container(
-                                  color: config.theme.colorScheme.background,
+                                  color: config.theme!.colorScheme.background,
                                   width: double.infinity,
                                   height: 24,
                                   child: Row(
@@ -175,7 +175,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                                     ],
                                   ),
                                 ),
-                              Expanded(child: navigator),
+                              Expanded(child: navigator!),
                             ],
                           ),
                         );
@@ -204,7 +204,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
     return GetBuilder<ConfigController>(builder: (config) {
       if (config.backgroundStyle == BackgroundStyle.normal) {
         return Container(
-          color: config.theme.colorScheme.background,
+          color: config.theme!.colorScheme.background,
         );
       }
       if (config.backgroundStyle == BackgroundStyle.image) {

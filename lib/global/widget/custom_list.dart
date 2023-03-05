@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomList extends StatefulWidget {
-  const CustomList({Key key, this.child}) : super(key: key);
-  final Widget child;
+  const CustomList({Key? key, this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   _CustomListState createState() => _CustomListState();

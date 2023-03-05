@@ -13,7 +13,7 @@ class Terminal extends ADBPage {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context).terminal,
+      title: S.of(context)!.terminal,
       iconData: Icons.code,
     );
   }
@@ -23,7 +23,7 @@ class Terminal extends ADBPage {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context).terminal,
+      title: S.of(context)!.terminal,
       iconData: Icons.code,
     );
   }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class DashboardPlugin extends Pluggable {
   @override
-  Widget buildWidget(BuildContext context, DevicesEntity device) {
+  Widget buildWidget(BuildContext context, DevicesEntity? device) {
     return Dashboard(
       entity: device,
     );

@@ -10,16 +10,16 @@ import 'package:path/path.dart' as p;
 
 class InstallApkDialog extends StatefulWidget {
   const InstallApkDialog({
-    Key key,
+    Key? key,
     this.paths,
-    @required this.adbChannel,
+    required this.adbChannel,
   }) : super(key: key);
 
   /// 路径列表
-  final List<String> paths;
+  final List<String>? paths;
 
   /// adb channel 实例
-  final ADBChannel adbChannel;
+  final ADBChannel? adbChannel;
 
   @override
   State createState() => _InstallApkDialogState();
@@ -34,7 +34,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
   @override
   void initState() {
     super.initState();
-    fileNum = widget.paths.length;
+    fileNum = widget.paths!.length;
     if (Platform.isAndroid) {
       progress = 0;
     }
@@ -50,14 +50,14 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       }
     });
     StringBuffer stringBuffer = StringBuffer();
-    for (final String path in widget.paths) {
+    for (final String path in widget.paths!) {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
       try {
-        await widget.adbChannel.install(path);
-      } catch (e) {
-        stringBuffer.write('$name: ${e.message}\n');
+        await widget.adbChannel!.install(path);
+      } on Exception catch (e) {
+        stringBuffer.write('$name: $e\n');
       }
       fileIndex++;
       // showToast('$name 已上传');

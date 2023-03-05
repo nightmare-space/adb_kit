@@ -8,10 +8,10 @@ int titlebarHeight = 0;
 
 class DesktopSafeArea extends StatefulWidget {
   const DesktopSafeArea({
-    Key key,
+    Key? key,
     this.child,
   }) : super(key: key);
-  final Widget child;
+  final Widget? child;
 
   @override
   State<DesktopSafeArea> createState() => _DesktopSafeAreaState();

@@ -17,7 +17,7 @@ class DevicesEntity {
   // 有可能是ip或者设备序列号
   final String serial;
   // ro.product.model
-  String productModel;
+  String? productModel;
   // 连接的状态
   String stat;
   @override
@@ -76,11 +76,11 @@ class DevicesController extends GetxController {
     });
     await startAdb();
     AdbUtil.addListener(handleResult);
-    String libPath;
+    String? libPath;
     if (GetPlatform.isAndroid) {
       libPath = await getLibPath();
     }
-    AdbUtil.setLibraryPath(libPath);
+    AdbUtil.setLibraryPath(libPath!);
     AdbUtil.startPoolingListDevices(
       duration: const Duration(seconds: 1),
     );
@@ -136,12 +136,12 @@ class DevicesController extends GetxController {
 
   // 这是model的缓存
   Map<String, String> modelCache = {};
-  Future<void> handleResult(String data) async {
+  Future<void> handleResult(String? data) async {
     letADBStarted();
     // if (kReleaseMode) {
     // Log.d('adb handleResult -> $data');
     // }
-    if (data.startsWith('List of devices')) {
+    if (data!.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');
       // print('outList -> $outList');
       // 删除 `List of devices attached`
@@ -157,7 +157,7 @@ class DevicesController extends GetxController {
         );
         // Log.w('获取${listTmp.first}信息...');
         if (devicesEntity.isConnect) {
-          String model;
+          String? model;
           if (modelCache.containsKey(listTmp.first)) {
             model = modelCache[listTmp.first];
           } else {
@@ -196,7 +196,7 @@ class DevicesController extends GetxController {
     }
   }
 
-  Completer<bool> removeLock;
+  Completer<bool>? removeLock;
   Future<void> updateWithAnima(List<DevicesEntity> current) async {
     // Log.d('updateWithAnima ->$current');
     for (final DevicesEntity devicesEntity in current) {
@@ -213,7 +213,7 @@ class DevicesController extends GetxController {
       }
     }
     if (removeLock != null) {
-      await removeLock.future;
+      await removeLock!.future;
     }
     // 遍历当前state的list
     for (final DevicesEntity devicesEntity in List.from(devicesEntitys)) {
@@ -225,10 +225,10 @@ class DevicesController extends GetxController {
         final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
         Future.delayed(const Duration(milliseconds: 300), () {
           update();
-          removeLock.complete();
+          removeLock!.complete();
         });
         devicesEntitys.removeAt(deleteIndex);
-        listKey.currentState.removeItem(
+        listKey.currentState!.removeItem(
           deleteIndex,
           (context, animation) => SlideTransition(
             position: animation
@@ -261,7 +261,7 @@ class DevicesController extends GetxController {
     devicesEntitys.add(devicesEntity);
     update();
     if (listKey.currentContext != null) {
-      listKey.currentState.insertItem(
+      listKey.currentState!.insertItem(
         index,
         duration: const Duration(
           milliseconds: 300,
@@ -270,7 +270,7 @@ class DevicesController extends GetxController {
     }
   }
 
-  DevicesEntity getDevicesByIp(String ip) {
+  DevicesEntity? getDevicesByIp(String ip) {
     for (int i = 0; i < devicesEntitys.length; i++) {
       if (devicesEntitys[i].serial.contains(ip)) {
         return devicesEntitys[i];

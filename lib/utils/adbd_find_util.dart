@@ -22,7 +22,7 @@ class ADBFind {
       ).then((_) {
         devices.add(ip);
         // print('\x1b[32m $ip 成功');
-      }).onError((error, stackTrace) {
+      }).onError((dynamic error, stackTrace) {
         // print('\x1b[33merror : $error');
       }).whenComplete(() {
         if (i == 254) {

@@ -16,12 +16,12 @@ import 'package:settings/settings.dart';
 
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
-    Key key,
+    Key? key,
     this.onChanged,
     this.groupValue,
   }) : super(key: key);
-  final void Function(Widget page) onChanged;
-  final String groupValue;
+  final void Function(Widget page)? onChanged;
+  final String? groupValue;
 
   @override
   State createState() => _TabletDrawerState();
@@ -69,8 +69,8 @@ class _TabletDrawerState extends State<TabletDrawer> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 8.w),
-        if (Custom.drawerHeader != null) Custom.drawerHeader,
-        for (ADBPage page in PageManager.instance.pages)
+        if (Custom.drawerHeader != null) Custom.drawerHeader!,
+        for (ADBPage page in PageManager.instance!.pages)
           if (page.isActive)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -78,7 +78,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 borderRadius: BorderRadius.circular(8.w),
                 onTap: () {
                   Global().changeDrawerRoute(page.runtimeType.toString());
-                  widget.onChanged(page.buildPage(context));
+                  widget.onChanged!(page.buildPage(context));
                 },
                 child: page.buildTabletDrawer(context),
               ),
@@ -107,7 +107,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                     GetBuilder<ConfigController>(
                       builder: (context) {
                         return Theme(
-                          data: context.theme,
+                          data: context.theme!,
                           child: Stack(
                             children: [
                               GetBuilder<ConfigController>(builder: (_) {
@@ -157,18 +157,18 @@ class _TabletDrawerState extends State<TabletDrawer> {
 
 class TabletDrawerItem extends StatelessWidget {
   const TabletDrawerItem({
-    Key key,
+    Key? key,
     this.title,
     this.onTap,
     this.value,
     this.groupValue,
     this.iconData,
   }) : super(key: key);
-  final String title;
-  final void Function(String value) onTap;
-  final String value;
-  final String groupValue;
-  final IconData iconData;
+  final String? title;
+  final void Function(String value)? onTap;
+  final String? value;
+  final String? groupValue;
+  final IconData? iconData;
 
   @override
   Widget build(BuildContext context) {

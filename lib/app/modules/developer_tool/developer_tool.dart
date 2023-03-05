@@ -10,30 +10,30 @@ import 'package:global_repository/global_repository.dart';
 import 'tab_indicator.dart';
 
 class DeveloperTool extends StatefulWidget {
-  const DeveloperTool({Key key, this.entity, this.providerContext})
+  const DeveloperTool({Key? key, this.entity, this.providerContext})
       : super(key: key);
-  final DevicesEntity entity;
-  final BuildContext providerContext;
+  final DevicesEntity? entity;
+  final BuildContext? providerContext;
   @override
   State createState() => _DeveloperToolState();
 }
 
 class _DeveloperToolState extends State<DeveloperTool>
     with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController? controller;
 
   @override
   void initState() {
     super.initState();
     controller = TabController(
-      length: PluginManager.instance.pluginsMap.length,
+      length: PluginManager.instance!.pluginsMap.length,
       vsync: this,
     );
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller!.dispose();
     super.dispose();
   }
 
@@ -77,8 +77,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                     isScrollable: true,
                     controller: controller,
                     tabs: <Widget>[
-                      for (var item in PluginManager.instance.pluginsMap.keys)
-                        Tab(text: PluginManager.instance.pluginsMap[item].name),
+                      for (var item in PluginManager.instance!.pluginsMap.keys)
+                        Tab(text: PluginManager.instance!.pluginsMap[item]!.name),
                     ],
                   ),
                 ),
@@ -89,8 +89,8 @@ class _DeveloperToolState extends State<DeveloperTool>
         body: TabBarView(
           controller: controller,
           children: [
-            for (var item in PluginManager.instance.pluginsMap.keys)
-              PluginManager.instance.pluginsMap[item]
+            for (var item in PluginManager.instance!.pluginsMap.keys)
+              PluginManager.instance!.pluginsMap[item]!
                   .buildWidget(context, widget.entity),
           ],
         ),

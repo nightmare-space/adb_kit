@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-T asT<T>(dynamic value) {
+T? asT<T>(dynamic value) {
   if (value is T) {
     return value;
   }
@@ -9,24 +9,20 @@ T asT<T>(dynamic value) {
 
 class ADBHistorys {
   ADBHistorys({
-    this.data,
+    required this.data,
   });
 
-  factory ADBHistorys.fromJson(Map<String, dynamic> jsonRes) {
-    if (jsonRes == null) {
-      return null;
-    }
-
-    final List<Data> data = jsonRes['data'] is List ? <Data>[] : null;
+  factory ADBHistorys.fromJson(Map<String, dynamic> json) {
+    final List<Data>? data = json['data'] is List ? <Data>[] : null;
     if (data != null) {
-      for (final dynamic item in jsonRes['data']) {
+      for (final dynamic item in json['data']!) {
         if (item != null) {
-          data.add(Data.fromJson(asT<Map<String, dynamic>>(item)));
+          data.add(Data.fromJson(asT<Map<String, dynamic>>(item)!));
         }
       }
     }
     return ADBHistorys(
-      data: data,
+      data: data!,
     );
   }
 
@@ -40,27 +36,22 @@ class ADBHistorys {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'data': data,
       };
-
-  ADBHistorys clone() => ADBHistorys.fromJson(
-      asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this))));
 }
 
 class Data {
   Data({
-    this.address,
-    this.port,
-    this.connectTime,
-    this.name,
+    required this.address,
+    required this.port,
+    required this.connectTime,
+    required this.name,
   });
 
-  factory Data.fromJson(Map<String, dynamic> jsonRes) => jsonRes == null
-      ? null
-      : Data(
-          address: asT<String>(jsonRes['address']),
-          port: asT<String>(jsonRes['port']),
-          connectTime: asT<String>(jsonRes['connect_time']),
-          name: asT<String>(jsonRes['name']),
-        );
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        address: asT<String>(json['address'])!,
+        port: asT<String>(json['port'])!,
+        connectTime: asT<String>(json['connect_time'])!,
+        name: asT<String>(json['name'])!,
+      );
 
   String address;
   String port;
@@ -78,11 +69,7 @@ class Data {
         'connect_time': connectTime,
         'name': name,
       };
-
-  Data clone() =>
-      Data.fromJson(asT<Map<String, dynamic>>(jsonDecode(jsonEncode(this))));
 }
-
 extension TimeExtension on DateTime {
   String getTimeString() {
     return '$year-$month-$day $hour:$minute:$second';
