@@ -50,7 +50,7 @@ class Global {
 
   bool isInit = false;
   Multicast multicast = Multicast(
-    port: adbToolUdpPort ,
+    port: adbToolUdpPort,
   );
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
@@ -105,7 +105,7 @@ class Global {
             if (devicesCTL.getDevicesByIp(address) == null) {
               try {
                 AdbResult result = await AdbUtil.connectDevices(address);
-              } on AdbException catch (e) {
+              } on ADBException catch (e) {
                 Log.e('通过UDP发现自动连接设备失败 : $e');
               }
               showToast('已自动连接$address');
@@ -147,7 +147,7 @@ class Global {
             port: '5555',
             name: address,
           );
-        } on AdbException catch (e) {
+        } on ADBException catch (e) {
           showToast(e.message!);
         }
       },
@@ -175,7 +175,7 @@ class Global {
   /// 复制一堆执行文件
   Future<void> installAdbToEnvir() async {
     if (kIsWeb) {
-      return true;
+      return;
     }
     if (GetPlatform.isAndroid) {
       String? libPath = await getLibPath();

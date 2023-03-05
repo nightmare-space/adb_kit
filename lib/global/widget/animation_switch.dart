@@ -139,7 +139,7 @@ class _RenderXliveSwitch extends RenderConstrainedBox {
     _value = value;
     markNeedsSemanticsUpdate();
     _position
-      ..curve = Curves.bounceOut
+      ?..curve = Curves.bounceOut
       ..reverseCurve = Curves.bounceOut.flipped;
     if (value)
       _positionController.forward();

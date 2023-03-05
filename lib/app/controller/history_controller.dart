@@ -62,7 +62,7 @@ class HistoryController extends GetxController {
     historyController._updateHistory(
       Data(
         address: address!,
-        port: port!,
+        port: port ?? '5555',
         connectTime: DateTime.now().toString(),
         name: name!,
       ),

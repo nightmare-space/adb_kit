@@ -79,7 +79,8 @@ dependencies:
   # device_info:
   #   git: https://github.com/nightmare-space/device_info.git
   # can manage window on desktop
-  window_manager: ^0.2.3
+  window_manager: ^0.3.0
+  
   
   flutter_markdown: ^0.6.10+2
   screenshot: ^1.2.3
@@ -117,8 +118,8 @@ dependency_overrides:
   #   path: ../device_info
   app_manager:
     path: ../app_manager
-  # adbutil:
-  #   path: ../adbutil
+  adbutil:
+    path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   # logger_view:

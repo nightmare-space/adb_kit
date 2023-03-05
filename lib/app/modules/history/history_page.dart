@@ -107,7 +107,7 @@ class HistoryPage extends GetView<HistoryController> {
             adbEntity.address! + suffix,
           );
           showToast(result.message);
-        } on AdbException catch (e) {
+        } on ADBException catch (e) {
           showToast(e.message!);
         }
       },

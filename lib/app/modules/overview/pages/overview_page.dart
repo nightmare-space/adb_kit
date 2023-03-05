@@ -192,7 +192,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                     port: port,
                                     name: address,
                                   );
-                                } on AdbException catch (e) {
+                                } on ADBException catch (e) {
                                   Log.e(e);
                                   showToast(e.message!);
                                 }

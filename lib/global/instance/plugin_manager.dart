@@ -10,9 +10,9 @@ class PluginManager {
   Pluggable? _activatedPluggable;
   String? get activatedPluggableName => _activatedPluggable?.name;
 
-  static PluginManager? get instance {
+  static PluginManager get instance {
     _instance ??= PluginManager._();
-    return _instance;
+    return _instance!;
   }
 
   PluginManager._();
