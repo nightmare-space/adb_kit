@@ -57,8 +57,7 @@ class DefaultThemeData {
         labelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
         ),
-        labelPadding:
-            EdgeInsets.only(top: Dimens.gap_dp8, bottom: Dimens.gap_dp10),
+        labelPadding: EdgeInsets.only(top: Dimens.gap_dp8, bottom: Dimens.gap_dp10),
         unselectedLabelColor: darkColorScheme.onSurface,
         unselectedLabelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
@@ -104,30 +103,50 @@ class DefaultThemeData {
           fontWeight: FontWeight.w400,
           color: const Color(0xFFE7E7E7),
         ),
-      ), switchTheme: SwitchThemeData(
- thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return _primary; }
- return null;
- }),
- trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return _primary; }
- return null;
- }),
- ), radioTheme: RadioThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return _primary; }
- return null;
- }),
- ), checkboxTheme: CheckboxThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return _primary; }
- return null;
- }),
- ), colorScheme: darkColorScheme.copyWith(background: Colors.transparent),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return _primary;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return _primary;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return _primary;
+          }
+          return null;
+        }),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return _primary;
+          }
+          return null;
+        }),
+      ),
+      colorScheme: darkColorScheme.copyWith(background: Colors.transparent),
     );
   }
 
@@ -209,8 +228,7 @@ class DefaultThemeData {
         labelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
         ),
-        labelPadding:
-            EdgeInsets.only(top: Dimens.gap_dp8, bottom: Dimens.gap_dp10),
+        labelPadding: EdgeInsets.only(top: Dimens.gap_dp8, bottom: Dimens.gap_dp10),
         unselectedLabelColor: colorScheme.onSurface,
         unselectedLabelStyle: TextStyle(
           fontSize: Dimens.font_sp16,
@@ -232,30 +250,50 @@ class DefaultThemeData {
           fontWeight: FontWeight.w500,
           color: colorScheme.onBackground,
         ),
-      ), switchTheme: SwitchThemeData(
- thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
- return null;
- }),
- trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
- return null;
- }),
- ), radioTheme: RadioThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
- return null;
- }),
- ), checkboxTheme: CheckboxThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
- return null;
- }),
- ), colorScheme: colorScheme.copyWith(background: Colors.transparent),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return colorScheme.primary;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return colorScheme.primary;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return colorScheme.primary;
+          }
+          return null;
+        }),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return colorScheme.primary;
+          }
+          return null;
+        }),
+      ),
+      colorScheme: colorScheme,
     );
   }
 }

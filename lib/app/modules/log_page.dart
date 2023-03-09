@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:logger_view/logger_view.dart';
 import 'overview/pages/overview_page.dart';
 
 class LogPage extends StatefulWidget {

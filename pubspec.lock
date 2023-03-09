@@ -411,15 +411,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  logger_view:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: bd4a2adf012dc7b7e012b430e06118b2d5ba4e1a
-      url: "https://github.com/nightmare-space/logger_view"
-    source: git
-    version: "0.0.1"
   markdown:
     dependency: transitive
     description:

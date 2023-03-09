@@ -60,9 +60,6 @@ dependencies:
   path: ^1.8.0
   # launcher url
   url_launcher: ^6.0.18
-  # show log
-  logger_view:
-    git: https://github.com/nightmare-space/logger_view
   # adb command util
   adbutil:
     git: https://github.com/nightmare-space/adbutil

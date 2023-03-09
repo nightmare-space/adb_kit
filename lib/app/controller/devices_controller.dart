@@ -76,7 +76,7 @@ class DevicesController extends GetxController {
     if (GetPlatform.isAndroid) {
       libPath = await getLibPath();
     }
-    AdbUtil.setLibraryPath(libPath!);
+    AdbUtil.setLibraryPath(libPath);
     AdbUtil.startPoolingListDevices(
       duration: const Duration(seconds: 1),
     );
