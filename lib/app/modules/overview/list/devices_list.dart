@@ -10,7 +10,7 @@ class DevicesList extends StatefulWidget {
   const DevicesList({Key? key}) : super(key: key);
 
   @override
-  _DevicesListState createState() => _DevicesListState();
+  State createState() => _DevicesListState();
 }
 
 class _DevicesListState extends State<DevicesList> {

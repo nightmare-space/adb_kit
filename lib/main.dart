@@ -20,9 +20,9 @@ Future<void> main() async {
   // Log.d(StackTrace.current);
   // 初始化运行时环境
 
-  PluginManager.instance!.registerADBPlugin(DashboardPlugin());
+  PluginManager.instance.registerADBPlugin(DashboardPlugin());
   if (!GetPlatform.isWindows) {
-    PluginManager.instance!.registerADBPlugin(AppStarterPlugin());
+    PluginManager.instance.registerADBPlugin(AppStarterPlugin());
   }
   PluginManager.instance
     ..registerADBPlugin(AppManagerPlugin())

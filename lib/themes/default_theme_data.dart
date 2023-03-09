@@ -18,10 +18,8 @@ class DefaultThemeData {
     // ThemeData
     return darkThemeData.copyWith(
       useMaterial3: true,
-      colorScheme: darkColorScheme,
       primaryColor: darkColorScheme.primary,
       scaffoldBackgroundColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.dark,
       ),
@@ -41,7 +39,7 @@ class DefaultThemeData {
         actionsIconTheme: darkThemeData.iconTheme.copyWith(
           color: const Color(0xFF8C8C8C),
         ),
-        toolbarTextStyle: darkThemeData.textTheme.headline6!.copyWith(
+        toolbarTextStyle: darkThemeData.textTheme.titleLarge!.copyWith(
           fontSize: Dimens.font_sp20,
           fontWeight: FontWeight.w500,
           color: const Color(0xFFA8A8A8),
@@ -67,7 +65,6 @@ class DefaultThemeData {
         ),
       ),
       unselectedWidgetColor: const Color(0xFF696969),
-      toggleableActiveColor: _primary,
       dividerColor: darkColorScheme.outline,
       dividerTheme: DividerThemeData(
         color: darkColorScheme.outline,
@@ -102,12 +99,35 @@ class DefaultThemeData {
         filled: true,
       ),
       textTheme: darkThemeData.textTheme.copyWith(
-        bodyText2: darkThemeData.textTheme.bodyText1!.copyWith(
+        bodyMedium: darkThemeData.textTheme.bodyLarge!.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w400,
           color: const Color(0xFFE7E7E7),
         ),
-      ),
+      ), switchTheme: SwitchThemeData(
+ thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return _primary; }
+ return null;
+ }),
+ trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return _primary; }
+ return null;
+ }),
+ ), radioTheme: RadioThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return _primary; }
+ return null;
+ }),
+ ), checkboxTheme: CheckboxThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return _primary; }
+ return null;
+ }),
+ ), colorScheme: darkColorScheme.copyWith(background: Colors.transparent),
     );
   }
 
@@ -123,10 +143,8 @@ class DefaultThemeData {
     );
     return lightThemeData.copyWith(
       primaryColor: colorScheme.primary,
-      colorScheme: colorScheme,
       // Desktop有高斯模糊背景
       scaffoldBackgroundColor: Colors.transparent,
-      backgroundColor: Colors.transparent,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
       ),
@@ -173,7 +191,7 @@ class DefaultThemeData {
         actionsIconTheme: lightThemeData.iconTheme.copyWith(
           color: colorScheme.primary,
         ),
-        titleTextStyle: lightThemeData.textTheme.headline6!.copyWith(
+        titleTextStyle: lightThemeData.textTheme.titleLarge!.copyWith(
           fontSize: 18.w,
           fontWeight: bold,
           color: colorScheme.onBackground,
@@ -199,7 +217,6 @@ class DefaultThemeData {
         ),
       ),
       unselectedWidgetColor: const Color(0xFFBFBFBF),
-      toggleableActiveColor: colorScheme.primary,
       dividerColor: colorScheme.outline,
       dividerTheme: DividerThemeData(
         color: colorScheme.outline,
@@ -210,12 +227,35 @@ class DefaultThemeData {
         color: colorScheme.surface,
       ),
       textTheme: lightThemeData.textTheme.copyWith(
-        bodyText2: lightThemeData.textTheme.bodyText2!.copyWith(
+        bodyMedium: lightThemeData.textTheme.bodyMedium!.copyWith(
           fontSize: Dimens.font_sp14,
           fontWeight: FontWeight.w500,
           color: colorScheme.onBackground,
         ),
-      ),
+      ), switchTheme: SwitchThemeData(
+ thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
+ return null;
+ }),
+ trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
+ return null;
+ }),
+ ), radioTheme: RadioThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
+ return null;
+ }),
+ ), checkboxTheme: CheckboxThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return colorScheme.primary; }
+ return null;
+ }),
+ ), colorScheme: colorScheme.copyWith(background: Colors.transparent),
     );
   }
 }

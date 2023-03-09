@@ -5,7 +5,6 @@ import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:adb_tool/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 
@@ -26,11 +25,8 @@ class DevicesEntity {
     if (other is! DevicesEntity) {
       return false;
     }
-    if (other is DevicesEntity) {
-      final DevicesEntity devicesEntity = other;
-      return serial == devicesEntity.serial;
-    }
-    return false;
+    final DevicesEntity devicesEntity = other;
+    return serial == devicesEntity.serial;
   }
 
   bool get isConnect => _isConnect();
@@ -54,7 +50,7 @@ class DevicesEntity {
 
 // ro.product.model
 class DevicesController extends GetxController {
-  DevicesController() {}
+  DevicesController();
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
@@ -225,7 +221,7 @@ class DevicesController extends GetxController {
         final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
         Future.delayed(const Duration(milliseconds: 300), () {
           update();
-          removeLock!.complete();
+          removeLock!.complete(true);
         });
         devicesEntitys.removeAt(deleteIndex);
         listKey.currentState!.removeItem(

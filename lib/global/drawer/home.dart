@@ -10,7 +10,7 @@ class Home extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context) {
     return DrawerItem(
-      title: S.of(context)!.home,
+      title: S.of(context).home,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,
@@ -20,7 +20,7 @@ class Home extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
-      title: S.of(context)!.home,
+      title: S.of(context).home,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.home,

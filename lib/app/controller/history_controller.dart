@@ -32,11 +32,8 @@ class AdbEntity {
     if (other is! AdbEntity) {
       return false;
     }
-    if (other is AdbEntity) {
-      final AdbEntity adbEntity = other;
-      return ip! + port! == adbEntity.ip! + adbEntity.port!;
-    }
-    return false;
+    final AdbEntity adbEntity = other;
+    return ip! + port! == adbEntity.ip! + adbEntity.port!;
   }
 
   @override
@@ -78,10 +75,6 @@ class HistoryController extends GetxController {
     readLocalStorage();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   Future<void> saveToLocal() async {
     Config.historySaveFile.writeAsString(adbHistorys.toString());
@@ -102,21 +95,21 @@ class HistoryController extends GetxController {
   }
 
   void sort() {
-    adbHistorys.data!.sort((a, b) {
-      return DateTime.parse(b.connectTime!).compareTo(
-        DateTime.parse(a.connectTime!),
+    adbHistorys.data.sort((a, b) {
+      return DateTime.parse(b.connectTime).compareTo(
+        DateTime.parse(a.connectTime),
       );
     });
   }
 
   void removeHis(int index) {
-    adbHistorys.data!.removeAt(index);
+    adbHistorys.data.removeAt(index);
     saveToLocal();
   }
 
   void _updateHistory(Data data) {
     try {
-      final Data preData = adbHistorys.data!.firstWhere(
+      final Data preData = adbHistorys.data.firstWhere(
         (element) {
           return element.address == data.address;
         },
@@ -124,7 +117,7 @@ class HistoryController extends GetxController {
       preData.connectTime = data.connectTime;
       preData.name = data.name;
     } catch (e) {
-      adbHistorys.data!.add(data);
+      adbHistorys.data.add(data);
     }
     saveToLocal();
   }

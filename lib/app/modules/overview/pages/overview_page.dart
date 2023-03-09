@@ -43,7 +43,7 @@ class _OverviewPageState extends State<OverviewPage> {
         elevation: 0.0,
         automaticallyImplyLeading: false,
         leading: Menubutton(scaffoldContext: context),
-        title: Text(S.of(context)!.home),
+        title: Text(S.of(context).home),
         actions: [
           if (GetPlatform.isAndroid)
             NiIconButton(
@@ -89,7 +89,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       children: [
                         const ItemHeader(color: CandyColors.candyPink),
                         Text(
-                          S.of(context)!.alreadyConnectDevice,
+                          S.of(context).alreadyConnectDevice,
                           style: TextStyle(
                             fontSize: 16.w,
                             fontWeight: bold,
@@ -123,7 +123,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.candyBlue),
                   Text(
-                    S.of(context)!.inputDeviceAddress,
+                    S.of(context).inputDeviceAddress,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: bold,
@@ -143,7 +143,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           controller: editingController,
                           style: const TextStyle(height: 1.2),
                           decoration: InputDecoration(
-                            hintText: S.of(context)!.inputFormat,
+                            hintText: S.of(context).inputFormat,
                             hintStyle: TextStyle(
                               fontSize: 14.w,
                               color: Theme.of(context)
@@ -196,7 +196,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   Log.e(e);
                                   showToast(e.message!);
                                 }
-                                Log.d('adb 连接结束 ${result}');
+                                Log.d('adb 连接结束 $result');
                               },
                             ),
                           ),
@@ -219,7 +219,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 children: [
                   const ItemHeader(color: CandyColors.purple),
                   Text(
-                    S.of(context)!.scanToConnect,
+                    S.of(context).scanToConnect,
                     style: TextStyle(
                       fontSize: Dimens.font_sp16,
                       fontWeight: bold,
@@ -238,7 +238,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   borderRadius: BorderRadius.circular(10.w),
                 ),
                 child: Text(
-                  S.of(context)!.scanQRCodeDes,
+                  S.of(context).scanQRCodeDes,
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 12.w,

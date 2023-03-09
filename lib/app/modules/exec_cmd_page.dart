@@ -6,7 +6,6 @@ import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/generated/l10n.dart';
 import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/pages/terminal.dart';
 import 'package:adb_tool/global/widget/xterm_wrapper.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone || controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: Text(S.of(context)!.terminal),
+        title: Text(S.of(context).terminal),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
@@ -147,7 +146,7 @@ class ItemButton extends StatelessWidget {
       margin: EdgeInsets.all(4.w),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(10.w),
           border: Border.all(
             color: Theme.of(context).primaryColor,

@@ -38,7 +38,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
     if (ResponsiveWrapper.of(context).isPhone ||
         controller.screenType == ScreenType.phone) {
       appBar = AppBar(
-        title: Text(S.of(context)!.installToSystem),
+        title: Text(S.of(context).installToSystem),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? IconButton(
@@ -75,7 +75,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                                 color: CandyColors.candyCyan,
                               ),
                               Text(
-                                S.of(context)!.chooseInstallPath,
+                                S.of(context).chooseInstallPath,
                                 style: TextStyle(
                                   fontSize: 16.w,
                                   fontWeight: bold,
@@ -140,7 +140,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context)!.installDes1,
+                              S.of(context).installDes1,
                               style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 12.w,
@@ -156,7 +156,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context)!.installDes2,
+                              S.of(context).installDes2,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -174,7 +174,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Text(
-                              S.of(context)!.installDes3,
+                              S.of(context).installDes3,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.w,
@@ -194,7 +194,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
                               children: [
                                 const ItemHeader(color: CandyColors.candyPink),
                                 Text(
-                                  S.of(context)!.terminal,
+                                  S.of(context).terminal,
                                   style: TextStyle(
                                     fontSize: Dimens.font_sp16,
                                     fontWeight: bold,

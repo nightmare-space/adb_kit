@@ -171,7 +171,7 @@ class _AppStarterState extends State<AppStarter> {
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        S.of(context)!.terminal,
+                        S.of(context).terminal,
                         style: TextStyle(
                           fontSize: Dimens.font_sp16,
                           fontWeight: bold,

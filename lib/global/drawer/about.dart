@@ -14,7 +14,7 @@ class About extends ADBPage {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.about,
+      title: S.of(context).about,
       iconData: Icons.info_outline,
     );
   }
@@ -24,7 +24,7 @@ class About extends ADBPage {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.about,
+      title: S.of(context).about,
       iconData: Icons.info_outline,
     );
   }

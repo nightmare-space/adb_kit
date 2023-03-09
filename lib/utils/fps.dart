@@ -35,11 +35,11 @@ class Fps {
   }
 
   registerCallBack(FpsCallback back) {
-    _callBackList?.add(back);
+    _callBackList.add(back);
   }
 
   unregisterCallBack(FpsCallback back) {
-    _callBackList?.remove(back);
+    _callBackList.remove(back);
   }
 
   cancel() {
@@ -71,7 +71,6 @@ class Fps {
     var lastFramesSet = <FrameTiming>[];
 
     // 获取当前手机的fps
-    _fpsHz ??= 90;
 
     //每帧消耗的时间，单位微秒
     _frameInterval ??=
@@ -128,7 +127,7 @@ class Fps {
 //    DebugLog.instance.log(
 //        "computerFps _fpsHz is $_fpsHz drawFrame is $fps,dropFrameCount is $droppedCount");
     lastFrames.clear();
-    _callBackList?.forEach((callBack) {
+    _callBackList.forEach((callBack) {
       callBack(fps, droppedCount!.toDouble());
     });
   }

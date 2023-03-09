@@ -5,7 +5,7 @@ class CustomList extends StatefulWidget {
   final Widget? child;
 
   @override
-  _CustomListState createState() => _CustomListState();
+  State createState() => _CustomListState();
 }
 
 class _CustomListState extends State<CustomList> {

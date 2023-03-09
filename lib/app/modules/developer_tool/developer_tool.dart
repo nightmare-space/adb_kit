@@ -1,7 +1,6 @@
 import 'package:adb_tool/app/controller/devices_controller.dart';
 import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/global/instance/plugin_manager.dart';
-import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/global/widget/pop_button.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class _DeveloperToolState extends State<DeveloperTool>
   void initState() {
     super.initState();
     controller = TabController(
-      length: PluginManager.instance!.pluginsMap.length,
+      length: PluginManager.instance.pluginsMap.length,
       vsync: this,
     );
   }
@@ -77,8 +76,8 @@ class _DeveloperToolState extends State<DeveloperTool>
                     isScrollable: true,
                     controller: controller,
                     tabs: <Widget>[
-                      for (var item in PluginManager.instance!.pluginsMap.keys)
-                        Tab(text: PluginManager.instance!.pluginsMap[item]!.name),
+                      for (var item in PluginManager.instance.pluginsMap.keys)
+                        Tab(text: PluginManager.instance.pluginsMap[item]!.name),
                     ],
                   ),
                 ),
@@ -89,8 +88,8 @@ class _DeveloperToolState extends State<DeveloperTool>
         body: TabBarView(
           controller: controller,
           children: [
-            for (var item in PluginManager.instance!.pluginsMap.keys)
-              PluginManager.instance!.pluginsMap[item]!
+            for (var item in PluginManager.instance.pluginsMap.keys)
+              PluginManager.instance.pluginsMap[item]!
                   .buildWidget(context, widget.entity),
           ],
         ),

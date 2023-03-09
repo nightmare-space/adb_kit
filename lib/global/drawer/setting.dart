@@ -12,7 +12,7 @@ class Setting extends ADBPage {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.setting,
+      title: S.of(context).setting,
       iconData: Icons.settings,
     );
   }
@@ -22,7 +22,7 @@ class Setting extends ADBPage {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.setting,
+      title: S.of(context).setting,
       iconData: Icons.settings,
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:adb_tool/config/font.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +37,7 @@ class _AdbInstallPageState extends State<AdbInstallPage> {
           '未找到Adb',
           style: TextStyle(
             height: 1.0,
-            color: Theme.of(context).textTheme.bodyText2!.color,
+            color: Theme.of(context).textTheme.bodyMedium!.color,
             fontWeight: bold,
             fontSize: 16,
           ),

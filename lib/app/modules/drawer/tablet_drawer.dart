@@ -6,7 +6,6 @@ import 'package:adb_tool/config/settings.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
-import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/themes/app_colors.dart';
 import 'package:adb_tool/themes/theme.dart';
 import 'package:flutter/material.dart';

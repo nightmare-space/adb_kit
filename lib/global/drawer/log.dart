@@ -12,7 +12,7 @@ class Log extends ADBPage {
     return DrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.log,
+      title: S.of(context).log,
       iconData: Icons.pending_outlined,
     );
   }
@@ -22,7 +22,7 @@ class Log extends ADBPage {
     return TabletDrawerItem(
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
-      title: S.of(context)!.log,
+      title: S.of(context).log,
       iconData: Icons.pending_outlined,
     );
   }

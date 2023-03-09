@@ -23,7 +23,6 @@ Widget getWidget(String route) {
   switch (route) {
     case Routes.searchIp:
       return const SearchIpPage();
-      break;
     default:
       return const SizedBox();
   }

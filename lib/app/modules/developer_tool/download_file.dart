@@ -28,11 +28,6 @@ class _DownloadFileState extends State<DownloadFile>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -44,7 +39,7 @@ class _DownloadFileState extends State<DownloadFile>
           '下载文件',
           style: TextStyle(
             height: 1.0,
-            color: Theme.of(context).textTheme.bodyText2!.color,
+            color: Theme.of(context).textTheme.bodyMedium!.color,
             fontWeight: bold,
           ),
         ),

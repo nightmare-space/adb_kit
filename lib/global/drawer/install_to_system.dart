@@ -11,7 +11,7 @@ class InstallToSystem extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context) {
     return DrawerItem(
-      title: S.of(context)!.installToSystem,
+      title: S.of(context).installToSystem,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,
@@ -21,7 +21,7 @@ class InstallToSystem extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
-      title: S.of(context)!.installToSystem,
+      title: S.of(context).installToSystem,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.file_download,

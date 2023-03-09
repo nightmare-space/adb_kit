@@ -12,7 +12,7 @@ class LogPage extends StatefulWidget {
   const LogPage({Key? key}) : super(key: key);
 
   @override
-  _LogPageState createState() => _LogPageState();
+  State createState() => _LogPageState();
 }
 
 class _LogPageState extends State<LogPage> {
@@ -31,7 +31,7 @@ class _LogPageState extends State<LogPage> {
     AppBar? appBar;
     if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
-        title: Text(S.of(context)!.log),
+        title: Text(S.of(context).log),
         automaticallyImplyLeading: false,
         leading: controller.needShowMenuButton
             ? Menubutton(
@@ -53,7 +53,7 @@ class _LogPageState extends State<LogPage> {
                 child: CardItem(
                   child: Responsive(
                     builder: (__, _) {
-                      return LoggerView();
+                      return const LoggerView();
                     },
                   ),
                 ),

@@ -4,7 +4,6 @@ import 'package:adb_tool/config/font.dart';
 import 'package:adb_tool/core/interface/adb_page.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
-import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';

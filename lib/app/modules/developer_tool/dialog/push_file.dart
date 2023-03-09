@@ -53,6 +53,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
       fileIndex++;
       // showToast('$name 已上传');
     }
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 

@@ -60,7 +60,7 @@ class _TaskManagerState extends State<TaskManager> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(tasks.datas[i].label ?? ''),
+                  Text(tasks.datas[i].label),
                   SizedBox(height: 12.w),
                   Stack(
                     alignment: Alignment.topRight,
@@ -70,7 +70,7 @@ class _TaskManagerState extends State<TaskManager> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.w),
                           color: Theme.of(context).surface1,
-                          boxShadow: [],
+                          boxShadow: const [],
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12.w),

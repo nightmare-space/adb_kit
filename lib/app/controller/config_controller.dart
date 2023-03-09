@@ -62,9 +62,7 @@ class ConfigController extends GetxController {
 
   void changeBackgroundStyle(BackgroundStyle style) {
     backgroundStyle = style;
-    if (backgroundStyle != null) {
-      Settings.backgroundStyle.set = backgroundStyle.name;
-    }
+    Settings.backgroundStyle.set = backgroundStyle.name;
     update();
     syncBackgroundStyle();
   }
@@ -72,9 +70,7 @@ class ConfigController extends GetxController {
   // bool get isDarkTheme => theme is DarkTheme;
   Locale? locale = chinese;
   ScreenType? screenType;
-  bool get needShowMenuButton =>
-      screenType == ScreenType.phone ||
-      (screenType == null && GetPlatform.isAndroid);
+  bool get needShowMenuButton => screenType == ScreenType.phone || (screenType == null && GetPlatform.isAndroid);
 
   bool isInit = false;
   void initConfig() {
@@ -173,8 +169,7 @@ class ConfigController extends GetxController {
 
   Future<void> changeServerPath(BuildContext context) async {
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final Offset offset =
-        renderBox.localToGlobal(renderBox.size.center(Offset.zero));
+    final Offset offset = renderBox.localToGlobal(renderBox.size.center(Offset.zero));
     final List<PopupMenuEntry<String>> items = <PopupMenuEntry<String>>[];
     for (final String path in <String>[
       Config.adbLocalPath,
@@ -192,8 +187,7 @@ class ConfigController extends GetxController {
           Radius.circular(8.0),
         ),
       ),
-      position: RelativeRect.fromLTRB(offset.dx - offset.dx / 2, offset.dy,
-          MediaQuery.of(context).size.width, 0.0),
+      position: RelativeRect.fromLTRB(offset.dx - offset.dx / 2, offset.dy, MediaQuery.of(context).size.width, 0.0),
       items: items,
       elevation: 0,
     );

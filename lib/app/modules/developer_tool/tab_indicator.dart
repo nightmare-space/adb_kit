@@ -7,8 +7,7 @@ class RoundedUnderlineTabIndicator extends Decoration {
     this.insets = EdgeInsets.zero,
     this.radius,
     this.width,
-  })  : assert(borderSide != null),
-        assert(insets != null);
+  });
   final BorderSide borderSide;
   final EdgeInsetsGeometry insets;
   final double? radius;
@@ -41,7 +40,7 @@ class RoundedUnderlineTabIndicator extends Decoration {
   }
 
   @override
-  _RoundedUnderlinePainter createBoxPainter([VoidCallback? onChanged]) {
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
     return _RoundedUnderlinePainter(
       this,
       onChanged,
@@ -57,8 +56,7 @@ class _RoundedUnderlinePainter extends BoxPainter {
     VoidCallback? onChanged, {
     required this.radius,
     this.width,
-  })  : assert(decoration != null),
-        super(onChanged);
+  })  : super(onChanged);
   final double radius;
   final double? width;
 
@@ -68,8 +66,6 @@ class _RoundedUnderlinePainter extends BoxPainter {
   EdgeInsetsGeometry get insets => decoration.insets;
 
   RRect _indicatorRectFor(Rect rect, TextDirection textDirection) {
-    assert(rect != null);
-    assert(textDirection != null);
     final Rect indicator = insets.resolve(textDirection).deflateRect(rect);
     return RRect.fromRectAndCorners(
       width == null
@@ -96,7 +92,6 @@ class _RoundedUnderlinePainter extends BoxPainter {
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    assert(configuration != null);
     assert(configuration.size != null);
     final Rect rect = offset & configuration.size!;
     final TextDirection textDirection = configuration.textDirection!;

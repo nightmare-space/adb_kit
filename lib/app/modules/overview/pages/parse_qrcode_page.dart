@@ -25,7 +25,7 @@ class ParseQrcodePage extends StatefulWidget {
   final List<String>? addressList;
 
   @override
-  _ParseQrcodePageState createState() => _ParseQrcodePageState();
+  State createState() => _ParseQrcodePageState();
 }
 
 class _ParseQrcodePageState extends State<ParseQrcodePage> {
@@ -108,7 +108,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
                             return Text(
                               '连接失败',
                               style: TextStyle(
-                                color: Theme.of(context).errorColor,
+                                color: Theme.of(context).colorScheme.error,
                               ),
                             );
                           }

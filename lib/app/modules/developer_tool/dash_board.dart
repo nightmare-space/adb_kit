@@ -473,7 +473,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         List<String>? paths;
                         if (GetPlatform.isDesktop) {
                           paths = [];
-                          final typeGroup = XTypeGroup(label: '*');
+                          const typeGroup = XTypeGroup(label: '*');
                           final files = await openFiles(acceptedTypeGroups: [typeGroup]);
                           if (files.isEmpty) {
                             return;
@@ -482,6 +482,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             paths.add(xFile.path);
                           }
                         } else {
+                          // ignore: use_build_context_synchronously
                           paths = await FileSelector.pick(context);
                         }
                         if (paths!.isEmpty) {

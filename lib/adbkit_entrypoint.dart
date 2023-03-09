@@ -121,7 +121,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
                     ],
                   );
               }
-              return const SizedBox();
             },
           ),
         ),

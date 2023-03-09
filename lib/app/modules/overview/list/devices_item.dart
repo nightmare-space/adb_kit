@@ -17,7 +17,7 @@ class DevicesItem extends StatefulWidget {
   final DevicesEntity? devicesEntity;
 
   @override
-  _DevicesItemState createState() => _DevicesItemState();
+  State createState() => _DevicesItemState();
 }
 
 class _DevicesItemState extends State<DevicesItem>
@@ -36,10 +36,10 @@ class _DevicesItemState extends State<DevicesItem>
       if (!mounted) {
         break;
       }
-      await animationController?.forward();
+      await animationController.forward();
       await Future<void>.delayed(const Duration(milliseconds: 100));
       if (mounted) {
-        await animationController?.reverse();
+        await animationController.reverse();
       }
       time++;
     }

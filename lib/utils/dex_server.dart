@@ -79,8 +79,6 @@ class DexServer {
               Log.d('ADB Forward LocalPort -> $localPort');
               // 这样才能保证列表正常
               final RemoteAppChannel channel = RemoteAppChannel(port: localPort);
-              // TODO 下面这行之前是放开的注释
-              // channel.serial = devicesId;
               Log.i('channel -> ${channel.port}');
               serverStartList[devicesId] = channel;
               completer.complete(channel);

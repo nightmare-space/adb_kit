@@ -104,7 +104,7 @@ class Global {
             final devicesCTL = Get.find<DevicesController>();
             if (devicesCTL.getDevicesByIp(address) == null) {
               try {
-                AdbResult result = await AdbUtil.connectDevices(address);
+                await AdbUtil.connectDevices(address);
               } on ADBException catch (e) {
                 Log.e('通过UDP发现自动连接设备失败 : $e');
               }
@@ -233,11 +233,13 @@ class Global {
     if (controller.autoConnect) {
       try {
         _receiveBoardCast();
+      // ignore: empty_catches
       } catch (e) {}
     }
     if (GetPlatform.isAndroid) {
       try {
         _sendBoardCast();
+      // ignore: empty_catches
       } catch (e) {}
     }
     _socketServer();

@@ -11,7 +11,7 @@ class NetDebug extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context) {
     return DrawerItem(
-      title: S.of(context)!.networkDebug,
+      title: S.of(context).networkDebug,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,
@@ -21,7 +21,7 @@ class NetDebug extends ADBPage {
   @override
   Widget buildTabletDrawer(BuildContext context) {
     return TabletDrawerItem(
-      title: S.of(context)!.networkDebug,
+      title: S.of(context).networkDebug,
       value: runtimeType.toString(),
       groupValue: Global().drawerRoute,
       iconData: Icons.signal_wifi_4_bar,

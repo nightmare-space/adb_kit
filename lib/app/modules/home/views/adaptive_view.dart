@@ -1,11 +1,9 @@
 import 'package:adb_tool/app/controller/config_controller.dart';
 import 'package:adb_tool/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_tool/app/modules/drawer/tablet_drawer.dart';
-import 'package:adb_tool/app/modules/privacy_page.dart';
 import 'package:adb_tool/config/config.dart';
 import 'package:adb_tool/global/instance/global.dart';
 import 'package:adb_tool/global/instance/page_manager.dart';
-import 'package:adb_tool/global/widget/mac_safearea.dart';
 import 'package:adb_tool/utils/plugin_util.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
-import 'package:window_manager/window_manager.dart';
 
 import 'dialog/otg_dialog.dart';
 
