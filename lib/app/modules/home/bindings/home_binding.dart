@@ -1,7 +1,7 @@
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/controller/history_controller.dart';
-import 'package:adb_tool/config/config.dart';
+import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
+import 'package:adb_kit/app/controller/history_controller.dart';
+import 'package:adb_kit/config/config.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 

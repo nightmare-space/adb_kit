@@ -1,9 +1,9 @@
-import 'package:adb_tool/adb_tool.dart';
-import 'package:adb_tool/app/controller/controller.dart';
-import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/global/pages/terminal.dart';
-import 'package:adb_tool/global/widget/item_header.dart';
+import 'package:adb_kit/adb_tool.dart';
+import 'package:adb_kit/app/controller/controller.dart';
+import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/global/pages/terminal.dart';
+import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

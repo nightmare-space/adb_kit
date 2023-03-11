@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/controller/devices_controller.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

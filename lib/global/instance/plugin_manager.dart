@@ -1,4 +1,4 @@
-import 'package:adb_tool/core/interface/pluggable.dart';
+import 'package:adb_kit/core/interface/pluggable.dart';
 
 class PluginManager {
   static PluginManager? _instance;

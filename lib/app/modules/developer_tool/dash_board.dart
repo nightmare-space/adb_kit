@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:adb_tool/app/controller/controller.dart';
-import 'package:adb_tool/app/modules/otg_terminal.dart';
-import 'package:adb_tool/app/modules/setting/setting_page.dart';
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/global/widget/item_header.dart';
-import 'package:adb_tool/global/widget/xterm_wrapper.dart';
-import 'package:adb_tool/themes/theme.dart';
-import 'package:adb_tool/utils/terminal_utill.dart';
+import 'package:adb_kit/app/controller/controller.dart';
+import 'package:adb_kit/app/modules/otg_terminal.dart';
+import 'package:adb_kit/app/modules/setting/setting_page.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/global/widget/item_header.dart';
+import 'package:adb_kit/global/widget/xterm_wrapper.dart';
+import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/utils/terminal_utill.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';

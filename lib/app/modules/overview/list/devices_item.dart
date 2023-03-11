@@ -1,7 +1,7 @@
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/modules/developer_tool/developer_tool.dart';
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
+import 'package:adb_kit/app/modules/developer_tool/developer_tool.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
 import 'package:flutter/material.dart';

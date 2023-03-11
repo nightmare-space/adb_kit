@@ -1,4 +1,4 @@
-name: adb_tool
+name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
 version: 1.3.9+37

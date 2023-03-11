@@ -1,6 +1,6 @@
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/config/settings.dart';
-import 'package:adb_tool/themes/theme.dart';
+import 'package:adb_kit/config/config.dart';
+import 'package:adb_kit/config/settings.dart';
+import 'package:adb_kit/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_acrylic/flutter_acrylic.dart';

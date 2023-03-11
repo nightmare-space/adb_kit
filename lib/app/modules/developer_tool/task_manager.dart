@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/modules/developer_tool/model/screen_size.dart';
-import 'package:adb_tool/themes/theme.dart';
-import 'package:adb_tool/utils/dex_server.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
+import 'package:adb_kit/app/modules/developer_tool/model/screen_size.dart';
+import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/utils/dex_server.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';

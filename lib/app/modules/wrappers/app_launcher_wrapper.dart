@@ -1,6 +1,6 @@
-// import 'package:adb_tool/app/controller/devices_controller.dart';
-// import 'package:adb_tool/themes/app_colors.dart';
-// import 'package:adb_tool/utils/dex_server.dart';
+// import 'package:adb_kit/app/controller/devices_controller.dart';
+// import 'package:adb_kit/themes/app_colors.dart';
+// import 'package:adb_kit/utils/dex_server.dart';
 // import 'package:app_launcher/app_launcher.dart';
 // import 'package:app_manager/app_manager.dart';
 // import 'package:app_manager/controller/app_manager_controller.dart';

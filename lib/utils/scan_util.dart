@@ -1,5 +1,5 @@
-import 'package:adb_tool/app/modules/overview/pages/parse_qrcode_page.dart';
-import 'package:adb_tool/app/modules/qrscan_page.dart';
+import 'package:adb_kit/app/modules/overview/pages/parse_qrcode_page.dart';
+import 'package:adb_kit/app/modules/qrscan_page.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 

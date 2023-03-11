@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adb_tool/global/instance/global.dart';
+import 'package:adb_kit/global/instance/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/utils.dart';

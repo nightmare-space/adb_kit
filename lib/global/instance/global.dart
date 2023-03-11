@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-import 'package:adb_tool/app/controller/controller.dart';
-import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
-import 'package:adb_tool/config/config.dart';
-import 'package:adb_tool/utils/unique_util.dart';
-import 'package:adb_tool/utils/utils.dart';
+import 'package:adb_kit/app/controller/controller.dart';
+import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
+import 'package:adb_kit/config/config.dart';
+import 'package:adb_kit/utils/unique_util.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

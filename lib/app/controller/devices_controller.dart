@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:adb_tool/app/modules/overview/list/devices_item.dart';
-import 'package:adb_tool/utils/plugin_util.dart';
-import 'package:adb_tool/utils/so_util.dart';
+import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
+import 'package:adb_kit/utils/plugin_util.dart';
+import 'package:adb_kit/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

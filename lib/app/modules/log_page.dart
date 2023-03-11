@@ -1,6 +1,6 @@
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/generated/l10n.dart';
-import 'package:adb_tool/global/widget/menu_button.dart';
+import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/generated/l10n.dart';
+import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';

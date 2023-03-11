@@ -1,6 +1,6 @@
-// import 'package:adb_tool/app/controller/devices_controller.dart';
-// import 'package:adb_tool/app/modules/wrappers/device_info_wrapper.dart';
-// import 'package:adb_tool/core/interface/pluggable.dart';
+// import 'package:adb_kit/app/controller/devices_controller.dart';
+// import 'package:adb_kit/app/modules/wrappers/device_info_wrapper.dart';
+// import 'package:adb_kit/core/interface/pluggable.dart';
 // import 'package:flutter/material.dart';
 
 // class DeviceInfoPlugin extends Pluggable {

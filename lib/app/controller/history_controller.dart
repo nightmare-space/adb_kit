@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:adb_tool/app/model/adb_historys.dart';
-import 'package:adb_tool/config/config.dart';
+import 'package:adb_kit/app/model/adb_historys.dart';
+import 'package:adb_kit/config/config.dart';
 import 'package:get/get.dart';
 
 class AdbEntity {

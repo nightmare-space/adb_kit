@@ -1,5 +1,5 @@
-import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/widget/xterm_wrapper.dart';
+import 'package:adb_kit/global/instance/global.dart';
+import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class TerminalPage extends StatelessWidget {

@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/app/controller/devices_controller.dart';
-import 'package:adb_tool/app/modules/overview/pages/overview_page.dart';
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/generated/l10n.dart';
-import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/widget/xterm_wrapper.dart';
+import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
+import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
+import 'package:adb_kit/global/instance/global.dart';
+import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

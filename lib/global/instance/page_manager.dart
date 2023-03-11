@@ -1,13 +1,13 @@
-import 'package:adb_tool/core/interface/adb_page.dart';
-import 'package:adb_tool/core/interface/pluggable.dart';
-import 'package:adb_tool/global/drawer/about.dart';
-import 'package:adb_tool/global/drawer/history.dart';
-import 'package:adb_tool/global/drawer/home.dart';
-import 'package:adb_tool/global/drawer/install_to_system.dart';
-import 'package:adb_tool/global/drawer/log.dart';
-import 'package:adb_tool/global/drawer/net_debug.dart';
-import 'package:adb_tool/global/drawer/setting.dart';
-import 'package:adb_tool/global/drawer/terminal.dart';
+import 'package:adb_kit/core/interface/adb_page.dart';
+import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_kit/global/drawer/about.dart';
+import 'package:adb_kit/global/drawer/history.dart';
+import 'package:adb_kit/global/drawer/home.dart';
+import 'package:adb_kit/global/drawer/install_to_system.dart';
+import 'package:adb_kit/global/drawer/log.dart';
+import 'package:adb_kit/global/drawer/net_debug.dart';
+import 'package:adb_kit/global/drawer/setting.dart';
+import 'package:adb_kit/global/drawer/terminal.dart';
 
 class PageManager {
   static PageManager? _instance;

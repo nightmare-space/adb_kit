@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/themes/app_colors.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/themes/app_colors.dart';
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';

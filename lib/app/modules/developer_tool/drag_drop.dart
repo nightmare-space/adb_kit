@@ -1,6 +1,6 @@
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/themes/app_colors.dart';
-import 'package:adb_tool/themes/theme.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/themes/app_colors.dart';
+import 'package:adb_kit/themes/theme.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';

@@ -1,9 +1,9 @@
-import 'package:adb_tool/app/controller/config_controller.dart';
-import 'package:adb_tool/config/custom.dart';
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/core/interface/adb_page.dart';
-import 'package:adb_tool/global/instance/global.dart';
-import 'package:adb_tool/global/instance/page_manager.dart';
+import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/config/custom.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/core/interface/adb_page.dart';
+import 'package:adb_kit/global/instance/global.dart';
+import 'package:adb_kit/global/instance/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';

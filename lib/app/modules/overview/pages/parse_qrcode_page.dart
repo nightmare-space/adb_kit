@@ -1,5 +1,5 @@
-import 'package:adb_tool/config/font.dart';
-import 'package:adb_tool/utils/http/http.dart';
+import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/utils/http/http.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

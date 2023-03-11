@@ -1,6 +1,6 @@
-import 'package:adb_tool/adbkit_entrypoint.dart';
-import 'package:adb_tool/app/modules/home/bindings/home_binding.dart';
-import 'package:adb_tool/app/modules/search_ip_page.dart';
+import 'package:adb_kit/adbkit_entrypoint.dart';
+import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
+import 'package:adb_kit/app/modules/search_ip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

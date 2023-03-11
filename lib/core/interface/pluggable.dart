@@ -1,4 +1,4 @@
-import 'package:adb_tool/app/controller/controller.dart';
+import 'package:adb_kit/app/controller/controller.dart';
 import 'package:flutter/widgets.dart';
 
 // inspired by flutter_ume
