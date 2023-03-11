@@ -20,8 +20,7 @@ class DevicesItem extends StatefulWidget {
   State createState() => _DevicesItemState();
 }
 
-class _DevicesItemState extends State<DevicesItem>
-    with TickerProviderStateMixin {
+class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin {
   String? _title;
   late AnimationController animationController;
   late AnimationController progressAnimaCTL;
@@ -93,10 +92,12 @@ class _DevicesItemState extends State<DevicesItem>
         }
         AdbUtil.stopPoolingListDevices();
         Get.put(AppManagerController());
-        await Get.to(DeveloperTool(
-          entity: widget.devicesEntity,
-        ));
-        Get.delete<AppManagerController>();
+        await openPage(
+          DeveloperTool(
+            entity: widget.devicesEntity,
+          ),
+          title: '开发者工具',
+        );
         AdbUtil.startPoolingListDevices();
       },
       child: SizedBox(
@@ -228,8 +229,7 @@ class _DevicesItemState extends State<DevicesItem>
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color:
-                            Colors.blue.withOpacity(animationController.value),
+                        color: Colors.blue.withOpacity(animationController.value),
                         offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
                         blurRadius: 16.0, //阴影模糊程度
                         spreadRadius: 1.0, //阴影扩散程度
@@ -242,8 +242,7 @@ class _DevicesItemState extends State<DevicesItem>
                       valueColor: AlwaysStoppedAnimation(
                         Theme.of(context).primaryColor,
                       ),
-                      backgroundColor:
-                          Theme.of(context).primaryColor.withOpacity(0.15),
+                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.15),
                       value: progressAnimaCTL.value * progressMax,
                     ),
                   ),

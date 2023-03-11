@@ -167,6 +167,28 @@ class DefaultThemeData {
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
       ),
+      tooltipTheme: TooltipThemeData(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.w),
+        textStyle: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 16.w,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.w),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(
+                0.02,
+              ),
+              offset: const Offset(0.0, 0.0),
+              blurRadius: 12.w,
+              spreadRadius: 8.w,
+            ),
+          ],
+        ),
+      ),
       primaryIconTheme: lightThemeData.primaryIconTheme.copyWith(
         color: colorScheme.onSurface,
       ),

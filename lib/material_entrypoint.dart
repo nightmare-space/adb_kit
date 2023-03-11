@@ -125,58 +125,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                         }
                         return Theme(
                           data: config.theme!,
-                          child: Column(
-                            children: [
-                              if (GetPlatform.isDesktop)
-                                Container(
-                                  color: config.theme!.colorScheme.background,
-                                  width: double.infinity,
-                                  height: 24,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      // Expanded(
-                                      //   child: DragToMoveArea(
-                                      //     child: Container(
-                                      //       color: Colors.transparent,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      WindowCaptionButton.minimize(
-                                        onPressed: () {
-                                          windowManager.minimize();
-                                        },
-                                        brightness: Theme.of(context).brightness,
-                                      ),
-                                      isFull
-                                          ? WindowCaptionButton.unmaximize(
-                                              onPressed: () {
-                                                isFull = false;
-                                                setState(() {});
-                                                windowManager.unmaximize();
-                                              },
-                                              brightness: Theme.of(context).brightness,
-                                            )
-                                          : WindowCaptionButton.maximize(
-                                              onPressed: () {
-                                                isFull = true;
-                                                setState(() {});
-                                                windowManager.maximize();
-                                              },
-                                              brightness: Theme.of(context).brightness,
-                                            ),
-                                      WindowCaptionButton.close(
-                                        onPressed: () {
-                                          windowManager.close();
-                                        },
-                                        brightness: Theme.of(context).brightness,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              Expanded(child: navigator!),
-                            ],
-                          ),
+                          child: navigator ?? const SizedBox(),
                         );
                       },
                     ),
@@ -187,7 +136,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                     breakpoints: const [
                       ResponsiveBreakpoint.resize(300, name: PHONE),
                       ResponsiveBreakpoint.resize(600, name: TABLET),
-                      ResponsiveBreakpoint.resize(800, name: DESKTOP),
+                      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
                     ],
                   );
                 },
