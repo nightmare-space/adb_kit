@@ -10,7 +10,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'material_entrypoint.dart';
 import 'config/config.dart';
-import 'core/impl/plugin.dart';
+import 'core/plugins/plugin.dart';
 import 'themes/lib_color_schemes.g.dart';
 
 // 这个值由shell去替换
@@ -21,13 +21,11 @@ Future<void> main() async {
   // 初始化运行时环境
 
   PluginManager.instance.registerADBPlugin(DashboardPlugin());
-  if (!GetPlatform.isWindows) {
-    PluginManager.instance.registerADBPlugin(AppStarterPlugin());
-  }
+  PluginManager.instance.registerADBPlugin(AppStarterPlugin());
   PluginManager.instance
     ..registerADBPlugin(AppManagerPlugin())
     // ..registerADBPlugin(AppLauncherPlugin())
-    // ..registerADBPlugin(DeviceInfoPlugin())
+    ..registerADBPlugin(DeviceInfoPlugin())
     ..registerADBPlugin(TaskManagerPlugin());
   runADBClient();
   // PageManager.instance.clear();

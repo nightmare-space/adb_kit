@@ -73,8 +73,8 @@ dependencies:
   settings:
     git: https://github.com/nightmare-space/settings
   # adb plugin can view android device info and cpu/gpu status
-  # device_info:
-  #   git: https://github.com/nightmare-space/device_info.git
+  device_info:
+    git: https://github.com/nightmare-space/device_info.git
   # can manage window on desktop
   window_manager: ^0.3.0
   
@@ -111,8 +111,8 @@ dependency_overrides:
   #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
-  # device_info:
-  #   path: ../device_info
+  device_info:
+    path: ../device_info
   app_manager:
     path: ../app_manager
   adbutil:
