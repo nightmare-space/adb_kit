@@ -30,6 +30,7 @@ jobs:
 
       - name: move file
         run: |
+          ls ${{ github.workspace }}
           mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/globa/instancel/behavior.dart
           mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
 
