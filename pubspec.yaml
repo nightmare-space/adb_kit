@@ -103,27 +103,27 @@ dependency_overrides:
   flutter_svg: 1.1.5
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
-  global_repository:
-    path: ../global_repository
+  # global_repository:
+  #   path: ../global_repository
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:
   # #   path: ../multicast
-  device_info:
-    path: ../device_info
-  app_manager:
-    path: ../app_manager
-  adbutil:
-    path: ../adbutil
+  # device_info:
+  #   path: ../device_info
+  # app_manager:
+  #   path: ../app_manager
+  # adbutil:
+  #   path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   # logger_view:
   #   path: ../logger_view
   qr_code_scanner: ^1.0.0
-  app_channel:
-    path: ../applib/app_channel
-  file_manager_view:
-    path: ../file_manager_view
+  # app_channel:
+  #   path: ../applib/app_channel
+  # file_manager_view:
+  #   path: ../file_manager_view
 flutter_intl:
   enabled: true
   localizely:

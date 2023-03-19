@@ -153,9 +153,11 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "../device_info"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1eb0d51916e7894c12d81d5eca988bd2d1d56456"
+      url: "https://github.com/nightmare-space/device_info.git"
+    source: git
     version: "1.0.0+1"
   device_info_plus:
     dependency: "direct main"
@@ -355,9 +357,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "../global_repository"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ab80e5f28c639de63f8aad6b21191ef23bc1ff51
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
