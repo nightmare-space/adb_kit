@@ -4,9 +4,11 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "../adbutil"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "7ed92a5a7b6d82a5799a15bbc83a04fcde11e09a"
+      url: "https://github.com/nightmare-space/adbutil"
+    source: git
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -25,18 +27,22 @@ packages:
     source: hosted
     version: "2.0.7"
   app_channel:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../applib/app_channel"
-      relative: true
-    source: path
+      path: app_channel
+      ref: HEAD
+      resolved-ref: "1813601bcc9347bdf5efebf0ef1482b30012b879"
+      url: "https://github.com/nightmare-space/applib"
+    source: git
     version: "0.0.1"
   app_manager:
     dependency: "direct main"
     description:
-      path: "../app_manager"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: c40969bf5a1bcfb6772d17b3bae793e866a8b510
+      url: "https://github.com/nightmare-space/app_manager"
+    source: git
     version: "1.0.0+1"
   archive:
     dependency: transitive
@@ -218,9 +224,11 @@ packages:
   file_manager_view:
     dependency: "direct main"
     description:
-      path: "../file_manager_view"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "270037270959961e038dd548291d7140ff0144c6"
+      url: "https://github.com/nightmare-space/file_manager_view.git"
+    source: git
     version: "1.0.0+1"
   file_selector:
     dependency: "direct main"
@@ -980,5 +988,5 @@ packages:
     source: git
     version: "3.4.1"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.0.0"
