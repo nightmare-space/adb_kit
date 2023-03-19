@@ -19,6 +19,19 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
+      - name: Checkout behavior_api code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/behavior_api'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/behavior_api"
+
+      - name: move file
+        run: |
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/globa/instancel/behavior.dart
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
+
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
@@ -53,7 +66,20 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          
+
+      - name: Checkout behavior_api code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/behavior_api'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/behavior_api"
+
+      - name: move file
+        run: |
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/globa/instancel/behavior.dart
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
+
       - name: Building
         run: |
           flutter config --enable-macos-desktop
@@ -76,6 +102,19 @@ jobs:
 
       - name: Checkout the code
         uses: actions/checkout@v3
+
+      - name: Checkout behavior_api code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/behavior_api'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/behavior_api"
+
+      - name: move file
+        run: |
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/globa/instancel/behavior.dart
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2

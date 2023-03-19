@@ -53,7 +53,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
       await windowManager.ensureInitialized();
       WindowOptions windowOptions = const WindowOptions(
         size: Size(800, 600),
-        center: true,
+        center: false,
         backgroundColor: Colors.transparent,
         skipTaskbar: false,
         titleBarStyle: TitleBarStyle.hidden,

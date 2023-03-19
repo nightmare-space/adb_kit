@@ -35,7 +35,7 @@ class About extends ADBPage {
   @override
   Widget buildPage(BuildContext context) {
     return AboutPage(
-      versionCode: Config.versionCode.toString(),
+      versionCode: Config.versionCode,
       appVersion: Config.versionName,
       logo: Container(
         width: 100.w,

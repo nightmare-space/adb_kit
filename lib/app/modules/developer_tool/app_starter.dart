@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
+/// 用来激活一些app服务，例如黑域，scene等
 class AppStarter extends StatefulWidget {
   const AppStarter({
     Key? key,
@@ -68,7 +69,7 @@ class _AppStarterState extends State<AppStarter> {
               GestureWithScale(
                 onTap: () {
                   // TODO scene激活有问题
-                  String cmd = '$adb -s ${widget.entity!.serial} shell sh /data/user/0/com.omarea.vtools/files/up.sh\r';
+                  String cmd = '$adb -s ${widget.entity!.serial} shell sh /sdcard/Android/data/com.omarea.vtools/up.sh\r';
                   Global().pty!.writeString(cmd);
                 },
                 child: Container(

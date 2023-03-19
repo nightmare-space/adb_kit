@@ -90,7 +90,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: '重启服务',
                         onTap: () async {
-                          String cmd = '$adb kill-server && adb start-server\r';
+                          String cmd = '$adb kill-server && $adb start-server\r';
                           Global().pty!.writeString(cmd);
                         },
                       ),

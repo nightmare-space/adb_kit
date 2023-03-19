@@ -1,6 +1,7 @@
 library adb_tool;
 
 import 'dart:async';
+import 'dart:io';
 import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide Config;
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -26,6 +27,7 @@ Future<void> main() async {
     ..registerADBPlugin(AppManagerPlugin())
     // ..registerADBPlugin(AppLauncherPlugin())
     ..registerADBPlugin(DeviceInfoPlugin())
+    ..registerADBPlugin(ProcessPlugin())
     ..registerADBPlugin(TaskManagerPlugin());
   runADBClient();
   // PageManager.instance.clear();

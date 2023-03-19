@@ -16,7 +16,7 @@ import 'generated/l10n.dart';
 import 'global/instance/global.dart';
 
 Future<void> initSetting() async {
-  await initSettingStore(RuntimeEnvir.configPath!);
+  await initSettingStore(RuntimeEnvir.configPath);
   if (Settings.serverPath.get == null) {
     Settings.serverPath.set = Config.adbLocalPath;
   }

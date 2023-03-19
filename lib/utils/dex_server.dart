@@ -81,6 +81,7 @@ class DexServer {
               final RemoteAppChannel channel = RemoteAppChannel(port: localPort);
               Log.i('channel -> ${channel.port}');
               serverStartList[devicesId] = channel;
+              Get.put<AppChannel>(channel);
               completer.complete(channel);
             }
           }

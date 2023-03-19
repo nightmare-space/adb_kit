@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/app/controller/history_controller.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_list.dart';
@@ -32,12 +35,63 @@ class _OverviewPageState extends State<OverviewPage> {
     super.initState();
   }
 
+  Future<List<String>> localAddress() async {
+    List<String> address = [];
+    final List<NetworkInterface> interfaces = await NetworkInterface.list(
+      includeLoopback: false,
+      type: InternetAddressType.IPv4,
+    );
+    for (final NetworkInterface interface in interfaces) {
+      Log.i('network interface name -> ${interface.name}');
+      if (GetPlatform.isAndroid && !interface.name.startsWith('wlan')) continue;
+      // 遍历网卡
+      for (final InternetAddress netAddress in interface.addresses) {
+        // 遍历网卡的IP地址
+        if (isAddress(netAddress.address)) {
+          address.add(netAddress.address);
+        }
+      }
+    }
+    return address;
+  }
+
+  Future<List<String>> getLANDevices() async {
+    List<String> address = await localAddress();
+    if (address.isEmpty) return [];
+    List<String> list = address.first.split('.');
+    List<String> devices = [];
+    Completer lock = Completer();
+    for (int i = 1; i < 255; i++) {
+      String ip = [list[0], list[1], list[2], i].join('.');
+      Socket.connect(
+        ip,
+        5555,
+        timeout: const Duration(
+          milliseconds: 2000,
+        ),
+      ).then((_) {
+        devices.add(ip);
+        // print('\x1b[32m $ip 成功');
+      }).onError((dynamic error, stackTrace) {
+        // print('\x1b[33merror : $error');
+      }).whenComplete(() async {
+        if (i == 254) {
+          // 等待1s
+          await Future.delayed(Duration(seconds: 1));
+          lock.complete();
+        }
+        // print('\x1b[32m $ip whenComplete');
+      });
+    }
+    await lock.future;
+    return devices;
+  }
+
   final ConfigController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (controller.screenType == ScreenType.phone ||
-        ResponsiveWrapper.of(context).isPhone) {
+    if (ResponsiveWrapper.of(context).isPhone) {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,
@@ -45,6 +99,7 @@ class _OverviewPageState extends State<OverviewPage> {
         leading: Menubutton(scaffoldContext: context),
         title: Text(S.of(context).home),
         actions: [
+          searchButton(context),
           if (GetPlatform.isAndroid)
             NiIconButton(
               child: SvgPicture.asset(
@@ -73,13 +128,14 @@ class _OverviewPageState extends State<OverviewPage> {
         // padding: EdgeInsets.only(bottom: 100.w),
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
-        left: false,
+          left: false,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // MacosContextMenuItem(
               //   content: Text('data'),
               // ),
+
               SizedBox(height: 8.w),
               CardItem(
                 child: Column(
@@ -95,6 +151,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             fontWeight: bold,
                           ),
                         ),
+                        if (GetPlatform.isDesktop) searchButton(context),
                       ],
                     ),
                     const DevicesList(),
@@ -108,6 +165,54 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
       ),
+    );
+  }
+
+  NiIconButton searchButton(BuildContext context) {
+    return NiIconButton(
+      child: Icon(
+        Icons.search,
+        color: Theme.of(context).colorScheme.onBackground,
+      ),
+      onTap: () async {
+        List<String> adbDevices = await getLANDevices();
+        Get.dialog(Center(
+          child: Material(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.w),
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (final String device in adbDevices)
+                  InkWell(
+                    onTap: () {
+                      AdbUtil.connectDevices('$device:5555');
+                      Get.back();
+                    },
+                    child: SizedBox(
+                      width: 200.w,
+                      height: 48.w,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 12.w),
+                          child: Text(
+                            device,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ));
+      },
     );
   }
 
@@ -146,10 +251,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             hintText: S.of(context).inputFormat,
                             hintStyle: TextStyle(
                               fontSize: 14.w,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onBackground
-                                  .withOpacity(0.8),
+                              color: Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
                             ),
                             isDense: true,
                           ),
@@ -180,8 +282,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                     editingController.text,
                                   );
                                   // showToast(result.message);
-                                  final List<String> tmp =
-                                      editingController.text.split(':');
+                                  final List<String> tmp = editingController.text.split(':');
                                   final String address = tmp[0];
                                   String port = '5555';
                                   if (tmp.length >= 2) {
@@ -210,44 +311,45 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
         SizedBox(height: 8.w),
-        if(Global().showQRCode)CardItem(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const ItemHeader(color: CandyColors.purple),
-                  Text(
-                    S.of(context).scanToConnect,
+        if (Global().showQRCode)
+          CardItem(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const ItemHeader(color: CandyColors.purple),
+                    Text(
+                      S.of(context).scanToConnect,
+                      style: TextStyle(
+                        fontSize: Dimens.font_sp16,
+                        fontWeight: bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.w),
+                const QrScanPage(),
+                SizedBox(height: 8.w),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10.w),
+                  ),
+                  child: Text(
+                    S.of(context).scanQRCodeDes,
                     style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: bold,
+                      color: Colors.green,
+                      fontSize: 12.w,
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 8.w),
-              const QrScanPage(),
-              SizedBox(height: 8.w),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(8.w),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.w),
                 ),
-                child: Text(
-                  S.of(context).scanQRCodeDes,
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 12.w,
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

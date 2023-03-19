@@ -18,7 +18,7 @@ class PageManager {
     Home(),
     History(),
     NetDebug(),
-    InstallToSystem(),
+    // InstallToSystem(),
     Terminal(),
     Log(),
     Setting(),

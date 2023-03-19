@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
-import 'package:adb_kit/utils/unique_util.dart';
 import 'package:adb_kit/utils/utils.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +17,7 @@ import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
 
+import 'behavior.dart';
 import 'page_manager.dart';
 
 extension PTYExt on Pty {
@@ -233,24 +233,20 @@ class Global {
     if (controller.autoConnect) {
       try {
         _receiveBoardCast();
-      // ignore: empty_catches
+        // ignore: empty_catches
       } catch (e) {}
     }
     if (GetPlatform.isAndroid) {
       try {
         _sendBoardCast();
-      // ignore: empty_catches
+        // ignore: empty_catches
       } catch (e) {}
     }
     _socketServer();
     await installAdbToEnvir();
+    await initApi('ADB KIT', Config.versionName);
   }
 
-  void initTerminalSize(Size size) {
-    if (size == Size.zero) {
-      return;
-    }
-  }
 }
 
 class Print implements Printable {
