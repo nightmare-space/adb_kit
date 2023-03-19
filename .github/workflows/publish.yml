@@ -80,8 +80,8 @@ jobs:
 
       - name: move file
         run: |
-          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/global/instance/behavior.dart
-          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
+          move "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/global/instance/behavior.dart
+          move "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
 
       - name: Building
         run: |
