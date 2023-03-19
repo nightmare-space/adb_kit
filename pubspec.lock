@@ -4,11 +4,9 @@ packages:
   adbutil:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "7ed92a5a7b6d82a5799a15bbc83a04fcde11e09a"
-      url: "https://github.com/nightmare-space/adbutil"
-    source: git
+      path: "../adbutil"
+      relative: true
+    source: path
     version: "0.0.1"
   android_intent_plus:
     dependency: transitive
@@ -27,22 +25,18 @@ packages:
     source: hosted
     version: "2.0.7"
   app_channel:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: app_channel
-      ref: HEAD
-      resolved-ref: "1813601bcc9347bdf5efebf0ef1482b30012b879"
-      url: "https://github.com/nightmare-space/applib"
-    source: git
+      path: "../applib/app_channel"
+      relative: true
+    source: path
     version: "0.0.1"
   app_manager:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: c40969bf5a1bcfb6772d17b3bae793e866a8b510
-      url: "https://github.com/nightmare-space/app_manager"
-    source: git
+      path: "../app_manager"
+      relative: true
+    source: path
     version: "1.0.0+1"
   archive:
     dependency: transitive
@@ -159,11 +153,9 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "1eb0d51916e7894c12d81d5eca988bd2d1d56456"
-      url: "https://github.com/nightmare-space/device_info.git"
-    source: git
+      path: "../device_info"
+      relative: true
+    source: path
     version: "1.0.0+1"
   device_info_plus:
     dependency: "direct main"
@@ -224,11 +216,9 @@ packages:
   file_manager_view:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "270037270959961e038dd548291d7140ff0144c6"
-      url: "https://github.com/nightmare-space/file_manager_view.git"
-    source: git
+      path: "../file_manager_view"
+      relative: true
+    source: path
     version: "1.0.0+1"
   file_selector:
     dependency: "direct main"
@@ -365,11 +355,9 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ab80e5f28c639de63f8aad6b21191ef23bc1ff51
-      url: "https://github.com/nightmare-space/global_repository"
-    source: git
+      path: "../global_repository"
+      relative: true
+    source: path
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -988,5 +976,5 @@ packages:
     source: git
     version: "3.4.1"
 sdks:
-  dart: ">=2.19.0 <3.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.0.0"
