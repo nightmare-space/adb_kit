@@ -86,7 +86,6 @@ jobs:
       - name: Building
         run: |
           flutter config --enable-macos-desktop
-          flutter build macos
 
       - name: Packaging
         run: |

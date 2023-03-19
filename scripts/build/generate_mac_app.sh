@@ -5,7 +5,7 @@ LOCAL_DIR=$(
 PROJECT_DIR=$LOCAL_DIR/../..
 source $LOCAL_DIR/../properties.sh
 app_path="build/macos/Build/Products/Release"
-flutter build macos
+flutter build macos --dart-define=VERSION=$VERSION --dart-define=VERSION_CODE=$VERSION_CODE
 rm -rf "$app_path/移动到这"
 ln -s -f /Applications "$app_path/移动到这"
 mkdir -p "$app_path/ADB TOOL.app/Contents/MacOS/data/usr/bin"
