@@ -11,7 +11,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'material_entrypoint.dart';
 import 'config/config.dart';
-import 'core/plugins/plugin.dart';
+import 'plugins/plugin.dart';
 import 'themes/lib_color_schemes.g.dart';
 
 // 这个值由shell去替换

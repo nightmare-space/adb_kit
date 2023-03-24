@@ -168,46 +168,46 @@ public class MainActivity extends FlutterActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
-        mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-        AdbBase64 base64 = new MyAdbBase64();
-        try {
-            adbCrypto = AdbCrypto.loadAdbKeyPair(base64, new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // mManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        // AdbBase64 base64 = new MyAdbBase64();
+        // try {
+        //     adbCrypto = AdbCrypto.loadAdbKeyPair(base64, new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
 
-        if (adbCrypto == null) {
-            try {
-                adbCrypto = AdbCrypto.generateAdbKeyPair(base64);
-                adbCrypto.saveAdbKeyPair(new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
-            } catch (Exception e) {
-                Log.w(Const.TAG, "fail to generate and save key-pair", e);
-            }
-        }
+        // if (adbCrypto == null) {
+        //     try {
+        //         adbCrypto = AdbCrypto.generateAdbKeyPair(base64);
+        //         adbCrypto.saveAdbKeyPair(new File(getFilesDir(), "private_key"), new File(getFilesDir(), "public_key"));
+        //     } catch (Exception e) {
+        //         Log.w(Const.TAG, "fail to generate and save key-pair", e);
+        //     }
+        // }
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-        intentFilter.addAction(Message.USB_PERMISSION);
-        registerReceiver(mUsbReceiver, intentFilter);
+        // IntentFilter intentFilter = new IntentFilter();
+        // intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        // intentFilter.addAction(Message.USB_PERMISSION);
+        // registerReceiver(mUsbReceiver, intentFilter);
 
         //Check USB
-        UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
-        if (device != null) {
-            // 说明是静态广播启动起来的
-            // 用户再收到系统弹窗"是否打开ADB工具"，用户点击了是
-            System.out.println("From Intent!");
-            asyncRefreshAdbConnection(device);
-        } else {
-            System.out.println("From onCreate!");
-            for (String k : mManager.getDeviceList().keySet()) {
-                UsbDevice usbDevice = mManager.getDeviceList().get(k);
-                if (mManager.hasPermission(usbDevice)) {
-                    asyncRefreshAdbConnection(usbDevice);
-                } else {
-                    mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), 0));
-                }
-            }
-        }
+        // UsbDevice device = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        // if (device != null) {
+        //     // 说明是静态广播启动起来的
+        //     // 用户再收到系统弹窗"是否打开ADB工具"，用户点击了是
+        //     System.out.println("From Intent!");
+        //     asyncRefreshAdbConnection(device);
+        // } else {
+        //     System.out.println("From onCreate!");
+        //     for (String k : mManager.getDeviceList().keySet()) {
+        //         UsbDevice usbDevice = mManager.getDeviceList().get(k);
+        //         if (mManager.hasPermission(usbDevice)) {
+        //             asyncRefreshAdbConnection(usbDevice);
+        //         } else {
+        //             mManager.requestPermission(usbDevice, PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent(Message.USB_PERMISSION), 0));
+        //         }
+        //     }
+        // }
     }
 
     @Override
@@ -263,7 +263,7 @@ public class MainActivity extends FlutterActivity {
     protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
         Log.d("Nightmare", "From onNewIntent");
-        asyncRefreshAdbConnection((UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE));
+        // asyncRefreshAdbConnection((UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE));
     }
 
     public void asyncRefreshAdbConnection(final UsbDevice device) {

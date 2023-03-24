@@ -1,6 +1,6 @@
 import 'package:adb_kit/app/modules/drawer/desktop_phone_drawer.dart';
 import 'package:adb_kit/app/modules/drawer/tablet_drawer.dart';
-import 'package:adb_kit/app/modules/exec_cmd_page.dart';
+import 'package:adb_kit/app/modules/terminal_page/exec_cmd_page.dart';
 import 'package:adb_kit/core/interface/adb_page.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
