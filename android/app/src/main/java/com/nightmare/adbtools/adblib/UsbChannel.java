@@ -94,7 +94,7 @@ public class UsbChannel implements AdbChannel {
 //    @Override
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     public void writex(byte[] buffer) throws IOException {
-        Log.i("Nightmare", ">>>>>>>>" + new String(buffer));
+//        Log.i("Nightmare", ">>>>>>>>" + new String(buffer));
         int offset = 0;
         int transferred = 0;
 
@@ -137,6 +137,7 @@ public class UsbChannel implements AdbChannel {
         // look for our bulk endpoints
         for (int i = 0; i < intf.getEndpointCount(); i++) {
             UsbEndpoint ep = intf.getEndpoint(i);
+            Log.d("Nightmare", "ep -> " + ep);
             if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
                 if (ep.getDirection() == UsbConstants.USB_DIR_OUT) {
                     epOut = ep;
@@ -149,6 +150,7 @@ public class UsbChannel implements AdbChannel {
             throw new IllegalArgumentException("not all endpoints found");
         }
         mEndpointOut = epOut;
+        Log.d("Nightmare", epOut + "");
         mEndpointIn = epIn;
     }
 
