@@ -2,6 +2,7 @@ library adb_tool;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide Config;
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -20,15 +21,16 @@ bool useNativeShell = false;
 Future<void> main() async {
   // Log.d(StackTrace.current);
   // 初始化运行时环境
-
-  PluginManager.instance.registerADBPlugin(DashboardPlugin());
-  PluginManager.instance.registerADBPlugin(AppStarterPlugin());
-  PluginManager.instance
-    ..registerADBPlugin(AppManagerPlugin())
-    // ..registerADBPlugin(AppLauncherPlugin())
-    ..registerADBPlugin(DeviceInfoPlugin())
-    ..registerADBPlugin(ProcessPlugin())
-    ..registerADBPlugin(TaskManagerPlugin());
+  Future.delayed(const Duration(milliseconds: 1000), () {
+    PluginManager.instance.registerADBPlugin(DashboardPlugin());
+    PluginManager.instance.registerADBPlugin(AppStarterPlugin());
+    PluginManager.instance
+      ..registerADBPlugin(AppManagerPlugin())
+      // ..registerADBPlugin(AppLauncherPlugin())
+      ..registerADBPlugin(DeviceInfoPlugin())
+      ..registerADBPlugin(ProcessPlugin())
+      ..registerADBPlugin(TaskManagerPlugin());
+  });
   runADBClient();
   // PageManager.instance.clear();
   // PageManager.instance.register(Home());

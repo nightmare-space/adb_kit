@@ -1,6 +1,7 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/app_starter.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class AppStarterPlugin extends Pluggable {
@@ -12,13 +13,13 @@ class AppStarterPlugin extends Pluggable {
   }
 
   @override
-  String get displayName => '常用服务启动';
+  String get displayName =>S.current.commonServiceStartup;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => '常用服务启动';
+  String get name => S.current.commonServiceStartup;
 
   @override
   void onTrigger() {}

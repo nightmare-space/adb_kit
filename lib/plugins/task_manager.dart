@@ -1,6 +1,7 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/task_manager.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class TaskManagerPlugin extends Pluggable {
@@ -12,13 +13,13 @@ class TaskManagerPlugin extends Pluggable {
   }
 
   @override
-  String get displayName => '任务管理';
+  String get displayName => S.current.taskManager;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => '任务管理';
+  String get name => S.current.taskManager;
 
   @override
   void onTrigger() {}

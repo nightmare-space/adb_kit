@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "agreement": MessageLookupByLibrary.simpleMessage("Agreement"),
         "alreadyConnectDevice":
             MessageLookupByLibrary.simpleMessage("Already Connect Devices"),
+        "appManager": MessageLookupByLibrary.simpleMessage("App Manager"),
         "autoConnectDevice":
             MessageLookupByLibrary.simpleMessage("Auto connect device in LAN"),
         "autoFit": MessageLookupByLibrary.simpleMessage("Responsive"),
@@ -33,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLog": MessageLookupByLibrary.simpleMessage("Change Log"),
         "chooseInstallPath":
             MessageLookupByLibrary.simpleMessage("Choose install path"),
+        "commonServiceStartup":
+            MessageLookupByLibrary.simpleMessage("Common service startup"),
+        "commonSwitch": MessageLookupByLibrary.simpleMessage("Commont Switch"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("Connect Method"),
         "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
             "1.Device and computer on the same LAN"),
@@ -42,9 +46,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "3.Exec \'adb devices\' to check if any devices connected"),
         "connectMethodTip": MessageLookupByLibrary.simpleMessage(
             "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
+        "currentDebug": MessageLookupByLibrary.simpleMessage("Current"),
         "currentVersion":
             MessageLookupByLibrary.simpleMessage("Current Version"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+        "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
             "Debug Paint Layer Borders Enabled"),
         "debugPaintPointersEnabled": MessageLookupByLibrary.simpleMessage(
@@ -58,6 +64,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "desktop": MessageLookupByLibrary.simpleMessage("Desktop"),
         "developerSettings":
             MessageLookupByLibrary.simpleMessage("Developer Settings"),
+        "deviceInfo": MessageLookupByLibrary.simpleMessage("Device Info"),
+        "displayScreenPointer":
+            MessageLookupByLibrary.simpleMessage("Display screen pointer"),
+        "displayTouch":
+            MessageLookupByLibrary.simpleMessage("Display Touch Feedback"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "fix some device without \n/data/local/tmp permission"),
@@ -68,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Input Device Address To Connect"),
         "inputFormat": MessageLookupByLibrary.simpleMessage(
             "Input format is \"IP:PORT CODE\""),
+        "installApk": MessageLookupByLibrary.simpleMessage("Install Apk"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
             "You can choose \'/system/xbin\',because most of binary in \'/system/bin\'"),
         "installDes2": MessageLookupByLibrary.simpleMessage(
@@ -82,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "localAddress": MessageLookupByLibrary.simpleMessage("Local Address"),
         "log": MessageLookupByLibrary.simpleMessage("Log"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
+        "noDeviceConnect": MessageLookupByLibrary.simpleMessage("No Devices"),
         "openLocalNetDebug": MessageLookupByLibrary.simpleMessage(
             "Enable Network ADB Debug Mode"),
         "openSourceLicense":
@@ -92,6 +105,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "pad": MessageLookupByLibrary.simpleMessage("Pad"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
+        "processManager":
+            MessageLookupByLibrary.simpleMessage("Process Manager"),
+        "pushTips":
+            MessageLookupByLibrary.simpleMessage("Tap button to select file"),
+        "remoteAdbDebug":
+            MessageLookupByLibrary.simpleMessage("Remote Adb Debug"),
+        "remoteDebuSwitchgDes":
+            MessageLookupByLibrary.simpleMessage("Without Root"),
+        "remoteDebugDes": MessageLookupByLibrary.simpleMessage("Remote"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
             "Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer"),
         "scanToConnect":
@@ -99,14 +121,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "showLayoutboundary":
+            MessageLookupByLibrary.simpleMessage("Show Layoutboundary"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("Show Performance Overlay"),
         "showSemanticsDebugger":
             MessageLookupByLibrary.simpleMessage("Show Semantics Debugger"),
         "showStatusBar": MessageLookupByLibrary.simpleMessage("Show Statusbar"),
+        "taskManager": MessageLookupByLibrary.simpleMessage("Task Manager"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "terms": MessageLookupByLibrary.simpleMessage("Terms"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "uploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
         "view": MessageLookupByLibrary.simpleMessage("View")
       };
 }

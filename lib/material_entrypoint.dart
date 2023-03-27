@@ -105,7 +105,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                locale: config.locale,
+                locale: window.locale,
                 supportedLocales: S.delegate.supportedLocales,
                 theme: ThemeData(
                   primarySwatch: Colors.blue,

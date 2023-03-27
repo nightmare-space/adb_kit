@@ -609,6 +609,186 @@ class S {
       args: [],
     );
   }
+
+  /// `No Devices`
+  String get noDeviceConnect {
+    return Intl.message(
+      'No Devices',
+      name: 'noDeviceConnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard`
+  String get dashboard {
+    return Intl.message(
+      'Dashboard',
+      name: 'dashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commont Switch`
+  String get commonSwitch {
+    return Intl.message(
+      'Commont Switch',
+      name: 'commonSwitch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display Touch Feedback`
+  String get displayTouch {
+    return Intl.message(
+      'Display Touch Feedback',
+      name: 'displayTouch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display screen pointer`
+  String get displayScreenPointer {
+    return Intl.message(
+      'Display screen pointer',
+      name: 'displayScreenPointer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remote Adb Debug`
+  String get remoteAdbDebug {
+    return Intl.message(
+      'Remote Adb Debug',
+      name: 'remoteAdbDebug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current`
+  String get currentDebug {
+    return Intl.message(
+      'Current',
+      name: 'currentDebug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remote`
+  String get remoteDebugDes {
+    return Intl.message(
+      'Remote',
+      name: 'remoteDebugDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Without Root`
+  String get remoteDebuSwitchgDes {
+    return Intl.message(
+      'Without Root',
+      name: 'remoteDebuSwitchgDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Layoutboundary`
+  String get showLayoutboundary {
+    return Intl.message(
+      'Show Layoutboundary',
+      name: 'showLayoutboundary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Install Apk`
+  String get installApk {
+    return Intl.message(
+      'Install Apk',
+      name: 'installApk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload File`
+  String get uploadFile {
+    return Intl.message(
+      'Upload File',
+      name: 'uploadFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap button to select file`
+  String get pushTips {
+    return Intl.message(
+      'Tap button to select file',
+      name: 'pushTips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Common service startup`
+  String get commonServiceStartup {
+    return Intl.message(
+      'Common service startup',
+      name: 'commonServiceStartup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Manager`
+  String get appManager {
+    return Intl.message(
+      'App Manager',
+      name: 'appManager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device Info`
+  String get deviceInfo {
+    return Intl.message(
+      'Device Info',
+      name: 'deviceInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Process Manager`
+  String get processManager {
+    return Intl.message(
+      'Process Manager',
+      name: 'processManager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Task Manager`
+  String get taskManager {
+    return Intl.message(
+      'Task Manager',
+      name: 'taskManager',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

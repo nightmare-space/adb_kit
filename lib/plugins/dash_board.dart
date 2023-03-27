@@ -1,6 +1,7 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/dash_board.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPlugin extends Pluggable {
@@ -12,13 +13,13 @@ class DashboardPlugin extends Pluggable {
   }
 
   @override
-  String get displayName => '控制面板';
+  String get displayName => S.current.dashboard;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => '控制面板';
+  String get name => S.current.dashboard;
 
   @override
   void onTrigger() {}

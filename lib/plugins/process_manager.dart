@@ -7,6 +7,7 @@ import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/wrappers/device_info_wrapper.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/dex_server.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/app_manager.dart';
@@ -51,13 +52,13 @@ class ProcessPlugin extends Pluggable {
   }
 
   @override
-  String get displayName => '进程管理';
+  String get displayName => S.current.processManager;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => '进程管理';
+  String get name => S.current.processManager;
 
   @override
   void onTrigger() {}
