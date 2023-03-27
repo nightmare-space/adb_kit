@@ -1,0 +1,11 @@
+#!/system/bin/sh
+set -e -u
+# echo "termux callback invoked arg $@"
+# echo "TERMUX_USB_DEV=$TERMUX_USB_DEV" > /sdcard/termux-callback.log
+# echo "TERMUX_ADB_SOCK_FD=$TERMUX_ADB_SOCK_FD" >> /sdcard/termux-callback.log
+# echo "TERMUX_USB_FD=$TERMUX_USB_FD" >> /sdcard/termux-callback.log
+# echo $TERMUX_USB_DEV
+# echo $TERMUX_USB_FD
+# echo $TERMUX_ADB_SOCK_FD
+# termux-toast "$TERMUX_USB_DEV $TERMUX_ADB_SOCK_FD $TERMUX_USB_FD"
+$TERMUX_CALLBACK "$@"

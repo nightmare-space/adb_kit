@@ -42,6 +42,8 @@ class Global {
     return _instance;
   }
 
+  Terminal otgTerminal = Terminal();
+
   String drawerRoute = PageManager.instance!.pages.first.runtimeType.toString();
   Widget? page;
   void changeDrawerRoute(core.String route) {
@@ -69,10 +71,10 @@ class Global {
     if (GetPlatform.isMobile) {
       envir['HOME'] = RuntimeEnvir.binPath!;
     }
-    envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath!;
-    envir['TMPDIR'] = RuntimeEnvir.binPath!;
+    envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath!}:/system/lib64';
+    envir['TMPDIR'] = '/sdcard';
     envir['TERM'] = 'xterm-256color';
-
+    envir['RUST_LOG'] = 'trace';
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
@@ -157,8 +159,9 @@ class Global {
   List<String> androidFiles = [
     // 'adb',
     // 'adb.bin-armeabi',
-    'libadb.so'
-        'ld-android.so',
+    'libadb.so',
+    'libadb_termux.so',
+    // 'ld-android.so',
     'libabsl_bad_variant_access.so',
     'libabsl_base.so',
     'libabsl_city.so',
@@ -204,17 +207,18 @@ class Global {
     'libbrotlicommon.so',
     'libbrotlidec.so',
     'libbrotlienc.so',
-    'libc++.so',
+    // 'libc++.so',
     'libc++_shared.so',
-    'libc.so',
-    'libdl.so',
-    'liblog.so',
+    // 'libc.so',
+    // 'libdl.so',
+    // 'liblog.so',
     'liblz4.so',
-    'libm.so',
+    // 'libm.so',
     'libprotobuf.so',
     'libusb-1.0.so',
     'libz.so.1',
     'libzstd.so.1',
+    'libtermux-api.so',
   ];
 
   List<String> globalFiles = [
@@ -229,7 +233,7 @@ class Global {
     if (GetPlatform.isAndroid) {
       String? libPath = await getLibPath();
       File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
-        '$libPath/libadb.so \$@',
+        '$libPath/libadb.so.so \$@',
       );
       final ProcessResult result = await Process.run(
         'chmod',
@@ -252,13 +256,27 @@ class Global {
         // );
       }
     }
-    AssetsManager.copyFiles(
+    await AssetsManager.copyFiles(
       localPath: '${RuntimeEnvir.binPath}/',
-      android: [],
+      android: [
+        'termux-api',
+        'termux-callback',
+        'termux-usb',
+        'termux-toast',
+        'am',
+        'am.apk',
+      ],
       macOS: [],
       global: globalFiles,
       package: Config.flutterPackage,
     );
+    Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
+    File('${RuntimeEnvir.binPath}/termux-callback').rename('${RuntimeEnvir.usrPath}/libexec/termux-callback');
+
+    // final ProcessResult result = await Process.run(
+    //   'chmod',
+    //   <String>['+x', "${RuntimeEnvir.usrPath}/libexec/termux-callback"],
+    // );
   }
 
   //

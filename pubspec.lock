@@ -25,18 +25,22 @@ packages:
     source: hosted
     version: "2.0.7"
   app_channel:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../applib/app_channel"
-      relative: true
-    source: path
+      path: app_channel
+      ref: HEAD
+      resolved-ref: "1813601bcc9347bdf5efebf0ef1482b30012b879"
+      url: "https://github.com/nightmare-space/applib"
+    source: git
     version: "0.0.1"
   app_manager:
     dependency: "direct main"
     description:
-      path: "../app_manager"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: c40969bf5a1bcfb6772d17b3bae793e866a8b510
+      url: "https://github.com/nightmare-space/app_manager"
+    source: git
     version: "1.0.0+1"
   archive:
     dependency: transitive
@@ -153,9 +157,11 @@ packages:
   device_info:
     dependency: "direct main"
     description:
-      path: "../device_info"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1eb0d51916e7894c12d81d5eca988bd2d1d56456"
+      url: "https://github.com/nightmare-space/device_info.git"
+    source: git
     version: "1.0.0+1"
   device_info_plus:
     dependency: "direct main"
@@ -216,9 +222,11 @@ packages:
   file_manager_view:
     dependency: "direct main"
     description:
-      path: "../file_manager_view"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "2a941d548677fa002753d9f3af456f819eb9de69"
+      url: "https://github.com/nightmare-space/file_manager_view.git"
+    source: git
     version: "1.0.0+1"
   file_selector:
     dependency: "direct main"
@@ -355,9 +363,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "../global_repository"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ab80e5f28c639de63f8aad6b21191ef23bc1ff51
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -798,6 +808,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  termux_api_plugin:
+    dependency: "direct main"
+    description:
+      path: "/Users/nightmare/Desktop/nightmare-space/termux_api_plugin"
+      relative: false
+    source: path
+    version: "0.0.1"
   test_api:
     dependency: transitive
     description:
@@ -976,5 +993,5 @@ packages:
     source: git
     version: "3.4.1"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.19.4 <3.0.0"
   flutter: ">=3.0.0"

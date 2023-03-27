@@ -79,6 +79,8 @@ dependencies:
   screenshot: ^1.2.3
 
   device_info_plus: 8.1.0
+  termux_api_plugin:
+    path: /Users/nightmare/Desktop/nightmare-space/termux_api_plugin
     
 dev_dependencies:
   flutter_test:
@@ -113,8 +115,8 @@ dependency_overrides:
   #   path: ../device_info
   # app_manager:
   #   path: ../app_manager
-  # adbutil:
-  #   path: ../adbutil
+  adbutil:
+    path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   # logger_view:
