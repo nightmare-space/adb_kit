@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
+import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
 import 'package:adb_kit/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
@@ -67,7 +68,7 @@ class DevicesController extends GetxController {
         otgDevices.clear();
       } else if (call.method == 'output') {
         // TODO
-        // otgTerm.write(call.arguments.toString());
+        Global().otgTerminal.write(call.arguments.toString());
       }
     });
     await startAdb();
@@ -104,7 +105,7 @@ class DevicesController extends GetxController {
     //   await Global().process.exec('su -p HOME');
     // }
     try {
-      String out = await execCmd('$adb start-server');
+      String out = await execCmd('libadb_termux.so start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {

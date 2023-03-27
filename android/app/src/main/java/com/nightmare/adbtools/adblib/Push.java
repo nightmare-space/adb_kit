@@ -1,11 +1,10 @@
-package com.nightmare.adbtools;
+package com.nightmare.adbtools.adblib;
 
 import android.os.Handler;
 import android.util.Log;
 
 
-import com.nightmare.adbtools.adblib.AdbConnection;
-import com.nightmare.adbtools.adblib.AdbStream;
+import com.nightmare.adbtools.MainActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +42,7 @@ public class Push {
 
         stream.write(mode.getBytes());
 
-        byte[] buff = new byte[500];
+        byte[] buff = new byte[adbConnection.getMaxData()];
 
         InputStream is = new FileInputStream(local);
 

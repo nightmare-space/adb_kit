@@ -70,63 +70,63 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                     ),
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      ItemButton(
-                        title: '开启服务',
-                        onTap: () async {
-                          String cmd = '$adb start-server\r';
-                          Global().pty!.writeString(cmd);
-                          AdbUtil.startPoolingListDevices();
-                        },
-                      ),
-                      ItemButton(
-                        title: '停止服务',
-                        onTap: () async {
-                          String cmd = '$adb kill-server\r';
-                          Global().pty!.writeString(cmd);
-                          AdbUtil.stopPoolingListDevices();
-                          final DevicesController controller = Get.find();
-                          controller.clearDevices();
-                        },
-                      ),
-                      ItemButton(
-                        title: '重启服务',
-                        onTap: () async {
-                          String cmd = '$adb kill-server && $adb start-server\r';
-                          Global().pty!.writeString(cmd);
-                        },
-                      ),
-                      ItemButton(
-                        title: '复制ADB KEY',
-                        onTap: () async {
-                          String? homePath = '';
-                          if (Platform.isMacOS) {
-                            homePath = Platform.environment['HOME'];
-                          } else if (Platform.isAndroid) {
-                            homePath = RuntimeEnvir.binPath;
-                          }
-                          final File adbKey = File(
-                            '$homePath/.android/adbkey.pub',
-                          );
-                          if (adbKey.existsSync()) {
-                            await Clipboard.setData(
-                              ClipboardData(
-                                text: adbKey.readAsStringSync(),
-                              ),
-                            );
-                            showToast('已复制');
-                          } else {
-                            showToast('未发现adb key');
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   physics: const BouncingScrollPhysics(),
+                //   child: Row(
+                //     children: [
+                //       ItemButton(
+                //         title: '开启服务',
+                //         onTap: () async {
+                //           String cmd = '$adb start-server\r';
+                //           Global().pty!.writeString(cmd);
+                //           AdbUtil.startPoolingListDevices();
+                //         },
+                //       ),
+                //       ItemButton(
+                //         title: '停止服务',
+                //         onTap: () async {
+                //           String cmd = '$adb kill-server\r';
+                //           Global().pty!.writeString(cmd);
+                //           AdbUtil.stopPoolingListDevices();
+                //           final DevicesController controller = Get.find();
+                //           controller.clearDevices();
+                //         },
+                //       ),
+                //       ItemButton(
+                //         title: '重启服务',
+                //         onTap: () async {
+                //           String cmd = '$adb kill-server && $adb start-server\r';
+                //           Global().pty!.writeString(cmd);
+                //         },
+                //       ),
+                //       ItemButton(
+                //         title: '复制ADB KEY',
+                //         onTap: () async {
+                //           String? homePath = '';
+                //           if (Platform.isMacOS) {
+                //             homePath = Platform.environment['HOME'];
+                //           } else if (Platform.isAndroid) {
+                //             homePath = RuntimeEnvir.binPath;
+                //           }
+                //           final File adbKey = File(
+                //             '$homePath/.android/adbkey.pub',
+                //           );
+                //           if (adbKey.existsSync()) {
+                //             await Clipboard.setData(
+                //               ClipboardData(
+                //                 text: adbKey.readAsStringSync(),
+                //               ),
+                //             );
+                //             showToast('已复制');
+                //           } else {
+                //             showToast('未发现adb key');
+                //           }
+                //         },
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

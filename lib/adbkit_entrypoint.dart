@@ -66,7 +66,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
     }
     await initSetting();
     configController.initConfig();
-    Global.instance!.initGlobal();
+    await Global.instance!.initGlobal();
     Global.instance!.hasSafeArea = widget.hasSafeArea;
     Global.instance!.showQRCode = widget.showQRCode;
     DevicesController controller = Get.find();

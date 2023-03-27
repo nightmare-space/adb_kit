@@ -1,11 +1,8 @@
-package com.nightmare.adbtools;
+package com.nightmare.adbtools.adblib;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-/**
- * Created by xudong on 2/22/14.
- */
 public class ByteUtils {
 
     public static byte[] concat(byte[]... arrays) {

@@ -1,5 +1,6 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -105,7 +106,7 @@ class _DevicesListState extends State<DevicesList> {
                       height: 20.w,
                       child: Center(
                         child: Text(
-                          '未连接任何设备',
+                          S.current.noDeviceConnect,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                           ),

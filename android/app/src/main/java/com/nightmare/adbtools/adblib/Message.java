@@ -1,4 +1,4 @@
-package com.nightmare.adbtools;
+package com.nightmare.adbtools.adblib;
 
 
 public class Message {

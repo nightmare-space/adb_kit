@@ -79,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const ItemHeader(color: CandyColors.candyPink),
+                      // const ItemHeader(color: CandyColors.candyPink),
                       Text(
                         S.of(context).view,
                         style: TextStyle(
@@ -237,22 +237,22 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                       //     ),
                       //   ),
                       // ),
-                      SettingItem(
-                        title: '背景风格',
-                        suffix: SelectTab(
-                          value: configController.backgroundStyle.index,
-                          children: const [
-                            Text('默认'),
-                            Text('背景模糊'),
-                            Text('全透明'),
-                          ],
-                          onChanged: (value) {
-                            configController.changeBackgroundStyle(
-                              BackgroundStyle.values[value],
-                            );
-                          },
-                        ),
-                      ),
+                      // SettingItem(
+                      //   title: '背景风格',
+                      //   suffix: SelectTab(
+                      //     value: configController.backgroundStyle.index,
+                      //     children: const [
+                      //       Text('默认'),
+                      //       Text('背景模糊'),
+                      //       Text('全透明'),
+                      //     ],
+                      //     onChanged: (value) {
+                      //       configController.changeBackgroundStyle(
+                      //         BackgroundStyle.values[value],
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -262,7 +262,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const ItemHeader(color: CandyColors.candyCyan),
+                      // const ItemHeader(color: CandyColors.candyCyan),
                       Text(
                         S.of(context).other,
                         style: TextStyle(
@@ -318,7 +318,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const ItemHeader(color: CandyColors.candyGreen),
+                      // const ItemHeader(color: CandyColors.candyGreen),
                       Text(
                         S.of(context).developerSettings,
                         style: TextStyle(

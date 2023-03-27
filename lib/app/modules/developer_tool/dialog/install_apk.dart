@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:adb_kit/app/modules/developer_tool/interface/adb_channel.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
@@ -11,15 +12,12 @@ import 'package:path/path.dart' as p;
 class InstallApkDialog extends StatefulWidget {
   const InstallApkDialog({
     Key? key,
-    this.paths,
-    required this.adbChannel,
+    this.paths, required this.entity,
   }) : super(key: key);
 
   /// 路径列表
   final List<String>? paths;
-
-  /// adb channel 实例
-  final ADBChannel? adbChannel;
+  final DevicesEntity entity;
 
   @override
   State createState() => _InstallApkDialogState();
@@ -55,7 +53,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       currentFile = name;
       setState(() {});
       try {
-        await widget.adbChannel!.install(path);
+        await execCmd('$adb -s ${widget.entity.serial} install -t $path');
       } on Exception catch (e) {
         stringBuffer.write('$name: $e\n');
       }

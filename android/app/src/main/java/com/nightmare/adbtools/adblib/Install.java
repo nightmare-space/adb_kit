@@ -1,12 +1,9 @@
-package com.nightmare.adbtools;
+package com.nightmare.adbtools.adblib;
 
 
 import android.os.Handler;
 import android.util.Log;
 
-
-import com.nightmare.adbtools.adblib.AdbConnection;
-import com.nightmare.adbtools.adblib.AdbStream;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -4,13 +4,14 @@ import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/otg_terminal.dart';
 import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
-import 'package:file_manager_view/file_manager_view.dart';
+import 'package:file_manager_view/file_manager_view.dart' hide execCmd;
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
@@ -19,13 +20,9 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
-
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
 import 'drag_drop.dart';
-import 'implement/binadb_channel.dart';
-import 'implement/otgadb_channel.dart';
-import 'interface/adb_channel.dart';
 import 'screenshot_page.dart';
 
 class Dashboard extends StatefulWidget {
@@ -40,7 +37,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   Pty? adbShell;
 
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
-  ADBChannel? adbChannel;
   Terminal terminal = Terminal();
 
   /// 获取卡片宽度，主要是做响应式适配的
@@ -86,12 +82,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         terminal.write(event);
       },
     );
-
-    if (widget.entity!.isOTG) {
-      adbChannel = OTGADBChannel();
-    } else {
-      adbChannel = BinADBChannel(widget.entity!.serial);
-    }
   }
 
   @override
@@ -235,7 +225,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        '常用开关',
+                        S.of(context).commonSwitch,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -250,40 +240,37 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   Column(
                     children: [
                       _DeveloperItem(
-                        adbChannel: adbChannel,
                         serial: widget.entity!.serial,
-                        title: '显示点按操作反馈',
+                        title: S.of(context).displayTouch,
                         putKey: 'show_touches',
                       ),
                       _DeveloperItem(
-                        adbChannel: adbChannel,
                         serial: widget.entity!.serial,
-                        title: '显示屏幕指针',
+                        title: S.of(context).displayScreenPointer,
                         putKey: 'pointer_location',
                       ),
                       SwitchItem(
-                        title: '打开布局边界',
+                        title: S.of(context).showLayoutboundary,
                         onOpen: () {
-                          adbChannel!.execCmmand(
+                          execCmd(
                             'adb -s ${widget.entity!.serial} shell setprop debug.layout true',
                           );
-                          adbChannel!.execCmmand(
+                          execCmd(
                             'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return true;
                         },
                         onClose: () {
-                          adbChannel!.execCmmand(
+                          execCmd(
                             'adb -s ${widget.entity!.serial} shell setprop debug.layout false',
                           );
-                          adbChannel!.execCmmand(
+                          execCmd(
                             'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return false;
                         },
                       ),
                       _OpenRemoteDebug(
-                        adbChannel: adbChannel,
                         serial: widget.entity!.serial,
                       ),
                     ],
@@ -339,7 +326,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyBlue),
                       Text(
-                        '安装APK',
+                        S.of(context).installApk,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -354,7 +341,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择Apk进行安装',
+                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -406,13 +393,12 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       barrierDismissible: false,
       builder: (_) {
         return PushFileDialog(
-          adbChannel: adbChannel,
+          entity: widget.entity!,
           paths: paths,
         );
       },
     );
   }
-
 
   void installApkWithPaths(List<String>? paths) {
     showDialog(
@@ -420,7 +406,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       barrierDismissible: false,
       builder: (_) {
         return InstallApkDialog(
-          adbChannel: adbChannel,
+          entity: widget.entity!,
           paths: paths,
         );
       },
@@ -448,7 +434,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyCyan),
                       Text(
-                        '上传文件',
+                        S.of(context).uploadFile,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -463,7 +449,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}点击按钮选择文件进行上传',
+                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -634,10 +620,8 @@ class _OpenRemoteDebug extends StatefulWidget {
   const _OpenRemoteDebug({
     Key? key,
     this.serial,
-    required this.adbChannel,
   }) : super(key: key);
   final String? serial;
-  final ADBChannel? adbChannel;
   @override
   __OpenRemoteDebugState createState() => __OpenRemoteDebugState();
 }
@@ -651,7 +635,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
   }
 
   Future<void> initCheckState() async {
-    final String? result = await widget.adbChannel!.execCmmand(
+    final String result = await execCmd(
       '$adb -s ${widget.serial} shell getprop service.adb.tcp.port',
     );
     // Log.w(result);
@@ -680,13 +664,13 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 Row(
                   children: [
                     Text(
-                      '远程调试',
+                      S.of(context).remoteAdbDebug,
                       style: TextStyle(
                         fontWeight: bold,
                       ),
                     ),
                     Text(
-                      isAddress(widget.serial!) ? '(当前方式:远程)' : '(当前方式:usb)',
+                      isAddress(widget.serial!) ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
                       style: TextStyle(
                         fontWeight: bold,
                         color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
@@ -695,7 +679,7 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                   ],
                 ),
                 Text(
-                  '无需root可让设备打开远程调试',
+                  S.of(context).remoteDebuSwitchgDes,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
                     fontSize: 12.w,
@@ -715,7 +699,16 @@ class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
                 // );
                 // print(result);
                 // String result;
-                await widget.adbChannel!.changeNetDebugStatus(value);
+                int port = value;
+                if (port == 5555) {
+                  await execCmd(
+                    '$adb -s ${widget.serial} tcpip 5555',
+                  );
+                } else {
+                  await execCmd(
+                    '$adb -s ${widget.serial} usb',
+                  );
+                }
                 // Log.v(result);
                 setState(() {});
               },
@@ -788,12 +781,10 @@ class _DeveloperItem extends StatefulWidget {
     this.title,
     this.serial,
     this.putKey,
-    required this.adbChannel,
   }) : super(key: key);
   final String? title;
   final String? serial;
   final String? putKey;
-  final ADBChannel? adbChannel;
   @override
   __DeveloperItemState createState() => __DeveloperItemState();
 }
@@ -807,7 +798,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
   }
 
   Future<void> initCheckState() async {
-    final String? result = await widget.adbChannel!.execCmmand(
+    final String result = await execCmd(
       '$adb -s ${widget.serial} shell settings get system ${widget.putKey}',
     );
     // Log.w('result -> $result');
@@ -838,7 +829,7 @@ class __DeveloperItemState extends State<_DeveloperItem> {
               onChanged: (_) {
                 isCheck = !isCheck;
                 final int value = isCheck ? 1 : 0;
-                widget.adbChannel!.execCmmand(
+                execCmd(
                   'adb -s ${widget.serial} shell settings put system ${widget.putKey} $value',
                 );
                 setState(() {});

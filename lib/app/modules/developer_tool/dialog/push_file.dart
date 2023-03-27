@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
+import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
@@ -12,10 +14,10 @@ class PushFileDialog extends StatefulWidget {
   const PushFileDialog({
     Key? key,
     this.paths,
-    required this.adbChannel,
+    required this.entity,
   }) : super(key: key);
   final List<String>? paths;
-  final ADBChannel? adbChannel;
+  final DevicesEntity entity;
 
   @override
   State createState() => _PushFileDialogState();
@@ -49,7 +51,8 @@ class _PushFileDialogState extends State<PushFileDialog> {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
-      await widget.adbChannel!.push(path, '/sdcard/');
+      final String fileName = p.basename(path);
+      await execCmd('$adb -s ${widget.entity.serial} push $path /sdcard/$fileName');
       fileIndex++;
       // showToast('$name 已上传');
     }
@@ -84,7 +87,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
                     RichText(
                         text: TextSpan(
                       children: [
-                         TextSpan(
+                        TextSpan(
                           text: '(',
                           style: TextStyle(
                             color: AppColors.fontColor,
@@ -100,7 +103,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
                         ),
                         TextSpan(
                           text: '/$fileNum)',
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: AppColors.fontColor,
                             fontWeight: bold,
                           ),
