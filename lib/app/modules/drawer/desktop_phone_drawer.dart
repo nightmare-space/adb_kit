@@ -1,3 +1,4 @@
+import 'package:adb_kit/adb_tool.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/config/custom.dart';
 import 'package:adb_kit/config/font.dart';
@@ -31,9 +32,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   Widget build(BuildContext context) {
     final double? width = widget.width;
     return Material(
-      color: ResponsiveWrapper.of(context).isDesktop
-          ? Theme.of(context).colorScheme.background.withOpacity(0.2)
-          : Theme.of(context).colorScheme.background,
+      color: ResponsiveWrapper.of(context).isDesktop ? Theme.of(context).colorScheme.background.withOpacity(0.2) : Theme.of(context).colorScheme.background,
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
@@ -68,6 +67,15 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       children: [
         SizedBox(height: 8.w),
         if (Custom.drawerHeader != null) Custom.drawerHeader!,
+        if (personHeader != null)
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 12.w,
+              left: 12.w,
+              right: 12.w,
+            ),
+            child: personHeader!,
+          ),
         for (ADBPage page in PageManager.instance!.pages)
           if (page.isActive)
             Padding(
@@ -129,9 +137,7 @@ class DrawerItem extends StatelessWidget {
                   Icon(
                     iconData ?? Icons.open_in_new,
                     size: 18.w,
-                    color: isChecked
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).colorScheme.onBackground,
+                    color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onBackground,
                   ),
                   SizedBox(
                     width: Dimens.gap_dp8,
@@ -139,9 +145,7 @@ class DrawerItem extends StatelessWidget {
                   Text(
                     title!,
                     style: TextStyle(
-                      color: isChecked
-                          ? Theme.of(context).primaryColor
-                          : Theme.of(context).colorScheme.onBackground,
+                      color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onBackground,
                       fontSize: 14.w,
                       fontWeight: bold,
                     ),

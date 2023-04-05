@@ -20,6 +20,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OverviewPage extends StatefulWidget {
   const OverviewPage({Key? key}) : super(key: key);
@@ -132,10 +133,6 @@ class _OverviewPageState extends State<OverviewPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // MacosContextMenuItem(
-              //   content: Text('data'),
-              // ),
-
               SizedBox(height: 8.w),
               CardItem(
                 child: Column(
@@ -161,6 +158,61 @@ class _OverviewPageState extends State<OverviewPage> {
               SizedBox(height: 8.w),
               connectCard(context),
               SizedBox(height: 8.w),
+              if (GetPlatform.isAndroid)
+                CardItem(
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const ItemHeader(color: CandyColors.deepPurple),
+                          Text(
+                            '加入反馈群',
+                            style: TextStyle(
+                              fontSize: 16.w,
+                              fontWeight: bold,
+                            ),
+                          ),
+                          if (GetPlatform.isDesktop) searchButton(context),
+                        ],
+                      ),
+                      SizedBox(height: 12.w),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(8.w),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10.w),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '与群里其他大佬交流，第一时间获得更新动态，联系开发者',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 12.w,
+                                ),
+                              ),
+                            ),
+                            NiIconButton(
+                              onTap: () async {
+                                const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
+                                if (await canLaunchUrlString(url)) {
+                                  await launchUrlString(url);
+                                } else {
+                                  showToast('唤起QQ失败，请检查是否安装。');
+                                  // throw 'Could not launch $url';
+                                }
+                              },
+                              child: Icon(Icons.arrow_forward_ios),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
@@ -200,7 +252,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           padding: EdgeInsets.only(left: 12.w),
                           child: Text(
                             device,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -14,6 +14,7 @@ import 'material_entrypoint.dart';
 import 'config/config.dart';
 import 'plugins/plugin.dart';
 import 'themes/lib_color_schemes.g.dart';
+import 'package:adb_kit_extension/adb_kit_extension.dart';
 
 // 这个值由shell去替换
 bool useNativeShell = false;
@@ -54,6 +55,7 @@ Future<void> runADBClient({Color? primary}) async {
   runZonedGuarded<void>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      initPersonal();
       if (!GetPlatform.isIOS) {
         // ios
         final dir = (await getApplicationSupportDirectory()).path;

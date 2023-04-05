@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:adb_kit/app/controller/controller.dart';
-import 'package:adb_kit/app/modules/developer_tool/interface/adb_channel.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/plugin_util.dart';

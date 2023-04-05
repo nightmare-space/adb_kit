@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         applicationId "com.nightmare.adbtools"
-        minSdkVersion 20
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -79,4 +79,5 @@ flutter {
 }
 
 dependencies {
+//    implementation project(":termux_api")
 }

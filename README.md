@@ -27,7 +27,8 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 
 ## 截图
 
-<img src="screenshot/screen.png" width="100%" height="100%" />
+<img src="screenshot/main/screen.png" width="100%" height="100%" />
+<img src="screenshot/main/pad.png" width="100%" />
 
 ## 功能列表
 - 可扩展

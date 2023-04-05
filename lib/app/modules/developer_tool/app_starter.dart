@@ -68,7 +68,6 @@ class _AppStarterState extends State<AppStarter> {
               ),
               GestureWithScale(
                 onTap: () {
-                  // TODO scene激活有问题
                   String cmd = '$adb -s ${widget.entity!.serial} shell sh /sdcard/Android/data/com.omarea.vtools/up.sh\r';
                   Global().pty!.writeString(cmd);
                 },

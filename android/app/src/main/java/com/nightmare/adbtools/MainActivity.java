@@ -13,7 +13,7 @@ import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity {
-    static String tag = "Nightmare";
+    static public String tag = "Nightmare";
     final String channelName = "adb";
     // 组播相关的锁
     // 安卓默认关闭组播，因为会耗电，所以用完记得释放

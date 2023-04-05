@@ -1,5 +1,7 @@
 library adb_tool;
 
+import 'package:flutter/material.dart';
+
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 // 这个文件提供其他项目集成adb_tool的时候导包
@@ -22,3 +24,5 @@ Future<double> getMacTitlebarWidth() async {
   // return await Window.getTitlebarHeight();
 }
 
+
+Widget? personHeader;

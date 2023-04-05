@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.4.0+39
+version: 1.5.0+40
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
@@ -39,7 +39,7 @@ dependencies:
   # some animations
   flutter_spinkit: "^4.1.2"
   # svg image
-  flutter_svg: ^0.22.0
+  flutter_svg: ^1.1.0
   # state manager...
   get: ^4.1.3
   # some foundation
@@ -81,6 +81,8 @@ dependencies:
   device_info_plus: 8.1.0
   termux_api_plugin:
     path: /Users/nightmare/Desktop/nightmare-space/termux_api_plugin
+  adb_kit_extension:
+    path: ../adb_kit_extension
     
 dev_dependencies:
   flutter_test:

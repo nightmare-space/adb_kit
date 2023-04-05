@@ -1,1 +1,0 @@
-flutter run --release

@@ -136,7 +136,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
         ),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: Color(0xfff3f4f9),
+          backgroundColor: const Color(0xfff3f4f9),
           body: Column(
             children: [
               TopTab(

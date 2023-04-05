@@ -109,7 +109,7 @@ class DevicesController extends GetxController {
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {
-      Log.e(e);
+      Log.d('adb start-server out:${(e as dynamic).message}');
     }
     Future.delayed(const Duration(milliseconds: 1000), () {
       letADBStarted();
