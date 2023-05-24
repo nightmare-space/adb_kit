@@ -9,7 +9,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # localizations
-  intl: ^0.17.0
+  intl: ^0.18.0
   animations: ^2.0.2
   # # desktop window stype
   # flutter_acrylic: ^1.1.0
@@ -24,7 +24,7 @@ dependencies:
   # get app local dir
   path_provider: ^2.0.10
   # responsive ui
-  responsive_framework: ^0.2.0
+  responsive_framework: ^1.0.0
   flutter:
     sdk: flutter
   # terminal widget
@@ -76,7 +76,7 @@ dependencies:
   # can manage window on desktop
   window_manager: ^0.3.0
   flutter_markdown: ^0.6.10+2
-  screenshot: ^1.2.3
+  screenshot: ^2.1.0
 
   device_info_plus: 8.1.0
   termux_api_plugin:

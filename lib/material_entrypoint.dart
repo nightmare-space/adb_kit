@@ -17,8 +17,8 @@ import 'global/instance/global.dart';
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.configPath);
-  if (Settings.serverPath.get == null) {
-    Settings.serverPath.set = Config.adbLocalPath;
+  if (Settings.serverPath.setting.get() == null) {
+    Settings.serverPath.setting.set(Config.adbLocalPath);
   }
 }
 
@@ -115,10 +115,10 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 initialRoute: AdbPages.initial,
                 getPages: AdbPages.routes + am.AppPages.routes,
                 builder: (BuildContext context, Widget? navigator) {
-                  return ResponsiveWrapper.builder(
-                    Builder(
+                  return ResponsiveBreakpoints.builder(
+                    child: Builder(
                       builder: (context) {
-                        if (ResponsiveWrapper.of(context).isDesktop || ResponsiveWrapper.of(context).isTablet) {
+                        if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
                           ScreenAdapter.init(896);
                         } else {
                           ScreenAdapter.init(414);
@@ -129,14 +129,10 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                         );
                       },
                     ),
-                    // maxWidth: 1200,
-                    minWidth: 300,
-                    defaultScale: false,
-                    defaultName: PHONE,
                     breakpoints: const [
-                      ResponsiveBreakpoint.resize(300, name: PHONE),
-                      ResponsiveBreakpoint.resize(600, name: TABLET),
-                      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+                      Breakpoint(start: 0, end: 300, name: MOBILE),
+                      Breakpoint(start: 300, end: 800, name: TABLET),
+                      Breakpoint(start: 800, end: 2000, name: DESKTOP),
                     ],
                   );
                 },

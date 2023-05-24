@@ -14,7 +14,10 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 
+import 'desktop_home.dart';
 import 'dialog/otg_dialog.dart';
+import 'mobile_home.dart';
+import 'tablet_home.dart';
 
 class AdbTool extends StatefulWidget {
   const AdbTool({
@@ -66,10 +69,10 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     });
     // TODO detach 也需要
     Future.delayed(Duration.zero, () async {
-      if ('privacy'.get == null) {
+      if ('privacy'.setting.get() == null) {
         await Get.to(PrivacyAgreePage(
           onAgreeTap: () {
-            'privacy'.set = true;
+            'privacy'.setting.set(true);
             Navigator.of(context).pop();
           },
         ));
@@ -93,113 +96,14 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
         children: [
           Builder(
             builder: (context) {
-              if (ResponsiveWrapper.of(context).isDesktop) {
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      DesktopPhoneDrawer(
-                        width: Dimens.setWidth(200),
-                        groupValue: Global().drawerRoute,
-                        onChanged: (value) {
-                          Global().page = value;
-                          setState(() {});
-                        },
-                      ),
-                      Container(
-                        height: double.infinity,
-                        width: 0.5,
-                        margin: EdgeInsets.symmetric(vertical: 40.w),
-                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.4),
-                      ),
-                      Expanded(
-                        child: PageTransitionSwitcher(
-                          transitionBuilder: (
-                            Widget child,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                          ) {
-                            return FadeThroughTransition(
-                              animation: animation,
-                              secondaryAnimation: secondaryAnimation,
-                              fillColor: Colors.transparent,
-                              child: child,
-                            );
-                          },
-                          duration: const Duration(milliseconds: 300),
-                          child: Global().page,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+              if (ResponsiveBreakpoints.of(context).isDesktop) {
+                return const DesktopHome();
               }
-              if (ResponsiveWrapper.of(context).isTablet) {
-                return Scaffold(
-                  body: Row(
-                    children: [
-                      TabletDrawer(
-                        groupValue: Global().drawerRoute,
-                        onChanged: (value) {
-                          Global().page = value;
-                          setState(() {});
-                        },
-                      ),
-                      Container(
-                        height: double.infinity,
-                        width: 1,
-                        margin: EdgeInsets.symmetric(vertical: 40.w),
-                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
-                      ),
-                      Expanded(
-                        child: PageTransitionSwitcher(
-                          transitionBuilder: (
-                            Widget child,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                          ) {
-                            return FadeThroughTransition(
-                              animation: animation,
-                              secondaryAnimation: secondaryAnimation,
-                              fillColor: Colors.transparent,
-                              child: child,
-                            );
-                          },
-                          duration: const Duration(milliseconds: 300),
-                          child: Global().page,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
+              if (ResponsiveBreakpoints.of(context).isTablet) {
+                return const TableHome();
               }
-              if (ResponsiveWrapper.of(context).isPhone) {
-                return Scaffold(
-                  drawer: DesktopPhoneDrawer(
-                    width: MediaQuery.of(context).size.width * 2 / 3,
-                    groupValue: Global().drawerRoute,
-                    onChanged: (value) {
-                      Global().page = value;
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                  ),
-                  body: PageTransitionSwitcher(
-                    transitionBuilder: (
-                      Widget child,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                    ) {
-                      return FadeThroughTransition(
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        fillColor: Colors.transparent,
-                        child: child,
-                      );
-                    },
-                    duration: const Duration(milliseconds: 300),
-                    child: Global().page,
-                  ),
-                );
+              if (ResponsiveBreakpoints.of(context).isPhone) {
+                return const MobileHome();
               }
               return const SizedBox();
             },

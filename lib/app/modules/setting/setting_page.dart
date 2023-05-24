@@ -40,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (ResponsiveWrapper.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).settings),
         automaticallyImplyLeading: false,
@@ -100,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                       SettingItem(
                         title: S.of(context).layout,
                         suffix: Builder(builder: (context) {
-                          if (configController.screenType == ScreenType.phone || ResponsiveWrapper.of(context).isPhone) {
+                          if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isPhone) {
                             return Column(
                               children: [
                                 SelectTab(
@@ -287,10 +287,10 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                           title: S.of(context).serverPath,
                           subTitle: S.of(context).fixDeviceWithoutDataLocalPermission,
                           suffix: ValueListenableBuilder(
-                            valueListenable: Settings.serverPath.ob,
+                            valueListenable: Settings.serverPath.setting.ob,
                             builder: (c, dynamic v, child) {
                               return Text(
-                                Settings.serverPath.get,
+                                Settings.serverPath.setting.get(),
                                 style: TextStyle(
                                   fontSize: 18.w,
                                 ),

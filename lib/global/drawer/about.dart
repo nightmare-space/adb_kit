@@ -37,19 +37,13 @@ class About extends ADBPage {
     return AboutPage(
       versionCode: Config.versionCode,
       appVersion: Config.versionName,
-      logo: Container(
+      logo: SizedBox(
         width: 100.w,
         height: 100.w,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(20.w),
-        ),
-        child: Icon(
-          Icons.adb,
-          color: Colors.white,
-          size: 72.w,
-        ),
+        child: Image.asset('assets/logo.png'),
       ),
+      openSourceLink: 'https://github.com/nightmare-space/adb_kit',
+      otherVersionLink: 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A',
       license: '''BSD 3-Clause License
 
 Copyright (c) 2021,  Nightmare

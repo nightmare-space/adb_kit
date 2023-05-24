@@ -95,9 +95,9 @@ class _TabletDrawerState extends State<TabletDrawer> {
                   theme = DefaultThemeData.dark();
                 }
                 if (theme.brightness == Brightness.dark) {
-                  Settings.theme.set = 'dark';
+                  Settings.theme.setting.set('dark');
                 } else {
-                  Settings.theme.set = 'light';
+                  Settings.theme.setting.set('light');
                 }
                 ConfigController controller = Get.find();
                 controller.theme = theme;
@@ -110,14 +110,12 @@ class _TabletDrawerState extends State<TabletDrawer> {
                           child: Stack(
                             children: [
                               GetBuilder<ConfigController>(builder: (_) {
-                                if (config.backgroundStyle ==
-                                    BackgroundStyle.normal) {
+                                if (config.backgroundStyle == BackgroundStyle.normal) {
                                   return Container(
                                     color: theme.colorScheme.background,
                                   );
                                 }
-                                if (config.backgroundStyle ==
-                                    BackgroundStyle.image) {
+                                if (config.backgroundStyle == BackgroundStyle.image) {
                                   return SizedBox(
                                     height: double.infinity,
                                     child: Image.asset(
@@ -142,9 +140,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               child: TabletDrawerItem(
                 groupValue: widget.groupValue,
                 title: '切换主题',
-                iconData: Theme.of(context).brightness == Brightness.dark
-                    ? Icons.light_mode
-                    : Icons.dark_mode,
+                iconData: Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode,
               ),
             ),
           );
@@ -192,9 +188,7 @@ class TabletDrawerItem extends StatelessWidget {
                 Icon(
                   iconData ?? Icons.open_in_new,
                   size: 24.w,
-                  color: isChecked
-                      ? AppColors.accent
-                      : Theme.of(context).colorScheme.onBackground,
+                  color: isChecked ? AppColors.accent : Theme.of(context).colorScheme.onBackground,
                 ),
                 SizedBox(height: 4.w),
                 // Text(

@@ -62,7 +62,7 @@ class ConfigController extends GetxController {
 
   void changeBackgroundStyle(BackgroundStyle style) {
     backgroundStyle = style;
-    Settings.backgroundStyle.set = backgroundStyle.name;
+    Settings.backgroundStyle.setting.set(backgroundStyle.name);
     update();
     syncBackgroundStyle();
   }
@@ -78,28 +78,28 @@ class ConfigController extends GetxController {
       return;
     }
     isInit = true;
-    if (Settings.screenType.get != null && Settings.screenType.get.isNotEmpty) {
-      screenType = ScreenType.values.byName(Settings.screenType.get);
+    if (Settings.screenType.setting.get() != null && Settings.screenType.setting.get().isNotEmpty) {
+      screenType = ScreenType.values.byName(Settings.screenType.setting.get());
     }
-    if (Settings.backgroundStyle.get != null) {
+    if (Settings.backgroundStyle.setting.get() != null) {
       backgroundStyle = BackgroundStyle.values.byName(
-        Settings.backgroundStyle.get,
+        Settings.backgroundStyle.setting.get(),
       );
     }
-    if (themeMap.containsKey(Settings.theme.get)) {
-      theme = themeMap[Settings.theme.get];
+    if (themeMap.containsKey(Settings.theme.setting.get())) {
+      theme = themeMap[Settings.theme.setting.get()];
     }
-    if (languageMap.containsKey(Settings.language.get)) {
-      locale = languageMap[Settings.language.get];
+    if (languageMap.containsKey(Settings.language.setting.get())) {
+      locale = languageMap[Settings.language.setting.get()];
     }
 
-    autoConnect = Settings.autoConnectDevice.get ?? autoConnect;
+    autoConnect = Settings.autoConnectDevice.setting.get() ?? autoConnect;
   }
 
   void changeScreenType(ScreenType? screenType) {
     this.screenType = screenType;
     if (screenType != null) {
-      Settings.screenType.set = screenType.name;
+      Settings.screenType.setting.set(screenType.name);
     }
     update();
   }
@@ -107,9 +107,9 @@ class ConfigController extends GetxController {
   void changeLocal(Locale locale) {
     this.locale = locale;
     if (locale == chinese) {
-      Settings.language.set = 'chinese';
+      Settings.language.setting.set('chinese');
     } else {
-      Settings.language.set = 'english';
+      Settings.language.setting.set('english');
     }
     update();
   }
@@ -117,9 +117,9 @@ class ConfigController extends GetxController {
   void changeTheme(ThemeData theme) {
     this.theme = theme;
     if (theme.brightness == Brightness.dark) {
-      Settings.theme.set = 'dark';
+      Settings.theme.setting.set('dark');
     } else {
-      Settings.theme.set = 'light';
+      Settings.theme.setting.set('light');
     }
     update();
   }
@@ -139,7 +139,7 @@ class ConfigController extends GetxController {
 
   void changeAutoConnectState(bool value) {
     autoConnect = value;
-    Settings.autoConnectDevice.set = value;
+    Settings.autoConnectDevice.setting.set(value);
     update();
   }
 
@@ -180,7 +180,7 @@ class ConfigController extends GetxController {
         child: Text(path),
       ));
     }
-    final String? newPartition = await showMenu<String>(
+    final String? newPath = await showMenu<String>(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -191,8 +191,8 @@ class ConfigController extends GetxController {
       items: items,
       elevation: 0,
     );
-    if (newPartition != null) {
-      Settings.serverPath.set = newPartition;
+    if (newPath != null) {
+      Settings.serverPath.setting.set(newPath);
     }
   }
 }

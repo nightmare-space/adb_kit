@@ -18,6 +18,7 @@ import 'dart:core' as core;
 import 'dart:core';
 
 // import 'behavior.dart';
+import 'behavior.dart';
 import 'page_manager.dart';
 
 extension PTYExt on Pty {
@@ -72,7 +73,7 @@ class Global {
       envir['HOME'] = RuntimeEnvir.binPath!;
     }
     envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath!}:/system/lib64';
-    envir['TMPDIR'] = '/sdcard';
+    if (GetPlatform.isAndroid) envir['TMPDIR'] = '/sdcard';
     envir['TERM'] = 'xterm-256color';
     envir['RUST_LOG'] = 'trace';
     String shell = 'sh';
@@ -270,8 +271,10 @@ class Global {
       global: globalFiles,
       package: Config.flutterPackage,
     );
-    Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
-    File('${RuntimeEnvir.binPath}/termux-callback').rename('${RuntimeEnvir.usrPath}/libexec/termux-callback');
+    if (GetPlatform.isAndroid) {
+      Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
+      File('${RuntimeEnvir.binPath}/termux-callback').rename('${RuntimeEnvir.usrPath}/libexec/termux-callback');
+    }
 
     // final ProcessResult result = await Process.run(
     //   'chmod',
@@ -315,7 +318,7 @@ class Global {
     }
     _socketServer();
     await installAdbToEnvir();
-    // await initApi('ADB KIT', Config.versionName);
+    await initApi('ADB KIT', Config.versionName);
   }
 }
 

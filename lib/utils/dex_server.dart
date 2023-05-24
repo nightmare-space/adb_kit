@@ -20,28 +20,33 @@ class DexServer {
   static int rangeStart = 14040;
   // TODO(nightmare):这个最终应该改成isolate，
   static Future<AppChannel?> startServer(String devicesId) async {
+    Stopwatch stopwatch = Stopwatch()..start();
+    String suffix = Config.versionCode;
     await initSetting();
+    Log.i('init setting time : ${stopwatch.elapsed}');
+    stopwatch.reset();
     if (serverStartList.keys.contains(devicesId)) {
       return serverStartList[devicesId];
     }
     final Completer<AppChannel> completer = Completer();
-    String serverPath = Settings.serverPath.get;
+    String serverPath = Settings.serverPath.setting.get();
     if (serverPath.isEmpty) {
       serverPath = Config.adbLocalPath;
     }
-    final String targetPath = '$serverPath/app_server';
+    final String targetPath = '$serverPath/app_server$suffix';
+    Log.i('targetPath -> $targetPath');
     // 上传server文件
     await AdbUtil.pushFile(
       devicesId,
       '${RuntimeEnvir.binPath}/app_server',
       targetPath,
     );
+    Log.i('push file time : ${stopwatch.elapsed}');
+    stopwatch.reset();
     final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
 
     /// 注意这个要和applib中的一样哦
     const String startTag = 'success start port : ';
-    Stopwatch stopwatch = Stopwatch();
-    stopwatch.start();
     String execuable = adb;
     // TODO 测试是否影响其他平台
     // if (Platform.isWindows) {
@@ -55,16 +60,22 @@ class DexServer {
       runInShell: GetPlatform.isWindows ? true : false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
+      StringBuffer printBuff = StringBuffer();
       value.stdout.transform(utf8.decoder).listen((event) async {
         if (event.isEmpty) {
           return;
         }
-        Log.w(event.trim(), tag: 'dex server');
+        printBuff.write(event);
+        if (printBuff.toString().trim().isNotEmpty && printBuff.toString().contains('\n')) {
+          // 解决有时候打印一个点就占用一行的问题
+          Log.w(printBuff.toString().trim(), tag: 'dex server');
+          printBuff.clear();
+        }
         if (event.contains(startTag)) {
           Log.w('serverStartList -> $serverStartList');
           for (final String line in event.split('\n')) {
             if (line.contains(startTag)) {
-              Log.e('time:${stopwatch.elapsed}');
+              Log.e('started time:${stopwatch.elapsed}');
               // 这个端口是对方设备成功绑定的端口
               final int? remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
               Log.d('Dex Server Start Port -> $remotePort');

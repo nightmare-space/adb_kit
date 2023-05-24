@@ -28,7 +28,7 @@ class _LogPageState extends State<LogPage> {
       //TODO
     } else {}
     AppBar? appBar;
-    if (ResponsiveWrapper.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).log),
         automaticallyImplyLeading: false,

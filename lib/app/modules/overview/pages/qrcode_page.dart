@@ -68,7 +68,7 @@ class _QrScanPageState extends State<QrScanPage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            QrImage(
+                            QrImageView(
                               data: addr,
                               version: QrVersions.auto,
                               size: 400.w,
@@ -91,7 +91,7 @@ class _QrScanPageState extends State<QrScanPage> {
               borderRadius: BorderRadius.circular(12.w),
               child: Column(
                 children: [
-                  QrImage(
+                  QrImageView(
                     data: addr,
                     version: QrVersions.auto,
                     size: 140.w,

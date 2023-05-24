@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   /// 获取卡片宽度，主要是做响应式适配的
   double getCardWidth() {
-    ResponsiveWrapperData data = ResponsiveWrapper.of(context);
+    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
     if (data.isPhone) {
       return context.mediaQuerySize.width;
     } else if (data.isTablet) {
@@ -52,7 +52,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   }
 
   double getMiddlePadding() {
-    ResponsiveWrapperData data = ResponsiveWrapper.of(context);
+    ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
     if (data.isPhone) {
       return 8.w;
     }

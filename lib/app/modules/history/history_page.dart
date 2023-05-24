@@ -19,8 +19,7 @@ class HistoryPage extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     final ConfigController configController = Get.find();
     AppBar? appBar;
-    if (configController.screenType == ScreenType.phone ||
-        ResponsiveWrapper.of(context).isPhone) {
+    if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isPhone) {
       appBar = AppBar(
         title: Text(S.of(context).historyConnect),
         automaticallyImplyLeading: false,
@@ -44,7 +43,7 @@ class HistoryPage extends GetView<HistoryController> {
             );
           }
           return SafeArea(
-        left: false,
+            left: false,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
               child: Stack(
@@ -102,7 +101,7 @@ class HistoryPage extends GetView<HistoryController> {
           String suffix = '';
           suffix = ':${adbEntity.port}';
           result = await AdbUtil.connectDevices(
-            adbEntity.address+ suffix,
+            adbEntity.address + suffix,
           );
           showToast(result.message);
         } on ADBException catch (e) {
@@ -126,7 +125,7 @@ class HistoryPage extends GetView<HistoryController> {
                   children: [
                     Text(
                       adbEntity.name,
-                      style:  TextStyle(
+                      style: TextStyle(
                         fontWeight: bold,
                       ),
                     ),
@@ -163,8 +162,7 @@ class HistoryPage extends GetView<HistoryController> {
                             vertical: 2.w,
                           ),
                           child: Text(
-                            DateTime.parse(adbEntity.connectTime)
-                                .getTimeString(),
+                            DateTime.parse(adbEntity.connectTime).getTimeString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white.withOpacity(0.8),
@@ -179,10 +177,7 @@ class HistoryPage extends GetView<HistoryController> {
                 Text(
                   adbEntity.address,
                   style: TextStyle(
-                    color: Theme.of(Get.context!)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.8),
+                    color: Theme.of(Get.context!).colorScheme.onSurface.withOpacity(0.8),
                   ),
                 ),
               ],

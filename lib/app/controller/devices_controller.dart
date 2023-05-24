@@ -105,7 +105,9 @@ class DevicesController extends GetxController {
     //   await Global().process.exec('su -p HOME');
     // }
     try {
-      String out = await execCmd('libadb_termux.so start-server');
+      String adbStartBin = 'adb';
+      if (GetPlatform.isAndroid) adbStartBin = 'libadb_termux.so';
+      String out = await execCmd('$adbStartBin start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches
     } catch (e) {

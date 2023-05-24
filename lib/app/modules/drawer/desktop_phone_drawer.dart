@@ -32,7 +32,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   Widget build(BuildContext context) {
     final double? width = widget.width;
     return Material(
-      color: ResponsiveWrapper.of(context).isDesktop ? Theme.of(context).colorScheme.background.withOpacity(0.2) : Theme.of(context).colorScheme.background,
+      color: ResponsiveBreakpoints.of(context).isDesktop ? Theme.of(context).colorScheme.background.withOpacity(0.2) : Theme.of(context).colorScheme.background,
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
