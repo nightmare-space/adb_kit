@@ -85,7 +85,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
               autofocus: true,
               focusNode: FocusNode(),
               onKey: ((value) {
-                Log.w(value);
+                // Log.w(value);
                 // if (value is RawKeyDownEvent) {
                 //   screenshotController.captureAndSave('./screenshot');
                 // }
@@ -118,11 +118,12 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                   return ResponsiveBreakpoints.builder(
                     child: Builder(
                       builder: (context) {
-                        if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
-                          ScreenAdapter.init(896);
-                        } else {
-                          ScreenAdapter.init(414);
-                        }
+                        // if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
+                        //   ScreenAdapter.init(896);
+                        // } else {
+                        //   ScreenAdapter.init(414);
+                        // }
+                        ScreenAdapter.init(414);
                         return Theme(
                           data: config.theme!,
                           child: navigator ?? const SizedBox(),

@@ -14,6 +14,8 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'src/platform_menu.dart';
+import 'suggestion.dart';
 import 'termare_view_with_bar.dart';
 
 class ExecCmdPage extends StatefulWidget {
@@ -61,14 +63,27 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
             child: Column(
               children: [
                 Expanded(
-                  child: TermareViewWithBottomBar(
-                    pty: Global().pty!,
-                    terminal: Global().terminal,
-                    child: XTermWrapper(
-                      pseudoTerminal: Global().pty,
+                  child: Builder(builder: (context) {
+                    if (GetPlatform.isDesktop) {
+                      return AppPlatformMenu(
+                          child: Home(
+                        pty: Global().pty!,
+                      ));
+                    }
+                    XTermWrapper;
+                    return TermareViewWithBottomBar(
+                      pty: Global().pty!,
                       terminal: Global().terminal,
-                    ),
-                  ),
+                      child: AppPlatformMenu(
+                          child: Home(
+                        pty: Global().pty!,
+                      )),
+                      // child: XTermWrapper(
+                      //   pseudoTerminal: Global().pty,
+                      //   terminal: Global().terminal,
+                      // ),
+                    );
+                  }),
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

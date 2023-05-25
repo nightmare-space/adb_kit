@@ -3,7 +3,7 @@ description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
 version: 1.5.0+41
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter_localizations:
@@ -80,7 +80,7 @@ dependencies:
 
   device_info_plus: 8.1.0
   termux_api_plugin:
-    path: /Users/nightmare/Desktop/nightmare-space/termux_api_plugin
+    path: ../termux_api_plugin
   adb_kit_extension:
     path: ../adb_kit_extension
     
@@ -107,8 +107,8 @@ dependency_overrides:
   flutter_svg: 1.1.5
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
-  global_repository:
-    path: ../global_repository
+  # global_repository:
+  #   path: ../global_repository
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:
@@ -117,8 +117,8 @@ dependency_overrides:
   #   path: ../device_info
   # app_manager:
   #   path: ../app_manager
-  adbutil:
-    path: ../adbutil
+  # adbutil:
+  #   path: ../adbutil
   # xterm:
   #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
   # logger_view:

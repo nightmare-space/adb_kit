@@ -72,6 +72,7 @@ android {
             output.versionCodeOverride = flutterVersionCode.toInteger()
         }
     }
+    ndkVersion "21.1.6352462"
 }
 
 flutter {

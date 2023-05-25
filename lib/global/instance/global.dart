@@ -84,14 +84,15 @@ class Global {
       shell,
       arguments: ['-l'],
       environment: envir,
-      workingDirectory: '/',
+      // workingDirectory: '/',
+      workingDirectory: RuntimeEnvir.binPath,
     );
 
-    pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
-      (event) {
-        terminal.write(event);
-      },
-    );
+    // pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+    //   (event) {
+    //     terminal.write(event);
+    //   },
+    // );
   }
 
   Future<void> _receiveBoardCast() async {
@@ -266,6 +267,8 @@ class Global {
         'termux-toast',
         'am',
         'am.apk',
+        'bash',
+        'shell_intergration.sh',
       ],
       macOS: [],
       global: globalFiles,
