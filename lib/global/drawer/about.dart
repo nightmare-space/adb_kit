@@ -37,10 +37,13 @@ class About extends ADBPage {
     return AboutPage(
       versionCode: Config.versionCode,
       appVersion: Config.versionName,
-      logo: SizedBox(
-        width: 100.w,
-        height: 100.w,
-        child: Image.asset('assets/logo.png'),
+      logo: Padding(
+        padding: EdgeInsets.only(top: 64.w),
+        child: SizedBox(
+          width: 100.w,
+          height: 100.w,
+          child: Image.asset('assets/logo.png'),
+        ),
       ),
       openSourceLink: 'https://github.com/nightmare-space/adb_kit',
       otherVersionLink: 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A',

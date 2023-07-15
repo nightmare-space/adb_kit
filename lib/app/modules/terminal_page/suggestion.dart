@@ -13,15 +13,16 @@ import 'src/platform_menu.dart';
 import 'src/suggestion_engine.dart';
 
 final engine = SuggestionEngine();
+bool isLoad = false;
 
-Future<Map<String, dynamic>> loadSuggestion() async {
-  final data = await rootBundle.load('assets/specs_v1.json.gz');
-  return await Stream.value(data.buffer.asUint8List()).cast<List<int>>().transform(gzip.decoder).transform(utf8.decoder).transform(json.decoder).first as Map<String, dynamic>;
-}
+// Future<Map<String, dynamic>> loadSuggestion() async {
+//   final data = await rootBundle.load('assets/specs_v1.json.gz');
+//   return await Stream.value(data.buffer.asUint8List()).cast<List<int>>().transform(gzip.decoder).transform(utf8.decoder).transform(json.decoder).first as Map<String, dynamic>;
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  engine.load(await loadSuggestion());
+  // engine.load(await loadSuggestion());
   // runApp(MyApp());
 }
 
@@ -37,8 +38,13 @@ void main() async {
 // }
 
 class Home extends StatefulWidget {
-  Home({Key? key, required this.pty}) : super(key: key);
+  const Home({
+    Key? key,
+    required this.pty,
+    required this.terminal,
+  }) : super(key: key);
   final Pty pty;
+  final Terminal terminal;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -46,10 +52,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late final terminal = Terminal(
-    maxLines: 10000,
-    onPrivateOSC: _handlePrivateOSC,
-  );
+  // late final terminal = Terminal(
+  //   maxLines: 10000,
+  //   onPrivateOSC: _handlePrivateOSC,
+  // );
+
+  late Terminal terminal = widget.terminal..onPrivateOSC = _handlePrivateOSC;
 
   final terminalController = TerminalController();
 
@@ -74,9 +82,11 @@ class _HomeState extends State<Home> {
   }
 
   void loadSuggestions() async {
+    if (isLoad) return;
     final data = await rootBundle.load('assets/specs_v1.json.gz');
     final specs = await Stream.value(data.buffer.asUint8List()).cast<List<int>>().transform(gzip.decoder).transform(utf8.decoder).transform(json.decoder).first as Map<String, dynamic>;
     engine.load(specs);
+    isLoad = true;
   }
 
   @override
@@ -92,7 +102,7 @@ class _HomeState extends State<Home> {
     //   rows: terminal.viewHeight,
     // );
 
-    pty.output.cast<List<int>>().transform(Utf8Decoder()).listen(terminal.write);
+    // pty.output.cast<List<int>>().transform(Utf8Decoder()).listen(terminal.write);
 
     pty.exitCode.then((code) {
       terminal.write('the process exited with exit code $code');

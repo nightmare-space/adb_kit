@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.0+41
+version: 1.5.2+43
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -19,7 +19,7 @@ dependencies:
   # network
   dio: ^4.0.0
   # file drop
-  desktop_drop: ^0.3.3
+  desktop_drop: ^0.4.1
   file_selector: ^0.8.4+2
   # get app local dir
   path_provider: ^2.0.10
@@ -107,6 +107,7 @@ dependency_overrides:
   flutter_svg: 1.1.5
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
+  android_intent_plus: 4.0.1
   global_repository:
     path: ../global_repository
   # app_launcher:

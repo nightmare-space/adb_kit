@@ -60,7 +60,9 @@ class Global {
 
   // todo initial
   Pty? pty;
-  Terminal terminal = Terminal();
+  Terminal terminal = Terminal(
+    maxLines: 10000,
+  );
   core.Future<void> initTerminal() async {
     if (Platform.isAndroid) {
       String? libPath = await getLibPath();
@@ -80,6 +82,7 @@ class Global {
     if (GetPlatform.isWindows) {
       shell = 'cmd';
     }
+    shell = 'bash';
     pty ??= Pty.start(
       shell,
       arguments: ['-l'],
@@ -87,12 +90,13 @@ class Global {
       // workingDirectory: '/',
       workingDirectory: RuntimeEnvir.binPath,
     );
+    pty?.write(Uint8List.fromList(utf8.encode('source ${RuntimeEnvir.binPath}/shell_intergration.sh\n')));
 
-    // pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
-    //   (event) {
-    //     terminal.write(event);
-    //   },
-    // );
+    pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+      (event) {
+        terminal.write(event);
+      },
+    );
   }
 
   Future<void> _receiveBoardCast() async {

@@ -66,18 +66,21 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                   child: Builder(builder: (context) {
                     if (GetPlatform.isDesktop) {
                       return AppPlatformMenu(
-                          child: Home(
-                        pty: Global().pty!,
-                      ));
+                        child: Home(
+                          pty: Global().pty!,
+                          terminal: Global().terminal,
+                        ),
+                      );
                     }
-                    XTermWrapper;
                     return TermareViewWithBottomBar(
                       pty: Global().pty!,
                       terminal: Global().terminal,
                       child: AppPlatformMenu(
-                          child: Home(
-                        pty: Global().pty!,
-                      )),
+                        child: Home(
+                          pty: Global().pty!,
+                          terminal: Global().terminal,
+                        ),
+                      ),
                       // child: XTermWrapper(
                       //   pseudoTerminal: Global().pty,
                       //   terminal: Global().terminal,
