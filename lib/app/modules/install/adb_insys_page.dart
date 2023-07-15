@@ -35,7 +35,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (ResponsiveBreakpoints.of(context).isPhone ||
+    if (ResponsiveBreakpoints.of(context).isMobile ||
         controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).installToSystem),

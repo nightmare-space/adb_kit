@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_framework/utils/responsive_utils.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
@@ -114,26 +115,40 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 defaultTransition: Transition.fadeIn,
                 initialRoute: AdbPages.initial,
                 getPages: AdbPages.routes + am.AppPages.routes,
+                useInheritedMediaQuery: true,
                 builder: (BuildContext context, Widget? navigator) {
                   return ResponsiveBreakpoints.builder(
                     child: Builder(
                       builder: (context) {
-                        // if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
-                        //   ScreenAdapter.init(896);
-                        // } else {
-                        //   ScreenAdapter.init(414);
-                        // }
-                        ScreenAdapter.init(414);
+                        print(ResponsiveBreakpoints.of(context).breakpoint);
+                        print(ResponsiveBreakpoints.of(context).screenHeight);
+                        print(ResponsiveBreakpoints.of(context).screenWidth);
+                        print(ResponsiveBreakpoints.of(context).isDesktop);
+                        print(ResponsiveBreakpoints.of(context).isTablet);
+                        print(ResponsiveBreakpoints.of(context).isMobile);
+                        if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
+                          ScreenAdapter.init(896);
+                        } else {
+                          ScreenAdapter.init(414);
+                        }
                         return Theme(
                           data: config.theme!,
                           child: navigator ?? const SizedBox(),
                         );
                       },
                     ),
+                    // landscapePlatforms: [
+                    //   ResponsiveTargetPlatform.macOS,
+                    // ],
                     breakpoints: const [
-                      Breakpoint(start: 0, end: 300, name: MOBILE),
-                      Breakpoint(start: 300, end: 800, name: TABLET),
+                      Breakpoint(start: 0, end: 400, name: MOBILE),
+                      Breakpoint(start: 400, end: 800, name: TABLET),
                       Breakpoint(start: 800, end: 2000, name: DESKTOP),
+                    ],
+                    breakpointsLandscape: [
+                      const Breakpoint(start: 0, end: 450, name: MOBILE),
+                      const Breakpoint(start: 451, end: 800, name: TABLET),
+                      const Breakpoint(start: 801, end: double.infinity, name: DESKTOP),
                     ],
                   );
                 },

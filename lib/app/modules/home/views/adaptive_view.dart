@@ -102,7 +102,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
               if (ResponsiveBreakpoints.of(context).isTablet) {
                 return const TableHome();
               }
-              if (ResponsiveBreakpoints.of(context).isPhone) {
+              if (ResponsiveBreakpoints.of(context).isMobile) {
                 return const MobileHome();
               }
               return const SizedBox();

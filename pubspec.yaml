@@ -107,8 +107,8 @@ dependency_overrides:
   flutter_svg: 1.1.5
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
-  # global_repository:
-  #   path: ../global_repository
+  global_repository:
+    path: ../global_repository
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:

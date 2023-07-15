@@ -92,7 +92,7 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (ResponsiveBreakpoints.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isMobile) {
       appBar = AppBar(
         centerTitle: true,
         elevation: 0.0,
