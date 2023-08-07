@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.2+43
+version: 1.5.3+44
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -79,6 +79,9 @@ dependencies:
   screenshot: ^2.1.0
 
   device_info_plus: 8.1.0
+
+  # 下面两个是非开源库，个人编译需要移除
+  # 并手动解决编译报错
   termux_api_plugin:
     path: ../termux_api_plugin
   adb_kit_extension:
@@ -110,6 +113,8 @@ dependency_overrides:
   android_intent_plus: 4.0.1
   global_repository:
     path: ../global_repository
+  flutter_pty:
+    path: ../flutter_pty
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:

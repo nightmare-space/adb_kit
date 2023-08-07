@@ -43,7 +43,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
       return;
     }
     // 等待1s
-    // await Future<void>.delayed(const Duration(milliseconds: 1000));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
     if (widget.primary != null) {
       seed = widget.primary;
     }
@@ -81,61 +81,56 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TabController>(
-      init: TabController()
-        ..setInitPage(
-          PageEntity(
-            title: 'ADB KIT',
-            page: Column(
-              children: [
-                Expanded(
-                  child: FutureBuilder(
-                    future: init(),
-                    builder: (_, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return const Text('Input a URL to start');
-                        case ConnectionState.waiting:
-                          return const Center(child: CircularProgressIndicator());
-                        case ConnectionState.active:
-                          return const Text('');
-                        case ConnectionState.done:
-                          return Stack(
-                            children: [
-                              GetBuilder<ConfigController>(builder: (config) {
-                                if (config.backgroundStyle == BackgroundStyle.normal) {
-                                  return Container(
-                                    color: config.theme!.colorScheme.background,
-                                  );
-                                }
-                                if (config.backgroundStyle == BackgroundStyle.image) {
-                                  return SizedBox(
-                                    height: double.infinity,
-                                    child: Image.asset(
-                                      'assets/b.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              }),
-                              GetBuilder<ConfigController>(builder: (config) {
-                                return Theme(
-                                  data: config.theme!,
-                                  child: const AdbTool(),
-                                );
-                              }),
-                            ],
-                          );
+    TabController controller = TabController();
+    controller.setInitPage(
+      PageEntity(
+        title: 'ADB KIT',
+        page: FutureBuilder(
+          future: init(),
+          builder: (_, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                return const Text('Input a URL to start');
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.active:
+                return const Text('');
+              case ConnectionState.done:
+                return Stack(
+                  children: [
+                    GetBuilder<ConfigController>(builder: (config) {
+                      if (config.backgroundStyle == BackgroundStyle.normal) {
+                        return Container(
+                          color: config.theme!.colorScheme.background,
+                        );
                       }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
+                      if (config.backgroundStyle == BackgroundStyle.image) {
+                        return SizedBox(
+                          height: double.infinity,
+                          child: Image.asset(
+                            'assets/b.png',
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    }),
+                    GetBuilder<ConfigController>(builder: (config) {
+                      return Theme(
+                        data: config.theme!,
+                        child: const AdbTool(),
+                      );
+                    }),
+                  ],
+                );
+            }
+          },
         ),
+      ),
+    );
+    return GetBuilder<TabController>(
+      init: controller,
       builder: (controller) {
         return Scaffold(
           backgroundColor: const Color(0xfff3f4f9),

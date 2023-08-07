@@ -82,14 +82,17 @@ class Global {
     if (GetPlatform.isWindows) {
       shell = 'cmd';
     }
-    shell = 'bash';
+    // ! 直接由 pty start bash，在android上首次启动会crash
+    // ! 原因未知
     pty ??= Pty.start(
       shell,
-      arguments: ['-l'],
+      arguments: [],
       environment: envir,
-      // workingDirectory: '/',
       workingDirectory: RuntimeEnvir.binPath,
     );
+
+    // 启动bash
+    pty?.writeString('bash\n');
     pty?.write(Uint8List.fromList(utf8.encode('source ${RuntimeEnvir.binPath}/shell_intergration.sh\n')));
 
     pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(

@@ -74,7 +74,7 @@ Future<void> runADBClient({Color? primary}) async {
     },
     zoneSpecification: ZoneSpecification(
       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-        parent.print(zone, 'ZoneSpecification: $line');
+        parent.print(zone, line);
         // Log.d(line);
       },
     ),

@@ -120,12 +120,6 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                   return ResponsiveBreakpoints.builder(
                     child: Builder(
                       builder: (context) {
-                        print(ResponsiveBreakpoints.of(context).breakpoint);
-                        print(ResponsiveBreakpoints.of(context).screenHeight);
-                        print(ResponsiveBreakpoints.of(context).screenWidth);
-                        print(ResponsiveBreakpoints.of(context).isDesktop);
-                        print(ResponsiveBreakpoints.of(context).isTablet);
-                        print(ResponsiveBreakpoints.of(context).isMobile);
                         if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
                           ScreenAdapter.init(896);
                         } else {
@@ -141,8 +135,8 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                     //   ResponsiveTargetPlatform.macOS,
                     // ],
                     breakpoints: const [
-                      Breakpoint(start: 0, end: 400, name: MOBILE),
-                      Breakpoint(start: 400, end: 800, name: TABLET),
+                      Breakpoint(start: 0, end: 500, name: MOBILE),
+                      Breakpoint(start: 500, end: 800, name: TABLET),
                       Breakpoint(start: 800, end: 2000, name: DESKTOP),
                     ],
                     breakpointsLandscape: [

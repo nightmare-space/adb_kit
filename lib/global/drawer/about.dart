@@ -46,7 +46,7 @@ class About extends ADBPage {
         ),
       ),
       openSourceLink: 'https://github.com/nightmare-space/adb_kit',
-      otherVersionLink: 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A',
+      otherVersionLink: 'http://nightmare.press/YanTool/resources/ADBTool/?C=N;O=A',
       license: '''BSD 3-Clause License
 
 Copyright (c) 2021,  Nightmare

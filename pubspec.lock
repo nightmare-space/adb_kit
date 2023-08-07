@@ -314,11 +314,10 @@ packages:
   flutter_pty:
     dependency: "direct main"
     description:
-      name: flutter_pty
-      sha256: "1f3114f125e4c447866511560818d6ac368471712cc952a25b5a06586aa80b64"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.1"
+      path: "../flutter_pty"
+      relative: true
+    source: path
+    version: "0.4.0"
   flutter_spinkit:
     dependency: "direct main"
     description:
