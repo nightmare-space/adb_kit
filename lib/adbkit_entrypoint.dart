@@ -43,7 +43,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
       return;
     }
     // 等待1s
-    await Future<void>.delayed(const Duration(milliseconds: 1000));
+    // await Future<void>.delayed(const Duration(milliseconds: 1000));
     if (widget.primary != null) {
       seed = widget.primary;
     }
