@@ -113,8 +113,8 @@ dependency_overrides:
   android_intent_plus: 4.0.1
   global_repository:
     path: ../global_repository
-  flutter_pty:
-    path: ../flutter_pty
+  # flutter_pty:
+  #   path: ../flutter_pty
   # app_launcher:
   #   path: ../app_launcher
   # # multicast:
