@@ -2,15 +2,19 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:xterm/xterm.dart';
 import 'package:xterm/suggestion.dart';
 
 import 'src/platform_menu.dart';
 import 'src/suggestion_engine.dart';
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 
 final engine = SuggestionEngine();
 bool isLoad = false;
@@ -83,8 +87,19 @@ class _HomeState extends State<Home> {
 
   void loadSuggestions() async {
     if (isLoad) return;
-    final data = await rootBundle.load('assets/specs_v1.json.gz');
-    final specs = await Stream.value(data.buffer.asUint8List()).cast<List<int>>().transform(gzip.decoder).transform(utf8.decoder).transform(json.decoder).first as Map<String, dynamic>;
+    Stopwatch stopwatch = Stopwatch()..start();
+    ByteData data = await rootBundle.load('assets/specs_v1.json.gz');
+    Log.i('rootBundle.load time: ${stopwatch.elapsedMilliseconds}ms');
+    Uint8List buffer = data.buffer.asUint8List();
+    // 将buffer使用gzip解压
+    List<int> decompressedBytes = await compute(GZipDecoder().decodeBytes, buffer);
+    Log.i('GZipDecoder time: ${stopwatch.elapsedMilliseconds}ms');
+
+    String jsonStr = await compute(utf8.decode, decompressedBytes);
+    Log.i('utf8.decode time: ${stopwatch.elapsedMilliseconds}ms');
+
+    final specs = await json.decode(jsonStr) as Map<String, dynamic>;
+    Log.i('json.decode: ${stopwatch.elapsedMilliseconds}ms');
     engine.load(specs);
     isLoad = true;
   }

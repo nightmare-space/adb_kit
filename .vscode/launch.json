@@ -3,13 +3,18 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
+    "configurations": [
+        {
             "name": "Chrome",
             "request": "launch",
             "type": "dart",
             "deviceId": "chrome",
-            "args": ["--web-renderer", "html"]
-        }, {
+            "args": [
+                "--web-renderer",
+                "html"
+            ]
+        },
+        {
             "name": "Linux",
             "request": "launch",
             "type": "dart",
@@ -38,6 +43,12 @@
             "request": "launch",
             "type": "dart",
             "deviceId": "2211133C"
+        },
+        {
+            "name": "小米平板6",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "23046RP50C"
         },
     ]
 }

@@ -48,8 +48,6 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
       seed = widget.primary;
     }
     Get.put(DevicesController());
-    WidgetsFlutterBinding.ensureInitialized();
-
     if (GetPlatform.isDesktop) {
       // Must add this line.
       await windowManager.ensureInitialized();
