@@ -233,7 +233,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "61fa0e46fd18b050ea4fb7d8fcc9fee5cb839a49"
+      resolved-ref: "10a357ff925e1cdfe9c394b53c444f52aef591ec"
       url: "https://github.com/nightmare-space/file_manager_view.git"
     source: git
     version: "1.0.0+1"
@@ -703,10 +703,10 @@ packages:
     dependency: transitive
     description:
       name: screen_retriever
-      sha256: "4931f226ca158123ccd765325e9fbf360bfed0af9b460a10f960f9bb13d58323"
+      sha256: "61ee705de5fbca718ade89cf015d8d221868ea941625ae6437bec7876fb8ecc3"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.7"
   screenshot:
     dependency: "direct main"
     description:
