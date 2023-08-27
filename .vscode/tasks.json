@@ -67,12 +67,25 @@
             }
         },
         {
-            "label": "Mac: Generate Mac App",
+            "label": "Mac: Generate Mac App(tar)",
             "type": "shell",
             "command": "ni",
             "args": [
                 "release",
                 "--gen-mac-app"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Mac: Generate Mac App(dmg)",
+            "type": "shell",
+            "command": "ni",
+            "args": [
+                "release",
+                "--build-mac-dmg"
             ],
             "group": {
                 "kind": "build",

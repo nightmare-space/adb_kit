@@ -1,6 +1,6 @@
 VERSION='1.5.3'
 VERSION_CODE='44'
-TARGET_PATH=root@$server:/home/nightmare/YanTool/resources/ADBTool
+TARGET_PATH=ADBTool
 APP_NAME='ADBKIT'
 APP_NAME_CN='ADBKIT'
 MAC_APP_NAME='ADB KIT'
