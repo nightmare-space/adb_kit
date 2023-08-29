@@ -11,6 +11,7 @@ class HomeBinding extends Bindings {
     if (RuntimeEnvir.packageName == Config.packageName) {
       Get.put(DevicesController());
     }
+    Get.put(TabController());
     Get.put(HistoryController());
     Get.put(ConfigController());
   }

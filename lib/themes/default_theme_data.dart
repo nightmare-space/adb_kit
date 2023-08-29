@@ -14,12 +14,16 @@ class DefaultThemeData {
   static final Color _primary = AppColors.accent;
 
   static ThemeData dark() {
-    final darkThemeData = ThemeData.dark();
+    final darkThemeData = ThemeData.dark(useMaterial3: true);
+
+    ColorScheme colorScheme = ColorScheme.fromSeed(
+      seedColor: seed!,
+    );
     // ThemeData
     return darkThemeData.copyWith(
       useMaterial3: true,
       primaryColor: darkColorScheme.primary,
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: darkColorScheme.background,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.dark,
       ),
@@ -45,6 +49,7 @@ class DefaultThemeData {
           color: const Color(0xFFA8A8A8),
         ),
       ),
+      cardColor: darkColorScheme.primary.withOpacity(0.05),
       tabBarTheme: darkThemeData.tabBarTheme.copyWith(
         indicator: UnderlineTabIndicator(
           borderSide: BorderSide(
@@ -146,7 +151,7 @@ class DefaultThemeData {
           return null;
         }),
       ),
-      colorScheme: darkColorScheme.copyWith(background: Colors.transparent),
+      colorScheme: darkColorScheme.copyWith(),
     );
   }
 
@@ -163,7 +168,8 @@ class DefaultThemeData {
     return lightThemeData.copyWith(
       primaryColor: colorScheme.primary,
       // Desktop有高斯模糊背景
-      scaffoldBackgroundColor: Colors.transparent,
+      // TODO 桌面透明背景
+      scaffoldBackgroundColor: colorScheme.background,
       cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
       ),
@@ -195,7 +201,7 @@ class DefaultThemeData {
       iconTheme: lightThemeData.iconTheme.copyWith(
         color: colorScheme.onSurface,
       ),
-      // cardTheme: CardTheme(),
+      cardColor: lightThemeData.surface1,
       inputDecorationTheme: InputDecorationTheme(
         fillColor: lightThemeData.surface2,
         isDense: true,
@@ -262,7 +268,6 @@ class DefaultThemeData {
         color: colorScheme.outline,
         space: Dimens.gap_dp1,
       ),
-      cardColor: Colors.white,
       popupMenuTheme: PopupMenuThemeData(
         color: colorScheme.surface,
       ),

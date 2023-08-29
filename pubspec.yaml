@@ -111,8 +111,8 @@ dependency_overrides:
   fwfh_text_style: 2.22.8+1
   better_player: 0.0.83
   android_intent_plus: 4.0.1
-  # global_repository:
-  #   path: ../global_repository
+  global_repository:
+    path: ../../nightmare-space/global_repository
   # flutter_pty:
   #   path: ../flutter_pty
   # app_launcher:

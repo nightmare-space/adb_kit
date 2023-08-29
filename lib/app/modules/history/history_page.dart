@@ -60,7 +60,7 @@ class HistoryPage extends GetView<HistoryController> {
                           onDismissed: (direction) {
                             ctl.removeHis(i);
                           },
-                          child: buildItem(adbEntity),
+                          child: buildItem(adbEntity, context),
                         );
                       },
                     ),
@@ -93,7 +93,8 @@ class HistoryPage extends GetView<HistoryController> {
     );
   }
 
-  InkWell buildItem(Data adbEntity) {
+  InkWell buildItem(Data adbEntity, BuildContext context) {
+    print('Theme.of(context).textTheme.bodyMedium!.color -> ${Theme.of(context).textTheme.bodyMedium!.color}');
     return InkWell(
       onTap: () async {
         AdbResult result;
@@ -144,7 +145,7 @@ class HistoryPage extends GetView<HistoryController> {
                             adbEntity.port,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                               fontSize: 10.w,
                             ),
                           ),
@@ -165,7 +166,7 @@ class HistoryPage extends GetView<HistoryController> {
                             DateTime.parse(adbEntity.connectTime).getTimeString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                               fontSize: 10.w,
                             ),
                           ),
@@ -177,7 +178,7 @@ class HistoryPage extends GetView<HistoryController> {
                 Text(
                   adbEntity.address,
                   style: TextStyle(
-                    color: Theme.of(Get.context!).colorScheme.onSurface.withOpacity(0.8),
+                    color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
                   ),
                 ),
               ],

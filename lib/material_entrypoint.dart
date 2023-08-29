@@ -41,7 +41,6 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
   @override
   void initState() {
     super.initState();
-    _lastSize = WidgetsBinding.instance.window.physicalSize;
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -51,11 +50,8 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
     super.dispose();
   }
 
-  Size? _lastSize;
-
   @override
   void didChangeMetrics() {
-    _lastSize = WidgetsBinding.instance.window.physicalSize;
     setState(() {});
   }
 
@@ -63,12 +59,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
   @override
   Widget build(BuildContext context) {
     return ToastApp(
-      child: Stack(
-        children: [
-          background(),
-          app(),
-        ],
-      ),
+      child: app(),
     );
   }
 
@@ -152,26 +143,5 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
         },
       ),
     );
-  }
-
-  GetBuilder<ConfigController> background() {
-    return GetBuilder<ConfigController>(builder: (config) {
-      if (config.backgroundStyle == BackgroundStyle.normal) {
-        return Container(
-          color: config.theme!.colorScheme.background,
-        );
-      }
-      if (config.backgroundStyle == BackgroundStyle.image) {
-        return SizedBox(
-          height: double.infinity,
-          child: Image.asset(
-            'assets/b.png',
-            fit: BoxFit.cover,
-          ),
-        );
-      } else {
-        return const SizedBox();
-      }
-    });
   }
 }

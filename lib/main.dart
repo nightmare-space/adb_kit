@@ -43,7 +43,7 @@ Future<void> runADBClient({Color? primary}) async {
   Get.config(
     enableLog: false,
     logWriterCallback: (text, {bool? isError}) {
-      // Log.d(text, tag: 'GetX');
+      Log.d(text, tag: 'GetX');
     },
   );
   // set primary color

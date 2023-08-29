@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
     String jsonStr = await compute(utf8.decode, decompressedBytes);
     Log.i('utf8.decode time: ${stopwatch.elapsedMilliseconds}ms');
 
-    final specs = await json.decode(jsonStr) as Map<String, dynamic>;
+    final specs = await compute(json.decode, jsonStr);
     Log.i('json.decode: ${stopwatch.elapsedMilliseconds}ms');
     engine.load(specs);
     isLoad = true;
@@ -273,6 +273,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SuggestionPortal(
@@ -318,7 +319,7 @@ class _HomeState extends State<Home> {
 
             return KeyEventResult.ignored;
           },
-          theme: GetPlatform.isAndroid ? android : theme,
+          theme: (isDark ? TerminalThemes.whiteOnBlack : theme),
         ),
       ),
     );

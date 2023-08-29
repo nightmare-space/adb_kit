@@ -105,32 +105,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                   RippleRoute(
                     GetBuilder<ConfigController>(
                       builder: (context) {
-                        return Theme(
-                          data: context.theme!,
-                          child: Stack(
-                            children: [
-                              GetBuilder<ConfigController>(builder: (_) {
-                                if (config.backgroundStyle == BackgroundStyle.normal) {
-                                  return Container(
-                                    color: theme.colorScheme.background,
-                                  );
-                                }
-                                if (config.backgroundStyle == BackgroundStyle.image) {
-                                  return SizedBox(
-                                    height: double.infinity,
-                                    child: Image.asset(
-                                      'assets/b.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              }),
-                              const AdbTool(),
-                            ],
-                          ),
-                        );
+                        return Theme(data: context.theme!, child: Global().rootWidget!);
                       },
                     ),
                     RouteConfig.fromContext(context),

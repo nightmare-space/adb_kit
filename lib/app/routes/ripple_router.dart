@@ -9,18 +9,14 @@ class RouteConfig {
       if (offset.dy > size.height / 2) {
         circleRadius = sqrt(pow(offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(pow(offset.dx, 2) + pow(size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(offset.dx, 2) + pow(size.height - offset.dy, 2)).toDouble();
       }
     }
     if (offset.dx <= size.width / 2) {
       if (offset.dy > size.height / 2) {
-        circleRadius =
-            sqrt(pow(size.width - offset.dx, 2) + pow(offset.dy, 2)).toDouble();
+        circleRadius = sqrt(pow(size.width - offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(pow(size.width - offset.dx, 2) +
-                pow(size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(size.width - offset.dx, 2) + pow(size.height - offset.dy, 2)).toDouble();
       }
     }
   }
@@ -31,18 +27,14 @@ class RouteConfig {
       if (offset.dy > size.height / 2) {
         circleRadius = sqrt(pow(offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(pow(offset.dx, 2) + pow(size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(offset.dx, 2) + pow(size.height - offset.dy, 2)).toDouble();
       }
     }
     if (offset.dx <= size.width / 2) {
       if (offset.dy > size.height / 2) {
-        circleRadius =
-            sqrt(pow(size.width - offset.dx, 2) + pow(offset.dy, 2)).toDouble();
+        circleRadius = sqrt(pow(size.width - offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(pow(size.width - offset.dx, 2) +
-                pow(size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(size.width - offset.dx, 2) + pow(size.height - offset.dy, 2)).toDouble();
       }
     }
   }
@@ -54,22 +46,14 @@ class RouteConfig {
       if (offset.dy > MediaQuery.of(context).size.height / 2) {
         circleRadius = sqrt(pow(offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(pow(offset.dx, 2) +
-                pow(MediaQuery.of(context).size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(offset.dx, 2) + pow(MediaQuery.of(context).size.height - offset.dy, 2)).toDouble();
       }
     }
     if (offset.dx <= MediaQuery.of(context).size.width / 2) {
       if (offset.dy > MediaQuery.of(context).size.height / 2) {
-        circleRadius = sqrt(
-                pow(MediaQuery.of(context).size.width - offset.dx, 2) +
-                    pow(offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(MediaQuery.of(context).size.width - offset.dx, 2) + pow(offset.dy, 2)).toDouble();
       } else {
-        circleRadius = sqrt(
-                pow(MediaQuery.of(context).size.width - offset.dx, 2) +
-                    pow(MediaQuery.of(context).size.height - offset.dy, 2))
-            .toDouble();
+        circleRadius = sqrt(pow(MediaQuery.of(context).size.width - offset.dx, 2) + pow(MediaQuery.of(context).size.height - offset.dy, 2)).toDouble();
       }
     }
   }
@@ -82,7 +66,7 @@ class RippleRoute extends PageRouteBuilder<void> {
   RippleRoute(this.widget, this.routeConfig)
       : super(
           // 设置过度时间
-          transitionDuration: const Duration(milliseconds: 600),
+          transitionDuration: const Duration(milliseconds: 800),
 
           // 构造器
           pageBuilder: (
@@ -100,27 +84,25 @@ class RippleRoute extends PageRouteBuilder<void> {
             Animation<double> _,
             Widget child,
           ) {
-            Animation curve = CurvedAnimation(
-                curve: Curves.easeInToLinear, parent: animation);
+            // easeInBack
+            // easeInOutCubicEmphasized配合长时间的Duration
+            Animation curve = CurvedAnimation(curve: Curves.easeInBack, parent: animation);
+            print('curve.value:${curve.value}');
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[
                 Positioned(
-                  top: routeConfig.offset.dy -
-                      routeConfig.circleRadius * curve.value,
-                  left: routeConfig.offset.dx -
-                      routeConfig.circleRadius * curve.value,
+                  top: routeConfig.offset.dy - (routeConfig.circleRadius * curve.value).abs(),
+                  left: routeConfig.offset.dx - (routeConfig.circleRadius * curve.value).abs(),
                   child: SizedBox(
-                    height: routeConfig.circleRadius * 2 * curve.value,
-                    width: routeConfig.circleRadius * 2 * curve.value,
+                    height: (routeConfig.circleRadius * 2 * curve.value).abs(),
+                    width: (routeConfig.circleRadius * 2 * curve.value).abs(),
                     child: ClipOval(
                       child: Stack(
                         children: <Widget>[
                           Positioned(
-                            top: routeConfig.circleRadius * curve.value -
-                                routeConfig.offset.dy,
-                            left: routeConfig.circleRadius * curve.value -
-                                routeConfig.offset.dx,
+                            top: (routeConfig.circleRadius * curve.value).abs() - routeConfig.offset.dy,
+                            left: (routeConfig.circleRadius * curve.value).abs() - routeConfig.offset.dx,
                             child: Align(
                               alignment: Alignment.center,
                               child: SizedBox(

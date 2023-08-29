@@ -33,12 +33,6 @@
             "deviceId": "windows"
         },
         {
-            "name": "小米平板5 12.4",
-            "request": "launch",
-            "type": "dart",
-            "deviceId": "22081281AC"
-        },
-        {
             "name": "小米13",
             "request": "launch",
             "type": "dart",

@@ -30,6 +30,7 @@ class ADBToolEntryPoint extends StatefulWidget {
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListener {
   ConfigController configController = Get.put(ConfigController());
+  TabController controller = Get.put(TabController());
   @override
   void onWindowFocus() {
     // Make sure to call once.
@@ -66,6 +67,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
     }
     await initSetting();
     configController.initConfig();
+    setState(() {});
     await Global.instance!.initGlobal();
     Global.instance!.hasSafeArea = widget.hasSafeArea;
     Global.instance!.showQRCode = widget.showQRCode;
@@ -75,11 +77,8 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
     isInit = true;
   }
 
-  //Create an instance of ScreenshotController
-
   @override
-  Widget build(BuildContext context) {
-    TabController controller = TabController();
+  void initState() {
     controller.setInitPage(
       PageEntity(
         title: 'ADB KIT',
@@ -127,35 +126,42 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
         ),
       ),
     );
-    return GetBuilder<TabController>(
-      init: controller,
+    super.initState();
+  }
+
+  //Create an instance of ScreenshotController
+
+  @override
+  Widget build(BuildContext context) {
+    return Global().rootWidget ??= GetBuilder<TabController>(
+      autoRemove: false,
       builder: (controller) {
-        return Scaffold(
-          backgroundColor: const Color(0xfff3f4f9),
-          body: Column(
-            children: [
-              TopTab(
-                onChanged: (int index) {
-                  controller.changePage(index);
-                  Log.d(index);
-                },
-                children: [
-                  for (PageEntity page in controller.pages)
-                    Text(
-                      page.title,
-                      style: TextStyle(
-                        fontSize: 12.w,
-                        fontWeight: FontWeight.bold,
-                        height: 1,
-                      ),
+        return Column(
+          children: [
+            TopTab(
+              onChanged: (int index) {
+                controller.changePage(index);
+                Log.d(index);
+              },
+              children: [
+                for (PageEntity page in controller.pages)
+                  Text(
+                    page.title,
+                    style: TextStyle(
+                      fontSize: 12.w,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
                     ),
-                ],
-              ),
-              Expanded(
+                  ),
+              ],
+            ),
+            Builder(builder: (context) {
+              print('controller.pageindex -> ${controller.pageindex} controller.pages.length -> ${controller.pages.length}');
+              return Expanded(
                 child: controller.pages[controller.pageindex].page,
-              ),
-            ],
-          ),
+              );
+            }),
+          ],
         );
       },
     );

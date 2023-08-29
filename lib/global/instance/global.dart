@@ -330,6 +330,8 @@ class Global {
     await installAdbToEnvir();
     await initApi('ADB KIT', Config.versionName);
   }
+
+  Widget? rootWidget;
 }
 
 class Print implements Printable {

@@ -82,7 +82,7 @@ TerminalTheme android = const TerminalTheme(
 
 TerminalTheme theme = const TerminalTheme(
   cursor: Color(0XAAAEAFAD),
-  selection: Color(0XFFFFFF40),
+  selection: Color(0XAAAEAFAD),
   foreground: Color(0XFF000000),
   background: Color(0XFF000000),
   black: Color(0XFF000000),
