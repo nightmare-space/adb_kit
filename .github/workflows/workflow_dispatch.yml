@@ -1,0 +1,225 @@
+name: ADBKIT CI
+on:
+  workflow_dispatch:
+    inputs:
+      custom_runner:
+        description: '是否使用自定义Runner'
+        required: true
+  repository_dispatch:
+    types:
+      - api
+
+jobs:
+  clone-code:
+    strategy:
+      matrix:
+        os: 
+          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-mac' || 'macos-latest' }}"
+          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-windows' || 'windows-latest' }}"
+          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout current code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Checkout adb_kit_extension code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/adb_kit_extension'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/adb_kit_extension"
+
+      - name: Checkout termux_api_plugin code
+        uses: actions/checkout@v3
+        with:
+          repository: 'nightmare-space/termux_api_plugin'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/termux_api_plugin"
+
+      - name: Checkout user_center_frontend code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/user_center_frontend'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/user_center_frontend"
+
+      - name: Checkout behavior_api code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/behavior_api'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/behavior_api"
+
+      - name: Checkout ni CLI code
+        uses: actions/checkout@v3
+        with:
+          repository: 'mengyanshou/ni'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/ni"
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}
+          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-dart-
+
+  build-linux:
+    runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}
+    environment: default
+    needs: clone-code
+    steps:
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            ${{ github.workspace }}
+          key: ${{ runner.os }}-dart-
+      - name: move file
+        run: |
+          mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
+          mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
+          mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
+
+      - name: Install and set Flutter version
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Setup other environment
+        if: github.event.inputs.custom_runner == 'false'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev
+          # tray manager need
+          sudo apt-get install libayatana-appindicator3-dev
+
+      - name: Setup CLI environment
+        run: |
+          cd ${{ github.workspace }}/ni
+          dart pub get
+
+      - name: Building...
+        run: |
+          export PATH=$PATH:${{ github.workspace }}/ni
+          ni release --build-linux-deb
+          
+      - name: Upload..
+        run: |
+          export PATH=$PATH:${{ github.workspace }}/ni
+          ni default -u
+
+
+
+  build-mac:
+    runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-mac' || 'macos-latest' }}
+    needs: clone-code
+    environment: default
+    steps:
+      - name: Run on ${{ github.job.runs-on }} 
+        run: echo "This job runs on ${{ github.job.runs-on }}"
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            ${{ github.workspace }}
+          key: ${{ runner.os }}-dart-
+      - name: move file
+        run: |
+          mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
+          mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
+          mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
+
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}/..
+
+      - name: Setup node environment
+        uses: actions/setup-node@v2
+      
+      - name: Install and set Flutter version
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Setup CLI environment
+        run: |
+          cd ${{ github.workspace }}/ni
+          dart pub get
+          
+      - name: Setup other environment
+        run: npm install -g appdmg
+        
+      - name: Building&&Packaging
+        run: |
+          export PATH=$PATH:${{ github.workspace }}/ni
+          ni release --build-mac-dmg
+
+      - name: Upload
+        run: |
+          export PATH=$PATH:${{ github.workspace }}/ni
+          ni default -u
+            
+  build-windows:
+    runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-windows' || 'windows-latest' }}
+    environment: default
+    needs: clone-code
+    steps:
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            ${{ github.workspace }}
+          key: ${{ runner.os }}-dart-
+      - name: move file
+        run: |
+          Move-Item -Path "${{ github.workspace }}/user_center_frontend" -Destination "${{ github.workspace }}/../"
+          Move-Item -Path "${{ github.workspace }}/adb_kit_extension" -Destination "${{ github.workspace }}/../"
+          Move-Item -Path "${{ github.workspace }}/termux_api_plugin" -Destination "${{ github.workspace }}/../"
+          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.dart" -Destination "./lib/global/instance/behavior.dart"
+          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.g.dart" -Destination "./lib/global/instance/behavior.g.dart"
+
+      - name: Install and set Flutter version
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Setup CLI environment
+        if: always()
+        run: |
+          cd ${{ github.workspace }}\ni
+          dart pub get
+
+      - name: Building...
+        if: always()
+        run: |
+          set PATH=%PATH%;${{ github.workspace }}\ni
+          ni release --build-win-zip
+        shell: cmd
+
+      - name: Upload
+        if: always()
+        run: |
+          set PATH=%PATH%;${{ github.workspace }}\ni
+          ni default -u
+        shell: cmd
