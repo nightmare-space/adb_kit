@@ -44,6 +44,31 @@ class _AppStarterState extends State<AppStarter> {
             children: [
               GestureWithScale(
                 onTap: () {
+                  // adb shell sh /storage/emulated/0/Android/data/com.nightmare.sula/files/sula_starter
+                  String cmd = '$adb -s ${widget.entity!.serial} shell sh /storage/emulated/0/Android/data/com.nightmare.sula/files/sula_starter\r';
+                  Global().pty!.writeString(cmd);
+                  HapticFeedback.vibrate();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).surface3,
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 8.w,
+                  ),
+                  child: Text(
+                    '启动Sula',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 16.w,
+                    ),
+                  ),
+                ),
+              ),
+              GestureWithScale(
+                onTap: () {
                   String cmd = '$adb -s ${widget.entity!.serial} shell sh /data/data/me.piebridge.brevent/brevent.sh\r';
                   Global().pty!.writeString(cmd);
                   HapticFeedback.vibrate();

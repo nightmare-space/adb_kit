@@ -108,9 +108,13 @@ dependency_overrides:
   visibility_detector: ^0.3.3
   ffi: 1.0.0
   flutter_svg: 1.1.5
-  fwfh_text_style: 2.22.8+1
+  flutter_widget_from_html_core: ^0.14.6
   better_player: 0.0.83
   android_intent_plus: 4.0.1
+  signale:
+    git: https://github.com/nightmare-space/signale.git
+      
+    
   # global_repository:
   #   path: ../../nightmare-space/global_repository
   # flutter_pty:
