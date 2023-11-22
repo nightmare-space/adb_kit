@@ -1,9 +1,13 @@
 @echo off
-echo patch windows 
-mkdir .\build\windows\runner\Release\data\usr\bin
-xcopy .\res\windows\bin .\build\windows\runner\Release\data\usr\bin /s /f /y
-xcopy .\res\windows\runtime .\build\windows\runner\Release /s /f /y
+setlocal
+set BASE_PATH=build\windows\x64\runner\Release
+set RELEASE_PATH=%BASE_PATH%
+set BIN_PATH=.\%BASE_PATH%\data\usr\bin
+set RES_BIN_PATH=.\res\windows\bin
+set RES_RUNTIME_PATH=.\res\windows\runtime
 
-@REM debug
-mkdir .\build\windows\runner\Debug\data\usr\bin
-xcopy .\res\windows\bin .\build\windows\runner\Debug\data\usr\bin /s /f /y
+
+mkdir %BIN_PATH%
+xcopy %RES_BIN_PATH% %BIN_PATH% /s /f /y
+xcopy %RES_RUNTIME_PATH% %RELEASE_PATH% /s /f /y
+endlocal

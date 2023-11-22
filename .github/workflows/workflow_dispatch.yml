@@ -154,7 +154,9 @@ jobs:
           ls ${{ github.workspace }}/..
 
       - name: Setup node environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
       
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -167,12 +169,15 @@ jobs:
           dart pub get
           
       - name: Setup other environment
-        run: npm install -g appdmg
+        run: |
+          # brew install create-dmg
+          npm install -g appdmg
         
       - name: Building&&Packaging
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
           ni release --build-mac-dmg
+          # ./scripts/dmg/create_dmg.sh
 
       - name: Upload
         run: |
