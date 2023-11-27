@@ -189,7 +189,7 @@ class _AppStarterState extends State<AppStarter> {
           SizedBox(height: 10.w),
           CardItem(
             child: SizedBox(
-              height: 300,
+              height: 400.w,
               child: Column(
                 children: [
                   Row(
