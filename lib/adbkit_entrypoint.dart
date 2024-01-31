@@ -30,7 +30,7 @@ class ADBToolEntryPoint extends StatefulWidget {
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListener {
   ConfigController configController = Get.put(ConfigController());
-  TabController controller = Get.put(TabController());
+  TabController controller = Get.put(TabController(), permanent: true);
   @override
   void onWindowFocus() {
     // Make sure to call once.

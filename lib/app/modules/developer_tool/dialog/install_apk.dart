@@ -12,7 +12,8 @@ import 'package:path/path.dart' as p;
 class InstallApkDialog extends StatefulWidget {
   const InstallApkDialog({
     Key? key,
-    this.paths, required this.entity,
+    this.paths,
+    required this.entity,
   }) : super(key: key);
 
   /// 路径列表
@@ -53,7 +54,7 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       currentFile = name;
       setState(() {});
       try {
-        await execCmd('$adb -s ${widget.entity.serial} install -t $path');
+        await execCmd('$adb -s ${widget.entity.serial} install -t "$path"');
       } on Exception catch (e) {
         stringBuffer.write('$name: $e\n');
       }
