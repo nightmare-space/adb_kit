@@ -33,6 +33,12 @@
             "deviceId": "windows"
         },
         {
+            "name": "小米14",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "23127PN0CC",
+        },
+        {
             "name": "小米平板6",
             "request": "launch",
             "type": "dart",
