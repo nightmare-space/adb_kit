@@ -27,7 +27,7 @@ class AdbEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     // 判断是否是非
     if (other is! AdbEntity) {
       return false;

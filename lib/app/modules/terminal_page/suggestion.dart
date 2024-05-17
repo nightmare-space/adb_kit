@@ -6,12 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
-import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:xterm/xterm.dart';
 import 'package:xterm/suggestion.dart';
 
-import 'src/platform_menu.dart';
 import 'src/suggestion_engine.dart';
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
@@ -291,7 +289,7 @@ class _HomeState extends State<Home> {
           autofocus: true,
           backgroundOpacity: 0,
           keyboardType: TextInputType.multiline,
-          onKey: (node, event) {
+          onKeyEvent: (node, event) {
             if (event is! RawKeyDownEvent) {
               return KeyEventResult.ignored;
             }

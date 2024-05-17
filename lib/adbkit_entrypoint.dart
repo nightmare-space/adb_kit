@@ -156,6 +156,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
               ],
             ),
             Builder(builder: (context) {
+              // ignore: avoid_print
               print('controller.pageindex -> ${controller.pageindex} controller.pages.length -> ${controller.pages.length}');
               return Expanded(
                 child: controller.pages[controller.pageindex].page,

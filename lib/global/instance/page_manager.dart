@@ -3,7 +3,6 @@ import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/global/drawer/about.dart';
 import 'package:adb_kit/global/drawer/history.dart';
 import 'package:adb_kit/global/drawer/home.dart';
-import 'package:adb_kit/global/drawer/install_to_system.dart';
 import 'package:adb_kit/global/drawer/log.dart';
 import 'package:adb_kit/global/drawer/net_debug.dart';
 import 'package:adb_kit/global/drawer/setting.dart';

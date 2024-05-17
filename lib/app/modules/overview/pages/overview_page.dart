@@ -78,7 +78,7 @@ class _OverviewPageState extends State<OverviewPage> {
       }).whenComplete(() async {
         if (i == 254) {
           // 等待1s
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
           lock.complete();
         }
         // print('\x1b[32m $ip whenComplete');
@@ -148,6 +148,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             fontWeight: bold,
                           ),
                         ),
+                        // TODO 移动设备也需要开放出来
                         if (GetPlatform.isDesktop) searchButton(context),
                       ],
                     ),
@@ -205,7 +206,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   // throw 'Could not launch $url';
                                 }
                               },
-                              child: Icon(Icons.arrow_forward_ios),
+                              child: const Icon(Icons.arrow_forward_ios),
                             ),
                           ],
                         ),
@@ -305,6 +306,10 @@ class _OverviewPageState extends State<OverviewPage> {
                               fontSize: 14.w,
                               color: Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
                             ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 12.w,
+                            ),
                             isDense: true,
                           ),
                         ),
@@ -321,6 +326,7 @@ class _OverviewPageState extends State<OverviewPage> {
                               child: Icon(
                                 Icons.arrow_forward_ios,
                                 color: Colors.black.withOpacity(0.6),
+                                size: 24.w,
                               ),
                               onTap: () async {
                                 if (editingController.text.isEmpty) {
@@ -330,10 +336,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                 Log.d('adb 连接开始 ${editingController.text}');
                                 AdbResult? result;
                                 try {
-                                  result = await AdbUtil.connectDevices(
-                                    editingController.text,
-                                  );
-                                  // showToast(result.message);
+                                  result = await AdbUtil.connectDevices(editingController.text);
                                   final List<String> tmp = editingController.text.split(':');
                                   final String address = tmp[0];
                                   String port = '5555';

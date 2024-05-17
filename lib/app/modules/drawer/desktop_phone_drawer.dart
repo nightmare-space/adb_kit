@@ -3,8 +3,6 @@ import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/config/custom.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/core/interface/adb_page.dart';
-import 'package:adb_kit/global/instance/global.dart';
-import 'package:adb_kit/global/instance/page_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
@@ -41,17 +39,38 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
             child: SizedBox(
               width: width,
               height: MediaQuery.of(context).size.height,
-              child: Builder(
-                builder: (_) {
-                  if (orientation == Orientation.portrait) {
-                    return buildBody(context);
-                  }
-                  return SingleChildScrollView(
-                    child: SizedBox(
-                      child: buildBody(context),
+              child: Stack(
+                children: [
+                  Builder(
+                    builder: (_) {
+                      if (orientation == Orientation.portrait) {
+                        return buildBody(context);
+                      }
+                      return SingleChildScrollView(
+                        child: SizedBox(
+                          child: buildBody(context),
+                        ),
+                      );
+                    },
+                  ),
+                  if (personHeader != null)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              bottom: 12.w,
+                              left: 12.w,
+                              right: 12.w,
+                            ),
+                            child: personHeader!,
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
+                ],
               ),
             ),
           );
@@ -67,15 +86,6 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
       children: [
         SizedBox(height: 8.w),
         if (Custom.drawerHeader != null) Custom.drawerHeader!,
-        if (personHeader != null)
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 12.w,
-              left: 12.w,
-              right: 12.w,
-            ),
-            child: personHeader!,
-          ),
         for (ADBPage page in PageManager.instance!.pages)
           if (page.isActive)
             Padding(

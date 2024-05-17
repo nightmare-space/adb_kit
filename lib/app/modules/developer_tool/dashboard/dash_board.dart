@@ -13,17 +13,22 @@ import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide execCmd;
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
-import 'dialog/install_apk.dart';
-import 'dialog/push_file.dart';
-import 'drag_drop.dart';
-import 'screenshot_page.dart';
+import '../dialog/install_apk.dart';
+import '../dialog/push_file.dart';
+import '../drag_drop.dart';
+import '../screenshot_page.dart';
+import 'developer_item.dart';
+import 'network_debug.dart';
+import 'switch_item.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, this.entity}) : super(key: key);
@@ -38,6 +43,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
   Terminal terminal = Terminal();
+  bool get isMobile => ResponsiveBreakpoints.of(context).isMobile;
 
   /// 获取卡片宽度，主要是做响应式适配的
   double getCardWidth() {
@@ -211,7 +217,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: SizedBox(
-          height: 230.w,
+          height: isMobile ? 240.w : 230.w,
           child: Material(
             color: Theme.of(context).surface1,
             borderRadius: BorderRadius.circular(12.w),
@@ -229,22 +235,21 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
+                          fontSize: 14.w,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
+                  SizedBox(height: 4.w),
                   Column(
                     children: [
-                      _DeveloperItem(
+                      DeveloperItem(
                         serial: widget.entity!.serial,
                         title: S.of(context).displayTouch,
                         putKey: 'show_touches',
                       ),
-                      _DeveloperItem(
+                      DeveloperItem(
                         serial: widget.entity!.serial,
                         title: S.of(context).displayScreenPointer,
                         putKey: 'pointer_location',
@@ -270,7 +275,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           return false;
                         },
                       ),
-                      _OpenRemoteDebug(
+                      NetworkDebug(
                         serial: widget.entity!.serial,
                       ),
                     ],
@@ -366,7 +371,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           // ignore: use_build_context_synchronously
                           paths = await FileSelector.pick(context);
                         }
-                        if (paths!.isEmpty) {
+                        if (paths.isEmpty) {
                           return;
                         }
                         installApkWithPaths(paths);
@@ -471,7 +476,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           // ignore: use_build_context_synchronously
                           paths = await FileSelector.pick(context);
                         }
-                        if (paths!.isEmpty) {
+                        if (paths.isEmpty) {
                           return;
                         }
                         pushFileWithPaths(paths);
@@ -503,7 +508,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
           color: Theme.of(context).surface1,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
-            height: 230.w,
+            height: isMobile ? 240.w : 230.w,
             child: OpenContainer<String>(
               useRootNavigator: false,
               tappable: true,
@@ -611,308 +616,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _OpenRemoteDebug extends StatefulWidget {
-  const _OpenRemoteDebug({
-    Key? key,
-    this.serial,
-  }) : super(key: key);
-  final String? serial;
-  @override
-  __OpenRemoteDebugState createState() => __OpenRemoteDebugState();
-}
-
-class __OpenRemoteDebugState extends State<_OpenRemoteDebug> {
-  bool isCheck = false;
-  @override
-  void initState() {
-    super.initState();
-    initCheckState();
-  }
-
-  Future<void> initCheckState() async {
-    final String result = await execCmd(
-      '$adb -s ${widget.serial} shell getprop service.adb.tcp.port',
-    );
-    // Log.w(result);
-    if (result == '5555') {
-      isCheck = true;
-      if (mounted) {
-        setState(() {});
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: Dimens.gap_dp48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      S.of(context).remoteAdbDebug,
-                      style: TextStyle(
-                        fontWeight: bold,
-                      ),
-                    ),
-                    Text(
-                      isAddress(widget.serial!) ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
-                      style: TextStyle(
-                        fontWeight: bold,
-                        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  S.of(context).remoteDebuSwitchgDes,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                    fontSize: 12.w,
-                  ),
-                ),
-              ],
-            ),
-            AquaSwitch(
-              value: isCheck,
-              onChanged: (_) async {
-                isCheck = !isCheck;
-                final int value = isCheck ? 5555 : 0;
-                // String result = await exec(
-                //   'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
-                //   'adb -s ${widget.serial} shell stop adbd\n'
-                //   'adb -s ${widget.serial} shell start adbd\n',
-                // );
-                // print(result);
-                // String result;
-                int port = value;
-                if (port == 5555) {
-                  await execCmd(
-                    '$adb -s ${widget.serial} tcpip 5555',
-                  );
-                } else {
-                  await execCmd(
-                    '$adb -s ${widget.serial} usb',
-                  );
-                }
-                // Log.v(result);
-                setState(() {});
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SwitchItem extends StatefulWidget {
-  const SwitchItem({
-    Key? key,
-    this.title,
-    this.onOpen,
-    this.onClose,
-  }) : super(key: key);
-  final String? title;
-  final bool Function()? onOpen;
-  final bool Function()? onClose;
-  @override
-  State createState() => _SwitchItemState();
-}
-
-class _SwitchItemState extends State<SwitchItem> {
-  bool isCheck = false;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: Dimens.gap_dp48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.title!,
-              style: TextStyle(
-                fontWeight: bold,
-              ),
-            ),
-            AquaSwitch(
-              value: isCheck,
-              onChanged: (_) {
-                if (isCheck) {
-                  isCheck = widget.onClose!();
-                } else {
-                  isCheck = widget.onOpen!();
-                }
-                setState(() {});
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DeveloperItem extends StatefulWidget {
-  const _DeveloperItem({
-    Key? key,
-    this.title,
-    this.serial,
-    this.putKey,
-  }) : super(key: key);
-  final String? title;
-  final String? serial;
-  final String? putKey;
-  @override
-  __DeveloperItemState createState() => __DeveloperItemState();
-}
-
-class __DeveloperItemState extends State<_DeveloperItem> {
-  bool isCheck = false;
-  @override
-  void initState() {
-    super.initState();
-    initCheckState();
-  }
-
-  Future<void> initCheckState() async {
-    final String result = await execCmd(
-      '$adb -s ${widget.serial} shell settings get system ${widget.putKey}',
-    );
-    // Log.w('result -> $result');
-    if (result == '1') {
-      isCheck = true;
-      setState(() {});
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: Dimens.gap_dp48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.title!,
-              style: TextStyle(
-                fontWeight: bold,
-              ),
-            ),
-            AquaSwitch(
-              value: isCheck,
-              onChanged: (_) {
-                isCheck = !isCheck;
-                final int value = isCheck ? 1 : 0;
-                execCmd(
-                  'adb -s ${widget.serial} shell settings put system ${widget.putKey} $value',
-                );
-                setState(() {});
-              },
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class GestureWithScale extends StatefulWidget {
-  const GestureWithScale({
-    Key? key,
-    this.onTap,
-    this.child,
-  }) : super(key: key);
-  final void Function()? onTap;
-  final Widget? child;
-
-  @override
-  State createState() => _GestureWithScaleState();
-}
-
-class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerProviderStateMixin {
-  AnimationController? animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-    );
-    animationController!.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    animationController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Transform(
-      alignment: Alignment.center,
-      transform: Matrix4.identity()
-        ..scale(
-          1.0 - animationController!.value * 0.02,
-        ),
-      child: GestureDetector(
-        onTap: () {
-          if (widget.onTap == null) {
-            return;
-          }
-          setState(() {});
-          Feedback.forLongPress(context);
-          Feedback.forTap(context);
-          animationController!.reverse();
-          widget.onTap!();
-        },
-        onTapDown: (_) {
-          if (widget.onTap == null) {
-            return;
-          }
-          animationController!.forward();
-          Feedback.forLongPress(context);
-          setState(() {});
-        },
-        onTapCancel: () {
-          if (widget.onTap == null) {
-            return;
-          }
-          animationController!.reverse();
-          Feedback.forLongPress(context);
-          Feedback.forTap(context);
-          setState(() {});
-        },
-        child: widget.child,
       ),
     );
   }

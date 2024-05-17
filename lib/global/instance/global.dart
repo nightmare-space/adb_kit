@@ -8,7 +8,6 @@ import 'package:adb_kit/utils/utils.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -23,7 +22,7 @@ import 'page_manager.dart';
 
 extension PTYExt on Pty {
   void writeString(String data) {
-    write(utf8.encode(data) as Uint8List);
+    write(utf8.encode(data));
   }
 }
 
@@ -307,13 +306,15 @@ class Global {
       Config.flutterPackage = 'packages/adb_tool/';
     }
     ConfigController controller = Get.put(ConfigController());
-    Log.i('当前系统语言 ${window.locales}');
-    Log.i('当前系统主题 ${window.platformBrightness}');
+    FlutterView flutterView = window;
+    PlatformDispatcher platformDispatcher = flutterView.platformDispatcher;
+    Log.i('当前系统语言 ${platformDispatcher.locales}');
+    Log.i('当前系统主题 ${platformDispatcher.platformBrightness}');
     Log.i('当前布局风格 ${controller.screenType}');
     Log.i('当前App内部主题 ${controller.theme!.brightness}');
-    Log.i('physicalSize:${window.physicalSize}');
-    Log.i('devicePixelRatio:${window.devicePixelRatio}');
-    Log.i('Android DPI:${window.devicePixelRatio * 160}');
+    Log.i('physicalSize:${flutterView.physicalSize}');
+    Log.i('devicePixelRatio:${flutterView.devicePixelRatio}');
+    Log.i('Android DPI:${flutterView.devicePixelRatio * 160}');
     // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
     Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
     WidgetsBinding.instance!.addObserver(Listener());

@@ -86,6 +86,7 @@ dependencies:
     path: ../termux_api_plugin
   adb_kit_extension:
     path: ../adb_kit_extension
+  archive: ^3.4.10
     
 dev_dependencies:
   flutter_test:
@@ -113,6 +114,10 @@ dependency_overrides:
   android_intent_plus: 4.0.1
   signale:
     git: https://github.com/nightmare-space/signale.git
+  xterm:
+    git:
+      url: https://github.com/TerminalStudio/xterm.dart.git
+      ref: master
       
     
   # global_repository:
