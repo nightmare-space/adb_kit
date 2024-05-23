@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.4+45
+version: 1.5.5+46
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
