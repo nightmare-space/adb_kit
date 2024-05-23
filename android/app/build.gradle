@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new GradleException('Flutter SDK not found. Define location with flutter.sdk in the local.properties file.')
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -24,18 +24,18 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-def keystorePropertiesFile = rootProject.file("key.properties")
+def keystorePropertiesFile = rootProject.file('key.properties')
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     lintOptions {
         disable 'InvalidPackage'
     }
 
     defaultConfig {
-        applicationId "com.nightmare.adbtools"
+        applicationId 'com.nightmare.adbtools'
         minSdkVersion 23
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
@@ -73,9 +73,8 @@ android {
         }
     }
 
-
-    ndkVersion "21.4.7075529"
-    // ndkVersion "21.1.6352462"
+    ndkVersion '21.4.7075529'
+// ndkVersion "21.1.6352462"
 }
 
 flutter {

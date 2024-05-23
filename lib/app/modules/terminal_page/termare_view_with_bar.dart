@@ -46,22 +46,6 @@ class _TermareViewWithBottomBarState extends State<TermareViewWithBottomBar> {
                   ),
                 ],
               ),
-              // if (PlatformUtil.isDesktop())
-              //   Align(
-              //     alignment: Alignment.topRight,
-              //     child: SizedBox(
-              //       height: 32.0,
-              //       child: IconButton(
-              //         onPressed: () {
-              //           Navigator.pop(context);
-              //         },
-              //         icon: const Icon(
-              //           Icons.clear,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
             ],
           ),
         ),

@@ -288,7 +288,6 @@ class _HomeState extends State<Home> {
           controller: terminalController,
           autofocus: true,
           backgroundOpacity: 0,
-          keyboardType: TextInputType.multiline,
           onKeyEvent: (node, event) {
             if (event is! RawKeyDownEvent) {
               return KeyEventResult.ignored;

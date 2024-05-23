@@ -23,7 +23,7 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
 **编译不过请联系 github 上的邮箱或者qq**
 
 ## 下载
-- [个人服务器地址](http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A)
+- [个人服务器地址](http://nightmare.press/YanTool/resources/ADBTool/?C=N;O=A)
 
 ## 截图
 
@@ -45,6 +45,9 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
    - 黑域
    - 冰箱
    - shizuku
+
+## Git History
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#nightmare-space/adb_kit&Date" frameBorder="0"></iframe>
 
 ## BSD
 
