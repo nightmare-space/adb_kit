@@ -54,3 +54,4 @@ macos/Flutter/GeneratedPluginRegistrant.swift
 lib/global/instance/behavior.g.dart
 lib/global/instance/behavior.dart
 pubspec_overrides.yaml
+pubspec.lock
