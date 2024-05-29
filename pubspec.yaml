@@ -72,6 +72,9 @@ dependencies:
   # adb plugin can view android device info and cpu/gpu status
   device_info:
     git: https://github.com/nightmare-space/device_info.git
+  # packages目录中放的是闭源库的空实现，靠override用闭源库覆盖，
+  adb_kit_extension:
+    path: packages/adb_kit_extension
   # can manage window on desktop
   window_manager: ^0.3.0
   flutter_markdown: ^0.6.10+2
