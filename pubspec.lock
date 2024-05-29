@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   adb_kit_extension:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "../adb_kit_extension"
       relative: true
@@ -18,13 +18,13 @@ packages:
     source: git
     version: "0.0.1"
   android_intent_plus:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: android_intent_plus
-      sha256: "2c87d8330ba5deef5fe20e77f4d178190b3b24531dce08368030ab4be40a9d4e"
+      sha256: e49b4d9e26135dd7ef83606aac56bd3105345e8243de903939a15c5aa07cc0ec
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "1.0.2"
   animations:
     dependency: "direct main"
     description:
@@ -221,7 +221,7 @@ packages:
     source: hosted
     version: "1.3.1"
   ffi:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: ffi
       sha256: "493f37e7df1804778ff3a53bd691d8692ddf69702cf4c1c1096a2e41b4779e21"
@@ -286,7 +286,7 @@ packages:
     source: hosted
     version: "0.8.2+2"
   fl_chart:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: fl_chart
       sha256: d0f0d49112f2f4b192481c16d05b6418bd7820e021e265a3c22db98acf7ed7fb
@@ -339,10 +339,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: f2aa23d9d1721cd5c2c5097558368d2a1f85be35a85a6cf26a626e80c369a47c
+      sha256: "6ff9fa12892ae074092de2fa6a9938fb21dbabfdaa2ff57dc697ff912fc8d4b2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.5"
+    version: "1.1.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -354,7 +354,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_widget_from_html_core:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: flutter_widget_from_html_core
       sha256: cc1d9be3d187ce668ee02091cd5442dfb050cdaf98e0ab9a4d12ad008f966979
@@ -372,11 +372,9 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "29c52922215b5ffb4776666c4e027955ec8dca71"
-      url: "https://github.com/nightmare-space/global_repository"
-    source: git
+      path: "/Users/nightmare/Desktop/nightmare-space/global_repository"
+      relative: false
+    source: path
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -850,7 +848,7 @@ packages:
     source: hosted
     version: "1.2.1"
   termux_api_plugin:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "../termux_api_plugin"
       relative: true
@@ -952,13 +950,13 @@ packages:
     source: hosted
     version: "2.1.4"
   visibility_detector:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: visibility_detector
-      sha256: "15c54a459ec2c17b4705450483f3d5a2858e733aee893dcee9d75fd04814940d"
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3"
+    version: "0.4.0+2"
   vm_service:
     dependency: transitive
     description:
@@ -1000,7 +998,7 @@ packages:
     source: hosted
     version: "5.5.1"
   win32_registry:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: win32_registry
       sha256: "10589e0d7f4e053f2c61023a31c9ce01146656a70b7b7f0828c0b46d7da2a9bb"
@@ -1037,7 +1035,7 @@ packages:
       path: "."
       ref: master
       resolved-ref: "84355d122ef6677cce6011d3bb4bf87bb6040bab"
-      url: "https://github.com/TerminalStudio/xterm.dart.git"
+      url: "https://github.com/TerminalStudio/xterm.dart"
     source: git
     version: "4.0.0"
   zmodem:
