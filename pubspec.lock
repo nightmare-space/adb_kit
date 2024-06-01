@@ -6,7 +6,7 @@ packages:
     description:
       path: adb_kit_extension
       ref: HEAD
-      resolved-ref: ab5436f0fd65e864a6681905dc07ee34aca505f1
+      resolved-ref: "286dcf9e49927d7e7907bf74e5ff5f3c925c4020"
       url: "https://github.com/nightmare-space/empty_package"
     source: git
     version: "1.0.0"
@@ -848,7 +848,7 @@ packages:
     description:
       path: termux_api_plugin
       ref: HEAD
-      resolved-ref: ab5436f0fd65e864a6681905dc07ee34aca505f1
+      resolved-ref: "286dcf9e49927d7e7907bf74e5ff5f3c925c4020"
       url: "https://github.com/nightmare-space/empty_package"
     source: git
     version: "1.0.0"

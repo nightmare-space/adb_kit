@@ -5,6 +5,7 @@ import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/utils/utils.dart';
+import 'package:adb_kit_extension/adb_kit_extension.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
