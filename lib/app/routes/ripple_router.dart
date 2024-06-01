@@ -87,7 +87,7 @@ class RippleRoute extends PageRouteBuilder<void> {
             // easeInBack
             // easeInOutCubicEmphasized配合长时间的Duration
             Animation curve = CurvedAnimation(curve: Curves.easeInBack, parent: animation);
-            print('curve.value:${curve.value}');
+            // print('curve.value:${curve.value}');
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[

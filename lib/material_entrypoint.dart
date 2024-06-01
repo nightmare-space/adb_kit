@@ -4,11 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:responsive_framework/utils/responsive_utils.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
 import 'package:app_manager/app_manager.dart' as am;
-import 'package:window_manager/window_manager.dart';
 import 'app/controller/controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
@@ -73,10 +71,10 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
         builder: (config) {
           return Screenshot(
             controller: screenshotController,
-            child: RawKeyboardListener(
+            child: KeyboardListener(
               autofocus: true,
               focusNode: FocusNode(),
-              onKey: ((value) {
+              onKeyEvent: ((value) {
                 // Log.w(value);
                 // if (value is RawKeyDownEvent) {
                 //   screenshotController.captureAndSave('./screenshot');
@@ -97,6 +95,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
+                // ignore: deprecated_member_use
                 locale: window.locale,
                 supportedLocales: S.delegate.supportedLocales,
                 theme: ThemeData(

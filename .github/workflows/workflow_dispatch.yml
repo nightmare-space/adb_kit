@@ -1,4 +1,4 @@
-name: SpeedShare Repository Dispatch
+name: ADBKIT CI
 on:
   workflow_dispatch:
     inputs:
@@ -19,6 +19,11 @@ jobs:
           - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}"
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Checkout current code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
       - name: Checkout adb_kit_extension code
         uses: actions/checkout@v3
         with:
@@ -63,7 +68,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ github.workspace }}
-          key: ${{ runner.os }}-primes
+          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-dart-
 
   build-linux:
     runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}
@@ -76,14 +83,14 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-primes
+          key: ${{ runner.os }}-dart-
       - name: move file
         run: |
           mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
           mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
           mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
-          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/global/instance/behavior.dart
-          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/instance/behavior.g.dart
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -133,20 +140,23 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-primes
+          key: ${{ runner.os }}-dart-
       - name: move file
         run: |
           mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
-          mv "${{ github.workspace }}/speed_share_extension" "${{ github.workspace }}/../speed_share_extension"
-          mv "${{ github.workspace }}/behavior_api/behavior.dart" ./lib/global/behavior.dart
-          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" ./lib/global/behavior.g.dart
+          mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
+          mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
+          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
+          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
 
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}/..
 
       - name: Setup node environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
       
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -159,12 +169,15 @@ jobs:
           dart pub get
           
       - name: Setup other environment
-        run: npm install -g appdmg
+        run: |
+          # brew install create-dmg
+          npm install -g appdmg
         
       - name: Building&&Packaging
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
           ni release --build-mac-dmg
+          # ./scripts/dmg/create_dmg.sh
 
       - name: Upload
         run: |
@@ -182,13 +195,14 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-primes
+          key: ${{ runner.os }}-dart-
       - name: move file
         run: |
           Move-Item -Path "${{ github.workspace }}/user_center_frontend" -Destination "${{ github.workspace }}/../"
-          Move-Item -Path "${{ github.workspace }}/speed_share_extension" -Destination "${{ github.workspace }}/../"
-          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.dart" -Destination ./lib/global/behavior.dart
-          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.g.dart" -Destination ./lib/global/behavior.g.dart
+          Move-Item -Path "${{ github.workspace }}/adb_kit_extension" -Destination "${{ github.workspace }}/../"
+          Move-Item -Path "${{ github.workspace }}/termux_api_plugin" -Destination "${{ github.workspace }}/../"
+          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.dart" -Destination "./lib/global/instance/behavior.dart"
+          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.g.dart" -Destination "./lib/global/instance/behavior.g.dart"
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2

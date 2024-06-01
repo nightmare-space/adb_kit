@@ -1,11 +1,8 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
-import 'package:adb_kit/app/modules/drawer/desktop_phone_drawer.dart';
-import 'package:adb_kit/app/modules/drawer/tablet_drawer.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/instance/page_manager.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_acrylic/flutter_acrylic.dart';

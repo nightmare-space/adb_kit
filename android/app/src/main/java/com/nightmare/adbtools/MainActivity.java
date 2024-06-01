@@ -1,5 +1,6 @@
 package com.nightmare.adbtools;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
@@ -7,7 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+
 import androidx.annotation.NonNull;
+
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
@@ -44,6 +47,12 @@ public class MainActivity extends FlutterActivity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
+        Intent serviceIntent = new Intent();
+        serviceIntent.setComponent(new ComponentName("com.nightmare.sharespace", "com.nightmare.sharespace.YourService"));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startForegroundService(serviceIntent);
+        else
+            startService(serviceIntent);
     }
 
     @Override

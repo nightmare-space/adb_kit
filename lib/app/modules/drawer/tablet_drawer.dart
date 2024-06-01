@@ -1,5 +1,4 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
-import 'package:adb_kit/app/modules/home/views/adaptive_view.dart';
 import 'package:adb_kit/app/routes/ripple_router.dart';
 import 'package:adb_kit/config/custom.dart';
 import 'package:adb_kit/config/settings.dart';

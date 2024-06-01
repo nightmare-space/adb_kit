@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:global_repository/global_repository.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:xterm/xterm.dart';
 import 'term_bottom_bar.dart';
@@ -48,22 +46,6 @@ class _TermareViewWithBottomBarState extends State<TermareViewWithBottomBar> {
                   ),
                 ],
               ),
-              // if (PlatformUtil.isDesktop())
-              //   Align(
-              //     alignment: Alignment.topRight,
-              //     child: SizedBox(
-              //       height: 32.0,
-              //       child: IconButton(
-              //         onPressed: () {
-              //           Navigator.pop(context);
-              //         },
-              //         icon: const Icon(
-              //           Icons.clear,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
             ],
           ),
         ),

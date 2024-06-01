@@ -117,8 +117,8 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                           borderRadius: BorderRadius.circular(12),
                           color: AppColors.accent,
                         ),
-                        height: Dimens.gap_dp6,
-                        width: Dimens.gap_dp6,
+                        height: 6.w,
+                        width: 6.w,
                       ),
                       SizedBox(
                         width: 4.w,
@@ -132,6 +132,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                             style: TextStyle(
                               height: 1.2,
                               fontWeight: bold,
+                              fontSize: 14.w,
                             ),
                           ),
                           SizedBox(

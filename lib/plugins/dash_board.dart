@@ -1,5 +1,5 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/app/modules/developer_tool/dash_board.dart';
+import 'package:adb_kit/app/modules/developer_tool/dashboard/dash_board.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';

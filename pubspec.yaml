@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.3+44
+version: 1.5.5+46
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -9,7 +9,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # localizations
-  intl: ^0.18.0
+  intl: ^0.19.0
   animations: ^2.0.2
   # # desktop window stype
   # flutter_acrylic: ^1.1.0
@@ -17,7 +17,7 @@ dependencies:
   app_manager:
     git: https://github.com/nightmare-space/app_manager
   # network
-  dio: ^4.0.0
+  dio: ^5.4.3
   # file drop
   desktop_drop: ^0.4.1
   file_selector: ^0.8.4+2
@@ -37,18 +37,17 @@ dependencies:
   # # color select
   # cyclop: ^0.5.2
   # some animations
-  flutter_spinkit: "^4.1.2"
+  flutter_spinkit: ^5.1.0
   # svg image
   flutter_svg: ^1.1.0
   # state manager...
-  get: ^4.1.3
+  get: ^4.6.6
   # some foundation
   global_repository:
     git: https://github.com/nightmare-space/global_repository
   # multicast on LAN
   multicast:
     git: https://github.com/nightmare-space/multicast
-  
   file_manager_view:
     git: https://github.com/nightmare-space/file_manager_view.git
   # can receive mdns message
@@ -56,7 +55,7 @@ dependencies:
   # generate QR widget
   qr_flutter: ^4.0.0
   # scan qr code with camera
-  qr_code_scanner: ^0.5.1
+  qr_code_scanner: ^1.0.0
   path: ^1.8.0
   # launcher url
   url_launcher: ^6.0.18
@@ -76,17 +75,18 @@ dependencies:
   # can manage window on desktop
   window_manager: ^0.3.0
   flutter_markdown: ^0.6.10+2
-  screenshot: ^2.1.0
-
-  device_info_plus: 8.1.0
-
-  # 下面两个是非开源库，个人编译需要移除
-  # 并手动解决编译报错
-  termux_api_plugin:
-    path: ../termux_api_plugin
+  screenshot: ^3.0.0
+  device_info_plus: ^10.1.0
+  archive: ^3.4.10
   adb_kit_extension:
-    path: ../adb_kit_extension
-    
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: adb_kit_extension
+  termux_api_plugin:
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: termux_api_plugin
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -102,39 +102,4 @@ flutter:
   assets:
     - assets/
     - CHANGELOG.md
-
-dependency_overrides:
-  flutter_spinkit: ^5.1.0
-  visibility_detector: ^0.3.3
-  ffi: 1.0.0
-  flutter_svg: 1.1.5
-  fwfh_text_style: 2.22.8+1
-  better_player: 0.0.83
-  android_intent_plus: 4.0.1
-  global_repository:
-    path: ../../nightmare-space/global_repository
-  # flutter_pty:
-  #   path: ../flutter_pty
-  # app_launcher:
-  #   path: ../app_launcher
-  # # multicast:
-  # #   path: ../multicast
-  # device_info:
-  #   path: ../device_info
-  # app_manager:
-  #   path: ../app_manager
-  # adbutil:
-  #   path: ../adbutil
-  # xterm:
-  #   path: /Users/nightmare/Desktop/nightmare-space/xterm.dart
-  # logger_view:
-  #   path: ../logger_view
-  qr_code_scanner: ^1.0.0
-  # app_channel:
-  #   path: ../applib/app_channel
-  # file_manager_view:
-  #   path: ../file_manager_view
-flutter_intl:
-  enabled: true
-  localizely:
-    project_id: 483edf0e-5f6c-489d-8b86-731bba09be1b
+# dependency_overrides:

@@ -30,7 +30,7 @@ class ADBToolEntryPoint extends StatefulWidget {
 
 class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListener {
   ConfigController configController = Get.put(ConfigController());
-  TabController controller = Get.put(TabController());
+  TabController controller = Get.put(TabController(), permanent: true);
   @override
   void onWindowFocus() {
     // Make sure to call once.
@@ -156,6 +156,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> with WindowListen
               ],
             ),
             Builder(builder: (context) {
+              // ignore: avoid_print
               print('controller.pageindex -> ${controller.pageindex} controller.pages.length -> ${controller.pages.length}');
               return Expanded(
                 child: controller.pages[controller.pageindex].page,

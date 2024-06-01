@@ -9,16 +9,19 @@ import 'package:global_repository/global_repository.dart' hide TabController;
 import 'tab_indicator.dart';
 
 class DeveloperTool extends StatefulWidget {
-  const DeveloperTool({Key? key, this.entity, this.providerContext})
-      : super(key: key);
+  const DeveloperTool({
+    Key? key,
+    this.entity,
+    this.providerContext,
+  }) : super(key: key);
   final DevicesEntity? entity;
   final BuildContext? providerContext;
+
   @override
   State createState() => _DeveloperToolState();
 }
 
-class _DeveloperToolState extends State<DeveloperTool>
-    with SingleTickerProviderStateMixin {
+class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProviderStateMixin {
   TabController? controller;
 
   @override
@@ -50,7 +53,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                 SizedBox(
                   width: 8.w,
                 ),
-                const PopButton(),
+                // const PopButton(),
                 Expanded(
                   child: TabBar(
                     labelStyle: TextStyle(
@@ -76,8 +79,7 @@ class _DeveloperToolState extends State<DeveloperTool>
                     isScrollable: true,
                     controller: controller,
                     tabs: <Widget>[
-                      for (var item in PluginManager.instance.pluginsMap.keys)
-                        Tab(text: PluginManager.instance.pluginsMap[item]!.name),
+                      for (var item in PluginManager.instance.pluginsMap.keys) Tab(text: PluginManager.instance.pluginsMap[item]!.name),
                     ],
                   ),
                 ),
@@ -88,9 +90,7 @@ class _DeveloperToolState extends State<DeveloperTool>
         body: TabBarView(
           controller: controller,
           children: [
-            for (var item in PluginManager.instance.pluginsMap.keys)
-              PluginManager.instance.pluginsMap[item]!
-                  .buildWidget(context, widget.entity),
+            for (var item in PluginManager.instance.pluginsMap.keys) PluginManager.instance.pluginsMap[item]!.buildWidget(context, widget.entity),
           ],
         ),
       ),

@@ -21,7 +21,7 @@ class DevicesEntity {
   // 连接的状态
   String stat;
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     // 判断是否是非
     if (other is! DevicesEntity) {
       return false;
@@ -176,7 +176,7 @@ class DevicesController extends GetxController {
             }
           }
           devicesEntity.productModel = model;
-          if (!devicesEntity.serial.contains('emulator') && model != null) {
+          if (!devicesEntity.serial.contains('emulatssor') && model != null) {
             // 更新这个设备的历史记录的设备名
             final List<String> tmp = devicesEntity.serial.split(':');
             final String address = tmp[0];

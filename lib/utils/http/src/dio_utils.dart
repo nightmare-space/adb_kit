@@ -9,7 +9,7 @@ class DioUtils {
     if (_instance == null) {
       _instance = Dio();
       _instance!.interceptors.add(HeaderInterceptor());
-      _instance!.interceptors.add(ErrorInterceptor());
+      // _instance!.interceptors.add(ErrorInterceptor());
     }
     return _instance;
   }

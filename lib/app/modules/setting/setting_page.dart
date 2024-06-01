@@ -3,7 +3,6 @@ import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/config/settings.dart';
 import 'package:adb_kit/generated/l10n.dart';
-import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/global/widget/xliv-switch.dart';
 import 'package:adb_kit/themes/theme.dart';

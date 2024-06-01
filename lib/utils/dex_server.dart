@@ -19,6 +19,7 @@ class DexServer {
   static Map<String, AppChannel> serverStartList = {};
   static int rangeStart = 14040;
   // TODO(nightmare):这个最终应该改成isolate，
+
   static Future<AppChannel?> startServer(String devicesId) async {
     Stopwatch stopwatch = Stopwatch()..start();
     String suffix = Config.versionCode;
@@ -46,7 +47,7 @@ class DexServer {
     final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
 
     /// 注意这个要和applib中的一样哦
-    const String startTag = 'success start port : ';
+    const String startTag = 'success start port -> ';
     String execuable = adb;
     // TODO 测试是否影响其他平台
     // if (Platform.isWindows) {
@@ -56,7 +57,7 @@ class DexServer {
       execuable,
       processArg,
       includeParentEnvironment: true,
-      environment: adbEnvir() as Map<String, String>?,
+      environment: adbEnvir().cast(),
       runInShell: GetPlatform.isWindows ? true : false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {
@@ -75,11 +76,15 @@ class DexServer {
           Log.w('serverStartList -> $serverStartList');
           for (final String line in event.split('\n')) {
             if (line.contains(startTag)) {
+              Log.i('line -> $line');
               Log.e('started time:${stopwatch.elapsed}');
+              String portStr = line.replaceAll(RegExp('.*> |\\..*'), '');
               // 这个端口是对方设备成功绑定的端口
-              final int? remotePort = int.tryParse(line.replaceAll(RegExp('.*>|<.*'), ''));
-              Log.d('Dex Server Start Port -> $remotePort');
+              final int? remotePort = int.tryParse(portStr);
+              Log.i('remotePort -> $remotePort');
+              // Log.d('Dex Server Start Port -> $remotePort');
               // 这个端口是本机成功绑定的端口
+              // Log.i('$adb -s $devicesId forward tcp:$rangeStart tcp:$portStr');
               final int? localPort = await AdbUtil.getForwardPort(
                 devicesId,
                 rangeStart: rangeStart,

@@ -1,11 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
-
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/app/modules/wrappers/device_info_wrapper.dart';
-import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/dex_server.dart';
@@ -288,11 +284,6 @@ class _ProcessManagerPageState extends State<ProcessManagerPage> {
                       ],
                     ),
                   ),
-                );
-                return ListTile(
-                  title: Text(processLine.cmdline),
-                  subtitle: Text(processLine.pid),
-                  trailing: Text(processLine.cpu),
                 );
               },
               itemCount: processLines.length,

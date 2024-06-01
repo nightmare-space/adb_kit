@@ -14,6 +14,10 @@
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <application
         android:name="${applicationName}"
         android:extractNativeLibs="true"
@@ -66,5 +70,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="true" /> -->
     </application>
 </manifest>

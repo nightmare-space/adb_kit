@@ -6,14 +6,8 @@ class HeaderInterceptor extends InterceptorsWrapper {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) {
-    options.connectTimeout = 1000 * 15;
-    options.receiveTimeout = 10000 * 15;
-    // options.headers['API-Key'] = Config.apiKey;
-    // if (Global.instance?.userInfo?.token != null) {
-    //   print('添加头');
-    //   options.headers['Authorization'] =
-    //       'Bearer ' + Global.instance.userInfo.token;
-    // } else {}
+    options.connectTimeout = const Duration(seconds: 20);
+    options.receiveTimeout = const Duration(seconds: 20);
     return handler.next(options);
   }
 
@@ -27,52 +21,52 @@ class HeaderInterceptor extends InterceptorsWrapper {
   }
 }
 
-class ErrorInterceptor extends InterceptorsWrapper {
-  @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
-    switch (err.type) {
-      case DioErrorType.response:
-        String? message = '';
-        final String content = err.response!.data.toString();
-        // Log.d(err.response.data.runtimeType);
-        // Log.d('$this ------>content---->$content');
-        if (content != '') {
-          // Log.d('content不为空');
-          try {
-            // Log.d(err.response.data.toString());
-            final Map<String, dynamic> decode =
-                err.response!.data as Map<String, dynamic>;
-            message = decode['error'] as String?;
-          } catch (error) {
-            message = error.toString();
-          }
-        }
+// class ErrorInterceptor extends InterceptorsWrapper {
+//   @override
+//   void onError(DioError err, ErrorInterceptorHandler handler) {
+//     switch (err.type) {
+//       case DioErrorType.response:
+//         String? message = '';
+//         final String content = err.response!.data.toString();
+//         // Log.d(err.response.data.runtimeType);
+//         // Log.d('$this ------>content---->$content');
+//         if (content != '') {
+//           // Log.d('content不为空');
+//           try {
+//             // Log.d(err.response.data.toString());
+//             final Map<String, dynamic> decode =
+//                 err.response!.data as Map<String, dynamic>;
+//             message = decode['error'] as String?;
+//           } catch (error) {
+//             message = error.toString();
+//           }
+//         }
 
-        // Log.d('$this ---->$message');
-        final int? status = err.response!.statusCode;
+//         // Log.d('$this ---->$message');
+//         final int? status = err.response!.statusCode;
 
-        switch (status) {
-          case HttpStatus.badRequest:
-            throw AuthorizationException(status: status, message: message);
-          case HttpStatus.unauthorized:
-            throw AuthorizationException(status: status, message: message);
-          case HttpStatus.forbidden:
-            throw AuthorizationException(status: status, message: message);
-          case HttpStatus.networkConnectTimeoutError:
-            throw NetworkException(status: status, message: '连接超时');
-          case HttpStatus.unprocessableEntity:
-            throw ValidationException(status: status, message: message);
-          default:
-            throw StatusException(status: status, message: message);
-        }
-      case DioErrorType.cancel:
-        DioUtils.cancelToken = null;
-        throw CancelRequestException(
-            status: HttpStatus.clientClosedRequest, message: err.toString());
-      default:
-        throw NetworkException(
-            status: HttpStatus.networkConnectTimeoutError,
-            message: err.message);
-    }
-  }
-}
+//         switch (status) {
+//           case HttpStatus.badRequest:
+//             throw AuthorizationException(status: status, message: message);
+//           case HttpStatus.unauthorized:
+//             throw AuthorizationException(status: status, message: message);
+//           case HttpStatus.forbidden:
+//             throw AuthorizationException(status: status, message: message);
+//           case HttpStatus.networkConnectTimeoutError:
+//             throw NetworkException(status: status, message: '连接超时');
+//           case HttpStatus.unprocessableEntity:
+//             throw ValidationException(status: status, message: message);
+//           default:
+//             throw StatusException(status: status, message: message);
+//         }
+//       case DioErrorType.cancel:
+//         DioUtils.cancelToken = null;
+//         throw CancelRequestException(
+//             status: HttpStatus.clientClosedRequest, message: err.toString());
+//       default:
+//         throw NetworkException(
+//             status: HttpStatus.networkConnectTimeoutError,
+//             message: err.message);
+//     }
+//   }
+// }
