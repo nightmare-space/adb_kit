@@ -2,12 +2,14 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   adb_kit_extension:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../adb_kit_extension"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: adb_kit_extension
+      ref: HEAD
+      resolved-ref: ab5436f0fd65e864a6681905dc07ee34aca505f1
+      url: "https://github.com/nightmare-space/empty_package"
+    source: git
+    version: "1.0.0"
   adbutil:
     dependency: "direct main"
     description:
@@ -55,10 +57,10 @@ packages:
     dependency: "direct main"
     description:
       name: archive
-      sha256: ecf4273855368121b1caed0d10d4513c7241dfc813f7d3c8933b36622ae9b265
+      sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.1"
+    version: "3.6.1"
   args:
     dependency: transitive
     description:
@@ -241,7 +243,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d3c272bbbf1ea5b71aad3f32d765c1def1eadb95
+      resolved-ref: "54fbe962a5a116932c4f1b2c67b9082575cd764c"
       url: "https://github.com/nightmare-space/file_manager_view.git"
     source: git
     version: "1.0.0+1"
@@ -372,9 +374,11 @@ packages:
   global_repository:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/global_repository"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "29c52922215b5ffb4776666c4e027955ec8dca71"
+      url: "https://github.com/nightmare-space/global_repository"
+    source: git
     version: "0.0.1"
   hive:
     dependency: transitive
@@ -480,14 +484,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  logger:
-    dependency: transitive
-    description:
-      name: logger
-      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   logging:
     dependency: transitive
     description:
@@ -613,10 +609,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: a248d8146ee5983446bf03ed5ea8f6533129a12b11f12057ad1b4a67a2b3b41d
+      sha256: "9c96da072b421e98183f9ea7464898428e764bc0ce5567f27ec8693442e72514"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -848,12 +844,14 @@ packages:
     source: hosted
     version: "1.2.1"
   termux_api_plugin:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "../termux_api_plugin"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: termux_api_plugin
+      ref: HEAD
+      resolved-ref: ab5436f0fd65e864a6681905dc07ee34aca505f1
+      url: "https://github.com/nightmare-space/empty_package"
+    source: git
+    version: "1.0.0"
   test_api:
     dependency: transitive
     description:
@@ -882,10 +880,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "360a6ed2027f18b73c8d98e159dda67a61b7f2e0f6ec26e86c3ada33b0621775"
+      sha256: ceb2625f0c24ade6ef6778d1de0b2e44f2db71fded235eb52295247feba8c5cf
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.1"
+    version: "6.3.3"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -934,13 +932,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  user_center_frontend:
-    dependency: transitive
-    description:
-      path: "../user_center_frontend"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   vector_math:
     dependency: transitive
     description:
@@ -1047,5 +1038,5 @@ packages:
     source: hosted
     version: "0.0.6"
 sdks:
-  dart: ">=3.4.0 <4.0.0"
+  dart: ">=3.4.1 <4.0.0"
   flutter: ">=3.22.0"
