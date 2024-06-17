@@ -47,7 +47,8 @@ adb 这个简单的可执行文件其实远比我们想象中的强大，adb she
    - shizuku
 
 ## Git History
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#nightmare-space/adb_kit&Date" frameBorder="0"></iframe>
+
+[![Star History Chart](https://api.star-history.com/svg?repos=nightmare-space/adb_kit&type=Date)](https://star-history.com/#nightmare-space/adb_kit&Date)
 
 ## BSD
 
