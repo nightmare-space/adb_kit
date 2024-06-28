@@ -54,7 +54,15 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
       currentFile = name;
       setState(() {});
       try {
-        await execCmd('$adb -s ${widget.entity.serial} install -t "$path"');
+        await execCmd2([
+          adb,
+          '-s',
+          widget.entity.serial,
+          'install',
+          '-t',
+          path,
+        ]);
+        Log.i('install cmd -> adb -s ${widget.entity.serial} install -t "$path"');
       } on Exception catch (e) {
         stringBuffer.write('$name: $e\n');
       }

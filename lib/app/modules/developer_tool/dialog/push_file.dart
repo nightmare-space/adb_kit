@@ -51,7 +51,14 @@ class _PushFileDialogState extends State<PushFileDialog> {
       currentFile = name;
       setState(() {});
       final String fileName = p.basename(path);
-      await execCmd('$adb -s ${widget.entity.serial} push $path /sdcard/$fileName');
+      await execCmd2([
+        adb,
+        '-s',
+        widget.entity.serial,
+        'push',
+        path,
+        '/sdcard/$fileName',
+      ]);
       fileIndex++;
       // showToast('$name 已上传');
     }
