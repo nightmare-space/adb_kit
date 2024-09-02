@@ -1,5 +1,6 @@
 import 'package:adb_kit/core/interface/pluggable.dart';
 
+/// 插件管理器
 class PluginManager {
   static PluginManager? _instance;
 

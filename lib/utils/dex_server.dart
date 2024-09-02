@@ -21,14 +21,14 @@ class DexServer {
   // TODO(nightmare):这个最终应该改成isolate，
 
   static Future<AppChannel?> startServer(String devicesId) async {
+    if (serverStartList.keys.contains(devicesId)) {
+      return serverStartList[devicesId];
+    }
     Stopwatch stopwatch = Stopwatch()..start();
     String suffix = Config.versionCode;
     await initSetting();
     Log.i('init setting time : ${stopwatch.elapsed}');
     stopwatch.reset();
-    if (serverStartList.keys.contains(devicesId)) {
-      return serverStartList[devicesId];
-    }
     final Completer<AppChannel> completer = Completer();
     String serverPath = Settings.serverPath.setting.get();
     if (serverPath.isEmpty) {
@@ -37,11 +37,7 @@ class DexServer {
     final String targetPath = '$serverPath/app_server$suffix';
     Log.i('targetPath -> $targetPath');
     // 上传server文件
-    await AdbUtil.pushFile(
-      devicesId,
-      '${RuntimeEnvir.binPath}/app_server',
-      targetPath,
-    );
+    await AdbUtil.pushFile(devicesId, '${RuntimeEnvir.binPath}/app_server', targetPath);
     Log.i('push file time : ${stopwatch.elapsed}');
     stopwatch.reset();
     final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
@@ -94,7 +90,7 @@ class DexServer {
               rangeStart += 10;
               Log.d('ADB Forward LocalPort -> $localPort');
               // 这样才能保证列表正常
-              final RemoteAppChannel channel = RemoteAppChannel(port: localPort);
+              final AppChannel channel = AppChannel(port: localPort);
               Log.i('channel -> ${channel.port}');
               serverStartList[devicesId] = channel;
               Get.put<AppChannel>(channel);

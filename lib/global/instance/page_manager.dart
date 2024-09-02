@@ -18,8 +18,8 @@ class PageManager {
     History(),
     NetDebug(),
     // InstallToSystem(),
-    Terminal(),
-    Log(),
+    TerminalDrawer(),
+    LogDrawer(),
     Setting(),
     About(),
   ];

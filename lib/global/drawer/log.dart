@@ -6,7 +6,7 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:flutter/material.dart';
 
-class Log extends ADBPage {
+class LogDrawer extends ADBPage {
   @override
   Widget buildDrawer(BuildContext context) {
     return DrawerItem(

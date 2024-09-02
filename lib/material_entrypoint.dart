@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,80 +69,82 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
         sigmaX: 24.0,
         sigmaY: 24.0,
       ),
-      child: GetBuilder<ConfigController>(
-        builder: (config) {
-          return Screenshot(
-            controller: screenshotController,
-            child: KeyboardListener(
-              autofocus: true,
-              focusNode: FocusNode(),
-              onKeyEvent: ((value) {
-                // Log.w(value);
-                // if (value is RawKeyDownEvent) {
-                //   screenshotController.captureAndSave('./screenshot');
-                // }
-              }),
-              child: GetMaterialApp(
-                showPerformanceOverlay: config.showPerformanceOverlay,
-                showSemanticsDebugger: config.showSemanticsDebugger,
-                debugShowMaterialGrid: config.debugShowMaterialGrid,
-                checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
-                debugShowCheckedModeBanner: false,
-                title: 'ADB工具箱',
-                navigatorKey: Global.instance!.navigatorKey,
-                themeMode: ThemeMode.light,
-                localizationsDelegates: const [
-                  S.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                // ignore: deprecated_member_use
-                locale: window.locale,
-                supportedLocales: S.delegate.supportedLocales,
-                theme: ThemeData(
-                  primarySwatch: Colors.blue,
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                ),
-                defaultTransition: Transition.fadeIn,
-                initialRoute: AdbPages.initial,
-                getPages: AdbPages.routes + am.AppPages.routes,
-                useInheritedMediaQuery: true,
-                builder: (BuildContext context, Widget? navigator) {
-                  return ResponsiveBreakpoints.builder(
-                    child: Builder(
-                      builder: (context) {
-                        if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
-                          ScreenAdapter.init(896);
-                        } else {
-                          ScreenAdapter.init(414);
-                        }
-                        return Theme(
-                          data: config.theme!,
-                          child: navigator ?? const SizedBox(),
-                        );
-                      },
-                    ),
-                    // landscapePlatforms: [
-                    //   ResponsiveTargetPlatform.macOS,
-                    // ],
-                    breakpoints: const [
-                      Breakpoint(start: 0, end: 500, name: MOBILE),
-                      Breakpoint(start: 500, end: 800, name: TABLET),
-                      Breakpoint(start: 800, end: 2000, name: DESKTOP),
-                    ],
-                    breakpointsLandscape: [
-                      const Breakpoint(start: 0, end: 450, name: MOBILE),
-                      const Breakpoint(start: 451, end: 800, name: TABLET),
-                      const Breakpoint(start: 801, end: double.infinity, name: DESKTOP),
-                    ],
-                  );
-                },
-              ),
+      child: rootWidgetBuilder(),
+    );
+  }
+
+  GetBuilder<ConfigController> rootWidgetBuilder() {
+    return GetBuilder<ConfigController>(
+      builder: (config) {
+        config.initConfig();
+        return Screenshot(
+          controller: screenshotController,
+          child: KeyboardListener(
+            autofocus: true,
+            focusNode: FocusNode(),
+            onKeyEvent: ((value) {
+              // Log.w(value);
+              // if (value is RawKeyDownEvent) {
+              //   screenshotController.captureAndSave('./screenshot');
+              // }
+            }),
+            child: GetMaterialApp(
+              showPerformanceOverlay: config.showPerformanceOverlay,
+              showSemanticsDebugger: config.showSemanticsDebugger,
+              debugShowMaterialGrid: config.debugShowMaterialGrid,
+              checkerboardRasterCacheImages: config.checkerboardRasterCacheImages,
+              debugShowCheckedModeBanner: false,
+              title: 'ADB工具箱',
+              navigatorKey: Global().navigatorKey,
+              themeMode: ThemeMode.light,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              locale: config.locale,
+              supportedLocales: S.delegate.supportedLocales,
+              theme: ThemeData(primarySwatch: Colors.blue, visualDensity: VisualDensity.adaptivePlatformDensity),
+              defaultTransition: Transition.fadeIn,
+              initialRoute: ADBPages.splash,
+              getPages: ADBPages.routes + am.AppPages.routes,
+              useInheritedMediaQuery: true,
+              builder: (BuildContext context, Widget? navigator) {
+                return ResponsiveBreakpoints.builder(
+                  child: Builder(
+                    builder: (context) {
+                      if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
+                        ScreenAdapter.init(896);
+                      } else {
+                        ScreenAdapter.init(414);
+                      }
+                      return Theme(
+                        data: config.theme!,
+                        child: navigator ?? const SizedBox(),
+                      );
+                    },
+                  ),
+                  // landscapePlatforms: [
+                  //   ResponsiveTargetPlatform.macOS,
+                  // ],
+                  // TODO 下面这个需要统一管理了
+                  breakpoints: const [
+                    Breakpoint(start: 0, end: 500, name: MOBILE),
+                    Breakpoint(start: 500, end: 800, name: TABLET),
+                    Breakpoint(start: 800, end: 2000, name: DESKTOP),
+                  ],
+                  breakpointsLandscape: [
+                    const Breakpoint(start: 0, end: 450, name: MOBILE),
+                    const Breakpoint(start: 451, end: 800, name: TABLET),
+                    const Breakpoint(start: 801, end: double.infinity, name: DESKTOP),
+                  ],
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

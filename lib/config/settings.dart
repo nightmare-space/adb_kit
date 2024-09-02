@@ -7,4 +7,5 @@ class Settings {
   static const autoConnectDevice = 'AutoConnectDevice';
   static const screenType = 'ScreenType';
   static const backgroundStyle = 'BackgroundStyle';
+  static const adbPassword = 'ADBPassword';
 }
