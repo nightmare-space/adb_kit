@@ -1,6 +1,7 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
@@ -87,16 +88,14 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () async {
         if (!widget.devicesEntity!.isConnect) {
-          showToast('设备未正常连接');
+          showToast(S.current.deviceNotConnect);
           return;
         }
         AdbUtil.stopPoolingListDevices();
         Get.put(AppManagerController());
         await openPage(
-          DeveloperTool(
-            entity: widget.devicesEntity,
-          ),
-          title: '开发者工具',
+          DeveloperTool(entity: widget.devicesEntity),
+          title: S.current.devTools,
         );
         AdbUtil.startPoolingListDevices();
       },
@@ -164,11 +163,8 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                     children: [
                       if (isAddress(widget.devicesEntity!.serial))
                         IconButton(
-                          tooltip: '断开连接',
-                          icon: Icon(
-                            Icons.clear,
-                            size: 24.w,
-                          ),
+                          tooltip: S.current.disconnect,
+                          icon: Icon(Icons.clear, size: 24.w),
                           onPressed: () async {
                             AdbUtil.stopPoolingListDevices();
                             await AdbUtil.disconnectDevices(
@@ -182,11 +178,8 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                         ),
                       if (!widget.devicesEntity!.isConnect)
                         IconButton(
-                          tooltip: '重新连接',
-                          icon: Icon(
-                            Icons.refresh,
-                            size: 24.w,
-                          ),
+                          tooltip: S.current.reconnect,
+                          icon: Icon(Icons.refresh, size: 24.w),
                           onPressed: () async {
                             Log.e(widget.devicesEntity!.serial);
                             AdbUtil.reconnectDevices(
@@ -202,7 +195,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                         ),
                         onPressed: () async {
                           if (!widget.devicesEntity!.isConnect) {
-                            showToast('设备未正常连接');
+                            showToast(S.current.deviceNotConnect);
                             return;
                           }
                           AdbUtil.stopPoolingListDevices();

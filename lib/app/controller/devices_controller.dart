@@ -154,7 +154,6 @@ class DevicesController extends GetxController {
           listTmp.first,
           listTmp.last,
         );
-        // Log.w('获取${listTmp.first}信息...');
         if (devicesEntity.isConnect) {
           String? model;
           if (modelCache.containsKey(listTmp.first)) {
@@ -176,6 +175,7 @@ class DevicesController extends GetxController {
             }
           }
           devicesEntity.productModel = model;
+          // TODO 我这之前写了个什么玩意儿
           if (!devicesEntity.serial.contains('emulatssor') && model != null) {
             // 更新这个设备的历史记录的设备名
             final List<String> tmp = devicesEntity.serial.split(':');
@@ -220,7 +220,7 @@ class DevicesController extends GetxController {
 
       if (!current.contains(devicesEntity)) {
         removeLock = Completer<bool>();
-        Log.v('需要删除devicesEntity ->$devicesEntity');
+        Log.v('Remove DevicesEntity ->$devicesEntity');
         final int deleteIndex = devicesEntitys.indexOf(devicesEntity);
         Future.delayed(const Duration(milliseconds: 300), () {
           update();

@@ -1,3 +1,4 @@
+import 'package:adb_kit/adb_tool.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/global/instance/global.dart';
@@ -12,22 +13,21 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 
 import 'desktop_home.dart';
-import 'dialog/otg_dialog.dart';
 import 'mobile_home.dart';
 import 'tablet_home.dart';
 
-class AdbTool extends StatefulWidget {
-  const AdbTool({
+class ADBKITAdaptiveRootWidget extends StatefulWidget {
+  const ADBKITAdaptiveRootWidget({
     Key? key,
     this.packageName,
   }) : super(key: key);
 
   final String? packageName;
   @override
-  State createState() => _AdbToolState();
+  State createState() => _ADBKITAdaptiveRootWidgetState();
 }
 
-class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
+class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> with WidgetsBindingObserver {
   bool dialogIsShow = false;
   ConfigController configController = Get.find();
 
@@ -39,6 +39,7 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // TODO 这个代码不应该放在这
     if (GetPlatform.isMacOS && RuntimeEnvir.packageName == Config.packageName) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
       Config.flutterPackage = 'packages/adb_tool/';
@@ -47,24 +48,8 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
     }
     configController.syncBackgroundStyle();
     WidgetsBinding.instance.addObserver(this);
-    PluginUtil.addHandler((call) {
-      if (call.method == 'ShowOTGDialog') {
-        dialogIsShow = true;
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) {
-            return const OTGDialog();
-          },
-        );
-      } else if (call.method == 'CloseOTGDialog') {
-        if (dialogIsShow) {
-          Navigator.of(context).pop();
-        }
-        dialogIsShow = false;
-      }
-    });
-    // TODO detach 也需要
+
+    // TODO 隐私协议不应该和某个Widget挂在一起
     Future.delayed(Duration.zero, () async {
       if ('privacy'.setting.get() == null) {
         await Get.to(PrivacyAgreePage(
@@ -88,7 +73,15 @@ class _AdbToolState extends State<AdbTool> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     Global().page ??= PageManager.instance!.pages.first.buildPage(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: Theme.of(context).brightness == Brightness.dark ? OverlayStyle.light : OverlayStyle.dark,
+      value: Theme.of(context).brightness == Brightness.dark
+          ? OverlayStyle.light
+          : SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.dark,
+              systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+              systemNavigationBarDividerColor: Colors.transparent,
+            ),
       child: Stack(
         children: [
           Builder(

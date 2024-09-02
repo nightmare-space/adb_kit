@@ -168,7 +168,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         children: [
                           const ItemHeader(color: CandyColors.deepPurple),
                           Text(
-                            '加入反馈群',
+                            S.current.joinQQGroup,
                             style: TextStyle(
                               fontSize: 16.w,
                               fontWeight: bold,
@@ -189,7 +189,7 @@ class _OverviewPageState extends State<OverviewPage> {
                           children: [
                             Expanded(
                               child: Text(
-                                '与群里其他大佬交流，第一时间获得更新动态，联系开发者',
+                                S.current.joinQQGT,
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 12.w,
@@ -202,7 +202,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                 if (await canLaunchUrlString(url)) {
                                   await launchUrlString(url);
                                 } else {
-                                  showToast('唤起QQ失败，请检查是否安装。');
+                                  showToast(S.current.openQQFail);
                                   // throw 'Could not launch $url';
                                 }
                               },
@@ -302,21 +302,10 @@ class _OverviewPageState extends State<OverviewPage> {
                           style: const TextStyle(height: 1.2),
                           decoration: InputDecoration(
                             hintText: S.of(context).inputFormat,
-                            hintStyle: TextStyle(
-                              fontSize: 14.w,
-                              color: Theme.of(context).colorScheme.onBackground.withOpacity(0.8),
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 12.w,
-                            ),
-                            isDense: true,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 4.w,
-                      ),
+                      SizedBox(width: 4.w),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Material(
@@ -377,10 +366,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     const ItemHeader(color: CandyColors.purple),
                     Text(
                       S.of(context).scanToConnect,
-                      style: TextStyle(
-                        fontSize: Dimens.font_sp16,
-                        fontWeight: bold,
-                      ),
+                      style: TextStyle(fontSize: 16.w, fontWeight: bold),
                     ),
                   ],
                 ),
@@ -408,46 +394,6 @@ class _OverviewPageState extends State<OverviewPage> {
       ],
     );
   }
-
-  Widget addressItem(String uri) {
-    return InkWell(
-      onTap: () async {
-        await Clipboard.setData(ClipboardData(
-          text: uri,
-        ));
-        setState(() {});
-        showToast('已复制到剪切板');
-      },
-      borderRadius: BorderRadius.circular(12.w),
-      child: SizedBox(
-        height: Dimens.gap_dp48,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimens.gap_dp8,
-          ),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.w),
-                  color: AppColors.accent,
-                ),
-                height: Dimens.gap_dp6,
-                width: Dimens.gap_dp6,
-              ),
-              SizedBox(width: Dimens.gap_dp8),
-              Text(
-                uri,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class CardItem extends StatelessWidget {
@@ -459,11 +405,8 @@ class CardItem extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(12.w),
       clipBehavior: Clip.hardEdge,
-      // border: Border.all(
-      //   color: Colors.grey.withOpacity(0.2),
-      //   width: 1.w,
-      // ),
-      color: Theme.of(context).surface1,
+      // color: Theme.of(context).colorScheme.surfaceContainerLowest,
+      color: Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,

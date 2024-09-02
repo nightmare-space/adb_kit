@@ -1,5 +1,5 @@
 import 'package:adb_kit/config/font.dart';
-import 'package:adb_kit/utils/http/http.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -44,11 +44,12 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
       entitys[i].state = ConnectState.connecting;
       setState(() {});
       try {
-        await httpInstance!.post('http://${entitys[i].address}');
+        await httpInstance.post('http://${entitys[i].address}');
         entitys[i].state = ConnectState.success;
         setState(() {});
         Future.delayed(const Duration(milliseconds: 600), () {
-          showToast('已经成功发送连接消息');
+          showToast(S.current.successSCM);
+          // ignore: use_build_context_synchronously
           Navigator.pop(context);
         });
         break;
@@ -77,7 +78,7 @@ class _ParseQrcodePageState extends State<ParseQrcodePage> {
                 children: [
                   Text(
                     element.address,
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontWeight: bold,
                     ),
                   ),

@@ -52,7 +52,9 @@ class _LogPageState extends State<LogPage> {
                 child: CardItem(
                   child: Responsive(
                     builder: (__, _) {
-                      return const LoggerView();
+                      return LoggerView(
+                        fontSize: 11.w,
+                      );
                     },
                   ),
                 ),

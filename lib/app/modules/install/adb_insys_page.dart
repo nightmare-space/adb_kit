@@ -11,7 +11,7 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-// 安装 adb 工具到系统
+@Deprecated('')
 class AdbInstallToSystemPage extends StatefulWidget {
   const AdbInstallToSystemPage({Key? key}) : super(key: key);
 
@@ -35,8 +35,7 @@ class _AdbInstallToSystemPageState extends State<AdbInstallToSystemPage> {
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (ResponsiveBreakpoints.of(context).isMobile ||
-        controller.screenType == ScreenType.phone) {
+    if (ResponsiveBreakpoints.of(context).isMobile || controller.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).installToSystem),
         automaticallyImplyLeading: false,

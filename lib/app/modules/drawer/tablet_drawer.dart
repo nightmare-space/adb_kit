@@ -3,10 +3,13 @@ import 'package:adb_kit/app/routes/ripple_router.dart';
 import 'package:adb_kit/config/custom.dart';
 import 'package:adb_kit/config/settings.dart';
 import 'package:adb_kit/core/interface/adb_page.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/instance/page_manager.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/themes/theme_dark.dart';
+import 'package:adb_kit/themes/theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -87,11 +90,9 @@ class _TabletDrawerState extends State<TabletDrawer> {
             child: InkWell(
               borderRadius: BorderRadius.circular(8.w),
               onTap: () {
-                ThemeData theme = DefaultThemeData.light(
-                  primary: Theme.of(context).primaryColor,
-                );
+                ThemeData theme = light(primary: Theme.of(context).primaryColor);
                 if (Theme.of(context).brightness == Brightness.light) {
-                  theme = DefaultThemeData.dark();
+                  theme = dark();
                 }
                 if (theme.brightness == Brightness.dark) {
                   Settings.theme.setting.set('dark');
@@ -113,7 +114,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
               },
               child: TabletDrawerItem(
                 groupValue: widget.groupValue,
-                title: '切换主题',
+                title: S.current.switchTheme,
                 iconData: Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode,
               ),
             ),
