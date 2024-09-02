@@ -6,6 +6,8 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/global/widget/xliv-switch.dart';
 import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/themes/theme_dark.dart';
+import 'package:adb_kit/themes/theme_light.dart';
 // import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,6 +15,8 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
+
+import 'password_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -23,7 +27,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver {
   ConfigController configController = Get.find();
-
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
   @override
@@ -43,6 +46,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
       appBar = AppBar(
         title: Text(S.of(context).settings),
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
         // systemOverlayStyle: OverlayStyle.dark,
         leading: configController.needShowMenuButton
             ? Padding(
@@ -55,6 +59,8 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
         // leadingWidth: 48.w,
       );
     }
+
+    Color titleColor = Theme.of(context).colorScheme.onSurface.withOpacity(0.6);
     return SafeArea(
       left: false,
       child: Padding(
@@ -81,11 +87,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                       // const ItemHeader(color: CandyColors.candyPink),
                       Text(
                         S.of(context).view,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: bold,
-                          color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                        ),
+                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
                       ),
                     ],
                   ),
@@ -163,9 +165,9 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                             ],
                             onChanged: (value) {
                               if (value == 0) {
-                                configController.changeTheme(DefaultThemeData.dark());
+                                configController.changeTheme(dark());
                               } else {
-                                configController.changeTheme(DefaultThemeData.light());
+                                configController.changeTheme(light());
                               }
                             },
                           ),
@@ -264,11 +266,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                       // const ItemHeader(color: CandyColors.candyCyan),
                       Text(
                         S.of(context).other,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: bold,
-                          color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                        ),
+                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
                       ),
                     ],
                   ),
@@ -298,6 +296,16 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                           ),
                         );
                       }),
+                      Builder(builder: (context) {
+                        return SettingItem(
+                          onTap: () async {
+                            Get.dialog(const PasswordDialog());
+                          },
+                          title: 'ADB Password',
+                          subTitle: 'Some device will need password when adb cmd execute',
+                          suffix: Text(configController.password),
+                        );
+                      }),
                       GetBuilder<ConfigController>(builder: (_) {
                         return SettingItem(
                           title: S.of(context).autoConnectDevice,
@@ -320,11 +328,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                       // const ItemHeader(color: CandyColors.candyGreen),
                       Text(
                         S.of(context).developerSettings,
-                        style: TextStyle(
-                          fontSize: 14.w,
-                          fontWeight: bold,
-                          color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                        ),
+                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
                       ),
                     ],
                   ),
@@ -362,9 +366,6 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                         suffix: AquaSwitch(
                           value: debugPaintPointersEnabled,
                           onChanged: (value) {
-                            // debugPaintSizeEnabled = true; // 显示文字基准线
-                            // debugPaintPointersEnabled = true; // 突出点击对象
-                            // debugPaintLayerBordersEnabled = true; // 显示层级边界
                             debugPaintPointersEnabled = value; // 显示重绘
                             configController.update();
                             setState(() {});
@@ -377,9 +378,6 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                         suffix: AquaSwitch(
                           value: debugPaintSizeEnabled,
                           onChanged: (value) {
-                            // debugPaintSizeEnabled = true; // 显示文字基准线
-                            // debugPaintPointersEnabled = true; // 突出点击对象
-                            // debugPaintLayerBordersEnabled = true; // 显示层级边界
                             debugPaintSizeEnabled = value; // 显示重绘
                             configController.update();
                             setState(() {});
@@ -487,11 +485,10 @@ class _SettingItemState extends State<SettingItem> {
                       if (widget.subTitle.isNotEmpty)
                         Builder(builder: (_) {
                           final String content = widget.subTitle;
-
                           return Text(
                             content,
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                               fontWeight: FontWeight.w400,
                               // height: 1.0,
                               fontSize: 14.w,
@@ -536,7 +533,7 @@ class AquaSwitch extends StatelessWidget {
     return Transform.scale(
       scale: 0.78,
       child: XlivSwitch(
-        unActiveColor: unActiveColor ?? Theme.of(context).surface3,
+        unActiveColor: unActiveColor ?? Theme.of(context).primaryColor.withOpacity(0.1),
         activeColor: Theme.of(context).primaryColor,
         thumbColor: thumbColor,
         value: value,
@@ -571,40 +568,19 @@ class _SelectTabState extends State<SelectTab> {
       child: Row(
         children: [
           for (int i = 0; i < widget.children.length; i++)
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    widget.onChanged?.call(i);
-                    Feedback.wrapForLongPress(() {}, context);
-                  },
-                  child: Container(
-                    width: 96.w,
-                    height: 40.w,
-                    decoration: BoxDecoration(
-                      color: i == widget.value ? Theme.of(context).surface4 : Theme.of(context).surface3,
-                    ),
-                    child: Center(child: widget.children[i]),
-                  ),
+            GestureDetector(
+              onTap: () {
+                widget.onChanged?.call(i);
+                Feedback.wrapForLongPress(() {}, context);
+              },
+              child: Container(
+                width: 96.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: i == widget.value ? Theme.of(context).colorScheme.surfaceContainerHighest : Theme.of(context).colorScheme.surfaceContainerHigh,
                 ),
-                // if (i != widget.children.length - 1)
-                //   Container(
-                //     width: 2.w,
-                //     height: 40.w,
-                //     decoration: BoxDecoration(
-                //       color: configController.theme.grey.shade200,
-                //     ),
-                //     child: Center(
-                //       child: Container(
-                //         height: 10.w,
-                //         width: 2.w,
-                //         decoration: BoxDecoration(
-                //           color: configController.theme.grey.shade300,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-              ],
+                child: Center(child: widget.children[i]),
+              ),
             ),
         ],
       ),

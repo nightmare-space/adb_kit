@@ -1,9 +1,11 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart';
 import 'package:adbutil/adbutil.dart';
@@ -24,6 +26,29 @@ extension PTYExt on Pty {
   }
 }
 
+class BoundedQueue<T> {
+  final int maxSize;
+  final Queue<T> _queue;
+
+  BoundedQueue(this.maxSize) : _queue = Queue<T>();
+
+  void add(T element) {
+    if (_queue.length == maxSize) {
+      _queue.removeFirst();
+    }
+    _queue.addLast(element);
+  }
+
+  List<T> toList() {
+    return _queue.toList();
+  }
+
+  @override
+  String toString() {
+    return _queue.toString();
+  }
+}
+
 class Global {
   factory Global() => _getInstance()!;
   Global._internal() {
@@ -32,12 +57,12 @@ class Global {
     HomeBinding().dependencies();
   }
 
-  static Global? get instance => _getInstance();
+  static Global get instance => _getInstance();
   static Global? _instance;
 
-  static Global? _getInstance() {
+  static Global _getInstance() {
     _instance ??= Global._internal();
-    return _instance;
+    return _instance!;
   }
 
   Terminal otgTerminal = Terminal();
@@ -91,9 +116,12 @@ class Global {
     // 启动bash
     pty?.writeString('bash\n');
     pty?.write(Uint8List.fromList(utf8.encode('source ${RuntimeEnvir.binPath}/shell_intergration.sh\n')));
-
     pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
+        if (event.contains('please input verify password')) {
+          ConfigController controller = Get.find();
+          pty!.writeString('${controller.password}\n');
+        }
         terminal.write(event);
       },
     );
@@ -114,9 +142,9 @@ class Global {
               try {
                 await AdbUtil.connectDevices(address);
               } on ADBException catch (e) {
-                Log.e('通过UDP发现自动连接设备失败 : $e');
+                Log.e('${S.current.udpCF} -> $e');
               }
-              showToast('已自动连接$address');
+              showToast('${S.current.ac} $address');
             }
           } catch (e) {
             Log.e('receiveBoardCast error : $e');
@@ -238,13 +266,8 @@ class Global {
     }
     if (GetPlatform.isAndroid) {
       String? libPath = await getLibPath();
-      File("${RuntimeEnvir.binPath}/adb").writeAsStringSync(
-        '$libPath/libadb.so.so \$@',
-      );
-      final ProcessResult result = await Process.run(
-        'chmod',
-        <String>['+x', "${RuntimeEnvir.binPath}/adb"],
-      );
+      File("${RuntimeEnvir.binPath}/adb").writeAsStringSync('$libPath/libadb.so.so \$@');
+      final ProcessResult result = await Process.run('chmod', <String>['+x', "${RuntimeEnvir.binPath}/adb"]);
       for (final String fileName in androidFiles) {
         final targetPath = '$libPath/$fileName.so';
         String filePath = '${RuntimeEnvir.binPath}/$fileName';
@@ -255,11 +278,8 @@ class Global {
         try {
           link.createSync(targetPath);
         } catch (e) {
-          Log.e(e);
+          Log.e('installAdbToEnvir error -> $e');
         }
-        // Log.d(
-        //   '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-        // );
       }
     }
     await AssetsManager.copyFiles(
@@ -277,6 +297,7 @@ class Global {
       macOS: [],
       global: globalFiles,
       package: Config.flutterPackage,
+      forceCopy: true,
     );
     if (GetPlatform.isAndroid) {
       Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
@@ -304,18 +325,18 @@ class Global {
       Config.flutterPackage = 'packages/adb_tool/';
     }
     ConfigController controller = Get.put(ConfigController());
+    // ignore: deprecated_member_use
     FlutterView flutterView = window;
     PlatformDispatcher platformDispatcher = flutterView.platformDispatcher;
-    Log.i('当前系统语言 ${platformDispatcher.locales}');
-    Log.i('当前系统主题 ${platformDispatcher.platformBrightness}');
-    Log.i('当前布局风格 ${controller.screenType}');
-    Log.i('当前App内部主题 ${controller.theme!.brightness}');
-    Log.i('physicalSize:${flutterView.physicalSize}');
-    Log.i('devicePixelRatio:${flutterView.devicePixelRatio}');
+    Log.i('Current Lang ${platformDispatcher.locales}');
+    Log.i('Current Platform Bri ${platformDispatcher.platformBrightness}');
+    Log.i('Layout Style ${controller.screenType}');
+    Log.i('Inline Bri ${controller.theme!.brightness}');
+    Log.i('PhysicalSize:${flutterView.physicalSize}');
+    Log.i('DevicePixelRatio:${flutterView.devicePixelRatio}');
     Log.i('Android DPI:${flutterView.devicePixelRatio * 160}');
-    // Log.i('当前设备Root状态 ${await YanProcess().isRoot()}');
-    Log.i('是否自动连接局域网设备 ${controller.autoConnect}');
-    WidgetsBinding.instance!.addObserver(Listener());
+    Log.i('Auto Connect ${controller.autoConnect}');
+    WidgetsBinding.instance.addObserver(MetricsObserver());
     isInit = true;
     if (controller.autoConnect) {
       try {
@@ -353,7 +374,7 @@ String twoDigits(int n) {
   return "0$n";
 }
 
-class Listener with WidgetsBindingObserver {
+class MetricsObserver with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     Log.v('didChangeMetrics invokded');
