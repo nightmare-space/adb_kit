@@ -43,18 +43,24 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     adbDebugOpen = !adbDebugOpen;
     setState(() {});
     final int value = adbDebugOpen ? 5555 : -1;
-    await execCmd2([
-      'su',
-      '-c',
-      'setprop service.adb.tcp.port $value&&stop adbd&&start adbd'
-    ]);
+    try {
+      await execCmd2([
+        'su',
+        '-c',
+        'setprop service.adb.tcp.port $value&&stop adbd&&start adbd',
+      ]);
+    } catch (e) {
+      Log.e('$RemoteDebugPage change state error -> $e');
+      adbDebugOpen = !adbDebugOpen;
+      setState(() {});
+      showToast(S.current.netDebugOpenFail);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     AppBar? appBar;
-    if (ResponsiveBreakpoints.of(context).isMobile ||
-        configController.screenType == ScreenType.phone) {
+    if (ResponsiveBreakpoints.of(context).isMobile || configController.screenType == ScreenType.phone) {
       appBar = AppBar(
         title: Text(S.of(context).networkDebug),
         automaticallyImplyLeading: false,
@@ -106,9 +112,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     children: [
                       Row(
                         children: [
-                          const ItemHeader(
-                            color: CandyColors.candyPurpleAccent,
-                          ),
+                          const ItemHeader(color: CandyColors.candyPurpleAccent),
                           Text(
                             S.of(context).localAddress,
                             style: TextStyle(
@@ -126,7 +130,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           await Clipboard.setData(ClipboardData(
                             text: address.join('\n'),
                           ));
-                          showToast('IP已复制');
+                          showToast(S.current.copyed);
                         },
                         borderRadius: BorderRadius.circular(12.w),
                         child: Text(
@@ -139,9 +143,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 8.w,
-                ),
+                SizedBox(height: 8.w),
                 CardItem(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,10 +154,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           const ItemHeader(color: CandyColors.candyBlue),
                           Text(
                             S.of(context).connectMethod,
-                            style: TextStyle(
-                              fontSize: Dimens.font_sp20,
-                              fontWeight: bold,
-                            ),
+                            style: TextStyle(fontSize: 20.w, fontWeight: bold),
                           ),
                         ],
                       ),
@@ -165,10 +164,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           children: [
                             Text(
                               S.of(context).connectMethodDes1,
-                              style: TextStyle(
-                                fontSize: Dimens.font_sp14,
-                                fontWeight: bold,
-                              ),
+                              style: TextStyle(fontSize: 14.w, fontWeight: bold),
                             ),
                           ],
                         ),
@@ -177,10 +173,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                         padding: EdgeInsets.symmetric(vertical: Dimens.gap_dp4),
                         child: Text(
                           S.of(context).connectMethodDes2,
-                          style: TextStyle(
-                            fontSize: Dimens.font_sp14,
-                            fontWeight: bold,
-                          ),
+                          style: TextStyle(fontSize: 14.w, fontWeight: bold),
                         ),
                       ),
                       Container(
@@ -190,10 +183,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: Dimens.gap_dp8,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.08),
+                          color: Theme.of(context).colorScheme.surfaceContainerHigh,
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
@@ -202,8 +192,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                               TextSpan(
                                 text: 'adb connect \$IP',
                                 style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context).colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -235,10 +224,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: 8.0,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.08),
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
                           borderRadius: BorderRadius.circular(Dimens.gap_dp8),
                         ),
                         child: RichText(
@@ -247,8 +233,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                               TextSpan(
                                 text: 'adb devices',
                                 style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context).colorScheme.onSurface,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

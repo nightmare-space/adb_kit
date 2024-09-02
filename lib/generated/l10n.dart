@@ -789,6 +789,336 @@ class S {
       args: [],
     );
   }
+
+  /// `Start`
+  String get start {
+    return Intl.message(
+      'Start',
+      name: 'start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IceBox`
+  String get iceBox {
+    return Intl.message(
+      'IceBox',
+      name: 'iceBox',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Server`
+  String get startServer {
+    return Intl.message(
+      'Start Server',
+      name: 'startServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop Server`
+  String get stopServer {
+    return Intl.message(
+      'Stop Server',
+      name: 'stopServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reboot Server`
+  String get rebootServer {
+    return Intl.message(
+      'Reboot Server',
+      name: 'rebootServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I'll try my best`
+  String get slogan {
+    return Intl.message(
+      'I\'ll try my best',
+      name: 'slogan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Release to action`
+  String get releaseToAction {
+    return Intl.message(
+      'Release to action',
+      name: 'releaseToAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Installing {name}...`
+  String installingApk(Object name) {
+    return Intl.message(
+      'Installing $name...',
+      name: 'installingApk',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Uploading {name}...`
+  String uploadingFile(Object name) {
+    return Intl.message(
+      'Uploading $name...',
+      name: 'uploadingFile',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Install failed`
+  String get installApkFailed {
+    return Intl.message(
+      'Install failed',
+      name: 'installApkFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Screenshots`
+  String get screenshot {
+    return Intl.message(
+      'Screenshots',
+      name: 'screenshot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It's like a developer's wallet. Nothing`
+  String get noHistoryTip {
+    return Intl.message(
+      'It\'s like a developer\'s wallet. Nothing',
+      name: 'noHistoryTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch Theme`
+  String get switchTheme {
+    return Intl.message(
+      'Switch Theme',
+      name: 'switchTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Swipe left or right to delete the corresponding history`
+  String get deleteHistoryTip {
+    return Intl.message(
+      'Swipe left or right to delete the corresponding history',
+      name: 'deleteHistoryTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device not connect`
+  String get deviceNotConnect {
+    return Intl.message(
+      'Device not connect',
+      name: 'deviceNotConnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DevTools`
+  String get devTools {
+    return Intl.message(
+      'DevTools',
+      name: 'devTools',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disconnect`
+  String get disconnect {
+    return Intl.message(
+      'Disconnect',
+      name: 'disconnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reconnect`
+  String get reconnect {
+    return Intl.message(
+      'Reconnect',
+      name: 'reconnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Drop file here or`
+  String get dropTip {
+    return Intl.message(
+      'Drop file here or',
+      name: 'dropTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Join QQ Group`
+  String get joinQQGroup {
+    return Intl.message(
+      'Join QQ Group',
+      name: 'joinQQGroup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open QQ fail,please check if installed`
+  String get openQQFail {
+    return Intl.message(
+      'Open QQ fail,please check if installed',
+      name: 'openQQFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get the latest updates and contact the developer`
+  String get joinQQGT {
+    return Intl.message(
+      'Get the latest updates and contact the developer',
+      name: 'joinQQGT',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy`
+  String get copy {
+    return Intl.message(
+      'Copy',
+      name: 'copy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied`
+  String get keyCopyS {
+    return Intl.message(
+      'Copied',
+      name: 'keyCopyS',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No adb key found`
+  String get keyCopyF {
+    return Intl.message(
+      'No adb key found',
+      name: 'keyCopyF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto Connect`
+  String get ac {
+    return Intl.message(
+      'Auto Connect',
+      name: 'ac',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ADB KIT`
+  String get appName {
+    return Intl.message(
+      'ADB KIT',
+      name: 'appName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check root permission`
+  String get netDebugOpenFail {
+    return Intl.message(
+      'Please check root permission',
+      name: 'netDebugOpenFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uncaught UI Exception`
+  String get uncaughtUE {
+    return Intl.message(
+      'Uncaught UI Exception',
+      name: 'uncaughtUE',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uncaught Dart Exception`
+  String get uncaughtDE {
+    return Intl.message(
+      'Uncaught Dart Exception',
+      name: 'uncaughtDE',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copyed`
+  String get copyed {
+    return Intl.message(
+      'Copyed',
+      name: 'copyed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect By UDP Faild`
+  String get udpCF {
+    return Intl.message(
+      'Connect By UDP Faild',
+      name: 'udpCF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect Message Send Success`
+  String get successSCM {
+    return Intl.message(
+      'Connect Message Send Success',
+      name: 'successSCM',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
