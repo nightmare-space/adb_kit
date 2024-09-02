@@ -1,31 +1,27 @@
 import 'dart:convert';
-
+import 'package:adb_kit/adb_tool.dart';
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/otg_terminal.dart';
-import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
-import 'package:adb_kit/themes/theme.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
 import 'package:file_manager_view/file_manager_view.dart' hide execCmd;
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
-import '../dialog/install_apk.dart';
-import '../dialog/push_file.dart';
-import '../drag_drop.dart';
-import '../screenshot_page.dart';
+import 'dialog/install_apk.dart';
+import 'dialog/push_file.dart';
+import '../../app/modules/developer_tool/drag_drop.dart';
+import '../../app/modules/developer_tool/screenshot_page.dart';
 import 'developer_item.dart';
 import 'network_debug.dart';
 import 'switch_item.dart';
@@ -182,7 +178,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyCyan),
                       Text(
-                        '屏幕截图',
+                        S.current.screenshot,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -219,7 +215,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         child: SizedBox(
           height: isMobile ? 240.w : 230.w,
           child: Material(
-            color: Theme.of(context).surface1,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12.w),
             child: Padding(
               padding: padding,
@@ -280,27 +276,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   children: const <Widget>[
-                  //     Text('标题'),
-                  //     SizedBox(
-                  //       width: 16.0,
-                  //     ),
-                  //     SizedBox(
-                  //       width: 120,
-                  //       child: TextField(
-                  //         decoration: InputDecoration(
-                  //           isDense: true,
-                  //           // border: OutlineInputBorder(),
-                  //           contentPadding: EdgeInsets.symmetric(
-                  //             horizontal: 08.0,
-                  //             vertical: 8.0,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                 ],
               ),
             ),
@@ -318,7 +293,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).surface1,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -426,7 +401,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).surface1,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -454,7 +429,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}${S.of(context).pushTips}',
+                      title: '${GetPlatform.isDesktop ? S.current.dropTip : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           if (!await PermissionUtil.requestStorage()) {
@@ -505,7 +480,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: Theme.of(context).surface1,
+          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             height: isMobile ? 240.w : 230.w,
@@ -587,9 +562,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(4.w),
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).surface2,
-                                ),
+                                decoration: BoxDecoration(color: colorScheme.surfaceContainer),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(

@@ -10,18 +10,18 @@ import 'package:flutter/services.dart';
 import 'package:global_repository/global_repository.dart';
 
 /// 用来激活一些app服务，例如黑域，scene等
-class AppStarter extends StatefulWidget {
-  const AppStarter({
+class AppStarterPage extends StatefulWidget {
+  const AppStarterPage({
     Key? key,
     this.entity,
   }) : super(key: key);
 
   final DevicesEntity? entity;
   @override
-  State<AppStarter> createState() => _AppStarterState();
+  State<AppStarterPage> createState() => _AppStarterPageState();
 }
 
-class _AppStarterState extends State<AppStarter> {
+class _AppStarterPageState extends State<AppStarterPage> {
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -59,9 +59,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动Sula',
+                    '${S.current.start} Sula',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),
@@ -75,7 +75,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -83,9 +83,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动黑域',
+                    '${S.current.start} 黑域',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),
@@ -98,7 +98,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -106,9 +106,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动scene',
+                    '${S.current.start} scene',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),
@@ -122,7 +122,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -130,9 +130,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动shizuku',
+                    '${S.current.start} shizuku',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),
@@ -145,7 +145,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -153,9 +153,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动小黑屋',
+                    '${S.current.start} 小黑屋',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),
@@ -168,7 +168,7 @@ class _AppStarterState extends State<AppStarter> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).surface3,
+                    color: colorScheme.primary,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   padding: EdgeInsets.symmetric(
@@ -176,9 +176,9 @@ class _AppStarterState extends State<AppStarter> {
                     vertical: 8.w,
                   ),
                   child: Text(
-                    '启动冰箱',
+                    '${S.current.start} ${S.current.iceBox}',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontSize: 16.w,
                     ),
                   ),

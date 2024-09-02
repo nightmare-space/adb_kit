@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/model/screen_size.dart';
+import 'package:adb_kit/themes/color_extension.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:adb_kit/utils/dex_server.dart';
 import 'package:adbutil/adbutil.dart';
@@ -24,7 +25,6 @@ class _TaskManagerState extends State<TaskManager> {
   @override
   void initState() {
     super.initState();
-    Get.put(IconController());
     initTask();
   }
 
@@ -69,7 +69,7 @@ class _TaskManagerState extends State<TaskManager> {
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.w),
-                          color: Theme.of(context).surface1,
+                          color: Theme.of(context).colorScheme.surface,
                           boxShadow: const [],
                         ),
                         child: ClipRRect(
@@ -85,9 +85,8 @@ class _TaskManagerState extends State<TaskManager> {
                                   child: Center(
                                     child: SizedBox(
                                       width: 54.w,
-                                      child: AppIconHeader(
-                                        channel: channel,
-                                        padding: EdgeInsets.zero,
+                                      child: AppIcon(
+                                        channel: channel!,
                                         packageName: tasks.datas[i].topPackage,
                                       ),
                                     ),

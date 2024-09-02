@@ -1,4 +1,5 @@
 import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:desktop_drop/desktop_drop.dart';
@@ -56,9 +57,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
       },
       child: AnimatedContainer(
         decoration: BoxDecoration(
-          color: dropping
-              ? AppColors.inputBorderColor
-              : Theme.of(context).surface2,
+          color: dropping ? AppColors.inputBorderColor : colorScheme.surface,
           borderRadius: BorderRadius.circular(8.w),
         ),
         duration: const Duration(milliseconds: 200),
@@ -76,7 +75,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                         color: AppColors.fontColor,
                       ),
                       child: Text(
-                        '释放执行操作',
+                        S.current.releaseToAction,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: bold,
@@ -89,7 +88,7 @@ class _DropTargetContainerState extends State<DropTargetContainer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Material(
-                          color: Theme.of(context).surface3,
+                          color: colorScheme.surface,
                           borderRadius: BorderRadius.circular(28.w),
                           child: SizedBox(
                             width: 54.w,

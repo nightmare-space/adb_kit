@@ -50,19 +50,15 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
             left: false,
             child: Row(
               children: [
-                SizedBox(
-                  width: 8.w,
-                ),
-                // const PopButton(),
+                SizedBox(width: 8.w),
+                const PopButton(),
                 Expanded(
                   child: TabBar(
-                    labelStyle: TextStyle(
-                      fontWeight: bold,
-                    ),
-                    unselectedLabelStyle: TextStyle(
-                      fontWeight: bold,
-                    ),
+                    labelStyle: TextStyle(fontWeight: bold),
+                    unselectedLabelStyle: TextStyle(fontWeight: bold),
                     unselectedLabelColor: AppColors.fontColor,
+                    padding: EdgeInsets.zero,
+                    indicatorPadding: EdgeInsets.zero,
                     indicator: RoundedUnderlineTabIndicator(
                       insets: EdgeInsets.only(bottom: 12.w),
                       radius: 12.w,

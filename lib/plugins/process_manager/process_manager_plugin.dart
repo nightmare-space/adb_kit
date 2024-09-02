@@ -39,12 +39,11 @@ String testOut = '''
 13004 root         20   0    0    0    0 I  0.0   0.0   0:00.25 [kworker/u16:6-events_unbound]
 13003 root         20   0    0    0    0 I  0.0   0.0   0:01.78 [kworker/u16:5-memlat_wq]''';
 
+// TODO 安卓14上挂了
 class ProcessPlugin extends Pluggable {
   @override
   Widget buildWidget(BuildContext context, DevicesEntity? device) {
-    return ProcessManagerPage(
-      devicesEntity: device,
-    );
+    return ProcessManagerPage(devicesEntity: device);
   }
 
   @override

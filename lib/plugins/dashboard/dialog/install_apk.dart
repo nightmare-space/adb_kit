@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:adb_kit/app/controller/controller.dart';
+import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
 import 'package:adbutil/adbutil.dart';
@@ -9,20 +10,22 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path/path.dart' as p;
 
-class PushFileDialog extends StatefulWidget {
-  const PushFileDialog({
+class InstallApkDialog extends StatefulWidget {
+  const InstallApkDialog({
     Key? key,
     this.paths,
     required this.entity,
   }) : super(key: key);
+
+  /// 路径列表
   final List<String>? paths;
   final DevicesEntity entity;
 
   @override
-  State createState() => _PushFileDialogState();
+  State createState() => _InstallApkDialogState();
 }
 
-class _PushFileDialogState extends State<PushFileDialog> {
+class _InstallApkDialogState extends State<InstallApkDialog> {
   String currentFile = '';
   double progress = 1;
   int fileIndex = 0;
@@ -46,21 +49,29 @@ class _PushFileDialogState extends State<PushFileDialog> {
         setState(() {});
       }
     });
+    StringBuffer stringBuffer = StringBuffer();
     for (final String path in widget.paths!) {
       final String name = p.basename(path);
       currentFile = name;
       setState(() {});
-      final String fileName = p.basename(path);
-      await execCmd2([
-        adb,
-        '-s',
-        widget.entity.serial,
-        'push',
-        path,
-        '/sdcard/$fileName',
-      ]);
+      try {
+        await execCmd2([
+          adb,
+          '-s',
+          widget.entity.serial,
+          'install',
+          '-t',
+          path,
+        ]);
+        Log.i('install cmd -> adb -s ${widget.entity.serial} install -t "$path"');
+      } on Exception catch (e) {
+        stringBuffer.write('$name: $e\n');
+      }
       fileIndex++;
       // showToast('$name 已上传');
+    }
+    if (stringBuffer.isNotEmpty) {
+      showToast('${S.current.installApkFailed}\n:${stringBuffer.toString().trim()}', duration: const Duration(milliseconds: 5000));
     }
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
@@ -80,10 +91,9 @@ class _PushFileDialogState extends State<PushFileDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '上传 $currentFile 中...',
+                      S.current.installingApk(currentFile),
                       style: TextStyle(
                         color: AppColors.fontColor,
                         fontWeight: bold,
