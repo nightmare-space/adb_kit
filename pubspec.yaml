@@ -1,12 +1,14 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.6+47
+version: 1.5.6-beta.1+47
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter_localizations:
+    sdk: flutter
+  flutter:
     sdk: flutter
   # localizations
   intl: ^0.19.0
@@ -25,8 +27,6 @@ dependencies:
   path_provider: ^2.0.10
   # responsive ui
   responsive_framework: ^1.0.0
-  flutter:
-    sdk: flutter
   # terminal widget
   xterm:
     git:
@@ -91,6 +91,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  intl_utils: ^2.8.7
 
 flutter:
   generate: true
@@ -103,3 +104,6 @@ flutter:
     - assets/
     - CHANGELOG.md
 # dependency_overrides:
+
+flutter_intl:
+  enabled: true

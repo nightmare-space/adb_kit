@@ -39,6 +39,12 @@
             "deviceId": "23127PN0CC",
         },
         {
+            "name": "魅族21",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "MEIZU 21",
+        },
+        {
             "name": "小米平板6",
             "request": "launch",
             "type": "dart",
