@@ -20,13 +20,19 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(name) => "Installing ${name}...";
+
+  static String m1(name) => "Uploading ${name}...";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
+        "ac": MessageLookupByLibrary.simpleMessage("Auto Connect"),
         "agreement": MessageLookupByLibrary.simpleMessage("Agreement"),
         "alreadyConnectDevice":
             MessageLookupByLibrary.simpleMessage("Already Connect Devices"),
         "appManager": MessageLookupByLibrary.simpleMessage("App Manager"),
+        "appName": MessageLookupByLibrary.simpleMessage("ADB KIT"),
         "autoConnectDevice":
             MessageLookupByLibrary.simpleMessage("Auto connect device in LAN"),
         "autoFit": MessageLookupByLibrary.simpleMessage("Responsive"),
@@ -46,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "3.Exec \'adb devices\' to check if any devices connected"),
         "connectMethodTip": MessageLookupByLibrary.simpleMessage(
             "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
+        "copy": MessageLookupByLibrary.simpleMessage("Copy"),
+        "copyed": MessageLookupByLibrary.simpleMessage("Copyed"),
         "currentDebug": MessageLookupByLibrary.simpleMessage("Current"),
         "currentVersion":
             MessageLookupByLibrary.simpleMessage("Current Version"),
@@ -61,25 +69,35 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Show Repaint Rainbow"),
         "debugShowMaterialGrid":
             MessageLookupByLibrary.simpleMessage("Debug Show Material Grid"),
+        "deleteHistoryTip": MessageLookupByLibrary.simpleMessage(
+            "Swipe left or right to delete the corresponding history"),
         "desktop": MessageLookupByLibrary.simpleMessage("Desktop"),
+        "devTools": MessageLookupByLibrary.simpleMessage("DevTools"),
         "developerSettings":
             MessageLookupByLibrary.simpleMessage("Developer Settings"),
         "deviceInfo": MessageLookupByLibrary.simpleMessage("Device Info"),
+        "deviceNotConnect":
+            MessageLookupByLibrary.simpleMessage("Device not connect"),
+        "disconnect": MessageLookupByLibrary.simpleMessage("Disconnect"),
         "displayScreenPointer":
             MessageLookupByLibrary.simpleMessage("Display screen pointer"),
         "displayTouch":
             MessageLookupByLibrary.simpleMessage("Display Touch Feedback"),
+        "dropTip": MessageLookupByLibrary.simpleMessage("Drop file here or"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "fix some device without \n/data/local/tmp permission"),
         "historyConnect":
             MessageLookupByLibrary.simpleMessage("History Connect"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "iceBox": MessageLookupByLibrary.simpleMessage("IceBox"),
         "inputDeviceAddress": MessageLookupByLibrary.simpleMessage(
             "Input Device Address To Connect"),
         "inputFormat": MessageLookupByLibrary.simpleMessage(
             "Input format is \"IP:PORT CODE\""),
         "installApk": MessageLookupByLibrary.simpleMessage("Install Apk"),
+        "installApkFailed":
+            MessageLookupByLibrary.simpleMessage("Install failed"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
             "You can choose \'/system/xbin\',because most of binary in \'/system/bin\'"),
         "installDes2": MessageLookupByLibrary.simpleMessage(
@@ -88,15 +106,27 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This function need ROOT"),
         "installToSystem":
             MessageLookupByLibrary.simpleMessage("Install to System"),
+        "installingApk": m0,
+        "joinQQGT": MessageLookupByLibrary.simpleMessage(
+            "Get the latest updates and contact the developer"),
+        "joinQQGroup": MessageLookupByLibrary.simpleMessage("Join QQ Group"),
+        "keyCopyF": MessageLookupByLibrary.simpleMessage("No adb key found"),
+        "keyCopyS": MessageLookupByLibrary.simpleMessage("Copied"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "layout": MessageLookupByLibrary.simpleMessage("Layout Style"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "localAddress": MessageLookupByLibrary.simpleMessage("Local Address"),
         "log": MessageLookupByLibrary.simpleMessage("Log"),
+        "netDebugOpenFail": MessageLookupByLibrary.simpleMessage(
+            "Please check root permission"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
         "noDeviceConnect": MessageLookupByLibrary.simpleMessage("No Devices"),
+        "noHistoryTip": MessageLookupByLibrary.simpleMessage(
+            "It\'s like a developer\'s wallet. Nothing"),
         "openLocalNetDebug": MessageLookupByLibrary.simpleMessage(
             "Enable Network ADB Debug Mode"),
+        "openQQFail": MessageLookupByLibrary.simpleMessage(
+            "Open QQ fail,please check if installed"),
         "openSourceLicense":
             MessageLookupByLibrary.simpleMessage("Open Source License"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
@@ -109,6 +139,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Process Manager"),
         "pushTips":
             MessageLookupByLibrary.simpleMessage("Tap button to select file"),
+        "rebootServer": MessageLookupByLibrary.simpleMessage("Reboot Server"),
+        "reconnect": MessageLookupByLibrary.simpleMessage("Reconnect"),
+        "releaseToAction":
+            MessageLookupByLibrary.simpleMessage("Release to action"),
         "remoteAdbDebug":
             MessageLookupByLibrary.simpleMessage("Remote Adb Debug"),
         "remoteDebuSwitchgDes":
@@ -118,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer"),
         "scanToConnect":
             MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
+        "screenshot": MessageLookupByLibrary.simpleMessage("Screenshots"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -128,11 +163,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "showSemanticsDebugger":
             MessageLookupByLibrary.simpleMessage("Show Semantics Debugger"),
         "showStatusBar": MessageLookupByLibrary.simpleMessage("Show Statusbar"),
+        "slogan": MessageLookupByLibrary.simpleMessage("I\'ll try my best"),
+        "start": MessageLookupByLibrary.simpleMessage("Start"),
+        "startServer": MessageLookupByLibrary.simpleMessage("Start Server"),
+        "stopServer": MessageLookupByLibrary.simpleMessage("Stop Server"),
+        "successSCM": MessageLookupByLibrary.simpleMessage(
+            "Connect Message Send Success"),
+        "switchTheme": MessageLookupByLibrary.simpleMessage("Switch Theme"),
         "taskManager": MessageLookupByLibrary.simpleMessage("Task Manager"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "terms": MessageLookupByLibrary.simpleMessage("Terms"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "udpCF": MessageLookupByLibrary.simpleMessage("Connect By UDP Faild"),
+        "uncaughtDE":
+            MessageLookupByLibrary.simpleMessage("Uncaught Dart Exception"),
+        "uncaughtUE":
+            MessageLookupByLibrary.simpleMessage("Uncaught UI Exception"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
+        "uploadingFile": m1,
         "view": MessageLookupByLibrary.simpleMessage("View")
       };
 }
