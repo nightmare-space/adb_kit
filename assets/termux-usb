@@ -2,7 +2,7 @@
 # set -e -u
 
 SCRIPTNAME=termux-usb
-show_usage () {
+show_usage() {
     echo "Usage: $SCRIPTNAME [-l | [-r] [-E] [-e command] [device | vendorId productId]]"
     echo "List or access USB devices. Devices cannot be accessed directly,"
     echo "                 only using $SCRIPTNAME."
@@ -18,22 +18,29 @@ show_usage () {
 
 ACTION="permission"
 PARAMS=""
-while getopts :hlre:E option
-do
+while getopts :hlre:E option; do
     case "$option" in
-        h) show_usage;;
-        l) ACTION="list";;
-        r) PARAMS="$PARAMS --ez request true";;
-        e) ACTION="open"; export TERMUX_CALLBACK="$OPTARG";;
-        E) export TERMUX_EXPORT_FD=true;;
-        ?) echo "$SCRIPTNAME: illegal option -$OPTARG"; exit 1;
+    h) show_usage ;;
+    l) ACTION="list" ;;
+    r) PARAMS="$PARAMS --ez request true" ;;
+    e)
+        ACTION="open"
+        export TERMUX_CALLBACK="$OPTARG"
+        ;;
+    E) export TERMUX_EXPORT_FD=true ;;
+    ?)
+        echo "$SCRIPTNAME: illegal option -$OPTARG"
+        exit 1
+        ;;
     esac
 done
-shift $((OPTIND-1))
+shift $((OPTIND - 1))
 
-if [ "$ACTION" == "list" ]
-then
-    if [ $# -gt 0 ]; then echo "$SCRIPTNAME: too many arguments"; exit 1; fi
+if [ "$ACTION" == "list" ]; then
+    if [ $# -gt 0 ]; then
+        echo "$SCRIPTNAME: too many arguments"
+        exit 1
+    fi
 else
     if [ $# -lt 1 ]; then
         echo "$SCRIPTNAME: missing -l or device path"
@@ -50,16 +57,10 @@ else
         exit 1
     fi
 fi
-# echo "TERMUX_CALLBACK:$TERMUX_CALLBACK"
-# echo "TERMUX_EXPORT_FD:$TERMUX_EXPORT_FD"
 CMD="termux-api Usb -a $ACTION $PARAMS"
-# termux-toast "CMD:$CMD"
-# echo "CMD:$CMD"
 
-if [ "$ACTION" == "permission" ]
-then
-    if [ "$($CMD)" == "yes" ]
-    then
+if [ "$ACTION" == "permission" ]; then
+    if [ "$($CMD)" == "yes" ]; then
         echo "Access granted."
         exit 0
     else
@@ -69,4 +70,3 @@ then
 else
     $CMD
 fi
-

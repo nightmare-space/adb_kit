@@ -2,7 +2,7 @@
 set -e -u
 
 SCRIPTNAME=termux-toast
-show_usage () {
+show_usage() {
 	echo "Usage: termux-toast [-b bgcolor] [-c color] [-g gravity] [-s] [text]"
 	echo "Show text in a Toast (a transient popup)."
 	echo "The toast text is either supplied as arguments or read from stdin"
@@ -19,25 +19,29 @@ show_usage () {
 }
 
 PARAMS=""
-while getopts :hsc:b:g: option
-do
+while getopts :hsc:b:g: option; do
 	case "$option" in
-		h) show_usage;;
-		s) PARAMS+=" --ez short true";;
-		c) PARAMS+=" --es text_color $OPTARG";;
-		b) PARAMS+=" --es background $OPTARG";;
-		g) PARAMS+=" --es gravity $OPTARG";;
-		?) echo "$SCRIPTNAME: illegal option -$OPTARG"; exit 1;
+	h) show_usage ;;
+	s) PARAMS+=" --ez short true" ;;
+	c) PARAMS+=" --es text_color $OPTARG" ;;
+	b) PARAMS+=" --es background $OPTARG" ;;
+	g) PARAMS+=" --es gravity $OPTARG" ;;
+	?)
+		echo "$SCRIPTNAME: illegal option -$OPTARG"
+		exit 1
+		;;
 	esac
 done
-shift $((OPTIND-1))
+shift $((OPTIND - 1))
 
 CMD="termux-api Toast $PARAMS"
 
 # If toast text was not passed as an argument, then attempt to read from STDIN with a 3s timeout
 # Toast text arguments takes precedence over STDIN
 if [ $# = 0 ]; then
-	set +e; IFS= read -t 3 -r -d '' TOAST_TEXT; set -e;
+	set +e
+	IFS= read -t 3 -r -d '' TOAST_TEXT
+	set -e
 else
 	TOAST_TEXT="$*"
 fi
