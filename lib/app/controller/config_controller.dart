@@ -1,6 +1,8 @@
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/config/settings.dart';
 import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/themes/theme_dark.dart';
+import 'package:adb_kit/themes/theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -20,14 +22,15 @@ class ConfigController extends GetxController {
 
   bool autoConnect = true;
   bool showStatusBar = true;
+  String password = '';
 
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
-  ThemeData? theme = DefaultThemeData.light();
+  ThemeData? theme = light();
 
   Map<String, ThemeData> themeMap = {
-    'light': DefaultThemeData.light(),
-    'dark': DefaultThemeData.dark(),
+    'light': light(),
+    'dark': dark(),
   };
   Map<String, Locale> languageMap = {
     'chinese': chinese,
@@ -92,8 +95,14 @@ class ConfigController extends GetxController {
     if (languageMap.containsKey(Settings.language.setting.get())) {
       locale = languageMap[Settings.language.setting.get()];
     }
-
     autoConnect = Settings.autoConnectDevice.setting.get() ?? autoConnect;
+    password = Settings.adbPassword.setting.get() ?? password;
+  }
+
+  void changePassword(String password) {
+    Settings.adbPassword.setting.set(password);
+    this.password = password;
+    update();
   }
 
   void changeScreenType(ScreenType? screenType) {
