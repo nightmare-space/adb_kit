@@ -114,6 +114,11 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 return ResponsiveBreakpoints.builder(
                   child: Builder(
                     builder: (context) {
+                      /// TODO: 这个屏幕适配的方案还是有问题
+                      /// 在安卓连接第二显示器的时候，第二显示的 Android Density 比较低
+                      ///
+                      ///
+                      /// 小米14:1200.0, 2670.0 devicePixelRatio:3.0 Android DPI:480.0
                       if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
                         ScreenAdapter.init(896);
                       } else {
@@ -128,11 +133,11 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                   // landscapePlatforms: [
                   //   ResponsiveTargetPlatform.macOS,
                   // ],
-                  // TODO 下面这个需要统一管理了
+                  landscapePlatforms: ResponsiveTargetPlatform.values,
                   breakpoints: const [
                     Breakpoint(start: 0, end: 500, name: MOBILE),
                     Breakpoint(start: 500, end: 800, name: TABLET),
-                    Breakpoint(start: 800, end: 2000, name: DESKTOP),
+                    Breakpoint(start: 800, end: double.infinity, name: DESKTOP),
                   ],
                   breakpointsLandscape: [
                     const Breakpoint(start: 0, end: 450, name: MOBILE),

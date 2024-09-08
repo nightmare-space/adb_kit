@@ -45,10 +45,10 @@
             "deviceId": "MEIZU 21",
         },
         {
-            "name": "小米平板6",
+            "name": "小米平板6s",
             "request": "launch",
             "type": "dart",
-            "deviceId": "23046RP50C"
+            "deviceId": "24018RPACC"
         },
     ]
 }

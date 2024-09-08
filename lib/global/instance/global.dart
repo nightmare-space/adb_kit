@@ -332,7 +332,8 @@ class Global {
     Log.i('Current Platform Bri ${platformDispatcher.platformBrightness}');
     Log.i('Layout Style ${controller.screenType}');
     Log.i('Inline Bri ${controller.theme!.brightness}');
-    Log.i('PhysicalSize:${flutterView.physicalSize}');
+    Log.i('PhysicalSize(px):${flutterView.physicalSize.str()}');
+    Log.i('PhysicalSize(dp):${(flutterView.physicalSize / flutterView.devicePixelRatio).str()}');
     Log.i('DevicePixelRatio:${flutterView.devicePixelRatio}');
     Log.i('Android DPI:${flutterView.devicePixelRatio * 160}');
     Log.i('Auto Connect ${controller.autoConnect}');
@@ -377,9 +378,16 @@ String twoDigits(int n) {
 class MetricsObserver with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
+    // ignore: deprecated_member_use
+    FlutterView view = window;
     Log.v('didChangeMetrics invokded');
-    Log.i('physicalSize:${window.physicalSize}');
-    Log.i('devicePixelRatio:${window.devicePixelRatio}');
-    Log.i('Android DPI:${window.devicePixelRatio * 160}');
+    Log.i('PhysicalSize(PX):${view.physicalSize.str()}');
+    Log.i('PhysicalSize(DP):${(view.physicalSize / view.devicePixelRatio).str()}');
+    Log.i('DevicePixelRatio:${view.devicePixelRatio}');
+    Log.i('Android DPI:${view.devicePixelRatio * 160}');
   }
+}
+
+extension SizeExt on Size {
+  String str() => 'Size(${width.toStringAsFixed(1)}, ${height.toStringAsFixed(1)})';
 }
