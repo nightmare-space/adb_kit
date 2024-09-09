@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "adb_tool")
-set(APPLICATION_ID "com.nightmare.adb_tool")
+set(BINARY_NAME "adbkit")
+set(APPLICATION_ID "com.nightmare.adbkit")
 
 cmake_policy(SET CMP0063 NEW)
 
