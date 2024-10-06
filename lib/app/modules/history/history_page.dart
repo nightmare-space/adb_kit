@@ -54,7 +54,7 @@ class HistoryPage extends GetView<HistoryController> {
                       itemCount: controller.adbHistorys.data.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (c, i) {
-                        final Data adbEntity = controller.adbHistorys.data[i];
+                        final ADBHistory adbEntity = controller.adbHistorys.data[i];
                         return Dismissible(
                           key: Key(i.toString()),
                           onDismissed: (direction) {
@@ -90,7 +90,7 @@ class HistoryPage extends GetView<HistoryController> {
     );
   }
 
-  InkWell buildItem(Data adbEntity, BuildContext context) {
+  InkWell buildItem(ADBHistory adbEntity, BuildContext context) {
     print('Theme.of(context).textTheme.bodyMedium!.color -> ${Theme.of(context).textTheme.bodyMedium!.color}');
     return InkWell(
       onTap: () async {

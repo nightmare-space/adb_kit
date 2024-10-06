@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:adb_kit/adb_tool.dart';
 import 'package:adb_kit/app/controller/controller.dart';
-import 'package:adb_kit/app/modules/otg_terminal.dart';
 import 'package:adb_kit/config/font.dart';
-import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
@@ -567,9 +565,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(
                                     builder: (context) {
-                                      if (widget.entity!.isOTG) {
-                                        return const OTGTerminal();
-                                      }
                                       return XTermWrapper(
                                         terminal: terminal,
                                         pseudoTerminal: adbShell,

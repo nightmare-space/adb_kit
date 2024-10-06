@@ -16,6 +16,12 @@ enum BackgroundStyle {
   tranparent,
 }
 
+extension ScreenTypeExt on ScreenType {
+  bool get isDesktop => this == ScreenType.desktop;
+  bool get isTablet => this == ScreenType.tablet;
+  bool get isPhone => this == ScreenType.phone;
+}
+
 class ConfigController extends GetxController {
   ConfigController();
   BackgroundStyle backgroundStyle = BackgroundStyle.normal;

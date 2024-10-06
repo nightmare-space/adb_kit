@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide TabController;
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'app/controller/controller.dart';
-import 'app/modules/home/views/adaptive_view.dart';
+import 'app/modules/home/adaptive_entry.dart';
 import 'global/instance/global.dart';
 
 class ADBToolEntryPoint extends StatefulWidget {

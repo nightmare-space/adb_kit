@@ -54,14 +54,16 @@ class HistoryController extends GetxController {
     String? address,
     String? port,
     String? name,
+    String? uniqueId,
   }) {
     final HistoryController historyController = Get.find();
     historyController._updateHistory(
-      Data(
+      ADBHistory(
         address: address!,
         port: port ?? '5555',
         connectTime: DateTime.now().toString(),
         name: name!,
+        uniqueId: uniqueId ?? '',
       ),
     );
   }
@@ -74,7 +76,6 @@ class HistoryController extends GetxController {
     // Log.w('$this init');
     readLocalStorage();
   }
-
 
   Future<void> saveToLocal() async {
     Config.historySaveFile.writeAsString(adbHistorys.toString());
@@ -107,11 +108,11 @@ class HistoryController extends GetxController {
     saveToLocal();
   }
 
-  void _updateHistory(Data data) {
+  void _updateHistory(ADBHistory data) {
     try {
-      final Data preData = adbHistorys.data.firstWhere(
+      final ADBHistory preData = adbHistorys.data.firstWhere(
         (element) {
-          return element.address == data.address;
+          return element.uniqueId == data.uniqueId;
         },
       );
       preData.connectTime = data.connectTime;

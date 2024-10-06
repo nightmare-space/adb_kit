@@ -40,7 +40,7 @@ class DexServer {
     await AdbUtil.pushFile(devicesId, '${RuntimeEnvir.binPath}/app_server', targetPath);
     Log.i('push file time : ${stopwatch.elapsed}');
     stopwatch.reset();
-    final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer'.split(' ');
+    final List<String> processArg = '-s $devicesId shell CLASSPATH=$targetPath app_process $serverPath com.nightmare.applib.AppServer default'.split(' ');
 
     /// 注意这个要和applib中的一样哦
     const String startTag = 'success start port -> ';

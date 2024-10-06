@@ -82,9 +82,7 @@ class Global {
 
   // todo initial
   Pty? pty;
-  Terminal terminal = Terminal(
-    maxLines: 10000,
-  );
+  Terminal terminal = Terminal(maxLines: 10000);
   core.Future<void> initTerminal() async {
     if (Platform.isAndroid) {
       String? libPath = await getLibPath();
@@ -174,15 +172,8 @@ class Global {
         // 弹窗
         AdbResult result;
         try {
-          result = await AdbUtil.connectDevices(
-            address,
-          );
+          result = await AdbUtil.connectDevices(address);
           showToast(result.message);
-          HistoryController.updateHistory(
-            address: address,
-            port: '5555',
-            name: address,
-          );
         } on ADBException catch (e) {
           showToast(e.message!);
         }
@@ -191,68 +182,8 @@ class Global {
   }
 
   List<String> androidFiles = [
-    // 'adb',
-    // 'adb.bin-armeabi',
     'libadb.so',
     'libadb_termux.so',
-    // 'ld-android.so',
-    'libabsl_bad_variant_access.so',
-    'libabsl_base.so',
-    'libabsl_city.so',
-    'libabsl_cord.so',
-    'libabsl_cord_internal.so',
-    'libabsl_cordz_functions.so',
-    'libabsl_cordz_handle.so',
-    'libabsl_cordz_info.so',
-    'libabsl_crc32c.so',
-    'libabsl_crc_cord_state.so',
-    'libabsl_crc_internal.so',
-    'libabsl_die_if_null.so',
-    'libabsl_examine_stack.so',
-    'libabsl_exponential_biased.so',
-    'libabsl_hash.so',
-    'libabsl_int128.so',
-    'libabsl_log_globals.so',
-    'libabsl_log_internal_check_op.so',
-    'libabsl_log_internal_format.so',
-    'libabsl_log_internal_globals.so',
-    'libabsl_log_internal_log_sink_set.so',
-    'libabsl_log_internal_message.so',
-    'libabsl_log_internal_nullguard.so',
-    'libabsl_log_internal_proto.so',
-    'libabsl_log_sink.so',
-    'libabsl_low_level_hash.so',
-    'libabsl_malloc_internal.so',
-    'libabsl_raw_hash_set.so',
-    'libabsl_raw_logging_internal.so',
-    'libabsl_spinlock_wait.so',
-    'libabsl_stacktrace.so',
-    'libabsl_status.so',
-    'libabsl_statusor.so',
-    'libabsl_str_format_internal.so',
-    'libabsl_strerror.so',
-    'libabsl_strings.so',
-    'libabsl_strings_internal.so',
-    'libabsl_symbolize.so',
-    'libabsl_synchronization.so',
-    'libabsl_throw_delegate.so',
-    'libabsl_time.so',
-    'libabsl_time_zone.so',
-    'libbrotlicommon.so',
-    'libbrotlidec.so',
-    'libbrotlienc.so',
-    // 'libc++.so',
-    'libc++_shared.so',
-    // 'libc.so',
-    // 'libdl.so',
-    // 'liblog.so',
-    'liblz4.so',
-    // 'libm.so',
-    'libprotobuf.so',
-    'libusb-1.0.so',
-    'libz.so.1',
-    'libzstd.so.1',
-    'libtermux-api.so',
   ];
 
   List<String> globalFiles = [
@@ -269,6 +200,7 @@ class Global {
       File("${RuntimeEnvir.binPath}/adb").writeAsStringSync('$libPath/libadb.so.so \$@');
       final ProcessResult result = await Process.run('chmod', <String>['+x', "${RuntimeEnvir.binPath}/adb"]);
       for (final String fileName in androidFiles) {
+        // TODO: 这里为什么有两个 .so
         final targetPath = '$libPath/$fileName.so';
         String filePath = '${RuntimeEnvir.binPath}/$fileName';
         Link link = Link(filePath);

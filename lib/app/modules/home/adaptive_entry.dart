@@ -12,9 +12,9 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 
-import 'desktop_home.dart';
-import 'mobile_home.dart';
-import 'tablet_home.dart';
+import 'views/desktop_home.dart';
+import 'views/mobile_home.dart';
+import 'views/tablet_home.dart';
 
 class ADBKITAdaptiveRootWidget extends StatefulWidget {
   const ADBKITAdaptiveRootWidget({
@@ -86,13 +86,14 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> wit
         children: [
           Builder(
             builder: (context) {
-              if (ResponsiveBreakpoints.of(context).isDesktop) {
+              // TODO bug
+              if (ResponsiveBreakpoints.of(context).isDesktop || (configController.screenType?.isDesktop ?? false)) {
                 return const DesktopHome();
               }
-              if (ResponsiveBreakpoints.of(context).isTablet) {
+              if (ResponsiveBreakpoints.of(context).isTablet || (configController.screenType?.isTablet ?? false)) {
                 return const TableHome();
               }
-              if (ResponsiveBreakpoints.of(context).isMobile) {
+              if (ResponsiveBreakpoints.of(context).isMobile || (configController.screenType?.isPhone ?? false)) {
                 return const MobileHome();
               }
               return const SizedBox();

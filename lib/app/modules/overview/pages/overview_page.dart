@@ -322,21 +322,10 @@ class _OverviewPageState extends State<OverviewPage> {
                                   showToast('IP不可为空');
                                   return;
                                 }
-                                Log.d('adb 连接开始 ${editingController.text}');
+                                Log.d('adb connect ${editingController.text} start');
                                 AdbResult? result;
                                 try {
                                   result = await AdbUtil.connectDevices(editingController.text);
-                                  final List<String> tmp = editingController.text.split(':');
-                                  final String address = tmp[0];
-                                  String port = '5555';
-                                  if (tmp.length >= 2) {
-                                    port = tmp[1];
-                                  }
-                                  HistoryController.updateHistory(
-                                    address: address,
-                                    port: port,
-                                    name: address,
-                                  );
                                 } on ADBException catch (e) {
                                   Log.e(e);
                                   showToast(e.message!);

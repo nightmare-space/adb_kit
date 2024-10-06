@@ -5,6 +5,7 @@ import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/utils/plugin_util.dart';
 import 'package:adb_kit/utils/so_util.dart';
 import 'package:adbutil/adbutil.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -18,8 +19,10 @@ class DevicesEntity {
   final String serial;
   // ro.product.model
   String? productModel;
-  // 连接的状态
+  // connect stat
   String stat;
+  String uniqueId = '';
+
   @override
   bool operator ==(Object other) {
     // 判断是否是非
@@ -32,12 +35,7 @@ class DevicesEntity {
 
   bool get isConnect => _isConnect();
   bool _isConnect() {
-    return stat == 'device' || stat == 'OTG';
-  }
-
-  bool get isOTG => _isOTG();
-  bool _isOTG() {
-    return stat == 'OTG';
+    return stat == 'device';
   }
 
   @override
@@ -49,28 +47,11 @@ class DevicesEntity {
   int get hashCode => serial.hashCode;
 }
 
-// ro.product.model
 class DevicesController extends GetxController {
   DevicesController();
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   Future<void> init() async {
-    PluginUtil.addHandler((call) {
-      if (call.method == 'DeviceAttach') {
-        final DevicesEntity entity = DevicesEntity(
-          '',
-          'OTG',
-        );
-        entity.productModel = call.arguments.toString();
-        otgDevices.add(entity);
-      } else if (call.method == 'DeviceDetach') {
-        Log.e('DeviceDetach');
-        otgDevices.clear();
-      } else if (call.method == 'output') {
-        // TODO
-        Global().otgTerminal.write(call.arguments.toString());
-      }
-    });
     await startAdb();
     AdbUtil.addListener(handleResult);
     String? libPath;
@@ -104,6 +85,7 @@ class DevicesController extends GetxController {
     // if (getRoot) {
     //   await Global().process.exec('su -p HOME');
     // }
+    // adb cli clinet adb server
     try {
       String adbStartBin = 'adb';
       if (GetPlatform.isAndroid) adbStartBin = 'libadb_termux.so';
@@ -113,9 +95,7 @@ class DevicesController extends GetxController {
     } catch (e) {
       Log.d('adb start-server out:${(e as dynamic).message}');
     }
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      letADBStarted();
-    });
+    letADBStarted();
     // final List<String> devices = await ADBFind.getLANDevices();
     // for (String ip in devices) {
     //   try {
@@ -133,40 +113,31 @@ class DevicesController extends GetxController {
     }
   }
 
-  // 这是model的缓存
-  Map<String, String> modelCache = {};
+  // Model Cache
+  // Some device like xiaomi can't get model name by `ro.product.marketname`
+  Map<String, String> modelCache = {
+    // '23127PN0CC': 'Xiaomi 14',
+  };
   Future<void> handleResult(String? data) async {
     letADBStarted();
-    // if (kReleaseMode) {
-    // Log.d('adb handleResult -> $data');
-    // }
     if (data!.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');
-      // print('outList -> $outList');
       // 删除 `List of devices attached`
+      // Rmove `List of devices attached`
       outList.removeAt(0);
-      // print('outList -> $outList');
       final List<DevicesEntity> tmpDevices = [];
       for (final String str in outList) {
         final List<String> listTmp = str.trim().split(RegExp('\\s+'));
-        // print('listTmp -> $listTmp');
-        final DevicesEntity devicesEntity = DevicesEntity(
-          listTmp.first,
-          listTmp.last,
-        );
+        final DevicesEntity devicesEntity = DevicesEntity(listTmp.first, listTmp.last);
         if (devicesEntity.isConnect) {
           String? model;
           if (modelCache.containsKey(listTmp.first)) {
             model = modelCache[listTmp.first];
           } else {
             try {
-              model = await execCmd(
-                '$adb -s ${listTmp.first} shell getprop ro.product.marketname',
-              );
+              model = await execCmd('$adb -s ${listTmp.first} shell getprop ro.product.marketname');
               if (model.trim().isEmpty) {
-                model = await execCmd(
-                  '$adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}',
-                );
+                model = await execCmd('$adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}');
               }
               modelCache[listTmp.first] = model;
             } catch (e) {
@@ -174,16 +145,26 @@ class DevicesController extends GetxController {
               Log.e('get model error : $e');
             }
           }
+          String id;
+          String nidPath = '/data/local/tmp/nid';
+          try {
+            // nightmare id, use to cache history
+            id = await execCmd2([adb, '-s', listTmp.first, 'shell', 'cat', nidPath]);
+          } catch (e) {
+            Log.i('error -> $e');
+            id = shortHash(() {}).toString();
+            try {
+              await execCmd2([adb, '-s', listTmp.first, 'shell', 'echo', id, '>$nidPath']);
+            } catch (e) {
+              Log.i('write id error -> ${e.toString().trim()}');
+            }
+          }
+          devicesEntity.uniqueId = id;
           devicesEntity.productModel = model;
-          // TODO 我这之前写了个什么玩意儿
-          if (!devicesEntity.serial.contains('emulatssor') && model != null) {
-            // 更新这个设备的历史记录的设备名
+          if (model != null) {
             final List<String> tmp = devicesEntity.serial.split(':');
             final String address = tmp[0];
-            HistoryController.updateHistory(
-              name: model,
-              address: address,
-            );
+            HistoryController.updateHistory(name: model, address: address, uniqueId: id);
             tmpDevices.add(devicesEntity);
           }
         }
