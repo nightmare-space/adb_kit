@@ -15,6 +15,7 @@ export 'plugins/plugin.dart';
 export 'package:global_repository/global_repository.dart' show RuntimeEnvir;
 export 'generated/l10n.dart';
 export 'themes/theme.dart';
+export 'global/instance/adb_installer.dart';
 
 Future<double> getMacTitlebarWidth() async {
   return 0;
