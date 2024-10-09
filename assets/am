@@ -1,5 +1,0 @@
-#!/system/bin/sh
-export CLASSPATH=/data/data/com.nightmare.adbtools/files/usr/bin/am.apk
-unset LD_LIBRARY_PATH LD_PRELOAD
-echo "am invoked"
-exec /system/bin/app_process / com.termux.termuxam.Am "$@"
