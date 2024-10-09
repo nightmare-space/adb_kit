@@ -88,6 +88,10 @@ dependencies:
     git:
       url: https://github.com/nightmare-space/empty_package
       path: termux_api_plugin
+  adb_library:
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: adb_library
 
 dev_dependencies:
   flutter_test:
