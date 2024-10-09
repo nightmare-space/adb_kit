@@ -39,7 +39,7 @@ android {
     defaultConfig {
         applicationId 'com.nightmare.adbtools'
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
