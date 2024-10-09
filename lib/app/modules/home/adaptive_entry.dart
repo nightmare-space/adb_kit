@@ -1,4 +1,4 @@
-import 'package:adb_kit/adb_tool.dart';
+import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/global/instance/global.dart';

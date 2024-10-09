@@ -6,18 +6,19 @@ import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/generated/l10n.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart';
+import 'package:adb_library/adb_library.dart';
 import 'package:adbutil/adbutil.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:multicast/multicast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
+import 'adb_installer.dart';
 import 'page_manager.dart';
 
 extension PTYExt on Pty {
@@ -85,17 +86,19 @@ class Global {
   Terminal terminal = Terminal(maxLines: 10000);
   core.Future<void> initTerminal() async {
     if (Platform.isAndroid) {
-      String? libPath = await getLibPath();
+      String? libPath = await AdbLibrary.getLibPath();
       RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
     }
     Map<String, String> envir = RuntimeEnvir.envir();
     // 设置HOME变量到应用内路径会引发异常
     // 例如 neofetch命令
     if (GetPlatform.isMobile) {
-      envir['HOME'] = RuntimeEnvir.binPath!;
+      envir['HOME'] = RuntimeEnvir.binPath;
     }
-    envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath!}:/system/lib64';
-    if (GetPlatform.isAndroid) envir['TMPDIR'] = '/sdcard';
+    envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath}:/system/lib64';
+    Directory? extenalStorage = await getExternalStorageDirectory();
+    // some time we need read adb log file
+    if (GetPlatform.isAndroid) envir['TMPDIR'] = '${extenalStorage?.path}';
     envir['TERM'] = 'xterm-256color';
     envir['RUST_LOG'] = 'trace';
     String shell = 'sh';
@@ -110,10 +113,7 @@ class Global {
       environment: envir,
       workingDirectory: RuntimeEnvir.binPath,
     );
-
-    // 启动bash
-    pty?.writeString('bash\n');
-    pty?.write(Uint8List.fromList(utf8.encode('source ${RuntimeEnvir.binPath}/shell_intergration.sh\n')));
+    // some device need input password
     pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
         if (event.contains('please input verify password')) {
@@ -181,67 +181,6 @@ class Global {
     );
   }
 
-  List<String> androidFiles = [
-    'libadb.so',
-    'libadb_termux.so',
-  ];
-
-  List<String> globalFiles = [
-    'app_server',
-  ];
-
-  /// 复制一堆执行文件
-  Future<void> installAdbToEnvir() async {
-    if (kIsWeb) {
-      return;
-    }
-    if (GetPlatform.isAndroid) {
-      String? libPath = await getLibPath();
-      File("${RuntimeEnvir.binPath}/adb").writeAsStringSync('$libPath/libadb.so.so \$@');
-      final ProcessResult result = await Process.run('chmod', <String>['+x', "${RuntimeEnvir.binPath}/adb"]);
-      for (final String fileName in androidFiles) {
-        // TODO: 这里为什么有两个 .so
-        final targetPath = '$libPath/$fileName.so';
-        String filePath = '${RuntimeEnvir.binPath}/$fileName';
-        Link link = Link(filePath);
-        if (link.existsSync()) {
-          link.deleteSync();
-        }
-        try {
-          link.createSync(targetPath);
-        } catch (e) {
-          Log.e('installAdbToEnvir error -> $e');
-        }
-      }
-    }
-    await AssetsManager.copyFiles(
-      localPath: '${RuntimeEnvir.binPath}/',
-      android: [
-        'termux-api',
-        'termux-callback',
-        'termux-usb',
-        'termux-toast',
-        'am',
-        'am.apk',
-        'bash',
-        'shell_intergration.sh',
-      ],
-      macOS: [],
-      global: globalFiles,
-      package: Config.flutterPackage,
-      forceCopy: true,
-    );
-    if (GetPlatform.isAndroid) {
-      Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
-      File('${RuntimeEnvir.binPath}/termux-callback').rename('${RuntimeEnvir.usrPath}/libexec/termux-callback');
-    }
-
-    // final ProcessResult result = await Process.run(
-    //   'chmod',
-    //   <String>['+x', "${RuntimeEnvir.usrPath}/libexec/termux-callback"],
-    // );
-  }
-
   //
   bool hasSafeArea = true;
   // 是否展示二维码
@@ -284,7 +223,7 @@ class Global {
       } catch (e) {}
     }
     _socketServer();
-    await installAdbToEnvir();
+    await ADBInstaller.installAdbToEnvir();
     await initApi('ADB KIT', Config.versionName);
   }
 

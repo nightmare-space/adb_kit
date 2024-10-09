@@ -1,15 +1,11 @@
 import 'dart:async';
-
 import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
-import 'package:adb_kit/global/instance/global.dart';
-import 'package:adb_kit/utils/plugin_util.dart';
-import 'package:adb_kit/utils/so_util.dart';
+import 'package:adb_library/adb_library.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-
 import 'history_controller.dart';
 
 class DevicesEntity {
@@ -54,11 +50,10 @@ class DevicesController extends GetxController {
   Future<void> init() async {
     await startAdb();
     AdbUtil.addListener(handleResult);
-    String? libPath;
     if (GetPlatform.isAndroid) {
-      libPath = await getLibPath();
+      String? libPath = await AdbLibrary.getLibPath();
+      AdbUtil.setLibraryPath(libPath);
     }
-    AdbUtil.setLibraryPath(libPath);
     AdbUtil.startPoolingListDevices(
       duration: const Duration(seconds: 1),
     );
@@ -88,7 +83,6 @@ class DevicesController extends GetxController {
     // adb cli clinet adb server
     try {
       String adbStartBin = 'adb';
-      if (GetPlatform.isAndroid) adbStartBin = 'libadb_termux.so';
       String out = await execCmd('$adbStartBin start-server');
       Log.d('adb start-server out:$out');
       // ignore: empty_catches

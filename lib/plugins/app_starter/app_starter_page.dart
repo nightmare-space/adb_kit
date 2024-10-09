@@ -1,4 +1,4 @@
-import 'package:adb_kit/adb_tool.dart';
+import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
