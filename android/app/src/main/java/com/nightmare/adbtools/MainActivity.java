@@ -23,21 +23,6 @@ public class MainActivity extends FlutterActivity {
     private WifiManager.MulticastLock mLock;
     MethodChannel channel;
 
-    private void initPlugin(FlutterEngine flutterEngine) {
-        channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), channelName);
-        channel.setMethodCallHandler((call, result) -> {
-            switch (call.method) {
-                case "get_lib_path":
-                    runOnUiThread(() -> {
-                        result.success(getApplicationInfo().nativeLibraryDir);
-                    });
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +53,6 @@ public class MainActivity extends FlutterActivity {
                 result.notImplemented();
             }
         });
-        initPlugin(flutterEngine);
     }
 
     // 申请组播锁
@@ -86,10 +70,6 @@ public class MainActivity extends FlutterActivity {
     }
 
     protected boolean releaseMulticastLock() {
-        // 之后如果降低 adb targetversion，这个判断还是需要
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.DONUT) {
-            return false;
-        }
         mLock.release();
         return true;
     }
