@@ -11,6 +11,7 @@ ThemeData light({
     seedColor: seed,
     brightness: Brightness.light,
     surfaceTint: Colors.red,
+    surface: const Color(0xfff3f4f9),
   );
   return lightThemeData.copyWith(
     primaryColor: colorScheme.primary,

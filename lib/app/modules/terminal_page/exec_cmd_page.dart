@@ -6,12 +6,14 @@ import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
+import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:xterm/xterm.dart';
 
 import 'src/platform_menu.dart';
 import 'suggestion.dart';
@@ -65,8 +67,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                   child: Builder(builder: (context) {
                     if (GetPlatform.isDesktop) {
                       return AppPlatformMenu(
-                        child: Home(
-                          pty: Global().pty!,
+                        child: XTermWrapper(
+                          pseudoTerminal: Global().pty!,
                           terminal: Global().terminal,
                         ),
                       );
@@ -75,8 +77,8 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       pty: Global().pty!,
                       terminal: Global().terminal,
                       child: AppPlatformMenu(
-                        child: Home(
-                          pty: Global().pty!,
+                        child: XTermWrapper(
+                          pseudoTerminal: Global().pty!,
                           terminal: Global().terminal,
                         ),
                       ),

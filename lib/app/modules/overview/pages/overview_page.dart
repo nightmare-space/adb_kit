@@ -395,7 +395,7 @@ class CardItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(12.w),
       clipBehavior: Clip.hardEdge,
       // color: Theme.of(context).colorScheme.surfaceContainerLowest,
-      color: Theme.of(context).colorScheme.surfaceContainer,
+      color: Theme.of(context).colorScheme.surfaceContainerLowest,
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,
