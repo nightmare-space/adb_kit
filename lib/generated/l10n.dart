@@ -180,16 +180,6 @@ class S {
     );
   }
 
-  /// `Current Version`
-  String get currentVersion {
-    return Intl.message(
-      'Current Version',
-      name: 'currentVersion',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Dark`
   String get dark {
     return Intl.message(
@@ -430,31 +420,11 @@ class S {
     );
   }
 
-  /// `Open Source License`
-  String get openSourceLicense {
-    return Intl.message(
-      'Open Source License',
-      name: 'openSourceLicense',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Other`
   String get other {
     return Intl.message(
       'Other',
       name: 'other',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Download Other Version`
-  String get otherVersionDownload {
-    return Intl.message(
-      'Download Other Version',
-      name: 'otherVersionDownload',
       desc: '',
       args: [],
     );
@@ -740,10 +710,10 @@ class S {
     );
   }
 
-  /// `Common service startup`
+  /// `Service Startup`
   String get commonServiceStartup {
     return Intl.message(
-      'Common service startup',
+      'Service Startup',
       name: 'commonServiceStartup',
       desc: '',
       args: [],

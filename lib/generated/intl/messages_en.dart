@@ -41,7 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseInstallPath":
             MessageLookupByLibrary.simpleMessage("Choose install path"),
         "commonServiceStartup":
-            MessageLookupByLibrary.simpleMessage("Common service startup"),
+            MessageLookupByLibrary.simpleMessage("Service Startup"),
         "commonSwitch": MessageLookupByLibrary.simpleMessage("Commont Switch"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("Connect Method"),
         "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
@@ -55,8 +55,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyed": MessageLookupByLibrary.simpleMessage("Copyed"),
         "currentDebug": MessageLookupByLibrary.simpleMessage("Current"),
-        "currentVersion":
-            MessageLookupByLibrary.simpleMessage("Current Version"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
@@ -127,11 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Enable Network ADB Debug Mode"),
         "openQQFail": MessageLookupByLibrary.simpleMessage(
             "Open QQ fail,please check if installed"),
-        "openSourceLicense":
-            MessageLookupByLibrary.simpleMessage("Open Source License"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
-        "otherVersionDownload":
-            MessageLookupByLibrary.simpleMessage("Download Other Version"),
         "pad": MessageLookupByLibrary.simpleMessage("Pad"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),

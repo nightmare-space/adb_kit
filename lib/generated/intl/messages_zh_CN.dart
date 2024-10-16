@@ -52,7 +52,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("复制"),
         "copyed": MessageLookupByLibrary.simpleMessage("已复制"),
         "currentDebug": MessageLookupByLibrary.simpleMessage("当前"),
-        "currentVersion": MessageLookupByLibrary.simpleMessage("当前版本"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
         "dashboard": MessageLookupByLibrary.simpleMessage("控制面吧"),
         "debugPaintLayerBordersEnabled":
@@ -109,9 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("这里就像开发者的钱包一样，什么也没有"),
         "openLocalNetDebug": MessageLookupByLibrary.simpleMessage("打开网络ADB调试"),
         "openQQFail": MessageLookupByLibrary.simpleMessage("唤起QQ失败，请检查是否安装"),
-        "openSourceLicense": MessageLookupByLibrary.simpleMessage("开源许可"),
         "other": MessageLookupByLibrary.simpleMessage("其他"),
-        "otherVersionDownload": MessageLookupByLibrary.simpleMessage("其他版本下载"),
         "pad": MessageLookupByLibrary.simpleMessage("平板"),
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
