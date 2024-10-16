@@ -22,73 +22,110 @@ class DeveloperTool extends StatefulWidget {
 }
 
 class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProviderStateMixin {
-  TabController? controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(
-      length: PluginManager.instance.pluginsMap.length,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    controller!.dispose();
-    super.dispose();
-  }
+  int value = 0;
+  PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.background,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(48.w),
-          child: SafeArea(
-            left: false,
-            child: Row(
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
               children: [
-                SizedBox(width: 8.w),
-                const PopButton(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: const PopButton(),
+                ),
                 Expanded(
-                  child: TabBar(
-                    labelStyle: TextStyle(fontWeight: bold),
-                    unselectedLabelStyle: TextStyle(fontWeight: bold),
-                    unselectedLabelColor: AppColors.fontColor,
-                    padding: EdgeInsets.zero,
-                    indicatorPadding: EdgeInsets.zero,
-                    indicator: RoundedUnderlineTabIndicator(
-                      insets: EdgeInsets.only(bottom: 12.w),
-                      radius: 12.w,
-                      // width: 50.w,
-                      borderSide: BorderSide(
-                        width: 4.w,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      // color: Color(0xff6002ee),
-                      // borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-                    ),
-                    labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
-                    isScrollable: true,
-                    controller: controller,
-                    tabs: <Widget>[
-                      for (var item in PluginManager.instance.pluginsMap.keys) Tab(text: PluginManager.instance.pluginsMap[item]!.name),
+                  child: AKTabBar<int>(
+                    value: value,
+                    groupValue: value,
+                    children: [
+                      for (var item in PluginManager.instance.pluginsMap.keys) Text(PluginManager.instance.pluginsMap[item]!.name),
                     ],
+                    onChanged: (index) {
+                      Log.d('index $index');
+                      value = index;
+                      pageController.animateToPage(
+                        index,
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                      setState(() {});
+                    },
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-        body: TabBarView(
-          controller: controller,
-          children: [
-            for (var item in PluginManager.instance.pluginsMap.keys) PluginManager.instance.pluginsMap[item]!.buildWidget(context, widget.entity),
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                children: [
+                  for (var item in PluginManager.instance.pluginsMap.keys) PluginManager.instance.pluginsMap[item]!.buildWidget(context, widget.entity),
+                ],
+              ),
+            ),
+            // Expanded(
+            //   child: PluginManager.instance.pluginsMap[PluginManager.instance.pluginsMap.keys.toList()[value]]!.buildWidget(context, widget.entity),
+            // ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AKTabBar<T> extends StatefulWidget {
+  const AKTabBar({
+    super.key,
+    required this.children,
+    required this.groupValue,
+    required this.value,
+    this.onChanged,
+  });
+  final List<Widget> children;
+  final T groupValue;
+  final T value;
+  final void Function(T index)? onChanged;
+
+  @override
+  State<AKTabBar<T>> createState() => _AKTabBarState<T>();
+}
+
+class _AKTabBarState<T> extends State<AKTabBar<T>> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          for (var i = 0; i < widget.children.length; i++)
+            GestureDetector(
+              onTap: () {
+                widget.onChanged?.call(i as T);
+              },
+              child: Builder(builder: (context) {
+                bool isSelect = widget.value == i;
+                Color fontColor = isSelect ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface;
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
+                  decoration: BoxDecoration(
+                    color: isSelect ? fontColor.withOpacity(0.2) : Colors.transparent,
+                    borderRadius: BorderRadius.circular(12.w),
+                  ),
+                  child: DefaultTextStyle.merge(
+                    child: widget.children[i],
+                    style: TextStyle(
+                      color: fontColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.w,
+                    ),
+                  ),
+                );
+              }),
+            ),
+        ],
       ),
     );
   }

@@ -45,7 +45,7 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
             }),
             GetBuilder<ConfigController>(
               builder: (config) {
-                return Theme(data: config.theme!, child: const ADBKITAdaptiveRootWidget());
+                return const ADBKITAdaptiveRootWidget();
               },
             ),
           ],
