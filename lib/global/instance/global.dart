@@ -81,7 +81,6 @@ class Global {
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
-  // todo initial
   Pty? pty;
   Terminal terminal = Terminal(maxLines: 10000);
   core.Future<void> initTerminal() async {
@@ -95,15 +94,20 @@ class Global {
     if (GetPlatform.isMobile) {
       envir['HOME'] = RuntimeEnvir.binPath;
     }
-    envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath}:/system/lib64';
-    Directory? extenalStorage = await getExternalStorageDirectory();
     // some time we need read adb log file
-    if (GetPlatform.isAndroid) envir['TMPDIR'] = '${extenalStorage?.path}';
+    if (GetPlatform.isAndroid) {
+      envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath}:/system/lib64';
+      Directory? extenalStorage = await getExternalStorageDirectory();
+      envir['TMPDIR'] = '${extenalStorage?.path}';
+      envir['RUST_LOG'] = 'trace';
+    }
     envir['TERM'] = 'xterm-256color';
-    envir['RUST_LOG'] = 'trace';
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
+    }
+    if (Platform.environment.containsKey('SHELL')) {
+      shell = Platform.environment['SHELL']!;
     }
     // ! 直接由 pty start bash，在android上首次启动会crash
     // ! 原因未知
@@ -111,7 +115,7 @@ class Global {
       shell,
       arguments: [],
       environment: envir,
-      workingDirectory: RuntimeEnvir.binPath,
+      workingDirectory: GetPlatform.isMobile ? RuntimeEnvir.binPath : "~",
     );
     // some device need input password
     pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(

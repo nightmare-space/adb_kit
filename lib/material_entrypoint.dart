@@ -15,6 +15,7 @@ import 'config/config.dart';
 import 'config/settings.dart';
 import 'generated/l10n.dart';
 import 'global/instance/global.dart';
+import 'themes/theme.dart';
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.configPath);
@@ -114,25 +115,23 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                 return ResponsiveBreakpoints.builder(
                   child: Builder(
                     builder: (context) {
-                      /// TODO: 这个屏幕适配的方案还是有问题
-                      /// 在安卓连接第二显示器的时候，第二显示的 Android Density 比较低
-                      ///
-                      ///
-                      /// 小米14:1200.0, 2670.0 devicePixelRatio:3.0 Android DPI:480.0
                       if (ResponsiveBreakpoints.of(context).isDesktop || ResponsiveBreakpoints.of(context).isTablet) {
                         ScreenAdapter.init(896);
                       } else {
                         ScreenAdapter.init(414);
                       }
-                      return Theme(
-                        data: config.theme!,
-                        child: navigator ?? const SizedBox(),
+                      final bool isDark = window.platformBrightness == Brightness.dark;
+                      final ThemeData theme = isDark ? dark() : light();
+                      return ScreenQuery(
+                        uiWidth: 414,
+                        screenWidth: MediaQuery.of(context).size.width,
+                        child: Theme(
+                          data: theme,
+                          child: navigator ?? const SizedBox(),
+                        ),
                       );
                     },
                   ),
-                  // landscapePlatforms: [
-                  //   ResponsiveTargetPlatform.macOS,
-                  // ],
                   landscapePlatforms: ResponsiveTargetPlatform.values,
                   breakpoints: const [
                     Breakpoint(start: 0, end: 500, name: MOBILE),

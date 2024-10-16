@@ -8,23 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plugins/plugins.dart';
 import 'generated/l10n.dart';
 import 'material_entrypoint.dart';
 import 'config/config.dart';
-import 'plugins/plugin.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart';
+import 'generated/intl/messages_en.dart' as en;
+import 'generated/intl/messages_zh_CN.dart' as zh;
 
 Future<void> main() async {
   // 初始化运行时环境
-  Future.delayed(const Duration(milliseconds: 1000), () {
-    PluginManager.instance
-      ..registerADBPlugin(DashboardPlugin())
-      ..registerADBPlugin(AppStarterPlugin())
-      ..registerADBPlugin(AppManagerPlugin())
-      ..registerADBPlugin(DeviceInfoPlugin())
-      ..registerADBPlugin(ProcessPlugin())
-      ..registerADBPlugin(TaskManagerPlugin());
-  });
+  registerADBPlugin();
   runADBClient();
 }
 
@@ -51,6 +45,7 @@ Future<void> runADBClient() async {
       }
       await initSetting();
       runApp(const MaterialAppWrapper());
+      mergeI18n();
     },
     (error, stackTrace) {
       Log.e('${S.current.uncaughtDE} -> $error \n$stackTrace');
@@ -68,4 +63,9 @@ Future<void> runADBClient() async {
     Log.e('${S.current.uncaughtUE} -> ${details.exception}');
   };
   StatusBarUtil.transparent();
+}
+
+void mergeI18n() {
+  en.messages.messages.addAll(enMessage);
+  zh.messages.messages.addAll(zhCNMessage);
 }

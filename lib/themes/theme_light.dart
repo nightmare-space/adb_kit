@@ -8,10 +8,13 @@ ThemeData light({
 }) {
   final lightThemeData = ThemeData.light(useMaterial3: true);
   ColorScheme colorScheme = ColorScheme.fromSeed(
+    // TODO 搞清楚这是个啥
+    // dynamicSchemeVariant: ,
     seedColor: seed,
     brightness: Brightness.light,
     surfaceTint: Colors.red,
     surface: const Color(0xfff3f4f9),
+    surfaceContainer: const Color(0xffe8e9ee),
   );
   return lightThemeData.copyWith(
     primaryColor: colorScheme.primary,

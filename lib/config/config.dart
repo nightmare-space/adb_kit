@@ -5,7 +5,7 @@ import 'package:global_repository/global_repository.dart';
 class Config {
   Config._();
   static String packageName = 'com.nightmare.adbtools';
-  static Directory localDir = Directory('${RuntimeEnvir.configPath}/AdbTool');
+  static Directory localDir = Directory(RuntimeEnvir.dataPath);
   static File historySaveFile = File('${localDir.path}/.history');
   static String versionName = const String.fromEnvironment('VERSION');
   static String versionCode = const String.fromEnvironment('VERSION_CODE');

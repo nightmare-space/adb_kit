@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+export './theme_dark.dart';
+export './theme_light.dart';
 
 const seed = Colors.indigo;
 

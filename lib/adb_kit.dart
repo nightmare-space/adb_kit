@@ -11,7 +11,6 @@ export 'main.dart';
 export 'global/instance/page_manager.dart';
 export 'global/instance/plugin_manager.dart';
 export 'global/drawer/drawer.dart';
-export 'plugins/plugin.dart';
 export 'package:global_repository/global_repository.dart' show RuntimeEnvir;
 export 'generated/l10n.dart';
 export 'themes/theme.dart';

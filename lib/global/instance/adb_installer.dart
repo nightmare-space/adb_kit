@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:adb_kit/config/config.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_library/adb_library.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,6 @@ import 'package:global_repository/global_repository.dart';
 List<String> androidFiles = [
   'libadb.so',
   'libtermux-api.so',
-  'libtermux-callback.so',
   'libtermux-toast.so',
   'libtermux-usb.so',
 ];
@@ -38,6 +36,7 @@ class ADBInstaller {
         String filePath = '${RuntimeEnvir.binPath}/$fileName';
         // custom path, termux-api will invoke
         if (fileName == 'termux-callback') {
+          Directory(RuntimeEnvir.usrPath).createSync(recursive: true);
           filePath = '${RuntimeEnvir.usrPath}/libexec/termux-callback';
         }
         File file = File(filePath);
@@ -60,11 +59,11 @@ class ADBInstaller {
         }
       }
       Directory(RuntimeEnvir.binPath).list().listen((event) {
-        Log.i('-> $event');
-        String fileNmae = event.path.split('/').last;
-        if (fileNmae.endsWith('.so')) {
+        String fileName = event.path.split('/').last;
+        Log.i('-> $fileName');
+        if (fileName.contains('.so')) {
           // old version create some so file
-          Log.i('delete -> ${event.path}');
+          Log.i('delete -> $fileName');
           event.deleteSync();
         }
       });

@@ -37,6 +37,7 @@ class About extends ADBPage {
     return AboutPage(
       versionCode: Config.versionCode,
       appVersion: Config.versionName,
+      applicationName: 'ADB KIT',
       logo: Padding(
         padding: EdgeInsets.only(top: 64.w),
         child: SizedBox(
