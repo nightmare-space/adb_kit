@@ -1,7 +1,7 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.7-beta.2+48
+version: 1.5.7-beta.3+49
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -15,9 +15,6 @@ dependencies:
   animations: ^2.0.2
   # # desktop window stype
   # flutter_acrylic: ^1.1.0
-  # adb plugin can manager app
-  app_manager:
-    git: https://github.com/nightmare-space/app_manager
   # network
   dio: ^5.4.3
   # file drop
@@ -27,11 +24,6 @@ dependencies:
   path_provider: ^2.0.10
   # responsive ui
   responsive_framework: ^1.0.0
-  # terminal widget
-  xterm:
-    git:
-      url: https://github.com/TerminalStudio/xterm.dart
-      ref: master
   # local pty
   flutter_pty: ^0.3.1
   # # color select
@@ -42,14 +34,6 @@ dependencies:
   flutter_svg: ^1.1.0
   # state manager...
   get: ^4.6.6
-  # some foundation
-  global_repository:
-    git: https://github.com/nightmare-space/global_repository
-  # multicast on LAN
-  multicast:
-    git: https://github.com/nightmare-space/multicast
-  file_manager_view:
-    git: https://github.com/nightmare-space/file_manager_view.git
   # can receive mdns message
   multicast_dns: ^0.3.0
   # generate QR widget
@@ -60,26 +44,41 @@ dependencies:
   # launcher url
   url_launcher: ^6.0.18
   # adb command util
-  adbutil:
-    git: https://github.com/nightmare-space/adbutil
   # file selector,but developed by nightmare
   # adb plugin can launcher app
   # app_launcher:
   #   git: https://github.com/nightmare-space/app_launcher
-  # foundation settings
-  settings:
-    git: https://github.com/nightmare-space/settings
-  # adb plugin can view android device info and cpu/gpu status
-  device_info:
-    git: https://github.com/nightmare-space/device_info.git
   # can manage window on desktop
   window_manager: ^0.3.0
   flutter_markdown: ^0.6.10+2
   screenshot: ^3.0.0
   device_info_plus: ^10.1.0
   archive: ^3.4.10
-
   json_annotation: ^4.5.0
+  # some foundation
+  global_repository:
+    git: https://github.com/nightmare-space/global_repository
+  # multicast on LAN
+  multicast:
+    git: https://github.com/nightmare-space/multicast
+  file_manager_view:
+    git: https://github.com/nightmare-space/file_manager_view.git
+  adbutil:
+    git: https://github.com/nightmare-space/adbutil
+  # foundation settings
+  settings:
+    git: https://github.com/nightmare-space/settings
+  # adb plugin can view android device info and cpu/gpu status
+  device_info:
+    git: https://github.com/nightmare-space/device_info.git
+  # adb plugin can manager app
+  app_manager:
+    git: https://github.com/nightmare-space/app_manager
+  # terminal widget
+  xterm:
+    git:
+      url: https://github.com/TerminalStudio/xterm.dart
+      ref: master
   adb_kit_extension:
     git:
       url: https://github.com/nightmare-space/empty_package
@@ -92,6 +91,8 @@ dependencies:
     git:
       url: https://github.com/nightmare-space/empty_package
       path: adb_library
+  plugins:
+    path: ./plugins
 
 dev_dependencies:
   flutter_test:

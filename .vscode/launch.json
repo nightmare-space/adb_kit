@@ -33,13 +33,13 @@
             "name": "小米14",
             "request": "launch",
             "type": "dart",
-            "deviceId": "23127PN0CC",
+            "deviceId": "23127PN0CC"
         },
         {
             "name": "魅族21",
             "request": "launch",
             "type": "dart",
-            "deviceId": "MEIZU 21",
+            "deviceId": "MEIZU 21"
         },
         {
             "name": "小米平板6s",

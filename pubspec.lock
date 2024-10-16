@@ -982,6 +982,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  plugins:
+    dependency: "direct main"
+    description:
+      path: plugins
+      relative: true
+    source: path
+    version: "0.0.1"
   pool:
     dependency: transitive
     description:
@@ -1460,5 +1467,5 @@ packages:
     source: hosted
     version: "0.0.6"
 sdks:
-  dart: ">=3.5.1 <4.0.0"
+  dart: ">=3.5.3 <4.0.0"
   flutter: ">=3.24.0"
