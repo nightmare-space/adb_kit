@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adb_kit/app/model/adb_historys.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 
 class AdbEntity {
   AdbEntity(this.ip, this.port, this.dateTime);
@@ -85,6 +86,7 @@ class HistoryController extends GetxController {
     if (!Config.historySaveFile.existsSync()) {
       return;
     }
+    Log.i('Config path -> ${Config.historySaveFile.path}');
     final String data = await Config.historySaveFile.readAsString();
     try {
       adbHistorys = ADBHistorys.fromJson(jsonDecode(data) as Map<String, dynamic>);

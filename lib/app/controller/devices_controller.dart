@@ -19,6 +19,12 @@ class DevicesEntity {
   String stat;
   String uniqueId = '';
 
+  // 判断 serial 是否是 ipv4/ipv6
+
+  bool get isIp {
+    return serial.contains(':');
+  }
+
   @override
   bool operator ==(Object other) {
     // 判断是否是非
@@ -155,12 +161,13 @@ class DevicesController extends GetxController {
           }
           devicesEntity.uniqueId = id;
           devicesEntity.productModel = model;
-          if (model != null) {
+          // just network device need to save history
+          if (model != null && devicesEntity.isIp) {
             final List<String> tmp = devicesEntity.serial.split(':');
             final String address = tmp[0];
             HistoryController.updateHistory(name: model, address: address, uniqueId: id);
-            tmpDevices.add(devicesEntity);
           }
+          tmpDevices.add(devicesEntity);
         }
       }
       for (final DevicesEntity entity in otgDevices) {

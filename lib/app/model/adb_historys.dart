@@ -12,6 +12,10 @@ class ADBHistorys {
   List<ADBHistory> data;
   factory ADBHistorys.fromJson(Map<String, dynamic> json) => _$ADBHistorysFromJson(json);
   Map<String, dynamic> toJson() => _$ADBHistorysToJson(this);
+  @override
+  String toString() {
+    return jsonEncode(toJson());
+  }
 }
 
 @JsonSerializable()
