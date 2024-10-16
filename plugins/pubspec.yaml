@@ -1,0 +1,20 @@
+name: plugins
+description: "A new Flutter package project."
+version: 0.0.1
+homepage: none
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  adb_kit:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+# flutter:

@@ -25,10 +25,7 @@ class _NetworkDebugState extends State<NetworkDebug> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await execCmd(
-      '$adb -s ${widget.serial} shell getprop service.adb.tcp.port',
-    );
-    // Log.w(result);
+    final String result = await asyncExec('$adb -s ${widget.serial} shell getprop service.adb.tcp.port');
     if (result == '5555') {
       isCheck = true;
       if (mounted) {
@@ -40,25 +37,26 @@ class _NetworkDebugState extends State<NetworkDebug> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () {},
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: 48.w,
-          maxHeight: 140.w,
-        ),
+        constraints: BoxConstraints(minHeight: 48.w),
         child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: isMobile ? 54.w : 48.w,
+          height: isMobile ? 48.w : 48.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
+              SizedBox(
+                height: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           S.of(context).remoteAdbDebug,
@@ -71,21 +69,16 @@ class _NetworkDebugState extends State<NetworkDebug> {
                           isAddress(widget.serial!) ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
                           style: TextStyle(
                             fontWeight: bold,
-                            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
+                            color: colorScheme.onSurface.withOpacity(0.6),
                           ),
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 200.w, minWidth: 10.w),
-                        child: Text(
-                          S.of(context).remoteDebuSwitchgDes,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
-                            fontSize: 12.w,
-                          ),
-                        ),
+                    Text(
+                      S.of(context).remoteDebuSwitchgDes,
+                      style: TextStyle(
+                        color: colorScheme.onSurface.withOpacity(0.6),
+                        fontSize: 12.w,
                       ),
                     ),
                   ],
@@ -96,20 +89,13 @@ class _NetworkDebugState extends State<NetworkDebug> {
                 onChanged: (_) async {
                   isCheck = !isCheck;
                   final int value = isCheck ? 5555 : 0;
-                  // String result = await exec(
-                  //   'adb -s ${widget.serial} shell setprop service.adb.tcp.port $value\n'
-                  //   'adb -s ${widget.serial} shell stop adbd\n'
-                  //   'adb -s ${widget.serial} shell start adbd\n',
-                  // );
-                  // print(result);
-                  // String result;
                   int port = value;
                   if (port == 5555) {
-                    await execCmd(
+                    await asyncExec(
                       '$adb -s ${widget.serial} tcpip 5555',
                     );
                   } else {
-                    await execCmd(
+                    await asyncExec(
                       '$adb -s ${widget.serial} usb',
                     );
                   }

@@ -1,28 +1,32 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/plugins/app_manager/app_manager_wrapper.dart';
+import 'dash_board.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/generated/l10n.dart';
-import 'package:app_manager/controller/check_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class AppManagerPlugin extends Pluggable {
+/// 控制面板
+/// Dashboard
+/// A handle to the location of a widget in the widget tree.
+///
+class DashboardPlugin extends Pluggable {
   @override
   Widget buildWidget(BuildContext context, DevicesEntity? device) {
-    Get.put(CheckController());
-    return AppManagerWrapper(
-      devicesEntity: device,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+      ),
+      child: Dashboard(entity: device),
     );
   }
 
   @override
-  String get displayName => '桌面启动';
+  String get displayName => S.current.dashboard;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => S.current.appManager;
+  String get name => S.current.dashboard;
 
   @override
   void onTrigger() {}

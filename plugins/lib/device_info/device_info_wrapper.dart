@@ -2,9 +2,10 @@ import 'package:adb_kit/app/controller/controller.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 
 class DeviceInfoWrapper extends StatefulWidget {
-  const DeviceInfoWrapper({Key? key, this.devicesEntity}) : super(key: key);
+  const DeviceInfoWrapper({super.key, this.devicesEntity});
   final DevicesEntity? devicesEntity;
 
   @override
@@ -21,6 +22,11 @@ class _DeviceInfoWrapperState extends State<DeviceInfoWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return DeviceInfo();
+    return Column(
+      children: [
+        SizedBox(height: 8.w),
+        Expanded(child: DeviceInfo()),
+      ],
+    );
   }
 }

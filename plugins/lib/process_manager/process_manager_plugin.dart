@@ -117,7 +117,7 @@ class ProcessLine {
 }
 
 class ProcessManagerPage extends StatefulWidget {
-  const ProcessManagerPage({Key? key, this.devicesEntity}) : super(key: key);
+  const ProcessManagerPage({super.key, this.devicesEntity});
   final DevicesEntity? devicesEntity;
 
   @override
@@ -141,12 +141,12 @@ class _ProcessManagerPageState extends State<ProcessManagerPage> {
     await DexServer.startServer(widget.devicesEntity!.serial).then((value) {
       channel = value;
     });
-    final result = await execCmd('$adb -s ${widget.devicesEntity!.serial} shell ps -A -o pid,ppid,name,etime,rss -k -cpu');
+    final result = await asyncExec('$adb -s ${widget.devicesEntity!.serial} shell ps -A -o pid,ppid,name,etime,rss -k -cpu');
     // Log.i('result -> $result');
     // final result2 = await execCmd('$adb -s ${widget.devicesEntity!.serial} shell top -m 100 -b -d 10');
     // Log.i('result -> $result2');
     process = await Process.start(
-      '$adb',
+      adb,
       ['-s', widget.devicesEntity!.serial, 'shell', 'top', '-m', '500', '-b', '-d', '3', '-q', '-o', ' PID,USER,PR,NI,VIRT,RES,SHR,S,%CPU,%MEM,TIME+,CMDLINE,NAME,CMD'],
       environment: adbEnvir() as Map<String, String>?,
       includeParentEnvironment: true,
@@ -199,8 +199,10 @@ class _ProcessManagerPageState extends State<ProcessManagerPage> {
   @override
   Widget build(BuildContext context) {
     List<double> widths = [120.w, 120.w, 60.w];
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
+        SizedBox(height: 8.w),
         Container(
           color: Theme.of(context).primaryColor.withOpacity(0.1),
           child: Row(
@@ -210,22 +212,45 @@ class _ProcessManagerPageState extends State<ProcessManagerPage> {
                 padding: EdgeInsets.only(left: 56.w),
                 child: SizedBox(
                   width: widths[0],
-                  child: Text('PID'),
+                  child: Text(
+                    'PID',
+                    style: TextStyle(
+                      color: colorScheme.onSurface,
+                      fontSize: 14.w,
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
                 width: widths[1],
-                child: Text('RES'),
+                child: Text(
+                  'RES',
+                  style: TextStyle(
+                    color: colorScheme.onSurface,
+                    fontSize: 14.w,
+                  ),
+                ),
               ),
               SizedBox(
                 width: widths[2],
-                child: Text('CPU'),
+                child: Text(
+                  'CPU',
+                  style: TextStyle(
+                    color: colorScheme.onSurface,
+                    fontSize: 14.w,
+                  ),
+                ),
               ),
             ],
           ),
         ),
         Expanded(
           child: Scrollbar(
+            interactive: true,
+            thumbVisibility: true,
+            trackVisibility: true,
+            radius: Radius.circular(12.w),
+            thickness: 10.w,
             child: ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 final ProcessLine processLine = processLines[index];
@@ -238,7 +263,7 @@ class _ProcessManagerPageState extends State<ProcessManagerPage> {
                         Builder(builder: (_) {
                           if (channel != null && processLine.user.startsWith('u0')) {
                             return Image.network(
-                              'http://127.0.0.1:${channel?.port}/icon/${processLine.cmdline}',
+                              channel!.iconUrl(processLine.cmdline),
                               width: 40.w,
                               height: 40.w,
                               gaplessPlayback: true,

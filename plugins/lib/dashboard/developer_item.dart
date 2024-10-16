@@ -6,11 +6,11 @@ import 'package:global_repository/global_repository.dart';
 
 class DeveloperItem extends StatefulWidget {
   const DeveloperItem({
-    Key? key,
+    super.key,
     this.title,
     this.serial,
     this.putKey,
-  }) : super(key: key);
+  });
   final String? title;
   final String? serial;
   final String? putKey;
@@ -27,10 +27,7 @@ class _DeveloperItemState extends State<DeveloperItem> {
   }
 
   Future<void> initCheckState() async {
-    final String result = await execCmd(
-      '$adb -s ${widget.serial} shell settings get system ${widget.putKey}',
-    );
-    // Log.w('result -> $result');
+    final String result = await asyncExec('$adb -s ${widget.serial} shell settings get system ${widget.putKey}');
     if (result == '1') {
       isCheck = true;
       setState(() {});
@@ -41,17 +38,19 @@ class _DeveloperItemState extends State<DeveloperItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 48.w,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: 48.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              widget.title!,
-              style: TextStyle(
-                fontWeight: bold,
-                fontSize: 16.w,
+            Expanded(
+              child: Text(
+                widget.title!,
+                style: TextStyle(
+                  fontWeight: bold,
+                  fontSize: 16.w,
+                ),
               ),
             ),
             AquaSwitch(

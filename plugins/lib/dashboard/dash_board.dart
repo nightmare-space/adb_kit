@@ -18,14 +18,14 @@ import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
 import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
-import '../../app/modules/developer_tool/drag_drop.dart';
-import '../../app/modules/developer_tool/screenshot_page.dart';
 import 'developer_item.dart';
+import 'drag_drop.dart';
 import 'network_debug.dart';
+import 'screenshot_page.dart';
 import 'switch_item.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key, this.entity}) : super(key: key);
+  const Dashboard({super.key, this.entity});
 
   final DevicesEntity? entity;
   @override
@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   /// 获取卡片宽度，主要是做响应式适配的
   double getCardWidth() {
     ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
-    if (data.isPhone) {
+    if (data.isMobile) {
       return context.mediaQuerySize.width;
     } else if (data.isTablet) {
       return context.mediaQuerySize.width / 2;
@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
 
   double getMiddlePadding() {
     ResponsiveBreakpointsData data = ResponsiveBreakpoints.of(context);
-    if (data.isPhone) {
+    if (data.isMobile) {
       return 8.w;
     }
     return 4.w;
@@ -108,6 +108,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       padding: EdgeInsets.only(bottom: 64.w),
       child: Column(
         children: [
+          SizedBox(height: 8.w),
           Wrap(
             runSpacing: 8.w,
             children: [
@@ -190,9 +191,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   ),
                   SizedBox(
                     height: 200.w,
-                    child: ScreenshotPage(
-                      devicesEntity: widget.entity,
-                    ),
+                    child: ScreenshotPage(devicesEntity: widget.entity),
                   ),
                 ],
               ),
@@ -213,7 +212,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         child: SizedBox(
           height: isMobile ? 240.w : 230.w,
           child: Material(
-            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12.w),
             child: Padding(
               padding: padding,
@@ -251,19 +249,19 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                       SwitchItem(
                         title: S.of(context).showLayoutboundary,
                         onOpen: () {
-                          execCmd(
+                          asyncExec(
                             'adb -s ${widget.entity!.serial} shell setprop debug.layout true',
                           );
-                          execCmd(
+                          asyncExec(
                             'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return true;
                         },
                         onClose: () {
-                          execCmd(
+                          asyncExec(
                             'adb -s ${widget.entity!.serial} shell setprop debug.layout false',
                           );
-                          execCmd(
+                          asyncExec(
                             'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
                           );
                           return false;
@@ -291,7 +289,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(left: 8.w, right: getMiddlePadding()),
         child: Material(
-          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -313,16 +310,16 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
+                  SizedBox(height: 4.w),
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
                       title: '${GetPlatform.isDesktop ? '拖放到此或' : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
-                          if (!await PermissionUtil.requestStorage()) {
+                          PermissionStatus status = await Permission.manageExternalStorage.request();
+                          Log.i('status -> $status');
+                          if (!status.isGranted) {
                             return;
                           }
                         }
@@ -399,7 +396,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             child: Padding(
@@ -430,7 +426,9 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                       title: '${GetPlatform.isDesktop ? S.current.dropTip : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
-                          if (!await PermissionUtil.requestStorage()) {
+                          PermissionStatus status = await Permission.manageExternalStorage.request();
+                          Log.i('status -> $status');
+                          if (!status.isGranted) {
                             return;
                           }
                         }
@@ -478,7 +476,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       child: Padding(
         padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
         child: Material(
-          color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(12.w),
           child: SizedBox(
             height: isMobile ? 240.w : 230.w,
@@ -487,28 +484,31 @@ class _DashboardState extends State<Dashboard> with WindowListener {
               tappable: true,
               transitionType: ContainerTransitionType.fade,
               openBuilder: (BuildContext context, _) {
-                return Stack(
-                  children: [
-                    XTermWrapper(
-                      terminal: terminal,
-                      pseudoTerminal: adbShell,
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: GestureWithScale(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(8.w),
-                          child: Icon(
-                            Icons.fullscreen_exit,
-                            size: 24.w,
+                return Scaffold(
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  body: Stack(
+                    children: [
+                      XTermWrapper(
+                        terminal: terminal,
+                        pseudoTerminal: adbShell,
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: GestureWithScale(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(8.w),
+                            child: Icon(
+                              Icons.fullscreen_exit,
+                              size: 24.w,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
               transitionDuration: const Duration(milliseconds: 300),
@@ -524,7 +524,6 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   padding: padding,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -551,16 +550,14 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 4.w,
-                      ),
+                      SizedBox(height: 4.w),
                       Expanded(
                         child: LayoutBuilder(
                           builder: (_, box) {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(4.w),
                               child: Container(
-                                decoration: BoxDecoration(color: colorScheme.surfaceContainer),
+                                decoration: BoxDecoration(color: colorScheme.surface),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(
