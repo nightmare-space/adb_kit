@@ -1,12 +1,10 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/config/font.dart';
+import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:adb_kit/global/widget/pop_button.dart';
-import 'package:adb_kit/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart' hide TabController;
-
-import 'tab_indicator.dart';
+import 'package:plugins/file_manager/fm_plugin.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({
@@ -42,14 +40,38 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
                     value: value,
                     groupValue: value,
                     children: [
-                      for (var item in PluginManager.instance.pluginsMap.keys) Text(PluginManager.instance.pluginsMap[item]!.name),
+                      for (var item in PluginManager.instance.pluginsMap.keys)
+                        Builder(builder: (context) {
+                          Pluggable plugin = PluginManager.instance.pluginsMap[item]!;
+                          return Row(
+                            children: [
+                              Text(
+                                plugin.name,
+                              ),
+                              if (plugin is FilePlugin)
+                                Row(
+                                  children: [
+                                    SizedBox(width: 8.w),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
+                                        borderRadius: BorderRadius.circular(4.w),
+                                      ),
+                                      padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                      child: Text('Beta', style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        }),
                     ],
                     onChanged: (index) {
                       Log.d('index $index');
                       value = index;
                       pageController.animateToPage(
                         index,
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut,
                       );
                       setState(() {});
