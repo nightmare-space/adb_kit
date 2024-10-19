@@ -53,7 +53,7 @@ class DexServer {
       execuable,
       processArg,
       includeParentEnvironment: true,
-      environment: adbEnvir().cast(),
+      environment: adbEnvir(),
       runInShell: GetPlatform.isWindows ? true : false,
       // mode: ProcessStartMode.inheritStdio,
     ).then((value) {

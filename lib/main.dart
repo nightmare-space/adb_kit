@@ -2,8 +2,7 @@ library adb_tool;
 
 import 'dart:async';
 import 'dart:ui';
-import 'package:adb_kit/global/instance/plugin_manager.dart';
-import 'package:file_manager_view/file_manager_view.dart' hide Config;
+import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
