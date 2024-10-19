@@ -1,4 +1,4 @@
-# ADB工具
+# ADB KIT
 
 ![release](https://img.shields.io/github/v/release/nightmare-space/adb_tool) 
 [![Last Commits](https://img.shields.io/github/last-commit/nightmare-space/adb_tool?logo=git&logoColor=white)](https://github.com/nightmare-space/adb_tool/commits/master)
@@ -6,7 +6,9 @@
 [![Code size](https://img.shields.io/github/languages/code-size/nightmare-space/adb_tool?logo=github&logoColor=white)](https://github.com/nightmare-space/adb_tool)
 [![License](https://img.shields.io/github/license/nightmare-space/adb_tool?logo=open-source-initiative&logoColor=green)](https://github.com/nightmare-space/adb_tool/blob/master/LICENSE)
  ![Platform](https://img.shields.io/badge/support%20platform-android%20%7C%20web%20%7C%20windows%20%7C%20macos%20%7C%20linux-green) ![download time](https://img.shields.io/github/downloads/nightmare-space/adb_tool/total) ![open issues](https://img.shields.io/github/issues/nightmare-space/adb_tool) ![fork](https://img.shields.io/github/forks/nightmare-space/adb_tool?style=social) ![code line](https://img.shields.io/tokei/lines/github/nightmare-space/adb_tool) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f969750dc4aa424ead664219ddcf321d)](https://app.codacy.com/gh/nightmare-space/adb_tool?utm_source=github.com&utm_medium=referral&utm_content=nightmare-space/adb_tool&utm_campaign=Badge_Grade)
- 
+
+A Better ADB GUI and More Than a ADB GUI
+
 这是一个基于 ADB 的 ADB 客户端工具，支持 Windows、macOS、Linux 与 Android，能够更方便的使用 adb 命令行的功能，也能使用 adb 命令行不能直接使用的功能，例如应用管理、桌面启动器。
 
 ADB Toolbox 可用来提高安卓开发者的开发效率，或为极客型用户提供更强大的功能。
@@ -84,3 +86,5 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ```
+
+More Than a ADB GUI 

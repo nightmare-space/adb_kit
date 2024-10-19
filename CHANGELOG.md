@@ -1,9 +1,10 @@
-## 1.5.7-beta.2
+## 1.5.7-beta.3
 - 优化包体积(静态编译 adb, 移除 bash, 移除specs_v1.json)
 - 开源代码优化
 - 修复 Android 14上 OTG 失效的问题
 - 持续优化UI
 - 升级 target sdk 28 -> 35(为上架 Google Play 做准备)
+- 修复 ADB OTG 在 OPPO/Sumsung 上无法使用的问题
 
 ## 1.5.6
 - 修复安装apk失败的问题
