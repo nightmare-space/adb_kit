@@ -25,7 +25,7 @@ dependencies:
   # responsive ui
   responsive_framework: ^1.0.0
   # local pty
-  flutter_pty: ^0.3.1
+  flutter_pty: ^0.4.1
   # # color select
   # cyclop: ^0.5.2
   # some animations
@@ -42,7 +42,7 @@ dependencies:
   qr_code_scanner: ^1.0.0
   path: ^1.8.0
   # launcher url
-  url_launcher: ^6.0.18
+  url_launcher: ^6.3.1
   # adb command util
   # file selector,but developed by nightmare
   # adb plugin can launcher app
@@ -61,8 +61,8 @@ dependencies:
   # multicast on LAN
   multicast:
     git: https://github.com/nightmare-space/multicast
-  file_manager_view:
-    git: https://github.com/nightmare-space/file_manager_view.git
+  file_manager:
+    git: https://github.com/nightmare-space/file_manager.git
   adbutil:
     git: https://github.com/nightmare-space/adbutil
   # foundation settings

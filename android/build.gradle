@@ -2,11 +2,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url 'http://maven.rokid.com/repository/maven-public/'
-            allowInsecureProtocol = true
-        }
         maven { url 'https://jitpack.io' }
+    }
+
+    configurations.all {
+        exclude group: 'com.google.guava', module: 'listenablefuture'
     }
 }
 
@@ -21,8 +21,4 @@ subprojects {
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
-configurations.all {
-    resolutionStrategy {
-        force 'androidx.core:core-ktx:1.6.0'
-    }
-}
+

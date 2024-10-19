@@ -84,5 +84,4 @@ flutter {
 }
 
 dependencies {
-//    implementation project(":termux_api")
 }
