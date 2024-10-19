@@ -1,6 +1,7 @@
 library plugins;
 
 import 'package:adb_kit/adb_kit.dart';
+import 'package:plugins/file_manager/fm_plugin.dart';
 export 'app_launcher.dart';
 export 'app_manager/app_manager_plugin.dart';
 export 'app_starter/app_starter_plugin.dart';
@@ -20,6 +21,7 @@ void registerADBPlugin() {
   Future.delayed(const Duration(milliseconds: 1000), () {
     PluginManager.instance
       ..registerADBPlugin(DashboardPlugin())
+      ..registerADBPlugin(FilePlugin())
       ..registerADBPlugin(AppStarterPlugin())
       // ..registerADBPlugin(AppManagerPlugin())
       ..registerADBPlugin(DeviceInfoPlugin())

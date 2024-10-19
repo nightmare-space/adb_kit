@@ -7,7 +7,6 @@ import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:animations/animations.dart';
-import 'package:file_manager_view/file_manager_view.dart' hide execCmd;
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
@@ -23,6 +22,7 @@ import 'drag_drop.dart';
 import 'network_debug.dart';
 import 'screenshot_page.dart';
 import 'switch_item.dart';
+import 'package:file_manager/file_manager.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, this.entity});
@@ -339,7 +339,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           }
                         } else {
                           // ignore: use_build_context_synchronously
-                          paths = await FileSelector.pick(context);
+                          paths = await FileManager.selectFile();
                         }
                         if (paths.isEmpty) {
                           return;
@@ -445,7 +445,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           }
                         } else {
                           // ignore: use_build_context_synchronously
-                          paths = await FileSelector.pick(context);
+                          paths = await FileManager.selectFile();
                         }
                         if (paths.isEmpty) {
                           return;
