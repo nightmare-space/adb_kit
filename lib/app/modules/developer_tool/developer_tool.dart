@@ -4,14 +4,14 @@ import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:adb_kit/global/widget/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart' hide TabController;
-import 'package:plugins/file_manager/fm_plugin.dart';
+import 'package:plugins/plugins.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({
-    Key? key,
+    super.key,
     this.entity,
     this.providerContext,
-  }) : super(key: key);
+  });
   final DevicesEntity? entity;
   final BuildContext? providerContext;
 
@@ -27,71 +27,69 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: const PopButton(),
-                ),
-                Expanded(
-                  child: AKTabBar<int>(
-                    value: value,
-                    groupValue: value,
-                    children: [
-                      for (var item in PluginManager.instance.pluginsMap.keys)
-                        Builder(builder: (context) {
-                          Pluggable plugin = PluginManager.instance.pluginsMap[item]!;
-                          return Row(
-                            children: [
-                              Text(
-                                plugin.name,
-                              ),
-                              if (plugin is FilePlugin)
-                                Row(
-                                  children: [
-                                    SizedBox(width: 8.w),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
-                                        borderRadius: BorderRadius.circular(4.w),
-                                      ),
-                                      padding: EdgeInsets.symmetric(horizontal: 4.w),
-                                      child: Text('Beta', style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
-                                    ),
-                                  ],
-                                ),
-                            ],
-                          );
-                        }),
-                    ],
-                    onChanged: (index) {
-                      Log.d('index $index');
-                      value = index;
-                      pageController.animateToPage(
-                        index,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      );
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
+        child: AKI18nWrapper(
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  for (var item in PluginManager.instance.pluginsMap.keys) PluginManager.instance.pluginsMap[item]!.buildWidget(context, widget.entity),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: const PopButton(),
+                  ),
+                  Expanded(
+                    child: AKTabBar<int>(
+                      value: value,
+                      groupValue: value,
+                      children: [
+                        for (var item in PluginManager.instance.pluginsMap.keys)
+                          Builder(builder: (context) {
+                            ADBKITPlugin plugin = PluginManager.instance.pluginsMap[item]!;
+                            plugin.context = context;
+                            return Row(
+                              children: [
+                                Text(plugin.name),
+                                if (plugin is FilePlugin)
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 8.w),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
+                                          borderRadius: BorderRadius.circular(4.w),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                        child: Text('Beta', style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            );
+                          }),
+                      ],
+                      onChanged: (index) {
+                        Log.d('index $index');
+                        value = index;
+                        pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOut,
+                        );
+                        setState(() {});
+                      },
+                    ),
+                  ),
                 ],
               ),
-            ),
-            // Expanded(
-            //   child: PluginManager.instance.pluginsMap[PluginManager.instance.pluginsMap.keys.toList()[value]]!.buildWidget(context, widget.entity),
-            // ),
-          ],
+              Expanded(
+                child: PageView(
+                  controller: pageController,
+                  children: [
+                    for (var item in PluginManager.instance.pluginsMap.values) item.buildWidget(context, widget.entity),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

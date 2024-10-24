@@ -600,36 +600,6 @@ class S {
     );
   }
 
-  /// `Commont Switch`
-  String get commonSwitch {
-    return Intl.message(
-      'Commont Switch',
-      name: 'commonSwitch',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Display Touch Feedback`
-  String get displayTouch {
-    return Intl.message(
-      'Display Touch Feedback',
-      name: 'displayTouch',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Display screen pointer`
-  String get displayScreenPointer {
-    return Intl.message(
-      'Display screen pointer',
-      name: 'displayScreenPointer',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Remote Adb Debug`
   String get remoteAdbDebug {
     return Intl.message(
@@ -665,46 +635,6 @@ class S {
     return Intl.message(
       'Without Root',
       name: 'remoteDebuSwitchgDes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Show Layoutboundary`
-  String get showLayoutboundary {
-    return Intl.message(
-      'Show Layoutboundary',
-      name: 'showLayoutboundary',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Install Apk`
-  String get installApk {
-    return Intl.message(
-      'Install Apk',
-      name: 'installApk',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Upload File`
-  String get uploadFile {
-    return Intl.message(
-      'Upload File',
-      name: 'uploadFile',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Tap button to select file`
-  String get pushTips {
-    return Intl.message(
-      'Tap button to select file',
-      name: 'pushTips',
       desc: '',
       args: [],
     );
@@ -860,16 +790,6 @@ class S {
     );
   }
 
-  /// `Screenshots`
-  String get screenshot {
-    return Intl.message(
-      'Screenshots',
-      name: 'screenshot',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `It's like a developer's wallet. Nothing`
   String get noHistoryTip {
     return Intl.message(
@@ -935,16 +855,6 @@ class S {
     return Intl.message(
       'Reconnect',
       name: 'reconnect',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Drop file here or`
-  String get dropTip {
-    return Intl.message(
-      'Drop file here or',
-      name: 'dropTip',
       desc: '',
       args: [],
     );

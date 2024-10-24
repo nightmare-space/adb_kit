@@ -13,85 +13,88 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class HistoryPage extends GetView<HistoryController> {
-  const HistoryPage({Key? key}) : super(key: key);
+  const HistoryPage({super.key});
+  ConfigController get configController => Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final ConfigController configController = Get.find();
-    AppBar? appBar;
-    if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
-      appBar = AppBar(
-        title: Text(S.of(context).historyConnect),
-        automaticallyImplyLeading: false,
-        leading: Menubutton(
-          scaffoldContext: context,
-        ),
-      );
-    }
-    return Scaffold(
-      appBar: appBar,
-      body: GetBuilder<HistoryController>(
-        builder: (ctl) {
-          if (controller.adbHistorys.data.isEmpty) {
-            return Center(
-              child: Text(
-                S.current.noHistoryTip,
-                style: TextStyle(
-                  color: AppColors.fontDetail,
+    return Builder(builder: (context) {
+      AppBar? appBar;
+      if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
+        appBar = AppBar(
+          title: Text(S.of(context).historyConnect),
+          automaticallyImplyLeading: false,
+          leading: Menubutton(
+            scaffoldContext: context,
+          ),
+        );
+      }
+      return Scaffold(
+        appBar: appBar,
+        body: GetBuilder<HistoryController>(
+          builder: (ctl) {
+            S s = S.of(context);
+            if (controller.adbHistorys.data.isEmpty) {
+              return Center(
+                child: Text(
+                  s.noHistoryTip,
+                  style: TextStyle(
+                    color: AppColors.fontDetail,
+                  ),
+                ),
+              );
+            }
+            return SafeArea(
+              left: false,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+                child: Stack(
+                  children: [
+                    CardItem(
+                      padding: EdgeInsets.zero,
+                      child: ListView.builder(
+                        itemCount: controller.adbHistorys.data.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (c, i) {
+                          final ADBHistory adbEntity = controller.adbHistorys.data[i];
+                          return Dismissible(
+                            key: Key(i.toString()),
+                            onDismissed: (direction) {
+                              ctl.removeHis(i);
+                            },
+                            child: buildItem(adbEntity, context),
+                          );
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(8.w),
+                        margin: EdgeInsets.all(8.w),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10.w),
+                        ),
+                        child: Text(
+                          s.deleteHistoryTip,
+                          style: TextStyle(color: Colors.green, fontSize: 12.w),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );
-          }
-          return SafeArea(
-            left: false,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-              child: Stack(
-                children: [
-                  CardItem(
-                    padding: EdgeInsets.zero,
-                    child: ListView.builder(
-                      itemCount: controller.adbHistorys.data.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (c, i) {
-                        final ADBHistory adbEntity = controller.adbHistorys.data[i];
-                        return Dismissible(
-                          key: Key(i.toString()),
-                          onDismissed: (direction) {
-                            ctl.removeHis(i);
-                          },
-                          child: buildItem(adbEntity, context),
-                        );
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      margin: EdgeInsets.all(8.w),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        S.current.deleteHistoryTip,
-                        style: TextStyle(color: Colors.green, fontSize: 12.w),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
+          },
+        ),
+      );
+    });
   }
 
   InkWell buildItem(ADBHistory adbEntity, BuildContext context) {
-    print('Theme.of(context).textTheme.bodyMedium!.color -> ${Theme.of(context).textTheme.bodyMedium!.color}');
+    // print('Theme.of(context).textTheme.bodyMedium!.color -> ${Theme.of(context).textTheme.bodyMedium!.color}');
     return InkWell(
       onTap: () async {
         AdbResult result;

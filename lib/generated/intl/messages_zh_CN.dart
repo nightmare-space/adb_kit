@@ -39,7 +39,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLog": MessageLookupByLibrary.simpleMessage("更新日志"),
         "chooseInstallPath": MessageLookupByLibrary.simpleMessage("选择安装路径"),
         "commonServiceStartup": MessageLookupByLibrary.simpleMessage("常用服务启动"),
-        "commonSwitch": MessageLookupByLibrary.simpleMessage("常用开关"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("连接方法"),
         "connectMethodDes1":
             MessageLookupByLibrary.simpleMessage("1.设备与PC处于于一个局域网"),
@@ -53,7 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyed": MessageLookupByLibrary.simpleMessage("已复制"),
         "currentDebug": MessageLookupByLibrary.simpleMessage("当前"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
-        "dashboard": MessageLookupByLibrary.simpleMessage("控制面吧"),
+        "dashboard": MessageLookupByLibrary.simpleMessage("控制面板"),
         "debugPaintLayerBordersEnabled":
             MessageLookupByLibrary.simpleMessage("显示层级边界"),
         "debugPaintPointersEnabled":
@@ -71,9 +70,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "deviceInfo": MessageLookupByLibrary.simpleMessage("设备信息"),
         "deviceNotConnect": MessageLookupByLibrary.simpleMessage("设备未正常连接"),
         "disconnect": MessageLookupByLibrary.simpleMessage("断开连接"),
-        "displayScreenPointer": MessageLookupByLibrary.simpleMessage("显示屏幕指针"),
-        "displayTouch": MessageLookupByLibrary.simpleMessage("显示触摸反馈"),
-        "dropTip": MessageLookupByLibrary.simpleMessage("拖放到此或"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "适配部分设备没有 \n/data/local/tmp 的权限问题"),
@@ -84,7 +80,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("输入对方设备IP连接"),
         "inputFormat":
             MessageLookupByLibrary.simpleMessage("输入格式为“IP地址:端口号 配对码”"),
-        "installApk": MessageLookupByLibrary.simpleMessage("安装Apk"),
         "installApkFailed": MessageLookupByLibrary.simpleMessage("安装失败"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
             "建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。"),
@@ -113,7 +108,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
         "processManager": MessageLookupByLibrary.simpleMessage("进程管理"),
-        "pushTips": MessageLookupByLibrary.simpleMessage("点击按钮选择文件"),
         "rebootServer": MessageLookupByLibrary.simpleMessage("重启服务"),
         "reconnect": MessageLookupByLibrary.simpleMessage("重新连接"),
         "releaseToAction": MessageLookupByLibrary.simpleMessage("释放以执行操作"),
@@ -124,11 +118,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
             "点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接"),
         "scanToConnect": MessageLookupByLibrary.simpleMessage("扫码连接"),
-        "screenshot": MessageLookupByLibrary.simpleMessage("截图"),
         "serverPath": MessageLookupByLibrary.simpleMessage("服务端路径"),
         "setting": MessageLookupByLibrary.simpleMessage("设置"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
-        "showLayoutboundary": MessageLookupByLibrary.simpleMessage("显示布局边界"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("打开性能监控"),
         "showSemanticsDebugger": MessageLookupByLibrary.simpleMessage("显示组件语义"),
@@ -146,7 +138,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "udpCF": MessageLookupByLibrary.simpleMessage("通过UDP发现自动连接设备失败"),
         "uncaughtDE": MessageLookupByLibrary.simpleMessage("未捕捉到的Dart异常"),
         "uncaughtUE": MessageLookupByLibrary.simpleMessage("未捕捉到的UI构建异常"),
-        "uploadFile": MessageLookupByLibrary.simpleMessage("上传文件"),
         "uploadingFile": m1,
         "view": MessageLookupByLibrary.simpleMessage("界面")
       };

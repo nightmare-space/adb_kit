@@ -1,14 +1,14 @@
 import 'package:adb_kit/core/interface/pluggable.dart';
 
-/// 插件管理器
+/// A singleton class that manages all the plugins registered in the app.
 class PluginManager {
   static PluginManager? _instance;
 
-  Map<String, Pluggable> get pluginsMap => _pluginsMap;
+  Map<String, ADBKITPlugin> get pluginsMap => _pluginsMap;
 
-  final Map<String, Pluggable> _pluginsMap = {};
+  final Map<String, ADBKITPlugin> _pluginsMap = {};
 
-  Pluggable? _activatedPluggable;
+  ADBKITPlugin? _activatedPluggable;
   String? get activatedPluggableName => _activatedPluggable?.name;
 
   static PluginManager get instance {
@@ -19,14 +19,14 @@ class PluginManager {
   PluginManager._();
 
   /// Register a single [plugin]
-  void registerADBPlugin(Pluggable plugin) {
-    if (plugin.name.isEmpty) {
+  void registerADBPlugin(ADBKITPlugin plugin) {
+    if (plugin.id.isEmpty) {
       return;
     }
-    _pluginsMap[plugin.name] = plugin;
+    _pluginsMap[plugin.id] = plugin;
   }
 
-  void registerDrawerPage(Pluggable plugin) {
+  void registerDrawerPage(ADBKITPlugin plugin) {
     // TODO
     // if (plugin.name.isEmpty) {
     //   return;
@@ -35,17 +35,17 @@ class PluginManager {
   }
 
   /// Register multiple [plugins]
-  void registerAll(List<Pluggable> plugins) {
+  void registerAll(List<ADBKITPlugin> plugins) {
     for (final plugin in plugins) {
       registerADBPlugin(plugin);
     }
   }
 
-  void activatePluggable(Pluggable pluggable) {
+  void activatePluggable(ADBKITPlugin pluggable) {
     _activatedPluggable = pluggable;
   }
 
-  void deactivatePluggable(Pluggable pluggable) {
+  void deactivatePluggable(ADBKITPlugin pluggable) {
     if (_activatedPluggable?.name == pluggable.name) {
       _activatedPluggable = null;
     }

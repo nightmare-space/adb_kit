@@ -42,7 +42,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose install path"),
         "commonServiceStartup":
             MessageLookupByLibrary.simpleMessage("Service Startup"),
-        "commonSwitch": MessageLookupByLibrary.simpleMessage("Commont Switch"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("Connect Method"),
         "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
             "1.Device and computer on the same LAN"),
@@ -77,11 +76,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "deviceNotConnect":
             MessageLookupByLibrary.simpleMessage("Device not connect"),
         "disconnect": MessageLookupByLibrary.simpleMessage("Disconnect"),
-        "displayScreenPointer":
-            MessageLookupByLibrary.simpleMessage("Display screen pointer"),
-        "displayTouch":
-            MessageLookupByLibrary.simpleMessage("Display Touch Feedback"),
-        "dropTip": MessageLookupByLibrary.simpleMessage("Drop file here or"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "fix some device without \n/data/local/tmp permission"),
@@ -93,7 +87,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "Input Device Address To Connect"),
         "inputFormat": MessageLookupByLibrary.simpleMessage(
             "Input format is \"IP:PORT CODE\""),
-        "installApk": MessageLookupByLibrary.simpleMessage("Install Apk"),
         "installApkFailed":
             MessageLookupByLibrary.simpleMessage("Install failed"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
@@ -131,8 +124,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
         "processManager":
             MessageLookupByLibrary.simpleMessage("Process Manager"),
-        "pushTips":
-            MessageLookupByLibrary.simpleMessage("Tap button to select file"),
         "rebootServer": MessageLookupByLibrary.simpleMessage("Reboot Server"),
         "reconnect": MessageLookupByLibrary.simpleMessage("Reconnect"),
         "releaseToAction":
@@ -146,12 +137,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer"),
         "scanToConnect":
             MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
-        "screenshot": MessageLookupByLibrary.simpleMessage("Screenshots"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "showLayoutboundary":
-            MessageLookupByLibrary.simpleMessage("Show Layoutboundary"),
         "showPerformanceOverlay":
             MessageLookupByLibrary.simpleMessage("Show Performance Overlay"),
         "showSemanticsDebugger":
@@ -173,7 +161,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uncaught Dart Exception"),
         "uncaughtUE":
             MessageLookupByLibrary.simpleMessage("Uncaught UI Exception"),
-        "uploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
         "uploadingFile": m1,
         "view": MessageLookupByLibrary.simpleMessage("View")
       };

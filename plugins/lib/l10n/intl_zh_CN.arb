@@ -1,0 +1,16 @@
+{
+  "@@locale": "zh_CN",
+  "file_manager": "文件管理",
+  "common_switch": "常用开关",
+  "screenshot": "截图",
+  "display_touch": "显示触摸反馈",
+  "displayScreenPointer": "显示屏幕指针",
+  "showLayoutboundary": "显示布局边界",
+  "install_apk": "安装Apk",
+  "upload_file": "上传文件",
+  "drop_tip": "拖放到此或",
+  "remoteAdbDebug": "远程调试",
+  "remoteDebuSwitchgDes": "无需root可让设备打开远程调试",
+  "currentDebug": "当前",
+  "remoteDebugDes": "远程"
+}

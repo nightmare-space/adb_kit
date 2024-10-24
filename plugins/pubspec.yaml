@@ -8,6 +8,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
   flutter:
     sdk: flutter
   adb_kit:
@@ -16,8 +18,19 @@ dependencies:
     git:
       url: https://github.com/nightmare-space/app_channel
   get: ^4.6.6
+  # some animations
+  flutter_spinkit: ^5.1.0
+  flutter_lints: ^4.0.0
+  # localizations
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  intl_utils: ^2.8.7
+  retrofit_generator: ^8.1.0
+  build_runner: ^2.1.11
+  json_serializable: ^6.2.0
+
+flutter_intl:
+  enabled: true

@@ -79,7 +79,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
                       configController.changePassword(controller.text);
                       Get.back();
                     },
-                    child: Text('确定'),
+                    child: const Text('确定'),
                   ),
                   SizedBox(width: 8.w),
                 ],

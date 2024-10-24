@@ -28,20 +28,4 @@ class PluginUtil {
     });
     _init = true;
   }
-
-  static void writeToOTG(String data) {
-    _channel.invokeMethod('write', data);
-  }
-
-  static Future<void> pushToOTG(String local, String remote) async {
-    await _channel.invokeMethod('push', [local, remote]);
-  }
-
-  static Future<String?> execCmd(String cmd) async {
-    return await _channel.invokeMethod('exec_cmd', cmd);
-  }
-
-  static Future<String?> changeNetDbugStatus(int port) async {
-    return await _channel.invokeMethod('tcpip', port);
-  }
 }

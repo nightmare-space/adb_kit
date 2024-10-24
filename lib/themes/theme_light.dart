@@ -12,7 +12,6 @@ ThemeData light({
     // dynamicSchemeVariant: ,
     seedColor: seed,
     brightness: Brightness.light,
-    surfaceTint: Colors.red,
     surface: const Color(0xfff3f4f9),
     surfaceContainer: const Color(0xffe8e9ee),
   );

@@ -1,9 +1,6 @@
 import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/config/config.dart';
-import 'package:adb_kit/global/instance/global.dart';
-import 'package:adb_kit/global/instance/page_manager.dart';
-import 'package:adb_kit/utils/plugin_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -18,9 +15,9 @@ import 'views/tablet_home.dart';
 
 class ADBKITAdaptiveRootWidget extends StatefulWidget {
   const ADBKITAdaptiveRootWidget({
-    Key? key,
+    super.key,
     this.packageName,
-  }) : super(key: key);
+  });
 
   final String? packageName;
   @override
@@ -71,7 +68,6 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> wit
 
   @override
   Widget build(BuildContext context) {
-    Global().page ??= PageManager.instance!.pages.first.buildPage(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
@@ -82,24 +78,20 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> wit
               systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
               systemNavigationBarDividerColor: Colors.transparent,
             ),
-      child: Stack(
-        children: [
-          Builder(
-            builder: (context) {
-              // TODO bug
-              if (ResponsiveBreakpoints.of(context).isDesktop || (configController.screenType?.isDesktop ?? false)) {
-                return const DesktopHome();
-              }
-              if (ResponsiveBreakpoints.of(context).isTablet || (configController.screenType?.isTablet ?? false)) {
-                return const TableHome();
-              }
-              if (ResponsiveBreakpoints.of(context).isMobile || (configController.screenType?.isPhone ?? false)) {
-                return const MobileHome();
-              }
-              return const SizedBox();
-            },
-          ),
-        ],
+      child: Builder(
+        builder: (context) {
+          // TODO bug
+          if (ResponsiveBreakpoints.of(context).isDesktop || (configController.screenType?.isDesktop ?? false)) {
+            return const DesktopHome();
+          }
+          if (ResponsiveBreakpoints.of(context).isTablet || (configController.screenType?.isTablet ?? false)) {
+            return const TabletHome();
+          }
+          if (ResponsiveBreakpoints.of(context).isMobile || (configController.screenType?.isPhone ?? false)) {
+            return const MobileHome();
+          }
+          return const SizedBox();
+        },
       ),
     );
   }

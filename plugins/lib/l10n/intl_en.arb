@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "file_manager": "File Manager",
+  "common_switch": "Common Switch",
+  "screenshot": "Screenshot",
+  "display_touch": "Display Touch Feedback",
+  "displayScreenPointer": "Display Screen Pointer",
+  "showLayoutboundary": "Show Layoutboundary",
+  "install_apk": "Install Apk",
+  "upload_file": "Upload File",
+  "drop_tip": "Drop here or",
+  "pushTips": "Tap button to select file",
+  "remoteAdbDebug": "Remote Adb Debug",
+  "remoteDebuSwitchgDes": "Without Root",
+  "currentDebug": "Current",
+  "remoteDebugDes": "Remote"
+}

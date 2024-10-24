@@ -6,8 +6,6 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/global/widget/xliv-switch.dart';
 import 'package:adb_kit/themes/theme.dart';
-import 'package:adb_kit/themes/theme_dark.dart';
-import 'package:adb_kit/themes/theme_light.dart';
 // import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

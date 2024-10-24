@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:plugins/plugins.dart';
+import 'package:plugins/plugins.dart' as plugins;
 import 'generated/l10n.dart';
 import 'material_entrypoint.dart';
 import 'config/config.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart';
-import 'generated/intl/messages_en.dart' as en;
-import 'generated/intl/messages_zh_CN.dart' as zh;
+import 'generated/intl/messages_en.dart' as messages_en;
+import 'generated/intl/messages_zh_CN.dart' as messages_zh_cn;
 
 Future<void> main() async {
   // 初始化运行时环境
-  registerADBPlugin();
+  plugins.registerADBPlugin();
   runADBClient();
 }
 
@@ -37,6 +37,7 @@ Future<void> runADBClient() async {
       initPersonal();
       if (!GetPlatform.isIOS) {
         final dir = (await getApplicationSupportDirectory()).path;
+        Log.d('ApplicationSupportDirectory: $dir');
         RuntimeEnvir.initEnvirWithPackageName(
           Config.packageName,
           appSupportDirectory: dir,
@@ -65,6 +66,8 @@ Future<void> runADBClient() async {
 }
 
 void mergeI18n() {
-  en.messages.messages.addAll(enMessage);
-  zh.messages.messages.addAll(zhCNMessage);
+  messages_en.messages.messages.addAll(enMessage);
+  messages_zh_cn.messages.messages.addAll(zhCNMessage);
+  messages_en.messages.messages.addAll(plugins.en_message);
+  messages_zh_cn.messages.messages.addAll(plugins.zh_cn_messages);
 }

@@ -19,7 +19,6 @@ import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
 import 'adb_installer.dart';
-import 'page_manager.dart';
 
 extension PTYExt on Pty {
   void writeString(String data) {
@@ -51,10 +50,10 @@ class BoundedQueue<T> {
 }
 
 class Global {
-  factory Global() => _getInstance()!;
+  factory Global() => _getInstance();
   Global._internal() {
     // Log.defaultLogger.printer = const Print();
-    Directory(RuntimeEnvir.binPath!).createSync(recursive: true);
+    Directory(RuntimeEnvir.binPath).createSync(recursive: true);
     HomeBinding().dependencies();
   }
 
@@ -68,12 +67,6 @@ class Global {
 
   Terminal otgTerminal = Terminal();
 
-  String drawerRoute = PageManager.instance!.pages.first.runtimeType.toString();
-  Widget? page;
-  void changeDrawerRoute(core.String route) {
-    drawerRoute = route;
-  }
-
   bool isInit = false;
   Multicast multicast = Multicast(
     port: adbToolUdpPort,
@@ -84,20 +77,17 @@ class Global {
   Pty? pty;
   Terminal terminal = Terminal(maxLines: 10000);
   core.Future<void> initTerminal() async {
-    if (Platform.isAndroid) {
+    Map<String, String> envir = RuntimeEnvir.envir();
+    if (GetPlatform.isMobile) {}
+    if (GetPlatform.isAndroid) {
       String? libPath = await AdbLibrary.getLibPath();
       RuntimeEnvir.put("PATH", '$libPath:${RuntimeEnvir.path}');
-    }
-    Map<String, String> envir = RuntimeEnvir.envir();
-    // 设置HOME变量到应用内路径会引发异常
-    // 例如 neofetch命令
-    if (GetPlatform.isMobile) {
+      // PC 设置HOME变量到应用内路径会引发异常
+      // 例如 neofetch命令
       envir['HOME'] = RuntimeEnvir.binPath;
-    }
-    // some time we need read adb log file
-    if (GetPlatform.isAndroid) {
       envir['LD_LIBRARY_PATH'] = '${RuntimeEnvir.binPath}:/system/lib64';
       Directory? extenalStorage = await getExternalStorageDirectory();
+      // some time we need read adb log file
       envir['TMPDIR'] = '${extenalStorage?.path}';
       envir['RUST_LOG'] = 'trace';
     }
