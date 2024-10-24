@@ -8,13 +8,15 @@ import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'drawer.dart';
+
 class DesktopPhoneDrawer extends StatefulWidget {
   const DesktopPhoneDrawer({
-    Key? key,
+    super.key,
     this.onChanged,
     this.groupValue,
     this.width,
-  }) : super(key: key);
+  });
   final void Function(Widget page)? onChanged;
   final String? groupValue;
   final double? width;
@@ -29,8 +31,9 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   @override
   Widget build(BuildContext context) {
     final double? width = widget.width;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Material(
-      color: ResponsiveBreakpoints.of(context).isDesktop ? Theme.of(context).colorScheme.background.withOpacity(0.2) : Theme.of(context).colorScheme.background,
+      color: ResponsiveBreakpoints.of(context).isDesktop ? colorScheme.surface.withOpacity(0.2) : colorScheme.surface,
       borderRadius: BorderRadius.circular(16.w),
       child: OrientationBuilder(
         builder: (context, orientation) {
@@ -80,25 +83,30 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
   }
 
   Widget buildBody(BuildContext context) {
+    List<Widget> drawers = desktopPhoneDrawer(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 8.w),
         if (Custom.drawerHeader != null) Custom.drawerHeader!,
-        for (ADBPage page in PageManager.instance!.pages)
-          if (page.isActive)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: InkWell(
-                onTap: () {
-                  Global().changeDrawerRoute(page.runtimeType.toString());
-                  widget.onChanged!(page.buildPage(context));
-                },
-                borderRadius: BorderRadius.circular(8.w),
-                child: page.buildDrawer(context),
-              ),
-            ),
+        for (int i = 0; i < drawers.length; i++)
+          Builder(
+            builder: (context) {
+              Widget drawer = drawers[i];
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: InkWell(
+                  onTap: () {
+                    final page = pages(context);
+                    widget.onChanged?.call(page[i]);
+                  },
+                  borderRadius: BorderRadius.circular(8.w),
+                  child: drawer,
+                ),
+              );
+            },
+          ),
       ],
     );
   }
@@ -108,13 +116,13 @@ final ConfigController configController = Get.find();
 
 class DrawerItem extends StatelessWidget {
   const DrawerItem({
-    Key? key,
+    super.key,
     this.title,
     this.onTap,
     this.value,
     this.groupValue,
     this.iconData,
-  }) : super(key: key);
+  });
   final String? title;
   final void Function(String value)? onTap;
   final String? value;

@@ -1,15 +1,12 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/app/modules/drawer/drawer.dart';
 import 'package:adb_kit/app/routes/ripple_router.dart';
 import 'package:adb_kit/config/custom.dart';
 import 'package:adb_kit/config/settings.dart';
-import 'package:adb_kit/core/interface/adb_page.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
-import 'package:adb_kit/global/instance/page_manager.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/themes/theme.dart';
-import 'package:adb_kit/themes/theme_dark.dart';
-import 'package:adb_kit/themes/theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -17,10 +14,10 @@ import 'package:settings/settings.dart';
 
 class TabletDrawer extends StatefulWidget {
   const TabletDrawer({
-    Key? key,
+    super.key,
     this.onChanged,
     this.groupValue,
-  }) : super(key: key);
+  });
   final void Function(Widget page)? onChanged;
   final String? groupValue;
 
@@ -66,24 +63,29 @@ class _TabletDrawerState extends State<TabletDrawer> {
   }
 
   Column buildBody(BuildContext context) {
+    List<Widget> drawers = tabletDrawer(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 8.w),
         if (Custom.drawerHeader != null) Custom.drawerHeader!,
-        for (ADBPage page in PageManager.instance!.pages)
-          if (page.isActive)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(8.w),
-                onTap: () {
-                  Global().changeDrawerRoute(page.runtimeType.toString());
-                  widget.onChanged!(page.buildPage(context));
-                },
-                child: page.buildTabletDrawer(context),
-              ),
-            ),
+        for (int i = 0; i < drawers.length; i++)
+          Builder(
+            builder: (context) {
+              Widget drawer = drawers[i];
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8.w),
+                  onTap: () {
+                    final page = pages(context);
+                    widget.onChanged?.call(page[i]);
+                  },
+                  child: drawer,
+                ),
+              );
+            },
+          ),
         Builder(builder: (context) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),

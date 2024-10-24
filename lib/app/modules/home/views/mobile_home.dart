@@ -1,4 +1,5 @@
-import 'package:adb_kit/app/modules/drawer/desktop_phone_drawer.dart';
+import 'package:adb_kit/app/modules/drawer/drawer.dart';
+import 'package:adb_kit/app/modules/drawer/drawer_desktop_phone.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,9 @@ class _MobileHomeState extends State<MobileHome> {
     return Scaffold(
       drawer: DesktopPhoneDrawer(
         width: MediaQuery.of(context).size.width * 2 / 3,
-        groupValue: Global().drawerRoute,
+        groupValue: drawerRoute,
         onChanged: (value) {
-          Global().page = value;
+          page = value;
           setState(() {});
           Navigator.pop(context);
         },
@@ -37,7 +38,7 @@ class _MobileHomeState extends State<MobileHome> {
           );
         },
         duration: const Duration(milliseconds: 300),
-        child: Global().page,
+        child: page,
       ),
     );
   }

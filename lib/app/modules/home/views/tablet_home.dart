@@ -1,26 +1,27 @@
-import 'package:adb_kit/app/modules/drawer/tablet_drawer.dart';
+import 'package:adb_kit/app/modules/drawer/drawer.dart';
+import 'package:adb_kit/app/modules/drawer/drawer_tablet.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
-class TableHome extends StatefulWidget {
-  const TableHome({Key? key}) : super(key: key);
+class TabletHome extends StatefulWidget {
+  const TabletHome({Key? key}) : super(key: key);
 
   @override
-  State<TableHome> createState() => _TableHomeState();
+  State<TabletHome> createState() => _TabletHomeState();
 }
 
-class _TableHomeState extends State<TableHome> {
+class _TabletHomeState extends State<TabletHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
           TabletDrawer(
-            groupValue: Global().drawerRoute,
+            groupValue: drawerRoute,
             onChanged: (value) {
-              Global().page = value;
+              page = value;
               setState(() {});
             },
           ),
@@ -45,7 +46,7 @@ class _TableHomeState extends State<TableHome> {
                 );
               },
               duration: const Duration(milliseconds: 300),
-              child: Global().page,
+              child: page,
             ),
           ),
         ],
