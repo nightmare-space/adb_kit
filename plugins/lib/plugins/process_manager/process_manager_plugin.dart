@@ -39,15 +39,12 @@ String testOut = '''
 13004 root         20   0    0    0    0 I  0.0   0.0   0:00.25 [kworker/u16:6-events_unbound]
 13003 root         20   0    0    0    0 I  0.0   0.0   0:01.78 [kworker/u16:5-memlat_wq]''';
 
-// TODO 安卓14上挂了
-class ProcessPlugin extends Pluggable {
+// TODO 安卓14上挂了, 2024.10.22 测试又是好的
+class ProcessPlugin extends ADBKITPlugin {
   @override
   Widget buildWidget(BuildContext context, DevicesEntity? device) {
     return ProcessManagerPage(devicesEntity: device);
   }
-
-  @override
-  String get displayName => S.current.processManager;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
@@ -57,6 +54,8 @@ class ProcessPlugin extends Pluggable {
 
   @override
   void onTrigger() {}
+  @override
+  String get id => '$this';
 }
 
 // def PID,USER,PR,NI,VIRT,RES,SHR,S,%CPU,%MEM,TIME+,CMDLINE

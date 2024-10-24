@@ -10,9 +10,9 @@ import 'package:global_repository/global_repository.dart';
 
 class AppManagerWrapper extends StatefulWidget {
   const AppManagerWrapper({
-    Key? key,
+    super.key,
     required this.devicesEntity,
-  }) : super(key: key);
+  });
   final DevicesEntity? devicesEntity;
 
   @override
@@ -29,9 +29,9 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
   }
 
   Future<void> startServer() async {
-    AppChannel appChannel = (await DexServer.startServer(
+    AppChannel appChannel = await DexServer.startServer(
       widget.devicesEntity!.serial,
-    ))!;
+    );
     controller.setAppChannel(appChannel);
     if (mounted) {
       setState(() {});
@@ -40,7 +40,7 @@ class _AppManagerWrapperState extends State<AppManagerWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (!DexServer.serverStartList.keys.contains(widget.devicesEntity!.serial)) {
+    if (!DexServer.serverStartList.containsKey(widget.devicesEntity!.serial)) {
       return SpinKitDualRing(
         color: AppColors.accent,
         size: 20.w,

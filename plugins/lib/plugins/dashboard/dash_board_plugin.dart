@@ -8,19 +8,18 @@ import 'package:flutter/material.dart';
 /// Dashboard
 /// A handle to the location of a widget in the widget tree.
 ///
-class DashboardPlugin extends Pluggable {
+class DashboardPlugin extends ADBKITPlugin {
   @override
   Widget buildWidget(BuildContext context, DevicesEntity? device) {
     return Theme(
       data: Theme.of(context).copyWith(
         canvasColor: Theme.of(context).colorScheme.surfaceContainerLowest,
       ),
-      child: Dashboard(entity: device),
+      child: Center(
+        child: Dashboard(serial: device!.serial),
+      ),
     );
   }
-
-  @override
-  String get displayName => S.current.dashboard;
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
@@ -30,4 +29,6 @@ class DashboardPlugin extends Pluggable {
 
   @override
   void onTrigger() {}
+  @override
+  String get id => '$this';
 }

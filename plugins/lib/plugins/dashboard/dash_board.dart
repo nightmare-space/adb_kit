@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:adb_kit/adb_kit.dart';
+import 'package:adb_kit/adb_kit.dart' hide S;
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
+import 'package:plugins/generated/l10n.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
@@ -25,9 +26,9 @@ import 'switch_item.dart';
 import 'package:file_manager/file_manager.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key, this.entity});
+  const Dashboard({super.key, required this.serial});
 
-  final DevicesEntity? entity;
+  final String serial;
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -65,14 +66,14 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     if (GetPlatform.isWindows) {
       adbShell = Pty.start(
         'cmd',
-        arguments: ['/C', 'adb', '-s', widget.entity!.serial, 'shell'],
+        arguments: ['/C', 'adb', '-s', widget.serial, 'shell'],
         environment: envir() as Map<String, String>?,
         workingDirectory: '/',
       );
     } else {
       adbShell = Pty.start(
         adb,
-        arguments: ['-s', widget.entity!.serial, 'shell'],
+        arguments: ['-s', widget.serial, 'shell'],
         environment: envir() as Map<String, String>?,
         workingDirectory: '/',
       );
@@ -157,50 +158,50 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     );
   }
 
-  ConstrainedBox screenshotBox() {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: getCardWidth(),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
-        child: NiCardButton(
-          margin: EdgeInsets.zero,
-          child: SizedBox(
-            child: Padding(
-              padding: padding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const ItemHeader(color: CandyColors.candyCyan),
-                      Text(
-                        S.current.screenshot,
-                        style: TextStyle(
-                          fontWeight: bold,
-                          height: 1.0,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  SizedBox(
-                    height: 200.w,
-                    child: ScreenshotPage(devicesEntity: widget.entity),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // ConstrainedBox screenshotBox() {
+  //   return ConstrainedBox(
+  //     constraints: BoxConstraints(
+  //       maxWidth: getCardWidth(),
+  //     ),
+  //     child: Padding(
+  //       padding: EdgeInsets.only(right: 8.w, left: getMiddlePadding()),
+  //       child: NiCardButton(
+  //         margin: EdgeInsets.zero,
+  //         child: SizedBox(
+  //           child: Padding(
+  //             padding: padding,
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.stretch,
+  //               children: [
+  //                 Row(
+  //                   crossAxisAlignment: CrossAxisAlignment.center,
+  //                   children: [
+  //                     const ItemHeader(color: CandyColors.candyCyan),
+  //                     Text(
+  //                       S.current.screenshot,
+  //                       style: TextStyle(
+  //                         fontWeight: bold,
+  //                         height: 1.0,
+  //                         color: Theme.of(context).primaryColor,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 4.0,
+  //                 ),
+  //                 SizedBox(
+  //                   height: 200.w,
+  //                   child: ScreenshotPage(devicesEntity: widget.entity),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   ConstrainedBox buildOptions() {
     return ConstrainedBox(
@@ -223,7 +224,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        S.of(context).commonSwitch,
+                        S.of(context).common_switch,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -237,12 +238,12 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   Column(
                     children: [
                       DeveloperItem(
-                        serial: widget.entity!.serial,
-                        title: S.of(context).displayTouch,
+                        serial: widget.serial,
+                        title: S.of(context).display_touch,
                         putKey: 'show_touches',
                       ),
                       DeveloperItem(
-                        serial: widget.entity!.serial,
+                        serial: widget.serial,
                         title: S.of(context).displayScreenPointer,
                         putKey: 'pointer_location',
                       ),
@@ -250,25 +251,25 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         title: S.of(context).showLayoutboundary,
                         onOpen: () {
                           asyncExec(
-                            'adb -s ${widget.entity!.serial} shell setprop debug.layout true',
+                            'adb -s ${widget.serial} shell setprop debug.layout true',
                           );
                           asyncExec(
-                            'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
+                            'adb -s ${widget.serial} shell service call activity 1599295570',
                           );
                           return true;
                         },
                         onClose: () {
                           asyncExec(
-                            'adb -s ${widget.entity!.serial} shell setprop debug.layout false',
+                            'adb -s ${widget.serial} shell setprop debug.layout false',
                           );
                           asyncExec(
-                            'adb -s ${widget.entity!.serial} shell service call activity 1599295570',
+                            'adb -s ${widget.serial} shell service call activity 1599295570',
                           );
                           return false;
                         },
                       ),
                       NetworkDebug(
-                        serial: widget.entity!.serial,
+                        serial: widget.serial,
                       ),
                     ],
                   ),
@@ -301,7 +302,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyBlue),
                       Text(
-                        S.of(context).installApk,
+                        S.of(context).install_apk,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -368,7 +369,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       barrierDismissible: false,
       builder: (_) {
         return PushFileDialog(
-          entity: widget.entity!,
+          serial: widget.serial,
           paths: paths,
         );
       },
@@ -381,7 +382,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       barrierDismissible: false,
       builder: (_) {
         return InstallApkDialog(
-          entity: widget.entity!,
+          serial: widget.serial,
           paths: paths,
         );
       },
@@ -408,7 +409,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyCyan),
                       Text(
-                        S.of(context).uploadFile,
+                        S.of(context).upload_file,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -423,7 +424,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${GetPlatform.isDesktop ? S.current.dropTip : ''}${S.of(context).pushTips}',
+                      title: '${GetPlatform.isDesktop ? S.current.drop_tip : ''}${S.of(context).pushTips}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           PermissionStatus status = await Permission.manageExternalStorage.request();

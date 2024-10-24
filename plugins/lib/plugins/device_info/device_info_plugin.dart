@@ -1,29 +1,24 @@
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'app_manager_wrapper.dart';
+import 'device_info_wrapper.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/generated/l10n.dart';
-import 'package:app_manager/controller/check_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class AppManagerPlugin extends Pluggable {
+class DeviceInfoPlugin extends ADBKITPlugin {
   @override
   Widget buildWidget(BuildContext context, DevicesEntity? device) {
-    Get.put(CheckController());
-    return AppManagerWrapper(
-      devicesEntity: device,
-    );
+    return DeviceInfoWrapper(devicesEntity: device);
   }
-
-  @override
-  String get displayName => '桌面启动';
 
   @override
   ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
-  String get name => S.current.appManager;
+  String get name => S.current.deviceInfo;
 
   @override
   void onTrigger() {}
+
+  @override
+  String get id => '$this';
 }

@@ -12,14 +12,14 @@ import 'package:path/path.dart' as p;
 
 class InstallApkDialog extends StatefulWidget {
   const InstallApkDialog({
-    Key? key,
+    super.key,
     this.paths,
-    required this.entity,
-  }) : super(key: key);
+    required this.serial,
+  });
 
   /// 路径列表
   final List<String>? paths;
-  final DevicesEntity entity;
+  final String serial;
 
   @override
   State createState() => _InstallApkDialogState();
@@ -58,12 +58,12 @@ class _InstallApkDialogState extends State<InstallApkDialog> {
         await execCmd2([
           adb,
           '-s',
-          widget.entity.serial,
+          widget.serial,
           'install',
           '-t',
           path,
         ]);
-        Log.i('install cmd -> adb -s ${widget.entity.serial} install -t "$path"');
+        Log.i('install cmd -> adb -s ${widget.serial} install -t "$path"');
       } on Exception catch (e) {
         stringBuffer.write('$name: $e\n');
       }

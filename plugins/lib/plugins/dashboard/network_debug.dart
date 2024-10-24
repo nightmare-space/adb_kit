@@ -1,16 +1,16 @@
 import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/config/font.dart';
-import 'package:adb_kit/generated/l10n.dart';
 import 'package:adbutil/adbutil.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:plugins/generated/l10n.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class NetworkDebug extends StatefulWidget {
   const NetworkDebug({
-    Key? key,
+    super.key,
     this.serial,
-  }) : super(key: key);
+  });
   final String? serial;
   @override
   State createState() => _NetworkDebugState();

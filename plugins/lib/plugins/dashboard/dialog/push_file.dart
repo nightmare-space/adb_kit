@@ -12,12 +12,12 @@ import 'package:path/path.dart' as p;
 
 class PushFileDialog extends StatefulWidget {
   const PushFileDialog({
-    Key? key,
+    super.key,
     this.paths,
-    required this.entity,
-  }) : super(key: key);
+    required this.serial,
+  });
   final List<String>? paths;
-  final DevicesEntity entity;
+  final String serial;
 
   @override
   State createState() => _PushFileDialogState();
@@ -55,7 +55,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
       await execCmd2([
         adb,
         '-s',
-        widget.entity.serial,
+        widget.serial,
         'push',
         path,
         '/sdcard/$fileName',
