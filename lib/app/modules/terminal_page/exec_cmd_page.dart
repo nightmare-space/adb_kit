@@ -6,7 +6,7 @@ import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;

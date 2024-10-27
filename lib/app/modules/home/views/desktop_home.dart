@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 class DesktopHome extends StatefulWidget {
-  const DesktopHome({Key? key}) : super(key: key);
+  const DesktopHome({
+    super.key,
+    required this.page,
+    required this.onChanged,
+  });
+  final Widget page;
+  final void Function(int index) onChanged;
 
   @override
   State<DesktopHome> createState() => _DesktopHomeState();
@@ -21,10 +27,7 @@ class _DesktopHomeState extends State<DesktopHome> {
           DesktopPhoneDrawer(
             width: Dimens.setWidth(200),
             groupValue: drawerRoute,
-            onChanged: (value) {
-              page = value;
-              setState(() {});
-            },
+            onChanged: widget.onChanged,
           ),
           Container(
             height: double.infinity,
@@ -47,7 +50,7 @@ class _DesktopHomeState extends State<DesktopHome> {
                 );
               },
               duration: const Duration(milliseconds: 300),
-              child: page,
+              child: widget.page,
             ),
           ),
         ],

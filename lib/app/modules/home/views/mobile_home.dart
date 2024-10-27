@@ -5,7 +5,13 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 class MobileHome extends StatefulWidget {
-  const MobileHome({Key? key}) : super(key: key);
+  const MobileHome({
+    super.key,
+    required this.onChanged,
+    required this.page,
+  });
+  final void Function(int index) onChanged;
+  final Widget page;
 
   @override
   State<MobileHome> createState() => _MobileHomeState();
@@ -19,8 +25,7 @@ class _MobileHomeState extends State<MobileHome> {
         width: MediaQuery.of(context).size.width * 2 / 3,
         groupValue: drawerRoute,
         onChanged: (value) {
-          page = value;
-          setState(() {});
+          widget.onChanged(value);
           Navigator.pop(context);
         },
       ),
@@ -38,7 +43,7 @@ class _MobileHomeState extends State<MobileHome> {
           );
         },
         duration: const Duration(milliseconds: 300),
-        child: page,
+        child: widget.page,
       ),
     );
   }

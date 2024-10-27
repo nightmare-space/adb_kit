@@ -5,7 +5,7 @@ import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/core/interface/pluggable.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/dex_server.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

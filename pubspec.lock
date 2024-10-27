@@ -29,7 +29,7 @@ packages:
     source: path
     version: "0.0.1"
   adbutil:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: HEAD

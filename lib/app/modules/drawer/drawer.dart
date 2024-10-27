@@ -13,7 +13,6 @@ import 'drawer_desktop_phone.dart';
 import 'drawer_tablet.dart';
 
 String drawerRoute = '';
-Widget? page;
 
 List<Widget> desktopPhoneDrawer(BuildContext context) {
   return [
@@ -113,11 +112,11 @@ List<Widget> tabletDrawer(BuildContext context) {
 List<Widget> pages(BuildContext context) {
   return [
     const OverviewPage(),
-    HistoryPage(),
-    RemoteDebugPage(),
-    ExecCmdPage(),
-    LogPage(),
-    SettingsPage(),
+    const HistoryPage(),
+    const RemoteDebugPage(),
+    const ExecCmdPage(),
+    const LogPage(),
+    const SettingsPage(),
     AboutPage(
       versionCode: Config.versionCode,
       appVersion: Config.versionName,

@@ -9,7 +9,7 @@ import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/utils/scan_util.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;

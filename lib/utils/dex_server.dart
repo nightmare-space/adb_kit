@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:adb_kit/material_entrypoint.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/config/settings.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

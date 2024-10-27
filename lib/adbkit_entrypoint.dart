@@ -23,38 +23,14 @@ class _ADBToolEntryPointState extends State<ADBToolEntryPoint> {
     controller.setInitPage(
       PageEntity(
         title: 'ADB KIT',
-        page: Stack(
-          children: [
-            GetBuilder<ConfigController>(builder: (config) {
-              if (config.backgroundStyle == BackgroundStyle.normal) {
-                return Container(
-                  color: config.theme!.colorScheme.background,
-                );
-              }
-              if (config.backgroundStyle == BackgroundStyle.image) {
-                return SizedBox(
-                  height: double.infinity,
-                  child: Image.asset(
-                    'assets/b.png',
-                    fit: BoxFit.cover,
-                  ),
-                );
-              } else {
-                return const SizedBox();
-              }
-            }),
-            GetBuilder<ConfigController>(
-              builder: (config) {
-                return const ADBKITAdaptiveRootWidget();
-              },
-            ),
-          ],
+        page: GetBuilder<ConfigController>(
+          builder: (config) {
+            return const ADBKITAdaptiveRootWidget();
+          },
         ),
       ),
     );
   }
-
-  //Create an instance of ScreenshotController
 
   @override
   Widget build(BuildContext context) {

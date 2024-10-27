@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 class TabletHome extends StatefulWidget {
-  const TabletHome({Key? key}) : super(key: key);
+  const TabletHome({
+    super.key,
+    required this.page,
+    required this.onChanged,
+  });
+  final Widget page;
+  final void Function(int index) onChanged;
 
   @override
   State<TabletHome> createState() => _TabletHomeState();
@@ -20,10 +26,7 @@ class _TabletHomeState extends State<TabletHome> {
         children: [
           TabletDrawer(
             groupValue: drawerRoute,
-            onChanged: (value) {
-              page = value;
-              setState(() {});
-            },
+            onChanged: widget.onChanged,
           ),
           Container(
             height: double.infinity,
@@ -46,7 +49,7 @@ class _TabletHomeState extends State<TabletHome> {
                 );
               },
               duration: const Duration(milliseconds: 300),
-              child: page,
+              child: widget.page,
             ),
           ),
         ],

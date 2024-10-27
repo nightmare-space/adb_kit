@@ -5,7 +5,7 @@ import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -13,7 +13,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class RemoteDebugPage extends StatefulWidget {
-  const RemoteDebugPage({Key? key}) : super(key: key);
+  const RemoteDebugPage({super.key});
 
   @override
   State createState() => _RemoteDebugPageState();

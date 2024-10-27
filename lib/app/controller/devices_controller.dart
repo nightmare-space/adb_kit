@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_library/adb_library.dart';
-import 'package:adbutil/adbutil.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

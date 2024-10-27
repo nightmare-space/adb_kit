@@ -18,7 +18,7 @@ class TabletDrawer extends StatefulWidget {
     this.onChanged,
     this.groupValue,
   });
-  final void Function(Widget page)? onChanged;
+  final void Function(int index)? onChanged;
   final String? groupValue;
 
   @override
@@ -78,8 +78,7 @@ class _TabletDrawerState extends State<TabletDrawer> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(8.w),
                   onTap: () {
-                    final page = pages(context);
-                    widget.onChanged?.call(page[i]);
+                    widget.onChanged?.call(i);
                   },
                   child: drawer,
                 ),

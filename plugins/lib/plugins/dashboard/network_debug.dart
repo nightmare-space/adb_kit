@@ -1,6 +1,6 @@
 import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/config/font.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:plugins/generated/l10n.dart';

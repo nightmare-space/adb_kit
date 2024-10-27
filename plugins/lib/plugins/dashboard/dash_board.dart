@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:adb_kit/adb_kit.dart' hide S;
-import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ import 'dialog/push_file.dart';
 import 'developer_item.dart';
 import 'drag_drop.dart';
 import 'network_debug.dart';
-import 'screenshot_page.dart';
 import 'switch_item.dart';
 import 'package:file_manager/file_manager.dart';
 

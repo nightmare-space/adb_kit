@@ -1,5 +1,6 @@
 import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/app/modules/drawer/drawer.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,28 +25,14 @@ class ADBKITAdaptiveRootWidget extends StatefulWidget {
   State createState() => _ADBKITAdaptiveRootWidgetState();
 }
 
-class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> with WidgetsBindingObserver {
-  bool dialogIsShow = false;
+class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> {
   ConfigController configController = Get.find();
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    Log.v('didChangeAppLifecycleState : $state');
-  }
+  late Widget page = pages(context)[0];
 
   @override
   void initState() {
     super.initState();
-    // TODO 这个代码不应该放在这
-    if (GetPlatform.isMacOS && RuntimeEnvir.packageName == Config.packageName) {
-      // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
-      Config.flutterPackage = 'packages/adb_tool/';
-      // Window.makeTitlebarTransparent();
-      // Window.enableFullSizeContentView();
-    }
     configController.syncBackgroundStyle();
-    WidgetsBinding.instance.addObserver(this);
-
     // TODO 隐私协议不应该和某个Widget挂在一起
     Future.delayed(Duration.zero, () async {
       if ('privacy'.setting.get() == null) {
@@ -62,13 +49,19 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> wit
   @override
   void dispose() {
     Log.w('ADB TOOL dispose');
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void onChanged(int index) {
+    setState(() {
+      page = pages(context)[index];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
+      // TODO(lin):?
       value: Theme.of(context).brightness == Brightness.dark
           ? OverlayStyle.light
           : SystemUiOverlayStyle(
@@ -80,15 +73,23 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> wit
             ),
       child: Builder(
         builder: (context) {
-          // TODO bug
           if (ResponsiveBreakpoints.of(context).isDesktop || (configController.screenType?.isDesktop ?? false)) {
-            return const DesktopHome();
+            return DesktopHome(
+              page: page,
+              onChanged: onChanged,
+            );
           }
           if (ResponsiveBreakpoints.of(context).isTablet || (configController.screenType?.isTablet ?? false)) {
-            return const TabletHome();
+            return TabletHome(
+              page: page,
+              onChanged: onChanged,
+            );
           }
           if (ResponsiveBreakpoints.of(context).isMobile || (configController.screenType?.isPhone ?? false)) {
-            return const MobileHome();
+            return MobileHome(
+              page: page,
+              onChanged: onChanged,
+            );
           }
           return const SizedBox();
         },

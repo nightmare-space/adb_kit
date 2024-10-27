@@ -17,7 +17,7 @@ class DesktopPhoneDrawer extends StatefulWidget {
     this.groupValue,
     this.width,
   });
-  final void Function(Widget page)? onChanged;
+  final void Function(int index)? onChanged;
   final String? groupValue;
   final double? width;
 
@@ -98,8 +98,7 @@ class _DesktopPhoneDrawerState<T> extends State<DesktopPhoneDrawer> {
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: InkWell(
                   onTap: () {
-                    final page = pages(context);
-                    widget.onChanged?.call(page[i]);
+                    widget.onChanged?.call(i);
                   },
                   borderRadius: BorderRadius.circular(8.w),
                   child: drawer,

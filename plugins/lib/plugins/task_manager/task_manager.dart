@@ -4,7 +4,7 @@ import 'package:adb_kit/app/modules/developer_tool/model/screen_size.dart';
 import 'package:adb_kit/themes/color_extension.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:adb_kit/utils/dex_server.dart';
-import 'package:adbutil/adbutil.dart';
+import 'package:adb_kit/utils/utils.dart';
 import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
