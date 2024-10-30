@@ -29,6 +29,7 @@ class _AppStarterPageState extends State<AppStarterPage> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: SingleChildScrollView(

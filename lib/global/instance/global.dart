@@ -131,6 +131,8 @@ class Global {
             // MaterialApp 可能还没加载
             final devicesCTL = Get.find<DevicesController>();
             if (devicesCTL.getDevicesByIp(address) == null) {
+              // TODO(lin): 有的时候，目标设备不是5555 端口，就一直连不上
+              // 有没可能，广播的时候，只在自己打开了无线调试的时候才广播
               try {
                 await AdbUtil.connectDevices(address);
               } on ADBException catch (e) {

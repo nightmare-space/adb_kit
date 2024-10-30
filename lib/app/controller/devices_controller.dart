@@ -10,6 +10,12 @@ import 'history_controller.dart';
 
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
+  static DevicesEntity parse(String data) {
+    final tmp = data.trim().split(RegExp('\\s+'));
+    final device = DevicesEntity(tmp.first, tmp.last);
+    return device;
+  }
+
   static String modelGetKey = 'ro.product.model';
   // 有可能是ip或者设备序列号
   final String serial;
@@ -42,7 +48,7 @@ class DevicesEntity {
 
   @override
   String toString() {
-    return 'serial:$serial stat:$stat';
+    return 'DevicesEntity{serial: $serial, stat: $stat}';
   }
 
   @override
@@ -127,19 +133,18 @@ class DevicesController extends GetxController {
       outList.removeAt(0);
       final List<DevicesEntity> tmpDevices = [];
       for (final String str in outList) {
-        final List<String> listTmp = str.trim().split(RegExp('\\s+'));
-        final DevicesEntity devicesEntity = DevicesEntity(listTmp.first, listTmp.last);
+        final DevicesEntity devicesEntity = DevicesEntity.parse(str);
         if (devicesEntity.isConnect) {
           String? model;
-          if (modelCache.containsKey(listTmp.first)) {
-            model = modelCache[listTmp.first];
+          if (modelCache.containsKey(devicesEntity.serial)) {
+            model = modelCache[devicesEntity.serial];
           } else {
             try {
-              model = await execCmd('$adb -s ${listTmp.first} shell getprop ro.product.marketname');
+              model = await execCmd('$adb -s ${devicesEntity.serial} shell getprop ro.product.marketname');
               if (model.trim().isEmpty) {
-                model = await execCmd('$adb -s ${listTmp.first} shell getprop ${DevicesEntity.modelGetKey}');
+                model = await execCmd('$adb -s ${devicesEntity.serial} shell getprop ${DevicesEntity.modelGetKey}');
               }
-              modelCache[listTmp.first] = model;
+              modelCache[devicesEntity.serial] = model;
             } catch (e) {
               Log.w(RuntimeEnvir.path);
               Log.e('get model error : $e');
@@ -149,12 +154,12 @@ class DevicesController extends GetxController {
           String nidPath = '/data/local/tmp/nid';
           try {
             // nightmare id, use to cache history
-            id = await execCmd2([adb, '-s', listTmp.first, 'shell', 'cat', nidPath]);
+            id = await execCmd2([adb, '-s', devicesEntity.serial, 'shell', 'cat', nidPath]);
           } catch (e) {
             Log.i('error -> $e');
             id = shortHash(() {}).toString();
             try {
-              await execCmd2([adb, '-s', listTmp.first, 'shell', 'echo', id, '>$nidPath']);
+              await execCmd2([adb, '-s', devicesEntity.serial, 'shell', 'echo', id, '>$nidPath']);
             } catch (e) {
               Log.i('write id error -> ${e.toString().trim()}');
             }

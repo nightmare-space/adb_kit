@@ -5,7 +5,6 @@ import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
-import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -14,19 +13,19 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 class HistoryPage extends GetView<HistoryController> {
   const HistoryPage({super.key});
+  final bool showLeading = false;
   ConfigController get configController => Get.find();
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return Builder(builder: (context) {
       AppBar? appBar;
       if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
         appBar = AppBar(
           title: Text(S.of(context).historyConnect),
           automaticallyImplyLeading: false,
-          leading: Menubutton(
-            scaffoldContext: context,
-          ),
+          leading: showLeading ? Menubutton(scaffoldContext: context) : null,
         );
       }
       return Scaffold(
@@ -39,7 +38,7 @@ class HistoryPage extends GetView<HistoryController> {
                 child: Text(
                   s.noHistoryTip,
                   style: TextStyle(
-                    color: AppColors.fontDetail,
+                    color: scheme.onSurface,
                   ),
                 ),
               );
@@ -58,7 +57,7 @@ class HistoryPage extends GetView<HistoryController> {
                         itemBuilder: (c, i) {
                           final ADBHistory adbEntity = controller.adbHistorys.data[i];
                           return Dismissible(
-                            key: Key(i.toString()),
+                            key: Key('$i'),
                             onDismissed: (direction) {
                               ctl.removeHis(i);
                             },
@@ -94,16 +93,14 @@ class HistoryPage extends GetView<HistoryController> {
   }
 
   InkWell buildItem(ADBHistory adbEntity, BuildContext context) {
-    // print('Theme.of(context).textTheme.bodyMedium!.color -> ${Theme.of(context).textTheme.bodyMedium!.color}');
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () async {
         AdbResult result;
         try {
           String suffix = '';
           suffix = ':${adbEntity.port}';
-          result = await AdbUtil.connectDevices(
-            adbEntity.address + suffix,
-          );
+          result = await AdbUtil.connectDevices(adbEntity.address + suffix);
           showToast(result.message);
         } on ADBException catch (e) {
           showToast(e.message!);
@@ -114,9 +111,7 @@ class HistoryPage extends GetView<HistoryController> {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Dimens.gap_dp16,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +129,7 @@ class HistoryPage extends GetView<HistoryController> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: CandyColors.green,
+                            color: scheme.tertiary,
                             borderRadius: BorderRadius.circular(4.w),
                           ),
                           padding: EdgeInsets.symmetric(
@@ -145,28 +140,23 @@ class HistoryPage extends GetView<HistoryController> {
                             adbEntity.port,
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
+                              color: scheme.onTertiary,
                               fontSize: 10.w,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
+                        SizedBox(width: 4.w),
                         Container(
                           decoration: BoxDecoration(
-                            color: CandyColors.orange,
+                            color: scheme.secondary,
                             borderRadius: BorderRadius.circular(4.w),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 4.w,
-                            vertical: 2.w,
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.w),
                           child: Text(
                             DateTime.parse(adbEntity.connectTime).getTimeString(),
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
+                              color: scheme.onSecondary,
                               fontSize: 10.w,
                             ),
                           ),
@@ -175,11 +165,22 @@ class HistoryPage extends GetView<HistoryController> {
                     ),
                   ],
                 ),
-                Text(
-                  adbEntity.address,
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      adbEntity.address,
+                      style: TextStyle(
+                        color: scheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                    Text(
+                      adbEntity.uniqueId,
+                      style: TextStyle(
+                        color: scheme.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

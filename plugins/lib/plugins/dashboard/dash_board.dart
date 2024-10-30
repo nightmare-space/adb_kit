@@ -556,7 +556,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(4.w),
                               child: Container(
-                                decoration: BoxDecoration(color: colorScheme.surface),
+                                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
                                 child: Padding(
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(

@@ -37,24 +37,6 @@ class MaterialAppWrapper extends StatefulWidget {
 
 class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBindingObserver {
   ConfigController config = Get.put(ConfigController());
-  bool isFull = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    setState(() {});
-  }
 
   ScreenshotController screenshotController = ScreenshotController();
   @override
