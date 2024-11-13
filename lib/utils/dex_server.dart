@@ -25,14 +25,14 @@ Future<int> startServerWithIsolate(IsolateArgs args) async {
   RuntimeEnvir.initEnvirFromMap(args.envir);
   Stopwatch stopwatch = Stopwatch()..start();
   String suffix = Config.versionCode;
-  await initSetting();
+  // await initSetting();
   Log.i('init setting time : ${stopwatch.elapsed}');
   stopwatch.reset();
   final Completer<int> completer = Completer();
-  String serverPath = Settings.serverPath.setting.get();
-  if (serverPath.isEmpty) {
-    serverPath = Config.adbLocalPath;
-  }
+  // String serverPath = Settings.serverPath.setting.get();
+  // if (serverPath.isEmpty) {
+  String serverPath = Config.adbLocalPath;
+  // }
   final String targetPath = '$serverPath/app_server$suffix';
   Log.i('targetPath -> $targetPath');
   // 上传server文件
