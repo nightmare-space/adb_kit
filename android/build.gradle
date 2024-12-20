@@ -6,7 +6,7 @@ allprojects {
     }
 
     configurations.all {
-        exclude group: 'com.google.guava', module: 'listenablefuture'
+//        exclude group: 'com.google.guava', module: 'listenablefuture'
     }
 }
 
