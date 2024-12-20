@@ -14,6 +14,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'src/platform_menu.dart';
 import 'termare_view_with_bar.dart';
+import 'package:adb_util/adb_util.dart';
 
 class ExecCmdPage extends StatefulWidget {
   const ExecCmdPage({Key? key}) : super(key: key);
@@ -93,17 +94,17 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: S.current.startServer,
                         onTap: () async {
-                          String cmd = '$adb start-server\r';
+                          String cmd = 'adb start-server\r';
                           Global().pty!.writeString(cmd);
-                          AdbUtil.startPoolingListDevices();
+                          ADB.startPoolingListDevices();
                         },
                       ),
                       ItemButton(
                         title: S.current.stopServer,
                         onTap: () async {
-                          String cmd = '$adb kill-server\r';
+                          String cmd = 'adb kill-server\r';
                           Global().pty!.writeString(cmd);
-                          AdbUtil.stopPoolingListDevices();
+                          ADB.stopPoolingListDevices();
                           final DevicesController controller = Get.find();
                           controller.clearDevices();
                         },
@@ -111,7 +112,7 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
                       ItemButton(
                         title: S.current.rebootServer,
                         onTap: () async {
-                          String cmd = '$adb kill-server && $adb start-server\r';
+                          String cmd = 'adb kill-server && adb start-server\r';
                           Global().pty!.writeString(cmd);
                         },
                       ),

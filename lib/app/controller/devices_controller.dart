@@ -1,13 +1,24 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
+import 'package:adb_kit/config/config.dart';
+import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_library/adb_library.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
+import 'config_controller.dart';
 import 'history_controller.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 
+class ADBDevice {}
+
+/// TODO 把这个下放到 adb_util，无界也会依赖这个
+/// ADB.addListener 直接吐 List<DevicesEntity>
 class DevicesEntity {
   DevicesEntity(this.serial, this.stat);
   static DevicesEntity parse(String data) {
@@ -53,25 +64,25 @@ class DevicesEntity {
 
   @override
   int get hashCode => serial.hashCode;
+
+  String? get password => Get.find<ConfigController>().password;
 }
 
 class DevicesController extends GetxController {
   DevicesController();
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+  ConfigController get configController => Get.find();
+  String get password => configController.password;
 
   Future<void> init() async {
     await startAdb();
-    AdbUtil.addListener(handleResult);
+    ADB.addListener(handleResult);
     if (GetPlatform.isAndroid) {
       String? libPath = await AdbLibrary.getLibPath();
-      AdbUtil.setLibraryPath(libPath);
+      ADB.setLibraryPath(libPath);
     }
-    AdbUtil.startPoolingListDevices(
-      duration: const Duration(seconds: 1),
-    );
+    ADB.startPoolingListDevices(duration: 1.seconds);
   }
-
-  List<DevicesEntity> otgDevices = [];
 
   bool getRoot = false;
   // adb是否在启动中
@@ -85,21 +96,13 @@ class DevicesController extends GetxController {
 
   Future<void> startAdb() async {
     adbIsStarting = true;
-    // 显示一会动画
-    // await Future.delayed(const Duration(milliseconds: 300));
     update();
-    // getRoot = await Global().process.isRoot();
-    // if (getRoot) {
-    //   await Global().process.exec('su -p HOME');
-    // }
     // adb cli clinet adb server
     try {
-      String adbStartBin = 'adb';
-      String out = await execCmd('$adbStartBin start-server');
+      String out = await startServer();
       Log.d('adb start-server out:$out');
-      // ignore: empty_catches
     } catch (e) {
-      Log.d('adb start-server out:${(e as dynamic).message}');
+      Log.e('adb start-server out:$e');
     }
     letADBStarted();
     // final List<String> devices = await ADBFind.getLANDevices();
@@ -119,12 +122,8 @@ class DevicesController extends GetxController {
     }
   }
 
-  // Model Cache
-  // Some device like xiaomi can't get model name by `ro.product.marketname`
-  Map<String, String> modelCache = {
-    // '23127PN0CC': 'Xiaomi 14',
-  };
   Future<void> handleResult(String? data) async {
+    // Log.i('handleResult -> $data');
     letADBStarted();
     if (data!.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');
@@ -133,50 +132,33 @@ class DevicesController extends GetxController {
       outList.removeAt(0);
       final List<DevicesEntity> tmpDevices = [];
       for (final String str in outList) {
-        final DevicesEntity devicesEntity = DevicesEntity.parse(str);
-        if (devicesEntity.isConnect) {
-          String? model;
-          if (modelCache.containsKey(devicesEntity.serial)) {
-            model = modelCache[devicesEntity.serial];
-          } else {
-            try {
-              model = await execCmd('$adb -s ${devicesEntity.serial} shell getprop ro.product.marketname');
-              if (model.trim().isEmpty) {
-                model = await execCmd('$adb -s ${devicesEntity.serial} shell getprop ${DevicesEntity.modelGetKey}');
-              }
-              modelCache[devicesEntity.serial] = model;
-            } catch (e) {
-              Log.w(RuntimeEnvir.path);
-              Log.e('get model error : $e');
-            }
-          }
-          String id;
-          String nidPath = '/data/local/tmp/nid';
-          try {
-            // nightmare id, use to cache history
-            id = await execCmd2([adb, '-s', devicesEntity.serial, 'shell', 'cat', nidPath]);
-          } catch (e) {
-            Log.i('error -> $e');
-            id = shortHash(() {}).toString();
-            try {
-              await execCmd2([adb, '-s', devicesEntity.serial, 'shell', 'echo', id, '>$nidPath']);
-            } catch (e) {
-              Log.i('write id error -> ${e.toString().trim()}');
-            }
-          }
-          devicesEntity.uniqueId = id;
-          devicesEntity.productModel = model;
-          // just network device need to save history
-          if (model != null && devicesEntity.isIp) {
-            final List<String> tmp = devicesEntity.serial.split(':');
-            final String address = tmp[0];
-            HistoryController.updateHistory(name: model, address: address, uniqueId: id);
-          }
-          tmpDevices.add(devicesEntity);
+        final DevicesEntity device = DevicesEntity.parse(str);
+        if (!device.isConnect) {
+          continue;
         }
-      }
-      for (final DevicesEntity entity in otgDevices) {
-        tmpDevices.add(entity);
+        String? model;
+        String? nid;
+        try {
+          model = await getDeviceProductModel(device.serial, password: password);
+          nid = await getDeviceID(device.serial, password: password);
+        } catch (e) {
+          continue;
+        }
+        device.productModel = model;
+        // just network device need to save history
+        if (model != null && nid != null && device.isIp) {
+          device.uniqueId = nid;
+          final List<String> tmp = device.serial.split(':');
+          final address = tmp[0];
+          final port = tmp[1];
+          HistoryController.updateHistory(
+            name: model,
+            address: address,
+            uniqueId: nid,
+            port: port,
+          );
+        }
+        tmpDevices.add(device);
       }
       updateWithAnima(tmpDevices);
     }

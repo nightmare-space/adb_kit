@@ -1,6 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:async';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui';
+import 'package:adb_kit/test_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -15,7 +20,9 @@ import 'config/config.dart';
 import 'config/settings.dart';
 import 'generated/l10n.dart';
 import 'global/instance/global.dart';
+import 'main.dart';
 import 'themes/theme.dart';
+import 'dart:ui' as ui;
 
 Future<void> initSetting() async {
   await initSettingStore(RuntimeEnvir.configPath);
@@ -104,13 +111,27 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                       }
                       final bool isDark = window.platformBrightness == Brightness.dark;
                       final ThemeData theme = isDark ? dark() : light();
-                      return ScreenQuery(
-                        uiWidth: 414,
-                        screenWidth: MediaQuery.of(context).size.width,
-                        child: Theme(
-                          data: theme,
-                          child: navigator ?? const SizedBox(),
-                        ),
+                      return Stack(
+                        children: [
+                          RepaintBoundary(
+                            key: globalKey,
+                            child: ScreenQuery(
+                              uiWidth: 414,
+                              screenWidth: MediaQuery.of(context).size.width,
+                              child: Theme(
+                                data: theme,
+                                child: navigator ?? const SizedBox(),
+                              ),
+                            ),
+                          ),
+                          // Align(
+                          //   alignment: Alignment.topRight,
+                          //   child: SizedBox(
+                          //     width: 100,
+                          //     child: Preview(),
+                          //   ),
+                          // ),
+                        ],
                       );
                     },
                   ),
@@ -132,5 +153,94 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
         );
       },
     );
+  }
+}
+
+class Preview extends StatefulWidget {
+  const Preview({super.key});
+
+  @override
+  State<Preview> createState() => _PreviewState();
+}
+
+class _PreviewState extends State<Preview> {
+  TestController testController = Get.find();
+  bool success = true;
+  @override
+  void initState() {
+    super.initState();
+    testController.addListener(() {
+      if (success) {
+        success = false;
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    MemoryImage;
+    FileImage;
+    return Image(
+      image: PixelMemoryImage(
+        testController.imageBytes,
+        testController.size.width.toInt(),
+        testController.size.height.toInt(),
+        ui.PixelFormat.rgba8888,
+      ),
+      gaplessPlayback: true,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          success = true;
+          return child;
+        }
+        if (frame != null) {
+          success = true;
+        }
+        return child;
+      },
+    );
+    return Image.memory(
+      testController.imageBytes,
+      gaplessPlayback: true,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          success = true;
+          return child;
+        }
+        if (frame != null) {
+          success = true;
+        }
+        return child;
+      },
+    );
+  }
+}
+
+class PixelMemoryImage extends ImageProvider<PixelMemoryImage> {
+  PixelMemoryImage(this.bytes, this.width, this.height, this.format);
+
+  final Uint8List bytes;
+  final int width;
+  final int height;
+  final ui.PixelFormat format;
+
+  @override
+  Future<PixelMemoryImage> obtainKey(ImageConfiguration configuration) {
+    return SynchronousFuture<PixelMemoryImage>(this);
+  }
+
+  @override
+  ImageStreamCompleter loadBuffer(PixelMemoryImage key, _) {
+    Completer<ui.Image> completer = Completer<ui.Image>();
+    ui.decodeImageFromPixels(bytes, width, height, format, completer.complete);
+    return OneFrameImageStreamCompleter(completer.future.then((ui.Image image) => ImageInfo(image: image)));
+  }
+
+  @override
+  ImageStreamCompleter loadImage(PixelMemoryImage key, _) {
+    Completer<ui.Image> completer = Completer<ui.Image>();
+    ui.decodeImageFromPixels(bytes, width, height, format, completer.complete);
+    return OneFrameImageStreamCompleter(completer.future.then((ui.Image image) => ImageInfo(image: image)));
   }
 }

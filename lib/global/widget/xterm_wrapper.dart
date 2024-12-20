@@ -48,7 +48,7 @@ class _XTermWrapperState extends State<XTermWrapper> {
     return TerminalView(
       widget.terminal!,
       backgroundOpacity: 0,
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.name,
       theme: GetPlatform.isAndroid ? android : theme,
     );
   }

@@ -46,10 +46,9 @@ class AdbEntity {
 class HistoryController extends GetxController {
   HistoryController() {
     if (!Config.localDir.existsSync()) {
-      Config.localDir.createSync(
-        recursive: true,
-      );
+      Config.localDir.createSync(recursive: true);
     }
+    Log.i('history path -> ${Config.historySaveFile.path}');
   }
   static void updateHistory({
     String? address,

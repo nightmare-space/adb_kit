@@ -1,6 +1,6 @@
 import 'package:adb_kit/app/controller/controller.dart';
+import 'package:android_api_server_client/android_api_server_client.dart';
 import 'package:flutter/widgets.dart';
-import 'package:app_channel/app_channel.dart';
 
 // inspired by flutter_ume
 abstract class ADBKITPlugin {
@@ -11,5 +11,5 @@ abstract class ADBKITPlugin {
   void onTrigger();
   Widget buildWidget(BuildContext context, DevicesEntity? device);
   ImageProvider get iconImageProvider;
-  AppChannel? appChannel;
+  AASClient? aas;
 }

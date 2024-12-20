@@ -16,17 +16,13 @@ class ADBPages {
       page: () => const ADBToolEntryPoint(),
       binding: HomeBinding(),
       transition: Transition.zoom,
-      customTransition: RouteTransition(
-        route: Routes.home,
-      ),
+      customTransition: RouteTransition(),
       transitionDuration: const Duration(milliseconds: 1200),
     ),
     GetPage(
       name: splash,
       page: () => const SplashPage(),
-      customTransition: RouteTransition(
-        route: splash,
-      ),
+      customTransition: RouteTransition(),
       transitionDuration: const Duration(milliseconds: 1000),
     ),
   ];
@@ -40,9 +36,7 @@ Widget getWidget(String route) {
 }
 
 class RouteTransition implements CustomTransition {
-  final String route;
-
-  RouteTransition({required this.route});
+  RouteTransition();
   @override
   Widget buildTransition(
     BuildContext context,

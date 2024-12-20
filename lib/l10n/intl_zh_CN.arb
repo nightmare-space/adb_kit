@@ -68,8 +68,6 @@
   "rebootServer": "重启服务",
   "slogan": "道阻且长、行则将至",
   "releaseToAction": "释放以执行操作",
-  "installingApk": "安装 {name} 中...",
-  "uploadingFile": "上传 {name} 中...",
   "installApkFailed": "安装失败",
   "noHistoryTip": "这里就像开发者的钱包一样，什么也没有",
   "switchTheme": "切换主题",

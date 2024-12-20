@@ -67,8 +67,6 @@
   "rebootServer": "Reboot Server",
   "slogan": "I'll try my best",
   "releaseToAction": "Release to action",
-  "installingApk": "Installing {name}...",
-  "uploadingFile": "Uploading {name}...",
   "installApkFailed": "Install failed",
   "noHistoryTip": "It's like a developer's wallet. Nothing",
   "switchTheme": "Switch Theme",

@@ -13,9 +13,10 @@ import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:adb_util/adb_util.dart';
 
 class OverviewPage extends StatefulWidget {
   const OverviewPage({super.key});
@@ -236,7 +237,7 @@ class _OverviewPageState extends State<OverviewPage> {
                 for (final String device in adbDevices)
                   InkWell(
                     onTap: () {
-                      AdbUtil.connectDevices('$device:5555');
+                      ADB.connectDevices('$device:5555');
                       Get.back();
                     },
                     child: SizedBox(
@@ -318,12 +319,12 @@ class _OverviewPageState extends State<OverviewPage> {
                                   return;
                                 }
                                 Log.d('adb connect ${editingController.text} start');
-                                AdbResult? result;
+                                ADBResult? result;
                                 try {
-                                  result = await AdbUtil.connectDevices(editingController.text);
-                                } on ADBException catch (e) {
+                                  result = await ADB.connectDevices(editingController.text);
+                                } catch (e) {
                                   Log.e(e);
-                                  showToast(e.message!);
+                                  showToast('$e');
                                 }
                                 Log.d('adb 连接结束 $result');
                               },

@@ -69,24 +69,17 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
                       onChanged: (index) {
                         Log.d('index $index');
                         value = index;
-                        pageController.animateToPage(
-                          index,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeOut,
-                        );
                         setState(() {});
                       },
                     ),
                   ),
+                  SizedBox(width: 10.w),
                 ],
               ),
               Expanded(
-                child: PageView(
-                  controller: pageController,
-                  children: [
-                    for (var item in PluginManager.instance.pluginsMap.values) item.buildWidget(context, widget.entity),
-                  ],
-                ),
+                child: [
+                  for (var item in PluginManager.instance.pluginsMap.values) item.buildWidget(context, widget.entity),
+                ][value],
               ),
             ],
           ),

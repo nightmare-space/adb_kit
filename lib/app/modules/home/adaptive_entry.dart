@@ -46,12 +46,6 @@ class _ADBKITAdaptiveRootWidgetState extends State<ADBKITAdaptiveRootWidget> {
     });
   }
 
-  @override
-  void dispose() {
-    Log.w('ADB TOOL dispose');
-    super.dispose();
-  }
-
   void onChanged(int index) {
     setState(() {
       page = pages(context)[index];

@@ -10,7 +10,7 @@ List<String> androidFiles = [
   'libadb.so',
   'libtermux-api.so',
   'libtermux-toast.so',
-  'libtermux-usb.so',
+  'libtermux-callback.so',
 ];
 
 const List<String> globalFiles = [
@@ -36,7 +36,7 @@ class ADBInstaller {
         String filePath = '${RuntimeEnvir.binPath}/$fileName';
         // custom path, termux-api will invoke
         if (fileName == 'termux-callback') {
-          Directory(RuntimeEnvir.usrPath).createSync(recursive: true);
+          Directory('${RuntimeEnvir.usrPath}/libexec').createSync(recursive: true);
           filePath = '${RuntimeEnvir.usrPath}/libexec/termux-callback';
         }
         File file = File(filePath);

@@ -8,8 +8,9 @@ import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:adb_util/adb_util.dart';
 
 class HistoryPage extends GetView<HistoryController> {
   const HistoryPage({super.key});
@@ -96,14 +97,14 @@ class HistoryPage extends GetView<HistoryController> {
     ColorScheme scheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () async {
-        AdbResult result;
+        ADBResult result;
         try {
           String suffix = '';
           suffix = ':${adbEntity.port}';
-          result = await AdbUtil.connectDevices(adbEntity.address + suffix);
+          result = await ADB.connectDevices(adbEntity.address + suffix);
           showToast(result.message);
-        } on ADBException catch (e) {
-          showToast(e.message!);
+        } catch (e) {
+          showToast('e');
         }
       },
       child: SizedBox(

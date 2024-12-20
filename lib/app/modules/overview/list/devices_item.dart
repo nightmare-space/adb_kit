@@ -7,7 +7,8 @@ import 'package:adb_kit/utils/utils.dart';
 import 'package:app_manager/controller/app_manager_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
+import 'package:adb_util/adb_util.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({
@@ -91,13 +92,13 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
           showToast(S.current.deviceNotConnect);
           return;
         }
-        AdbUtil.stopPoolingListDevices();
+        ADB.stopPoolingListDevices();
         Get.put(AppManagerController());
         await openPage(
           DeveloperTool(entity: widget.devicesEntity),
           title: S.current.devTools,
         );
-        AdbUtil.startPoolingListDevices();
+        ADB.startPoolingListDevices();
       },
       child: SizedBox(
         height: 54.w,
@@ -166,14 +167,9 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                           tooltip: S.current.disconnect,
                           icon: Icon(Icons.clear, size: 24.w),
                           onPressed: () async {
-                            AdbUtil.stopPoolingListDevices();
-                            await AdbUtil.disconnectDevices(
-                              widget.devicesEntity!.serial,
-                            );
-                            AdbUtil.startPoolingListDevices();
-                            // Global.instance.pseudoTerminal.write(
-                            //   'adb disconnect ${widget.devicesEntity.serial}\n',
-                            // );
+                            ADB.stopPoolingListDevices();
+                            await ADB.disconnectDevices(widget.devicesEntity!.serial);
+                            ADB.startPoolingListDevices();
                           },
                         ),
                       if (!widget.devicesEntity!.isConnect)
@@ -182,9 +178,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                           icon: Icon(Icons.refresh, size: 24.w),
                           onPressed: () async {
                             Log.e(widget.devicesEntity!.serial);
-                            AdbUtil.reconnectDevices(
-                              widget.devicesEntity!.serial,
-                            );
+                            ADB.reconnectDevices(widget.devicesEntity!.serial);
                           },
                         ),
                       IconButton(
@@ -198,13 +192,13 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                             showToast(S.current.deviceNotConnect);
                             return;
                           }
-                          AdbUtil.stopPoolingListDevices();
+                          ADB.stopPoolingListDevices();
                           Get.put(AppManagerController());
                           await Get.to(DeveloperTool(
                             entity: widget.devicesEntity,
                           ));
                           Get.delete<AppManagerController>();
-                          AdbUtil.startPoolingListDevices();
+                          ADB.startPoolingListDevices();
                         },
                       ),
                     ],

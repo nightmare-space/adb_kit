@@ -12,13 +12,14 @@ import 'package:adb_library/adb_library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:multicast/multicast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
 import 'adb_installer.dart';
+import 'package:adb_util/adb_util.dart';
 
 extension PTYExt on Pty {
   void writeString(String data) {
@@ -134,8 +135,8 @@ class Global {
               // TODO(lin): 有的时候，目标设备不是5555 端口，就一直连不上
               // 有没可能，广播的时候，只在自己打开了无线调试的时候才广播
               try {
-                await AdbUtil.connectDevices(address);
-              } on ADBException catch (e) {
+                await ADB.connectDevices(address);
+              } catch (e) {
                 Log.e('${S.current.udpCF} -> $e');
               }
               showToast('${S.current.ac} $address');
@@ -166,12 +167,12 @@ class Global {
       successBindPort!,
       (address) async {
         // 弹窗
-        AdbResult result;
+        ADBResult result;
         try {
-          result = await AdbUtil.connectDevices(address);
+          result = await ADB.connectDevices(address);
           showToast(result.message);
-        } on ADBException catch (e) {
-          showToast(e.message!);
+        } catch (e) {
+          showToast('$e');
         }
       },
     );
@@ -247,11 +248,11 @@ class MetricsObserver with WidgetsBindingObserver {
   void didChangeMetrics() {
     // ignore: deprecated_member_use
     FlutterView view = window;
-    Log.v('didChangeMetrics invokded');
-    Log.i('PhysicalSize(PX):${view.physicalSize.str()}');
-    Log.i('PhysicalSize(DP):${(view.physicalSize / view.devicePixelRatio).str()}');
-    Log.i('DevicePixelRatio:${view.devicePixelRatio}');
-    Log.i('Android DPI:${view.devicePixelRatio * 160}');
+    // Log.v('didChangeMetrics invokded');
+    // Log.i('PhysicalSize(PX):${view.physicalSize.str()}');
+    // Log.i('PhysicalSize(DP):${(view.physicalSize / view.devicePixelRatio).str()}');
+    // Log.i('DevicePixelRatio:${view.devicePixelRatio}');
+    // Log.i('Android DPI:${view.devicePixelRatio * 160}');
   }
 }
 

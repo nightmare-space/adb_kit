@@ -9,8 +9,9 @@ import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:adb_util/adb_util.dart';
 
 class RemoteDebugPage extends StatefulWidget {
   const RemoteDebugPage({super.key});
@@ -32,7 +33,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
   Future<void> init() async {
     address = await PlatformUtil.localAddress();
     setState(() {});
-    final String result = await execCmd('getprop service.adb.tcp.port');
+    final String result = await exec('getprop service.adb.tcp.port');
     if (result == '5555') {
       adbDebugOpen = true;
       setState(() {});
@@ -44,7 +45,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     setState(() {});
     final int value = adbDebugOpen ? 5555 : -1;
     try {
-      await execCmd2([
+      await execWL([
         'su',
         '-c',
         'setprop service.adb.tcp.port $value&&stop adbd&&start adbd',

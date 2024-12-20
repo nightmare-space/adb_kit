@@ -3,8 +3,8 @@ import 'package:global_repository/global_repository.dart';
 
 class PopButton extends StatelessWidget {
   const PopButton({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
