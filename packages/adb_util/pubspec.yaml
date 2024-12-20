@@ -1,0 +1,13 @@
+name: adb_util
+description: "A new Flutter package project."
+version: 0.0.1
+homepage: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+resolution: workspace
+
+dev_dependencies:
+  test: ^1.25.7
