@@ -3,7 +3,11 @@ description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
 version: 1.5.7-beta.4+50
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.6.0 <4.0.0"
+
+workspace:
+  - packages/plugins
+  - packages/adb_util
 
 dependencies:
   flutter_localizations:
@@ -39,7 +43,7 @@ dependencies:
   # generate QR widget
   qr_flutter: ^4.0.0
   # scan qr code with camera
-  qr_code_scanner: ^1.0.0
+  mobile_scanner: ^6.0.2
   path: ^1.8.0
   # launcher url
   url_launcher: ^6.3.1
@@ -89,8 +93,9 @@ dependencies:
     git:
       url: https://github.com/nightmare-space/empty_package
       path: adb_library
-  plugins:
-    path: ./plugins
+  android_api_server_client:
+    git:
+      url: https://github.com/nightmare-space/android_api_server_client
 
 dev_dependencies:
   flutter_test:
@@ -115,3 +120,4 @@ flutter:
 
 flutter_intl:
   enabled: true
+  class_name: S

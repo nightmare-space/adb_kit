@@ -8,6 +8,8 @@ PODS:
   - flutter_pty (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
+  - mobile_scanner (6.0.2):
+    - FlutterMacOS
   - open_file_mac (0.0.1):
     - FlutterMacOS
   - package_info_plus (0.0.1):
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - flutter_pty (from `Flutter/ephemeral/.symlinks/plugins/flutter_pty/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - mobile_scanner (from `Flutter/ephemeral/.symlinks/plugins/mobile_scanner/macos`)
   - open_file_mac (from `Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
@@ -53,6 +56,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_pty/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  mobile_scanner:
+    :path: Flutter/ephemeral/.symlinks/plugins/mobile_scanner/macos
   open_file_mac:
     :path: Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos
   package_info_plus:
@@ -76,8 +81,9 @@ SPEC CHECKSUMS:
   file_selector_macos: f1b08a781e66103e3ba279fd5d4024a2478b3af6
   flutter_pty: 41b6f848ade294be726a6b94cdd4a67c3bc52f59
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  mobile_scanner: 07710d6b9b2c220ae899de2d7ecf5d77ffa56333
   open_file_mac: 0e554648e2a87ce59e9438e3e5ca3e552e90d89a
-  package_info_plus: f5790acc797bf17c3e959e9d6cf162cc68ff7523
+  package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
   url_launcher_macos: c82c93949963e55b228a30115bd219499a6fe404
