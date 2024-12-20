@@ -1,0 +1,11 @@
+name: plugins
+description: "A new Flutter package project."
+version: 0.0.1
+homepage: none
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+resolution: workspace
+## Failed to ensure /data/user/0/com.termux.api/shared_prefs
