@@ -12,6 +12,8 @@ Future<String> pushFile({
   String? password,
 }) async {
   try {
+    // -s 192.168.31.110:5555 push /Users/nightmare/Downloads/shizuku-v13.5.4.r1049.0e53409-release (4).apk /storage/emulated/0/shizuku-v13.5.4.r1049.0e53409-release (4).apk
+    // TODO 上面这个名称挂了
     String data = await execWL(
       [
         adb,
@@ -50,6 +52,24 @@ Future<String> installApk({
   } catch (e) {
     rethrow;
   }
+}
+
+/// rm file
+Future<String> rm({
+  required String serial,
+  required String path,
+  String? password,
+}) async {
+  return runShell(serial: serial, command: 'rm $path', password: password);
+}
+
+/// pm install
+Future<String> pmInstall({
+  required String serial,
+  required String path,
+  String? password,
+}) async {
+  return runShell(serial: serial, command: 'pm install -r $path', password: password);
 }
 
 Future<String> runShell({
@@ -108,6 +128,7 @@ Future<String> getProp({
   return runShell(serial: serial, command: 'getprop $key', password: password);
 }
 
+// TODO
 Future<String> getExternalStoragePath({
   required String serial,
   String? password,

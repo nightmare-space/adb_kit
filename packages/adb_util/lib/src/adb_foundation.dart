@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:global_repository/global_repository_dart.dart';
-import 'package:signale/signale.dart';
 
 Map<String, String> adbEnvir() {
   Map<String, String> envir = RuntimeEnvir.envir();
@@ -41,22 +40,13 @@ Future<String> execWL(
   return result;
 }
 
-/// TODO
-/// import android.os.Environment;
-
-// public class StorageUtil {
-//     public static String getExternalStoragePath() {
-//         return Environment.getExternalStorageDirectory().getAbsolutePath();
-//     }
-// }
-
 Future<String> execWSWS(String cmd, {String? password}) {
   final List<String> args = cmd.split(' ');
   return execWSWL(args, password: password);
 }
 
 Future<String> execWSWL(List<String> args, {String? password}) async {
-  Log.i('adb cmd -> ${args.join(' ')}');
+  // Log.i('adb cmd -> ${args.join(' ')}');
   Process process = await Process.start(
     args[0],
     args.sublist(1),

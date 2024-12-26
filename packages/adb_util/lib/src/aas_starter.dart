@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:adb_util/src/adb_command.dart';
 import 'package:adb_util/src/adb_foundation.dart';
-import 'package:android_api_server_client/src/client/aas_client.dart';
+import 'package:android_api_server_client/android_api_server_client.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:global_repository/global_repository_dart.dart';
@@ -129,25 +129,37 @@ class AndroidAPIServerStarter {
   AndroidAPIServerStarter._();
   static Map<String, AASClient> serverStartList = {};
   static int rangeStart = 14040;
+  static bool _isStarting = false;
+  static Completer<void>? _startCompleter;
 
   static Future<AASClient> startServer(
     String serial, {
     String? password,
   }) async {
+    if (_isStarting) {
+      Log.i('server is starting');
+      await _startCompleter!.future;
+    }
     if (serverStartList.containsKey(serial)) {
       return serverStartList[serial]!;
     }
-    final int? port = await compute(
-      startServerWithIsolate,
-      StarterIsolateArgs(
-        serial,
-        RuntimeEnvir.environment,
-        rangeStart,
-        password,
-      ),
+    _isStarting = true;
+    _startCompleter = Completer<void>();
+    final args = StarterIsolateArgs(
+      serial,
+      RuntimeEnvir.environment,
+      rangeStart,
+      password,
     );
+    Log.i('startServerWithIsolate');
+    final int? port = await compute(startServerWithIsolate, args);
+
+    Log.i('startServerWithIsolate done port -> $port');
     rangeStart += 10;
     AASClient channel = AASClient(port: port);
-    return serverStartList[serial] = channel;
+    serverStartList[serial] = channel;
+    _startCompleter!.complete();
+    _isStarting = false;
+    return channel;
   }
 }
