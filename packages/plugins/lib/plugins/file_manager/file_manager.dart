@@ -1,28 +1,25 @@
-import 'package:adb_kit/adb_kit.dart' hide S;
-import 'package:adb_kit/app/controller/controller.dart';
-import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_interface/adb_interface.dart';
 import 'package:adb_kit/utils/dex_server.dart';
+import 'package:adb_util/adb_util_flutter.dart';
+import 'package:file_manager/controller/download_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:plugins/generated/l10n.dart';
 import 'package:android_api_server_client/android_api_server_client.dart';
+import 'package:adb_util/adb_util.dart';
 
 class FilePlugin extends ADBKITPlugin {
   @override
-  Widget buildWidget(BuildContext context, DevicesEntity? device) {
-    return FileManagerWrapper(device: device!);
+  Widget buildWidget(BuildContext context, ADBDevice device) {
+    return FileManagerWrapper(device: device);
   }
-
-  @override
-  ImageProvider<Object> get iconImageProvider => throw UnimplementedError();
 
   @override
   String get name => S.current.file_manager;
 
-  @override
-  void onTrigger() {}
   @override
   String get id => '$this';
 }
@@ -32,7 +29,7 @@ class FileManagerWrapper extends StatefulWidget {
     super.key,
     required this.device,
   });
-  final DevicesEntity device;
+  final ADBDevice device;
 
   @override
   State<FileManagerWrapper> createState() => _FileManagerWrapperState();
@@ -40,12 +37,13 @@ class FileManagerWrapper extends StatefulWidget {
 
 class _FileManagerWrapperState extends State<FileManagerWrapper> {
   Future<AASClient?> init(String serial) async {
-    AASClient? appChannel = await DexServer.startServer(serial);
+    AASClient? appChannel = await AndroidAPIServerStarter.startServer(serial);
     FMController controller = FMController();
     controller.setPort(appChannel.port!, isRemote: true);
-    Get.put<FMController>(controller);
-    controller.enterDir('/sdcard');
-    // controller.enterDir('/storage/emulated/0');
+    Get.put(controller);
+    Get.put(DownloadController());
+    controller.enterHomeDir();
+    await Future.delayed(3.seconds);
     return appChannel;
   }
 
@@ -65,11 +63,7 @@ class _FileManagerWrapperState extends State<FileManagerWrapper> {
         if (snapshot.connectionState == ConnectionState.done) {
           return const FileManagerPage();
         }
-        return Center(
-          child: SpinKitPulse(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        );
+        return LoadingProgress();
       },
     );
   }
