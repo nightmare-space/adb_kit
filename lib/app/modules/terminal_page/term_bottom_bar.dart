@@ -1,11 +1,11 @@
-
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:xterm/xterm.dart';
 
 class TerminalFoot extends StatefulWidget {
-  const TerminalFoot({Key? key, required this.pty, required this.terminal}) : super(key: key);
+  const TerminalFoot({super.key, required this.pty, required this.terminal});
   final Pty pty;
   final Terminal terminal;
 
@@ -14,7 +14,7 @@ class TerminalFoot extends StatefulWidget {
 }
 
 class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderStateMixin {
-  Color defaultDragColor = Colors.black.withOpacity(0.4);
+  Color defaultDragColor = Colors.black.withAlpha(opacity04);
   late Animation<double> height;
   late AnimationController controller;
   late Color dragColor;
@@ -24,7 +24,7 @@ class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderSt
     dragColor = defaultDragColor;
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
     );
     height = Tween<double>(begin: 18.0, end: 82).animate(CurvedAnimation(
       curve: Curves.easeIn,
@@ -35,11 +35,6 @@ class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderSt
     });
     controller.forward();
     // widget.terminal.keyInput(key)
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -54,7 +49,7 @@ class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderSt
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onPanDown: (_) {
-                dragColor = Colors.white.withOpacity(0.8);
+                dragColor = Colors.white.withAlpha(opacity08);
                 setState(() {});
               },
               onPanCancel: () {
@@ -86,9 +81,7 @@ class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderSt
                 ),
               ),
             ),
-            SizedBox(
-              height: 2,
-            ),
+            SizedBox(height: 2.w),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -255,12 +248,12 @@ class _TerminalFootState extends State<TerminalFoot> with SingleTickerProviderSt
 
 class BottomItem extends StatefulWidget {
   const BottomItem({
-    Key? key,
+    super.key,
     required this.pty,
     required this.title,
     this.onTap,
     this.enable = false,
-  }) : super(key: key);
+  });
   final Pty pty;
   final String title;
   final void Function()? onTap;
@@ -290,7 +283,7 @@ class _BottomItemState extends State<BottomItem> {
       // onTap: widget.onTap,
       onPanDown: (_) {
         widget.onTap?.call();
-        backgroundColor = Colors.white.withOpacity(0.2);
+        backgroundColor = Colors.white.withAlpha(opacity02);
         setState(() {});
         Feedback.forLongPress(context);
       },
@@ -306,13 +299,13 @@ class _BottomItemState extends State<BottomItem> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: widget.enable ? Colors.white.withOpacity(0.4) : backgroundColor,
+          color: widget.enable ? Colors.white.withAlpha(opacity04) : backgroundColor,
         ),
         height: 30,
         child: Center(
           child: Text(
             widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w500,
             ),
           ),

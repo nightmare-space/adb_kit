@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class AppPlatformMenu extends StatefulWidget {
-  const AppPlatformMenu({Key? key, required this.child}) : super(key: key);
+  const AppPlatformMenu({super.key, required this.child});
 
   final Widget child;
 

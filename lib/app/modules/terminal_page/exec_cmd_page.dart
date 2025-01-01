@@ -6,7 +6,6 @@ import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -17,7 +16,7 @@ import 'termare_view_with_bar.dart';
 import 'package:adb_util/adb_util.dart';
 
 class ExecCmdPage extends StatefulWidget {
-  const ExecCmdPage({Key? key}) : super(key: key);
+  const ExecCmdPage({super.key});
 
   @override
   State createState() => _ExecCmdPageState();
@@ -164,7 +163,7 @@ class ItemButton extends StatelessWidget {
       margin: EdgeInsets.all(4.w),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(10.w),
           border: Border.all(
             color: Theme.of(context).primaryColor,

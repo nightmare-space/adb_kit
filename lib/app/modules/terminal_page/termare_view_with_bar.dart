@@ -6,11 +6,11 @@ import 'term_bottom_bar.dart';
 
 class TermareViewWithBottomBar extends StatefulWidget {
   const TermareViewWithBottomBar({
-    Key? key,
+    super.key,
     required this.child,
     required this.pty,
     required this.terminal,
-  }) : super(key: key);
+  });
   final Widget child;
   final Pty pty;
   final Terminal terminal;

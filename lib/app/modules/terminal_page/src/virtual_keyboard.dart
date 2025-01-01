@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xterm/xterm.dart';
 
 class VirtualKeyboardView extends StatelessWidget {
-  const VirtualKeyboardView(this.keyboard, {Key? key}) : super(key: key);
+  const VirtualKeyboardView(this.keyboard, {super.key});
 
   final VirtualKeyboard keyboard;
 
@@ -11,7 +11,6 @@ class VirtualKeyboardView extends StatelessWidget {
     return AnimatedBuilder(
       animation: keyboard,
       builder: (context, child) => ToggleButtons(
-        children: [Text('Ctrl'), Text('Alt'), Text('Shift')],
         isSelected: [keyboard.ctrl, keyboard.alt, keyboard.shift],
         onPressed: (index) {
           switch (index) {
@@ -26,6 +25,7 @@ class VirtualKeyboardView extends StatelessWidget {
               break;
           }
         },
+        children: const [Text('Ctrl'), Text('Alt'), Text('Shift')],
       ),
     );
   }
