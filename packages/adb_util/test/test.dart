@@ -8,7 +8,7 @@ void main() {
   int testCount = 1000;
   String testCMD = '/Users/nightmare/Desktop/nightmare-core/adb_kit/packages/adb_util/test/test.sh';
   // adb = testCMD;
-  String serial = '192.168.31.110:5555';
+  String serial = '192.168.31.111:5555';
   String password = 'adb369875';
 
   // test('test exception', () async {
@@ -76,6 +76,7 @@ void main() {
     String? product = await getDeviceProductModel(serial, password: password);
     Log.i('product : $product, time : ${stopwatch.elapsed}');
     // double get
+    stopwatch.reset();
     product = await getDeviceProductModel(serial);
     Log.i('product : $product, time : ${stopwatch.elapsed}');
   });
@@ -84,56 +85,28 @@ void main() {
     String? nid = await getDeviceID(serial, password: password);
     Log.i('nid : $nid, time : ${stopwatch.elapsed}');
     // double get
+    stopwatch.reset();
     nid = await getDeviceID(serial);
     Log.i('nid : $nid, time : ${stopwatch.elapsed}');
   });
+  // 把这个测试放在安卓上跑
   test('test exec cmd with start', () async {
-    int sumTime = 0;
-    for (int i = 0; i < testCount; i++) {
-      final Stopwatch stopwatch = Stopwatch()..start();
-      // ignore: unused_local_variable
-      String result = await exec('$adb devices', password: password);
-      // print(result);
-      // print('耗时:${stopwatch.elapsedMilliseconds}');
-      sumTime += stopwatch.elapsedMilliseconds;
-    }
-    Log.i('平均耗时:${sumTime / testCount}');
+    await testExecSpeed(testCount, false);
   });
   test('test exec cmd with run', () async {
-    int sumTime = 0;
-    for (int i = 0; i < testCount; i++) {
-      final Stopwatch stopwatch = Stopwatch()..start();
-      // ignore: unused_local_variable
-      String result = await exec('$adb devices', useProcessRun: true);
-      // print(result);
-      // print('耗时:${stopwatch.elapsedMilliseconds}');
-      sumTime += stopwatch.elapsedMilliseconds;
-    }
-    Log.i('平均耗时:${sumTime / testCount}');
+    await testExecSpeed(testCount, true);
   });
+}
 
-  test('test exec cmd with start', () async {
-    int sumTime = 0;
-    for (int i = 0; i < testCount; i++) {
-      final Stopwatch stopwatch = Stopwatch()..start();
-      // ignore: unused_local_variable
-      String result = await exec('$adb devices', password: password);
-      // print(result);
-      // print('耗时:${stopwatch.elapsedMilliseconds}');
-      sumTime += stopwatch.elapsedMilliseconds;
-    }
-    Log.i('平均耗时:${sumTime / testCount}');
-  });
-  test('test exec cmd with run', () async {
-    int sumTime = 0;
-    for (int i = 0; i < testCount; i++) {
-      final Stopwatch stopwatch = Stopwatch()..start();
-      // ignore: unused_local_variable
-      String result = await exec('$adb devices', useProcessRun: true);
-      // print(result);
-      // print('耗时:${stopwatch.elapsedMilliseconds}');
-      sumTime += stopwatch.elapsedMilliseconds;
-    }
-    Log.i('平均耗时:${sumTime / testCount}');
-  });
+Future<void> testExecSpeed(int count, bool useProcessRun) async {
+  int sumTime = 0;
+  for (int i = 0; i < count; i++) {
+    final Stopwatch stopwatch = Stopwatch()..start();
+    // ignore: unused_local_variable
+    String result = await exec('$adb devices', useProcessRun: useProcessRun);
+    // print(result);
+    // print('耗时:${stopwatch.elapsedMilliseconds}');
+    sumTime += stopwatch.elapsedMilliseconds;
+  }
+  Log.i('平均耗时:${sumTime / count}');
 }

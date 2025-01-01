@@ -127,10 +127,16 @@ Future<int> startServerWithIsolate(StarterIsolateArgs args) async {
 
 class AndroidAPIServerStarter {
   AndroidAPIServerStarter._();
+  // TODO 是不是应该用 id 来区分
   static Map<String, AASClient> serverStartList = {};
   static int rangeStart = 14040;
   static bool _isStarting = false;
   static Completer<void>? _startCompleter;
+
+  /// for test
+  static putServer(String serial, AASClient channel) {
+    serverStartList[serial] = channel;
+  }
 
   static Future<AASClient> startServer(
     String serial, {

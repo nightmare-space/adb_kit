@@ -52,7 +52,7 @@ class ADBDevice {
 
   @override
   String toString() {
-    return 'ADBDevice{serial: $serial, stat: $stat}';
+    return 'ADBDevice{serial: $serial, stat: $stat model: $productModel nid: $nid}';
   }
 
   @override
@@ -272,7 +272,7 @@ Future<void> adbPollingIsolate(IsolateArgs args) async {
   args.sendPort.send(receivePort.sendPort);
   Timer.periodic(args.duration, (timer) async {
     try {
-      String result = await exec('adb devices');
+      String result = await exec('adb devices', useProcessRun: true);
       args.sendPort.send(result);
     } catch (e) {
       Log.e('ADB polling error : ${e.toString()}');

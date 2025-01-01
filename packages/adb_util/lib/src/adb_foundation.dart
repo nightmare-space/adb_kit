@@ -8,10 +8,14 @@ Map<String, String> adbEnvir() {
   envir['TMPDIR'] = RuntimeEnvir.binPath;
   // ADB_MDNS=0 can fix rokid bug(adb will crash when mDNS is enabled)
   envir['ADB_MDNS'] = '0';
+  envir['ADB_MDNS_AUTO_CONNECT'] = '0';
+  // ADB_EMU=0
+  envir['ADB_EMU'] = '0';
   envir['PREFIX'] = RuntimeEnvir.usrPath;
-  envir['HOME'] = RuntimeEnvir.binPath;
+  envir['HOME'] = RuntimeEnvir.homePath;
   envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
   envir['RUST_LOG'] = 'debug';
+  // envir['RUST_LOG'] = 'trace';
   return envir;
 }
 
@@ -27,7 +31,7 @@ Future<String> exec(
   return result;
 }
 
-/// exec with args(List<String>)
+/// exec with args(List)
 Future<String> execWL(
   List<String> args, {
   String? password,
@@ -40,6 +44,7 @@ Future<String> execWL(
   return result;
 }
 
+// with process start
 Future<String> execWSWS(String cmd, {String? password}) {
   final List<String> args = cmd.split(' ');
   return execWSWL(args, password: password);
@@ -59,6 +64,8 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
   final StreamController<String> controller = StreamController<String>();
   process.stdout.transform(utf8.decoder).listen(controller.sink.add);
   process.stderr.transform(utf8.decoder).listen(controller.sink.add);
+  // TODO 感觉这里的异常处理有点问题
+  // 是不是直接在 stderr 里面直接往外抛出异常
   controller.stream.listen((data) {
     // No such file or directory
     if (data.contains('No such file or directory')) {
@@ -87,11 +94,13 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
   return completer.future;
 }
 
+/// with process run and string cmd
 Future<String> execWRWS(String cmd) async {
   final List<String> args = cmd.split(' ');
   return execWRWL(args);
 }
 
+/// with process run and list cmd
 Future<String> execWRWL(List<String> args) async {
   ProcessResult result = await Process.run(
     args[0],
