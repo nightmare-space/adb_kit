@@ -5,7 +5,6 @@ import 'package:adb_util/adb_util_flutter.dart';
 class DexServer {
   DexServer._();
 
-  // TODO: fix password
   static Future<AASClient> startServer(String devicesId) async {
     return AndroidAPIServerStarter.startServer(devicesId);
   }

@@ -8,6 +8,7 @@ class ADBFind {
 
   static Future<List<String>> getLANDevices() async {
     List<String> address = await localAddress();
+    if (address.isEmpty) return [];
     List<String> list = address.first.split('.');
     List<String> devices = [];
     Completer lock = Completer();
@@ -56,8 +57,12 @@ class ADBFind {
 }
 
 bool isAddress(String content) {
-  final RegExp regExp = RegExp(
-      '((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
+  final RegExp regExp = RegExp(r'^((25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.){3}(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$');
+  return regExp.hasMatch(content);
+}
+
+bool isIPV6(String content) {
+  final RegExp regExp = RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$');
   return regExp.hasMatch(content);
 }
 

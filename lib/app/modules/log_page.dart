@@ -8,7 +8,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'overview/pages/overview_page.dart';
 
 class LogPage extends StatefulWidget {
-  const LogPage({Key? key}) : super(key: key);
+  const LogPage({super.key});
 
   @override
   State createState() => _LogPageState();

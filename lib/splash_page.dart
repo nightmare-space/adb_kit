@@ -1,7 +1,7 @@
-import 'package:app_manager/app_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'app/controller/controller.dart';
@@ -56,15 +56,13 @@ class _SplashPageState extends State<SplashPage> {
     await Global().initGlobal();
     DevicesController controller = Get.find();
     controller.init();
-    // TODO get依赖不自动移除
-    AppManager.globalInstance;
     isInit = true;
   }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.light,
@@ -78,7 +76,7 @@ class _SplashPageState extends State<SplashPage> {
             S.current.slogan,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 18.w,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -28,15 +28,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  adbutil:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3c45e22c12e119aeee7fd9b8e1bb5f51a217433a"
-      url: "https://github.com/nightmare-space/adbutil"
-    source: git
-    version: "0.0.1"
   analyzer:
     dependency: transitive
     description:
@@ -52,14 +43,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  android_intent_plus:
+  android_tool:
     dependency: transitive
     description:
-      name: android_intent_plus
-      sha256: "38921ec22ebb3b9a7eb678792cf6fab0b6f458b61b9d327688573449c9b47db3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.0"
+      path: "/Users/nightmare/Desktop/nightmare-space/android_tool"
+      relative: false
+    source: path
+    version: "1.0.0+1"
   animations:
     dependency: "direct main"
     description:
@@ -68,13 +58,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.11"
-  app_manager:
-    dependency: "direct main"
-    description:
-      path: "../../nightmare-space/app_manager"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   archive:
     dependency: "direct main"
     description:
@@ -316,13 +299,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.4"
-  device_info:
-    dependency: "direct main"
-    description:
-      path: "/Users/nightmare/Desktop/nightmare-space/device_info"
-      relative: false
-    source: path
-    version: "1.0.0+1"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -390,7 +366,7 @@ packages:
   file_manager:
     dependency: "direct main"
     description:
-      path: "../../nightmare-space/file_manager"
+      path: "../../nightmare-space/file_manager_private"
       relative: true
     source: path
     version: "1.0.0+1"
@@ -398,18 +374,42 @@ packages:
     dependency: "direct main"
     description:
       name: file_selector
-      sha256: "9e34368bfacdf644e2c8a59e2b241cfb722bcbbd09876410e8775ae4905d6a49"
+      sha256: "5019692b593455127794d5718304ff1ae15447dea286cdda9f0db2a796a1b828"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.4+3"
+    version: "1.0.3"
+  file_selector_android:
+    dependency: transitive
+    description:
+      name: file_selector_android
+      sha256: "98ac58e878b05ea2fdb204e7f4fc4978d90406c9881874f901428e01d3b18fbc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1+12"
+  file_selector_ios:
+    dependency: transitive
+    description:
+      name: file_selector_ios
+      sha256: "94b98ad950b8d40d96fee8fa88640c2e4bd8afcdd4817993bd04e20310f45420"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.3+1"
+  file_selector_linux:
+    dependency: transitive
+    description:
+      name: file_selector_linux
+      sha256: "54cbbd957e1156d29548c7d9b9ec0c0ebb6de0a90452198683a7d23aed617a33"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.3+2"
   file_selector_macos:
     dependency: transitive
     description:
       name: file_selector_macos
-      sha256: e87311d719039da30d26ae829aab3ae66f82deb3318cd70ffecb608c99e3da68
+      sha256: "271ab9986df0c135d45c3cdb6bd0faa5db6f4976d3e4b437cf7d0f258d941bfc"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.2+2"
+    version: "0.9.4+2"
   file_selector_platform_interface:
     dependency: transitive
     description:
@@ -422,18 +422,18 @@ packages:
     dependency: transitive
     description:
       name: file_selector_web
-      sha256: bf166d08f4c3f79286774cdfa39ed301e076c5a903c435f5199818288f24a66d
+      sha256: c4c0ea4224d97a60a7067eca0c8fd419e708ff830e0c83b11a48faf566cec3e7
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.1+5"
+    version: "0.9.4+2"
   file_selector_windows:
     dependency: transitive
     description:
       name: file_selector_windows
-      sha256: "8bbcc82fe0d3cdf5ae5c289492ddfd703ec028028d9f194dbceae04cfbde1c48"
+      sha256: "8f5d2f6590d51ecd9179ba39c64f722edc15226cc93dcc8698466ad36a4a85a4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.2+2"
+    version: "0.9.3+3"
   fixnum:
     dependency: transitive
     description:
@@ -475,10 +475,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: "3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c"
+      sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -696,10 +696,10 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: "976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235"
+      sha256: c35bb79562d980e9a453fc715854e1ed39e24e7d0297a880ef54e17f9874a9d7
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "5.1.1"
   logger:
     dependency: transitive
     description:

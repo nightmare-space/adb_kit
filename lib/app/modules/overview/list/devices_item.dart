@@ -1,10 +1,8 @@
-import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/app/modules/developer_tool/developer_tool.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
-import 'package:adb_kit/utils/utils.dart';
-import 'package:app_manager/controller/app_manager_controller.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart' hide exec;
@@ -12,11 +10,11 @@ import 'package:adb_util/adb_util.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({
-    Key? key,
-    this.devicesEntity,
-  }) : super(key: key);
+    super.key,
+    required this.adbDevice,
+  });
   // 可能是ip地址可能是设备编号
-  final DevicesEntity? devicesEntity;
+  final ADBDevice adbDevice;
 
   @override
   State createState() => _DevicesItemState();
@@ -84,18 +82,17 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    _title = widget.devicesEntity!.productModel ?? widget.devicesEntity!.serial;
+    _title = widget.adbDevice.productModel ?? widget.adbDevice.serial;
     return InkWell(
       borderRadius: BorderRadius.circular(Dimens.gap_dp8),
       onTap: () async {
-        if (!widget.devicesEntity!.isConnect) {
+        if (!widget.adbDevice.isConnect) {
           showToast(S.current.deviceNotConnect);
           return;
         }
         ADB.stopPoolingListDevices();
-        Get.put(AppManagerController());
         await openPage(
-          DeveloperTool(entity: widget.devicesEntity),
+          DeveloperTool(adbDevice: widget.adbDevice),
           title: S.current.devTools,
         );
         ADB.startPoolingListDevices();
@@ -148,10 +145,10 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                               vertical: 2.w,
                             ),
                             child: Text(
-                              widget.devicesEntity!.stat,
+                              widget.adbDevice.stat,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withAlpha(opacity08),
                                 fontSize: 10.w,
                               ),
                             ),
@@ -162,23 +159,23 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                   ),
                   Row(
                     children: [
-                      if (isAddress(widget.devicesEntity!.serial))
+                      if (widget.adbDevice.isNetworkDevice)
                         IconButton(
                           tooltip: S.current.disconnect,
                           icon: Icon(Icons.clear, size: 24.w),
                           onPressed: () async {
                             ADB.stopPoolingListDevices();
-                            await ADB.disconnectDevices(widget.devicesEntity!.serial);
+                            await ADB.disconnectDevices(widget.adbDevice.serial);
                             ADB.startPoolingListDevices();
                           },
                         ),
-                      if (!widget.devicesEntity!.isConnect)
+                      if (!widget.adbDevice.isConnect)
                         IconButton(
                           tooltip: S.current.reconnect,
                           icon: Icon(Icons.refresh, size: 24.w),
                           onPressed: () async {
-                            Log.e(widget.devicesEntity!.serial);
-                            ADB.reconnectDevices(widget.devicesEntity!.serial);
+                            Log.e(widget.adbDevice.serial);
+                            ADB.reconnectDevices(widget.adbDevice.serial);
                           },
                         ),
                       IconButton(
@@ -188,16 +185,14 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                           color: Colors.black87,
                         ),
                         onPressed: () async {
-                          if (!widget.devicesEntity!.isConnect) {
+                          if (!widget.adbDevice.isConnect) {
                             showToast(S.current.deviceNotConnect);
                             return;
                           }
                           ADB.stopPoolingListDevices();
-                          Get.put(AppManagerController());
                           await Get.to(DeveloperTool(
-                            entity: widget.devicesEntity,
+                            adbDevice: widget.adbDevice,
                           ));
-                          Get.delete<AppManagerController>();
                           ADB.startPoolingListDevices();
                         },
                       ),
@@ -217,7 +212,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Colors.blue.withOpacity(animationController.value),
+                        color: Colors.blue.o(animationController.value),
                         offset: const Offset(0.0, 0.0), //阴影xy轴偏移量
                         blurRadius: 16.0, //阴影模糊程度
                         spreadRadius: 1.0, //阴影扩散程度
@@ -230,7 +225,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                       valueColor: AlwaysStoppedAnimation(
                         Theme.of(context).primaryColor,
                       ),
-                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.15),
+                      backgroundColor: Theme.of(context).primaryColor.withAlpha(opacity015),
                       value: progressAnimaCTL.value * progressMax,
                     ),
                   ),

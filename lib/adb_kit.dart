@@ -1,14 +1,12 @@
+// ignore_for_file: non_constant_identifier_names
+
 library adb_tool;
 
 // other repo can import this file
 
-import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'generated/intl/messages_en.dart' as en;
-import 'generated/intl/messages_zh_CN.dart' as zh_CN;
-import 'package:adb_util/adb_util.dart' as au;
-
+import 'generated/intl/messages_zh_CN.dart' as zh_cn;
 export 'app/modules/history/history_page.dart';
 export 'app/modules/log_page.dart';
 export 'app/routes/app_pages.dart';
@@ -28,16 +26,4 @@ Future<double> getMacTitlebarWidth() async {
 Widget? personHeader;
 
 Map<String, dynamic> en_message = en.messages.messages;
-Map<String, dynamic> zh_cn_messages = zh_CN.messages.messages;
-
-// exec with password
-Future<String> execWithPassword(String cmd) async {
-  ConfigController configController = Get.find();
-  return au.exec(cmd, password: configController.password);
-}
-
-// exec with password
-Future<String> execWLexecWithPassword(List<String> args) async {
-  ConfigController configController = Get.find();
-  return au.execWL(args, password: configController.password);
-}
+Map<String, dynamic> zh_cn_messages = zh_cn.messages.messages;

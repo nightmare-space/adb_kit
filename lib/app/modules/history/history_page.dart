@@ -5,7 +5,7 @@ import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
-import 'package:adb_kit/utils/utils.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart' hide exec;
@@ -13,8 +13,11 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:adb_util/adb_util.dart';
 
 class HistoryPage extends GetView<HistoryController> {
-  const HistoryPage({super.key});
-  final bool showLeading = false;
+  const HistoryPage({
+    super.key,
+    this.showLeading = false,
+  });
+  final bool showLeading;
   ConfigController get configController => Get.find();
 
   @override
@@ -22,7 +25,7 @@ class HistoryPage extends GetView<HistoryController> {
     ColorScheme scheme = Theme.of(context).colorScheme;
     return Builder(builder: (context) {
       AppBar? appBar;
-      if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
+      if (ResponsiveBreakpoints.of(context).isMobile || configController.screenType == ScreenType.phone) {
         appBar = AppBar(
           title: Text(S.of(context).historyConnect),
           automaticallyImplyLeading: false,
@@ -74,7 +77,7 @@ class HistoryPage extends GetView<HistoryController> {
                         padding: EdgeInsets.all(8.w),
                         margin: EdgeInsets.all(8.w),
                         decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.1),
+                          color: Colors.green.withAlpha(opacity01),
                           borderRadius: BorderRadius.circular(10.w),
                         ),
                         child: Text(
@@ -99,12 +102,12 @@ class HistoryPage extends GetView<HistoryController> {
       onTap: () async {
         ADBResult result;
         try {
-          String suffix = '';
-          suffix = ':${adbEntity.port}';
-          result = await ADB.connectDevices(adbEntity.address + suffix);
+          // String suffix = ':${adbEntity.port}';
+          // FIXME: 需要支持不是5555端口的设备
+          result = await ADB.connectDevices(adbEntity.address);
           showToast(result.message);
         } catch (e) {
-          showToast('e');
+          showToast('$e');
         }
       },
       child: SizedBox(
@@ -172,13 +175,13 @@ class HistoryPage extends GetView<HistoryController> {
                     Text(
                       adbEntity.address,
                       style: TextStyle(
-                        color: scheme.onSurface.withOpacity(0.6),
+                        color: scheme.onSurface.withAlpha(opacity06),
                       ),
                     ),
                     Text(
                       adbEntity.uniqueId,
                       style: TextStyle(
-                        color: scheme.onSurface.withOpacity(0.6),
+                        color: scheme.onSurface.withAlpha(opacity06),
                       ),
                     ),
                   ],

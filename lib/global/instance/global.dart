@@ -6,7 +6,6 @@ import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/generated/l10n.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart';
 import 'package:adb_library/adb_library.dart';
 import 'package:flutter/material.dart';
@@ -108,16 +107,6 @@ class Global {
       environment: envir,
       workingDirectory: GetPlatform.isMobile ? RuntimeEnvir.binPath : "~",
     );
-    // some device need input password
-    pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
-      (event) {
-        if (event.contains('please input verify password')) {
-          ConfigController controller = Get.find();
-          pty!.writeString('${controller.password}\n');
-        }
-        terminal.write(event);
-      },
-    );
   }
 
   Future<void> _receiveBoardCast() async {
@@ -159,6 +148,15 @@ class Global {
     );
   }
 
+  String extractIPv4(String input) {
+    final ipv4Regex = RegExp(r'(\d{1,3}\.){3}\d{1,3}');
+    final match = ipv4Regex.firstMatch(input);
+    if (match != null) {
+      return match.group(0)!;
+    }
+    return '';
+  }
+
   int? successBindPort = 0;
   Future<void> _socketServer() async {
     successBindPort = await getSafePort(adbToolQrPort, adbToolQrPort + 10);
@@ -166,10 +164,9 @@ class Global {
     HttpServerUtil.bindServer(
       successBindPort!,
       (address) async {
-        // 弹窗
-        ADBResult result;
         try {
-          result = await ADB.connectDevices(address);
+          String ipv4 = extractIPv4(address);
+          ADBResult result = await ADB.connectDevices(ipv4);
           showToast(result.message);
         } catch (e) {
           showToast('$e');
@@ -231,7 +228,7 @@ class Print implements Printable {
   const Print();
   @override
   void print(DateTime time, Object object) {
-    final String data = '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
+    // final String data = '[${twoDigits(time.hour)}:${twoDigits(time.minute)}:${twoDigits(time.second)}] $object';
 
     // ignore: avoid_print
     // core.print(data);
@@ -247,7 +244,7 @@ class MetricsObserver with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     // ignore: deprecated_member_use
-    FlutterView view = window;
+    // FlutterView view = window;
     // Log.v('didChangeMetrics invokded');
     // Log.i('PhysicalSize(PX):${view.physicalSize.str()}');
     // Log.i('PhysicalSize(DP):${(view.physicalSize / view.devicePixelRatio).str()}');

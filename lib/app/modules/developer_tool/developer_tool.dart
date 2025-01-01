@@ -1,19 +1,18 @@
-import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_interface/adb_interface.dart';
 import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:adb_kit/global/widget/pop_button.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart' hide TabController;
 import 'package:plugins/plugins.dart';
+import 'package:adb_util/adb_util.dart';
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({
     super.key,
-    this.entity,
-    this.providerContext,
+    required this.adbDevice,
   });
-  final DevicesEntity? entity;
-  final BuildContext? providerContext;
+  final ADBDevice adbDevice;
 
   @override
   State createState() => _DeveloperToolState();
@@ -44,7 +43,6 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
                         for (var item in PluginManager.instance.pluginsMap.keys)
                           Builder(builder: (context) {
                             ADBKITPlugin plugin = PluginManager.instance.pluginsMap[item]!;
-                            plugin.context = context;
                             return Row(
                               children: [
                                 Text(plugin.name),
@@ -54,7 +52,7 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
                                       SizedBox(width: 8.w),
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.tertiary.withOpacity(0.15),
+                                          color: Theme.of(context).colorScheme.tertiary.withAlpha(opacity015),
                                           borderRadius: BorderRadius.circular(4.w),
                                         ),
                                         padding: EdgeInsets.symmetric(horizontal: 4.w),
@@ -76,9 +74,25 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
                   SizedBox(width: 10.w),
                 ],
               ),
+              // 这种方式太卡
+              // Expanded(
+              //   child: PageView(
+              //     children: [
+              //       for (var item in PluginManager.instance.pluginsMap.values)
+              //         item.buildWidget(
+              //           context,
+              //           widget.adbDevice,
+              //         ),
+              //     ],
+              //   ),
+              // ),
               Expanded(
                 child: [
-                  for (var item in PluginManager.instance.pluginsMap.values) item.buildWidget(context, widget.entity),
+                  for (var item in PluginManager.instance.pluginsMap.values)
+                    item.buildWidget(
+                      context,
+                      widget.adbDevice,
+                    ),
                 ][value],
               ),
             ],
@@ -124,7 +138,7 @@ class _AKTabBarState<T> extends State<AKTabBar<T>> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
                   decoration: BoxDecoration(
-                    color: isSelect ? fontColor.withOpacity(0.2) : Colors.transparent,
+                    color: isSelect ? fontColor.withAlpha(opacity02) : Colors.transparent,
                     borderRadius: BorderRadius.circular(12.w),
                   ),
                   child: DefaultTextStyle.merge(

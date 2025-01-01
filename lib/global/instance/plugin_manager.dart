@@ -1,4 +1,4 @@
-import 'package:adb_kit/core/interface/pluggable.dart';
+import 'package:adb_interface/adb_interface.dart';
 
 /// A singleton class that manages all the plugins registered in the app.
 class PluginManager {

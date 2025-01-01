@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui';
 import 'dart:ui';
 import 'package:adb_kit/test_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +11,6 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:settings/settings.dart';
-import 'package:app_manager/app_manager.dart' as am;
 import 'app/controller/controller.dart';
 import 'app/routes/app_pages.dart';
 import 'config/config.dart';
@@ -33,9 +30,9 @@ Future<void> initSetting() async {
 
 class MaterialAppWrapper extends StatefulWidget {
   const MaterialAppWrapper({
-    Key? key,
+    super.key,
     this.isNativeShell = false,
-  }) : super(key: key);
+  });
   final bool isNativeShell;
 
   @override
@@ -98,7 +95,7 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
               theme: ThemeData(primarySwatch: Colors.blue, visualDensity: VisualDensity.adaptivePlatformDensity),
               defaultTransition: Transition.fadeIn,
               initialRoute: ADBPages.splash,
-              getPages: ADBPages.routes + am.AppPages.routes,
+              getPages: ADBPages.routes,
               useInheritedMediaQuery: true,
               builder: (BuildContext context, Widget? navigator) {
                 return ResponsiveBreakpoints.builder(

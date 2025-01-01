@@ -4,36 +4,6 @@ extension ColorExt on State {
   ColorScheme get scheme => Theme.of(context).colorScheme;
 }
 
-extension ThemeDataExt on ThemeData {
-  Color get surface1 {
-    if (useMaterial3) {
-      return primaryColor.withOpacity(0.05);
-    }
-    return Colors.white;
-  }
-
-  Color get surface2 {
-    if (useMaterial3) {
-      return primaryColor.withOpacity(0.08);
-    }
-    return grey2;
-  }
-
-  Color get surface3 {
-    if (useMaterial3) {
-      return primaryColor.withOpacity(0.11);
-    }
-    return grey3;
-  }
-
-  Color get surface4 {
-    if (useMaterial3) {
-      return primaryColor.withOpacity(0.12);
-    }
-    return grey4;
-  }
-}
-
 Color grey1 = grey.shade100;
 Color grey2 = grey.shade200;
 Color grey3 = grey.shade300;

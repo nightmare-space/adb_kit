@@ -5,7 +5,7 @@ import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
-import 'package:adb_kit/utils/utils.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -225,8 +225,8 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                           vertical: 8.0,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(Dimens.gap_dp8),
+                          color: Theme.of(context).colorScheme.primary.withAlpha(opacity008),
+                          borderRadius: BorderRadius.circular(8.w),
                         ),
                         child: RichText(
                           text: TextSpan(
@@ -254,7 +254,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.red.withAlpha(opacity01),
                         borderRadius: BorderRadius.circular(10.w),
                       ),
                       child: Text(

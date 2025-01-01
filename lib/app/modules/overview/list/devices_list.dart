@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:adb_util/adb_util.dart';
 
 class DevicesList extends StatefulWidget {
-  const DevicesList({Key? key}) : super(key: key);
+  const DevicesList({super.key});
 
   @override
   State createState() => _DevicesListState();
@@ -53,8 +54,7 @@ class _DevicesListState extends State<DevicesList> {
                       int index,
                       Animation<double> animation,
                     ) {
-                      final DevicesEntity devicesEntity =
-                          controller.devicesEntitys[index];
+                      final ADBDevice devicesEntity = controller.devicesEntitys[index];
                       return SlideTransition(
                         position: animation
                             .drive(
@@ -100,8 +100,7 @@ class _DevicesListState extends State<DevicesList> {
                   return const SizedBox();
                 }),
                 Builder(builder: (_) {
-                  if (!controller.adbIsStarting &&
-                      controller.devicesEntitys.isEmpty) {
+                  if (!controller.adbIsStarting && controller.devicesEntitys.isEmpty) {
                     return SizedBox(
                       height: 20.w,
                       child: Center(

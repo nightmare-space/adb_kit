@@ -1,29 +1,76 @@
+import 'dart:io';
+
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:adb_kit/themes/theme_light.dart';
+import 'package:adb_kit/utils/adbd_find_util.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrScanPage extends StatefulWidget {
-  const QrScanPage({Key? key}) : super(key: key);
+  const QrScanPage({super.key});
 
   @override
   State createState() => _QrScanPageState();
 }
 
+class Addr {
+  Addr(this.addr, this.name);
+  String addr;
+  final String name;
+}
+
 class _QrScanPageState extends State<QrScanPage> {
   ConfigController controller = Get.find();
-  List<String> localAddresList = [];
+  List<Addr> localAddresList = [];
+  String removeScopeId(String address) {
+    return address.split('%').first;
+  }
+
+  Future<List<Addr>> localAddress() async {
+    List<Addr> addrs = [];
+    final List<NetworkInterface> interfacesIpv4 = await NetworkInterface.list(type: InternetAddressType.IPv4);
+    for (final NetworkInterface interface in interfacesIpv4) {
+      for (final InternetAddress address in interface.addresses) {
+        Log.i('interface.name:${interface.name} address:${address.address}');
+        addrs.add(Addr(address.address, interface.name));
+      }
+    }
+    final List<NetworkInterface> interfacesIpv6 = await NetworkInterface.list(type: InternetAddressType.IPv6);
+    for (final NetworkInterface interface in interfacesIpv6) {
+      for (final InternetAddress address in interface.addresses) {
+        Log.i('interface.name:${interface.name} address:${address.address}');
+        addrs.add(Addr(address.address, interface.name));
+      }
+    }
+    // check address name start with 'wlan'
+    bool hasWlan = false;
+    for (final Addr addr in addrs) {
+      if (addr.name.startsWith('wlan')) {
+        hasWlan = true;
+        break;
+      }
+    }
+    if (hasWlan) {
+      addrs = addrs.where((element) => element.name.startsWith('wlan')).toList();
+    }
+    for (Addr addr in addrs) {
+      addr.addr = removeScopeId(addr.addr);
+    }
+    return addrs;
+  }
+
   Future<void> getQrCode() async {
     await Future.delayed(const Duration(milliseconds: 100));
-    localAddresList = await PlatformUtil.localAddress();
-    for (int i = 0; i < localAddresList.length; i++) {
-      localAddresList[i] += ':${Global().successBindPort}';
-    }
+    localAddresList = await localAddress();
+    // for (int i = 0; i < localAddresList.length; i++) {
+    //   localAddresList[i].addr += ':${Global().successBindPort}';
+    // }
     setState(() {});
   }
 
@@ -50,7 +97,8 @@ class _QrScanPageState extends State<QrScanPage> {
     }
     return Builder(builder: (_) {
       final List<Widget> children = [];
-      for (final String addr in localAddresList) {
+      for (final Addr addr in localAddresList) {
+        String url = '${isIPV6(addr.addr) ? '[${addr.addr}]' : addr.addr}:${Global().successBindPort}';
         children.add(
           GestureWithScale(
             onTap: () {
@@ -58,7 +106,7 @@ class _QrScanPageState extends State<QrScanPage> {
                 Theme(
                   data: light(),
                   child: Material(
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withAlpha(opacity08),
                     child: Center(
                       child: NiCardButton(
                         onTap: () {
@@ -70,11 +118,11 @@ class _QrScanPageState extends State<QrScanPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             QrImageView(
-                              data: addr,
+                              data: url,
                               version: QrVersions.auto,
                               size: 400.w,
                             ),
-                            Text(addr),
+                            Text(url),
                             SizedBox(height: 4.w),
                           ],
                         ),
@@ -88,21 +136,33 @@ class _QrScanPageState extends State<QrScanPage> {
               // AdbUtil.connectDevices('172.24.85.34:5555');
             },
             child: Material(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(12.w),
               child: Column(
                 children: [
-                  QrImageView(
-                    data: addr,
-                    version: QrVersions.auto,
-                    size: 140.w,
-                    // foregroundColor: controller.theme.fontColor,
-                  ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
-                    child: Text(
-                      addr,
-                      style: TextStyle(fontSize: 12.w),
+                    padding: EdgeInsets.all(8.w),
+                    child: QrImageView(
+                      data: url,
+                      version: QrVersions.auto,
+                      size: 140.w,
+                      padding: EdgeInsets.all(0.w),
+                      eyeStyle: QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    addr.name,
+                    style: TextStyle(fontSize: 12.w, fontWeight: FontWeight.bold),
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 140.w),
+                    child: SelectableText(
+                      url,
+                      maxLines: 2,
+                      style: TextStyle(fontSize: 10.w, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(height: 4.w),
@@ -118,9 +178,7 @@ class _QrScanPageState extends State<QrScanPage> {
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        child: Row(
-          children: children,
-        ),
+        child: Row(children: children),
       );
     });
   }

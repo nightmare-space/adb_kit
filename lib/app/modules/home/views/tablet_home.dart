@@ -1,6 +1,7 @@
-import 'package:adb_kit/app/modules/drawer/drawer.dart';
-import 'package:adb_kit/app/modules/drawer/drawer_tablet.dart';
-import 'package:adb_kit/global/instance/global.dart';
+import 'package:adb_kit/app/modules/home/adaptive_entry.dart';
+import 'package:adb_kit/app/modules/home/drawer/drawer.dart';
+import 'package:adb_kit/app/modules/home/drawer/drawer_tablet.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
@@ -8,11 +9,11 @@ import 'package:global_repository/global_repository.dart';
 class TabletHome extends StatefulWidget {
   const TabletHome({
     super.key,
-    required this.page,
+    required this.route,
     required this.onChanged,
   });
-  final Widget page;
-  final void Function(int index) onChanged;
+  final String route;
+  final RouteCallback? onChanged;
 
   @override
   State<TabletHome> createState() => _TabletHomeState();
@@ -25,14 +26,14 @@ class _TabletHomeState extends State<TabletHome> {
       body: Row(
         children: [
           TabletDrawer(
-            groupValue: drawerRoute,
+            route: widget.route,
             onChanged: widget.onChanged,
           ),
           Container(
             height: double.infinity,
             width: 1,
             margin: EdgeInsets.symmetric(vertical: 40.w),
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.onSurface.withAlpha(opacity01),
           ),
           Expanded(
             child: PageTransitionSwitcher(
@@ -49,7 +50,7 @@ class _TabletHomeState extends State<TabletHome> {
                 );
               },
               duration: const Duration(milliseconds: 300),
-              child: widget.page,
+              child: drawerPages(widget.route),
             ),
           ),
         ],

@@ -2,15 +2,15 @@ library adb_tool;
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:adb_kit/test_controller.dart';
+import 'package:adb_util/adb_util.dart';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:path_provider/path_provider.dart';
 import 'package:plugins/plugins.dart' as plugins;
 import 'generated/l10n.dart';
@@ -20,7 +20,6 @@ import 'package:adb_kit_extension/adb_kit_extension.dart';
 import 'generated/intl/messages_en.dart' as messages_en;
 import 'generated/intl/messages_zh_CN.dart' as messages_zh_cn;
 import 'dart:ui' as ui;
-import 'package:adb_util/adb_util.dart';
 
 Future<void> main() async {
   // 初始化运行时环境
@@ -52,9 +51,10 @@ Future<void> runADBClient() async {
         );
       }
       await initSetting();
-
-      // String testCMD = '/Users/nightmare/Desktop/nightmare-core/adb_kit/packages/adb_util/test/test.sh';
-      // adb = testCMD;
+      if (kDebugMode && GetPlatform.isMacOS) {
+        // String testCMD = '/Users/nightmare/Desktop/nightmare-core/adb_kit/packages/adb_util/test/test.sh';
+        // adb = testCMD;
+      }
       if (false) {
       } else {
         // final server = await ServerSocket.bind(InternetAddress.anyIPv4, 4040);

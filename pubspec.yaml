@@ -1,13 +1,14 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.5.7-beta.4+50
+version: 1.6.0-beta.1+51
 environment:
   sdk: ">=3.6.0 <4.0.0"
 
 workspace:
   - packages/plugins
   - packages/adb_util
+  - packages/adb_interface
 
 dependencies:
   flutter_localizations:
@@ -23,7 +24,7 @@ dependencies:
   dio: ^5.4.3
   # file drop
   desktop_drop: ^0.4.1
-  file_selector: ^0.8.4+2
+  file_selector: ^1.0.3
   # get app local dir
   path_provider: ^2.0.10
   # responsive ui
@@ -66,16 +67,13 @@ dependencies:
   multicast:
     git: https://github.com/nightmare-space/multicast
   file_manager:
-    git: https://github.com/nightmare-space/file_manager.git
+    git: https://github.com/nightmare-space/file_manager_private.git
   # foundation settings
   settings:
     git: https://github.com/nightmare-space/settings
   # adb plugin can view android device info and cpu/gpu status
-  device_info:
-    git: https://github.com/nightmare-space/device_info.git
-  # adb plugin can manager app
-  app_manager:
-    git: https://github.com/nightmare-space/app_manager
+  # device_info:
+  #   git: https://github.com/nightmare-space/device_info.git
   # terminal widget
   xterm:
     git:
@@ -96,11 +94,15 @@ dependencies:
   android_api_server_client:
     git:
       url: https://github.com/nightmare-space/android_api_server_client
+  plugins:
+  adb_util:
+  adb_interface:
+  # app_manager:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   intl_utils: ^2.8.7
   retrofit_generator: ^8.1.0
   build_runner: ^2.1.11

@@ -6,6 +6,7 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/global/widget/xliv-switch.dart';
 import 'package:adb_kit/themes/theme.dart';
+import 'package:adb_kit/utils/color_util.dart';
 // import 'package:cyclop/cyclop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,7 +18,7 @@ import 'package:settings/settings.dart';
 import 'password_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State createState() => _SettingsPageState();
@@ -25,7 +26,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver {
   ConfigController configController = Get.find();
-  Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
+  // TODO Check
+  // Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
   @override
   void initState() {
@@ -58,7 +60,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
       );
     }
 
-    Color titleColor = Theme.of(context).colorScheme.onSurface.withOpacity(0.6);
+    Color titleColor = Theme.of(context).colorScheme.onSurface.withAlpha(opacity06);
     return SafeArea(
       left: false,
       child: Padding(
@@ -432,12 +434,12 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
 
 class SettingItem extends StatefulWidget {
   const SettingItem({
-    Key? key,
+    super.key,
     this.title,
     this.onTap,
     this.subTitle = '',
     this.suffix = const SizedBox(),
-  }) : super(key: key);
+  });
 
   final String? title;
   final String subTitle;
@@ -486,7 +488,7 @@ class _SettingItemState extends State<SettingItem> {
                           return Text(
                             content,
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withAlpha(opacity06),
                               fontWeight: FontWeight.w400,
                               // height: 1.0,
                               fontSize: 14.w,
@@ -518,20 +520,20 @@ class AquaSwitch extends StatelessWidget {
   final Color? thumbColor;
 
   const AquaSwitch({
-    Key? key,
+    super.key,
     required this.value,
     required this.onChanged,
     this.activeColor,
     this.unActiveColor,
     this.thumbColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
       scale: 0.78,
       child: XlivSwitch(
-        unActiveColor: unActiveColor ?? Theme.of(context).primaryColor.withOpacity(0.1),
+        unActiveColor: unActiveColor ?? Theme.of(context).primaryColor.withAlpha((255.0 * 0.1).round()),
         activeColor: Theme.of(context).primaryColor,
         thumbColor: thumbColor,
         value: value,
@@ -543,11 +545,11 @@ class AquaSwitch extends StatelessWidget {
 
 class SelectTab extends StatefulWidget {
   const SelectTab({
-    Key? key,
+    super.key,
     this.children = const [],
     required this.value,
     this.onChanged,
-  }) : super(key: key);
+  });
   final List<Widget> children;
   final int value;
   final void Function(int value)? onChanged;

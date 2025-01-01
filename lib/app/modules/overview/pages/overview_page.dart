@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_list.dart';
 import 'package:adb_kit/app/modules/overview/pages/qrcode_page.dart';
@@ -8,8 +6,9 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
+import 'package:adb_kit/utils/adbd_find_util.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:adb_kit/utils/scan_util.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -27,62 +26,6 @@ class OverviewPage extends StatefulWidget {
 
 class _OverviewPageState extends State<OverviewPage> {
   TextEditingController editingController = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<List<String>> localAddress() async {
-    List<String> address = [];
-    final List<NetworkInterface> interfaces = await NetworkInterface.list(
-      includeLoopback: false,
-      type: InternetAddressType.IPv4,
-    );
-    for (final NetworkInterface interface in interfaces) {
-      Log.i('network interface name -> ${interface.name}');
-      if (GetPlatform.isAndroid && !interface.name.startsWith('wlan')) continue;
-      // 遍历网卡
-      for (final InternetAddress netAddress in interface.addresses) {
-        // 遍历网卡的IP地址
-        if (isAddress(netAddress.address)) {
-          address.add(netAddress.address);
-        }
-      }
-    }
-    return address;
-  }
-
-  Future<List<String>> getLANDevices() async {
-    List<String> address = await localAddress();
-    if (address.isEmpty) return [];
-    List<String> list = address.first.split('.');
-    List<String> devices = [];
-    Completer lock = Completer();
-    for (int i = 1; i < 255; i++) {
-      String ip = [list[0], list[1], list[2], i].join('.');
-      Socket.connect(
-        ip,
-        5555,
-        timeout: const Duration(
-          milliseconds: 2000,
-        ),
-      ).then((_) {
-        devices.add(ip);
-        // print('\x1b[32m $ip 成功');
-      }).onError((dynamic error, stackTrace) {
-        // print('\x1b[33merror : $error');
-      }).whenComplete(() async {
-        if (i == 254) {
-          // 等待1s
-          await Future.delayed(const Duration(seconds: 1));
-          lock.complete();
-        }
-        // print('\x1b[32m $ip whenComplete');
-      });
-    }
-    await lock.future;
-    return devices;
-  }
 
   final ConfigController controller = Get.find();
   @override
@@ -178,7 +121,7 @@ class _OverviewPageState extends State<OverviewPage> {
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.all(8.w),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color: Theme.of(context).primaryColor.withAlpha(opacity01),
                           borderRadius: BorderRadius.circular(10.w),
                         ),
                         child: Row(
@@ -224,7 +167,7 @@ class _OverviewPageState extends State<OverviewPage> {
         color: Theme.of(context).colorScheme.onSurface,
       ),
       onTap: () async {
-        List<String> adbDevices = await getLANDevices();
+        List<String> adbDevices = await ADBFind.getLANDevices();
         Get.dialog(Center(
           child: Material(
             color: Colors.white,
@@ -310,7 +253,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             child: NiIconButton(
                               child: Icon(
                                 Icons.arrow_forward_ios,
-                                color: Colors.black.withOpacity(0.6),
+                                color: Colors.black.withAlpha(opacity06),
                                 size: 24.w,
                               ),
                               onTap: () async {
@@ -322,6 +265,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                 ADBResult? result;
                                 try {
                                   result = await ADB.connectDevices(editingController.text);
+                                  showToast(result.toString());
                                 } catch (e) {
                                   Log.e(e);
                                   showToast('$e');
@@ -362,7 +306,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(8.w),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: Colors.green.withAlpha(opacity01),
                     borderRadius: BorderRadius.circular(10.w),
                   ),
                   child: Text(

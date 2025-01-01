@@ -20,7 +20,7 @@ class ConnectEntity {
 }
 
 class ParseQrcodePage extends StatefulWidget {
-  const ParseQrcodePage({Key? key, this.addressList}) : super(key: key);
+  const ParseQrcodePage({super.key, this.addressList});
 
   final List<String>? addressList;
 
