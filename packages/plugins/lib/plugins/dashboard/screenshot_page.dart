@@ -1,14 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:adb_util/adb_util.dart';
 
 class ScreenshotPage extends StatefulWidget {
-  const ScreenshotPage({Key? key, this.devicesEntity}) : super(key: key);
-  final DevicesEntity? devicesEntity;
+  const ScreenshotPage({super.key, this.devicesEntity});
+  final ADBDevice? devicesEntity;
 
   @override
   State createState() => _ScreenshotPageState();

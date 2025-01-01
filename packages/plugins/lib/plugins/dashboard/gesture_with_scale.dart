@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 
 class GestureWithScale extends StatefulWidget {
   const GestureWithScale({
-    Key? key,
+    super.key,
     this.onTap,
     this.child,
-  }) : super(key: key);
+  });
   final void Function()? onTap;
   final Widget? child;
 

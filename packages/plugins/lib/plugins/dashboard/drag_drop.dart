@@ -11,11 +11,11 @@ typedef PerformCall = void Function(List<String> paths);
 
 class DropTargetContainer extends StatefulWidget {
   const DropTargetContainer({
-    Key? key,
+    super.key,
     this.onPerform,
     this.onTap,
     this.title,
-  }) : super(key: key);
+  });
   final void Function()? onTap;
   final PerformCall? onPerform;
   final String? title;

@@ -3,8 +3,8 @@ import 'package:adb_kit/adb_kit.dart' hide S;
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:adb_kit/utils/terminal_utill.dart';
-import 'package:adb_kit/utils/utils.dart';
 import 'package:animations/animations.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +12,9 @@ import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
 import 'package:plugins/generated/intl.dart';
-import 'package:plugins/generated/l10n.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
-import 'dialog/install_apk.dart';
 import 'dialog/push_file.dart';
 import 'developer_item.dart';
 import 'drag_drop.dart';
@@ -26,7 +24,7 @@ import 'package:adb_util/adb_util_flutter.dart';
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.device});
 
-  final DevicesEntity device;
+  final ADBDevice device;
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -36,7 +34,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   EdgeInsets padding = EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w);
   Terminal terminal = Terminal();
   bool get isMobile => ResponsiveBreakpoints.of(context).isMobile;
-  DevicesEntity get device => widget.device;
+  ADBDevice get device => widget.device;
 
   /// 获取卡片宽度，主要是做响应式适配的
   double getCardWidth() {
@@ -64,7 +62,10 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     AndroidAPIServerStarter.startServer(
       widget.device.serial,
       password: device.password,
-    );
+    ).then((value) {
+      Log.i('AndroidAPIServerStarter -> $value');
+      Get.put(value);
+    });
     if (GetPlatform.isWindows) {
       adbShell = Pty.start(
         'cmd',
@@ -80,9 +81,11 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         workingDirectory: '/',
       );
     }
-    if (device.password != null) {
-      adbShell!.writeString('${device.password}\n');
-    }
+    Future.delayed(1.seconds, () {
+      if (device.password != null && device.password!.isNotEmpty) {
+        adbShell!.writeString('${device.password}\n');
+      }
+    });
     adbShell!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
         terminal.write(event);
@@ -305,14 +308,14 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                               children: [
                                 Text(S.of(context).remoteAdbDebug),
                                 Text(
-                                  isAddress(device.serial) ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
+                                  device.isNetworkDevice ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
                                 )
                               ],
                             ),
                             Text(
                               S.of(context).remoteDebuSwitchgDes,
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                                color: Theme.of(context).colorScheme.onSurface.withAlpha(opacity06),
                                 fontSize: 12.w,
                               ),
                             ),
@@ -408,11 +411,11 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         if (paths.isEmpty) {
                           return;
                         }
-                        installApkWithPaths(paths);
+                        pushFileWithPaths(paths, installApk: true);
                       },
                       onPerform: (paths) async {
                         if (GetPlatform.isDesktop) {
-                          installApkWithPaths(paths);
+                          pushFileWithPaths(paths, installApk: true);
                         }
                       },
                     ),
@@ -426,27 +429,15 @@ class _DashboardState extends State<Dashboard> with WindowListener {
     );
   }
 
-  void pushFileWithPaths(List<String>? paths) {
+  void pushFileWithPaths(List<String>? paths, {bool installApk = false}) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) {
         return PushFileDialog(
-          serial: device.serial,
+          device: device,
           paths: paths,
-        );
-      },
-    );
-  }
-
-  void installApkWithPaths(List<String>? paths) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) {
-        return InstallApkDialog(
-          serial: device.serial,
-          paths: paths,
+          installApk: installApk,
         );
       },
     );
