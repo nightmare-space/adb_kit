@@ -11,8 +11,10 @@ Map<String, String> adbEnvir() {
   envir['ADB_MDNS_AUTO_CONNECT'] = '0';
   // ADB_EMU=0
   envir['ADB_EMU'] = '0';
-  envir['PREFIX'] = RuntimeEnvir.usrPath;
-  envir['HOME'] = RuntimeEnvir.homePath;
+  if (Platform.isAndroid) {
+    envir['PREFIX'] = RuntimeEnvir.usrPath;
+    envir['HOME'] = RuntimeEnvir.homePath;
+  }
   envir['LD_LIBRARY_PATH'] = RuntimeEnvir.binPath;
   envir['RUST_LOG'] = 'debug';
   // envir['RUST_LOG'] = 'trace';

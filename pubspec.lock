@@ -485,13 +485,13 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_markdown:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_markdown
-      sha256: "04c4722cc36ec5af38acc38ece70d22d3c2123c61305d555750a091517bbe504"
+      sha256: "255b00afa1a7bad19727da6a7780cf3db6c3c12e68d302d85e0ff1fdf173db9e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.23"
+    version: "0.7.4+3"
   flutter_pty:
     dependency: "direct main"
     description:

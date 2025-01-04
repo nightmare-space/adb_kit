@@ -46,6 +46,32 @@ class ADBDevice {
     return serial.contains(':');
   }
 
+  /// [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555
+  String extractIp() {
+    // 正则表达式匹配IPv6地址
+    final ipv6RegExp = RegExp(r'([a-fA-F0-9:]+:+)+[a-fA-F0-9]+');
+    // 正则表达式匹配IPv4地址
+    final ipv4RegExp = RegExp(r'(\d{1,3}\.){3}\d{1,3}');
+
+    // 尝试匹配IPv6地址
+    final ipv6Match = ipv6RegExp.firstMatch(serial);
+    if (ipv6Match != null) {
+      return '[${ipv6Match.group(0)!}]';
+    }
+
+    // 尝试匹配IPv4地址
+    final ipv4Match = ipv4RegExp.firstMatch(serial);
+    if (ipv4Match != null) {
+      return ipv4Match.group(0)!;
+    }
+
+    throw Exception('无法匹配到IP地址');
+  }
+
+  String extractPort() {
+    return serial.split(':').last;
+  }
+
   bool get isConnect => stat == 'device';
 
   String? password;
@@ -231,7 +257,7 @@ class ADB {
     if (ipAndPort.contains(' ')) {
       cmd = 'adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
     }
-    final String result = await exec(cmd);
+    final String result = await exec(cmd, useProcessRun: true);
     Log.i('connectDevices result -> $result');
     if (result.contains(RegExp('refused|failed'))) {
       throw Exception('$ipAndPort 无法连接，对方可能未打开网络ADB调试');

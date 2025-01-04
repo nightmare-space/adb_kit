@@ -9,12 +9,10 @@ class ItemHeader extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        margin: EdgeInsets.only(
-          right: Dimens.gap_dp4,
-        ),
+        margin: EdgeInsets.only(right: 4.w),
         decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4.w)),
-        width: Dimens.gap_dp4,
-        height: Dimens.gap_dp12,
+        width: 4.w,
+        height: 12.w,
       ),
     );
   }

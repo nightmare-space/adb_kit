@@ -1,6 +1,5 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_list.dart';
-import 'package:adb_kit/app/modules/overview/pages/qrcode_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
@@ -16,6 +15,8 @@ import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:adb_util/adb_util.dart';
+
+import 'qrcode_container.dart';
 
 class OverviewPage extends StatefulWidget {
   const OverviewPage({super.key});
@@ -87,8 +88,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             fontWeight: bold,
                           ),
                         ),
-                        // TODO 移动设备也需要开放出来
-                        if (GetPlatform.isDesktop) searchButton(context),
+                        searchButton(context),
                       ],
                     ),
                     const DevicesList(),
@@ -284,42 +284,9 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
         SizedBox(height: 8.w),
-        if (Global().showQRCode)
-          CardItem(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const ItemHeader(color: CandyColors.purple),
-                    Text(
-                      S.of(context).scanToConnect,
-                      style: TextStyle(fontSize: 16.w, fontWeight: bold),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8.w),
-                const QrScanPage(),
-                SizedBox(height: 8.w),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(8.w),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withAlpha(opacity01),
-                    borderRadius: BorderRadius.circular(10.w),
-                  ),
-                  child: Text(
-                    S.of(context).scanQRCodeDes,
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 12.w,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        QRCodeContainer(
+          port: Global.instance.successBindPort ?? 0,
+        ),
       ],
     );
   }

@@ -104,7 +104,7 @@ class HistoryPage extends GetView<HistoryController> {
         try {
           // String suffix = ':${adbEntity.port}';
           // FIXME: 需要支持不是5555端口的设备
-          result = await ADB.connectDevices(adbEntity.address);
+          result = await ADB.connectDevices('${adbEntity.address}:${adbEntity.port}');
           showToast(result.message);
         } catch (e) {
           showToast('$e');
@@ -141,7 +141,7 @@ class HistoryPage extends GetView<HistoryController> {
                             vertical: 2.w,
                           ),
                           child: Text(
-                            adbEntity.port,
+                            'id:${adbEntity.uniqueId}',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: scheme.onTertiary,
@@ -176,12 +176,16 @@ class HistoryPage extends GetView<HistoryController> {
                       adbEntity.address,
                       style: TextStyle(
                         color: scheme.onSurface.withAlpha(opacity06),
+                        fontSize: 12.w,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      adbEntity.uniqueId,
+                      '端口:${adbEntity.port}',
                       style: TextStyle(
                         color: scheme.onSurface.withAlpha(opacity06),
+                        fontSize: 12.w,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

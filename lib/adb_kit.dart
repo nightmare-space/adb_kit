@@ -17,6 +17,7 @@ export 'package:global_repository/global_repository.dart' show RuntimeEnvir;
 export 'generated/intl.dart';
 export 'global/instance/adb_installer.dart';
 export 'app/controller/controller.dart';
+export 'app/modules/overview/pages/qrcode_container.dart';
 
 Future<double> getMacTitlebarWidth() async {
   return 0;
