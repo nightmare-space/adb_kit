@@ -118,6 +118,8 @@ class HistoryController extends GetxController {
       );
       preData.connectTime = data.connectTime;
       preData.name = data.name;
+      preData.address = data.address;
+      preData.port = data.port;
       // Log.i('${data.name} already exist in history');
     } catch (e) {
       adbHistorys.data.add(data);
