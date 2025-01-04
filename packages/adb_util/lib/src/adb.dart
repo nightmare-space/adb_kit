@@ -47,6 +47,7 @@ class ADBDevice {
   }
 
   /// [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555
+  /// 192.168.31.111:5555
   String extractIp() {
     // 正则表达式匹配IPv6地址
     final ipv6RegExp = RegExp(r'([a-fA-F0-9:]+:+)+[a-fA-F0-9]+');

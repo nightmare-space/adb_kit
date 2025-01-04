@@ -59,7 +59,7 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
     args.sublist(1),
     environment: adbEnvir(),
     includeParentEnvironment: true,
-    runInShell: false,
+    runInShell: Platform.isWindows ? true : false,
   );
   StringBuffer buffer = StringBuffer();
   Completer<String> completer = Completer();
@@ -109,7 +109,7 @@ Future<String> execWRWL(List<String> args) async {
     args.sublist(1),
     environment: adbEnvir(),
     includeParentEnvironment: true,
-    runInShell: false,
+    runInShell: Platform.isWindows ? true : false,
   );
   StringBuffer buffer = StringBuffer();
   buffer.write(result.stdout);
