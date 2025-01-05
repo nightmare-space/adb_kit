@@ -146,10 +146,10 @@ Future<int?> forwardPort({
   while (rangeStart != rangeEnd) {
     try {
       String result = await exec('$adb -s $serial forward tcp:$rangeStart $targetArg', useProcessRun: true);
-      Log.d('port $rangeStart bind success result: $result');
+      // Log.d('port $rangeStart bind success result: $result');
       return rangeStart;
     } catch (e) {
-      Log.w('port $rangeStart bind failed, try next');
+      // Log.w('port $rangeStart bind failed, try next');
       rangeStart++;
     }
   }

@@ -101,6 +101,7 @@ bool _sendingFrame = false;
 
 Future<void> _capturePng() async {
   try {
+    ''.isIPv6;
     RenderRepaintBoundary boundary = globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage(
       pixelRatio: window.devicePixelRatio,

@@ -190,8 +190,7 @@ class Global {
       Config.flutterPackage = 'packages/adb_tool/';
     }
     ConfigController controller = Get.put(ConfigController());
-    // ignore: deprecated_member_use
-    FlutterView flutterView = window;
+    FlutterView flutterView = PlatformDispatcher.instance.views.first;
     PlatformDispatcher platformDispatcher = flutterView.platformDispatcher;
     Log.i('Current Lang ${platformDispatcher.locales}');
     Log.i('Current Platform Bri ${platformDispatcher.platformBrightness}');

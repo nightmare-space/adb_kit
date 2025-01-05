@@ -46,27 +46,27 @@ class ADBDevice {
     return serial.contains(':');
   }
 
-  /// [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555
-  /// 192.168.31.111:5555
+  /// for example:
+  /// [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555 will get [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]
+  /// note: ipv6 address will be wrapped in square brackets
+  /// 192.168.31.111:5555 will get 192.168.31.111
   String extractIp() {
-    // 正则表达式匹配IPv6地址
-    final ipv6RegExp = RegExp(r'([a-fA-F0-9:]+:+)+[a-fA-F0-9]+');
-    // 正则表达式匹配IPv4地址
-    final ipv4RegExp = RegExp(r'(\d{1,3}\.){3}\d{1,3}');
+    return removePort(serial);
+  }
 
-    // 尝试匹配IPv6地址
-    final ipv6Match = ipv6RegExp.firstMatch(serial);
-    if (ipv6Match != null) {
-      return '[${ipv6Match.group(0)!}]';
+  String removePort(String address) {
+    // 检查是否包含端口
+    if (address.contains(':')) {
+      // 如果是IPv6地址，端口前会有一个单独的冒号
+      if (address.contains('[') && address.contains(']')) {
+        return '${address.split(']:')[0]}]';
+      } else {
+        // IPv4地址或没有方括号的IPv6地址
+        return address.split(':')[0];
+      }
     }
-
-    // 尝试匹配IPv4地址
-    final ipv4Match = ipv4RegExp.firstMatch(serial);
-    if (ipv4Match != null) {
-      return ipv4Match.group(0)!;
-    }
-
-    throw Exception('无法匹配到IP地址');
+    // 如果不包含端口，直接返回原地址
+    return address;
   }
 
   String extractPort() {

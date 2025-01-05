@@ -20,6 +20,10 @@ void main() {
   //   }
   // });
   // test('write custom adbkit key', () {});
+  ADBDevice adbDevice = ADBDevice('192.168.31.111:5555', 'device');
+  ADBDevice ipv6Device = ADBDevice('[240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555', 'device');
+  Log.i(adbDevice.extractIp());
+  Log.i(ipv6Device.extractIp());
   group('push file', () {
     test('push file exception', () async {
       try {
@@ -61,7 +65,6 @@ void main() {
     });
   });
   test('forward port', () async {
-    // TODO: test this cmd if need password
     int start = 20000;
     int? port = await forwardPort(
       serial: serial,
