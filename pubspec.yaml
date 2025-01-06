@@ -6,9 +6,9 @@ environment:
   sdk: ">=3.6.0 <4.0.0"
 
 workspace:
-  - packages/plugins
-  - packages/adb_util
-  - packages/adb_interface
+  - lib/packages/plugins
+  - lib/packages/adb_util
+  - lib/packages/adb_interface
 
 dependencies:
   flutter_localizations:

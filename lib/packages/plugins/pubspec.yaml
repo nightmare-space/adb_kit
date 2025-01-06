@@ -14,25 +14,6 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
-  adb_kit:
-  get:
-  adb_util:
-  responsive_framework:
-  android_api_server_client:
-  flutter_svg:
-  global_repository:
-  file_manager:
-  intl:
-  animations:
-  file_selector:
-  flutter_pty:
-  window_manager:
-  desktop_drop:
-  flutter_spinkit:
-  path:
-  dio:
-  signale:
-  adb_interface:
   flutter_localizations:
     sdk: flutter
   android_tool:

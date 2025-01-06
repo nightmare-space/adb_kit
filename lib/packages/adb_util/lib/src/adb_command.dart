@@ -1,5 +1,4 @@
 import '../adb_util.dart';
-import 'package:signale/signale.dart';
 
 Future<String> startServer() async {
   return await exec('$adb start-server', useProcessRun: true);
