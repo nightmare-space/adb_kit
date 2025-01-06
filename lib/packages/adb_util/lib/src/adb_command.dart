@@ -1,6 +1,10 @@
+import 'dart:io';
+import 'package:global_repository/global_repository_dart.dart' hide exec;
+
 import '../adb_util.dart';
 
 Future<String> startServer() async {
+  Directory(RuntimeEnvir.binPath).createSync(recursive: true);
   return await exec('$adb start-server', useProcessRun: true);
 }
 
