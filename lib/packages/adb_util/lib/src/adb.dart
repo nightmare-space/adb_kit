@@ -35,12 +35,10 @@ Future<String?> getDeviceID(
       await writeKey(serial, password!);
       id = await exec(cmd, password: password);
     } catch (e) {
-      Log.e("sdasdsad -> $e");
+      Log.e("important error -> $e");
     }
   }
-  // if (id.contains('No such file')) {
-  // }
-  deviceIDCache[serial] = id ?? '';
+  deviceIDCache[serial] = 'unknown';
   return id;
 }
 
