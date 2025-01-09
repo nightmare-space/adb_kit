@@ -55,16 +55,25 @@ Future<String> execWSWS(String cmd, {String? password}) {
 
 Future<String> execWSWL(List<String> args, {String? password}) async {
   // Log.i('adb cmd -> ${args.join(' ')}');
-  Process process = await Process.start(
-    args[0],
-    args.sublist(1),
-    environment: adbEnvir(),
-    includeParentEnvironment: true,
-    runInShell: Platform.isWindows ? true : false,
-  );
+  late Process process;
+  try {
+    process = await Process.start(
+      args[0],
+      args.sublist(1),
+      environment: adbEnvir(),
+      includeParentEnvironment: true,
+      runInShell: Platform.isWindows ? true : false,
+    );
+  } catch (e) {
+    Log.e('eeee->$e');
+  }
   StringBuffer buffer = StringBuffer();
   Completer<String> completer = Completer();
-  process.stderr.transform(utf8.decoder).listen((data) {
+  final converter = SystemEncoding().decoder;
+  await for (String data in process.stdout.transform(converter)) {
+    buffer.write(data);
+  }
+  await for (String data in process.stderr.transform(converter)) {
     // check verify success 是哪儿出来的
     if (data.contains('please input verify password')) {
       if (password == null) {
@@ -74,12 +83,9 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
         process.stdin.add(utf8.encode('$password\n'));
       }
     } else {
-      completer.completeError(data.trim());
+      throw data.trim();
     }
-  });
-  process.stdout.transform(utf8.decoder).listen((data) {
-    buffer.write(data);
-  });
+  }
   // TODO 感觉这里的异常处理有点问题
   // 是不是直接在 stderr 里面直接往外抛出异常
   // controller.stream.listen((data) {
@@ -124,8 +130,11 @@ Future<String> execWRWL(List<String> args) async {
     environment: adbEnvir(),
     includeParentEnvironment: true,
     runInShell: Platform.isWindows ? true : false,
+    stdoutEncoding: utf8,
+    stderrEncoding: utf8,
   );
-  // Log.e(result.stderr);
+  // var decodedOutput = const SystemEncoding().decode(result.stdout);
+  // Log.e('decodedOutput -> $decodedOutput');
   if (result.stderr.isNotEmpty) {
     throw '${result.stderr}'.trim();
   }

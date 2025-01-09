@@ -30,19 +30,30 @@ Future<String?> getDeviceID(
   try {
     id = await exec(cmd, password: password);
   } catch (e) {
-    await writeKey(serial, password!);
-    id = await exec(cmd, password: password);
+    Log.i('cat nid failed : $e try write a new one and get again');
+    try {
+      await writeKey(serial, password!);
+      id = await exec(cmd, password: password);
+    } catch (e) {
+      Log.e("sdasdsad -> $e");
+    }
   }
   // if (id.contains('No such file')) {
   // }
-  deviceIDCache[serial] = id;
+  deviceIDCache[serial] = id ?? '';
   return id;
 }
 
 Future<void> writeKey(String serial, String password) async {
   String nidPath = '/data/local/tmp/nid';
   String id = shortHash(() {}).toString();
-  await exec('$adb -s $serial shell echo $id > $nidPath', password: password);
+  await execWL(
+    [adb, '-s', serial, 'shell', 'echo $id > $nidPath'],
+    password: password,
+  );
+  // TODO 下面代码在 Linux/Mac 正常，在 Windows 崩了
+  // String test = await exec('$adb -s $serial shell echo $id', password: password);
+  // Log.e('test -> $test');
 }
 
 Future<String?> getDeviceProductModel(
@@ -171,9 +182,9 @@ class ADB {
   }
 
   static Future<ADBConnectResult> connectDevices(String ipAndPort) async {
-    String cmd = 'adb connect $ipAndPort';
+    String cmd = '$adb connect $ipAndPort';
     if (ipAndPort.contains(' ')) {
-      cmd = 'adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
+      cmd = '$adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
     }
     final String result = await exec(cmd, useProcessRun: true);
     Log.i('connect devices result -> $result');
