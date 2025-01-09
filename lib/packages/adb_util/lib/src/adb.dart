@@ -2,97 +2,14 @@ import 'dart:async';
 import 'dart:isolate';
 import 'package:global_repository/global_repository_dart.dart' hide exec;
 import 'package:signale/signale.dart';
-
 import 'adb_foundation.dart';
+import 'foundation/adb_device.dart';
+import 'foundation/adb_exception.dart';
+import 'foundation/adb_connect_result.dart';
 
 String adb = 'adb';
 
-class ADBResult {
-  ADBResult(this.message);
-
-  final String message;
-
-  @override
-  String toString() {
-    return message;
-  }
-}
-
 bool _isPooling = false;
-
-class ADBDevice {
-  ADBDevice(this.serial, this.stat);
-  static ADBDevice parse(String data) {
-    final tmp = data.trim().split(RegExp('\\s+'));
-    final device = ADBDevice(tmp.first, tmp.last);
-    return device;
-  }
-
-  /// ip or serial
-  final String serial;
-
-  /// ro.product.model or ro.product.marketname(xiaomi)
-  String? productModel;
-
-  /// connect stat
-  String stat;
-
-  /// /data/local/tmp/nid
-  String nid = '';
-
-  /// 判断 serial 是否是 ipv4/ipv6
-  /// check serial is ipv4/ipv6
-  bool get isNetworkDevice {
-    return serial.contains(':');
-  }
-
-  /// for example:
-  /// [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]:5555 will get [240e:39c:3f:7300:278f:fd9a:c63f:cd1c]
-  /// note: ipv6 address will be wrapped in square brackets
-  /// 192.168.31.111:5555 will get 192.168.31.111
-  String extractIp() {
-    return removePort(serial);
-  }
-
-  String removePort(String address) {
-    // 检查是否包含端口
-    if (address.contains(':')) {
-      // 如果是IPv6地址，端口前会有一个单独的冒号
-      if (address.contains('[') && address.contains(']')) {
-        return '${address.split(']:')[0]}]';
-      } else {
-        // IPv4地址或没有方括号的IPv6地址
-        return address.split(':')[0];
-      }
-    }
-    // 如果不包含端口，直接返回原地址
-    return address;
-  }
-
-  String extractPort() {
-    return serial.split(':').last;
-  }
-
-  bool get isConnect => stat == 'device';
-
-  String? password;
-
-  @override
-  String toString() {
-    return 'ADBDevice{serial: $serial, stat: $stat model: $productModel nid: $nid}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (other is ADBDevice) {
-      return other.serial == serial;
-    }
-    return false;
-  }
-
-  @override
-  int get hashCode => serial.hashCode;
-}
 
 String shortHash(Object? object) {
   return object.hashCode.toUnsigned(20).toRadixString(16).padLeft(5, '0');
@@ -159,7 +76,7 @@ class ADB {
   static String? _libPath;
   static String? _password;
   static Future<void> reconnectDevices(String ip, [String? port]) async {
-    await disconnectDevices(ip);
+    await disconnectDevice(ip);
     connectDevices(ip);
   }
 
@@ -253,28 +170,35 @@ class ADB {
     isolate.kill(priority: Isolate.immediate);
   }
 
-  static Future<ADBResult> connectDevices(String ipAndPort) async {
+  static Future<ADBConnectResult> connectDevices(String ipAndPort) async {
     String cmd = 'adb connect $ipAndPort';
     if (ipAndPort.contains(' ')) {
       cmd = 'adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
     }
     final String result = await exec(cmd, useProcessRun: true);
-    Log.i('connectDevices result -> $result');
-    if (result.contains(RegExp('refused|failed'))) {
-      throw Exception('$ipAndPort 无法连接，对方可能未打开网络ADB调试');
+    Log.i('connect devices result -> $result');
+    if (result.contains('failed to authenticate')) {
+      throw NeedAuthenticate();
+    } else if (result.contains(RegExp('Connection refused'))) {
+      // TODO
+      // throw Exception('$ipAndPort 无法连接，对方可能未打开网络ADB调试');
+      throw ConnectRefused();
     } else if (result.contains('already connected')) {
-      throw Exception('该设备已连接');
+      // TODO 这里需要处理 offline 的时候
+      throw AlreadyConnected();
     } else if (result.contains('connect')) {
-      return ADBResult('连接成功');
+      // return ADBResult('连接成功');
+      return SuccessConnect();
     } else if (result.contains('Successfully paired')) {
-      return ADBResult('配对成功，还需要连接一次');
+      // return ADBResult('配对成功，还需要连接一次');
+      return SuccessPair();
     }
-    return ADBResult(result);
+    return ADBConnectResult(result);
     //todo timed out
   }
 
-  static Future<void> disconnectDevices(String ipAndPort) async {
-    await exec('adb disconnect $ipAndPort');
+  static Future<String> disconnectDevice(String ipAndPort) async {
+    return await exec('$adb disconnect $ipAndPort', useProcessRun: true);
   }
 }
 

@@ -5,7 +5,7 @@ if [[ "$@" == *"devices"* ]]; then
     exit 0
 fi
 
-echo "please input verify password"
+echo "please input verify password" >&2
 read password
 # if $@ containes "devices" then do not verify password
 

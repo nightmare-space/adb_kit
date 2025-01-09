@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:global_repository/global_repository_dart.dart';
+import 'package:signale/signale.dart';
 
 Map<String, String> adbEnvir() {
   Map<String, String> envir = RuntimeEnvir.envir();
@@ -63,31 +64,44 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
   );
   StringBuffer buffer = StringBuffer();
   Completer<String> completer = Completer();
-  final StreamController<String> controller = StreamController<String>();
-  process.stdout.transform(utf8.decoder).listen(controller.sink.add);
-  process.stderr.transform(utf8.decoder).listen(controller.sink.add);
-  // TODO 感觉这里的异常处理有点问题
-  // 是不是直接在 stderr 里面直接往外抛出异常
-  controller.stream.listen((data) {
-    // No such file or directory
-    if (data.contains('No such file or directory')) {
-      completer.completeError(data);
-    } else if (data.contains('not found')) {
-      completer.completeError(data);
-    } else if (data.contains('please input verify password')) {
+  process.stderr.transform(utf8.decoder).listen((data) {
+    // check verify success 是哪儿出来的
+    if (data.contains('please input verify password')) {
       if (password == null) {
         completer.completeError('password is null');
         process.kill();
       } else {
         process.stdin.add(utf8.encode('$password\n'));
       }
-    } else if (data.contains('verify success')) {
-    } else if (data.contains('verify failed')) {
-      completer.completeError(data);
     } else {
-      buffer.write(data);
+      completer.completeError(data.trim());
     }
   });
+  process.stdout.transform(utf8.decoder).listen((data) {
+    buffer.write(data);
+  });
+  // TODO 感觉这里的异常处理有点问题
+  // 是不是直接在 stderr 里面直接往外抛出异常
+  // controller.stream.listen((data) {
+  //   // No such file or directory
+  //   if (data.contains('No such file or directory')) {
+  //     completer.completeError(data);
+  //   } else if (data.contains('not found')) {
+  //     completer.completeError(data);
+  //   } else if (data.contains('please input verify password')) {
+  //     if (password == null) {
+  //       completer.completeError('password is null');
+  //       process.kill();
+  //     } else {
+  //       process.stdin.add(utf8.encode('$password\n'));
+  //     }
+  //   } else if (data.contains('verify success')) {
+  //   } else if (data.contains('verify failed')) {
+  //     completer.completeError(data);
+  //   } else {
+  //     buffer.write(data);
+  //   }
+  // });
   process.exitCode.then((int code) {
     if (!completer.isCompleted) {
       completer.complete('$buffer'.trim());
@@ -111,8 +125,9 @@ Future<String> execWRWL(List<String> args) async {
     includeParentEnvironment: true,
     runInShell: Platform.isWindows ? true : false,
   );
-  StringBuffer buffer = StringBuffer();
-  buffer.write(result.stdout);
-  buffer.write(result.stderr);
-  return '$buffer'.trim();
+  // Log.e(result.stderr);
+  if (result.stderr.isNotEmpty) {
+    throw '${result.stderr}'.trim();
+  }
+  return '${result.stdout}'.trim();
 }

@@ -5,6 +5,7 @@ import '../adb_util.dart';
 
 Future<String> startServer() async {
   Directory(RuntimeEnvir.binPath).createSync(recursive: true);
+  Directory(RuntimeEnvir.homePath).createSync(recursive: true);
   return await exec('$adb start-server', useProcessRun: true);
 }
 
@@ -23,6 +24,9 @@ Future<String> pushFile({
     );
     return data;
   } catch (e) {
+    if ('$e'.contains('1 file pushed')) {
+      return '$e';
+    }
     rethrow;
   }
 }
@@ -148,11 +152,9 @@ Future<int?> forwardPort({
 }) async {
   while (rangeStart != rangeEnd) {
     try {
-      String result = await exec('$adb -s $serial forward tcp:$rangeStart $targetArg', useProcessRun: true);
-      // Log.d('port $rangeStart bind success result: $result');
+      await exec('$adb -s $serial forward tcp:$rangeStart $targetArg', useProcessRun: true);
       return rangeStart;
     } catch (e) {
-      // Log.w('port $rangeStart bind failed, try next');
       rangeStart++;
     }
   }
