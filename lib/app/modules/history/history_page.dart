@@ -100,7 +100,7 @@ class HistoryPage extends GetView<HistoryController> {
     ColorScheme scheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () async {
-        ADBResult result;
+        ADBConnectResult result;
         try {
           // String suffix = ':${adbEntity.port}';
           // FIXME: 需要支持不是5555端口的设备

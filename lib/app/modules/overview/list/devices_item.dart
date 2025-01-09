@@ -165,7 +165,7 @@ class _DevicesItemState extends State<DevicesItem> with TickerProviderStateMixin
                           icon: Icon(Icons.clear, size: 24.w),
                           onPressed: () async {
                             ADB.stopPoolingListDevices();
-                            await ADB.disconnectDevices(widget.adbDevice.serial);
+                            await ADB.disconnectDevice(widget.adbDevice.serial);
                             ADB.startPoolingListDevices();
                           },
                         ),

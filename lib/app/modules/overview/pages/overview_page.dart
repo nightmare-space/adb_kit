@@ -262,11 +262,15 @@ class _OverviewPageState extends State<OverviewPage> {
                                   return;
                                 }
                                 Log.d('adb connect ${editingController.text} start');
-                                ADBResult? result;
+                                ADBConnectResult? result;
                                 try {
                                   result = await ADB.connectDevices(editingController.text);
                                   showToast(result.toString());
                                 } catch (e) {
+                                  if (e is NeedAuthenticate) {
+                                    showToast('需要授权，留意弹窗');
+                                    return;
+                                  }
                                   Log.e(e);
                                   showToast('$e');
                                 }
@@ -284,9 +288,7 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
         ),
         SizedBox(height: 8.w),
-        QRCodeContainer(
-          port: Global.instance.successBindPort ?? 0,
-        ),
+        QRCodeContainer(port: Global.instance.successBindPort ?? 0),
       ],
     );
   }

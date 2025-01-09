@@ -166,7 +166,7 @@ class Global {
       (address) async {
         try {
           String ipv4 = extractIPv4(address);
-          ADBResult result = await ADB.connectDevices(ipv4);
+          ADBConnectResult result = await ADB.connectDevices(ipv4);
           showToast(result.message);
         } catch (e) {
           showToast('$e');
@@ -192,6 +192,7 @@ class Global {
     ConfigController controller = Get.put(ConfigController());
     FlutterView flutterView = PlatformDispatcher.instance.views.first;
     PlatformDispatcher platformDispatcher = flutterView.platformDispatcher;
+    platformDispatcher.platformBrightness;
     Log.i('Current Lang ${platformDispatcher.locales}');
     Log.i('Current Platform Bri ${platformDispatcher.platformBrightness}');
     Log.i('Layout Style ${controller.screenType}');

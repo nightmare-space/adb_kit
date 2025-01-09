@@ -7,9 +7,6 @@ import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:adb_util/adb_util_flutter.dart';
 
-/// TODO 把这个下放到 adb_util，无界也会依赖这个
-/// ADB.addListener 直接吐 List<DevicesEntity>
-
 class DevicesController extends GetxController {
   DevicesController();
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
@@ -69,10 +66,10 @@ class DevicesController extends GetxController {
     for (ADBDevice device in devices) {
       if (device.isNetworkDevice) {
         HistoryController.updateHistory(
-          address: device.serial,
-          port: '5555',
+          address: device.extractIp(),
+          port: device.extractPort(),
           name: device.productModel,
-          uniqueId: device.serial,
+          uniqueId: device.nid,
         );
       }
     }
