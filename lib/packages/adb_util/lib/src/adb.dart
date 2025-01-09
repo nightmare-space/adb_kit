@@ -32,17 +32,17 @@ Future<String?> getDeviceID(
   } catch (e) {
     Log.i('cat nid failed : $e try write a new one and get again');
     try {
-      await writeKey(serial, password!);
+      await writeKey(serial, password);
       id = await exec(cmd, password: password);
-    } catch (e) {
-      Log.e("important error -> $e");
+    } catch (e, stackTrace) {
+      Log.e("important error -> $e $stackTrace");
     }
   }
-  deviceIDCache[serial] = 'unknown';
-  return id;
+  deviceIDCache[serial] = id ?? 'unknown';
+  return deviceIDCache[serial];
 }
 
-Future<void> writeKey(String serial, String password) async {
+Future<void> writeKey(String serial, String? password) async {
   String nidPath = '/data/local/tmp/nid';
   String id = shortHash(() {}).toString();
   await execWL(

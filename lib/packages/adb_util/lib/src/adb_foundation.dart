@@ -54,19 +54,14 @@ Future<String> execWSWS(String cmd, {String? password}) {
 }
 
 Future<String> execWSWL(List<String> args, {String? password}) async {
-  // Log.i('adb cmd -> ${args.join(' ')}');
-  late Process process;
-  try {
-    process = await Process.start(
-      args[0],
-      args.sublist(1),
-      environment: adbEnvir(),
-      includeParentEnvironment: true,
-      runInShell: Platform.isWindows ? true : false,
-    );
-  } catch (e) {
-    Log.e('eeee->$e');
-  }
+  Log.i('adb cmd -> ${args.join(' ')}');
+  Process process = await Process.start(
+    args[0],
+    args.sublist(1),
+    environment: adbEnvir(),
+    includeParentEnvironment: true,
+    runInShell: Platform.isWindows ? true : false,
+  );
   StringBuffer buffer = StringBuffer();
   Completer<String> completer = Completer();
   final converter = SystemEncoding().decoder;
@@ -113,6 +108,7 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
       completer.complete('$buffer'.trim());
     }
   });
+  Log.i('1111');
   return completer.future;
 }
 
