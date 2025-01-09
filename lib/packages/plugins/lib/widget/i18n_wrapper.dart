@@ -18,7 +18,7 @@ class _AKI18nWrapperState extends State<AKI18nWrapper> {
     return Localizations(
       locale: Localizations.localeOf(context),
       delegates: const [
-        S.delegate,
+        P.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

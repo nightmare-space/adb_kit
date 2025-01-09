@@ -18,7 +18,7 @@ class FilePlugin extends ADBKITPlugin {
   }
 
   @override
-  String get name => S.current.file_manager;
+  String get name => P.current.file_manager;
 
   @override
   String get id => '$this';
@@ -43,7 +43,7 @@ class _FileManagerWrapperState extends State<FileManagerWrapper> {
     Get.put(controller);
     Get.put(DownloadController());
     controller.enterHomeDir();
-    await Future.delayed(3.seconds);
+    await Future.delayed(1.seconds);
     return appChannel;
   }
 

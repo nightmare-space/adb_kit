@@ -108,6 +108,9 @@ class _PushFileDialogState extends State<PushFileDialog> {
         response = await dio.head(url);
       } catch (e) {
         Log.e('head error -> $e');
+        if (!mounted) {
+          timer.cancel();
+        }
         return;
       }
       // Log.i('response.headers -> ${response.headers}');
@@ -147,6 +150,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    Log.i('------>${P.of(context).common_switch}');
     return Center(
       child: Material(
         borderRadius: BorderRadius.circular(12.w),
@@ -163,7 +167,7 @@ class _PushFileDialogState extends State<PushFileDialog> {
                   children: [
                     Expanded(
                       child: Text(
-                        P.uploadingFile(currentFile),
+                        P.current.uploadingFile(currentFile),
                         style: TextStyle(
                           color: AppColors.fontColor,
                           fontWeight: bold,

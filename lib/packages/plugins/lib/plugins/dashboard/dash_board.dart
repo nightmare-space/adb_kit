@@ -226,7 +226,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyPink),
                       Text(
-                        S.of(context).common_switch,
+                        P.of(context).common_switch,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -240,7 +240,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   Column(
                     children: [
                       DashboardSwitchItem(
-                        title: Text(S.current.display_touch),
+                        title: Text(P.current.display_touch),
                         init: () => getSystemBool(
                           serial: device.serial,
                           key: 'show_touches',
@@ -264,7 +264,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         },
                       ),
                       DashboardSwitchItem(
-                        title: Text(S.current.displayScreenPointer),
+                        title: Text(P.current.displayScreenPointer),
                         init: () => getSystemBool(
                           serial: device.serial,
                           key: 'pointer_location',
@@ -288,7 +288,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                         },
                       ),
                       DashboardSwitchItem(
-                        title: Text(S.current.showLayoutboundary),
+                        title: Text(P.current.showLayoutboundary),
                         init: () => Future.value(false),
                         onOpen: () {
                           asyncExec('$adb -s ${device.serial} shell setprop debug.layout true');
@@ -306,14 +306,14 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(S.of(context).remoteAdbDebug),
+                                Text(P.of(context).remoteAdbDebug),
                                 Text(
-                                  device.isNetworkDevice ? '(${S.current.currentDebug}:${S.current.remoteDebugDes})' : '(${S.current.currentDebug}:usb)',
+                                  device.isNetworkDevice ? '(${P.current.currentDebug}:${P.current.remoteDebugDes})' : '(${P.current.currentDebug}:usb)',
                                 )
                               ],
                             ),
                             Text(
-                              S.of(context).remoteDebuSwitchgDes,
+                              P.of(context).remoteDebuSwitchgDes,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface.withAlpha(opacity06),
                                 fontSize: 12.w,
@@ -368,7 +368,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyBlue),
                       Text(
-                        S.current.install_apk,
+                        P.current.install_apk,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -381,7 +381,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${P.drop_tip}${P.select_tip}',
+                      title: '${P.current.drop_tip}${P.current.select_tip}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           PermissionStatus status = await Permission.manageExternalStorage.request();
@@ -463,7 +463,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       const ItemHeader(color: CandyColors.candyCyan),
                       Text(
-                        S.current.upload_file,
+                        P.current.upload_file,
                         style: TextStyle(
                           fontWeight: bold,
                           height: 1.0,
@@ -478,7 +478,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   SizedBox(
                     height: 200.w,
                     child: DropTargetContainer(
-                      title: '${P.drop_tip}${P.select_tip}',
+                      title: '${P.current.drop_tip}${P.current.select_tip}',
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           PermissionStatus status = await Permission.manageExternalStorage.request();
