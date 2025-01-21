@@ -106,8 +106,13 @@ class _MaterialAppWrapperState extends State<MaterialAppWrapper> with WidgetsBin
                       } else {
                         ScreenAdapter.init(414);
                       }
-                      final bool isDark = window.platformBrightness == Brightness.dark;
-                      final ThemeData theme = isDark ? dark() : light();
+                      late ThemeData theme;
+                      if (config.theme == null) {
+                        final bool isDark = window.platformBrightness == Brightness.dark;
+                        theme = isDark ? dark() : light();
+                      } else {
+                        theme = config.theme!;
+                      }
                       return Stack(
                         children: [
                           RepaintBoundary(

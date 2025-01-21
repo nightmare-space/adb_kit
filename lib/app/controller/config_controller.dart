@@ -23,6 +23,7 @@ extension ScreenTypeExt on ScreenType {
 class ConfigController extends GetxController {
   ConfigController();
   BackgroundStyle backgroundStyle = BackgroundStyle.normal;
+  SettingNode themeSetting = Settings.theme.setting;
 
   bool autoConnect = true;
   bool showStatusBar = true;
@@ -31,10 +32,12 @@ class ConfigController extends GetxController {
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
   ThemeData? theme = light();
+  ThemeMode themeMode = ThemeMode.light;
 
-  Map<String, ThemeData> themeMap = {
-    'light': light(),
-    'dark': dark(),
+  Map<String, ThemeData?> themeMap = {
+    ThemeMode.light.name: light(),
+    ThemeMode.dark.name: dark(),
+    ThemeMode.system.name: null,
   };
   Map<String, Locale> languageMap = {
     'chinese': chinese,
@@ -84,6 +87,7 @@ class ConfigController extends GetxController {
     if (isInit) {
       return;
     }
+    Log.i('initConfig');
     isInit = true;
     if (Settings.screenType.setting.get() != null && Settings.screenType.setting.get().isNotEmpty) {
       screenType = ScreenType.values.byName(Settings.screenType.setting.get());
@@ -93,8 +97,11 @@ class ConfigController extends GetxController {
         Settings.backgroundStyle.setting.get(),
       );
     }
-    if (themeMap.containsKey(Settings.theme.setting.get())) {
-      theme = themeMap[Settings.theme.setting.get()];
+    Log.i('themeSetting.get() -> ${themeSetting.get()}');
+    if (themeMap.containsKey(themeSetting.get())) {
+      themeMode = ThemeMode.values.byName(themeSetting.get());
+      theme = themeMap[themeSetting.get()];
+      Log.i('theme -> $theme themeMode -> $themeMode');
     }
     if (languageMap.containsKey(Settings.language.setting.get())) {
       locale = languageMap[Settings.language.setting.get()];
@@ -127,13 +134,21 @@ class ConfigController extends GetxController {
     update();
   }
 
-  void changeTheme(ThemeData theme) {
-    this.theme = theme;
-    if (theme.brightness == Brightness.dark) {
-      Settings.theme.setting.set('dark');
-    } else {
-      Settings.theme.setting.set('light');
+  void changeTheme(int index) {
+    themeMode = ThemeMode.values[index];
+    switch (themeMode) {
+      case ThemeMode.dark:
+        theme = dark();
+        break;
+      case ThemeMode.light:
+        theme = light();
+        break;
+      case ThemeMode.system:
+        theme = null;
+        break;
     }
+    themeSetting.set(themeMode.name);
+    Log.i('---> ${themeSetting.get()}');
     update();
   }
 

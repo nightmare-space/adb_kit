@@ -108,7 +108,6 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
       completer.complete('$buffer'.trim());
     }
   });
-  Log.i('1111');
   return completer.future;
 }
 

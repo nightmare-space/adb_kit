@@ -196,7 +196,7 @@ class Global {
     Log.i('Current Lang ${platformDispatcher.locales}');
     Log.i('Current Platform Bri ${platformDispatcher.platformBrightness}');
     Log.i('Layout Style ${controller.screenType}');
-    Log.i('Inline Bri ${controller.theme!.brightness}');
+    Log.i('Inline Bri ${controller.theme?.brightness}');
     Log.i('PhysicalSize(px):${flutterView.physicalSize.str()}');
     Log.i('PhysicalSize(dp):${(flutterView.physicalSize / flutterView.devicePixelRatio).str()}');
     Log.i('DevicePixelRatio:${flutterView.devicePixelRatio}');

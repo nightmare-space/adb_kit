@@ -61,7 +61,7 @@ class DevicesController extends GetxController {
   }
 
   Future<void> handleResult(List<ADBDevice> devices) async {
-    Log.i('handleResult -> $devices');
+    // Log.i('handleResult -> $devices');
     letADBStarted();
     for (ADBDevice device in devices) {
       if (device.isNetworkDevice) {

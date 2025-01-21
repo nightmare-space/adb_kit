@@ -76,7 +76,9 @@ class _SplashPageState extends State<SplashPage> {
             S.current.slogan,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18.w,
+              // do not use 18.w
+              // it will cause Text refresh when open app
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),

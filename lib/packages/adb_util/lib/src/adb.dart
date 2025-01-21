@@ -188,6 +188,7 @@ class ADB {
     Log.i('connect devices result -> $result');
     if (result.contains('failed to authenticate')) {
       throw NeedAuthenticate();
+      // TODO windows cannot connect
     } else if (result.contains(RegExp('Connection refused'))) {
       // TODO
       // throw Exception('$ipAndPort 无法连接，对方可能未打开网络ADB调试');

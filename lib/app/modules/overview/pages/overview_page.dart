@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_list.dart';
 import 'package:adb_kit/config/font.dart';
@@ -110,10 +112,9 @@ class _OverviewPageState extends State<OverviewPage> {
                             S.current.joinQQGroup,
                             style: TextStyle(
                               fontSize: 16.w,
-                              fontWeight: bold,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          if (GetPlatform.isDesktop) searchButton(context),
                         ],
                       ),
                       SizedBox(height: 12.w),
@@ -137,9 +138,19 @@ class _OverviewPageState extends State<OverviewPage> {
                             ),
                             NiIconButton(
                               onTap: () async {
-                                const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
-                                if (await canLaunchUrlString(url)) {
-                                  await launchUrlString(url);
+                                // const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
+                                const String url = 'https://pd.qq.com/s/h44e4i2oq?businessType=9';
+                                // https://pd.qq.com/g/667273564040034447
+                                const String originalUrl = 'https://qun.qq.com/qqweb/qunpro/share'
+                                    '?_wv=3&_wwv=128&appChannel=share&inviteCode=2mpAHhKfCOH'
+                                    '&businessType=9&from=246610&biz=ka&mainSourceId=share'
+                                    '&subSourceId=others&jumpsource=shorturl#/out';
+                                final String base64UrlPrefix = base64Encode(utf8.encode(originalUrl));
+
+                                final String url2 = 'mqqapi://forward/url?src_type=web&version=1&url_prefix=$base64UrlPrefix&t=1736670403844';
+
+                                if (await canLaunchUrlString(url2)) {
+                                  await launchUrlString(url2);
                                 } else {
                                   showToast(S.current.openQQFail);
                                   // throw 'Could not launch $url';

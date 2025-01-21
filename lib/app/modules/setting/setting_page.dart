@@ -156,20 +156,13 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                         return SettingItem(
                           title: S.of(context).theme,
                           suffix: SelectTab(
-                            value: Theme.of(context).brightness == Brightness.dark ? 0 : 1,
+                            value: configController.themeMode.index,
                             children: [
-                              Text(
-                                S.of(context).dark,
-                              ),
+                              Text(S.of(context).system),
                               Text(S.of(context).light),
+                              Text(S.of(context).dark),
                             ],
-                            onChanged: (value) {
-                              if (value == 0) {
-                                configController.changeTheme(dark());
-                              } else {
-                                configController.changeTheme(light());
-                              }
-                            },
+                            onChanged: configController.changeTheme,
                           ),
                         );
                       }),
@@ -263,7 +256,6 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // const ItemHeader(color: CandyColors.candyCyan),
                       Text(
                         S.of(context).other,
                         style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
@@ -457,10 +449,7 @@ class _SettingItemState extends State<SettingItem> {
       // highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 4.w,
-          horizontal: 8.w,
-        ),
+        padding: EdgeInsets.symmetric(vertical: 4.w, horizontal: 8.w),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 56.w),
           child: Align(
@@ -476,7 +465,7 @@ class _SettingItemState extends State<SettingItem> {
                       Text(
                         widget.title!,
                         style: TextStyle(
-                          // color: Theme.of(context).colorScheme.primaryVariant,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontWeight: FontWeight.w400,
                           fontSize: 18.w,
                           // height: 1.0,
@@ -565,24 +554,33 @@ class _SelectTabState extends State<SelectTab> {
       borderRadius: BorderRadius.circular(12.w),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       color: Colors.transparent,
-      child: Row(
-        children: [
-          for (int i = 0; i < widget.children.length; i++)
-            GestureDetector(
-              onTap: () {
-                widget.onChanged?.call(i);
-                Feedback.wrapForLongPress(() {}, context);
-              },
-              child: Container(
-                width: 96.w,
-                height: 40.w,
-                decoration: BoxDecoration(
-                  color: i == widget.value ? Theme.of(context).colorScheme.surfaceContainerHighest : Theme.of(context).colorScheme.surfaceContainerHigh,
-                ),
-                child: Center(child: widget.children[i]),
-              ),
-            ),
-        ],
+      child: DefaultTextStyle(
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14.w,
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        child: Row(
+          children: [
+            for (int i = 0; i < widget.children.length; i++)
+              Builder(builder: (context) {
+                bool isSelect = i == widget.value;
+                Color background = isSelect ? Theme.of(context).colorScheme.primary.withOpacity(0.2) : Theme.of(context).colorScheme.surfaceContainer;
+                return GestureDetector(
+                  onTap: () {
+                    widget.onChanged?.call(i);
+                    Feedback.wrapForLongPress(() {}, context);
+                  },
+                  child: Container(
+                    width: 96.w,
+                    height: 40.w,
+                    decoration: BoxDecoration(color: background),
+                    child: Center(child: widget.children[i]),
+                  ),
+                );
+              }),
+          ],
+        ),
       ),
     );
   }
