@@ -17,14 +17,16 @@ packages:
   adb_kit_extension:
     dependency: "direct main"
     description:
-      path: "../adb_kit_extension"
-      relative: true
-    source: path
-    version: "0.0.1"
+      path: adb_kit_extension
+      ref: HEAD
+      resolved-ref: "50dc13e60b072ac0298321abd1ed0308dbeb1c9f"
+      url: "https://github.com/nightmare-space/empty_package"
+    source: git
+    version: "1.0.0"
   adb_library:
     dependency: "direct main"
     description:
-      path: "../adb_library"
+      path: "../../nightmare-space/adb_library"
       relative: true
     source: path
     version: "0.0.1"
@@ -44,10 +46,10 @@ packages:
     source: path
     version: "0.0.1"
   android_tool:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/android_tool"
-      relative: false
+      path: "../../nightmare-space/android_tool"
+      relative: true
     source: path
     version: "1.0.0+1"
   animations:
@@ -83,12 +85,12 @@ packages:
     source: hosted
     version: "2.11.0"
   behavior_api:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "."
+      path: behavior_api
       ref: HEAD
-      resolved-ref: "844a657826ed8aeb5e99a94e90adae42e69a75fc"
-      url: "https://github.com/mengyanshou/behavior_api.git"
+      resolved-ref: "50dc13e60b072ac0298321abd1ed0308dbeb1c9f"
+      url: "https://github.com/nightmare-space/empty_package"
     source: git
     version: "1.0.0"
   bloc:
@@ -495,10 +497,11 @@ packages:
   flutter_pty:
     dependency: "direct main"
     description:
-      path: "/Users/nightmare/Desktop/nightmare-space/flutter_pty"
-      relative: false
-    source: path
-    version: "0.4.1"
+      name: flutter_pty
+      sha256: c2f3b3160b519ac820fa3f6ef175361f2dfc52c557465643589542e9f229ad66
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -616,10 +619,10 @@ packages:
     dependency: "direct overridden"
     description:
       name: image
-      sha256: f31d52537dc417fdcde36088fdf11d191026fd5e4fae742491ebd40e5a8bea7d
+      sha256: a72242c9a0ffb65d03de1b7113bc4e189686fc07c7147b8b41811d0dd0e0d9bf
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.0"
+    version: "4.0.17"
   intl:
     dependency: "direct main"
     description:
@@ -653,7 +656,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: json_annotation
       sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
@@ -700,14 +703,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.1"
-  logger:
-    dependency: transitive
-    description:
-      name: logger
-      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   logging:
     dependency: transitive
     description:
@@ -1310,7 +1305,7 @@ packages:
   termux_api_plugin:
     dependency: "direct main"
     description:
-      path: "../termux_api_plugin"
+      path: "../../nightmare-space/termux_api_plugin"
       relative: true
     source: path
     version: "0.0.1"
@@ -1442,13 +1437,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
-  user_center_frontend:
-    dependency: transitive
-    description:
-      path: "../user_center_frontend"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   vector_math:
     dependency: transitive
     description:
