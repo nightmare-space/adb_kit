@@ -190,6 +190,26 @@ class S {
     );
   }
 
+  /// `Light`
+  String get light {
+    return Intl.message(
+      'Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System`
+  String get system {
+    return Intl.message(
+      'System',
+      name: 'system',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Debug Paint Layer Borders Enabled`
   String get debugPaintLayerBordersEnabled {
     return Intl.message(
@@ -370,16 +390,6 @@ class S {
     );
   }
 
-  /// `Light`
-  String get light {
-    return Intl.message(
-      'Light',
-      name: 'light',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Local Address`
   String get localAddress {
     return Intl.message(
@@ -460,10 +470,10 @@ class S {
     );
   }
 
-  /// `Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer`
+  /// `Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address`
   String get scanQRCodeDes {
     return Intl.message(
-      'Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer',
+      'Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address',
       name: 'scanQRCodeDes',
       desc: '',
       args: [],
@@ -600,46 +610,6 @@ class S {
     );
   }
 
-  /// `Remote Adb Debug`
-  String get remoteAdbDebug {
-    return Intl.message(
-      'Remote Adb Debug',
-      name: 'remoteAdbDebug',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Current`
-  String get currentDebug {
-    return Intl.message(
-      'Current',
-      name: 'currentDebug',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Remote`
-  String get remoteDebugDes {
-    return Intl.message(
-      'Remote',
-      name: 'remoteDebugDes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Without Root`
-  String get remoteDebuSwitchgDes {
-    return Intl.message(
-      'Without Root',
-      name: 'remoteDebuSwitchgDes',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Service Startup`
   String get commonServiceStartup {
     return Intl.message(
@@ -760,26 +730,6 @@ class S {
     );
   }
 
-  /// `Installing {name}...`
-  String installingApk(Object name) {
-    return Intl.message(
-      'Installing $name...',
-      name: 'installingApk',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `Uploading {name}...`
-  String uploadingFile(Object name) {
-    return Intl.message(
-      'Uploading $name...',
-      name: 'uploadingFile',
-      desc: '',
-      args: [name],
-    );
-  }
-
   /// `Install failed`
   String get installApkFailed {
     return Intl.message(
@@ -860,10 +810,10 @@ class S {
     );
   }
 
-  /// `Join QQ Group`
+  /// `Join QQ Channel`
   String get joinQQGroup {
     return Intl.message(
-      'Join QQ Group',
+      'Join QQ Channel',
       name: 'joinQQGroup',
       desc: '',
       args: [],

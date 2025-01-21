@@ -20,10 +20,6 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(name) => "Installing ${name}...";
-
-  static String m1(name) => "Uploading ${name}...";
-
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
@@ -53,7 +49,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyed": MessageLookupByLibrary.simpleMessage("Copyed"),
-        "currentDebug": MessageLookupByLibrary.simpleMessage("Current"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
@@ -97,10 +92,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This function need ROOT"),
         "installToSystem":
             MessageLookupByLibrary.simpleMessage("Install to System"),
-        "installingApk": m0,
         "joinQQGT": MessageLookupByLibrary.simpleMessage(
             "Get the latest updates and contact the developer"),
-        "joinQQGroup": MessageLookupByLibrary.simpleMessage("Join QQ Group"),
+        "joinQQGroup": MessageLookupByLibrary.simpleMessage("Join QQ Channel"),
         "keyCopyF": MessageLookupByLibrary.simpleMessage("No adb key found"),
         "keyCopyS": MessageLookupByLibrary.simpleMessage("Copied"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -128,13 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reconnect": MessageLookupByLibrary.simpleMessage("Reconnect"),
         "releaseToAction":
             MessageLookupByLibrary.simpleMessage("Release to action"),
-        "remoteAdbDebug":
-            MessageLookupByLibrary.simpleMessage("Remote Adb Debug"),
-        "remoteDebuSwitchgDes":
-            MessageLookupByLibrary.simpleMessage("Without Root"),
-        "remoteDebugDes": MessageLookupByLibrary.simpleMessage("Remote"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
-            "Tap to scale QR code,only in the same LAN can scan\nQR code support scan with broswer/ADBTool\nalso can open url by broswer"),
+            "Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address"),
         "scanToConnect":
             MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
@@ -152,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successSCM": MessageLookupByLibrary.simpleMessage(
             "Connect Message Send Success"),
         "switchTheme": MessageLookupByLibrary.simpleMessage("Switch Theme"),
+        "system": MessageLookupByLibrary.simpleMessage("System"),
         "taskManager": MessageLookupByLibrary.simpleMessage("Task Manager"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "terms": MessageLookupByLibrary.simpleMessage("Terms"),
@@ -161,7 +151,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uncaught Dart Exception"),
         "uncaughtUE":
             MessageLookupByLibrary.simpleMessage("Uncaught UI Exception"),
-        "uploadingFile": m1,
         "view": MessageLookupByLibrary.simpleMessage("View")
       };
 }

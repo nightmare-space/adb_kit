@@ -20,10 +20,6 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_CN';
 
-  static String m0(name) => "安装 ${name} 中...";
-
-  static String m1(name) => "上传 ${name} 中...";
-
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("关于软件"),
@@ -50,8 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "该功能需要ROOT！！！并且是给本机打开的！！！给对方设备打开无线调试在主页点击已经连接的设备后面的箭头进到的二级页"),
         "copy": MessageLookupByLibrary.simpleMessage("复制"),
         "copyed": MessageLookupByLibrary.simpleMessage("已复制"),
-        "currentDebug": MessageLookupByLibrary.simpleMessage("当前"),
-        "dark": MessageLookupByLibrary.simpleMessage("暗黑模式"),
+        "dark": MessageLookupByLibrary.simpleMessage("暗黑"),
         "dashboard": MessageLookupByLibrary.simpleMessage("控制面板"),
         "debugPaintLayerBordersEnabled":
             MessageLookupByLibrary.simpleMessage("显示层级边界"),
@@ -86,14 +81,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "installDes2": MessageLookupByLibrary.simpleMessage("该功能暂未适配动态分区"),
         "installDes3": MessageLookupByLibrary.simpleMessage("该功能需要ROOT权限"),
         "installToSystem": MessageLookupByLibrary.simpleMessage("安装到系统"),
-        "installingApk": m0,
         "joinQQGT": MessageLookupByLibrary.simpleMessage("第一时间获得更新动态，联系开发者"),
-        "joinQQGroup": MessageLookupByLibrary.simpleMessage("加入QQ群"),
+        "joinQQGroup": MessageLookupByLibrary.simpleMessage("加入QQ频道"),
         "keyCopyF": MessageLookupByLibrary.simpleMessage("未发现adb key"),
         "keyCopyS": MessageLookupByLibrary.simpleMessage("已复制"),
         "language": MessageLookupByLibrary.simpleMessage("语言"),
         "layout": MessageLookupByLibrary.simpleMessage("布局风格"),
-        "light": MessageLookupByLibrary.simpleMessage("浅色模式"),
+        "light": MessageLookupByLibrary.simpleMessage("浅色"),
         "localAddress": MessageLookupByLibrary.simpleMessage("本机IP"),
         "log": MessageLookupByLibrary.simpleMessage("日志"),
         "netDebugOpenFail": MessageLookupByLibrary.simpleMessage("请检查Root权限"),
@@ -111,12 +105,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rebootServer": MessageLookupByLibrary.simpleMessage("重启服务"),
         "reconnect": MessageLookupByLibrary.simpleMessage("重新连接"),
         "releaseToAction": MessageLookupByLibrary.simpleMessage("释放以执行操作"),
-        "remoteAdbDebug": MessageLookupByLibrary.simpleMessage("远程调试"),
-        "remoteDebuSwitchgDes":
-            MessageLookupByLibrary.simpleMessage("无需root可让设备打开远程调试"),
-        "remoteDebugDes": MessageLookupByLibrary.simpleMessage("远程"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
-            "点击可放大二维码，只有同一局域网下对应的二维码才能正常扫描\n二维码支持adb工具、无界投屏、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接"),
+            "点击可放大二维码\n二维码支持ADB KIT、无界、以及任意浏览器扫描\n也支持浏览器直接打开二维码对应IP进行连接"),
         "scanToConnect": MessageLookupByLibrary.simpleMessage("扫码连接"),
         "serverPath": MessageLookupByLibrary.simpleMessage("服务端路径"),
         "setting": MessageLookupByLibrary.simpleMessage("设置"),
@@ -131,6 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stopServer": MessageLookupByLibrary.simpleMessage("停止服务"),
         "successSCM": MessageLookupByLibrary.simpleMessage("已经成功发送连接消息"),
         "switchTheme": MessageLookupByLibrary.simpleMessage("切换主题"),
+        "system": MessageLookupByLibrary.simpleMessage("系统"),
         "taskManager": MessageLookupByLibrary.simpleMessage("任务管理"),
         "terminal": MessageLookupByLibrary.simpleMessage("终端模拟器"),
         "terms": MessageLookupByLibrary.simpleMessage("服务条款"),
@@ -138,7 +129,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "udpCF": MessageLookupByLibrary.simpleMessage("通过UDP发现自动连接设备失败"),
         "uncaughtDE": MessageLookupByLibrary.simpleMessage("未捕捉到的Dart异常"),
         "uncaughtUE": MessageLookupByLibrary.simpleMessage("未捕捉到的UI构建异常"),
-        "uploadingFile": m1,
         "view": MessageLookupByLibrary.simpleMessage("界面")
       };
 }
