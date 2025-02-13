@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:global_repository/global_repository_dart.dart' hide exec;
+import 'package:signale/signale.dart';
 
 import '../adb_util.dart';
 
@@ -152,7 +153,10 @@ Future<int?> forwardPort({
 }) async {
   while (rangeStart != rangeEnd) {
     try {
-      await exec('$adb -s $serial forward tcp:$rangeStart $targetArg', useProcessRun: true);
+      // adb -s $serial forward tcp:$rangeStart $targetArg
+      String cmd = '$adb -s $serial forward tcp:$rangeStart $targetArg';
+      Log.i('cmd -> $cmd');
+      await exec(cmd, useProcessRun: true);
       return rangeStart;
     } catch (e) {
       rangeStart++;
