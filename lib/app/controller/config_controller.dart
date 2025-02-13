@@ -23,7 +23,8 @@ extension ScreenTypeExt on ScreenType {
 class ConfigController extends GetxController {
   ConfigController();
   BackgroundStyle backgroundStyle = BackgroundStyle.normal;
-  SettingNode themeSetting = Settings.theme.setting;
+  SettingNode themeSetting = Settings.themeSetting;
+  SettingNode screenTypeSetting = Settings.screenTypeSetting;
 
   bool autoConnect = true;
   bool showStatusBar = true;
@@ -89,38 +90,34 @@ class ConfigController extends GetxController {
     }
     Log.i('initConfig');
     isInit = true;
-    if (Settings.screenType.setting.get() != null && Settings.screenType.setting.get().isNotEmpty) {
-      screenType = ScreenType.values.byName(Settings.screenType.setting.get());
+    if (screenTypeSetting.value != null && screenTypeSetting.value.isNotEmpty) {
+      screenType = ScreenType.values.byName(screenTypeSetting.value);
     }
-    if (Settings.backgroundStyle.setting.get() != null) {
-      backgroundStyle = BackgroundStyle.values.byName(
-        Settings.backgroundStyle.setting.get(),
-      );
+    if (Settings.backgroundStyleSetting.value != null) {
+      backgroundStyle = BackgroundStyle.values.byName(Settings.backgroundStyleSetting.value);
     }
-    Log.i('themeSetting.get() -> ${themeSetting.get()}');
-    if (themeMap.containsKey(themeSetting.get())) {
-      themeMode = ThemeMode.values.byName(themeSetting.get());
-      theme = themeMap[themeSetting.get()];
+    Log.i('themeSetting.value -> ${themeSetting.value}');
+    if (themeMap.containsKey(themeSetting.value)) {
+      themeMode = ThemeMode.values.byName(themeSetting.value);
+      theme = themeMap[themeSetting.value];
       Log.i('theme -> $theme themeMode -> $themeMode');
     }
-    if (languageMap.containsKey(Settings.language.setting.get())) {
-      locale = languageMap[Settings.language.setting.get()];
+    if (languageMap.containsKey(Settings.languageSetting.value)) {
+      locale = languageMap[Settings.languageSetting.value];
     }
-    autoConnect = Settings.autoConnectDevice.setting.get() ?? autoConnect;
-    password = Settings.adbPassword.setting.get() ?? password;
+    autoConnect = Settings.adbPasswordSetting.value ?? autoConnect;
+    password = Settings.adbPasswordSetting.value ?? password;
   }
 
   void changePassword(String password) {
-    Settings.adbPassword.setting.set(password);
+    Settings.adbPasswordSetting.set(password);
     this.password = password;
     update();
   }
 
   void changeScreenType(ScreenType? screenType) {
     this.screenType = screenType;
-    if (screenType != null) {
-      Settings.screenType.setting.set(screenType.name);
-    }
+    screenTypeSetting.set(screenType?.name);
     update();
   }
 
@@ -148,7 +145,7 @@ class ConfigController extends GetxController {
         break;
     }
     themeSetting.set(themeMode.name);
-    Log.i('---> ${themeSetting.get()}');
+    Log.i('changeTheme -> ${themeSetting.value}');
     update();
   }
 
