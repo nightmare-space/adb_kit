@@ -40,7 +40,8 @@ class _FileManagerWrapperState extends State<FileManagerWrapper> {
     AASClient? appChannel = await AndroidAPIServerStarter.startServer(serial);
     FMController controller = FMController();
     controller.setPort(appChannel.port!, isRemote: true);
-    Get.put(controller);
+    // TODO replace也不行，需要考虑多实例
+    Get.replace(controller);
     Get.put(DownloadController());
     controller.enterHomeDir();
     await Future.delayed(1.seconds);
