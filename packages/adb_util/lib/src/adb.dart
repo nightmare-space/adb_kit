@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
+import 'package:dart_adb/adb.dart';
 import 'package:global_repository/global_repository_dart.dart' hide exec;
 import 'package:signale/signale.dart';
 import 'adb_foundation.dart';
@@ -20,12 +22,30 @@ Map<String, String> deviceIDCache = {};
 Future<String?> getDeviceID(
   String serial, {
   String? password,
+  bool usePureDart = false,
+  ADBIO? adbio,
 }) async {
   if (deviceIDCache.containsKey(serial)) {
     return deviceIDCache[serial];
   }
   String nidPath = '/data/local/tmp/nid';
   String cmd = '$adb -s $serial shell cat $nidPath';
+  if (usePureDart) {
+    String? id;
+    try {
+      id = await adbio!.adbShell('cat $nidPath');
+    } catch (e) {
+      Log.i('cat nid failed : $e try write a new one and get again');
+      try {
+        await adbio!.adbShell('echo ${shortHash(() {})} > $nidPath');
+        id = await adbio!.adbShell('cat $nidPath');
+      } catch (e, stackTrace) {
+        Log.e("important error -> $e $stackTrace");
+      }
+    }
+    deviceIDCache[serial] = id ?? 'unknown';
+    return deviceIDCache[serial];
+  }
   String? id;
   try {
     id = await exec(cmd, password: password);
@@ -57,10 +77,25 @@ Future<void> writeKey(String serial, String? password) async {
 Future<String?> getDeviceProductModel(
   String serial, {
   String? password,
+  bool usePureDart = false,
+  ADBIO? adbio,
 }) async {
   if (modelCache.containsKey(serial)) {
     // Log.i('get model from cache');
     return modelCache[serial]!;
+  }
+  if (usePureDart) {
+    String? model;
+    try {
+      model = await adbio!.adbShell('getprop ro.product.marketname');
+      if (model.trim().isEmpty) {
+        model = await adbio.adbShell('getprop ro.product.model');
+      }
+      modelCache[serial] = model;
+    } catch (e) {
+      rethrow;
+    }
+    return model;
   }
   String getPropPrefix = '$adb -s $serial shell getprop';
   String? model;
@@ -89,11 +124,13 @@ class ADB {
     connectDevices(ip);
   }
 
-  static Future<void> setDevicePassword(String password) async {
+  static Future<void> setDevicePassword(String? password) async {
     _password = password;
   }
 
   /// 给安卓用的，设置so库的位置
+  /// 目前没用了，之前是动态编译才用的
+  @Deprecated('useless')
   static void setLibraryPath(String? path) {
     _libPath = path;
   }
@@ -114,7 +151,10 @@ class ADB {
     }
   }
 
-  static Future<void> handleResult(String? data) async {
+  static Future<void> handleResult(
+    String? data, {
+    void Function(String)? onError,
+  }) async {
     if (data!.startsWith('List of devices')) {
       final List<String> outList = data.split('\n');
       // 删除 `List of devices attached`
@@ -132,6 +172,7 @@ class ADB {
           model = await getDeviceProductModel(device.serial, password: _password);
           nid = await getDeviceID(device.serial, password: _password);
         } catch (e) {
+          onError?.call(e.toString());
           continue;
         }
         device.productModel = model;
@@ -145,6 +186,7 @@ class ADB {
 
   static Future<void> startPoolingListDevices({
     Duration duration = const Duration(milliseconds: 600),
+    void Function(String)? onError,
   }) async {
     if (_isPooling) {
       return;
@@ -156,8 +198,7 @@ class ADB {
       if (sendPort == null) {
         sendPort = msg as SendPort?;
       } else {
-        handleResult(msg);
-        // Log.e('Isolate Message -> $msg');
+        handleResult(msg, onError: onError);
       }
     });
     isolate = await Isolate.spawn(
@@ -185,22 +226,19 @@ class ADB {
       cmd = '$adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
     }
     final String result = await exec(cmd, useProcessRun: true);
-    Log.i('connect devices result -> $result');
+    Log.v('connect devices result -> $result');
+    // failed to connect to '240e:452:de06:478a:2763:981e:d0a5:fe4f:5555': Network is unreachabl
     if (result.contains('failed to authenticate')) {
       throw NeedAuthenticate();
       // TODO windows cannot connect
     } else if (result.contains(RegExp('Connection refused'))) {
-      // TODO
-      // throw Exception('$ipAndPort 无法连接，对方可能未打开网络ADB调试');
       throw ConnectRefused();
     } else if (result.contains('already connected')) {
       // TODO 这里需要处理 offline 的时候
       throw AlreadyConnected();
     } else if (result.contains('connect')) {
-      // return ADBResult('连接成功');
       return SuccessConnect();
     } else if (result.contains('Successfully paired')) {
-      // return ADBResult('配对成功，还需要连接一次');
       return SuccessPair();
     }
     return ADBConnectResult(result);
@@ -223,6 +261,9 @@ class IsolateArgs {
 
 // 新isolate的入口函数
 Future<void> adbPollingIsolate(IsolateArgs args) async {
+  if (Platform.isIOS) {
+    return;
+  }
   // 实例化一个ReceivePort 以接收消息
   final ReceivePort receivePort = ReceivePort();
   RuntimeEnvir.initEnvirWithPackageName(args.package!);

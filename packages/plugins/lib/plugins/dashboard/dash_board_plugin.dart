@@ -1,8 +1,7 @@
-import 'package:adb_interface/adb_interface.dart';
-
 import 'dash_board.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:adb_interface/adb_interface.dart';
 import 'package:adb_util/adb_util.dart';
 
 /// 控制面板

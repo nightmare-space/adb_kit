@@ -1,15 +1,11 @@
-import 'package:adb_interface/adb_interface.dart';
-import 'package:adb_kit/utils/dex_server.dart';
-import 'package:adb_util/adb_util_flutter.dart';
-import 'package:file_manager/controller/download_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:file_manager/file_manager.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:plugins/generated/l10n.dart';
+import '../../generated/l10n.dart';
 import 'package:android_api_server_client/android_api_server_client.dart';
-import 'package:adb_util/adb_util.dart';
+import 'package:adb_util/adb_util_flutter.dart';
+import 'package:adb_interface/adb_interface.dart';
 
 class FilePlugin extends ADBKITPlugin {
   @override
@@ -39,7 +35,7 @@ class _FileManagerWrapperState extends State<FileManagerWrapper> {
   Future<AASClient?> init(String serial) async {
     AASClient? appChannel = await AndroidAPIServerStarter.startServer(serial);
     FMController controller = FMController();
-    controller.setPort(appChannel.port!, isRemote: true);
+    controller.setBaseUrl('${appChannel.baseUrl}/file');
     // TODO replace也不行，需要考虑多实例
     Get.replace(controller);
     Get.put(DownloadController());

@@ -85,7 +85,7 @@ class _DeveloperItemState extends State<DeveloperItem> {
   bool isCheck = false;
 
   ConfigController configController = Get.find();
-  String get password => configController.password;
+  String? get password => configController.password;
   @override
   void initState() {
     super.initState();

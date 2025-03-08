@@ -65,44 +65,26 @@ Future<String> execWSWL(List<String> args, {String? password}) async {
   StringBuffer buffer = StringBuffer();
   Completer<String> completer = Completer();
   final converter = SystemEncoding().decoder;
-  await for (String data in process.stdout.transform(converter)) {
+
+  process.stdout.transform(converter).listen((data) {
     buffer.write(data);
-  }
-  await for (String data in process.stderr.transform(converter)) {
+  });
+  process.stderr.transform(converter).listen((data) {
     // check verify success 是哪儿出来的
     if (data.contains('please input verify password')) {
       if (password == null) {
+        Log.e('password is null');
         completer.completeError('password is null');
         process.kill();
       } else {
         process.stdin.add(utf8.encode('$password\n'));
       }
+    } else if (data.contains('verify success')) {
+      // do nothing
     } else {
-      throw data.trim();
+      completer.completeError(data.trim());
     }
-  }
-  // TODO 感觉这里的异常处理有点问题
-  // 是不是直接在 stderr 里面直接往外抛出异常
-  // controller.stream.listen((data) {
-  //   // No such file or directory
-  //   if (data.contains('No such file or directory')) {
-  //     completer.completeError(data);
-  //   } else if (data.contains('not found')) {
-  //     completer.completeError(data);
-  //   } else if (data.contains('please input verify password')) {
-  //     if (password == null) {
-  //       completer.completeError('password is null');
-  //       process.kill();
-  //     } else {
-  //       process.stdin.add(utf8.encode('$password\n'));
-  //     }
-  //   } else if (data.contains('verify success')) {
-  //   } else if (data.contains('verify failed')) {
-  //     completer.completeError(data);
-  //   } else {
-  //     buffer.write(data);
-  //   }
-  // });
+  });
   process.exitCode.then((int code) {
     if (!completer.isCompleted) {
       completer.complete('$buffer'.trim());
@@ -124,6 +106,7 @@ Future<String> execWRWL(List<String> args) async {
     args.sublist(1),
     environment: adbEnvir(),
     includeParentEnvironment: true,
+    // TODO check runInShell is necessary
     runInShell: Platform.isWindows ? true : false,
     stdoutEncoding: utf8,
     stderrEncoding: utf8,

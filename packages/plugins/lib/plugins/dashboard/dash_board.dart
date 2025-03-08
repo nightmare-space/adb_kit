@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart';
-import 'package:plugins/generated/intl.dart';
+import '../../generated/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:xterm/xterm.dart';
@@ -20,6 +20,7 @@ import 'developer_item.dart';
 import 'drag_drop.dart';
 import 'package:file_manager/file_manager.dart';
 import 'package:adb_util/adb_util_flutter.dart';
+import '../../widget/i18n_wrapper.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key, required this.device});
@@ -59,13 +60,20 @@ class _DashboardState extends State<Dashboard> with WindowListener {
   @override
   void initState() {
     super.initState();
-    AndroidAPIServerStarter.startServer(
-      widget.device.serial,
-      password: device.password,
-    ).then((value) {
-      Log.i('AndroidAPIServerStarter -> $value');
-      Get.put(value);
-    });
+    if (device is ADBDeviceFromDartAPI) {
+      AndroidAPIServerStarter.startServerByDart(device as ADBDeviceFromDartAPI).then((value) {
+        Log.i('AndroidAPIServerStarter -> $value');
+        Get.put(value);
+      });
+    } else {
+      AndroidAPIServerStarter.startServer(
+        widget.device.serial,
+        password: device.password,
+      ).then((value) {
+        Log.i('AndroidAPIServerStarter -> $value');
+        Get.put(value);
+      });
+    }
     if (GetPlatform.isWindows) {
       adbShell = Pty.start(
         'cmd',
@@ -73,6 +81,16 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         environment: envir(),
         workingDirectory: '/',
       );
+    } else if (GetPlatform.isIOS) {
+      ADBDeviceFromDartAPI device = widget.device as ADBDeviceFromDartAPI;
+      device.adbio.adbShellInteractive().then((value) {
+        value.listen((event) {
+          terminal.write(event);
+        });
+        terminal.onOutput = (event) {
+          value.write(event);
+        };
+      });
     } else {
       adbShell = Pty.start(
         adb,
@@ -86,16 +104,21 @@ class _DashboardState extends State<Dashboard> with WindowListener {
         adbShell!.writeString('${device.password}\n');
       }
     });
-    adbShell!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
-      (event) {
-        terminal.write(event);
-      },
-    );
+    if (adbShell != null) {
+      adbShell?.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+        (event) {
+          terminal.write(event);
+        },
+      );
+      terminal.onOutput = (event) {
+        adbShell?.writeString(event);
+      };
+    }
   }
 
   @override
   void dispose() {
-    adbShell!.kill();
+    adbShell?.kill();
     super.dispose();
   }
 
@@ -241,62 +264,34 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                     children: [
                       DashboardSwitchItem(
                         title: Text(P.current.display_touch),
-                        init: () => getSystemBool(
-                          serial: device.serial,
-                          key: 'show_touches',
-                          password: device.password,
-                        ),
+                        init: () => device.getSystemBool(key: 'show_touches'),
                         onOpen: () {
-                          setSystem(
-                            serial: device.serial,
-                            key: 'show_touches',
-                            value: '1',
-                            password: device.password,
-                          );
+                          device.setSystem(key: 'show_touches', value: '1');
                         },
                         onClose: () {
-                          setSystem(
-                            serial: device.serial,
-                            key: 'show_touches',
-                            value: '0',
-                            password: device.password,
-                          );
+                          device.setSystem(key: 'show_touches', value: '0');
                         },
                       ),
                       DashboardSwitchItem(
                         title: Text(P.current.displayScreenPointer),
-                        init: () => getSystemBool(
-                          serial: device.serial,
-                          key: 'pointer_location',
-                          password: device.password,
-                        ),
+                        init: () => device.getSystemBool(key: 'pointer_location'),
                         onOpen: () {
-                          setSystem(
-                            serial: device.serial,
-                            key: 'pointer_location',
-                            value: '1',
-                            password: device.password,
-                          );
+                          device.setSystem(key: 'pointer_location', value: '1');
                         },
                         onClose: () {
-                          setSystem(
-                            serial: device.serial,
-                            key: 'pointer_location',
-                            value: '0',
-                            password: device.password,
-                          );
+                          device.setSystem(key: 'pointer_location', value: '0');
                         },
                       ),
                       DashboardSwitchItem(
                         title: Text(P.current.showLayoutboundary),
                         init: () => Future.value(false),
                         onOpen: () {
-                          asyncExec('$adb -s ${device.serial} shell setprop debug.layout true');
-                          asyncExec('$adb -s ${device.serial} shell service call activity 1599295570');
+                          device.runShell('setprop debug.layout true');
+                          device.runShell('service call activity 1599295570');
                         },
                         onClose: () {
-                          asyncExec('$adb -s ${device.serial} shell setprop debug.layout false');
-                          asyncExec('$adb -s ${device.serial} shell service call activity 1599295570');
+                          device.runShell('setprop debug.layout false');
+                          device.runShell('service call activity 1599295570');
                         },
                       ),
                       DashboardSwitchItem(
@@ -322,11 +317,7 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                           ],
                         ),
                         init: () async {
-                          String port = await getProp(
-                            serial: device.serial,
-                            key: 'service.adb.tcp.port',
-                            password: device.password,
-                          );
+                          String port = await device.getProp(key: 'service.adb.tcp.port');
                           // TODO 支持识别其他端口
                           return port == '5555';
                         },
@@ -434,10 +425,12 @@ class _DashboardState extends State<Dashboard> with WindowListener {
       context: context,
       barrierDismissible: false,
       builder: (_) {
-        return PushFileDialog(
-          device: device,
-          paths: paths,
-          installApk: installApk,
+        return AKI18nWrapper(
+          child: PushFileDialog(
+            device: device,
+            paths: paths,
+            installApk: installApk,
+          ),
         );
       },
     );
@@ -543,9 +536,11 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   body: Stack(
                     children: [
-                      XTermWrapper(
-                        terminal: terminal,
-                        pseudoTerminal: adbShell,
+                      TerminalView(
+                        terminal,
+                        backgroundOpacity: 0,
+                        keyboardType: TextInputType.name,
+                        theme: GetPlatform.isAndroid ? android : theme,
                       ),
                       Align(
                         alignment: Alignment.topRight,
@@ -617,9 +612,11 @@ class _DashboardState extends State<Dashboard> with WindowListener {
                                   padding: EdgeInsets.all(4.w),
                                   child: Builder(
                                     builder: (context) {
-                                      return XTermWrapper(
-                                        terminal: terminal,
-                                        pseudoTerminal: adbShell,
+                                      return TerminalView(
+                                        terminal,
+                                        backgroundOpacity: 0,
+                                        keyboardType: TextInputType.name,
+                                        theme: GetPlatform.isAndroid ? android : theme,
                                       );
                                     },
                                   ),

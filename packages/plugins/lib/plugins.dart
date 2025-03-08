@@ -9,7 +9,7 @@ import 'package:adb_kit/adb_kit.dart';
 import 'package:android_tool/android_tool.dart';
 import 'generated/intl/messages_en.dart' as en;
 import 'generated/intl/messages_zh_CN.dart' as zh_cn;
-import '';
+import 'plugins.dart';
 
 Map<String, dynamic> en_message = en.messages.messages;
 Map<String, dynamic> zh_cn_messages = zh_cn.messages.messages;

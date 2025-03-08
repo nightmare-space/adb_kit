@@ -12,5 +12,5 @@ read password
 if [ "$password" == "adb369875" ]; then
     /Users/nightmare/Library/Android/sdk/platform-tools/adb $@
 else
-    echo "verify failed!"
+    echo "verify failed!" >&2
 fi

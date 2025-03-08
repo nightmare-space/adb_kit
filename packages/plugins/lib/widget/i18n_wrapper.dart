@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:plugins/generated/l10n.dart';
+import '../generated/l10n.dart';
 
 /// ADB KIT I18n Wrapper
 /// let some views support multi-language when adb_kit as package

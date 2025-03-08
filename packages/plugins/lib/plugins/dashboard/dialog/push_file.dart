@@ -12,7 +12,7 @@ import 'package:adb_util/adb_util_flutter.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:dio/dio.dart';
 import 'package:android_api_server_client/android_api_server_client.dart';
-import 'package:plugins/generated/intl.dart';
+import '../../../generated/intl.dart';
 
 class PushFileDialog extends StatefulWidget {
   const PushFileDialog({
@@ -51,35 +51,40 @@ class _PushFileDialogState extends State<PushFileDialog> {
     }
     // TODO 提示是否覆盖
     for (final String sourcePath in widget.paths!) {
-      final String fileName = p.basename(sourcePath);
-      final int fileLen = await File(sourcePath).length();
-      currentFile = fileName;
-      setState(() {});
-      String targetPath = '$targetDir/$fileName';
-      getFileSize(targetPath, fileLen);
-      String pushResult = await pushFile(
-        serial: widget.device.serial,
-        sourcePath: sourcePath,
-        targetPath: targetPath,
-        password: widget.device.password,
-      );
-      Log.i('pushResult -> $pushResult');
-      if (widget.installApk) {
-        String installResult = await pmInstall(
+      try {
+        final String fileName = p.basename(sourcePath);
+        final int fileLen = await File(sourcePath).length();
+        currentFile = fileName;
+        setState(() {});
+        String targetPath = '$targetDir/$fileName';
+        getFileSize(targetPath, fileLen);
+        String pushResult = await pushFile(
           serial: widget.device.serial,
-          path: targetPath,
+          sourcePath: sourcePath,
+          targetPath: targetPath,
           password: widget.device.password,
         );
-        Log.i('installResult -> $installResult');
-        if (installResult.contains('Failure')) {
-          showToast(installResult);
+        Log.i('pushResult -> $pushResult');
+        if (widget.installApk) {
+          String installResult = await pmInstall(
+            serial: widget.device.serial,
+            path: targetPath,
+            password: widget.device.password,
+          );
+          Log.i('installResult -> $installResult');
+          if (installResult.contains('Failure')) {
+            showToast(installResult);
+          }
+          String rmResult = await rm(
+            serial: widget.device.serial,
+            path: targetPath,
+            password: widget.device.password,
+          );
+          Log.i('rmResult -> $rmResult');
         }
-        String rmResult = await rm(
-          serial: widget.device.serial,
-          path: targetPath,
-          password: widget.device.password,
-        );
-        Log.i('rmResult -> $rmResult');
+      } catch (e) {
+        Log.e('push error -> $e');
+        // showToast('$currentFile 上传失败');
       }
       fileIndex++;
       // showToast('$name 已上传');
@@ -150,7 +155,6 @@ class _PushFileDialogState extends State<PushFileDialog> {
 
   @override
   Widget build(BuildContext context) {
-    Log.i('------>${P.of(context).common_switch}');
     return Center(
       child: Material(
         borderRadius: BorderRadius.circular(12.w),
