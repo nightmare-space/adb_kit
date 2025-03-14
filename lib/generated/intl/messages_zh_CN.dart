@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("关于软件"),
         "ac": MessageLookupByLibrary.simpleMessage("已自动连接"),
+        "adbStarting": MessageLookupByLibrary.simpleMessage("ADB启动中..."),
         "agreement": MessageLookupByLibrary.simpleMessage("隐私政策"),
         "alreadyConnectDevice":
             MessageLookupByLibrary.simpleMessage("已成功连接的设备"),
@@ -35,6 +36,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeLog": MessageLookupByLibrary.simpleMessage("更新日志"),
         "chooseInstallPath": MessageLookupByLibrary.simpleMessage("选择安装路径"),
         "commonServiceStartup": MessageLookupByLibrary.simpleMessage("常用服务启动"),
+        "confirm": MessageLookupByLibrary.simpleMessage("确认"),
+        "connect": MessageLookupByLibrary.simpleMessage("连接"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("连接方法"),
         "connectMethodDes1":
             MessageLookupByLibrary.simpleMessage("1.设备与PC处于于一个局域网"),
@@ -46,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "该功能需要ROOT！！！并且是给本机打开的！！！给对方设备打开无线调试在主页点击已经连接的设备后面的箭头进到的二级页"),
         "copy": MessageLookupByLibrary.simpleMessage("复制"),
         "copyed": MessageLookupByLibrary.simpleMessage("已复制"),
+        "customFileSelecter": MessageLookupByLibrary.simpleMessage("自定义文件选择器"),
         "dark": MessageLookupByLibrary.simpleMessage("暗黑"),
         "dashboard": MessageLookupByLibrary.simpleMessage("控制面板"),
         "debugPaintLayerBordersEnabled":
@@ -65,6 +69,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "deviceInfo": MessageLookupByLibrary.simpleMessage("设备信息"),
         "deviceNotConnect": MessageLookupByLibrary.simpleMessage("设备未正常连接"),
         "disconnect": MessageLookupByLibrary.simpleMessage("断开连接"),
+        "fileSelecterType": MessageLookupByLibrary.simpleMessage("文件选择器类型"),
+        "fileSelecterTypeDes":
+            MessageLookupByLibrary.simpleMessage("选择系统文件方式可以不用申请完整储存权限"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "适配部分设备没有 \n/data/local/tmp 的权限问题"),
@@ -75,14 +82,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("输入对方设备IP连接"),
         "inputFormat":
             MessageLookupByLibrary.simpleMessage("输入格式为“IP地址:端口号 配对码”"),
+        "inputPassword": MessageLookupByLibrary.simpleMessage("输入密码"),
+        "inputPasswordTip":
+            MessageLookupByLibrary.simpleMessage("部分设备需要密码才能连接(车机)"),
         "installApkFailed": MessageLookupByLibrary.simpleMessage("安装失败"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
             "建议选择 /system/xbin ,因为安卓自带程序大部分都在 system/bin ,装在前者更方便管理个人安装的一些可执行程序。"),
         "installDes2": MessageLookupByLibrary.simpleMessage("该功能暂未适配动态分区"),
         "installDes3": MessageLookupByLibrary.simpleMessage("该功能需要ROOT权限"),
         "installToSystem": MessageLookupByLibrary.simpleMessage("安装到系统"),
+        "ip": MessageLookupByLibrary.simpleMessage("IP地址"),
+        "ipIsEmtpy": MessageLookupByLibrary.simpleMessage("IP地址不能为空"),
         "joinQQGT": MessageLookupByLibrary.simpleMessage("第一时间获得更新动态，联系开发者"),
-        "joinQQGroup": MessageLookupByLibrary.simpleMessage("加入QQ频道"),
+        "joinSocial": MessageLookupByLibrary.simpleMessage("加入社交群"),
         "keyCopyF": MessageLookupByLibrary.simpleMessage("未发现adb key"),
         "keyCopyS": MessageLookupByLibrary.simpleMessage("已复制"),
         "language": MessageLookupByLibrary.simpleMessage("语言"),
@@ -90,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "light": MessageLookupByLibrary.simpleMessage("浅色"),
         "localAddress": MessageLookupByLibrary.simpleMessage("本机IP"),
         "log": MessageLookupByLibrary.simpleMessage("日志"),
+        "needAuth": MessageLookupByLibrary.simpleMessage("需要授权，请注意设备上的弹窗"),
         "netDebugOpenFail": MessageLookupByLibrary.simpleMessage("请检查Root权限"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("网络调试"),
         "noDeviceConnect": MessageLookupByLibrary.simpleMessage("未连接任何设备"),
@@ -99,9 +112,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "openQQFail": MessageLookupByLibrary.simpleMessage("唤起QQ失败，请检查是否安装"),
         "other": MessageLookupByLibrary.simpleMessage("其他"),
         "pad": MessageLookupByLibrary.simpleMessage("平板"),
+        "pair": MessageLookupByLibrary.simpleMessage("配对"),
+        "pairMode": MessageLookupByLibrary.simpleMessage("配对模式"),
+        "pairSuccess":
+            MessageLookupByLibrary.simpleMessage("配对成功，请删除配对码，修改连接端口，连接设备"),
+        "pairTip": MessageLookupByLibrary.simpleMessage(
+            "只支持Android11及以上版本，在系统无线调试页面扫码配对"),
         "phone": MessageLookupByLibrary.simpleMessage("手机"),
+        "port": MessageLookupByLibrary.simpleMessage("端口号"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("产品色"),
         "processManager": MessageLookupByLibrary.simpleMessage("进程管理"),
+        "qqChannel": MessageLookupByLibrary.simpleMessage("QQ频道"),
+        "qqGroup": MessageLookupByLibrary.simpleMessage("QQ群"),
         "rebootServer": MessageLookupByLibrary.simpleMessage("重启服务"),
         "reconnect": MessageLookupByLibrary.simpleMessage("重新连接"),
         "releaseToAction": MessageLookupByLibrary.simpleMessage("释放以执行操作"),
@@ -122,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successSCM": MessageLookupByLibrary.simpleMessage("已经成功发送连接消息"),
         "switchTheme": MessageLookupByLibrary.simpleMessage("切换主题"),
         "system": MessageLookupByLibrary.simpleMessage("系统"),
+        "systemFileSelecter": MessageLookupByLibrary.simpleMessage("系统文件选择器"),
         "taskManager": MessageLookupByLibrary.simpleMessage("任务管理"),
         "terminal": MessageLookupByLibrary.simpleMessage("终端模拟器"),
         "terms": MessageLookupByLibrary.simpleMessage("服务条款"),

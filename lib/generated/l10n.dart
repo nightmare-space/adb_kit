@@ -310,10 +310,10 @@ class S {
     );
   }
 
-  /// `Input Device Address To Connect`
+  /// `Connect By IP`
   String get inputDeviceAddress {
     return Intl.message(
-      'Input Device Address To Connect',
+      'Connect By IP',
       name: 'inputDeviceAddress',
       desc: '',
       args: [],
@@ -470,20 +470,20 @@ class S {
     );
   }
 
-  /// `Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address`
+  /// `Click to zoom in, Support ADB KIT、Uncon、and any browser to scan, Also support browser to open the IP address`
   String get scanQRCodeDes {
     return Intl.message(
-      'Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address',
+      'Click to zoom in, Support ADB KIT、Uncon、and any browser to scan, Also support browser to open the IP address',
       name: 'scanQRCodeDes',
       desc: '',
       args: [],
     );
   }
 
-  /// `Scan QR Code To Connect`
+  /// `Connect By QR Code`
   String get scanToConnect {
     return Intl.message(
-      'Scan QR Code To Connect',
+      'Connect By QR Code',
       name: 'scanToConnect',
       desc: '',
       args: [],
@@ -810,11 +810,11 @@ class S {
     );
   }
 
-  /// `Join QQ Channel`
-  String get joinQQGroup {
+  /// `Join Social Group`
+  String get joinSocial {
     return Intl.message(
-      'Join QQ Channel',
-      name: 'joinQQGroup',
+      'Join Social Group',
+      name: 'joinSocial',
       desc: '',
       args: [],
     );
@@ -835,6 +835,26 @@ class S {
     return Intl.message(
       'Get the latest updates and contact the developer',
       name: 'joinQQGT',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `QQ Group`
+  String get qqGroup {
+    return Intl.message(
+      'QQ Group',
+      name: 'qqGroup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `QQ Channel`
+  String get qqChannel {
+    return Intl.message(
+      'QQ Channel',
+      name: 'qqChannel',
       desc: '',
       args: [],
     );
@@ -945,6 +965,176 @@ class S {
     return Intl.message(
       'Connect Message Send Success',
       name: 'successSCM',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pair Mode`
+  String get pairMode {
+    return Intl.message(
+      'Pair Mode',
+      name: 'pairMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Only support Android 11 and above, scan the code on the system wireless debugging page to pair`
+  String get pairTip {
+    return Intl.message(
+      'Only support Android 11 and above, scan the code on the system wireless debugging page to pair',
+      name: 'pairTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ADB starting...`
+  String get adbStarting {
+    return Intl.message(
+      'ADB starting...',
+      name: 'adbStarting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IP`
+  String get ip {
+    return Intl.message(
+      'IP',
+      name: 'ip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Port`
+  String get port {
+    return Intl.message(
+      'Port',
+      name: 'port',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect`
+  String get connect {
+    return Intl.message(
+      'Connect',
+      name: 'connect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pair`
+  String get pair {
+    return Intl.message(
+      'Pair',
+      name: 'pair',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input Password`
+  String get inputPassword {
+    return Intl.message(
+      'Input Password',
+      name: 'inputPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Some device need password to connect`
+  String get inputPasswordTip {
+    return Intl.message(
+      'Some device need password to connect',
+      name: 'inputPasswordTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Need Authrization, please notice dialog on device`
+  String get needAuth {
+    return Intl.message(
+      'Need Authrization, please notice dialog on device',
+      name: 'needAuth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pair success, please delete the pair code, modify the connection port, and connect the device`
+  String get pairSuccess {
+    return Intl.message(
+      'Pair success, please delete the pair code, modify the connection port, and connect the device',
+      name: 'pairSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IP address can not be empty`
+  String get ipIsEmtpy {
+    return Intl.message(
+      'IP address can not be empty',
+      name: 'ipIsEmtpy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File Selector Type`
+  String get fileSelecterType {
+    return Intl.message(
+      'File Selector Type',
+      name: 'fileSelecterType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selecting system files does not require full storage permissions`
+  String get fileSelecterTypeDes {
+    return Intl.message(
+      'Selecting system files does not require full storage permissions',
+      name: 'fileSelecterTypeDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System File Selector`
+  String get systemFileSelecter {
+    return Intl.message(
+      'System File Selector',
+      name: 'systemFileSelecter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom File Selector`
+  String get customFileSelecter {
+    return Intl.message(
+      'Custom File Selector',
+      name: 'customFileSelecter',
       desc: '',
       args: [],
     );

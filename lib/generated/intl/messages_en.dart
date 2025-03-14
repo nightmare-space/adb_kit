@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "ac": MessageLookupByLibrary.simpleMessage("Auto Connect"),
+        "adbStarting": MessageLookupByLibrary.simpleMessage("ADB starting..."),
         "agreement": MessageLookupByLibrary.simpleMessage("Agreement"),
         "alreadyConnectDevice":
             MessageLookupByLibrary.simpleMessage("Already Connect Devices"),
@@ -38,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Choose install path"),
         "commonServiceStartup":
             MessageLookupByLibrary.simpleMessage("Service Startup"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "connect": MessageLookupByLibrary.simpleMessage("Connect"),
         "connectMethod": MessageLookupByLibrary.simpleMessage("Connect Method"),
         "connectMethodDes1": MessageLookupByLibrary.simpleMessage(
             "1.Device and computer on the same LAN"),
@@ -49,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "This function need ROOT!!!and it work locally,help the other devices enable ADB debug,go the home page tap the list of devces to enable"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyed": MessageLookupByLibrary.simpleMessage("Copyed"),
+        "customFileSelecter":
+            MessageLookupByLibrary.simpleMessage("Custom File Selector"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "debugPaintLayerBordersEnabled": MessageLookupByLibrary.simpleMessage(
@@ -71,6 +76,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "deviceNotConnect":
             MessageLookupByLibrary.simpleMessage("Device not connect"),
         "disconnect": MessageLookupByLibrary.simpleMessage("Disconnect"),
+        "fileSelecterType":
+            MessageLookupByLibrary.simpleMessage("File Selector Type"),
+        "fileSelecterTypeDes": MessageLookupByLibrary.simpleMessage(
+            "Selecting system files does not require full storage permissions"),
         "fixDeviceWithoutDataLocalPermission":
             MessageLookupByLibrary.simpleMessage(
                 "fix some device without \n/data/local/tmp permission"),
@@ -78,10 +87,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("History Connect"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "iceBox": MessageLookupByLibrary.simpleMessage("IceBox"),
-        "inputDeviceAddress": MessageLookupByLibrary.simpleMessage(
-            "Input Device Address To Connect"),
+        "inputDeviceAddress":
+            MessageLookupByLibrary.simpleMessage("Connect By IP"),
         "inputFormat": MessageLookupByLibrary.simpleMessage(
             "Input format is \"IP:PORT CODE\""),
+        "inputPassword": MessageLookupByLibrary.simpleMessage("Input Password"),
+        "inputPasswordTip": MessageLookupByLibrary.simpleMessage(
+            "Some device need password to connect"),
         "installApkFailed":
             MessageLookupByLibrary.simpleMessage("Install failed"),
         "installDes1": MessageLookupByLibrary.simpleMessage(
@@ -92,9 +104,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This function need ROOT"),
         "installToSystem":
             MessageLookupByLibrary.simpleMessage("Install to System"),
+        "ip": MessageLookupByLibrary.simpleMessage("IP"),
+        "ipIsEmtpy":
+            MessageLookupByLibrary.simpleMessage("IP address can not be empty"),
         "joinQQGT": MessageLookupByLibrary.simpleMessage(
             "Get the latest updates and contact the developer"),
-        "joinQQGroup": MessageLookupByLibrary.simpleMessage("Join QQ Channel"),
+        "joinSocial": MessageLookupByLibrary.simpleMessage("Join Social Group"),
         "keyCopyF": MessageLookupByLibrary.simpleMessage("No adb key found"),
         "keyCopyS": MessageLookupByLibrary.simpleMessage("Copied"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -102,6 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "localAddress": MessageLookupByLibrary.simpleMessage("Local Address"),
         "log": MessageLookupByLibrary.simpleMessage("Log"),
+        "needAuth": MessageLookupByLibrary.simpleMessage(
+            "Need Authrization, please notice dialog on device"),
         "netDebugOpenFail": MessageLookupByLibrary.simpleMessage(
             "Please check root permission"),
         "networkDebug": MessageLookupByLibrary.simpleMessage("LAN debug"),
@@ -114,18 +131,27 @@ class MessageLookup extends MessageLookupByLibrary {
             "Open QQ fail,please check if installed"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
         "pad": MessageLookupByLibrary.simpleMessage("Pad"),
+        "pair": MessageLookupByLibrary.simpleMessage("Pair"),
+        "pairMode": MessageLookupByLibrary.simpleMessage("Pair Mode"),
+        "pairSuccess": MessageLookupByLibrary.simpleMessage(
+            "Pair success, please delete the pair code, modify the connection port, and connect the device"),
+        "pairTip": MessageLookupByLibrary.simpleMessage(
+            "Only support Android 11 and above, scan the code on the system wireless debugging page to pair"),
         "phone": MessageLookupByLibrary.simpleMessage("Phone"),
+        "port": MessageLookupByLibrary.simpleMessage("Port"),
         "primaryColor": MessageLookupByLibrary.simpleMessage("Primary Color"),
         "processManager":
             MessageLookupByLibrary.simpleMessage("Process Manager"),
+        "qqChannel": MessageLookupByLibrary.simpleMessage("QQ Channel"),
+        "qqGroup": MessageLookupByLibrary.simpleMessage("QQ Group"),
         "rebootServer": MessageLookupByLibrary.simpleMessage("Reboot Server"),
         "reconnect": MessageLookupByLibrary.simpleMessage("Reconnect"),
         "releaseToAction":
             MessageLookupByLibrary.simpleMessage("Release to action"),
         "scanQRCodeDes": MessageLookupByLibrary.simpleMessage(
-            "Click to zoom in\nSupport ADB KIT、Uncon、and any browser to scan\nAlso support browser to open the IP address"),
+            "Click to zoom in, Support ADB KIT、Uncon、and any browser to scan, Also support browser to open the IP address"),
         "scanToConnect":
-            MessageLookupByLibrary.simpleMessage("Scan QR Code To Connect"),
+            MessageLookupByLibrary.simpleMessage("Connect By QR Code"),
         "serverPath": MessageLookupByLibrary.simpleMessage("Server Path"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -142,6 +168,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Connect Message Send Success"),
         "switchTheme": MessageLookupByLibrary.simpleMessage("Switch Theme"),
         "system": MessageLookupByLibrary.simpleMessage("System"),
+        "systemFileSelecter":
+            MessageLookupByLibrary.simpleMessage("System File Selector"),
         "taskManager": MessageLookupByLibrary.simpleMessage("Task Manager"),
         "terminal": MessageLookupByLibrary.simpleMessage("Terminal"),
         "terms": MessageLookupByLibrary.simpleMessage("Terms"),
