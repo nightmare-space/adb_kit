@@ -2,11 +2,11 @@ import 'package:adb_kit/app/controller/devices_controller.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:adb_util/adb_util.dart';
 
 class DevicesList extends StatefulWidget {
   const DevicesList({super.key});
@@ -78,16 +78,10 @@ class _DevicesListState extends State<DevicesList> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SpinKitDualRing(
-                            color: AppColors.accent,
-                            size: 20.w,
-                            lineWidth: 2.w,
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
+                          const LoadingProgress(),
+                          SizedBox(width: 8.w),
                           Text(
-                            'ADB启动中',
+                            S.current.adbStarting,
                             style: TextStyle(
                               fontWeight: bold,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -107,7 +101,8 @@ class _DevicesListState extends State<DevicesList> {
                         child: Text(
                           S.current.noDeviceConnect,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

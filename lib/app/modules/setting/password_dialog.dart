@@ -1,4 +1,5 @@
 import 'package:adb_kit/app/controller/controller.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
@@ -37,7 +38,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
               Padding(
                 padding: EdgeInsets.only(left: 16.w),
                 child: Text(
-                  '输入密码',
+                  S.current.inputPassword,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.w),
                 ),
               ),
@@ -58,11 +59,11 @@ class _PasswordDialogState extends State<PasswordDialog> {
                     color: Theme.of(context).colorScheme.surfaceContainer,
                     borderRadius: BorderRadius.circular(10.w),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 4.w, horizontal: 8.w),
+                  padding: EdgeInsets.all(4.w),
                   // TODO intl
                   child: Center(
                     child: Text(
-                      '这个密码在adb请求密码的时候会自动输入到终端',
+                      S.current.inputPasswordTip,
                       style: TextStyle(
                         fontSize: 12.w,
                         fontWeight: FontWeight.bold,
@@ -79,7 +80,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
                       configController.changePassword(controller.text);
                       Get.back();
                     },
-                    child: const Text('确定'),
+                    child: Text(S.current.confirm),
                   ),
                   SizedBox(width: 8.w),
                 ],

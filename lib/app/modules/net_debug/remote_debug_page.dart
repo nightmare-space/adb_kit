@@ -1,4 +1,5 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/global/widget/card_item.dart';
 import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/config/font.dart';
@@ -6,12 +7,12 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/item_header.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/utils/color_util.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:adb_util/adb_util.dart';
 
 class RemoteDebugPage extends StatefulWidget {
   const RemoteDebugPage({super.key});
@@ -75,8 +76,7 @@ class _RemoteDebugPageState extends State<RemoteDebugPage> {
     }
     return Scaffold(
       appBar: appBar,
-      body: SafeArea(
-        left: false,
+      body: SafeAreaFix(
         child: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Padding(

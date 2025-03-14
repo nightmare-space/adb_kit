@@ -3,10 +3,10 @@ import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/app_colors.dart';
 import 'package:adb_kit/utils/color_util.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart' hide exec;
-import 'package:adb_util/adb_util.dart';
 
 class DevicesItem extends StatefulWidget {
   const DevicesItem({

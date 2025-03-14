@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:adb_kit/adb_wrapper.dart';
 import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_list.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
@@ -10,14 +13,17 @@ import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/utils/adbd_find_util.dart';
 import 'package:adb_kit/utils/color_util.dart';
 import 'package:adb_kit/utils/scan_util.dart';
+import 'package:adb_util/adb_util_flutter.dart';
+import 'package:dart_adb/adb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:adb_util/adb_util.dart';
-
+import '../../../../global/widget/card_item.dart';
+import 'find_card.dart';
+import 'connect_pair_card.dart';
 import 'qrcode_container.dart';
 
 class OverviewPage extends StatefulWidget {
@@ -42,7 +48,6 @@ class _OverviewPageState extends State<OverviewPage> {
         leading: Menubutton(scaffoldContext: context),
         title: Text(S.of(context).home),
         actions: [
-          searchButton(context),
           if (GetPlatform.isAndroid)
             NiIconButton(
               child: SvgPicture.asset(
@@ -64,261 +69,190 @@ class _OverviewPageState extends State<OverviewPage> {
     );
   }
 
-  Padding buildBody(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
-      child: SingleChildScrollView(
-        // padding: EdgeInsets.only(bottom: 100.w),
-        physics: const BouncingScrollPhysics(),
-        child: SafeArea(
-          left: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8.w),
+  Widget buildBody(BuildContext context) {
+    return SingleChildScrollView(
+      // padding: EdgeInsets.only(bottom: 100.w),
+      physics: const BouncingScrollPhysics(),
+      child: SafeAreaFix(
+        child: Column(
+          spacing: 8.w,
+          children: [
+            CardItem(
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const ItemHeader(color: CandyColors.candyPink),
+                      Text(
+                        S.of(context).alreadyConnectDevice,
+                        style: TextStyle(
+                          fontSize: 16.w,
+                          fontWeight: bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const DevicesList(),
+                ],
+              ),
+            ),
+            ConnectPairCard(),
+            FindCard(),
+            QRCodeContainer(port: Global.instance.successBindPort ?? 0),
+            if (GetPlatform.isAndroid)
               CardItem(
                 child: Column(
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const ItemHeader(color: CandyColors.candyPink),
+                        const ItemHeader(color: CandyColors.deepPurple),
                         Text(
-                          S.of(context).alreadyConnectDevice,
+                          S.current.joinSocial,
                           style: TextStyle(
                             fontSize: 16.w,
-                            fontWeight: bold,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        searchButton(context),
                       ],
                     ),
-                    const DevicesList(),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // https://t.me/nightmare_ly
+                            launchUrlString('https://t.me/nightmare_ly');
+                          },
+                          borderRadius: BorderRadius.circular(8.w),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 8.w,
+                            ),
+                            child: Text(
+                              'Telegram',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12.w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            // const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
+                            const String url = 'https://pd.qq.com/s/h44e4i2oq?businessType=9';
+                            // https://pd.qq.com/g/667273564040034447
+                            const String originalUrl = 'https://qun.qq.com/qqweb/qunpro/share'
+                                '?_wv=3&_wwv=128&appChannel=share&inviteCode=2mpAHhKfCOH'
+                                '&businessType=9&from=246610&biz=ka&mainSourceId=share'
+                                '&subSourceId=others&jumpsource=shorturl#/out';
+                            final String base64UrlPrefix = base64Encode(utf8.encode(originalUrl));
+
+                            final String url2 = 'mqqapi://forward/url?src_type=web&version=1&url_prefix=$base64UrlPrefix&t=1736670403844';
+
+                            if (await canLaunchUrlString(url2)) {
+                              await launchUrlString(url2);
+                            } else {
+                              showToast(S.current.openQQFail);
+                              // throw 'Could not launch $url';
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(8.w),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 8.w,
+                            ),
+                            child: Text(
+                              S.current.qqChannel,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12.w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        //
+                        InkWell(
+                          onTap: () async {
+                            // const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
+                            const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=615899007&card_type=group&source=qrcode';
+                            if (await canLaunchUrlString(url)) {
+                              await launchUrlString(url);
+                            } else {
+                              showToast('唤起QQ失败');
+                              // throw 'Could not launch $url';
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(8.w),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 8.w,
+                            ),
+                            child: Text(
+                              S.current.qqGroup,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12.w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 8.w),
-              connectCard(context),
-              SizedBox(height: 8.w),
-              if (GetPlatform.isAndroid)
-                CardItem(
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const ItemHeader(color: CandyColors.deepPurple),
-                          Text(
-                            S.current.joinQQGroup,
-                            style: TextStyle(
-                              fontSize: 16.w,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 12.w),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.all(8.w),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withAlpha(opacity01),
-                          borderRadius: BorderRadius.circular(10.w),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                S.current.joinQQGT,
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 12.w,
-                                ),
-                              ),
-                            ),
-                            NiIconButton(
-                              onTap: () async {
-                                // const String url = 'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=&card_type=group&source=qrcode';
-                                const String url = 'https://pd.qq.com/s/h44e4i2oq?businessType=9';
-                                // https://pd.qq.com/g/667273564040034447
-                                const String originalUrl = 'https://qun.qq.com/qqweb/qunpro/share'
-                                    '?_wv=3&_wwv=128&appChannel=share&inviteCode=2mpAHhKfCOH'
-                                    '&businessType=9&from=246610&biz=ka&mainSourceId=share'
-                                    '&subSourceId=others&jumpsource=shorturl#/out';
-                                final String base64UrlPrefix = base64Encode(utf8.encode(originalUrl));
-
-                                final String url2 = 'mqqapi://forward/url?src_type=web&version=1&url_prefix=$base64UrlPrefix&t=1736670403844';
-
-                                if (await canLaunchUrlString(url2)) {
-                                  await launchUrlString(url2);
-                                } else {
-                                  showToast(S.current.openQQFail);
-                                  // throw 'Could not launch $url';
-                                }
-                              },
-                              child: const Icon(Icons.arrow_forward_ios),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
+          ],
         ),
       ),
-    );
-  }
-
-  NiIconButton searchButton(BuildContext context) {
-    return NiIconButton(
-      child: Icon(
-        Icons.search,
-        color: Theme.of(context).colorScheme.onSurface,
-      ),
-      onTap: () async {
-        List<String> adbDevices = await ADBFind.getLANDevices();
-        Get.dialog(Center(
-          child: Material(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8.w),
-            clipBehavior: Clip.hardEdge,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (final String device in adbDevices)
-                  InkWell(
-                    onTap: () {
-                      ADB.connectDevices('$device:5555');
-                      Get.back();
-                    },
-                    child: SizedBox(
-                      width: 200.w,
-                      height: 48.w,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 12.w),
-                          child: Text(
-                            device,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ));
-      },
-    );
-  }
-
-  Widget connectCard(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CardItem(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const ItemHeader(color: CandyColors.candyBlue),
-                  Text(
-                    S.of(context).inputDeviceAddress,
-                    style: TextStyle(
-                      fontSize: Dimens.font_sp16,
-                      fontWeight: bold,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: Dimens.gap_dp4),
-              SizedBox(
-                width: 414.w,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.w),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: editingController,
-                          style: const TextStyle(height: 1.2),
-                          decoration: InputDecoration(
-                            hintText: S.of(context).inputFormat,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Center(
-                            child: NiIconButton(
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.black.withAlpha(opacity06),
-                                size: 24.w,
-                              ),
-                              onTap: () async {
-                                if (editingController.text.isEmpty) {
-                                  showToast('IP不可为空');
-                                  return;
-                                }
-                                Log.d('adb connect ${editingController.text} start');
-                                ADBConnectResult? result;
-                                try {
-                                  result = await ADB.connectDevices(editingController.text);
-                                  showToast(result.toString());
-                                } catch (e) {
-                                  if (e is NeedAuthenticate) {
-                                    showToast('需要授权，留意弹窗');
-                                    return;
-                                  }
-                                  Log.e(e);
-                                  showToast('$e');
-                                }
-                                Log.d('adb 连接结束 $result');
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 8.w),
-        QRCodeContainer(port: Global.instance.successBindPort ?? 0),
-      ],
     );
   }
 }
 
-class CardItem extends StatelessWidget {
-  const CardItem({Key? key, this.child, this.padding}) : super(key: key);
-  final Widget? child;
-  final EdgeInsetsGeometry? padding;
+class ActionButton extends StatefulWidget {
+  const ActionButton({
+    super.key,
+    this.onTap,
+    required this.child,
+  });
+  final VoidCallback? onTap;
+  final Widget child;
+
+  @override
+  State<ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<ActionButton> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).colorScheme.primary,
       borderRadius: BorderRadius.circular(12.w),
-      clipBehavior: Clip.hardEdge,
-      // color: Theme.of(context).colorScheme.surfaceContainerLowest,
-      color: Theme.of(context).colorScheme.surfaceContainerLowest,
-      child: Padding(
-        padding: padding ?? EdgeInsets.all(8.w),
-        child: child,
+      child: InkWell(
+        onTap: widget.onTap,
+        borderRadius: BorderRadius.circular(12.w),
+        child: SizedBox(
+          height: 40.w,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: DefaultTextStyle(
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontSize: 14.w,
+                fontWeight: FontWeight.bold,
+                height: 1.0,
+              ),
+              child: Center(child: widget.child),
+            ),
+          ),
+        ),
       ),
     );
   }

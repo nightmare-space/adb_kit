@@ -1,4 +1,5 @@
 import 'package:adb_kit/app/controller/config_controller.dart';
+import 'package:adb_kit/global/widget/card_item.dart';
 import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/config/settings.dart';
@@ -15,6 +16,7 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:settings/settings.dart';
 
+import 'menu.dart';
 import 'password_dialog.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -25,7 +27,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver {
-  ConfigController configController = Get.find();
+  ConfigController cc = Get.find();
   // TODO Check
   // Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
@@ -48,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         // systemOverlayStyle: OverlayStyle.dark,
-        leading: configController.needShowMenuButton
+        leading: cc.needShowMenuButton
             ? Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Menubutton(
@@ -61,364 +63,401 @@ class _SettingsPageState extends State<SettingsPage> with WidgetsBindingObserver
     }
 
     Color titleColor = Theme.of(context).colorScheme.onSurface.withAlpha(opacity06);
-    return SafeArea(
-      left: false,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        child: SingleChildScrollView(
-          controller: ScrollController(),
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.only(bottom: 48.w),
-          child: GetBuilder<ConfigController>(builder: (_) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (appBar != null) appBar,
-                // if (configController.screenType != ScreenType.phone)
-                //   SizedBox(
-                //     height: 16.w,
-                //   ),
-                SizedBox(height: 8.w),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // const ItemHeader(color: CandyColors.candyPink),
-                      Text(
-                        S.of(context).view,
-                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
-                      ),
-                    ],
-                  ),
+    return SafeAreaFix(
+      child: SingleChildScrollView(
+        controller: ScrollController(),
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 48.w),
+        child: GetBuilder<ConfigController>(builder: (_) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (appBar != null) appBar,
+              // if (configController.screenType != ScreenType.phone)
+              //   SizedBox(
+              //     height: 16.w,
+              //   ),
+              SizedBox(height: 8.w),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // const ItemHeader(color: CandyColors.candyPink),
+                    Text(
+                      S.of(context).view,
+                      style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4.w),
-                CardItem(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 0.w),
-                      SettingItem(
-                        title: S.of(context).layout,
-                        suffix: Builder(builder: (context) {
-                          if (configController.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
-                            return Column(
-                              children: [
-                                SelectTab(
-                                  value: configController.screenType == null ? 3 : configController.screenType!.index,
-                                  children: [
-                                    Text(S.of(context).desktop),
-                                    Text(S.of(context).pad),
-                                  ],
-                                  onChanged: (value) {
-                                    configController.changeScreenType(ScreenType.values[value]);
-                                  },
-                                ),
-                                SizedBox(height: 4.w),
-                                SelectTab(
-                                  value: configController.screenType == null ? 1 : configController.screenType!.index - 2,
-                                  children: [
-                                    Text(S.of(context).phone),
-                                    Text(S.of(context).autoFit),
-                                  ],
-                                  onChanged: (value) {
-                                    if (value == 1) {
-                                      configController.changeScreenType(null);
-                                      return;
-                                    }
-                                    configController.changeScreenType(
-                                      ScreenType.values[value + 2],
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
-                          }
-                          return SelectTab(
-                            value: configController.screenType == null ? 3 : configController.screenType!.index,
+              ),
+              SizedBox(height: 4.w),
+              CardItem(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 0.w),
+                    SettingItem(
+                      title: S.of(context).layout,
+                      suffix: Builder(builder: (context) {
+                        if (cc.screenType == ScreenType.phone || ResponsiveBreakpoints.of(context).isMobile) {
+                          return Column(
                             children: [
-                              Text(S.of(context).desktop),
-                              Text(S.of(context).pad),
-                              Text(S.of(context).phone),
-                              Text(S.of(context).autoFit),
+                              SelectTab(
+                                value: cc.screenType == null ? 3 : cc.screenType!.index,
+                                children: [
+                                  Text(S.of(context).desktop),
+                                  Text(S.of(context).pad),
+                                ],
+                                onChanged: (value) {
+                                  cc.changeScreenType(ScreenType.values[value]);
+                                },
+                              ),
+                              SizedBox(height: 4.w),
+                              SelectTab(
+                                value: cc.screenType == null ? 1 : cc.screenType!.index - 2,
+                                children: [
+                                  Text(S.of(context).phone),
+                                  Text(S.of(context).autoFit),
+                                ],
+                                onChanged: (value) {
+                                  if (value == 1) {
+                                    cc.changeScreenType(null);
+                                    return;
+                                  }
+                                  cc.changeScreenType(
+                                    ScreenType.values[value + 2],
+                                  );
+                                },
+                              ),
                             ],
-                            onChanged: (value) {
-                              if (value == 3) {
-                                configController.changeScreenType(null);
-                                return;
-                              }
-                              configController.changeScreenType(ScreenType.values[value]);
-                            },
                           );
-                        }),
-                      ),
-                      GetBuilder<ConfigController>(builder: (_) {
-                        return SettingItem(
-                          title: S.of(context).theme,
-                          suffix: SelectTab(
-                            value: configController.themeMode.index,
-                            children: [
-                              Text(S.of(context).system),
-                              Text(S.of(context).light),
-                              Text(S.of(context).dark),
-                            ],
-                            onChanged: configController.changeTheme,
-                          ),
-                        );
-                      }),
-                      SettingItem(
-                        title: S.of(context).language,
-                        suffix: SelectTab(
-                          value: configController.locale == ConfigController.english ? 1 : 0,
-                          children: const [
-                            Text('中文'),
-                            Text('English'),
+                        }
+                        return SelectTab(
+                          value: cc.screenType == null ? 3 : cc.screenType!.index,
+                          children: [
+                            Text(S.of(context).desktop),
+                            Text(S.of(context).pad),
+                            Text(S.of(context).phone),
+                            Text(S.of(context).autoFit),
                           ],
                           onChanged: (value) {
-                            if (value == 0) {
-                              Get.locale = ConfigController.chinese;
-                              configController.changeLocal(
-                                ConfigController.chinese,
-                              );
-                            } else {
-                              Get.locale = ConfigController.english;
-                              configController.changeLocal(
-                                ConfigController.english,
-                              );
+                            if (value == 3) {
+                              cc.changeScreenType(null);
+                              return;
                             }
+                            cc.changeScreenType(ScreenType.values[value]);
                           },
-                        ),
-                      ),
-                      // SettingItem(
-                      //   title: S.of(context).primaryColor,
-                      //   suffix: ColorButton(
-                      //     key: const Key('c1'),
-                      //     color: Theme.of(context).primaryColor,
-                      //     config:
-                      //         const ColorPickerConfig(enableEyePicker: true),
-                      //     size: 40.w,
-                      //     elevation: 0,
-                      //     boxShape: BoxShape.circle, // default : circle
-                      //     swatches: swatches,
-                      //     onColorChanged: (value) {
-                      //       configController.update();
-                      //       setState(() {});
-                      //       Get.forceAppUpdate();
-                      //     },
-                      //   ),
-                      // ),
-                      GetBuilder<ConfigController>(builder: (_) {
-                        return SettingItem(
-                          title: S.of(context).showStatusBar,
-                          suffix: AquaSwitch(
-                            activeColor: Theme.of(context).primaryColor,
-                            value: configController.showStatusBar,
-                            onChanged: configController.changeStatusBarState,
-                          ),
                         );
                       }),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //     horizontal: 8.0,
-                      //   ),
-                      //   child: Text(
-                      //     '背景风格',
-                      //     style: TextStyle(
-                      //       // color: Theme.of(context).colorScheme.primaryVariant,
-                      //       fontWeight: FontWeight.w400,
-                      //       fontSize: 18.w,
-                      //       // height: 1.0,
-                      //     ),
-                      //   ),
-                      // ),
-                      // SettingItem(
-                      //   title: '背景风格',
-                      //   suffix: SelectTab(
-                      //     value: configController.backgroundStyle.index,
-                      //     children: const [
-                      //       Text('默认'),
-                      //       Text('背景模糊'),
-                      //       Text('全透明'),
-                      //     ],
-                      //     onChanged: (value) {
-                      //       configController.changeBackgroundStyle(
-                      //         BackgroundStyle.values[value],
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16.w),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        S.of(context).other,
-                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
+                    ),
+                    GetBuilder<ConfigController>(builder: (_) {
+                      return SettingItem(
+                        title: S.of(context).theme,
+                        suffix: SelectTab(
+                          value: cc.themeMode.index,
+                          onChanged: cc.changeTheme,
+                          children: [
+                            Text(S.of(context).system),
+                            Text(S.of(context).light),
+                            Text(S.of(context).dark),
+                          ],
+                        ),
+                      );
+                    }),
+                    SettingItem(
+                      title: S.of(context).language,
+                      suffix: SelectTab(
+                        value: cc.locale == ConfigController.english ? 1 : 0,
+                        children: const [
+                          Text('中文'),
+                          Text('English'),
+                        ],
+                        onChanged: (value) {
+                          if (value == 0) {
+                            Get.locale = ConfigController.chinese;
+                            cc.changeLocal(
+                              ConfigController.chinese,
+                            );
+                          } else {
+                            Get.locale = ConfigController.english;
+                            cc.changeLocal(
+                              ConfigController.english,
+                            );
+                          }
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    // SettingItem(
+                    //   title: S.of(context).primaryColor,
+                    //   suffix: ColorButton(
+                    //     key: const Key('c1'),
+                    //     color: Theme.of(context).primaryColor,
+                    //     config:
+                    //         const ColorPickerConfig(enableEyePicker: true),
+                    //     size: 40.w,
+                    //     elevation: 0,
+                    //     boxShape: BoxShape.circle, // default : circle
+                    //     swatches: swatches,
+                    //     onColorChanged: (value) {
+                    //       configController.update();
+                    //       setState(() {});
+                    //       Get.forceAppUpdate();
+                    //     },
+                    //   ),
+                    // ),
+                    GetBuilder<ConfigController>(builder: (_) {
+                      return SettingItem(
+                        title: S.of(context).showStatusBar,
+                        suffix: AquaSwitch(
+                          activeColor: Theme.of(context).primaryColor,
+                          value: cc.showStatusBar,
+                          onChanged: cc.changeStatusBarState,
+                        ),
+                      );
+                    }),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     horizontal: 8.0,
+                    //   ),
+                    //   child: Text(
+                    //     '背景风格',
+                    //     style: TextStyle(
+                    //       // color: Theme.of(context).colorScheme.primaryVariant,
+                    //       fontWeight: FontWeight.w400,
+                    //       fontSize: 18.w,
+                    //       // height: 1.0,
+                    //     ),
+                    //   ),
+                    // ),
+                    // SettingItem(
+                    //   title: '背景风格',
+                    //   suffix: SelectTab(
+                    //     value: configController.backgroundStyle.index,
+                    //     children: const [
+                    //       Text('默认'),
+                    //       Text('背景模糊'),
+                    //       Text('全透明'),
+                    //     ],
+                    //     onChanged: (value) {
+                    //       configController.changeBackgroundStyle(
+                    //         BackgroundStyle.values[value],
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                  ],
                 ),
-                SizedBox(height: 4.w),
-                CardItem(
-                  child: Column(
-                    children: [
-                      Builder(builder: (context) {
-                        return SettingItem(
-                          onTap: () async {
-                            await configController.changeServerPath(context);
-                            // setState(() {});
+              ),
+              SizedBox(height: 16.w),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      S.of(context).other,
+                      style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 4.w),
+              CardItem(
+                child: Column(
+                  children: [
+                    Builder(builder: (context) {
+                      return SettingItem(
+                        onTap: () async {
+                          await cc.changeServerPath(context);
+                          // setState(() {});
+                        },
+                        title: S.of(context).serverPath,
+                        subTitle: S.of(context).fixDeviceWithoutDataLocalPermission,
+                        suffix: ValueListenableBuilder(
+                          valueListenable: Settings.serverPath.setting.ob,
+                          builder: (c, dynamic v, child) {
+                            return Text(
+                              Settings.serverPath.setting.get(),
+                              style: TextStyle(
+                                fontSize: 16.w,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
                           },
-                          title: S.of(context).serverPath,
-                          subTitle: S.of(context).fixDeviceWithoutDataLocalPermission,
-                          suffix: ValueListenableBuilder(
-                            valueListenable: Settings.serverPath.setting.ob,
-                            builder: (c, dynamic v, child) {
-                              return Text(
-                                Settings.serverPath.setting.get(),
-                                style: TextStyle(
-                                  fontSize: 18.w,
+                        ),
+                      );
+                    }),
+                    Builder(builder: (context) {
+                      return SettingItem(
+                        onTap: () async {
+                          Get.dialog(const PasswordDialog());
+                        },
+                        title: 'ADB Password',
+                        subTitle: 'Some device will need password when adb cmd execute',
+                        suffix: Text(cc.password ?? ''),
+                      );
+                    }),
+                    GetBuilder<ConfigController>(builder: (_) {
+                      return SettingItem(
+                        title: S.of(context).autoConnectDevice,
+                        suffix: AquaSwitch(
+                          activeColor: Theme.of(context).primaryColor,
+                          value: cc.autoConnect,
+                          onChanged: cc.changeAutoConnectState,
+                        ),
+                      );
+                    }),
+                    Builder(
+                      builder: (context) {
+                        return GetBuilder<ConfigController>(
+                          builder: (_) {
+                            return SettingItem(
+                              title: S.current.fileSelecterType,
+                              subTitle: S.current.fileSelecterTypeDes,
+                              onTap: () async {
+                                String result = await NiMenu.show(
+                                  items: [
+                                    NiMenyItem(
+                                      value: FileSelecterType.custom.name,
+                                      title: FileSelecterType.custom.nameIntl,
+                                    ),
+                                    NiMenyItem(
+                                      value: FileSelecterType.saf.name,
+                                      title: FileSelecterType.saf.nameIntl,
+                                    ),
+                                  ],
+                                  context: context,
+                                );
+                                Log.i('result -> $result');
+                                cc.changeFileSelecterType(FileSelecterType.values.byName(result));
+                              },
+                              suffix: SizedBox(
+                                width: 100.w,
+                                child: Text(
+                                  cc.fileSelecterType.name,
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    fontSize: 16.w,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         );
-                      }),
-                      Builder(builder: (context) {
-                        return SettingItem(
-                          onTap: () async {
-                            Get.dialog(const PasswordDialog());
-                          },
-                          title: 'ADB Password',
-                          subTitle: 'Some device will need password when adb cmd execute',
-                          suffix: Text(configController.password),
-                        );
-                      }),
-                      GetBuilder<ConfigController>(builder: (_) {
-                        return SettingItem(
-                          title: S.of(context).autoConnectDevice,
-                          suffix: AquaSwitch(
-                            activeColor: Theme.of(context).primaryColor,
-                            value: configController.autoConnect,
-                            onChanged: configController.changeAutoConnectState,
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 16.w),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // const ItemHeader(color: CandyColors.candyGreen),
-                      Text(
-                        S.of(context).developerSettings,
-                        style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
-                      ),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 16.w),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // const ItemHeader(color: CandyColors.candyGreen),
+                    Text(
+                      S.of(context).developerSettings,
+                      style: TextStyle(fontSize: 14.w, fontWeight: bold, color: titleColor),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 4.w),
-                CardItem(
-                  child: Column(
-                    children: [
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).showPerformanceOverlay,
-                        suffix: AquaSwitch(
-                          value: configController.showPerformanceOverlay,
-                          onChanged: configController.showPerformanceOverlayChange,
-                        ),
+              ),
+              SizedBox(height: 4.w),
+              CardItem(
+                child: Column(
+                  children: [
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).showPerformanceOverlay,
+                      suffix: AquaSwitch(
+                        value: cc.showPerformanceOverlay,
+                        onChanged: cc.showPerformanceOverlayChange,
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).debugRepaintRainbowEnabled,
-                        suffix: AquaSwitch(
-                          value: debugRepaintRainbowEnabled,
-                          onChanged: (value) {
-                            // debugPaintSizeEnabled = true; // 显示文字基准线
-                            // debugPaintPointersEnabled = true; // 突出点击对象
-                            // debugPaintLayerBordersEnabled = true; // 显示层级边界
-                            debugRepaintRainbowEnabled = value; // 显示重绘
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).debugRepaintRainbowEnabled,
+                      suffix: AquaSwitch(
+                        value: debugRepaintRainbowEnabled,
+                        onChanged: (value) {
+                          // debugPaintSizeEnabled = true; // 显示文字基准线
+                          // debugPaintPointersEnabled = true; // 突出点击对象
+                          // debugPaintLayerBordersEnabled = true; // 显示层级边界
+                          debugRepaintRainbowEnabled = value; // 显示重绘
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).debugPaintPointersEnabled,
-                        suffix: AquaSwitch(
-                          value: debugPaintPointersEnabled,
-                          onChanged: (value) {
-                            debugPaintPointersEnabled = value; // 显示重绘
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).debugPaintPointersEnabled,
+                      suffix: AquaSwitch(
+                        value: debugPaintPointersEnabled,
+                        onChanged: (value) {
+                          debugPaintPointersEnabled = value; // 显示重绘
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).debugPaintSizeEnabled,
-                        suffix: AquaSwitch(
-                          value: debugPaintSizeEnabled,
-                          onChanged: (value) {
-                            debugPaintSizeEnabled = value; // 显示重绘
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).debugPaintSizeEnabled,
+                      suffix: AquaSwitch(
+                        value: debugPaintSizeEnabled,
+                        onChanged: (value) {
+                          debugPaintSizeEnabled = value; // 显示重绘
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).debugPaintLayerBordersEnabled,
-                        suffix: AquaSwitch(
-                          value: debugPaintLayerBordersEnabled,
-                          onChanged: (value) {
-                            debugPaintLayerBordersEnabled = value; // 显示重绘
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).debugPaintLayerBordersEnabled,
+                      suffix: AquaSwitch(
+                        value: debugPaintLayerBordersEnabled,
+                        onChanged: (value) {
+                          debugPaintLayerBordersEnabled = value; // 显示重绘
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).showSemanticsDebugger,
-                        suffix: AquaSwitch(
-                          value: configController.showSemanticsDebugger,
-                          onChanged: (value) {
-                            configController.showSemanticsDebugger = value;
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).showSemanticsDebugger,
+                      suffix: AquaSwitch(
+                        value: cc.showSemanticsDebugger,
+                        onChanged: (value) {
+                          cc.showSemanticsDebugger = value;
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                      SettingItem(
-                        onTap: () async {},
-                        title: S.of(context).debugShowMaterialGrid,
-                        suffix: AquaSwitch(
-                          value: configController.debugShowMaterialGrid,
-                          onChanged: (value) {
-                            configController.debugShowMaterialGrid = value;
-                            configController.update();
-                            setState(() {});
-                          },
-                        ),
+                    ),
+                    SettingItem(
+                      onTap: () async {},
+                      title: S.of(context).debugShowMaterialGrid,
+                      suffix: AquaSwitch(
+                        value: cc.debugShowMaterialGrid,
+                        onChanged: (value) {
+                          cc.debugShowMaterialGrid = value;
+                          cc.update();
+                          setState(() {});
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }),
-        ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

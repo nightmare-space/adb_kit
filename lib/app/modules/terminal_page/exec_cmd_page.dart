@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:adb_kit/app/controller/config_controller.dart';
 import 'package:adb_kit/app/controller/devices_controller.dart';
-import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_kit/global/widget/card_item.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/instance/global.dart';
 import 'package:adb_kit/global/widget/xterm_wrapper.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide ScreenType;
@@ -13,7 +14,6 @@ import 'package:global_repository/global_repository.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'src/platform_menu.dart';
 import 'termare_view_with_bar.dart';
-import 'package:adb_util/adb_util.dart';
 
 class ExecCmdPage extends StatefulWidget {
   const ExecCmdPage({super.key});
@@ -49,13 +49,9 @@ class _ExecCmdPageState extends State<ExecCmdPage> {
     }
     return Scaffold(
       appBar: appBar,
-      body: SafeArea(
-        left: false,
+      body: SafeAreaFix(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 8.w,
-            horizontal: 8.w,
-          ),
+          padding: EdgeInsets.only(bottom: 16.w),
           child: CardItem(
             child: Column(
               children: [
