@@ -1,4 +1,4 @@
-package com.nightmare.adbtools;
+package com.nightmare.adbkit;
 
 import android.content.ComponentName;
 import android.content.Context;

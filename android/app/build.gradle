@@ -8,7 +8,8 @@ def keystorePropertiesFile = rootProject.file('key.properties')
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
-    namespace = 'com.nightmare.adbtools'
+    def appId = 'com.nightmare.adbkit'
+    namespace = appId
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -17,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.nightmare.adbtools'
+        applicationId appId
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -32,6 +33,9 @@ android {
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
+    }
+    aaptOptions {
+//        cruncherEnabled = false  // 禁用png优化
     }
     buildTypes {
         release {
@@ -49,6 +53,9 @@ android {
         sourceCompatibility = 11
         targetCompatibility = 11
     }
+        kotlinOptions {
+        jvmTarget = '11'
+        }
     project.android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             output.versionCodeOverride = flutter.versionCode
