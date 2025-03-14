@@ -27,6 +27,13 @@
             "deviceId": "linux"
         },
         {
+            "name": "iOS(iPhone13)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "Nightmare",
+            "program": "lib/main.dart"
+        },
+        {
             "name": "Android(小米14)",
             "request": "launch",
             "type": "dart",

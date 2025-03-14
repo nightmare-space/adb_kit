@@ -3,5 +3,6 @@
     "dart.lineLength": 200,
     "cmake.ignoreCMakeListsMissing": true,
     "dart.runPubGetOnPubspecChanges": "never",
-    "dart.runPubGetOnNestedProjects": "none"
+    "dart.runPubGetOnNestedProjects": "none",
+    "liveServer.settings.port": 5501
 }
