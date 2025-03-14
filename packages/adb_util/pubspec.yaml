@@ -22,3 +22,4 @@ dependencies:
     sdk: flutter
   dart_adb:
     path: /Users/lori/Desktop/nightmare-space/dart_adb
+  multicast_dns: ^0.3.2+8
