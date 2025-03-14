@@ -1,19 +1,21 @@
 import 'package:adb_kit/app/modules/home/drawer/drawer.dart';
-import 'package:adb_kit/app/modules/home/drawer/drawer_desktop_phone.dart';
 import 'package:adb_kit/app/modules/home/adaptive_entry.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/color_util.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
+import 'tablet_home.dart';
+
 class DesktopHome extends StatefulWidget {
   const DesktopHome({
     super.key,
     required this.route,
-    required this.onChanged,
+    required this.drawer,
   });
   final String route;
-  final RouteCallback onChanged;
+  final NiDrawer drawer;
 
   @override
   State<DesktopHome> createState() => _DesktopHomeState();
@@ -24,10 +26,9 @@ class _DesktopHomeState extends State<DesktopHome> {
   Widget build(BuildContext context) {
     Row row = Row(
       children: [
-        DesktopPhoneDrawer(
+        widget.drawer.copyWith(
+          expanded: true,
           width: 200.w,
-          groupValue: widget.route,
-          onChanged: widget.onChanged,
         ),
         Container(
           height: double.infinity,

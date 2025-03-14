@@ -1,111 +1,14 @@
 import 'package:adb_kit/app/modules/history/history_page.dart';
+import 'package:adb_kit/app/modules/home/views/tablet_home.dart';
 import 'package:adb_kit/app/modules/log_page.dart';
 import 'package:adb_kit/app/modules/net_debug/remote_debug_page.dart';
 import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
 import 'package:adb_kit/app/modules/setting/setting_page.dart';
 import 'package:adb_kit/app/modules/terminal_page/exec_cmd_page.dart';
 import 'package:adb_kit/config/config.dart';
-import 'package:adb_kit/generated/l10n.dart';
+import 'package:adb_kit/utils/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
-
-import 'drawer_desktop_phone.dart';
-import 'drawer_tablet.dart';
-
-List<DrawerItem> desktopPhoneDrawer(String route) {
-  return [
-    DrawerItem(
-      title: S.current.home,
-      value: S.current.home,
-      iconData: Icons.home,
-      groupValue: route,
-    ),
-    DrawerItem(
-      title: S.current.historyConnect,
-      value: S.current.historyConnect,
-      iconData: Icons.history,
-      groupValue: route,
-    ),
-    DrawerItem(
-      title: S.current.networkDebug,
-      value: S.current.networkDebug,
-      iconData: Icons.signal_wifi_4_bar,
-      groupValue: route,
-    ),
-    DrawerItem(
-      title: S.current.terminal,
-      value: S.current.terminal,
-      iconData: Icons.code,
-      groupValue: route,
-    ),
-    DrawerItem(
-      title: S.current.log,
-      value: S.current.log,
-      iconData: Icons.pending_outlined,
-      groupValue: route,
-    ),
-    // const SettingsPage();
-    DrawerItem(
-      title: S.current.setting,
-      value: S.current.setting,
-      iconData: Icons.settings,
-      groupValue: route,
-    ),
-    DrawerItem(
-      title: S.current.about,
-      value: S.current.about,
-      iconData: Icons.info_outline,
-      groupValue: route,
-    ),
-  ];
-}
-
-List<TabletDrawerItem> tabletDrawer(String route) {
-  return [
-    TabletDrawerItem(
-      title: S.current.home,
-      value: S.current.home,
-      groupValue: route,
-      iconData: Icons.home,
-    ),
-    TabletDrawerItem(
-      title: S.current.historyConnect,
-      value: S.current.historyConnect,
-      groupValue: route,
-      iconData: Icons.history,
-    ),
-    TabletDrawerItem(
-      title: S.current.networkDebug,
-      value: S.current.networkDebug,
-      groupValue: route,
-      iconData: Icons.signal_wifi_4_bar,
-    ),
-    TabletDrawerItem(
-      title: S.current.terminal,
-      value: S.current.terminal,
-      groupValue: route,
-      iconData: Icons.code,
-    ),
-    TabletDrawerItem(
-      title: S.current.log,
-      value: S.current.log,
-      groupValue: route,
-      iconData: Icons.pending_outlined,
-    ),
-    TabletDrawerItem(
-      title: S.current.setting,
-      value: S.current.setting,
-      groupValue: route,
-      iconData: Icons.settings,
-    ),
-    TabletDrawerItem(
-      title: S.current.about,
-      value: S.current.about,
-      groupValue: route,
-      iconData: Icons.info_outline,
-    ),
-  ];
-}
 
 Map<String, Widget> _routes = {};
 
@@ -135,13 +38,13 @@ Widget? drawerPages(String route) {
     return _routes[route];
   }
   _routes = {};
-  _routes[S.current.home] = const OverviewPage();
-  _routes[S.current.historyConnect] = const HistoryPage(showLeading: true);
-  _routes[S.current.networkDebug] = const RemoteDebugPage();
-  _routes[S.current.terminal] = const ExecCmdPage();
-  _routes[S.current.log] = const LogPage();
-  _routes[S.current.setting] = const SettingsPage();
-  _routes[S.current.about] = AboutPage(
+  _routes[DrawerRoutes.home] = const OverviewPage();
+  _routes[DrawerRoutes.history] = const HistoryPage(showLeading: true);
+  // _routes[DrawerRoutes.networkDebug] = const RemoteDebugPage();
+  _routes[DrawerRoutes.terminal] = const ExecCmdPage();
+  _routes[DrawerRoutes.log] = const LogPage();
+  _routes[DrawerRoutes.setting] = const SettingsPage();
+  _routes[DrawerRoutes.about] = AboutPage(
     versionCode: Config.versionCode,
     appVersion: Config.versionName,
     applicationName: 'ADB KIT',
@@ -158,4 +61,186 @@ Widget? drawerPages(String route) {
     license: license.trim(),
   );
   return _routes[route];
+}
+
+class NiDrawer extends StatefulWidget {
+  const NiDrawer({
+    super.key,
+    required this.items,
+    this.onChanged,
+    this.expanded = false,
+    this.width,
+  });
+  final List<NiDrawerItem> items;
+  final void Function(String value)? onChanged;
+  final bool expanded;
+  final double? width;
+
+  NiDrawer copyWith({
+    List<NiDrawerItem>? items,
+    void Function(String value)? onChanged,
+    bool? expanded,
+    double? width,
+  }) {
+    return NiDrawer(
+      items: items ?? this.items,
+      onChanged: onChanged ?? this.onChanged,
+      expanded: expanded ?? this.expanded,
+      width: width ?? this.width,
+    );
+  }
+
+  @override
+  State<NiDrawer> createState() => _NiDrawerState();
+}
+
+class _NiDrawerState extends State<NiDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: SafeAreaFix(
+        child: SizedBox(
+          width: widget.width,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
+            child: Column(
+              children: [
+                for (NiDrawerItem item in widget.items)
+                  SizedBox(
+                    child: InkWell(
+                      onTap: () {
+                        widget.onChanged?.call(item.value.toString());
+                      },
+                      borderRadius: BorderRadius.circular(8.w),
+                      child: item.copyWith(
+                        expanded: widget.expanded,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NiDrawerItem<T> extends StatefulWidget {
+  const NiDrawerItem({
+    super.key,
+    required this.value,
+    required this.groupValue,
+    this.tooltip,
+    required this.mini,
+    this.expanded,
+    required this.title,
+  });
+  final T value;
+  final T groupValue;
+  final String? tooltip;
+  final Widget mini;
+  final Widget title;
+  final bool? expanded;
+
+  NiDrawerItem copyWith({
+    T? value,
+    T? groupValue,
+    String? tooltip,
+    Widget? mini,
+    Widget? title,
+    bool? expanded,
+  }) {
+    return NiDrawerItem(
+      value: value ?? this.value,
+      groupValue: groupValue ?? this.groupValue,
+      tooltip: tooltip ?? this.tooltip,
+      mini: mini ?? this.mini,
+      title: title ?? this.title,
+      expanded: expanded ?? this.expanded,
+    );
+  }
+
+  @override
+  State<NiDrawerItem<T>> createState() => _NiDrawerItemState<T>();
+}
+
+class _NiDrawerItemState<T> extends State<NiDrawerItem<T>> {
+  @override
+  Widget build(BuildContext context) {
+    final bool isChecked = widget.value == widget.groupValue;
+    if (widget.expanded == true) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            height: 48.w,
+            decoration: isChecked
+                ? BoxDecoration(
+                    color: Theme.of(context).primaryColor.withAlpha(opacity01),
+                    borderRadius: BorderRadius.circular(8.w),
+                  )
+                : null,
+          ),
+          SizedBox(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.w),
+                child: Row(
+                  children: [
+                    IconTheme(
+                      data: IconThemeData(
+                        size: 18.w,
+                        color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface,
+                      ),
+                      child: widget.mini,
+                    ),
+                    SizedBox(width: 8.w),
+                    DefaultTextStyle(
+                      style: TextStyle(
+                        color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface,
+                        fontSize: 14.w,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      child: widget.title,
+                    )
+                    // Text(
+                    //   title!,
+                    //   style: TextStyle(
+                    //     color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface,
+                    //     fontSize: 14.w,
+                    //     fontWeight: bold,
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return Tooltip(
+      message: widget.tooltip ?? '',
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Container(
+            height: 54.w,
+            width: 54.w,
+            decoration: isChecked
+                ? BoxDecoration(
+                    color: colorScheme.primary.withAlpha(opacity015),
+                    borderRadius: BorderRadius.circular(12.w),
+                  )
+                : null,
+            child: widget.mini,
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,19 +1,29 @@
 import 'package:adb_kit/app/modules/home/adaptive_entry.dart';
 import 'package:adb_kit/app/modules/home/drawer/drawer.dart';
-import 'package:adb_kit/app/modules/home/drawer/drawer_tablet.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/utils/color_util.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
+class DrawerRoutes {
+  static const String home = 'home';
+  static const String history = 'history';
+  // static const String networkDebug = 'networkDebug';
+  static const String terminal = 'terminal';
+  static const String log = 'log';
+  static const String setting = 'setting';
+  static const String about = 'about';
+}
+
 class TabletHome extends StatefulWidget {
   const TabletHome({
     super.key,
     required this.route,
-    required this.onChanged,
+    required this.drawer,
   });
   final String route;
-  final RouteCallback? onChanged;
+  final NiDrawer drawer;
 
   @override
   State<TabletHome> createState() => _TabletHomeState();
@@ -25,10 +35,43 @@ class _TabletHomeState extends State<TabletHome> {
     return Scaffold(
       body: Row(
         children: [
-          TabletDrawer(
-            route: widget.route,
-            onChanged: widget.onChanged,
-          ),
+          widget.drawer,
+          // Builder(builder: (context) {
+          //   return Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 8.w),
+          //     child: InkWell(
+          //       borderRadius: BorderRadius.circular(8.w),
+          //       onTap: () {
+          //         ThemeData theme = light(primary: Theme.of(context).primaryColor);
+          //         if (Theme.of(context).brightness == Brightness.light) {
+          //           theme = dark();
+          //         }
+          //         if (theme.brightness == Brightness.dark) {
+          //           Settings.theme.setting.set('dark');
+          //         } else {
+          //           Settings.theme.setting.set('light');
+          //         }
+          //         ConfigController controller = Get.find();
+          //         controller.theme = theme;
+          //         Navigator.of(context).pushReplacement(
+          //           RippleRoute(
+          //             GetBuilder<ConfigController>(
+          //               builder: (context) {
+          //                 return Theme(data: context.theme!, child: Global().rootWidget!);
+          //               },
+          //             ),
+          //             RouteConfig.fromContext(context),
+          //           ),
+          //         );
+          //       },
+          //       child: TabletDrawerItem(
+          //         groupValue: widget.route,
+          //         title: S.current.switchTheme,
+          //         iconData: Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode,
+          //       ),
+          //     ),
+          //   );
+          // }),
           Container(
             height: double.infinity,
             width: 1,

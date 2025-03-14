@@ -1,18 +1,18 @@
 import 'package:adb_kit/app/modules/home/drawer/drawer.dart';
-import 'package:adb_kit/app/modules/home/drawer/drawer_desktop_phone.dart';
-import 'package:adb_kit/app/modules/home/adaptive_entry.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/global_repository.dart';
 
 class MobileHome extends StatefulWidget {
   const MobileHome({
     super.key,
-    this.onChanged,
     required this.route,
+    required this.drawer,
   });
-  final RouteCallback? onChanged;
+
   final String route;
+  final NiDrawer drawer;
 
   @override
   State<MobileHome> createState() => _MobileHomeState();
@@ -21,14 +21,14 @@ class MobileHome extends StatefulWidget {
 class _MobileHomeState extends State<MobileHome> {
   @override
   Widget build(BuildContext context) {
-    Widget drawer = DesktopPhoneDrawer(
-      width: Get.mediaQuery.size.width * 2 / 3,
-      groupValue: widget.route,
-      onChanged: (value) {
-        widget.onChanged?.call(value);
-        Navigator.pop(context);
-      },
-    );
+    // Widget drawer = DesktopPhoneDrawer(
+    //   width: Get.mediaQuery.size.width * 2 / 3,
+    //   groupValue: widget.route,
+    //   onChanged: (value) {
+    //     widget.onChanged?.call(value);
+    //     Navigator.pop(context);
+    //   },
+    // );
     Widget body = PageTransitionSwitcher(
       transitionBuilder: (
         Widget child,
@@ -45,7 +45,15 @@ class _MobileHomeState extends State<MobileHome> {
       duration: mill300,
       child: drawerPages(widget.route),
     );
-    return Scaffold(drawer: drawer, body: body);
+    return Scaffold(
+      drawer: widget.drawer.copyWith(
+        expanded: true,
+        width: Get.mediaQuery.size.width * 2 / 3,
+      ),
+      body: SafeAreaFix(
+        child: body,
+      ),
+    );
   }
 }
 
