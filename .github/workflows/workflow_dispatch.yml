@@ -112,7 +112,7 @@ jobs:
 
       - name: Move file
         run: |
-          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+          mv "${{ github.workspace }}/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -167,7 +167,7 @@ jobs:
 
       - name: Move file
         run: |
-          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+          mv "${{ github.workspace }}/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
     
       - name: List files in the repository
         run: |
@@ -220,7 +220,7 @@ jobs:
 
       - name: Move file
         run: |
-          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+          mv "${{ github.workspace }}/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
     
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
