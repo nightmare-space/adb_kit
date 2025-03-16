@@ -13,13 +13,6 @@ dev_dependencies:
   test: ^1.25.7
 
 dependencies:
-  # global_repository:
-  # signale:
-  # android_api_server_client:
-  # crypto:
-  # adb_kit:
   flutter:
     sdk: flutter
-  dart_adb:
-    path: /Users/lori/Desktop/nightmare-space/dart_adb
   multicast_dns: ^0.3.2+8

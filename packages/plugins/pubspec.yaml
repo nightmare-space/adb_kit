@@ -16,8 +16,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  android_tool:
-    path: /Users/nightmare/Desktop/nightmare-space/android_tool
 
 flutter_intl:
   enabled: true
