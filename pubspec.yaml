@@ -70,8 +70,6 @@ dependencies:
   # multicast on LAN
   multicast:
     git: https://github.com/nightmare-space/multicast
-  file_manager:
-    git: https://github.com/nightmare-space/file_manager_private.git
   # foundation settings
   settings:
     git: https://github.com/nightmare-space/settings
@@ -83,6 +81,17 @@ dependencies:
     git:
       url: https://github.com/TerminalStudio/xterm.dart
       ref: master
+
+  # empty repo #
+
+  file_manager:
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: file_manager
+  dart_adb:
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: dart_adb
   adb_kit_extension:
     git:
       url: https://github.com/nightmare-space/empty_package
@@ -102,8 +111,10 @@ dependencies:
   android_api_server_client:
     git:
       url: https://github.com/nightmare-space/android_api_server_client
-  dart_adb:
-    path: /Users/lori/Desktop/nightmare-space/dart_adb
+  android_tool:
+    git:
+      url: https://github.com/nightmare-space/empty_package
+      path: android_tool
 
   # local dep #
   plugins:
