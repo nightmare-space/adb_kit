@@ -135,12 +135,12 @@ jobs:
       - name: Building...
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
-          ni release --build-linux-deb
+          nic release --build-linux-deb
           
       - name: Upload..
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
-          ni default -u
+          nic default -u
 
 
 
@@ -196,13 +196,13 @@ jobs:
       - name: Building&&Packaging
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
-          ni release --build-mac-dmg
+          nic release --build-mac-dmg
           # ./scripts/dmg/create_dmg.sh
 
       - name: Upload To Private Server
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
-          ni default -u
+          nic default -u
             
   build-windows:
     name: Build Windows Portable
@@ -235,14 +235,14 @@ jobs:
 
       - name: Building...
         if: always()
+        shell: cmd
         run: |
           set PATH=%PATH%;${{ github.workspace }}\ni
-          ni release --build-win-zip
-        shell: cmd
+          nic release --build-win-zip
 
       - name: Upload
         if: always()
+        shell: cmd
         run: |
           set PATH=%PATH%;${{ github.workspace }}\ni
-          ni default -u
-        shell: cmd
+          nic default -u
