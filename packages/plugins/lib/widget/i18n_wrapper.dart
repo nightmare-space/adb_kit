@@ -18,9 +18,9 @@ class _AKI18nWrapperState extends State<AKI18nWrapper> {
   Widget build(BuildContext context) {
     return Localizations(
       locale: Localizations.localeOf(context),
-      delegates: const [
+      delegates: [
         P.delegate,
-        IA.delegate,
+        if (IA.delegate != null) IA.delegate!,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
