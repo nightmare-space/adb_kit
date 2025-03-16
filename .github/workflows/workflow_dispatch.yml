@@ -5,19 +5,17 @@ on:
       custom_runner:
         description: '是否使用自定义Runner'
         required: true
+      clone_code_runner:
+        description: '是否使用自定义Runner'
+        required: false
+        default: 'ubuntu-latest'
   repository_dispatch:
     types:
       - api
 
 jobs:
   clone-code:
-    strategy:
-      matrix:
-        os: 
-          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-mac' || 'macos-latest' }}"
-          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-windows' || 'windows-latest' }}"
-          - "${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}"
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ github.event.inputs.clone_code_runner}}
     steps:
       - name: Checkout current code
         uses: actions/checkout@v4
