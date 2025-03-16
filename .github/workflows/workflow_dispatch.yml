@@ -203,7 +203,7 @@ jobs:
     steps:
       - name: Restore cached Primes
         id: cache-primes-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ github.workspace }}
