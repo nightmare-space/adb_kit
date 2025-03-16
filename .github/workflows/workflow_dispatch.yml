@@ -119,6 +119,7 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: code-
+          enableCrossOsArchive : true
 
       - name: Move file
         run: |
@@ -174,6 +175,7 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: code-
+          enableCrossOsArchive : true
 
       - name: Move file
         run: |
@@ -227,6 +229,7 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: code-
+          enableCrossOsArchive : true
 
       - name: Move file
         run: |
