@@ -206,7 +206,7 @@ jobs:
             
   build-windows:
     name: Build Windows Portable
-    runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-windows' || 'windows-latest' }}
+    runs-on: ${{ github.event.inputs.windows_runner }}
     environment: default
     needs: clone-code
     steps:
@@ -220,7 +220,7 @@ jobs:
 
       - name: Move file
         run: |
-          mv "${{ github.workspace }}/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+          Move-Item -Path "${{ github.workspace }}/scripts/github_actions/pubspec_overrides.yaml" -Destination "${{ github.workspace }}/"
     
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
