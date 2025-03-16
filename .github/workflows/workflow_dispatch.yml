@@ -87,14 +87,22 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           ref: 'main'
           path: "${{ github.workspace }}/packages/android_tool"
+      # https://github.com/nightmare-space/dart_adb
+      - name: Checkout Dart ADB
+        uses: actions/checkout@v4
+        with:
+          repository: 'nightmare-space/dart_adb'
+          token: ${{ secrets.GH_PAT }}
+          ref: 'main'
+          path: "${{ github.workspace }}/packages/dart_adb"
       - name: Cache Primes
         id: cache-primes
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}
-          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          key: code-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
-            ${{ runner.os }}-dart-
+            code-
 
   build-linux:
     name: Build Linux DEB
@@ -108,7 +116,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-dart-
+          key: code
 
       - name: Move file
         run: |
@@ -163,7 +171,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-dart-
+          key: code-
 
       - name: Move file
         run: |
@@ -216,7 +224,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ runner.os }}-dart-
+          key: code-
 
       - name: Move file
         run: |
