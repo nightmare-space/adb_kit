@@ -1,17 +1,19 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:adb_kit/adb_kit.dart';
 import 'package:adb_kit/app/modules/overview/list/devices_item.dart';
 import 'package:adb_library/adb_library.dart';
+import 'package:dart_adb/adb.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart' hide exec;
-import 'package:adb_util/adb_util_flutter.dart';
+import 'package:adb_util/adb_util.dart';
 
 class DevicesController extends GetxController {
   DevicesController();
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   ConfigController get configController => Get.find();
-  String get password => configController.password;
+  String? get password => configController.password;
 
   Future<void> init() async {
     ADB.setDevicePassword(password);
@@ -21,13 +23,51 @@ class DevicesController extends GetxController {
       String? libPath = await AdbLibrary.getLibPath();
       ADB.setLibraryPath(libPath);
     }
-    ADB.startPoolingListDevices(duration: 1.seconds);
+    if (Platform.isIOS) return;
+    ADB.startPoolingListDevices(
+      duration: 1.seconds,
+      onError: handleError,
+    );
+  }
+
+  void handleError(String error) {
+    showToast(error);
   }
 
   bool getRoot = false;
   // adb是否在启动中
   bool adbIsStarting = true;
   List<ADBDevice> devicesEntitys = [];
+  List<ADBDevice> devicesFromDartAPI = [];
+
+  Future<void> onPureDartADBDeviceConnect(String serial, ADBIO adbio) async {
+    ADBDeviceFromDartAPI adbDevice = ADBDeviceFromDartAPI(
+      '$serial:5555',
+      'device',
+    );
+    String? model = await getDeviceProductModel(
+      serial,
+      usePureDart: true,
+      adbio: adbio,
+    );
+
+    String? nid = await getDeviceID(
+      serial,
+      usePureDart: true,
+      adbio: adbio,
+    );
+    adbDevice.nid = nid!;
+    adbDevice.productModel = model;
+    adbDevice.adbio = adbio;
+    devicesFromDartAPI.add(adbDevice);
+    HistoryController.updateHistory(
+      address: adbDevice.extractIp(),
+      port: adbDevice.extractPort(),
+      name: adbDevice.productModel,
+      uniqueId: adbDevice.nid,
+    );
+    updateWithAnima(devicesFromDartAPI);
+  }
 
   void clearDevices() {
     devicesEntitys.clear();
@@ -42,6 +82,7 @@ class DevicesController extends GetxController {
     } catch (e) {
       Log.e('adb start-server out:$e');
     }
+    // await Future.delayed(3.seconds);
     letADBStarted();
     // final List<String> devices = await ADBFind.getLANDevices();
     // for (String ip in devices) {
@@ -74,7 +115,7 @@ class DevicesController extends GetxController {
       }
     }
 
-    updateWithAnima(devices);
+    updateWithAnima(devices + devicesFromDartAPI);
   }
 
   Completer<bool>? removeLock;
@@ -152,6 +193,11 @@ class DevicesController extends GetxController {
     for (int i = 0; i < devicesEntitys.length; i++) {
       if (devicesEntitys[i].serial.contains(ip)) {
         return devicesEntitys[i];
+      }
+    }
+    for (int i = 0; i < devicesFromDartAPI.length; i++) {
+      if (devicesFromDartAPI[i].serial.contains(ip)) {
+        return devicesFromDartAPI[i];
       }
     }
     return null;
