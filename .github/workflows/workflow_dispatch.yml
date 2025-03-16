@@ -102,7 +102,7 @@ jobs:
           path: ${{ github.workspace }}
           key: code-${{ hashFiles('**/pubspec.lock') }}
           # enableCrossOsArchive
-          enable-cross-os-archive: true
+          enableCrossOsArchive : true
           restore-keys: |
             code-
 
