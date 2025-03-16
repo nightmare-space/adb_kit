@@ -103,6 +103,12 @@ class Global {
     if (Platform.environment.containsKey('SHELL')) {
       shell = Platform.environment['SHELL']!;
     }
+    String workDir = RuntimeEnvir.binPath;
+    if (GetPlatform.isWindows) {
+      workDir = '.';
+    } else if (GetPlatform.isDesktop) {
+      workDir = '~';
+    }
     // ! 直接由 pty start bash，在android上首次启动会crash
     // ! 因为那个 bash 是 arm64 的，并不是 ndk 编译的
     // ! 原因未知
@@ -110,7 +116,7 @@ class Global {
       shell,
       arguments: ['-l'],
       environment: envir,
-      workingDirectory: GetPlatform.isMobile ? RuntimeEnvir.binPath : "~",
+      workingDirectory: workDir,
     );
     pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
       (event) {
