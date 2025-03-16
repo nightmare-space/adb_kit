@@ -1,0 +1,13 @@
+dependency_overrides:
+  adb_kit_extension:
+    path: packages/adb_kit_extension
+  termux_api_plugin:
+    path: packages/termux_api_plugin
+  file_manager:
+    path: packages/file_manager
+  dart_adb:
+    path: packages/dart_adb
+  android_tool:
+    path: packages/android_tool
+  behavior_api:
+    path: packages/behavior_api

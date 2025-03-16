@@ -45,4 +45,4 @@ app.*.map.json
 android/app/keystore.jks
 
 dist/
-pubspec_overrides.yaml
+/pubspec_overrides.yaml
