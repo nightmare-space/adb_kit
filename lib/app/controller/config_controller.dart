@@ -1,5 +1,6 @@
 import 'package:adb_kit/config/config.dart';
 import 'package:adb_kit/config/settings.dart';
+import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,23 @@ enum BackgroundStyle {
   normal,
   image,
   tranparent,
+}
+
+// TODO 适配英语为跟随系统
+enum FileSelecterType {
+  saf,
+  custom,
+}
+
+extension FileSelecterTypeExt on FileSelecterType {
+  String get nameIntl {
+    switch (this) {
+      case FileSelecterType.saf:
+        return S.current.systemFileSelecter;
+      case FileSelecterType.custom:
+        return S.current.customFileSelecter;
+    }
+  }
 }
 
 extension ScreenTypeExt on ScreenType {
@@ -28,12 +46,14 @@ class ConfigController extends GetxController {
 
   bool autoConnect = true;
   bool showStatusBar = true;
-  String password = '';
+  String? password;
 
   static Locale english = const Locale('en');
   static Locale chinese = const Locale('zh', 'CN');
   ThemeData? theme = light();
   ThemeMode themeMode = ThemeMode.light;
+
+  FileSelecterType fileSelecterType = FileSelecterType.custom;
 
   Map<String, ThemeData?> themeMap = {
     ThemeMode.light.name: light(),
@@ -79,7 +99,7 @@ class ConfigController extends GetxController {
   }
 
   // bool get isDarkTheme => theme is DarkTheme;
-  Locale? locale = chinese;
+  Locale? locale;
   ScreenType? screenType;
   bool get needShowMenuButton => screenType == ScreenType.phone || (screenType == null && GetPlatform.isAndroid);
 
@@ -105,8 +125,11 @@ class ConfigController extends GetxController {
     if (languageMap.containsKey(Settings.languageSetting.value)) {
       locale = languageMap[Settings.languageSetting.value];
     }
-    autoConnect = Settings.adbPasswordSetting.value ?? autoConnect;
+    autoConnect = Settings.autoConnectDeviceSetting.value ?? autoConnect;
     password = Settings.adbPasswordSetting.value ?? password;
+    if (Settings.fileSelecterTypeSetting.value != null) {
+      fileSelecterType = FileSelecterType.values.byName(Settings.fileSelecterTypeSetting.value);
+    }
   }
 
   void changePassword(String password) {
@@ -118,6 +141,12 @@ class ConfigController extends GetxController {
   void changeScreenType(ScreenType? screenType) {
     this.screenType = screenType;
     screenTypeSetting.set(screenType?.name);
+    update();
+  }
+
+  void changeFileSelecterType(FileSelecterType type) {
+    fileSelecterType = type;
+    Settings.fileSelecterTypeSetting.set(type.name);
     update();
   }
 

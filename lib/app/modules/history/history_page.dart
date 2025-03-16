@@ -1,16 +1,16 @@
-import 'package:adb_kit/app/controller/config_controller.dart';
-import 'package:adb_kit/app/controller/history_controller.dart';
+import 'package:adb_kit/adb_wrapper.dart';
+import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/model/adb_historys.dart';
-import 'package:adb_kit/app/modules/overview/pages/overview_page.dart';
+import 'package:adb_kit/global/widget/card_item.dart';
 import 'package:adb_kit/config/font.dart';
 import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit/global/widget/menu_button.dart';
 import 'package:adb_kit/utils/color_util.dart';
+import 'package:dart_adb/adb.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide ScreenType;
 import 'package:global_repository/global_repository.dart' hide exec;
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:adb_util/adb_util.dart';
 
 class HistoryPage extends GetView<HistoryController> {
   const HistoryPage({
@@ -47,47 +47,43 @@ class HistoryPage extends GetView<HistoryController> {
                 ),
               );
             }
-            return SafeArea(
-              left: false,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-                child: Stack(
-                  children: [
-                    CardItem(
-                      padding: EdgeInsets.zero,
-                      child: ListView.builder(
-                        itemCount: controller.adbHistorys.data.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (c, i) {
-                          final ADBHistory adbEntity = controller.adbHistorys.data[i];
-                          return Dismissible(
-                            key: Key('$i'),
-                            onDismissed: (direction) {
-                              ctl.removeHis(i);
-                            },
-                            child: buildItem(adbEntity, context),
-                          );
-                        },
+            return SafeAreaFix(
+              child: Stack(
+                children: [
+                  CardItem(
+                    padding: EdgeInsets.zero,
+                    child: ListView.builder(
+                      itemCount: controller.adbHistorys.data.length,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (c, i) {
+                        final ADBHistory adbEntity = controller.adbHistorys.data[i];
+                        return Dismissible(
+                          key: Key('$i'),
+                          onDismissed: (direction) {
+                            ctl.removeHis(i);
+                          },
+                          child: buildItem(adbEntity, context),
+                        );
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(8.w),
+                      margin: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withAlpha(opacity01),
+                        borderRadius: BorderRadius.circular(10.w),
+                      ),
+                      child: Text(
+                        s.deleteHistoryTip,
+                        style: TextStyle(color: Colors.green, fontSize: 12.w),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.all(8.w),
-                        margin: EdgeInsets.all(8.w),
-                        decoration: BoxDecoration(
-                          color: Colors.green.withAlpha(opacity01),
-                          borderRadius: BorderRadius.circular(10.w),
-                        ),
-                        child: Text(
-                          s.deleteHistoryTip,
-                          style: TextStyle(color: Colors.green, fontSize: 12.w),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
@@ -100,12 +96,13 @@ class HistoryPage extends GetView<HistoryController> {
     ColorScheme scheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () async {
-        ADBConnectResult result;
+        String address = adbEntity.address;
+        DevicesController dc = Get.find();
         try {
-          // String suffix = ':${adbEntity.port}';
-          // FIXME: 需要支持不是5555端口的设备
-          result = await ADB.connectDevices('${adbEntity.address}:${adbEntity.port}');
-          showToast(result.message);
+          final result = await ADBWrapper.connectDevices('${adbEntity.address}:${adbEntity.port}');
+          if (result is ADBIO) {
+            dc.onPureDartADBDeviceConnect(address, result);
+          }
         } catch (e) {
           showToast('$e');
         }
@@ -181,7 +178,7 @@ class HistoryPage extends GetView<HistoryController> {
                       ),
                     ),
                     Text(
-                      '端口:${adbEntity.port}',
+                      '${S.current.port}:${adbEntity.port}',
                       style: TextStyle(
                         color: scheme.onSurface.withAlpha(opacity06),
                         fontSize: 12.w,

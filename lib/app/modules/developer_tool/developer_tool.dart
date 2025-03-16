@@ -2,10 +2,12 @@ import 'package:adb_interface/adb_interface.dart';
 import 'package:adb_kit/global/instance/plugin_manager.dart';
 import 'package:adb_kit/global/widget/pop_button.dart';
 import 'package:adb_kit/utils/color_util.dart';
-import 'package:flutter/material.dart';
-import 'package:global_repository/global_repository.dart' hide TabController;
+import 'package:adb_util/adb_util_flutter.dart';
+import 'package:flutter/services.dart';
 import 'package:plugins/plugins.dart';
+import 'package:flutter/material.dart';
 import 'package:adb_util/adb_util.dart';
+import 'package:global_repository/global_repository.dart' hide TabController;
 
 class DeveloperTool extends StatefulWidget {
   const DeveloperTool({
@@ -24,81 +26,74 @@ class _DeveloperToolState extends State<DeveloperTool> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: AKI18nWrapper(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
-                    child: const PopButton(),
-                  ),
-                  Expanded(
-                    child: AKTabBar<int>(
-                      value: value,
-                      groupValue: value,
-                      children: [
-                        for (var item in PluginManager.instance.pluginsMap.keys)
-                          Builder(builder: (context) {
-                            ADBKITPlugin plugin = PluginManager.instance.pluginsMap[item]!;
-                            return Row(
-                              children: [
-                                Text(plugin.name),
-                                if (plugin is FilePlugin)
-                                  Row(
-                                    children: [
-                                      SizedBox(width: 8.w),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.tertiary.withAlpha(opacity015),
-                                          borderRadius: BorderRadius.circular(4.w),
-                                        ),
-                                        padding: EdgeInsets.symmetric(horizontal: 4.w),
-                                        child: Text('Beta', style: TextStyle(color: Theme.of(context).colorScheme.tertiary)),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            );
-                          }),
-                      ],
-                      onChanged: (index) {
-                        Log.d('index $index');
-                        value = index;
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-                ],
-              ),
-              // 这种方式太卡
-              // Expanded(
-              //   child: PageView(
-              //     children: [
-              //       for (var item in PluginManager.instance.pluginsMap.values)
-              //         item.buildWidget(
-              //           context,
-              //           widget.adbDevice,
-              //         ),
-              //     ],
-              //   ),
-              // ),
-              Expanded(
-                child: [
-                  for (var item in PluginManager.instance.pluginsMap.values)
-                    item.buildWidget(
-                      context,
-                      widget.adbDevice,
-                    ),
-                ][value],
-              ),
-            ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SafeAreaFix(
+          child: AKI18nWrapper(
+            child: Column(
+              children: [
+                buildTab(),
+                // 这种方式太卡
+                // Expanded(
+                //   child: PageView(
+                //     children: [
+                //       for (var item in PluginManager.instance.pluginsMap.values)
+                //         item.buildWidget(
+                //           context,
+                //           widget.adbDevice,
+                //         ),
+                //     ],
+                //   ),
+                // ),
+                buildBody(context),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Row buildTab() {
+    return Row(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: const PopButton(),
+        ),
+        Expanded(
+          child: AKTabBar<int>(
+            value: value,
+            groupValue: value,
+            children: [
+              for (var item in PluginManager.instance.pluginsMap.keys)
+                Builder(builder: (context) {
+                  ADBKITPlugin plugin = PluginManager.instance.pluginsMap[item]!;
+                  return Text(plugin.name);
+                }),
+            ],
+            onChanged: (index) {
+              Log.d('index $index');
+              value = index;
+              setState(() {});
+            },
+          ),
+        ),
+        SizedBox(width: 10.w),
+      ],
+    );
+  }
+
+  Expanded buildBody(BuildContext context) {
+    return Expanded(
+      child: [
+        for (var item in PluginManager.instance.pluginsMap.values)
+          item.buildWidget(
+            context,
+            widget.adbDevice,
+          ),
+      ][value],
     );
   }
 }
