@@ -1,14 +1,14 @@
 name: adb_kit
 description: The best ADB client for Android/Windows/Linux/macOS.
 publish_to: "none"
-version: 1.6.0-beta.1+51
+version: 1.6.0+53
 environment:
   sdk: ">=3.6.0 <4.0.0"
 
 workspace:
-  - lib/packages/plugins
-  - lib/packages/adb_util
-  - lib/packages/adb_interface
+  - packages/plugins
+  - packages/adb_util
+  - packages/adb_interface
 
 dependencies:
   flutter_localizations:
@@ -102,11 +102,16 @@ dependencies:
   android_api_server_client:
     git:
       url: https://github.com/nightmare-space/android_api_server_client
+  dart_adb:
+    path: /Users/lori/Desktop/nightmare-space/dart_adb
 
   # local dep #
   plugins:
+    path: packages/plugins
   adb_util:
   adb_interface:
+  network_info_plus: ^6.1.3
+  app_settings: ^5.2.0
 
 dev_dependencies:
   flutter_test:

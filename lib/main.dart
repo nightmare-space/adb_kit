@@ -4,13 +4,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:adb_kit/test_controller.dart';
-import 'package:adb_util/adb_util.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart' hide exec;
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:plugins/plugins.dart' as plugins;
 import 'generated/l10n.dart';
@@ -37,19 +38,22 @@ Future<void> runADBClient() async {
     },
   );
   // 启动文件管理器服务，以供 ADB KIT 选择本机文件
+  // start file manager server, for ADB KIT to select local files
   Server.start();
   runZonedGuarded<void>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       initPersonal();
-      if (!GetPlatform.isIOS) {
-        final dir = (await getApplicationSupportDirectory()).path;
-        Log.d('ApplicationSupportDirectory: $dir');
-        RuntimeEnvir.initEnvirWithPackageName(
-          Config.packageName,
-          appSupportDirectory: dir,
-        );
-      }
+      final dir = (await getApplicationSupportDirectory()).path;
+      Log.i('ApplicationSupportDirectory: $dir');
+      (await getApplicationSupportDirectory()).list().listen((event) {
+        Log.i('ApplicationSupportDirectory -> ${event.path}');
+      });
+      RuntimeEnvir.initEnvirWithPackageName(
+        Config.packageName,
+        appSupportDirectory: dir,
+      );
+
       await initSetting();
       if (kDebugMode && GetPlatform.isMacOS) {
         // String testCMD = '/Users/nightmare/Desktop/nightmare-core/adb_kit/packages/adb_util/test/test.sh';
@@ -59,7 +63,6 @@ Future<void> runADBClient() async {
       } else {
         // final server = await ServerSocket.bind(InternetAddress.anyIPv4, 4040);
         // server.listen((event) {
-        //   Log.i('有客户端连接');
         //   socket = event;
         // });
         // WidgetsBinding.instance.addPersistentFrameCallback((Duration timeStamp) {
@@ -87,6 +90,10 @@ Future<void> runADBClient() async {
     Log.e('${S.current.uncaughtUE} -> ${details.exception}');
   };
   StatusBarUtil.transparent();
+  // AppSettings.openAppSettings();
+  if (Platform.isIOS) {
+    setupOniOS();
+  }
 }
 
 void mergeI18n() {
@@ -94,6 +101,17 @@ void mergeI18n() {
   messages_zh_cn.messages.messages.addAll(zhCNMessage);
   messages_en.messages.messages.addAll(plugins.en_message);
   messages_zh_cn.messages.messages.addAll(plugins.zh_cn_messages);
+}
+
+Future<void> setupOniOS() async {
+  var deviceIp = await NetworkInfo().getWifiIP();
+  Log.i('deviceIp -> $deviceIp');
+  try {
+    Duration? timeOutDuration = Duration(milliseconds: 100);
+    await Socket.connect(deviceIp, 80, timeout: timeOutDuration);
+  } catch (e) {
+    print('Exception..');
+  }
 }
 
 GlobalKey globalKey = GlobalKey();

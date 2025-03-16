@@ -10,6 +10,7 @@ class Settings {
   static const screenType = 'ScreenType';
   static const backgroundStyle = 'BackgroundStyle';
   static const adbPassword = 'ADBPassword';
+  static const fileSelecterType = 'FileSelecterType';
 
   static final SettingNode serverPathSetting = serverPath.setting;
   static final SettingNode languageSetting = language.setting;
@@ -20,4 +21,5 @@ class Settings {
   static final SettingNode screenTypeSetting = screenType.setting;
   static final SettingNode backgroundStyleSetting = backgroundStyle.setting;
   static final SettingNode adbPasswordSetting = adbPassword.setting;
+  static final SettingNode fileSelecterTypeSetting = fileSelecterType.setting;
 }

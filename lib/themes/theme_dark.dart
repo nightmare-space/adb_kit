@@ -40,7 +40,9 @@ ThemeData dark() {
         systemNavigationBarDividerColor: Colors.transparent,
       ),
       centerTitle: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: colorScheme.surface,
+      // when scaffold has scroll view and position >0 will use this color
+      surfaceTintColor: colorScheme.surface,
       elevation: 0,
       actionsIconTheme: lightThemeData.iconTheme.copyWith(color: colorScheme.primary),
       titleTextStyle: lightThemeData.textTheme.titleLarge!.copyWith(fontSize: 18.w, fontWeight: FontWeight.bold),

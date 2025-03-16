@@ -60,6 +60,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.11"
+  app_settings:
+    dependency: "direct main"
+    description:
+      name: app_settings
+      sha256: "476df1d85cec143c3d27dd1c7451629a59c0c5ccf70a0adcbfa92a0a2d928705"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
   archive:
     dependency: "direct main"
     description:
@@ -76,6 +84,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      sha256: "1c296cd268f486cabcc3930e9b93a8133169305f18d722916e675959a88f6d2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.9"
   async:
     dependency: transitive
     description:
@@ -87,11 +103,9 @@ packages:
   behavior_api:
     dependency: "direct main"
     description:
-      path: behavior_api
-      ref: HEAD
-      resolved-ref: "50dc13e60b072ac0298321abd1ed0308dbeb1c9f"
-      url: "https://github.com/nightmare-space/empty_package"
-    source: git
+      path: "/Users/lori/Desktop/nightmare-space/behavior_api"
+      relative: false
+    source: path
     version: "1.0.0"
   bloc:
     dependency: transitive
@@ -277,6 +291,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dart_adb:
+    dependency: "direct main"
+    description:
+      path: "/Users/lori/Desktop/nightmare-space/dart_adb"
+      relative: false
+    source: path
+    version: "1.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -333,6 +354,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  encrypt:
+    dependency: transitive
+    description:
+      name: encrypt
+      sha256: "62d9aa4670cc2a8798bab89b39fc71b6dfbacf615de6cf5001fb39f7e4a996a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.3"
   equatable:
     dependency: transitive
     description:
@@ -788,10 +817,10 @@ packages:
     dependency: "direct main"
     description:
       name: multicast_dns
-      sha256: "982c4cc4cda5f98dd477bddfd623e8e4bd1014e7dbf9e7b05052e14a5b550b99"
+      sha256: "0a568c8411ab0979ab8cd4af1c29b6d316d854ab81592463ccceb92b35fde813"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.2+7"
+    version: "0.3.2+8"
   nested:
     dependency: transitive
     description:
@@ -800,6 +829,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  network_info_plus:
+    dependency: "direct main"
+    description:
+      name: network_info_plus
+      sha256: "08f4166bbb77da9e407edef6322a33f87b18c0ca46483fb25606cb3d2bfcdd2a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.3"
+  network_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: network_info_plus_platform_interface
+      sha256: "7e7496a8a9d8136859b8881affc613c4a21304afeb6c324bcefc4bd0aff6b94b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
+  nm:
+    dependency: transitive
+    description:
+      name: nm
+      sha256: "2c9aae4127bdc8993206464fcc063611e0e36e72018696cd9631023a31b24254"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   node_preamble:
     dependency: transitive
     description:
@@ -1040,6 +1093,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "4be0097fcf3fd3e8449e53730c631200ebc7b88016acecab2b0da2f0149222fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.9.1"
   pool:
     dependency: transitive
     description:
@@ -1147,11 +1208,9 @@ packages:
   settings:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "1d683a15da1d2e4c1732b87d2da5c89c21a6b38b"
-      url: "https://github.com/nightmare-space/settings"
-    source: git
+      path: "../../nightmare-space/settings"
+      relative: true
+    source: path
     version: "0.0.1"
   shelf:
     dependency: transitive

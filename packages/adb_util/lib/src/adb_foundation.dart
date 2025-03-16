@@ -7,6 +7,7 @@ import 'package:signale/signale.dart';
 Map<String, String> adbEnvir() {
   Map<String, String> envir = RuntimeEnvir.envir();
   envir['TMPDIR'] = RuntimeEnvir.binPath;
+  // envir['TMPDIR'] = '/sdcard/Android/data/com.nightmare.adbkit/files';
   // ADB_MDNS=0 can fix rokid bug(adb will crash when mDNS is enabled)
   envir['ADB_MDNS'] = '0';
   envir['ADB_MDNS_AUTO_CONNECT'] = '0';

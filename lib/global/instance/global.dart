@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
+import 'package:adb_kit/adb_wrapper.dart';
 import 'package:adb_kit/app/controller/controller.dart';
 import 'package:adb_kit/app/modules/home/bindings/home_binding.dart';
 import 'package:adb_kit/config/config.dart';
@@ -9,6 +10,7 @@ import 'package:adb_kit/generated/l10n.dart';
 import 'package:adb_kit_extension/adb_kit_extension.dart' hide initApi;
 import 'package:adb_library/adb_library.dart';
 import 'package:behavior_api/behavior_api.dart';
+import 'package:dart_adb/adb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pty/flutter_pty.dart';
 import 'package:get/get.dart';
@@ -19,7 +21,7 @@ import 'package:xterm/xterm.dart';
 import 'dart:core' as core;
 import 'dart:core';
 import 'adb_installer.dart';
-import 'package:adb_util/adb_util.dart';
+import 'package:adb_util/adb_util_flutter.dart';
 
 extension PTYExt on Pty {
   void writeString(String data) {
@@ -93,6 +95,7 @@ class Global {
       envir['RUST_LOG'] = 'trace';
     }
     envir['TERM'] = 'xterm-256color';
+    // String shell = '/system/bin/linker64';
     String shell = 'sh';
     if (GetPlatform.isWindows) {
       shell = 'cmd';
@@ -101,13 +104,20 @@ class Global {
       shell = Platform.environment['SHELL']!;
     }
     // ! 直接由 pty start bash，在android上首次启动会crash
+    // ! 因为那个 bash 是 arm64 的，并不是 ndk 编译的
     // ! 原因未知
     pty ??= Pty.start(
       shell,
-      arguments: [],
+      arguments: ['-l'],
       environment: envir,
       workingDirectory: GetPlatform.isMobile ? RuntimeEnvir.binPath : "~",
     );
+    pty!.output.cast<List<int>>().transform(const Utf8Decoder()).listen(
+      (event) {
+        terminal.write(event);
+      },
+    );
+    // pty?.writeString('/system/bin/linker64 --list');
   }
 
   Future<void> _receiveBoardCast() async {
@@ -120,12 +130,15 @@ class Global {
           try {
             // try不能省
             // MaterialApp 可能还没加载
-            final devicesCTL = Get.find<DevicesController>();
-            if (devicesCTL.getDevicesByIp(address) == null) {
+            final dc = Get.find<DevicesController>();
+            if (dc.getDevicesByIp(address) == null) {
               // TODO(lin): 有的时候，目标设备不是5555 端口，就一直连不上
               // 有没可能，广播的时候，只在自己打开了无线调试的时候才广播
               try {
-                await ADB.connectDevices(address);
+                final result = await ADBWrapper.connectDevices(address);
+                if (result is ADBIO) {
+                  dc.onPureDartADBDeviceConnect(address, result);
+                }
               } catch (e) {
                 Log.e('${S.current.udpCF} -> $e');
               }
@@ -184,7 +197,9 @@ class Global {
     if (isInit) {
       return;
     }
-    initTerminal();
+    if (!Platform.isIOS) {
+      initTerminal();
+    }
     Log.i('Global instance init');
     if (RuntimeEnvir.packageName != Config.packageName) {
       // 如果这个项目是独立运行的，那么RuntimeEnvir.packageName会在main函数中被设置成Config.packageName
