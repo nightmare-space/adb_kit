@@ -45,7 +45,7 @@ jobs:
           repository: 'mengyanshou/user_center_frontend'
           token: ${{ secrets.GH_PAT }}
           ref: 'main'
-          path: "${{ github.workspace }}/user_center_frontend"
+          path: "${{ github.workspace }}/packages/user_center_frontend"
 
       - name: Checkout behavior_api code
         uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
           repository: 'mengyanshou/behavior_api'
           token: ${{ secrets.GH_PAT }}
           ref: 'main'
-          path: "${{ github.workspace }}/behavior_api"
+          path: "${{ github.workspace }}/packages/behavior_api"
 
       - name: Checkout ni CLI code
         uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
           repository: 'nightmare-space/file_manager_private'
           token: ${{ secrets.GH_PAT }}
           ref: 'main'
-          path: "${{ github.workspace }}/file_manager"
+          path: "${{ github.workspace }}/packages/file_manager"
       - name: Checkout Android Tool
       # https://github.com/nightmare-space/android_tool
         uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
           repository: 'nightmare-space/android_tool'
           token: ${{ secrets.GH_PAT }}
           ref: 'main'
-          path: "${{ github.workspace }}/android_tool"
+          path: "${{ github.workspace }}/packages/android_tool"
       - name: Cache Primes
         id: cache-primes
         uses: actions/cache@v4
@@ -100,13 +100,10 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: ${{ runner.os }}-dart-
-      - name: move file
+
+      - name: Move file
         run: |
-          mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
-          mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
-          mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
-          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
-          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
+          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
 
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
@@ -158,14 +155,11 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: ${{ runner.os }}-dart-
-      - name: move file
-        run: |
-          mv "${{ github.workspace }}/user_center_frontend" "${{ github.workspace }}/../user_center_frontend"
-          mv "${{ github.workspace }}/adb_kit_extension" "${{ github.workspace }}/../adb_kit_extension"
-          mv "${{ github.workspace }}/termux_api_plugin" "${{ github.workspace }}/../termux_api_plugin"
-          mv "${{ github.workspace }}/behavior_api/behavior.dart" "./lib/global/instance/behavior.dart"
-          mv "${{ github.workspace }}/behavior_api/behavior.g.dart" "./lib/global/instance/behavior.g.dart"
 
+      - name: Move file
+        run: |
+          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+    
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}/..
@@ -214,14 +208,11 @@ jobs:
           path: |
             ${{ github.workspace }}
           key: ${{ runner.os }}-dart-
-      - name: move file
-        run: |
-          Move-Item -Path "${{ github.workspace }}/user_center_frontend" -Destination "${{ github.workspace }}/../"
-          Move-Item -Path "${{ github.workspace }}/adb_kit_extension" -Destination "${{ github.workspace }}/../"
-          Move-Item -Path "${{ github.workspace }}/termux_api_plugin" -Destination "${{ github.workspace }}/../"
-          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.dart" -Destination "./lib/global/instance/behavior.dart"
-          Move-Item -Path "${{ github.workspace }}/behavior_api/behavior.g.dart" -Destination "./lib/global/instance/behavior.g.dart"
 
+      - name: Move file
+        run: |
+          mv "${{ github.workspace }}/build/scripts/github_actions/pubspec_overrides.yaml" "${{ github.workspace }}/"
+    
       - name: Install and set Flutter version
         uses: subosito/flutter-action@v2
         with:
