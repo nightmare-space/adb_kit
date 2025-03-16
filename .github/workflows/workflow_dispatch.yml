@@ -73,6 +73,7 @@ jobs:
             ${{ runner.os }}-dart-
 
   build-linux:
+    name: Build Linux DEB
     runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-linux' || 'ubuntu-latest' }}
     environment: default
     needs: clone-code
@@ -186,6 +187,7 @@ jobs:
           ni default -u
             
   build-windows:
+    name: Build Windows Portable
     runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-windows' || 'windows-latest' }}
     environment: default
     needs: clone-code
