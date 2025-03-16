@@ -15,13 +15,17 @@ on:
 
 jobs:
   clone-code:
+    name: Clone Code in ${{ github.event.inputs.clone_code_runner}}
     runs-on: ${{ github.event.inputs.clone_code_runner}}
     steps:
       - name: Checkout current code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
-
+      # log github.workspace folder
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       - name: Checkout adb_kit_extension code
         uses: actions/checkout@v4
         with:
