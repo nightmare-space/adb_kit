@@ -20,12 +20,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout current code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
 
       - name: Checkout adb_kit_extension code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'mengyanshou/adb_kit_extension'
           token: ${{ secrets.GH_PAT }}
@@ -33,7 +33,7 @@ jobs:
           path: "${{ github.workspace }}/adb_kit_extension"
 
       - name: Checkout termux_api_plugin code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'nightmare-space/termux_api_plugin'
           token: ${{ secrets.GH_PAT }}
@@ -41,7 +41,7 @@ jobs:
           path: "${{ github.workspace }}/termux_api_plugin"
 
       - name: Checkout user_center_frontend code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'mengyanshou/user_center_frontend'
           token: ${{ secrets.GH_PAT }}
@@ -49,7 +49,7 @@ jobs:
           path: "${{ github.workspace }}/user_center_frontend"
 
       - name: Checkout behavior_api code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'mengyanshou/behavior_api'
           token: ${{ secrets.GH_PAT }}
@@ -57,7 +57,7 @@ jobs:
           path: "${{ github.workspace }}/behavior_api"
 
       - name: Checkout ni CLI code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'mengyanshou/ni'
           token: ${{ secrets.GH_PAT }}
@@ -65,7 +65,7 @@ jobs:
           path: "${{ github.workspace }}/ni"
       - name: Cache Primes
         id: cache-primes
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}
           key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
@@ -79,7 +79,7 @@ jobs:
     steps:
       - name: Restore cached Primes
         id: cache-primes-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ github.workspace }}
@@ -123,6 +123,7 @@ jobs:
 
 
   build-mac:
+    name: Build Mac DMG
     runs-on: ${{ github.event.inputs.custom_runner == 'true' && 'self-hosted-mac' || 'macos-latest' }}
     needs: clone-code
     environment: default
@@ -136,7 +137,7 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: Restore cached Primes
         id: cache-primes-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ github.workspace }}
@@ -179,7 +180,7 @@ jobs:
           ni release --build-mac-dmg
           # ./scripts/dmg/create_dmg.sh
 
-      - name: Upload
+      - name: Upload To Private Server
         run: |
           export PATH=$PATH:${{ github.workspace }}/ni
           ni default -u
