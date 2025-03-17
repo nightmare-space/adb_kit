@@ -101,7 +101,6 @@ jobs:
         with:
           path: ${{ github.workspace }}
           key: code-${{ hashFiles('**/pubspec.lock') }}
-          # enableCrossOsArchive
           enableCrossOsArchive : true
           restore-keys: |
             code-
@@ -118,8 +117,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: code-
-          enableCrossOsArchive : true
+          restore-keys: code-
 
       - name: Move file
         run: |
@@ -174,8 +172,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: code-
-          enableCrossOsArchive : true
+          restore-keys: code-
 
       - name: Move file
         run: |
@@ -228,8 +225,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: code-
-          enableCrossOsArchive : true
+          restore-keys: code-
 
       - name: Move file
         run: |
