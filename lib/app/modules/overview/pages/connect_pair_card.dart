@@ -38,13 +38,13 @@ class _ConnectPairCardState extends State<ConnectPairCard> {
       return;
     }
     Log.d('adb connect ${ipController.text} start');
-    DevicesController dc = Get.find();
     ADBConnectResult? result;
     try {
       String suffix = pairCodeCtl.text.isEmpty ? '' : ' ${pairCodeCtl.text}';
       String port = portCtl.text.isEmpty ? '5555' : portCtl.text;
       final onnectResult = await ADBWrapper.connectDevices('${ipController.text}:$port$suffix');
       if (onnectResult is ADBIO) {
+        DevicesController dc = Get.find();
         dc.onPureDartADBDeviceConnect('${ipController.text}:${portCtl.text}', onnectResult);
       } else {
         result = onnectResult;

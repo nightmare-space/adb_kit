@@ -48,42 +48,45 @@ class HistoryPage extends GetView<HistoryController> {
               );
             }
             return SafeAreaFix(
-              child: Stack(
-                children: [
-                  CardItem(
-                    padding: EdgeInsets.zero,
-                    child: ListView.builder(
-                      itemCount: controller.adbHistorys.data.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (c, i) {
-                        final ADBHistory adbEntity = controller.adbHistorys.data[i];
-                        return Dismissible(
-                          key: Key('$i'),
-                          onDismissed: (direction) {
-                            ctl.removeHis(i);
-                          },
-                          child: buildItem(adbEntity, context),
-                        );
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(8.w),
-                      margin: EdgeInsets.all(16.w),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withAlpha(opacity01),
-                        borderRadius: BorderRadius.circular(10.w),
-                      ),
-                      child: Text(
-                        s.deleteHistoryTip,
-                        style: TextStyle(color: Colors.green, fontSize: 12.w),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 8.w),
+                child: Stack(
+                  children: [
+                    CardItem(
+                      padding: EdgeInsets.zero,
+                      child: ListView.builder(
+                        itemCount: controller.adbHistorys.data.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (c, i) {
+                          final ADBHistory adbEntity = controller.adbHistorys.data[i];
+                          return Dismissible(
+                            key: Key('$i'),
+                            onDismissed: (direction) {
+                              ctl.removeHis(i);
+                            },
+                            child: buildItem(adbEntity, context),
+                          );
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.all(8.w),
+                        margin: EdgeInsets.all(16.w),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withAlpha(opacity01),
+                          borderRadius: BorderRadius.circular(10.w),
+                        ),
+                        child: Text(
+                          s.deleteHistoryTip,
+                          style: TextStyle(color: Colors.green, fontSize: 12.w),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -97,11 +100,17 @@ class HistoryPage extends GetView<HistoryController> {
     return InkWell(
       onTap: () async {
         String address = adbEntity.address;
-        DevicesController dc = Get.find();
+        DevicesController? dc;
+        try {
+          dc = Get.find<DevicesController>();
+        } catch (e) {
+          Log.i('$e', tag: '$this');
+          return;
+        }
         try {
           final result = await ADBWrapper.connectDevices('${adbEntity.address}:${adbEntity.port}');
           if (result is ADBIO) {
-            dc.onPureDartADBDeviceConnect(address, result);
+            dc?.onPureDartADBDeviceConnect(address, result);
           }
         } catch (e) {
           showToast('$e');

@@ -25,6 +25,7 @@ class ADBDevice {
 
   /// 判断 serial 是否是 ipv4/ipv6
   /// check serial is ipv4/ipv6
+  /// TODO adb-8c922a7e-cFqP8C._adb-tls-connect._tcp 也是一个网络设备
   bool get isNetworkDevice {
     return serial.contains(':');
   }

@@ -112,7 +112,7 @@ class _NiDrawerState extends State<NiDrawer> {
                       onTap: () {
                         widget.onChanged?.call(item.value.toString());
                       },
-                      borderRadius: BorderRadius.circular(8.w),
+                      borderRadius: BorderRadius.circular(12.w),
                       child: item.copyWith(
                         expanded: widget.expanded,
                       ),
@@ -132,17 +132,17 @@ class NiDrawerItem<T> extends StatefulWidget {
     super.key,
     required this.value,
     required this.groupValue,
-    this.tooltip,
     required this.mini,
-    this.expanded,
     required this.title,
+    this.tooltip,
+    this.expanded = false,
   });
   final T value;
   final T groupValue;
   final String? tooltip;
   final Widget mini;
   final Widget title;
-  final bool? expanded;
+  final bool expanded;
 
   NiDrawerItem copyWith({
     T? value,
@@ -169,8 +169,9 @@ class NiDrawerItem<T> extends StatefulWidget {
 class _NiDrawerItemState<T> extends State<NiDrawerItem<T>> {
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     final bool isChecked = widget.value == widget.groupValue;
-    if (widget.expanded == true) {
+    if (widget.expanded) {
       return Stack(
         alignment: Alignment.center,
         children: [
@@ -178,7 +179,7 @@ class _NiDrawerItemState<T> extends State<NiDrawerItem<T>> {
             height: 48.w,
             decoration: isChecked
                 ? BoxDecoration(
-                    color: Theme.of(context).primaryColor.withAlpha(opacity01),
+                    color: colorScheme.primary.withAlpha(opacity01),
                     borderRadius: BorderRadius.circular(8.w),
                   )
                 : null,
@@ -206,14 +207,6 @@ class _NiDrawerItemState<T> extends State<NiDrawerItem<T>> {
                       ),
                       child: widget.title,
                     )
-                    // Text(
-                    //   title!,
-                    //   style: TextStyle(
-                    //     color: isChecked ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface,
-                    //     fontSize: 14.w,
-                    //     fontWeight: bold,
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -222,24 +215,25 @@ class _NiDrawerItemState<T> extends State<NiDrawerItem<T>> {
         ],
       );
     }
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Tooltip(
       message: widget.tooltip ?? '',
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            height: 54.w,
-            width: 54.w,
-            decoration: isChecked
-                ? BoxDecoration(
-                    color: colorScheme.primary.withAlpha(opacity015),
-                    borderRadius: BorderRadius.circular(12.w),
-                  )
-                : null,
-            child: widget.mini,
+      child: Container(
+        height: 54.w,
+        width: 54.w,
+        decoration: isChecked
+            ? BoxDecoration(
+                color: colorScheme.primary.withAlpha(opacity015),
+                borderRadius: BorderRadius.circular(12.w),
+              )
+            : null,
+        child: DefaultTextStyle(
+          style: TextStyle(
+            color: isChecked ? colorScheme.primary : colorScheme.onSurface,
+            fontSize: 12.w,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+          child: widget.mini,
+        ),
       ),
     );
   }

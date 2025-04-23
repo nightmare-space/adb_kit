@@ -11,11 +11,11 @@ import 'generated/intl/messages_en.dart' as en;
 import 'generated/intl/messages_zh_CN.dart' as zh_cn;
 import 'plugins.dart';
 
-Map<String, Function> en_message = {
+Map<String, dynamic> en_message = {
   ...en.messages.messages,
   ...at.en_message,
 };
-Map<String, Function> zh_cn_messages = {
+Map<String, dynamic> zh_cn_messages = {
   ...zh_cn.messages.messages,
   ...at.zh_cn_messages,
 };
