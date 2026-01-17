@@ -1,18 +1,18 @@
-class AlreadyConnected extends ADBException {
+class AlreadyConnected extends AdbException {
   AlreadyConnected() : super('this device is already connected');
 }
 
-class ConnectRefused extends ADBException {
+class ConnectRefused extends AdbException {
   ConnectRefused() : super('connect refused');
 }
 
-class NeedAuthenticate extends ADBException {
+class NeedAuthenticate extends AdbException {
   NeedAuthenticate() : super('need authenticate');
 }
 
-class ADBException implements Exception {
+class AdbException implements Exception {
   final String message;
-  ADBException(this.message);
+  AdbException(this.message);
 
   @override
   String toString() => message;

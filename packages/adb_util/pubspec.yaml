@@ -9,10 +9,10 @@ environment:
 
 resolution: workspace
 
-dev_dependencies:
-  test: ^1.25.7
-
 dependencies:
   flutter:
     sdk: flutter
   multicast_dns: ^0.3.2+8
+
+dev_dependencies:
+  test: ^1.25.7

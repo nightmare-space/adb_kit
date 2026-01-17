@@ -1,7 +1,9 @@
-export 'src/adb_foundation.dart';
+export 'src/foundation/adb_foundation.dart';
 export 'src/adb.dart';
-export 'src/adb_command.dart';
+export 'src/utils/adb_command.dart';
 export 'src/adb_pair.dart';
-export 'src/foundation/adb_device.dart';
+export 'src/device/adb_device.dart';
+export 'src/device/adb_device_raw.dart';
+export 'src/device/adb_device_binary.dart';
+export 'src/extension/adb_device_ext.dart';
 export 'src/foundation/adb_exception.dart';
-export 'src/foundation/adb_connect_result.dart';

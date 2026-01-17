@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
-import 'package:dart_adb/adb.dart';
+import 'package:adb_util/src/device/adb_device.dart';
 import 'package:global_repository/global_repository_dart.dart' hide exec;
 import 'package:signale/signale.dart';
-import 'adb_foundation.dart';
-import 'foundation/adb_device.dart';
+import 'foundation/adb_foundation.dart';
+import 'device/adb_device_binary.dart';
+import 'extension/adb_device_ext.dart';
 import 'foundation/adb_exception.dart';
-import 'foundation/adb_connect_result.dart';
 
 String adb = 'adb';
 
@@ -19,109 +19,17 @@ String shortHash(Object? object) {
 
 Map<String, String> modelCache = {};
 Map<String, String> deviceIDCache = {};
-Future<String?> getDeviceID(
-  String serial, {
-  String? password,
-  bool usePureDart = false,
-  ADBIO? adbio,
-}) async {
-  if (deviceIDCache.containsKey(serial)) {
-    return deviceIDCache[serial];
-  }
-  String nidPath = '/data/local/tmp/nid';
-  String cmd = '$adb -s $serial shell cat $nidPath';
-  if (usePureDart) {
-    String? id;
-    try {
-      id = await adbio!.adbShell('cat $nidPath');
-    } catch (e) {
-      Log.i('cat nid failed : $e try write a new one and get again');
-      try {
-        await adbio!.adbShell('echo ${shortHash(() {})} > $nidPath');
-        id = await adbio!.adbShell('cat $nidPath');
-      } catch (e, stackTrace) {
-        Log.e("important error -> $e $stackTrace");
-      }
-    }
-    deviceIDCache[serial] = id ?? 'unknown';
-    return deviceIDCache[serial];
-  }
-  String? id;
-  try {
-    id = await exec(cmd, password: password);
-  } catch (e) {
-    Log.i('cat nid failed : $e try write a new one and get again');
-    try {
-      await writeKey(serial, password);
-      id = await exec(cmd, password: password);
-    } catch (e, stackTrace) {
-      Log.e("important error -> $e $stackTrace");
-    }
-  }
-  deviceIDCache[serial] = id ?? 'unknown';
-  return deviceIDCache[serial];
-}
 
-Future<void> writeKey(String serial, String? password) async {
-  String nidPath = '/data/local/tmp/nid';
-  String id = shortHash(() {}).toString();
-  await execWL(
-    [adb, '-s', serial, 'shell', 'echo $id > $nidPath'],
-    password: password,
-  );
-  // TODO 下面代码在 Linux/Mac 正常，在 Windows 崩了
-  // String test = await exec('$adb -s $serial shell echo $id', password: password);
-  // Log.e('test -> $test');
-}
+typedef AdbResultCallback = void Function(List<AdbDevice> data);
 
-Future<String?> getDeviceProductModel(
-  String serial, {
-  String? password,
-  bool usePureDart = false,
-  ADBIO? adbio,
-}) async {
-  if (modelCache.containsKey(serial)) {
-    // Log.i('get model from cache');
-    return modelCache[serial]!;
-  }
-  if (usePureDart) {
-    String? model;
-    try {
-      model = await adbio!.adbShell('getprop ro.product.marketname');
-      if (model.trim().isEmpty) {
-        model = await adbio.adbShell('getprop ro.product.model');
-      }
-      modelCache[serial] = model;
-    } catch (e) {
-      rethrow;
-    }
-    return model;
-  }
-  String getPropPrefix = '$adb -s $serial shell getprop';
-  String? model;
-  // Some device like xiaomi can't get model name by `ro.product.marketname`
-  try {
-    model = await exec('$getPropPrefix ro.product.marketname', password: password);
-    if (model.trim().isEmpty) {
-      model = await exec('$getPropPrefix ro.product.model', password: password);
-    }
-    modelCache[serial] = model;
-  } catch (e) {
-    rethrow;
-  }
-  return model;
-}
-
-typedef ADBResultCallback = void Function(List<ADBDevice> data);
-
-class ADB {
-  static final List<ADBResultCallback> _callback = [];
+class AdbBinary {
+  static final List<AdbResultCallback> _callback = [];
   static late Isolate isolate;
   static String? _libPath;
   static String? _password;
   static Future<void> reconnectDevices(String ip, [String? port]) async {
     await disconnectDevice(ip);
-    connectDevices(ip);
+    connectDevice(ip);
   }
 
   static Future<void> setDevicePassword(String? password) async {
@@ -135,18 +43,18 @@ class ADB {
     _libPath = path;
   }
 
-  static void addListener(ADBResultCallback listener) {
+  static void addListener(AdbResultCallback listener) {
     _callback.add(listener);
   }
 
-  static void removeListener(ADBResultCallback listener) {
+  static void removeListener(AdbResultCallback listener) {
     if (_callback.contains(listener)) {
       _callback.remove(listener);
     }
   }
 
-  static void _notifiAll(List<ADBDevice> data) {
-    for (ADBResultCallback call in _callback) {
+  static void _notifiAll(List<AdbDevice> data) {
+    for (AdbResultCallback call in _callback) {
       call(data);
     }
   }
@@ -160,30 +68,32 @@ class ADB {
       // 删除 `List of devices attached`
       // Rmove `List of devices attached`
       outList.removeAt(0);
-      final List<ADBDevice> tmpDevices = [];
+      final List<AdbDeviceBinary> tmpDevices = [];
       for (final String str in outList) {
-        final ADBDevice device = ADBDevice.parse(str);
+        final AdbDeviceBinary device = AdbDeviceBinary.parse(str);
         if (!device.isConnect) {
           continue;
         }
         String? model;
-        String? nid;
+        String? uid;
         try {
-          model = await getDeviceProductModel(device.serial, password: _password);
-          nid = await getDeviceID(device.serial, password: _password);
+          model = await device.getDeviceProductModel(password: _password);
+          uid = await device.getDeviceUniqueID(password: _password);
         } catch (e) {
           onError?.call(e.toString());
           continue;
         }
         device.productModel = model;
-        device.nid = nid!;
-        device.password = _password;
+        device.uid = uid!;
+        // TODO
+        device.password = _password ?? '';
         tmpDevices.add(device);
       }
       _notifiAll(tmpDevices);
     }
   }
 
+  /// 开始轮询列出设备
   static Future<void> startPoolingListDevices({
     Duration duration = const Duration(milliseconds: 600),
     void Function(String)? onError,
@@ -220,11 +130,8 @@ class ADB {
     isolate.kill(priority: Isolate.immediate);
   }
 
-  static Future<ADBConnectResult> connectDevices(String ipAndPort) async {
+  static Future<bool> connectDevice(String ipAndPort) async {
     String cmd = '$adb connect $ipAndPort';
-    if (ipAndPort.contains(' ')) {
-      cmd = '$adb pair ${ipAndPort.split(' ').first} ${ipAndPort.split(' ').last}';
-    }
     final String result = await exec(cmd, useProcessRun: true);
     Log.v('connect devices result -> $result');
     // failed to connect to '240e:452:de06:478a:2763:981e:d0a5:fe4f:5555': Network is unreachabl
@@ -237,16 +144,24 @@ class ADB {
       // TODO 这里需要处理 offline 的时候
       throw AlreadyConnected();
     } else if (result.contains('connect')) {
-      return SuccessConnect();
-    } else if (result.contains('Successfully paired')) {
-      return SuccessPair();
+      return true;
     }
-    return ADBConnectResult(result);
-    //todo timed out
+    return false;
   }
 
-  static Future<String> disconnectDevice(String ipAndPort) async {
-    return await exec('$adb disconnect $ipAndPort', useProcessRun: true);
+  static Future<bool> pairDevice(String ipAndPort, String pairCode) async {
+    String cmd = '$adb pair $ipAndPort $pairCode';
+    final String result = await exec(cmd, useProcessRun: true);
+    Log.v('pair devices result -> $result');
+    if (result.contains('Successfully paired')) {
+      return true;
+    }
+    return false;
+  }
+
+  static Future<bool> disconnectDevice(String ipAndPort) async {
+    String result = await exec('$adb disconnect $ipAndPort', useProcessRun: true);
+    return result.contains('disconnected');
   }
 }
 

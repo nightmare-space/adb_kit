@@ -26,7 +26,7 @@ void main() {
       'connect no exist device',
       () async {
         try {
-          await ADB.connectDevices('127.0.0.1:4444');
+          await AdbBinary.connectDevice('127.0.0.1:4444');
         } catch (e) {
           // `failed to connect to '127.0.0.1:4444': Connection refused`s
           expect(e, isA<ConnectRefused>());
@@ -37,7 +37,7 @@ void main() {
       'disconnect device',
       () async {
         try {
-          String result = await ADB.disconnectDevice(serial);
+          bool result = await AdbBinary.disconnectDevice(serial);
           // common is `disconnected 192.168.31.109:5555`
           expect(result, contains(RegExp('disconnected')));
         } catch (e) {
@@ -51,7 +51,7 @@ void main() {
       () async {
         String? error;
         try {
-          await ADB.connectDevices(serial);
+          await AdbBinary.connectDevice(serial);
         } catch (e) {
           error = e.toString();
         }
@@ -62,7 +62,7 @@ void main() {
       'connect already connected device',
       () async {
         try {
-          await ADB.connectDevices(serial);
+          await AdbBinary.connectDevice(serial);
         } catch (e) {
           expect(e, isA<AlreadyConnected>());
         }
